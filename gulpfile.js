@@ -7,6 +7,7 @@ const colors = require('colors');
 const concat = require('gulp-concat');
 const liveServer = require('gulp-live-server');
 const plumber = require('gulp-plumber');
+const replace = require('gulp-replace');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
@@ -127,7 +128,7 @@ gulp.task('lint:sass', function () {
 gulp.task('compile:sass', function () {
     // concat and minify global scss files
     return gulp
-        .src('app/styles/*.scss')
+        .src('styles/main.scss')
         .pipe(plumber({
             errorHandler: function (err) {
                 console.error('>>> [sass] Sass global style compilation failed'.bold.green, err);
@@ -141,7 +142,7 @@ gulp.task('compile:sass', function () {
         .pipe(concat('styles.min.css'))
         .pipe(cleanCSS())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/app/css'));
+        .pipe(gulp.dest('dist/css'));
     // minify component specific scss files
 });
 
@@ -150,7 +151,7 @@ gulp.task('minify:css', function () {
     // minify component css files
     gulp.src('app/**/*.css')
         .pipe(cleanCSS())
-        .pipe(gulp.dest('dist/app/css'));
+        .pipe(gulp.dest('dist/css'));
 });
 
 // Copy dependencies
@@ -192,8 +193,13 @@ gulp.task('copy:libs', function () {
         .pipe(gulp.dest('dist/lib/js/@angular'));
 });
 
+function getAppVersion() {
+    return Date.now();
+}
+
 gulp.task('copy:html', function () {
     return gulp.src('app/index.html')
+        .pipe(replace('{appVersion}', getAppVersion()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -220,7 +226,7 @@ gulp.task('watch:src', function () {
 
     gulp.watch('assets/**/*', runAndReload('copy:assets'));
 
-    gulp.watch(['styles/**/*.scss', 'app/**/*.css', 'styles/**/*'], runAndReload('styles', 1500));
+    gulp.watch(['styles/**/*.scss', 'app/**/*.css'], runAndReload('styles', 1500));
 });
 
 let server;
