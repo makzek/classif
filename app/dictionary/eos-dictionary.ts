@@ -7,27 +7,39 @@ export class EosDictionary {
     }
 
     init(nodes: EosDictionaryNode[]) {
-        nodes.forEach(_n => this._nodes.set(_n.id, _n));
+        nodes.forEach((_n) => this._nodes.set(_n.id, _n));
     }
 
-    addNode(parentId: number, node: EosDictionaryNode): boolean {
-        let _parent: EosDictionaryNode = this._nodes.get(parentId);
-        let _success = false;
+    getNode(nodeId: number): EosDictionaryNode {
+        return this._nodes.get(nodeId);
+    }
 
-        if (_parent) {
-            if (!_parent.children) {
-                _parent.children = [];
+    addNode(parentId: (number | null), node: EosDictionaryNode): boolean {
+        let _result = false;
+
+        // check that node with specified id does not exist in this instance
+        if (this._nodes.has(node.id)) { return _result; }
+
+        if (parentId !== null) {
+            let _parent: EosDictionaryNode = this._nodes.get(parentId);
+
+            if (_parent) {
+                if (!_parent.children) {
+                    _parent.children = [];
+                }
+                _parent.children.push(node);
+                this._nodes.set(node.id, node);
+                _result = true;
             }
-            _parent.children.push(node);
+        } else {
             this._nodes.set(node.id, node);
-            _success = true;
+            _result = true;
         }
-
-        return _success;
+        return _result;
     }
 
     deleteNode(nodeId: number, hard = false): boolean {
-        let _success = false;
+        let _result = false;
         let _node: EosDictionaryNode = this._nodes.get(nodeId);
         let _parent: EosDictionaryNode;
 
@@ -35,17 +47,17 @@ export class EosDictionary {
             if (hard) {
                 if (!_node.children || _node.children.length < 1) {
                     _parent = _node.parent;
-                    _parent.children = _parent.children.filter(_n => _n.id !== _node.id);
+                    _parent.children = _parent.children.filter((_n) => _n.id !== _node.id);
                     this._nodes.delete(nodeId);
-                    _success = true;
+                    _result = true;
                 }
             } else {
                 _node.isDeleted = true;
-                _success = true;
+                _result = true;
             }
         }
 
-        return _success;
+        return _result;
     }
 
 }
