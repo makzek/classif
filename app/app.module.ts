@@ -12,6 +12,9 @@ import { HomeComponent } from './home/home.component';
 import { RegionsComponent } from './regions/regions.component';
 import { RubricatorComponent } from './rubricator/rubricator.component';
 
+import { EosApiService } from './services/eos-api.service';
+import { EosDictService } from './services/eos-dict.service';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -27,7 +30,9 @@ import { RubricatorComponent } from './rubricator/rubricator.component';
         HttpModule
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        EosApiService,
+        EosDictService
     ],
     bootstrap: [AppComponent]
 })
