@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -10,10 +10,10 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { HomeComponent } from './home/home.component';
-import { RegionsComponent } from './regions/regions.component';
-import { RubricatorComponent } from './rubricator/rubricator.component';
+import { DictionaryComponent } from './dictionary/dictionary.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditComponent } from './edit/edit.component';
+import { TreeComponent } from './tree/tree.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -24,10 +24,10 @@ import { EosDictService } from './services/eos-dict.service';
         BreadcrumbsComponent,
         DictionariesComponent,
         HomeComponent,
-        RegionsComponent,
-        RubricatorComponent,
+        DictionaryComponent,
         SidebarComponent,
         EditComponent,
+        TreeComponent,
     ],
     imports: [
         BrowserModule,

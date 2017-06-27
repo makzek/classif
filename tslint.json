@@ -39,6 +39,16 @@
     "quotemark": {
       "options": ["single"]
     },
+    "trailing-comma": {
+      "options": {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never"
+        },
+        "singleline": "never"
+      }
+    },
     "typedef-whitespace": [
       true,
       {

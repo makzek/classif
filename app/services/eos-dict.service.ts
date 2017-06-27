@@ -3,16 +3,16 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { EosApiService } from './eos-api.service';
-import { EosDictionary } from '../dictionary/eos-dictionary';
-import { EosDictionaryNode } from '../dictionary/eos-dictionary-node';
+import { EosDictionary } from '../core/eos-dictionary';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Injectable()
 export class EosDictService {
     private _dictionaries: Map<string, EosDictionary>;
     private _dictionariesList: Array<{id: string, title: string}>;
 
-    private _openedNode: EosDictionaryNode; // selected in tree
-    private _selectedNode: EosDictionaryNode; // selected in list of _openedNode children
+    private _selectedNode: EosDictionaryNode; // selected in tree
+    private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
     private _dictionary: EosDictionary;
 
     private _dictionariesList$: BehaviorSubject<Array<{id: string, title: string}>>;
@@ -26,6 +26,8 @@ export class EosDictService {
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
+        // this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
+        // this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -48,16 +50,26 @@ export class EosDictService {
         return this._dictionary$.asObservable();
     }
 
-    private _checkDictionary(dictionaryId: string): void {
-        if (!this._dictionaries.get(dictionaryId)) {
-            this._loadDictionary(dictionaryId);
+    /* Observable dictionary for subscribing on updates in components */
+    loadChildrenNodes(parentId: number) {
+        console.log('EosDictService loadChildrenNodes', parentId);
+        const parentNode = this._dictionary.getNode(parentId);
+        // if it is parent node and children haven't been loaded yet, do it
+        if (parentNode.isNode && !parentNode.children) {
+            this._loadNodeChildren(parentId);
+        }
+    }
+
+    private _checkDictionary(id: string): void {
+        if (!this._dictionaries.get(id)) {
+            this._loadDictionary(id);
         }
     }
 
     private _changeParameters(
         dictionaryId: string,
-        openedNode: (EosDictionaryNode | null) = null,
         selectedNode: (EosDictionaryNode | null) = null,
+        openedNode: (EosDictionaryNode | null) = null
     ): void {
         this._checkDictionary(dictionaryId);
         this._dictionary = this._dictionaries.get(dictionaryId);
@@ -69,7 +81,7 @@ export class EosDictService {
     }
 
     getDictionariesList(): void {
-        if (!this._dictionariesList) {this._loadDictionariesList();}
+        if (!this._dictionariesList) { this._loadDictionariesList(); }
         this._dictionariesList$.next(this._dictionariesList);
     }
 
@@ -86,17 +98,29 @@ export class EosDictService {
         this._changeParameters(dictionaryId, selectedNode.parent, selectedNode);
     }
 
-    deleteNode(dictionary: string, id: number, hard = false) {
-
-    }
+    // openNode(dictionaryName: string, nodeId: number): void {
+    //     this._checkDictionary(dictionaryName);
+    //     this._changeParameters(dictionaryName, this._dictionary.getNode(nodeId));
+    // }
+    //
+    // selectNode(dictionaryName: string, nodeId: number): void {
+    //     this._checkDictionary(dictionaryName);
+    //     const selectedNode = this._dictionary.getNode(nodeId);
+    //     this._changeParameters(dictionaryName, selectedNode.parent, selectedNode);
+    // }
+    //
+    // deleteNode(dictionary: string, id: number, hard = false) {
+    //
+    // }
 
     getNode(dictionaryName: string, nodeId: number): Promise<EosDictionaryNode> {
-        let example: EosDictionaryNode = {
+        const example: EosDictionaryNode = {
             id: nodeId,
             code: 'code',
             title: dictionaryName,
             description: 'description',
             isDeleted: false,
+            isNode: false,
             selected: false,
             data: {
                 code: '102',
@@ -127,36 +151,26 @@ export class EosDictService {
 
     /* load dictionary data with API */
     private _loadDictionary(id: string) {
-        if (id === 'rubricator') {
-            const dictionary = new EosDictionary(id);
-            dictionary.init(
-                'Рубрикатор',
-                [{
-                    id: 1,
-                    title: 'title of the first node',
-                    code: '1',
-                    description: 'description of the first node',
-                    isDeleted: false,
-                }, {
-                    id: 2,
-                    title: 'title of the second node',
-                    code: '2',
-                    description: 'description of the second node',
-                    isDeleted: true,
-                }, {
-                    id: 3,
-                    title: 'title of the trird node',
-                    code: '3',
-                    description: 'description of the trird node',
-                    isDeleted: false,
-                }] as EosDictionaryNode[],
-            );
-            this._dictionaries.set(id, dictionary);
-        }
-    }
+        // TODO: make async
+        const nodes = this._api.getDictionaryNodeChildren(id);
+        const eosNodes: EosDictionaryNode[] = nodes.map(({ parentId, ...rest }) => ({ ...rest, parent: null }));
+        const dictionary = new EosDictionary(id);
+        // TODO: change title
+        dictionary.init('Рубрикатор', eosNodes);
+        this._dictionaries.set(id, dictionary);
+     }
 
-    /* load dictionary node data with API */
-    private _loadNode(id: number) {
+    // /* load dictionary node data with API */
+    // private _loadNode(id: number) {
+    //
+    // }
 
+    /* load dictionary node children data with API */
+    private _loadNodeChildren(parentId: number) {
+        // TODO: get api data by dictionary name
+        // TODO: make async
+        const children = this._api.getDictionaryNodeChildren(this._dictionary.id, parentId);
+        this._dictionary.setChildren(parentId, children);
+        this._dictionary$.next(this._dictionary);
     }
 }

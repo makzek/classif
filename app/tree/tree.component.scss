@@ -1,0 +1,37 @@
+.tree-header {
+  >div {
+    display: inline-block;
+  }
+}
+
+// .tree-nodes {
+//   display: table;
+//   list-style-type: none;
+//   padding-left: 16px;
+// }
+//
+// .tree-node {
+//   display: table-row;
+//   list-style-type: none;
+// }
+
+.node-button {
+  cursor: pointer;
+  // display: table-cell;
+}
+
+.node-info {
+  // display: table-cell;
+  // list-style-type: none;
+  padding-left: 5px;
+}
+
+.node-text {
+  cursor: pointer;
+  // padding-left: 3px;
+  // padding-right: 3px;
+
+  &.bg-warning {
+    font-weight: bold;
+  }
+}

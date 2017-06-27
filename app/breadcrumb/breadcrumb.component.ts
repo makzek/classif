@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { Router, RoutesRecognized, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 interface IBreadcrumb {
     url: string;
     title: string;
     params?: any;
-};
+}
+
 @Component({
     selector: 'eos-breadcrumb',
     templateUrl: 'breadcrumb.component.html',
@@ -23,6 +24,7 @@ export class BreadcrumbsComponent {
     private _update(evt: any) {
         let currentUrlPart = evt.state._root;
         let currUrl = '';
+        console.log('Breadcrumbs', evt);
 
         this.breadcrumbs = [{
             url: '/home',
@@ -31,13 +33,13 @@ export class BreadcrumbsComponent {
         }];
         while (currentUrlPart.children.length > 0) {
             currentUrlPart = currentUrlPart.children[0];
-            let routeSnaphot = <ActivatedRouteSnapshot>currentUrlPart.value;
-            let subpath = routeSnaphot.url.map((item) => item.path).join('/');
+            const routeSnaphot = currentUrlPart.value as ActivatedRouteSnapshot;
+            const subpath = routeSnaphot.url.map((item) => item.path).join('/');
 
             if (subpath) {
                 currUrl += '/' + subpath;
                 this.breadcrumbs.push({
-                    title: (<any>routeSnaphot.data).title,
+                    title: (routeSnaphot.data).title,
                     url: currUrl,
                     params: routeSnaphot.params,
                 });
