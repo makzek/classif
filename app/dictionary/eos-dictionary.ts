@@ -14,26 +14,23 @@ export class EosDictionary {
         return this._nodes.get(nodeId);
     }
 
-    addNode(parentId: (number | null), node: EosDictionaryNode): boolean {
+    addNode(node: EosDictionaryNode, parentId?: number): boolean {
         let _result = false;
 
         // check that node with specified id does not exist in this instance
-        if (this._nodes.has(node.id)) { return _result; }
-
-        if (parentId !== null) {
-            let _parent: EosDictionaryNode = this._nodes.get(parentId);
-
-            if (_parent) {
-                if (!_parent.children) {
-                    _parent.children = [];
-                }
-                _parent.children.push(node);
-                this._nodes.set(node.id, node);
-                _result = true;
-            }
-        } else {
+        if (!this._nodes.has(node.id)) {
             this._nodes.set(node.id, node);
-            _result = true;
+            if (!isNaN(+parentId)) {
+                let _parent: EosDictionaryNode = this._nodes.get(parentId);
+
+                if (_parent) {
+                    if (!_parent.children) {
+                        _parent.children = [];
+                    }
+                    _parent.children.push(node);
+                    _result = true;
+                }
+            }
         }
         return _result;
     }
