@@ -1,12 +1,16 @@
 import { EosDictionaryNode } from './eos-dictionary-node';
 export class EosDictionary {
     private _nodes: Map<number, EosDictionaryNode>;
+    readonly id: string;
+    public title: string;
 
-    constructor() {
+    constructor(id: string) {
         this._nodes = new Map<number, EosDictionaryNode>();
+        this.id = id;
     }
 
-    init(nodes: EosDictionaryNode[]) {
+    init(title: string, nodes: EosDictionaryNode[]) {
+        this.title = title;
         nodes.forEach((_n) => this._nodes.set(_n.id, _n));
     }
 

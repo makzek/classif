@@ -11,6 +11,7 @@ const routes: Routes = [{
     path: 'spravochniki',
     component: DictionariesComponent,
     data: { title: 'Справочники' },
+    pathMatch: 'full',
     children: [{
         path: 'rubricator',
         component: RubricatorComponent,
