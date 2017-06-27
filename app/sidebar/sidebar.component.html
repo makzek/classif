@@ -1,1 +1,12 @@
-<eos-dictionaries></eos-dictionaries>
+<div class="sidebar">
+    <div class="sandwich-wrapper" (click)="hideMenu = !hideMenu" ><span class="sandwich"></span></div>
+
+    <ul class="menu">
+        <li>
+            <a class="link-text" routerLink="/spravochniki">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                <span [hidden]="hideMenu">Справочники</span>
+            </a>
+        </li>
+    </ul>
+</div>
