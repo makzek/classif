@@ -18,23 +18,23 @@ const routes: Routes = [{
         path: 'regions',
         component: RegionsComponent,
         data: { title: 'Регионы' },
-    }]
+    }],
 }, {
     path: 'home',
     component: HomeComponent,
-    data: { title: 'Home' }
+    data: { title: 'Home' },
 }, {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
 }, {
     path: '**',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
 }];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

@@ -1,0 +1,6 @@
+<ol class="breadcrumb">
+    <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
+        <a [routerLink]="[route.url, route.params]" *ngIf="!isLast">{{route.title}}</a>
+        <span *ngIf="isLast">{{route.title}}</span>
+    </li>
+</ol>

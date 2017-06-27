@@ -2,5 +2,11 @@
     {{title}}
 </h1>
 <div class="container">
-    <router-outlet></router-outlet>
+    <div class="sidebar-wrapper">
+        <eos-sidebar></eos-sidebar>
+    </div>
+    <div class="content-wrapper">
+        <eos-breadcrumb></eos-breadcrumb>
+        <router-outlet></router-outlet>
+    </div>
 </div>
