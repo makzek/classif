@@ -1,23 +1,25 @@
 .container {
     height: 100vh;
+    width: 100vw;
     padding: 0;
     background: $background-color;
     color: $font-color;
 }
 
+.wrapper {
+    display: flex;
+}
+
 .content-wrapper {
-    float: left;
-    padding-left: 20px;
+    width: 100%;
 }
 
 .sidebar-wrapper {
-    float: left;
     height: 100%;
     border-right: 1px solid $icon-color;
 }
 
 .header-wrapper {
-    width: 100%;
     padding: 10px;
     border-bottom: 1px solid $icon-color;
 }

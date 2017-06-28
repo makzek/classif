@@ -90,8 +90,26 @@ export class EosDictService {
 
     }
 
-    getNode(dictionaryName: string, nodeId: number): any /*Observable<any>*/ {
+    getNode(dictionaryName: string, nodeId: number): Promise<EosDictionaryNode> {
+        let example: EosDictionaryNode = {
+            id: nodeId,
+            code: 'code',
+            title: dictionaryName,
+            description: 'description',
+            isDeleted: false,
+            selected: false,
+            data: {
+                code: '102',
+                shortName: 'lalala',
+                fullName: 'lalala lalala lalala',
+                note: '',
+                indexSEV: 'asd123'
+            }
+        };
+        return Promise.resolve(example);
+    }
 
+    setNode(node: EosDictionaryNode): void {
     }
 
     /* load dictionary data with API */

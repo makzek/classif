@@ -26,7 +26,7 @@ const routes: Routes = [{
     component: HomeComponent,
     data: { title: 'Home' },
 },{
-    path: ':dictionaryName/:nodeId/edit',
+    path: 'spravochniki/:dictionaryName/:nodeId/edit',
     component: EditComponent,
     data: { title: 'Редактирвание' },
 },{

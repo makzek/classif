@@ -1,1 +1,55 @@
-<span (click)="log()">log</span>
+<div class="edit-container">
+    <header class="edit-header">
+        <span class="checkbox">
+            <label><input type="checkbox" [(ngModel)]="node.selected">Выбрать</label>
+        </span>
+        <span class="edit-title">{{node.title}}</span>
+        <button class="btn btn-primary" (click)="save()">Сохранить</button>
+        <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+
+        <span class="pull-right">
+        <a routerLink="{{selfLink}}/edit" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goPrevPage()"></span>
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goNextPage()"></span>
+        <a routerLink="{{selfLink}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+        </span>
+    </header>
+    <aside class="edit-aside">
+        <div class="btn-group vertical-buttons" role="group">
+            <button type="button" class="btn btn-default">Что-то ещё</button>
+            <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
+        </div>
+    </aside>
+    <article class="edit-content">
+        <div class="input-line">
+            <div class="form-group">
+                <label for="code">Код:</label>
+                <input [hidden]="!editMode" class="" id="code" [(ngModel)]="node.data.code"></input>
+                <span [hidden]="editMode" class="">{{node.data.code}}</span>
+            </div>
+            <div class="form-group">
+                <label for="shortName">Краткое наименование:</label>
+                <input [hidden]="!editMode" class="" id="shortName" [(ngModel)]="node.data.shortName"></input>
+                <span [hidden]="editMode" class="">{{node.data.shortName}}</span>
+            </div>
+        </div>
+        <div class="input-line">
+            <div class="form-group">
+                <label for="fullName">Полное наименование:</label>
+                <input [hidden]="!editMode" class="" id="fullName" [(ngModel)]="node.data.fullName"></input>
+                <span [hidden]="editMode" class="">{{node.data.fullName}}</span>
+            </div>
+            <div class="form-group">
+                <label for="note">Примечание:</label>
+                <input [hidden]="!editMode" class="" id="note" [(ngModel)]="node.data.note"></input>
+                <span [hidden]="editMode" class="">{{node.data.note}}</span>
+            </div>
+            <div class="form-group">
+                <label for="indexSEV">Индекс СЭВ:</label>
+                <input [hidden]="!editMode" class="" id="indexSEV" [(ngModel)]="node.data.indexSEV"></input>
+                <span [hidden]="editMode" class="">{{node.data.indexSEV}}</span>
+            </div>
+        </div>
+    </article>
+</div>

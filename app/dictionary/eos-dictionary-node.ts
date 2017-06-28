@@ -6,4 +6,6 @@ export class EosDictionaryNode {
     title: string;
     description: string;
     isDeleted: boolean;
+    selected: boolean;
+    data: any;
 }
