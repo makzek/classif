@@ -20,7 +20,5 @@ export class EditComponent {
             // (+) converts string 'id' to a number
             .switchMap((params: Params) => this.eosDictService.getNode(params['dictionaryName'], +params['nodeId']))
             .subscribe((node: EosDictionaryNode) => this.node = node);
-
-        this.eosDictService.openNode('lallal', 10);
     };
 }
