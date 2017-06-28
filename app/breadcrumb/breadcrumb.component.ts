@@ -5,7 +5,7 @@ import 'rxjs/add/operator/filter';
 interface IBreadcrumb {
     url: string;
     title: string;
-    params: any;
+    params?: any;
 };
 @Component({
     selector: 'eos-breadcrumb',
@@ -24,18 +24,24 @@ export class BreadcrumbsComponent {
         let currentUrlPart = evt.state._root;
         let currUrl = '';
 
-        this.breadcrumbs = [];
+        this.breadcrumbs = [{
+            url: '/home',
+            title: 'Home',
+            params: new Object(),
+        }];
         while (currentUrlPart.children.length > 0) {
             currentUrlPart = currentUrlPart.children[0];
             let routeSnaphot = <ActivatedRouteSnapshot>currentUrlPart.value;
+            let subpath = routeSnaphot.url.map((item) => item.path).join('/');
 
-            currUrl += '/' + routeSnaphot.url.map((item) => item.path).join('/');
-
-            this.breadcrumbs.push({
-                title: (<any>routeSnaphot.data).title,
-                url: currUrl,
-                params: routeSnaphot.params,
-            });
+            if (subpath) {
+                currUrl += '/' + subpath;
+                this.breadcrumbs.push({
+                    title: (<any>routeSnaphot.data).title,
+                    url: currUrl,
+                    params: routeSnaphot.params,
+                });
+            }
         }
     }
 }
