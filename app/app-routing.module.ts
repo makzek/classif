@@ -12,15 +12,14 @@ const routes: Routes = [{
     component: DictionariesComponent,
     data: { title: 'Справочники' },
     pathMatch: 'full',
-    children: [{
-        path: 'rubricator',
-        component: RubricatorComponent,
-        data: { title: 'Рубрикатор' },
-    }, {
-        path: 'regions',
-        component: RegionsComponent,
-        data: { title: 'Регионы' },
-    }],
+}, {
+    path: 'spravochniki/rubricator',
+    component: RubricatorComponent,
+    data: { title: 'Рубрикатор' },
+}, {
+    path: 'spravochniki/regions',
+    component: RegionsComponent,
+    data: { title: 'Регионы' },
 }, {
     path: 'home',
     component: HomeComponent,

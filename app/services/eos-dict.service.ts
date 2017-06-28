@@ -103,8 +103,8 @@ export class EosDictService {
                 shortName: 'lalala',
                 fullName: 'lalala lalala lalala',
                 note: '',
-                indexSEV: 'asd123'
-            }
+                indexSEV: 'asd123',
+            },
         };
         return Promise.resolve(example);
     }
