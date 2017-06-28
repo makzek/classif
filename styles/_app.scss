@@ -1,13 +1,19 @@
 .container {
     display: flex;
-    height: 100vh;
     background: $background-color;
     color: $font-color;
+    flex-wrap: wrap;
 }
 
 .content-wrapper {
     border-left: 1px solid $icon-color;
     padding-left: 20px;
+}
+
+.header-wrapper {
+    width: 100%;
+    border-bottom: 1px solid $icon-color;
+    flex-grow: 2;
 }
 
 .breadcrumb,
