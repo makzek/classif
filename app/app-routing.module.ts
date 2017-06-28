@@ -5,6 +5,7 @@ import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { RubricatorComponent } from './rubricator/rubricator.component';
 import { RegionsComponent } from './regions/regions.component';
 import { HomeComponent } from './home/home.component';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
@@ -23,7 +24,11 @@ const routes: Routes = [{
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home' },
-}, {
+},{
+    path: ':dictionaryName/:nodeId/edit',
+    component: EditComponent,
+    data: { title: 'Редактирвание' },
+},{
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',

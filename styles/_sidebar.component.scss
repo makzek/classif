@@ -1,10 +1,6 @@
 .sidebar {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
     padding: 10px;
-    background: #0b1324;
+    background: $background-color;
     .menu {
         padding: 10px 0 0;
         list-style: none;
@@ -23,14 +19,14 @@
             position: relative;
             height: 3px;
             width: 20px;
-            background: grey;
+            background: $icon-color;
             &::before,
             &::after {
                 display: inline-block;
                 position: absolute;
                 height: 3px;
                 width: 20px;
-                background: grey;
+                background: $icon-color;
                 content: '';
             }
             &::before {

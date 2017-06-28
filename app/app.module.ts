@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { RegionsComponent } from './regions/regions.component';
 import { RubricatorComponent } from './rubricator/rubricator.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { EditComponent } from './edit/edit.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -26,6 +27,7 @@ import { EosDictService } from './services/eos-dict.service';
         RegionsComponent,
         RubricatorComponent,
         SidebarComponent,
+        EditComponent,
     ],
     imports: [
         BrowserModule,

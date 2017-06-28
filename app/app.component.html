@@ -1,12 +1,10 @@
-<h1>
-    {{title}}
-</h1>
 <div class="container">
-    <div class="sidebar-wrapper">
+    <header class="header"><h1 class="title">{{title}}</h1></header>
+    <aside class="sidebar-wrapper">
         <eos-sidebar></eos-sidebar>
-    </div>
-    <div class="content-wrapper">
+    </aside>
+    <article  class="content-wrapper">
         <eos-breadcrumb></eos-breadcrumb>
         <router-outlet></router-outlet>
-    </div>
+    </article >
 </div>

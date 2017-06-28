@@ -79,6 +79,10 @@ export class EosDictService {
 
     }
 
+    getNode(dictionaryName: string, nodeId: number): any /*Observable<any>*/ {
+
+    }
+
     /* load dictionary data with API */
     private _loadDictionary(name: string) {
         if (name === 'rubricator') {

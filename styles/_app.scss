@@ -1,3 +1,16 @@
+.container {
+    display: flex;
+    height: 100vh;
+    background: $background-color;
+    color: $font-color;
+}
+
 .content-wrapper {
-    margin-left: 25px;
+    border-left: 1px solid $icon-color;
+    padding-left: 20px;
+}
+
+.breadcrumb,
+.title {
+    background: $background-color;
 }
