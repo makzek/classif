@@ -5,6 +5,7 @@
         padding: 10px 0 0;
         list-style: none;
         .link-text {
+            white-space: nowrap;
             &:hover,
             &:focus,
             &:active {
