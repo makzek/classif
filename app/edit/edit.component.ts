@@ -4,7 +4,7 @@ import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionaryNode } from '../dictionary/eos-dictionary-node';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-edit',

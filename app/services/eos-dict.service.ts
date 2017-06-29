@@ -3,8 +3,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { EosApiService } from './eos-api.service';
-import { EosDictionary } from '../dictionary/eos-dictionary';
-import { EosDictionaryNode } from '../dictionary/eos-dictionary-node';
+import { EosDictionary } from '../core/eos-dictionary';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Injectable()
 export class EosDictService {

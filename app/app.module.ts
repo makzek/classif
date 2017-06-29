@@ -8,10 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
+import { DictionaryComponent} from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { HomeComponent } from './home/home.component';
-import { RegionsComponent } from './regions/regions.component';
-import { RubricatorComponent } from './rubricator/rubricator.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditComponent } from './edit/edit.component';
 
@@ -22,10 +21,9 @@ import { EosDictService } from './services/eos-dict.service';
     declarations: [
         AppComponent,
         BreadcrumbsComponent,
+        DictionaryComponent,
         DictionariesComponent,
         HomeComponent,
-        RegionsComponent,
-        RubricatorComponent,
         SidebarComponent,
         EditComponent,
     ],
