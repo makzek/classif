@@ -14,7 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditComponent } from './edit/edit.component';
 import { TreeComponent } from './tree/tree.component';
-import { ElemListComponent } from './elem-list/elem-list.component';
+import { OpenNodeComponent } from './open-node/open-node.component';
+import { SelectedNodeComponent } from './selected-node/selected-node.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -29,7 +30,8 @@ import { EosDictService } from './services/eos-dict.service';
         SidebarComponent,
         EditComponent,
         TreeComponent,
-        ElemListComponent,
+        OpenNodeComponent,
+        SelectedNodeComponent,
     ],
     imports: [
         BrowserModule,

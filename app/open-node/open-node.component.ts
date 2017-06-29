@@ -4,21 +4,23 @@ import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionaryNode } from '../dictionary/eos-dictionary-node';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
-    selector: 'eos-elem-list',
-    templateUrl: 'elem-list.component.html',
+    selector: 'eos-open-node',
+    templateUrl: 'open-node.component.html',
 })
-export class ElemListComponent {
+export class OpenNodeComponent {
 
     openNode: EosDictionaryNode = {
         id: null,
-        parent: null,
-        children: null,
         code: null,
         title: null,
+        parent: null,
+        children: null,
         description: null,
+        isNode: null,
+        isExpanded: null,
         isDeleted: null,
         selected: null,
         data: null
@@ -28,7 +30,7 @@ export class ElemListComponent {
 
     constructor(private eosDictService: EosDictService) {
         this.eosDictService.openNode$.subscribe((node) => {
-            if(node) this.openNode = node
+            if (node) this.openNode = node
         }, (err) => console.error(err));
     }
 
@@ -40,8 +42,13 @@ export class ElemListComponent {
         this.eosDictService.dictionary$.subscribe((dictionary) => this.eosDictService.openNode(dictionary.id, childId));
     }
 
+    goToTop(): void {
+        if(this.openNode.parent.id) this.eosDictService.dictionary$.subscribe((dictionary) => this.eosDictService.openNode(dictionary.id, this.openNode.parent.id));
+        else alert('Уровень выше не известен');
+    }
+
     checkAllItems(): void {
-        for(let item of this.openNode.children){
+        for (let item of this.openNode.children) {
             item.selected = this.checkAll;
         }
     }

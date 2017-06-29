@@ -1,5 +1,5 @@
-<div class="elem-list-wrapper">
-    <div class="elem-list-header">
+<div class="open-node-wrapper">
+    <div class="open-node-header">
         <span class="table-title">
             <span class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
@@ -16,7 +16,8 @@
             <span class="circle"><span class="dots">...</span></span>
         </span>
     </div>
-    <div class="elem-list-content">
+    <div class="open-node-content">
+        <a (click)="goToTop()">Вверх</a>
         <ul class="elements">
             <li *ngFor="let child of openNode.children">
                 <span class="checkbox">
