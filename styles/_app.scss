@@ -1,15 +1,22 @@
 .container {
-    height: 100vh;
-    width: 100vw;
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 0;
     background: $background-color;
     color: $font-color;
-    overflow: hidden;
+    flex-direction: column;
 }
 
 .wrapper {
     display: flex;
-    height: 90vh;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .content-wrapper {
@@ -21,9 +28,9 @@
 }
 
 .header-wrapper {
-    height: 10vh;
     padding: 10px;
     border-bottom: 1px solid $icon-color;
+    flex: 0 1 auto;
 }
 
 .breadcrumb,
