@@ -4,7 +4,7 @@
             (click)="onExpand(node); $event.stopPropagation();">
         </i>
         <!-- TODO: add routeLink -->
-        <a>{{node.code}} {{node.name}}</a>
+        <a>{{node.code}} {{node.title}}</a>
         <eos-tree
             [nodes]="node.children"
             *ngIf="node.isExpanded">
@@ -15,11 +15,10 @@
         <i *ngIf="node.isNode" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
             (click)="onExpand(node); $event.stopPropagation();">
         </i>
-        {{node.code}} {{node.name}}
+        {{node.code}} {{node.title}}
         <eos-tree
             [nodes]="node.children"
             *ngIf="node.isExpanded">
         </eos-tree>
     </a> -->
 </div>
-<router-outlet></router-outlet>

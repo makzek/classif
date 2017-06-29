@@ -13,7 +13,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 export class EditComponent {
 
     node: EosDictionaryNode;
-    dictionaryName: string;
+    dictionaryId: string;
     nodeId: number;
     selfLink: string;
     editMode: boolean = false;
@@ -25,20 +25,20 @@ export class EditComponent {
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
-                this.dictionaryName = params.dictionaryName;
+                this.dictionaryId = params.dictionaryId;
                 this.nodeId = +params.nodeId;
-                this.selfLink = '/spravochniki/' + this.dictionaryName + '/' + this.nodeId;
-                return this.eosDictService.getNode(this.dictionaryName, this.nodeId);
+                this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
+                return this.eosDictService.getNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node: EosDictionaryNode) => { this.node = node; }, (error) => { console.log('error', error); });
     }
 
     goPrevPage(): void {
-        this.router.navigate(['spravochniki/' + this.dictionaryName + '/' + (this.nodeId - 1).toString() + '/edit']);
+        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.nodeId - 1).toString() + '/edit']);
     }
 
     goNextPage(): void {
-        this.router.navigate(['spravochniki/' + this.dictionaryName + '/' + (this.nodeId + 1).toString() + '/edit']);
+        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.nodeId + 1).toString() + '/edit']);
     }
 
     save(): void {
