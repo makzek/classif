@@ -8,21 +8,34 @@ import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
-    component: DictionariesComponent,
     data: { title: 'Справочники' },
-}, {
-    path: 'spravochniki/:dictionaryId',
-    component: DictionaryComponent,
-    data: { title: 'Справочник' },
+    children: [{
+        path: '',
+        pathMatch: 'full',
+        component: DictionariesComponent,
+    }, {
+        path: ':dictionaryId',
+        data: { title: 'Справочник' },
+        children: [{
+            path: '',
+            pathMatch: 'full',
+            component: DictionaryComponent
+        }, {
+            path: ':nodeId/edit',
+            pathMatch: 'full',
+            component: EditComponent,
+            data: { title: 'Редактирвание' },
+        }]
+    }]
 }, {
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home' },
-}, {
+}, /* {
     path: 'spravochniki/:dictionaryName/:nodeId/edit',
     component: EditComponent,
     data: { title: 'Редактирвание' },
-}, {
+},*/ {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',

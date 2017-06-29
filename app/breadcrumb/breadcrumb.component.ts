@@ -31,12 +31,13 @@ export class BreadcrumbsComponent {
             title: 'Home',
             params: new Object(),
         }];
+
         while (currentUrlPart.children.length > 0) {
             currentUrlPart = currentUrlPart.children[0];
             const routeSnaphot = currentUrlPart.value as ActivatedRouteSnapshot;
             const subpath = routeSnaphot.url.map((item) => item.path).join('/');
 
-            if (subpath) {
+            if (subpath && subpath !== 'home') {
                 currUrl += '/' + subpath;
                 this.breadcrumbs.push({
                     title: (routeSnaphot.data).title,
@@ -45,5 +46,6 @@ export class BreadcrumbsComponent {
                 });
             }
         }
+        console.log('breadcrumbs', this.breadcrumbs);
     }
 }
