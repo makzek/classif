@@ -4,11 +4,12 @@
     padding: 0;
     background: $background-color;
     color: $font-color;
+    overflow: hidden;
 }
 
 .wrapper {
     display: flex;
-    height: 100vh;
+    height: 90vh;
 }
 
 .content-wrapper {
@@ -20,6 +21,7 @@
 }
 
 .header-wrapper {
+    height: 10vh;
     padding: 10px;
     border-bottom: 1px solid $icon-color;
 }
