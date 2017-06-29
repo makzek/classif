@@ -15,7 +15,7 @@ const routes: Routes = [{
         component: DictionariesComponent,
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник' },
+        data: { title: 'Справочник', isDictionary: true },
         children: [{
             path: '',
             pathMatch: 'full',

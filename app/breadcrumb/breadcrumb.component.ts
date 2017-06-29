@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
+import { EosDictService } from '../services/eos-dict.service';
+
 interface IBreadcrumb {
     url: string;
     title: string;
@@ -14,11 +16,15 @@ interface IBreadcrumb {
 })
 export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
+    dictionariesList: Array<{id: string, title: string}>;
 
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _dictionaryService: EosDictService) {
         _router.events
             .filter((e) => e instanceof RoutesRecognized)
             .subscribe((e) => this._update(e));
+        _dictionaryService.dictionariesList$
+            .subscribe((dictionariesList) => this.dictionariesList = dictionariesList);
+        this.dictionariesList = [];
     }
 
     private _update(evt: any) {
@@ -38,8 +44,17 @@ export class BreadcrumbsComponent {
 
             if (subpath && subpath !== 'home') {
                 currUrl += '/' + subpath;
+                let title = routeSnaphot.data.title;
+                if (routeSnaphot.data.isDictionary && this.dictionariesList) {
+                    for(let i in this.dictionariesList) {
+                        if (this.dictionariesList[i].id === routeSnaphot.params.dictionaryId) {
+                            title = this.dictionariesList[i].title;
+                            break;
+                        }
+                    }
+                }
                 this.breadcrumbs.push({
-                    title: (routeSnaphot.data).title,
+                    title,
                     url: currUrl,
                     params: routeSnaphot.params,
                 });
