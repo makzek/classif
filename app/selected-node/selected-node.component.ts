@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
@@ -23,21 +23,48 @@ export class SelectedNodeComponent {
         isExpanded: null,
         isDeleted: null,
         selected: null,
-        data: null
+        data: null,
     };
 
-    note: string = '';
-    SEV: string = '';
+    checkAll: boolean = false;
 
-    constructor(private eosDictService: EosDictService) {
-        this.eosDictService.currentNode$.subscribe((node) => {
-            if (node) this.selectedNode = node;
-            if (node) 
-                if (node.data){
-                    this.note = node.data.note;
-                    this.note = node.data.SEV;
+    constructor(private _eosDictService: EosDictService) {
+        this._eosDictService.selectedNode$.subscribe(
+            (node) => {
+                if (node) {
+                    this.selectedNode = node;
                 }
-        }, (err) => console.error(err));
+            },
+            console.error
+        );
+    }
+
+    openFullInfo(childId: number): void {
+        this._eosDictService.dictionary$.subscribe(
+            (dictionary) => this._eosDictService.selectNode(dictionary.id, childId)
+        );
+    }
+
+    openThisNode(childId: number): void {
+        this._eosDictService.dictionary$.subscribe(
+            (dictionary) => this._eosDictService.openNode(dictionary.id, childId)
+        );
+    }
+
+    goToTop(): void {
+        if (this.selectedNode.parent) {
+            this._eosDictService.dictionary$.subscribe(
+                (dictionary) => this._eosDictService.openNode(dictionary.id, this.selectedNode.parent.id)
+            );
+        } else {
+            alert('Уровень выше не известен');
+        }
+    }
+
+    checkAllItems(): void {
+        for (const item of this.selectedNode.children) {
+            item.selected = this.checkAll;
+        }
     }
 
 }

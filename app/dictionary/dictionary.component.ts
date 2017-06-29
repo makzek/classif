@@ -10,28 +10,34 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent {
-    private _dictionary: EosDictionary;
-    nodes: EosDictionaryNode[];
-    selectedNode: EosDictionaryNode;
-    openedNode: EosDictionaryNode;
+    private _dictionaryId: string;
+    public nodes: EosDictionaryNode[];
+    public selectedNode: EosDictionaryNode;
+    public openedNode: EosDictionaryNode;
 
     constructor(private _dictionaryService: EosDictService, private route: ActivatedRoute) {
         this.route.params.subscribe((params) => this._handleRoute(params));
+        this._dictionaryService.selectedNode$.subscribe((node) => {
+            this.selectedNode = node;
+        });
         this.nodes = [];
         this._dictionaryService.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
+                this._dictionaryId = dictionary.id;
                 this.nodes = dictionary.rootNodes;
             }
         });
     }
 
     _handleRoute(params: Params) {
-        const { dictionaryId } = params;
         this._dictionaryService.openDictionary(params.dictionaryId);
     }
 
     loadChildrenNodes(parentId: number) {
-        console.log('DictionaryComponent loadChildrenNodes', parentId);
         this._dictionaryService.loadChildrenNodes(parentId);
+    }
+
+    selectNode(node: EosDictionaryNode) {
+        this._dictionaryService.selectNode(this._dictionaryId, node.id);
     }
 }

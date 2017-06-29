@@ -1,15 +1,15 @@
 .container {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 0;
     background: $background-color;
+    bottom: 0;
     color: $font-color;
+    display: flex;
     flex-direction: column;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
 }
 
 .wrapper {
@@ -28,9 +28,9 @@
 }
 
 .header-wrapper {
-    padding: 10px;
     border-bottom: 1px solid $icon-color;
     flex: 0 1 auto;
+    padding: 10px;
 }
 
 .breadcrumb,

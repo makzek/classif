@@ -26,8 +26,6 @@ export class EosDictService {
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
-        // this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
-        // this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -36,12 +34,12 @@ export class EosDictService {
     }
 
     /* Observable currentNode for subscribing on updates in components */
-    get currentNode$(): Observable<EosDictionaryNode> {
+    get selectedNode$(): Observable<EosDictionaryNode> {
         return this._selectedNode$.asObservable();
     }
 
     /* Observable openNode for subscribing on updates in components */
-    get openNode$(): Observable<EosDictionaryNode> {
+    get openedNode$(): Observable<EosDictionaryNode> {
         return this._openedNode$.asObservable();
     }
 
@@ -52,7 +50,6 @@ export class EosDictService {
 
     /* Observable dictionary for subscribing on updates in components */
     loadChildrenNodes(parentId: number) {
-        console.log('EosDictService loadChildrenNodes', parentId);
         const parentNode = this._dictionary.getNode(parentId);
         // if it is parent node and children haven't been loaded yet, do it
         if (parentNode.isNode && !parentNode.children) {
@@ -73,8 +70,8 @@ export class EosDictService {
     ): void {
         this._checkDictionary(dictionaryId);
         this._dictionary = this._dictionaries.get(dictionaryId);
-        this._openedNode = openedNode;
         this._selectedNode = selectedNode;
+        this._openedNode = openedNode;
         this._dictionary$.next(this._dictionary);
         this._selectedNode$.next(this._selectedNode);
         this._openedNode$.next(this._openedNode);
@@ -89,24 +86,19 @@ export class EosDictService {
         this._changeParameters(id);
     }
 
-    openNode(dictionaryId: string, nodeId: number): void {
-        this._changeParameters(dictionaryId, this._dictionary.getNode(nodeId));
-    }
-
     selectNode(dictionaryId: string, nodeId: number): void {
         const selectedNode = this._dictionary.getNode(nodeId);
-        this._changeParameters(dictionaryId, selectedNode.parent, selectedNode);
+        this._changeParameters(dictionaryId, selectedNode);
+    }
+
+    openNode(dictionaryId: string, nodeId: number): void {
+        const openedNode = this._dictionary.getNode(nodeId);
+        this._changeParameters(dictionaryId, openedNode.parent, openedNode);
     }
 
     // openNode(dictionaryName: string, nodeId: number): void {
     //     this._checkDictionary(dictionaryName);
     //     this._changeParameters(dictionaryName, this._dictionary.getNode(nodeId));
-    // }
-    //
-    // selectNode(dictionaryName: string, nodeId: number): void {
-    //     this._checkDictionary(dictionaryName);
-    //     const selectedNode = this._dictionary.getNode(nodeId);
-    //     this._changeParameters(dictionaryName, selectedNode.parent, selectedNode);
     // }
     //
     // deleteNode(dictionary: string, id: number, hard = false) {

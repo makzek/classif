@@ -128,7 +128,10 @@ gulp.task('lint:sass', function () {
 gulp.task('compile:sass', function () {
     // concat and minify global scss files
     return gulp
-        .src('styles/main.scss')
+        .src([
+          'styles/*.scss',
+          'app/**/*.scss'
+        ])
         .pipe(plumber({
             errorHandler: function (err) {
                 console.error('>>> [sass] Sass global style compilation failed'.bold.green, err);
@@ -226,7 +229,7 @@ gulp.task('watch:src', function () {
 
     gulp.watch('assets/**/*', runAndReload('copy:assets'));
 
-    gulp.watch(['styles/**/*.scss', 'app/**/*.css'], runAndReload('styles', 1500));
+    gulp.watch(['styles/**/*.scss', 'app/**/*.scss', 'app/**/*.css'], runAndReload('styles', 1500));
 });
 
 let server;

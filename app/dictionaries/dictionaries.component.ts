@@ -20,7 +20,6 @@ export class DictionariesComponent implements OnInit {
     }
 
     _update(dictionariesList: Array<{id: string, title: string}>) {
-        console.log('DictionariesComponent _update', dictionariesList);
         this.dictionariesList = dictionariesList;
     }
 }

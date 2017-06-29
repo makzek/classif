@@ -1,35 +1,43 @@
 .edit-container {
-    height: 450px;
-    //width: 700px;
     background: white;
     color: black;
+    height: 450px;
+
     .edit-header {
-        padding: 5px;
         background: black;
         color: white;
+        padding: 5px;
+
         .checkbox {
             display: inline-block;
         }
+
         .edit-title {
             display: inline-block;
             margin: 0 20px;
         }
+
         .pull-right {
             margin-top: 12px;
         }
+
         .glyphicon {
             color: white;
         }
     }
+
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
         }
     }
+
     .edit-content {
         margin-left: 45px;
+
         .form-group {
             display: inline-block;
+
             &:not(:last-child) {
                 margin-right: 20px;
             }

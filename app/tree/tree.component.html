@@ -1,24 +1,17 @@
-<div>
-    <div *ngFor="let node of nodes" [class.active]="node == selectedNode">
-        <i *ngIf="node.isNode" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
-            (click)="onExpand(node); $event.stopPropagation();">
-        </i>
-        <!-- TODO: add routeLink -->
-        <a>{{node.code}} {{node.title}}</a>
+<div class="eos-tree">
+    <div *ngFor="let node of nodes" class="eos-tree-node" [class.active]="node === selectedNode">
+        <div>
+            <i *ngIf="node.isNode" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
+                (click)="onExpand(node); $event.stopPropagation();">
+            </i>
+        </div>
+        <span (click)="onSelect(node);">{{node.code}} {{node.title}}</span>
         <eos-tree
+            *ngIf="node.isExpanded"
             [nodes]="node.children"
-            *ngIf="node.isExpanded">
+            [selectedNode]="selectedNode"
+            (onRequestChildNodes)="onExpand($event)"
+            (onSelectNode)="onSelect($event)">
         </eos-tree>
     </div>
-    <!-- <a *ngFor="let node of nodes"
-        [class.active]="node == selectedNode">
-        <i *ngIf="node.isNode" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
-            (click)="onExpand(node); $event.stopPropagation();">
-        </i>
-        {{node.code}} {{node.title}}
-        <eos-tree
-            [nodes]="node.children"
-            *ngIf="node.isExpanded">
-        </eos-tree>
-    </a> -->
 </div>

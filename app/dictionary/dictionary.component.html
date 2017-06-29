@@ -1,11 +1,15 @@
 <div class="col-sm-3">
     <eos-tree
         [nodes]="nodes"
-        [selectedNode]="openedNode"
+        [selectedNode]="selectedNode"
         (onRequestChildNodes)="loadChildrenNodes($event)"
+        (onSelectNode)="selectNode($event)"
     >
     </eos-tree>
 </div>
 <div class="col-sm-5">
-<eos-open-node></eos-open-node></div>
-<div class="col-sm-4"><eos-selected-node></eos-selected-node></div>
+    <eos-selected-node></eos-selected-node>
+</div>
+<div class="col-sm-4">
+    <eos-opened-node *ngIf="!!openedNode"></eos-opened-node>
+</div>

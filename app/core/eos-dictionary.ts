@@ -37,7 +37,12 @@ export class EosDictionary {
     }
 
     setChildren(parentId: number, children: EosDictionaryNode[]) {
-        this._nodes.get(parentId).children = children;
+        const parent = this._nodes.get(parentId);
+        parent.children = children;
+        children.forEach((node) => {
+            node.parent = parent;
+            this._nodes.set(node.id, node);
+        });
     }
 
     /* get children nodes or first level nodes if parentNodeId is not specified */

@@ -1,37 +1,20 @@
-.tree-header {
-  >div {
-    display: inline-block;
-  }
-}
+.eos-tree-node {
+    padding-left: 15px;
 
-// .tree-nodes {
-//   display: table;
-//   list-style-type: none;
-//   padding-left: 16px;
-// }
-//
-// .tree-node {
-//   display: table-row;
-//   list-style-type: none;
-// }
+    &>div {
+        display: inline-block;
+        width: 15px;
+    }
 
-.node-button {
-  cursor: pointer;
-  // display: table-cell;
-}
+    span {
+        cursor: pointer;
+        display: inline-block;
+    }
 
-.node-info {
-  // display: table-cell;
-  // list-style-type: none;
-  padding-left: 5px;
-}
-
-.node-text {
-  cursor: pointer;
-  // padding-left: 3px;
-  // padding-right: 3px;
-
-  &.bg-warning {
-    font-weight: bold;
-  }
+    &.active {
+        &>span {
+            background-color: #8899bc;
+            font-weight: bold;
+        }
+    }
 }

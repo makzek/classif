@@ -19,13 +19,7 @@
     },
     "no-arg": true,
     "no-console": {
-      "options": [
-        "debug",
-        "info",
-        "time",
-        "timeEnd",
-        "trace"
-      ]
+      "severity": "warning"
     },
     "no-empty": false,
     "no-inferrable-types": false,

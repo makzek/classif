@@ -24,7 +24,6 @@ export class BreadcrumbsComponent {
     private _update(evt: any) {
         let currentUrlPart = evt.state._root;
         let currUrl = '';
-        console.log('Breadcrumbs', evt);
 
         this.breadcrumbs = [{
             url: '/home',
