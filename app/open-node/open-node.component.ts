@@ -43,7 +43,7 @@ export class OpenNodeComponent {
     }
 
     goToTop(): void {
-        if(this.openNode.parent.id) this.eosDictService.dictionary$.subscribe((dictionary) => this.eosDictService.openNode(dictionary.id, this.openNode.parent.id));
+        if(this.openNode.parent) this.eosDictService.dictionary$.subscribe((dictionary) => this.eosDictService.openNode(dictionary.id, this.openNode.parent.id));
         else alert('Уровень выше не известен');
     }
 
