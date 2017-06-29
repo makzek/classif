@@ -1,7 +1,7 @@
 <div class="eos-tree">
     <div *ngFor="let node of nodes" class="eos-tree-node" [class.active]="node === selectedNode">
         <div>
-            <i *ngIf="node.isNode" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
+            <i *ngIf="node.hasSubnodes" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
                 (click)="onExpand(node); $event.stopPropagation();">
             </i>
         </div>

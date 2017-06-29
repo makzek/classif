@@ -22,6 +22,7 @@
       "severity": "warning"
     },
     "no-empty": false,
+    "no-unused-variable": [true, "check-parameters"],
     "no-inferrable-types": false,
     "object-literal-sort-keys": false,
     "ordered-imports": {
@@ -43,16 +44,15 @@
         "singleline": "never"
       }
     },
-    "typedef-whitespace": [
-      true,
-      {
+    "typedef-whitespace": {
+      "options": {
         "call-signature": "nospace",
         "index-signature": "nospace",
         "parameter": "nospace",
         "property-declaration": "nospace",
         "variable-declaration": "nospace"
       }
-    ],
+    },
     "variable-name": {
       "options": ["ban-keywords"]
     },

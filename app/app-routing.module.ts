@@ -19,23 +19,19 @@ const routes: Routes = [{
         children: [{
             path: '',
             pathMatch: 'full',
-            component: DictionaryComponent
+            component: DictionaryComponent,
         }, {
             path: ':nodeId/edit',
             pathMatch: 'full',
             component: EditComponent,
             data: { title: 'Редактирвание' },
-        }]
-    }]
+        }],
+    }],
 }, {
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home' },
-}, /* {
-    path: 'spravochniki/:dictionaryName/:nodeId/edit',
-    component: EditComponent,
-    data: { title: 'Редактирвание' },
-},*/ {
+}, {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
@@ -44,6 +40,7 @@ const routes: Routes = [{
     redirectTo: '/home',
     pathMatch: 'full',
 }];
+
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],

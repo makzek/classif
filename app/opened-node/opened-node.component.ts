@@ -20,6 +20,7 @@ export class OpenedNodeComponent {
         children: null,
         description: null,
         isNode: null,
+        hasSubnodes: null,
         isExpanded: null,
         isDeleted: null,
         selected: null,

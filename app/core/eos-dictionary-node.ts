@@ -6,6 +6,7 @@ export class EosDictionaryNode {
     children?: EosDictionaryNode[];
     description: string;
     isNode: boolean;
+    hasSubnodes: boolean;
     isExpanded?: boolean;
     isDeleted: boolean;
     selected: boolean;

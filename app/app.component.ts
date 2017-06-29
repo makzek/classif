@@ -6,7 +6,7 @@ import { Component, ViewContainerRef } from '@angular/core';
 })
 export class AppComponent {
     private _containerRef: ViewContainerRef;
-    constructor (viewContainerRef: ViewContainerRef) {
+    constructor(viewContainerRef: ViewContainerRef) {
         this._containerRef = viewContainerRef;
     }
 }
