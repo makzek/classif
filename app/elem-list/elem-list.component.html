@@ -1,0 +1,30 @@
+<div class="elem-list-wrapper">
+    <div class="elem-list-header">
+        <span class="table-title">
+            <span class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
+        </span>
+            <span class="code"><b>Код</b></span>
+            <b>Рубрика</b>
+        </span>
+        <span class="controller pull-right">
+            <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
+            <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
+            <span class="circle"><span class="glyphicon glyphicon-pencil"></span></span>
+            <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
+            <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
+            <span class="circle"><span class="dots">...</span></span>
+        </span>
+    </div>
+    <div class="elem-list-content">
+        <ul class="elements">
+            <li *ngFor="let child of openNode.children">
+                <span class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="child.selected" (click)="openFullInfo(child.id)" (dblclick)="openThisNode(child.id)">
+                <span class="code">{{child.code}}</span>{{child.title}}
+                </label>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
