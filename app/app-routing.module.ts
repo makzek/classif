@@ -8,6 +8,7 @@ import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
+    component: DictionariesComponent,
     data: { title: 'Справочники' },
 }, {
     path: 'spravochniki/:dictionaryId',
