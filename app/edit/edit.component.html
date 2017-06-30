@@ -23,29 +23,29 @@
     </aside>
     <article class="edit-content">
         <div class="input-line">
-            <div class="form-group">
+            <div  class="form-group">
                 <label for="code">Код:</label>
-                <input [hidden]="!editMode" class="" id="code" [(ngModel)]="node.data.code"></input>
-                <span [hidden]="editMode" class="">{{node.data.code}}</span>
+                <input [hidden]="!editMode" class="" id="code" [(ngModel)]="node.code"></input>
+                <span [hidden]="editMode" class="">{{node.code}}</span>
             </div>
             <div class="form-group">
                 <label for="shortName">Краткое наименование:</label>
-                <input [hidden]="!editMode" class="" id="shortName" [(ngModel)]="node.data.shortName"></input>
-                <span [hidden]="editMode" class="">{{node.data.shortName}}</span>
+                <input [hidden]="!editMode" class="" id="shortName" [(ngModel)]="node.title"></input>
+                <span [hidden]="editMode" class="">{{node.title}}</span>
             </div>
         </div>
         <div class="input-line">
             <div class="form-group">
                 <label for="fullName">Полное наименование:</label>
-                <input [hidden]="!editMode" class="" id="fullName" [(ngModel)]="node.data.fullName"></input>
-                <span [hidden]="editMode" class="">{{node.data.fullName}}</span>
+                <input [hidden]="!editMode" class="" id="fullName" [(ngModel)]="node.description"></input>
+                <span [hidden]="editMode" class="">{{node.description}}</span>
             </div>
-            <div class="form-group">
+            <div *ngIf="node.data" class="form-group">
                 <label for="note">Примечание:</label>
                 <input [hidden]="!editMode" class="" id="note" [(ngModel)]="node.data.note"></input>
                 <span [hidden]="editMode" class="">{{node.data.note}}</span>
             </div>
-            <div class="form-group">
+            <div *ngIf="node.data" class="form-group">
                 <label for="indexSEV">Индекс СЭВ:</label>
                 <input [hidden]="!editMode" class="" id="indexSEV" [(ngModel)]="node.data.indexSEV"></input>
                 <span [hidden]="editMode" class="">{{node.data.indexSEV}}</span>

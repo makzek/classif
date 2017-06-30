@@ -25,6 +25,7 @@ export class SelectedNodeComponent {
             (node) => {
                 if (node) {
                     this.selectedNode = node;
+                    this.openedNodeId = this.selectedNode.id.toString();
                 }
             },
             (error) => console.log(error)
@@ -32,9 +33,9 @@ export class SelectedNodeComponent {
         this.route.params
             .subscribe((params: Params) => {
                 this.dictionaryId = params.dictionaryId;
-                //this.selectedNodeId = params.nodeId;
-                this.selectedNodeId = '10';
-                this.openedNodeId = params.openedNodeId;
+                this.selectedNodeId = params.nodeId;
+                //this.openedNodeId = params.openedNodeId;
+                //console.log('params', params);
             }, 
                 (error) => console.log(error)
             );
@@ -42,6 +43,7 @@ export class SelectedNodeComponent {
     }
 
     openFullInfo(childId: number): void {
+        this.openedNodeId = childId.toString();
         console.log("openFullInfo", this.dictionaryId, childId);
         this._eosDictService.openNode(this.dictionaryId, childId);
     }
@@ -62,8 +64,10 @@ export class SelectedNodeComponent {
 
     checkAllItems(): void {
         this.selectedNode.selected = !this.checkAll;
-        for (const item of this.selectedNode.children) {
-            item.selected = !this.checkAll;
+        if(this.selectedNode.children) {
+            for (const item of this.selectedNode.children) {
+                item.selected = !this.checkAll;
+            }
         }
     }
 

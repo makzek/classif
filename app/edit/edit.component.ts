@@ -34,6 +34,7 @@ export class EditComponent {
     }
 
     private _update(node: EosDictionaryNode) {
+        console.log('node', node);
         this.node = Object.assign({}, node);
     }
 
