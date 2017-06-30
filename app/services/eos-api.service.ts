@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { DICTIONARIES, DICTIONARIE_LIST, NODES } from './eos-api.mock';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
-
-/* tslint:disable:max-line-length */
-const mockRubrics: any[] = [
-];
-/* tslint:enable:max-line-length */
-
-const mockRubricsMap = new Map<number, EosDictionaryNode>(
-    mockRubrics.map((rubric) => [rubric.id, rubric] as [number, EosDictionaryNode])
-);
 
 @Injectable()
 export class EosApiService {

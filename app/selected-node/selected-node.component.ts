@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -34,11 +33,9 @@ export class SelectedNodeComponent {
             .subscribe((params: Params) => {
                 this.dictionaryId = params.dictionaryId;
                 this.selectedNodeId = params.nodeId;
-                //this.openedNodeId = params.openedNodeId;
-                //console.log('params', params);
-            }, 
-                (error) => console.log(error)
-            );
+                // this.openedNodeId = params.openedNodeId;
+                // console.log('params', params);
+            }, (error) => console.log(error));
 
     }
 
@@ -64,7 +61,7 @@ export class SelectedNodeComponent {
 
     checkAllItems(): void {
         this.selectedNode.selected = !this.checkAll;
-        if(this.selectedNode.children) {
+        if (this.selectedNode.children) {
             for (const item of this.selectedNode.children) {
                 item.selected = !this.checkAll;
             }

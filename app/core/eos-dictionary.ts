@@ -18,15 +18,20 @@ export class EosDictionary {
 
         data.forEach((nodeData) => {
             let node: EosDictionaryNode = new EosDictionaryNode(nodeData);
+
             this._nodes.set(node.id, node);
+            if (nodeData.parentId) {
+                const parent = this._nodes.get(nodeData.parentId);
+                if (parent) {
+                    node.parent = parent;
+                    if (!parent.children) {
+                        parent.children = [];
+                    }
+                    parent.children.push(node);
+                }
+            }
             if (!node.parent) {
                 this._rootNodes.push(node);
-            } else {
-                const parent = this._nodes.get(node.parent.id);
-                if (!parent.children) {
-                    parent.children = [];
-                }
-                parent.children.push(node);
             }
         });
     }

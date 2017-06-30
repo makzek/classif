@@ -2,6 +2,7 @@ export class EosDictionaryNode {
     id: number;
     code: string;
     title: string;
+    parentId: number;
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
     description: string;

@@ -61,16 +61,7 @@ export class BreadcrumbsComponent {
                         }
                     });
                 }
-                /*
-                if (routeSnaphot.data.isDictionary && this.dictionariesList) {
-                    for (let i in this.dictionariesList) {
-                        if (this.dictionariesList[i].id === routeSnaphot.params.dictionaryId) {
-                            title = this.dictionariesList[i].title;
-                            break;
-                        }
-                    }
-                }
-                */
+
                 this.breadcrumbs.push(bc);
             }
         }

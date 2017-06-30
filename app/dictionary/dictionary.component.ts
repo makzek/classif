@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'eos-dictionary',
@@ -16,11 +16,29 @@ export class DictionaryComponent {
     public openedNode: EosDictionaryNode;
 
     constructor(private _dictionaryService: EosDictService, private route: ActivatedRoute) {
-        this.route.params.subscribe((params) => this._handleRoute(params));
+
+        this.route.params.subscribe((params) => {
+            if (params) {
+                if (params.dictionaryId) {
+                    _dictionaryService.openDictionary(params.dictionaryId)
+                        .then(() => {
+                            if (params.nodeId) {
+                                _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
+                            }
+                            if (params.openId) {
+                                _dictionaryService.openNode(params.dictionaryId, params.nodeId);
+                            }
+                        });
+                }
+            }
+        });
+        /* what for? */
         this._dictionaryService.selectedNode$.subscribe((node) => {
             this.selectedNode = node;
         });
+
         this.nodes = [];
+
         this._dictionaryService.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
@@ -29,14 +47,7 @@ export class DictionaryComponent {
         });
     }
 
-    _handleRoute(params: Params) {
-        this._dictionaryService.openDictionary(params.dictionaryId);
-    }
-
-    loadChildrenNodes(parentId: number) {
-        // this._dictionaryService.loadChildrenNodes(parentId);
-    }
-
+    /* it's event of tree-node only, not dictionary */
     selectNode(node: EosDictionaryNode) {
         this._dictionaryService.selectNode(this._dictionaryId, node.id);
     }
