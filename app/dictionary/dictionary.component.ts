@@ -34,7 +34,7 @@ export class DictionaryComponent {
     }
 
     loadChildrenNodes(parentId: number) {
-        this._dictionaryService.loadChildrenNodes(parentId);
+        // this._dictionaryService.loadChildrenNodes(parentId);
     }
 
     selectNode(node: EosDictionaryNode) {

@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
+import { DICTIONARIES, DICTIONARIE_LIST, NODES } from './eos-api.mock';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 /* tslint:disable:max-line-length */
 const mockRubrics: any[] = [
-  { id: 1, code: '1', title: 'Общая тематика', parentId: null, isNode: true, isDeleted: false, description: 'description', hasSubnodes: true },
-  { id: 2, code: '1.1', title: 'Вопросы промышленности', parentId: 1, isNode: true, isDeleted: false, description: 'description', hasSubnodes: false },
-  { id: 3, code: '1.2', title: 'Вопросы сельского хозяйства', parentId: 1, isNode: false, isDeleted: false, description: 'description', hasSubnodes: false },
-  { id: 4, code: '1.3', title: 'Вопросы экологии', parentId: 1, isNode: false, isDeleted: false, description: 'description', hasSubnodes: false },
-  { id: 5, code: '1.4', title: 'Вопросы строительства', parentId: 1, isNode: false, isDeleted: false, description: 'description', hasSubnodes: false },
-  { id: 6, code: '2', title: 'Обращения граждан', parentId: null, isNode: true, isDeleted: false, description: 'description', hasSubnodes: false },
-  { id: 7, code: '3', title: 'Финансы', parentId: null, isNode: false, isDeleted: false, description: 'description', hasSubnodes: false },
 ];
 /* tslint:enable:max-line-length */
 
@@ -21,10 +14,55 @@ const mockRubricsMap = new Map<number, EosDictionaryNode>(
 
 @Injectable()
 export class EosApiService {
-    getDictionary(dictId: string) {
+    private _mockedNodesMap: Map<number, any>;
+
+    constructor() {
+        this._mockedNodesMap = new Map<number, any>();
+        NODES.forEach((_n) => this._mockedNodesMap.set(_n.id, _n));
     }
 
-    /* Return promise with dictionary node data */
+    getDictionaryListMocked(): Promise<any> {
+        return new Promise((res) => {
+            res(DICTIONARIE_LIST);
+        });
+    }
+
+    getDictionaryMocked(dictionaryId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (DICTIONARIES[dictionaryId]) {
+                resolve(DICTIONARIES[dictionaryId]);
+            } else {
+                reject('Dictionary "' + dictionaryId + '" not found');
+            }
+        });
+    }
+
+    getDictionaryNodesMocked(dictionaryId: string): Promise<any> {
+        return new Promise((res, rej) => {
+            if (DICTIONARIES[dictionaryId]) {
+                res(NODES);
+            } else {
+                rej('Dictionary "' + dictionaryId + '" not found');
+            }
+        });
+    }
+
+    getNodeMocked(dictionaryId: string, nodeId: number): Promise<any> {
+        return new Promise((res, rej) => {
+            if (DICTIONARIES[dictionaryId]) {
+                let _node = this._mockedNodesMap.get(nodeId);
+                if (_node) {
+                    res(_node);
+                } else {
+                    rej('Node "' + nodeId + '" not found');
+                }
+            } else {
+                rej('Dictionary "' + dictionaryId + '" not found');
+            }
+        });
+    }
+
+    /*
     getDictionaryNode(dictionaryId: string, id: number): Promise<EosDictionaryNode> {
         return new Promise<EosDictionaryNode>((resolve, reject) => {
             if (dictionaryId === 'rubricator') {
@@ -35,7 +73,6 @@ export class EosApiService {
         });
     }
 
-    /* Return promise with dictionary node children data */
     getDictionaryNodeChildren(
         dictionaryId: string,
         parentId: number = null,
@@ -55,4 +92,5 @@ export class EosApiService {
             }
         });
     }
+    */
 }

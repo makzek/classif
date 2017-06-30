@@ -16,7 +16,8 @@ interface IBreadcrumb {
 })
 export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
-    dictionariesList: Array<{id: string, title: string}>;
+    private _dictionaryBc: IBreadcrumb;
+    dictionariesList: Array<{ id: string, title: string }>;
 
     constructor(private _router: Router, private _dictionaryService: EosDictService) {
         _router.events
@@ -44,22 +45,35 @@ export class BreadcrumbsComponent {
 
             if (subpath && subpath !== 'home') {
                 currUrl += '/' + subpath;
-                let title = routeSnaphot.data.title;
+                let bc: IBreadcrumb = {
+                    title: routeSnaphot.data.title,
+                    url: currUrl,
+                    params: routeSnaphot.params,
+                };
+
+                if (routeSnaphot.params && routeSnaphot.params.dictionaryId) {
+                    this._dictionaryBc = bc;
+                    this._dictionaryService.getDictionariesList()
+                    .then((list) => {
+                        let _d = list.find((e:any)=> e.id === routeSnaphot.params.dictionaryId);
+                        if (_d) {
+                            this._dictionaryBc.title = _d.title;
+                        }
+                    });
+                }
+                /*
                 if (routeSnaphot.data.isDictionary && this.dictionariesList) {
-                    for(let i in this.dictionariesList) {
+                    for (let i in this.dictionariesList) {
                         if (this.dictionariesList[i].id === routeSnaphot.params.dictionaryId) {
                             title = this.dictionariesList[i].title;
                             break;
                         }
                     }
                 }
-                this.breadcrumbs.push({
-                    title,
-                    url: currUrl,
-                    params: routeSnaphot.params,
-                });
+                */
+                this.breadcrumbs.push(bc);
             }
         }
-        console.log('breadcrumbs', this.breadcrumbs);
+        /* console.log('breadcrumbs', this.breadcrumbs); */
     }
 }

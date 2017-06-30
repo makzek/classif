@@ -30,10 +30,11 @@ export class EditComponent {
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
                 return this.eosDictService.getNode(this.dictionaryId, this.nodeId);
             })
-            .subscribe((node: EosDictionaryNode) => { 
-                console.log('node',node);
-                if(node) this.node = node;
-             }, (error) => { console.log('error', error); });
+            .subscribe((node) => this._update(node), (error) => console.log('error', error));
+    }
+
+    private _update(node: EosDictionaryNode) {
+        this.node = Object.assign({}, node);
     }
 
     goPrevPage(): void {
@@ -46,12 +47,12 @@ export class EditComponent {
 
     save(): void {
         console.log('node', this.node);
-        this.eosDictService.setNode(this.node);
+        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node);
     }
 
     cancel(): void {
         this.eosDictService.getNode(this.node.title, this.node.id)
-        .then((node) => { this.node = node; })
-        .catch((error) => { console.log('error', error); });
+            .then((node) => this._update(node))
+            .catch((error) => console.log('error', error));
     }
 }
