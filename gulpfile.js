@@ -2,9 +2,11 @@
 
 const del = require('del');
 const gulp = require('gulp');
+const guppy = require('git-guppy')(gulp);
 const cleanCSS = require('gulp-clean-css');
 const colors = require('colors');
 const concat = require('gulp-concat');
+const filter = require('gulp-filter');
 const liveServer = require('gulp-live-server');
 const plumber = require('gulp-plumber');
 const replace = require('gulp-replace');
@@ -13,7 +15,8 @@ const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
 const sourcemaps = require('gulp-sourcemaps');
 const sysBuilder = require('systemjs-builder');
-const tslint = require('gulp-tslint');
+const tslint = require('tslint');
+const gulpTslint = require('gulp-tslint');
 const tsc = require('gulp-typescript');
 const uglify = require('gulp-uglify');
 const tsconfig = require('tsconfig-glob');
@@ -56,12 +59,15 @@ gulp.task('clean:tests', function () {
 
 // Lint Typescript
 gulp.task('lint:ts', function () {
+    const program = tslint.Linter.createProgram("./tsconfig.json");
     return gulp.src('app/**/*.ts')
-        .pipe(tslint({
-            formatter: "verbose"
+        .pipe(gulpTslint({
+            program,
+            formatter: "stylish"
         }))
-        .pipe(tslint.report({
-            emitError: false
+        .pipe(gulpTslint.report({
+            emitError: false,
+            summarizeFailureOutput: true
         }));
 });
 
@@ -107,7 +113,7 @@ gulp.task('minify:js', function () {
 
 // Lint Sass
 gulp.task('lint:sass', function () {
-    return gulp.src('styles/**/*.scss')
+    return gulp.src(['styles/**/*.scss', 'app/**/*.scss'])
         .pipe(plumber({
             errorHandler: function (err) {
                 console.error('>>> [sass-lint] Sass linting failed'.bold.green);
@@ -116,8 +122,7 @@ gulp.task('lint:sass', function () {
         }))
         .pipe(sassLint({
             options: {
-                formatter: 'stylish',
-                'merge-default-rules': false
+                formatter: 'stylish'
             }
         }))
         .pipe(sassLint.format())
@@ -223,13 +228,13 @@ gulp.task('tsconfig-glob', function () {
 
 // Watch src files for changes, then trigger recompilation
 gulp.task('watch:src', function () {
-    gulp.watch(['app/**/*.ts', 'app/**/*.html'], runAndReload('scripts', 500));
+    gulp.watch(['app/**/*.ts', 'app/**/*.html'], runAndReload('scripts:withoutLint', 500));
 
     gulp.watch(['app/index.html'], runAndReload('copy:html', 100));
 
     gulp.watch('assets/**/*', runAndReload('copy:assets'));
 
-    gulp.watch(['styles/**/*.scss', 'app/**/*.scss', 'app/**/*.css'], runAndReload('styles', 1500));
+    gulp.watch(['styles/**/*.scss', 'app/**/*.scss', 'app/**/*.css'], runAndReload('styles:withoutLint', 1500));
 });
 
 let server;
@@ -311,8 +316,14 @@ gulp.task('copy', function (callback) {
 gulp.task('scripts', function (callback) {
     runSequence(['lint:ts', 'clean:app:js'], 'compile:ts', 'bundle:js', 'minify:js', callback);
 });
+gulp.task('scripts:withoutLint', function (callback) {
+    runSequence('clean:app:js', 'compile:ts', 'bundle:js', 'minify:js', callback);
+});
 gulp.task('styles', function (callback) {
     runSequence(['lint:sass', 'clean:app:css'], ['compile:sass', 'minify:css'], callback);
+});
+gulp.task('styles:withoutLint', function (callback) {
+    runSequence('clean:app:css', ['compile:sass', 'minify:css'], callback);
 });
 gulp.task('build', function (callback) {
     runSequence('copy', 'scripts', 'styles', callback);
@@ -321,6 +332,30 @@ gulp.task('build', function (callback) {
 gulp.task('assets', function (cb) {
     runSequence('clean:assets', 'copy:assets');
 });
+
+gulp.task('pre-commit', guppy.src('pre-commit', function (filesBeingCommitted) {
+    const program = tslint.Linter.createProgram("./tsconfig.json");
+    const lintTSFiles = gulp.src(filesBeingCommitted)
+        .pipe(filter(['app/**/*.ts']))
+        .pipe(gulpTslint({
+            program,
+            formatter: "stylish"
+        }))
+        .pipe(gulpTslint.report({
+            allowWarnings: true,
+            summarizeFailureOutput: true
+        }));
+    const lintSassFiles = gulp.src(filesBeingCommitted)
+        .pipe(filter(['styles/**/*.scss', 'app/**/*.scss']))
+        .pipe(sassLint({
+            options: {
+                formatter: 'stylish'
+            }
+        }))
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError());
+    return [lintTSFiles, lintSassFiles];
+}));
 
 gulp.task('default', function (callback) {
     runSequence('build', 'serve', callback);
