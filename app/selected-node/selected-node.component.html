@@ -21,15 +21,15 @@
         <a (click)="goToTop()">Вверх</a>
 
         <ul class="elements">
-            <li><span class="checkbox">
+            <li [ngClass]="{'highlight': this.openedNodeId === selectedNode.id}" ><span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="selectedNode.selected">
                     </label>
                     </span>
-                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="openThisNode(selectedNode.id)"><span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}</span>
+                <span class="node-info"  (click)="openFullInfo(selectedNode.id)" (dblclick)="openThisNode(selectedNode.id)"><span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}</span>
             </li>
             <li>
                 <ul>
-                    <li *ngFor="let child of selectedNode.children">
+                    <li *ngFor="let child of selectedNode.children" [ngClass]="{'highlight': this.openedNodeId === child.id}">
                         <span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="child.selected">
                     </label>

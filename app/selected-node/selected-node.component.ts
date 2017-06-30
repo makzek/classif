@@ -12,25 +12,13 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 })
 export class SelectedNodeComponent {
 
-    selectedNode: EosDictionaryNode /* = {
-        id: null,
-        code: null,
-        title: null,
-        parent: null,
-        children: null,
-        description: null,
-        isNode: null,
-        hasSubnodes: null,
-        isExpanded: null,
-        isDeleted: null,
-        selected: null,
-        data: null,
-    }*/;
+    selectedNode: EosDictionaryNode;
 
     checkAll: boolean = false;
 
     dictionaryId: string;
     selectedNodeId: string;
+    openedNodeId: string;
 
     constructor(private _eosDictService: EosDictService, private route: ActivatedRoute) {
         this._eosDictService.selectedNode$.subscribe(
@@ -46,6 +34,7 @@ export class SelectedNodeComponent {
                 this.dictionaryId = params.dictionaryId;
                 //this.selectedNodeId = params.nodeId;
                 this.selectedNodeId = '10';
+                this.openedNodeId = params.openedNodeId;
             }, 
                 (error) => console.log(error)
             );
