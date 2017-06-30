@@ -12,7 +12,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 })
 export class OpenedNodeComponent {
 
-    openedNode: EosDictionaryNode = {
+    openedNode: EosDictionaryNode/* = {
         id: null,
         code: null,
         title: null,
@@ -25,7 +25,7 @@ export class OpenedNodeComponent {
         isDeleted: null,
         selected: null,
         data: null,
-    };
+    }*/;
 
     note: string = '';
     SEV: string = '';

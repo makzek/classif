@@ -30,7 +30,10 @@ export class EditComponent {
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
                 return this.eosDictService.getNode(this.dictionaryId, this.nodeId);
             })
-            .subscribe((node: EosDictionaryNode) => { this.node = node; }, (error) => { console.log('error', error); });
+            .subscribe((node: EosDictionaryNode) => { 
+                console.log('node',node);
+                if(node) this.node = node;
+             }, (error) => { console.log('error', error); });
     }
 
     goPrevPage(): void {

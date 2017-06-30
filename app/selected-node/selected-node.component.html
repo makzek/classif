@@ -1,5 +1,5 @@
-<div [hidden]="!!selectedNode.id">Здесь будет отображена информация о выбранной ветке справочника (Кликните на элемент из первого столбца)</div>
-<div [hidden]="!selectedNode.id" class="selected-node-wrapper">
+<div *ngIf="!selectedNode">Здесь будет отображена информация о выбранной ветке справочника (Кликните на элемент из первого столбца)</div>
+<div *ngIf="selectedNode" class="selected-node-wrapper">
     <div class="selected-node-header">
         <span class="table-title">
             <span class="checkbox">
@@ -11,7 +11,7 @@
         <span class="controller pull-right">
             <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
-        <span class="circle"><span class="glyphicon glyphicon-pencil"></span></span>
+        <a routerLink="/spravochniki/{{dictionaryId}}/{{selectedNodeId}}/edit"><span class="circle"><span class="glyphicon glyphicon-pencil"></span></span></a>
         <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
         <span class="circle"><span class="dots">...</span></span>

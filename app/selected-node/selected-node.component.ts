@@ -12,7 +12,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 })
 export class SelectedNodeComponent {
 
-    selectedNode: EosDictionaryNode = {
+    selectedNode: EosDictionaryNode /* = {
         id: null,
         code: null,
         title: null,
@@ -25,12 +25,12 @@ export class SelectedNodeComponent {
         isDeleted: null,
         selected: null,
         data: null,
-    };
+    }*/;
 
     checkAll: boolean = false;
 
-    private _dictionaryId: string;
-    private _selectedNode: string;
+    dictionaryId: string;
+    selectedNodeId: string;
 
     constructor(private _eosDictService: EosDictService, private route: ActivatedRoute) {
         this._eosDictService.selectedNode$.subscribe(
@@ -43,8 +43,9 @@ export class SelectedNodeComponent {
         );
         this.route.params
             .subscribe((params: Params) => {
-                this._dictionaryId = params.dictionaryId;
-                this._selectedNode = params.nodeId;
+                this.dictionaryId = params.dictionaryId;
+                //this.selectedNodeId = params.nodeId;
+                this.selectedNodeId = '10';
             }, 
                 (error) => console.log(error)
             );
@@ -52,19 +53,19 @@ export class SelectedNodeComponent {
     }
 
     openFullInfo(childId: number): void {
-        console.log("openFullInfo", this._dictionaryId, childId);
-        this._eosDictService.openNode(this._dictionaryId, childId);
+        console.log("openFullInfo", this.dictionaryId, childId);
+        this._eosDictService.openNode(this.dictionaryId, childId);
     }
 
     openThisNode(childId: number): void {
         console.log('openThisNode');
-        this._eosDictService.selectNode(this._dictionaryId, childId);
+        this._eosDictService.selectNode(this.dictionaryId, childId);
     }
 
     goToTop(): void {
         console.log('goToTop');
         if (this.selectedNode.parent) {
-            this._eosDictService.selectNode(this._dictionaryId, this.selectedNode.parent.id);
+            this._eosDictService.selectNode(this.dictionaryId, this.selectedNode.parent.id);
         } else {
             alert('Уровень выше не известен');
         }

@@ -1,4 +1,4 @@
-<div class="edit-container">
+<div *ngIf="node" class="edit-container">
     <header class="edit-header">
         <span class="checkbox">
             <label><input type="checkbox" [(ngModel)]="node.selected">Выбрать</label>
