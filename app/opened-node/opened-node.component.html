@@ -1,9 +1,10 @@
-<div class="opened-node-wrapper">
+<div [hidden]="!!openedNode.id">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
+<div [hidden]="!openedNode.id" class="opened-node-wrapper">
     <div class="opened-node-header">
-        <b>Краткое наименование:</b>{{selectedNode.title}}
+        <b>Краткое наименование:</b>{{openedNode.title}}
     </div>
     <div class="opened-node-content">
-        <b>Полное наименование:</b> {{selectedNode.description}}
+        <b>Полное наименование:</b> {{openedNode.description}}
         <br>
         <b>Примечание:</b> {{note}}
         <br>

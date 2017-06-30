@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,7 +30,19 @@ export class OpenedNodeComponent {
     note: string = '';
     SEV: string = '';
 
-    constructor(private eosDictService: EosDictService) {
+    private _dictionaryId: string;
+    private _selectedNode: string;
+    private _openedNode: string;
+
+    constructor(private eosDictService: EosDictService, private route: ActivatedRoute) {
+        this.route.params
+            .subscribe((params: Params) => {
+                this._dictionaryId = params.dictionaryId;
+                this._selectedNode = params.nodeId;
+                this._openedNode = params.openedNodeId;
+            },
+            (error) => console.log(error)
+            );
         this.eosDictService.openedNode$.subscribe(
             (node) => {
                 if (node) {
@@ -41,7 +53,7 @@ export class OpenedNodeComponent {
                     }
                 }
             },
-            console.error);
+            (error) => console.log(error));
     }
 
 }

@@ -1,31 +1,42 @@
-<div class="selected-node-wrapper">
+<div [hidden]="!!selectedNode.id">Здесь будет отображена информация о выбранной ветке справочника (Кликните на элемент из первого столбца)</div>
+<div [hidden]="!selectedNode.id" class="selected-node-wrapper">
     <div class="selected-node-header">
         <span class="table-title">
             <span class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
         </span>
-            <span class="code"><b>Код</b></span>
-            <b>Рубрика</b>
+        <span class="code"><b>Код</b></span>
+        <b>Рубрика</b>
         </span>
         <span class="controller pull-right">
             <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
-            <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
-            <span class="circle"><span class="glyphicon glyphicon-pencil"></span></span>
-            <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
-            <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
-            <span class="circle"><span class="dots">...</span></span>
+        <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
+        <span class="circle"><span class="glyphicon glyphicon-pencil"></span></span>
+        <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
+        <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
+        <span class="circle"><span class="dots">...</span></span>
         </span>
     </div>
     <div class="selected-node-content">
         <a (click)="goToTop()">Вверх</a>
+
         <ul class="elements">
-            <li *ngFor="let child of selectedNode.children">
-                <span class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="child.selected" (click)="openFullInfo(child.id)" (dblclick)="openThisNode(child.id)">
-                <span class="code">{{child.code}}</span>{{child.title}}
-                </label>
-                </span>
+            <li><span class="checkbox">
+                    <label><input type="checkbox" [(ngModel)]="selectedNode.selected">
+                    </label>
+                    </span>
+                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="openThisNode(selectedNode.id)"><span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}</span>
             </li>
-        </ul>
+            <li>
+                <ul>
+                    <li *ngFor="let child of selectedNode.children">
+                        <span class="checkbox">
+                    <label><input type="checkbox" [(ngModel)]="child.selected">
+                    </label>
+                    </span>
+                        <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="openThisNode(child.id)"><span class="code">{{child.code}}</span>{{child.title}}</span>
+                    </li>
+                </ul>
+            </li>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,42 +29,51 @@ export class SelectedNodeComponent {
 
     checkAll: boolean = false;
 
-    constructor(private _eosDictService: EosDictService) {
+    private _dictionaryId: string;
+    private _selectedNode: string;
+
+    constructor(private _eosDictService: EosDictService, private route: ActivatedRoute) {
         this._eosDictService.selectedNode$.subscribe(
             (node) => {
                 if (node) {
                     this.selectedNode = node;
                 }
             },
-            console.error
+            (error) => console.log(error)
         );
+        this.route.params
+            .subscribe((params: Params) => {
+                this._dictionaryId = params.dictionaryId;
+                this._selectedNode = params.nodeId;
+            }, 
+                (error) => console.log(error)
+            );
+
     }
 
     openFullInfo(childId: number): void {
-        this._eosDictService.dictionary$.subscribe(
-            (dictionary) => this._eosDictService.selectNode(dictionary.id, childId)
-        );
+        console.log("openFullInfo", this._dictionaryId, childId);
+        this._eosDictService.openNode(this._dictionaryId, childId);
     }
 
     openThisNode(childId: number): void {
-        this._eosDictService.dictionary$.subscribe(
-            (dictionary) => this._eosDictService.openNode(dictionary.id, childId)
-        );
+        console.log('openThisNode');
+        this._eosDictService.selectNode(this._dictionaryId, childId);
     }
 
     goToTop(): void {
+        console.log('goToTop');
         if (this.selectedNode.parent) {
-            this._eosDictService.dictionary$.subscribe(
-                (dictionary) => this._eosDictService.openNode(dictionary.id, this.selectedNode.parent.id)
-            );
+            this._eosDictService.selectNode(this._dictionaryId, this.selectedNode.parent.id);
         } else {
             alert('Уровень выше не известен');
         }
     }
 
     checkAllItems(): void {
+        this.selectedNode.selected = !this.checkAll;
         for (const item of this.selectedNode.children) {
-            item.selected = this.checkAll;
+            item.selected = !this.checkAll;
         }
     }
 
