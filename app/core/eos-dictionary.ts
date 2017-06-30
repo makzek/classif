@@ -6,18 +6,18 @@ export class EosDictionary {
     private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<number, EosDictionaryNode>;
 
-    constructor(id: string) {
+    constructor(data: any) {
+        Object.assign(this, data);
         this._nodes = new Map<number, EosDictionaryNode>();
-        this.id = id;
         this._rootNodes = [];
     }
 
-    init(title: string, nodes: EosDictionaryNode[]) {
-        this.title = title;
+    init(data: any[]) {
         this._nodes.clear();
-        this._rootNodes.splice(0, this._rootNodes. length);
+        this._rootNodes.splice(0, this._rootNodes.length);
 
-        nodes.forEach((node) => {
+        data.forEach((nodeData) => {
+            let node: EosDictionaryNode = new EosDictionaryNode(nodeData);
             this._nodes.set(node.id, node);
             if (!node.parent) {
                 this._rootNodes.push(node);
