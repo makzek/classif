@@ -43,7 +43,7 @@ export class BreadcrumbsComponent {
             const routeSnaphot = currentUrlPart.value as ActivatedRouteSnapshot;
             const subpath = routeSnaphot.url.map((item) => item.path).join('/');
 
-            if (subpath && subpath !== 'home') {
+            if (subpath && subpath !== 'home' && routeSnaphot.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
                 let bc: IBreadcrumb = {
                     title: routeSnaphot.data.title,
@@ -51,18 +51,22 @@ export class BreadcrumbsComponent {
                     params: routeSnaphot.params,
                 };
 
-                if (routeSnaphot.params && routeSnaphot.params.dictionaryId) {
-                    this._dictionaryBc = bc;
-                    this._dictionaryService.getDictionariesList()
-                        .then((list) => {
-                            let _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
-                            if (_d) {
-                                this._dictionaryBc.title = _d.title;
-                            }
-                        });
+                if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
+                    if (routeSnaphot.params.dictionaryId) {
+                        this._dictionaryBc = bc;
+                        this._dictionaryService.getDictionariesList()
+                            .then((list) => {
+                                let _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                                if (_d) {
+                                    this._dictionaryBc.title = _d.title;
+                                }
+                            });
+                    }
                 }
 
-                this.breadcrumbs.push(bc);
+                if (bc) {
+                    this.breadcrumbs.push(bc);
+                }
             }
         }
         console.log('breadcrumbs', this.breadcrumbs);

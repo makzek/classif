@@ -8,23 +8,24 @@ import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
-    data: { title: 'Справочники' },
+    data: { title: 'Справочники', showInBreadcrumb: true  },
     children: [{
         path: '',
         pathMatch: 'full',
         component: DictionariesComponent,
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', isDictionary: true },
-        children: [ {
+        data: { title: 'Справочник', showInBreadcrumb: true },
+        children: [{
             path: ':nodeId/edit',
             pathMatch: 'full',
             component: EditComponent,
             data: { title: 'Редактирвание' },
         }, {
             path: ':nodeId',
+            data: { showInBreadcrumb: false },
             component: DictionaryComponent,
-        },{
+        }, {
             path: '',
             component: DictionaryComponent,
             pathMatch: 'full'
@@ -33,7 +34,7 @@ const routes: Routes = [{
 }, {
     path: 'home',
     component: HomeComponent,
-    data: { title: 'Home' },
+    data: { title: 'Home', showInBreadcrumb: true },
 }, {
     path: '',
     redirectTo: '/home',
