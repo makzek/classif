@@ -6,7 +6,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-tree-node',
-    templateUrl: 'tree-node.component.html'
+    templateUrl: 'tree-node.component.html',
 })
 export class TreeNodeComponent implements OnInit {
     private _dictionaryId: string;
@@ -41,10 +41,10 @@ export class TreeNodeComponent implements OnInit {
 
     onSelect(evt: Event) {
         evt.stopPropagation();
-        let _path = [
+        const _path = [
             'spravochniki',
             this._dictionaryId,
-            this.node.id + ''
+            this.node.id + '',
         ];
         this._router.navigate(_path);
     }

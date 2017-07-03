@@ -45,7 +45,7 @@ export class BreadcrumbsComponent {
 
             if (subpath && subpath !== 'home' && routeSnaphot.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
-                let bc: IBreadcrumb = {
+                const bc: IBreadcrumb = {
                     title: routeSnaphot.data.title,
                     url: currUrl,
                     params: routeSnaphot.params,
@@ -56,7 +56,7 @@ export class BreadcrumbsComponent {
                         this._dictionaryBc = bc;
                         this._dictionaryService.getDictionariesList()
                             .then((list) => {
-                                let _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                                const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
                                 if (_d) {
                                     this._dictionaryBc.title = _d.title;
                                 }

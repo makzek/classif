@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIES, DICTIONARIE_LIST, NODES } from './eos-api.mock';
+import { DICTIONARIE_LIST, DICTIONARIES, NODES } from './eos-api.mock';
 
 @Injectable()
 export class EosApiService {
@@ -40,7 +40,7 @@ export class EosApiService {
     getNodeMocked(dictionaryId: string, nodeId: number): Promise<any> {
         return new Promise((res, rej) => {
             if (DICTIONARIES[dictionaryId]) {
-                let _node = this._mockedNodesMap.get(nodeId);
+                const _node = this._mockedNodesMap.get(nodeId);
                 if (_node) {
                     res(_node);
                 } else {

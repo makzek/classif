@@ -41,7 +41,7 @@ export class SelectedNodeComponent {
 
     openFullInfo(childId: number): void {
         this.openedNodeId = childId.toString();
-        console.log("openFullInfo", this.dictionaryId, childId);
+        console.log('openFullInfo', this.dictionaryId, childId);
         this._eosDictService.openNode(this.dictionaryId, childId);
     }
 

@@ -28,7 +28,7 @@ const routes: Routes = [{
         }, {
             path: '',
             component: DictionaryComponent,
-            pathMatch: 'full'
+            pathMatch: 'full',
         }],
     }],
 }, {

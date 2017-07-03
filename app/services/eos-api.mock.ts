@@ -12,8 +12,8 @@ export const DICTIONARIE_LIST = [
 export const DICTIONARIES = {
     rubricator: {
         id: 'rubricator',
-        title: 'Рубрикатор'
-    }
+        title: 'Рубрикатор',
+    },
 };
 
 export const NODES = [

@@ -158,7 +158,7 @@ export class EosDictService {
     }
 
     public getChildren(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode[]> {
-        return new Promise((res, rej) => {
+        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             this.getNode(dictionaryId, nodeId)
                 .then((_node) => {
                     rej('not implemented (may be useless???)');
@@ -167,8 +167,8 @@ export class EosDictService {
         });
     }
 
-    public updateNode(dictionaryId: string, nodeId: number, value: EosDictionaryNode): Promise<any> {
-        return new Promise((res, rej) => {
+    public updateNode(dictionaryId: string, nodeId: number, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
+        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             rej('not implemented');
         });
     }
