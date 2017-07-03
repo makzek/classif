@@ -9,10 +9,8 @@
     span {
         cursor: pointer;
         display: inline-block;
-    }
 
-    &.active {
-        &>span {
+        &.active {
             background-color: #8899bc;
             font-weight: bold;
         }
