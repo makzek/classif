@@ -54,17 +54,17 @@ export class BreadcrumbsComponent {
                 if (routeSnaphot.params && routeSnaphot.params.dictionaryId) {
                     this._dictionaryBc = bc;
                     this._dictionaryService.getDictionariesList()
-                    .then((list) => {
-                        let _d = list.find((e:any)=> e.id === routeSnaphot.params.dictionaryId);
-                        if (_d) {
-                            this._dictionaryBc.title = _d.title;
-                        }
-                    });
+                        .then((list) => {
+                            let _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                            if (_d) {
+                                this._dictionaryBc.title = _d.title;
+                            }
+                        });
                 }
 
                 this.breadcrumbs.push(bc);
             }
         }
-        /* console.log('breadcrumbs', this.breadcrumbs); */
+        console.log('breadcrumbs', this.breadcrumbs);
     }
 }

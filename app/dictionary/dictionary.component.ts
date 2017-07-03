@@ -43,6 +43,7 @@ export class DictionaryComponent {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 this.nodes = dictionary.rootNodes;
+                console.log('roots', this.nodes);
             }
         });
     }

@@ -19,12 +19,16 @@ export class EosDictService {
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
 
+    private _listPromise: Promise<any>;
+    private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
+
     constructor(private _api: EosApiService) {
         this._dictionaries = new Map<string, EosDictionary>();
         this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]);
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
+        this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -64,37 +68,52 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        return new Promise<EosDictionary>((res, rej) => {
-            let _dictionary = this._dictionaries.get(dictionaryId);
+        let _p = this._mDictionaryPromise.get(dictionaryId);
+        if (!_p) {
+            /* console.warn('openDictionary', dictionaryId); */
+            _p = new Promise<EosDictionary>((res, rej) => {
+                let _dictionary = this._dictionaries.get(dictionaryId);
 
-            if (_dictionary) {
-                res(_dictionary);
-            } else {
-                this._api.getDictionaryMocked(dictionaryId)
-                    .then((data: any) => {
-                        _dictionary = new EosDictionary(data);
-                        this._dictionary = _dictionary;
-                        return this._api.getDictionaryNodesMocked(dictionaryId);
-                    })
-                    .then((data) => {
-                        this._dictionary.init(data);
-                        this._dictionaries.set(dictionaryId, _dictionary);
-                        this._dictionary$.next(_dictionary);
-                        res(_dictionary);
-                    })
-                    .catch((err) => rej(err));
-            }
-        });
+                if (_dictionary) {
+                    this._mDictionaryPromise.delete(dictionaryId);
+                    res(_dictionary);
+                } else {
+                    this._api.getDictionaryMocked(dictionaryId)
+                        .then((data: any) => {
+                            _dictionary = new EosDictionary(data);
+                            this._dictionary = _dictionary;
+                            return this._api.getDictionaryNodesMocked(dictionaryId);
+                        })
+                        .then((data) => {
+                            this._dictionary.init(data);
+                            this._dictionaries.set(dictionaryId, _dictionary);
+                            this._dictionary$.next(_dictionary);
+                            this._mDictionaryPromise.delete(dictionaryId);
+                            res(_dictionary);
+                        })
+                        .catch((err) => {
+                            this._mDictionaryPromise.delete(dictionaryId);
+                            rej(err);
+                        });
+                }
+            });
+            this._mDictionaryPromise.set(dictionaryId, _p);
+        }
+        return _p;
     }
 
     public getNode(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode> {
+        /* console.log('getNode', dictionaryId, nodeId); */
         return new Promise<EosDictionaryNode>((res, rej) => {
             this.openDictionary(dictionaryId)
                 .then((_dict) => {
+                    /* console.log('got dictionary', _dict);*/
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
+                        /* console.log('got node', _node); */
                         res(_node);
                     } else {
+                        /* console.log('requesting node from API'); */
                         this._api.getNodeMocked(dictionaryId, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(data);

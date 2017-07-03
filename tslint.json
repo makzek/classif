@@ -4,6 +4,7 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "no-bitwise": false,
     "linebreak-style": {
       "options": ["LF"]
     },

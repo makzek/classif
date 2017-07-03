@@ -16,15 +16,18 @@ const routes: Routes = [{
     }, {
         path: ':dictionaryId',
         data: { title: 'Справочник', isDictionary: true },
-        children: [{
-            path: '',
-            pathMatch: 'full',
-            component: DictionaryComponent,
-        }, {
+        children: [ {
             path: ':nodeId/edit',
             pathMatch: 'full',
             component: EditComponent,
             data: { title: 'Редактирвание' },
+        }, {
+            path: ':nodeId',
+            component: DictionaryComponent,
+        },{
+            path: '',
+            component: DictionaryComponent,
+            pathMatch: 'full'
         }],
     }],
 }, {
@@ -42,7 +45,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { enableTracing: false })],
     exports: [RouterModule],
 })
 export class AppRoutingModule {

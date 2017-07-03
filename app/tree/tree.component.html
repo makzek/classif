@@ -1,17 +1,5 @@
 <div class="eos-tree">
     <div *ngFor="let node of nodes" class="eos-tree-node" [class.active]="node === selectedNode">
-        <div>
-            <i *ngIf="node.hasSubnodes" class="fa fa-{{node.isExpanded ? 'minus' : 'plus'}}"
-                (click)="onExpand(node); $event.stopPropagation();">
-            </i>
-        </div>
-        <span (click)="onSelect(node);">{{node.code}} {{node.title}}</span>
-        <eos-tree
-            *ngIf="node.isExpanded"
-            [nodes]="node.children"
-            [selectedNode]="selectedNode"
-            (onRequestChildNodes)="onExpand($event)"
-            (onSelectNode)="onSelect($event)">
-        </eos-tree>
+        <eos-tree-node [node]="node"></eos-tree-node>
     </div>
 </div>
