@@ -13,7 +13,7 @@ export class EditComponent {
 
     node: EosDictionaryNode;
     dictionaryId: string;
-    nodeId: number;
+    nodeId: string;
     selfLink: string;
     editMode: boolean = false;
 
@@ -25,7 +25,7 @@ export class EditComponent {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
-                this.nodeId = +params.nodeId;
+                this.nodeId = params.nodeId;
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
                 return this.eosDictService.getNode(this.dictionaryId, this.nodeId);
             })
@@ -38,10 +38,10 @@ export class EditComponent {
     }
 
     goPrevPage(): void {
-        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.nodeId - 1).toString() + '/edit']);
+        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.node.parent).toString() + '/edit']);
     }
 
-    goNextPage(): void {
+    goNextPage(): void { /* wtf */
         this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.nodeId + 1).toString() + '/edit']);
     }
 

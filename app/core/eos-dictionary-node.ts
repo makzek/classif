@@ -1,8 +1,8 @@
 export class EosDictionaryNode {
-    id: number;
+    id: string;
     code: string;
     title: string;
-    parentId: number;
+    parentId?: string;
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
     description: string;

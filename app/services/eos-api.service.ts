@@ -4,10 +4,10 @@ import { DICTIONARIE_LIST, DICTIONARIES, NODES } from './eos-api.mock';
 
 @Injectable()
 export class EosApiService {
-    private _mockedNodesMap: Map<number, any>;
+    private _mockedNodesMap: Map<string, any>;
 
     constructor() {
-        this._mockedNodesMap = new Map<number, any>();
+        this._mockedNodesMap = new Map<string, any>();
         NODES.forEach((_n) => this._mockedNodesMap.set(_n.id, _n));
     }
 
@@ -37,7 +37,7 @@ export class EosApiService {
         });
     }
 
-    getNodeMocked(dictionaryId: string, nodeId: number): Promise<any> {
+    getNodeMocked(dictionaryId: string, nodeId: string): Promise<any> {
         return new Promise((res, rej) => {
             if (DICTIONARIES[dictionaryId]) {
                 const _node = this._mockedNodesMap.get(nodeId);

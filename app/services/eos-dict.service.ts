@@ -102,7 +102,7 @@ export class EosDictService {
         return _p;
     }
 
-    public getNode(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode> {
+    public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         /* console.log('getNode', dictionaryId, nodeId); */
         return new Promise<EosDictionaryNode>((res, rej) => {
             this.openDictionary(dictionaryId)
@@ -127,7 +127,7 @@ export class EosDictService {
         });
     }
 
-    public selectNode(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode> {
+    public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => {
@@ -143,7 +143,7 @@ export class EosDictService {
         });
     }
 
-    public openNode(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode> {
+    public openNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => {
@@ -157,7 +157,7 @@ export class EosDictService {
         });
     }
 
-    public getChildren(dictionaryId: string, nodeId: number): Promise<EosDictionaryNode[]> {
+    public getChildren(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode[]> {
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             this.getNode(dictionaryId, nodeId)
                 .then((_node) => {
@@ -167,7 +167,7 @@ export class EosDictService {
         });
     }
 
-    public updateNode(dictionaryId: string, nodeId: number, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
+    public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             rej('not implemented');
         });

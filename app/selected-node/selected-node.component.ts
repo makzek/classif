@@ -39,13 +39,13 @@ export class SelectedNodeComponent {
 
     }
 
-    openFullInfo(childId: number): void {
+    openFullInfo(childId: string): void {
         this.openedNodeId = childId.toString();
         console.log('openFullInfo', this.dictionaryId, childId);
         this._eosDictService.openNode(this.dictionaryId, childId);
     }
 
-    openThisNode(childId: number): void {
+    openThisNode(childId: string): void {
         console.log('openThisNode');
         this._eosDictService.selectNode(this.dictionaryId, childId);
     }

@@ -4,11 +4,11 @@ export class EosDictionary {
     readonly id: string;
     public title: string;
     private _rootNodes: EosDictionaryNode[];
-    private _nodes: Map<number, EosDictionaryNode>;
+    private _nodes: Map<string, EosDictionaryNode>;
 
     constructor(data: any) {
         Object.assign(this, data);
-        this._nodes = new Map<number, EosDictionaryNode>();
+        this._nodes = new Map<string, EosDictionaryNode>();
         this._rootNodes = [];
     }
 
@@ -19,7 +19,7 @@ export class EosDictionary {
         /* add nodes */
         data.forEach((nodeData) => {
             const node: EosDictionaryNode = new EosDictionaryNode(nodeData);
-            this._nodes.set(+node.id, node);
+            this._nodes.set(node.id, node);
         });
 
         /* build tree */
@@ -54,7 +54,7 @@ export class EosDictionary {
         return this._rootNodes;
     }
 
-    setChildren(parentId: number, children: EosDictionaryNode[]) {
+    setChildren(parentId: string, children: EosDictionaryNode[]) {
         const parent = this._nodes.get(parentId);
         parent.children = children;
         children.forEach((node) => {
@@ -64,7 +64,7 @@ export class EosDictionary {
     }
 
     /* get children nodes or first level nodes if parentNodeId is not specified */
-    getChildrenNodes(parentNodeId?: number): EosDictionaryNode[] {
+    getChildrenNodes(parentNodeId?: string): EosDictionaryNode[] {
         if (typeof parentNodeId === 'undefined') {
             return this._rootNodes;
         }
@@ -74,20 +74,20 @@ export class EosDictionary {
         // return node && node.children;
     }
 
-    getNode(nodeId: number): EosDictionaryNode {
-        const _res = this._nodes.get(+nodeId);
+    getNode(nodeId: string): EosDictionaryNode {
+        const _res = this._nodes.get(nodeId);
         /* console.log('get node', this.id, nodeId, this._nodes, _res); */
         return _res;
     }
 
-    addNode(node: EosDictionaryNode, parentId?: number): boolean {
+    addNode(node: EosDictionaryNode, parentId?: string): boolean {
         let _result = false;
 
         // check that node with specified id does not exist in this instance
         if (!this._nodes.has(node.id)) {
             this._nodes.set(node.id, node);
-            if (!isNaN(+parentId)) {
-                const _parent: EosDictionaryNode = this._nodes.get(+parentId);
+            if (!parentId) {
+                const _parent: EosDictionaryNode = this._nodes.get(parentId);
 
                 if (_parent) {
                     if (!_parent.children) {
@@ -101,9 +101,9 @@ export class EosDictionary {
         return _result;
     }
 
-    deleteNode(nodeId: number, hard = false): boolean {
+    deleteNode(nodeId: string, hard = false): boolean {
         let _result = false;
-        const _node: EosDictionaryNode = this._nodes.get(+nodeId);
+        const _node: EosDictionaryNode = this._nodes.get(nodeId);
         let _parent: EosDictionaryNode;
 
         if (_node) {
@@ -111,7 +111,7 @@ export class EosDictionary {
                 if (!_node.children || _node.children.length < 1) {
                     _parent = _node.parent;
                     _parent.children = _parent.children.filter((_n) => _n.id !== _node.id);
-                    this._nodes.delete(+nodeId);
+                    this._nodes.delete(nodeId);
                     _result = true;
                 }
             } else {

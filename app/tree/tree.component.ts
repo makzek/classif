@@ -13,7 +13,7 @@ export class TreeComponent {
 
     @Output() onSelectNode: EventEmitter<EosDictionaryNode> = new EventEmitter<EosDictionaryNode>();
     // @Output() getNodes: EventEmitter<number> = new EventEmitter<number>();
-    @Output() onRequestChildNodes: EventEmitter<number> = new EventEmitter<number>();
+    @Output() onRequestChildNodes: EventEmitter<string> = new EventEmitter<string>();
 
     onSelect(node: EosDictionaryNode) {
         this.onSelectNode.emit(node);
