@@ -18,6 +18,7 @@
         "variables-before-functions"
       ]
     },
+    "no-debugger": false,
     "no-arg": true,
     "no-console": {
       "severity": "warning"

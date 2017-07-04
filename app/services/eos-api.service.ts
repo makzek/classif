@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIE_LIST, DICTIONARIES, NODES } from './eos-api.mock';
-
+import { DICTIONARIE_LIST, DICTIONARIES } from './eos-api.mock';
+import { MOCK_RUBRICS as NODES } from './rubric.mock';
 @Injectable()
 export class EosApiService {
     private _mockedNodesMap: Map<string, any>;
