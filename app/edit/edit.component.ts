@@ -33,8 +33,7 @@ export class EditComponent {
     }
 
     private _update(node: EosDictionaryNode) {
-        console.log('node', node);
-        this.node = Object.assign({}, node);
+        this.node = new EosDictionaryNode(node);
     }
 
     goPrevPage(): void {
@@ -46,12 +45,11 @@ export class EditComponent {
     }
 
     save(): void {
-        console.log('node', this.node);
         this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node);
     }
 
     cancel(): void {
-        this.eosDictService.getNode(this.node.title, this.node.id)
+        this.eosDictService.getNode(this.dictionaryId, this.node.id)
             .then((node) => this._update(node))
             .catch((error) => console.log('error', error));
     }
