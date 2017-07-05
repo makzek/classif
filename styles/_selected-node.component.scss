@@ -53,10 +53,16 @@
         }
     }
 
+    .selected-node-content {
+        a {
+            cursor: pointer;
+        }
+    }
+
     .elements {
+        list-style: none;
         max-height: 70vh;
         overflow-y: auto;
-        list-style: none;
         padding-left: 0;
 
         ul {

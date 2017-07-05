@@ -18,14 +18,14 @@
         </span>
     </div>
     <div class="selected-node-content">
-        <a (click)="goToTop()">Вверх</a>
+        <a *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
 
         <ul class="elements">
             <li [ngClass]="{'highlight': +this.openedNodeId == selectedNode.id}"><span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="selectedNode.selected">
                     </label>
                     </span>
-                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="openThisNode(selectedNode.id)"><span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}</span>
+                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="selectNode(selectedNode.id)"><span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}</span>
             </li>
             <li>
                 <ul>
@@ -34,7 +34,7 @@
                     <label><input type="checkbox" [(ngModel)]="child.selected">
                     </label>
                     </span>
-                        <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="openThisNode(child.id)"><span class="code">{{child.code}}</span>{{child.title}}</span>
+                        <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)"><span class="code">{{child.code}}</span>{{child.title}}</span>
                     </li>
                 </ul>
             </li>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -20,7 +20,7 @@ export class SelectedNodeComponent {
     selectedNodeId: string;
     openedNodeId: string;
 
-    constructor(private _eosDictService: EosDictService, private route: ActivatedRoute) {
+    constructor(private _eosDictService: EosDictService, private route: ActivatedRoute, private router: Router) {
         this._eosDictService.selectedNode$.subscribe(
             (node) => {
                 if (node) {
@@ -50,22 +50,11 @@ export class SelectedNodeComponent {
 
     openFullInfo(childId: string): void {
         this.openedNodeId = childId.toString();
-        // console.log('openFullInfo', this.dictionaryId, childId);
         this._eosDictService.openNode(this.dictionaryId, childId);
     }
 
-    openThisNode(childId: string): void {
-        // console.log('openThisNode');
-        this._eosDictService.selectNode(this.dictionaryId, childId);
-    }
-
-    goToTop(): void {
-        // console.log('goToTop');
-        if (this.selectedNode.parent) {
-            this._eosDictService.selectNode(this.dictionaryId, this.selectedNode.parent.id);
-        } else {
-            alert('Уровень выше не известен');
-        }
+    selectNode(nodeId: string): void {
+        this.router.navigate(['spravochniki', this.dictionaryId, nodeId]);
     }
 
     checkAllItems(): void {
