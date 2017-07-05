@@ -54,6 +54,8 @@
     }
 
     .elements {
+        max-height: 70vh;
+        overflow-y: auto;
         list-style: none;
         padding-left: 0;
 

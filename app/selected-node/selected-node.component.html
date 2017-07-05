@@ -4,7 +4,7 @@
         <span class="table-title">
             <span class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
-        </span>
+            </span>
         <span class="code"><b>Код</b></span>
         <b>Рубрика</b>
         </span>
@@ -21,7 +21,7 @@
         <a (click)="goToTop()">Вверх</a>
 
         <ul class="elements">
-            <li [ngClass]="{'highlight': +this.openedNodeId == selectedNode.id}" ><span class="checkbox">
+            <li [ngClass]="{'highlight': +this.openedNodeId == selectedNode.id}"><span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="selectedNode.selected">
                     </label>
                     </span>
