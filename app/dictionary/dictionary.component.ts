@@ -12,8 +12,6 @@ import 'rxjs/add/operator/filter';
 export class DictionaryComponent {
     private _dictionaryId: string;
     public nodes: EosDictionaryNode[];
-    public selectedNode: EosDictionaryNode;
-    public openedNode: EosDictionaryNode;
 
     constructor(private _dictionaryService: EosDictService, private route: ActivatedRoute) {
 
@@ -31,10 +29,6 @@ export class DictionaryComponent {
                         });
                 }
             }
-        });
-        /* what for? */
-        this._dictionaryService.selectedNode$.subscribe((node) => {
-            this.selectedNode = node;
         });
 
         this.nodes = [];

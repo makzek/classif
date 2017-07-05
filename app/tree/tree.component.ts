@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
@@ -11,12 +11,12 @@ export class TreeComponent {
     @Input() selectedNode: any;
 
     // @Output() getNodes: EventEmitter<number> = new EventEmitter<number>();
-    @Output() onRequestChildNodes: EventEmitter<string> = new EventEmitter<string>();
+    // @Output() onRequestChildNodes: EventEmitter<string> = new EventEmitter<string>();
 
     onExpand(node: EosDictionaryNode) {
         node.isExpanded = !node.isExpanded;
         // if (node.isExpanded && node.isNode && (!node.children || node.children.length === 0)) {
-        this.onRequestChildNodes.emit(node.id);
+        //     this.onRequestChildNodes.emit(node.id);
         // }
     }
 

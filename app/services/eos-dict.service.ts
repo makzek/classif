@@ -70,7 +70,6 @@ export class EosDictService {
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            /* console.warn('openDictionary', dictionaryId); */
             _p = new Promise<EosDictionary>((res, rej) => {
                 let _dictionary = this._dictionaries.get(dictionaryId);
 
@@ -103,17 +102,13 @@ export class EosDictService {
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        /* console.log('getNode', dictionaryId, nodeId); */
         return new Promise<EosDictionaryNode>((res, rej) => {
             this.openDictionary(dictionaryId)
                 .then((_dict) => {
-                    /* console.log('got dictionary', _dict);*/
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
-                        /* console.log('got node', _node); */
                         res(_node);
                     } else {
-                        /* console.log('requesting node from API'); */
                         this._api.getNodeMocked(dictionaryId, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(data);
@@ -132,6 +127,12 @@ export class EosDictService {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => {
                     if (this._selectedNode !== node) {
+                        // expand all parents of selected node
+                        let parent = node.parent;
+                        while (parent) {
+                            parent.isExpanded = true;
+                            parent = parent.parent;
+                        }
                         this._selectedNode = node;
                         this._selectedNode$.next(node);
                         this._openedNode = null;
