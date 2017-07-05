@@ -1,18 +1,25 @@
 <div *ngIf="node" class="edit-container">
-    <header class="edit-header">
-        <span class="checkbox">
-            <label><input type="checkbox" [(ngModel)]="node.selected">Выбрать</label>
-        </span>
-        <span class="edit-title">{{node.title}}</span>
-        <button class="btn btn-primary" (click)="save()">Сохранить</button>
-        <button class="btn btn-primary" (click)="cancel()">Отменить</button>
-
-        <span class="pull-right">
+    <header class="edit-header row">
+        <div class="col-sm-2 col-md-2 col-lg-1">
+            <span class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="node.selected">Выбрать</label>
+            </span>
+        </div>
+        <div class="col-sm-4 col-md-5 col-lg-6">
+            <span class="edit-title">{{node.title}}</span>
+        </div>
+        <div class="edit-buttons col-sm-4 col-md-3 col-lg-3">
+            <button class="btn btn-primary" (click)="save()">Сохранить</button>
+            <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <span class="pull-right">
         <a routerLink="{{selfLink}}/edit" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goPrevPage()"></span>
-        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goNextPage()"></span>
-        <a routerLink="{{selfLink}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-        </span>
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goPrevPage()"></span>
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goNextPage()"></span>
+            <a routerLink="{{selfLink}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </span>
+        </div>
     </header>
     <aside class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
@@ -22,30 +29,31 @@
         </div>
     </aside>
     <article class="edit-content">
-        <div class="input-line">
-            <div  class="form-group">
+        <div class="input-line row">
+            <div class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="code">Код:</label>
                 <input [hidden]="!editMode" class="" id="code" [(ngModel)]="node.code"></input>
                 <span [hidden]="editMode" class="">{{node.code}}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-8 col-md-8 col-lg-8">
                 <label for="shortName">Краткое наименование:</label>
                 <input [hidden]="!editMode" class="" id="shortName" [(ngModel)]="node.title"></input>
                 <span [hidden]="editMode" class="">{{node.title}}</span>
             </div>
         </div>
-        <div class="input-line">
-            <div class="form-group">
+        <div class="input-line row ">
+            <div class="form-group" [ngClass]="{'col-sm-6 col-md-6 col-lg-6': node.data, 'col-sm-12 col-md-12 col-lg-12': !node.data}">
                 <label for="fullName">Полное наименование:</label>
-                <input [hidden]="!editMode" class="" id="fullName" [(ngModel)]="node.description"></input>
+                <br>
+                <textarea [hidden]="!editMode" class="" id="fullName" [(ngModel)]="node.description"></textarea>
                 <span [hidden]="editMode" class="">{{node.description}}</span>
             </div>
-            <div *ngIf="node.data" class="form-group">
+            <div *ngIf="node.data" class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="note">Примечание:</label>
                 <input [hidden]="!editMode" class="" id="note" [(ngModel)]="node.data.note"></input>
                 <span [hidden]="editMode" class="">{{node.data.note}}</span>
             </div>
-            <div *ngIf="node.data" class="form-group">
+            <div *ngIf="node.data" class="form-group col-sm-2 col-md-2 col-lg-2">
                 <label for="indexSEV">Индекс СЭВ:</label>
                 <input [hidden]="!editMode" class="" id="indexSEV" [(ngModel)]="node.data.indexSEV"></input>
                 <span [hidden]="editMode" class="">{{node.data.indexSEV}}</span>

@@ -27,7 +27,7 @@ export class OpenedNodeComponent {
                 this._selectedNode = params.nodeId;
                 this._openedNode = params.openedNodeId;
             },
-            (error) => console.log(error)
+            (error) => alert(error)
             );
         this.eosDictService.openedNode$.subscribe(
             (node) => {
@@ -39,7 +39,7 @@ export class OpenedNodeComponent {
                     }
                 }
             },
-            (error) => console.log(error));
+            (error) => alert(error));
     }
 
 }
