@@ -23,9 +23,6 @@ export class DictionaryComponent {
                             if (params.nodeId) {
                                 _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
                             }
-                            if (params.openId) {
-                                _dictionaryService.openNode(params.dictionaryId, params.nodeId);
-                            }
                         });
                 }
             }

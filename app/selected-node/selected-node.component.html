@@ -11,7 +11,7 @@
         <span class="controller pull-right">
             <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
-        <a routerLink="/spravochniki/{{dictionaryId}}/{{openedNode?openedNode.id:selectedNode.id}}/edit"><span class="circle"><span class="glyphicon glyphicon-pencil"></span></span></a>
+        <a (click)="editNode()"><span class="circle"><span class="glyphicon glyphicon-pencil"></span></span></a>
         <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
         <span class="circle"><span class="dots">...</span></span>
@@ -21,7 +21,7 @@
         <a *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
 
         <ul class="elements">
-            <li [ngClass]="{'highlight': +this.openedNodeId == selectedNode.id}"><span class="checkbox">
+            <li [ngClass]="{'highlight': openedNode.id === selectedNode.id}"><span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="selectedNode.selected">
                     </label>
                     </span>
@@ -29,7 +29,7 @@
             </li>
             <li>
                 <ul>
-                    <li *ngFor="let child of selectedNode.children" [ngClass]="{'highlight': +this.openedNodeId == child.id}">
+                    <li *ngFor="let child of selectedNode.children" [ngClass]="{'highlight': openedNode.id === child.id}">
                         <span class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="child.selected">
                     </label>

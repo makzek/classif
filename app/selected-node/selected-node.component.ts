@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -16,45 +15,49 @@ export class SelectedNodeComponent {
 
     checkAll: boolean = false;
 
-    dictionaryId: string;
-    selectedNodeId: string;
-    openedNodeId: string;
+    private _dictionaryId: string;
 
-    constructor(private _eosDictService: EosDictService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _eosDictService: EosDictService, private router: Router) {
+        this._eosDictService.dictionary$.subscribe(
+            (dictionary) => {
+                if (dictionary) {
+                    this._dictionaryId = dictionary.id;
+                }
+            },
+            (error) => alert(error)
+        );
         this._eosDictService.selectedNode$.subscribe(
             (node) => {
+                this.selectedNode = node;
                 if (node) {
-                    this.selectedNode = node;
-                    this.openedNodeId = this.selectedNode.id.toString();
+                    this.openFullInfo(node.id);
                 }
             },
             (error) => alert(error)
         );
         this._eosDictService.openedNode$.subscribe(
             (node) => {
-                if (node) {
-                    this.openedNode = node;
-                }
+                this.openedNode = node;
             },
             (error) => alert(error)
         );
-        this.route.params
-            .subscribe((params: Params) => {
-                this.dictionaryId = params.dictionaryId;
-                this.selectedNodeId = params.nodeId;
-                // this.openedNodeId = params.openedNodeId;
-                // console.log('params', params);
-            }, (error) => alert(error));
-
     }
 
     openFullInfo(childId: string): void {
-        this.openedNodeId = childId.toString();
-        this._eosDictService.openNode(this.dictionaryId, childId);
+        this._eosDictService.openNode(this._dictionaryId, childId);
     }
 
     selectNode(nodeId: string): void {
-        this.router.navigate(['spravochniki', this.dictionaryId, nodeId]);
+        this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
+    }
+
+    editNode() {
+        this.router.navigate([
+            'spravochniki',
+            this._dictionaryId,
+            this.openedNode ? this.openedNode.id : this.selectedNode.id,
+            'edit',
+        ]);
     }
 
     checkAllItems(): void {
