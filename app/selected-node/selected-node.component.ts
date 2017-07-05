@@ -30,6 +30,10 @@ export class SelectedNodeComponent {
             (node) => {
                 this.selectedNode = node;
                 if (node) {
+                    // Uncheck all checboxes before changing selectedNode
+                    if (this.selectedNode) {
+                        this.checkAllItems(false);
+                    }
                     this.openFullInfo(node.id);
                 }
             },
@@ -48,6 +52,7 @@ export class SelectedNodeComponent {
     }
 
     selectNode(nodeId: string): void {
+        this.checkAllItems(false);
         this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
     }
 
@@ -60,12 +65,40 @@ export class SelectedNodeComponent {
         ]);
     }
 
-    checkAllItems(): void {
-        this.selectedNode.selected = !this.checkAll;
+    checkAllItems(value: boolean = !this.checkAll): void {
+        this.checkAll = value;
+        this.selectedNode.selected = this.checkAll;
         if (this.selectedNode.children) {
             for (const item of this.selectedNode.children) {
-                item.selected = !this.checkAll;
+                item.selected = this.checkAll;
             }
         }
+    }
+
+    checkItem(item: EosDictionaryNode): void {
+        item.selected = !item.selected;
+        this.checkAll = false;
+    }
+
+    deleteSelectedItems(): void {
+        if (this.openedNode.selected && this.openedNode !== this.selectedNode) {
+            this.openFullInfo(this.openedNode.parent.id);
+        }
+        if (this.selectedNode.selected) {
+            this._eosDictService.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id]);
+            if (this.selectedNode.parent) {
+                this.selectNode(this.selectedNode.parent.id);
+            } else {
+                this.selectNode('');
+            }
+            return;
+        }
+        const selectedNodes: string[] = [];
+        this.selectedNode.children.forEach((child) => {
+            if (child.selected && !child.isDeleted) {
+                selectedNodes.push(child.id);
+            }
+        });
+        this._eosDictService.deleteSelectedNodes(this._dictionaryId, selectedNodes);
     }
 }

@@ -22,7 +22,7 @@ export class TreeNodeComponent implements OnInit {
     }
 
     private _update(selected: EosDictionaryNode) {
-        if (this.node) {
+        if (this.node && selected) {
             this.isActive = (selected.id === this.node.id);
         }
         this.selectedNode = selected;

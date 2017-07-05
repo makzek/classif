@@ -124,6 +124,13 @@ export class EosDictService {
 
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
+            if (!nodeId) {
+                this._selectedNode = null;
+                this._selectedNode$.next(null);
+                this._openedNode = null;
+                this._openedNode$.next(null);
+                res(null);
+            }
             this.getNode(dictionaryId, nodeId)
                 .then((node) => {
                     if (this._selectedNode !== node) {
@@ -180,5 +187,23 @@ export class EosDictService {
             );
             // rej('not implemented');
         });
+    }
+
+    private _deleteNode(node: EosDictionaryNode): void {
+        if (this._openedNode === node) {
+            this._openedNode = null;
+            this._openedNode$.next(this._openedNode);
+        }
+        Object.assign(node, { ...node, isDeleted: true });
+        if (node.children) {
+            node.children.forEach((subNode) => this._deleteNode(subNode));
+        }
+    }
+    public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
+        nodes.forEach((nodeId) => {
+            this.getNode(dictionaryId, nodeId)
+            .then((node) => this._deleteNode(node));
+        });
+        this._dictionary$.next(this._dictionary);
     }
 }

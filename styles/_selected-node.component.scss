@@ -1,3 +1,10 @@
+.control-implemented {
+    color: #337ab7;
+    cursor: pointer;
+}
+.isDeleted-wrap {
+    display: inherit;
+}
 .selected-node-wrapper {
     background: white;
     color: black;

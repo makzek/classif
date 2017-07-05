@@ -1,4 +1,4 @@
-<div *ngIf="node">
+<div *ngIf="node && !node.isDeleted">
     <i *ngIf="node.hasSubnodes" class="fa"
         [ngClass]="{'fa-minus':node.isExpanded, 'fa-plus': !node.isExpanded}" (click)="onExpand($event)"></i>
     <span [ngClass]="{active: isActive}" (click)="onSelect($event);">{{node.code}} {{node.title}}</span>

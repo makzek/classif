@@ -20,9 +20,7 @@ export class DictionaryComponent {
                 if (params.dictionaryId) {
                     _dictionaryService.openDictionary(params.dictionaryId)
                         .then(() => {
-                            if (params.nodeId) {
-                                _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
-                            }
+                            _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
                         });
                 }
             }
