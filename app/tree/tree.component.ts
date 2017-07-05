@@ -9,15 +9,9 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 export class TreeComponent {
     @Input() nodes: EosDictionaryNode[];
     @Input() selectedNode: any;
-    // @Input() baseRoute: string;
 
-    @Output() onSelectNode: EventEmitter<EosDictionaryNode> = new EventEmitter<EosDictionaryNode>();
     // @Output() getNodes: EventEmitter<number> = new EventEmitter<number>();
     @Output() onRequestChildNodes: EventEmitter<string> = new EventEmitter<string>();
-
-    onSelect(node: EosDictionaryNode) {
-        this.onSelectNode.emit(node);
-    }
 
     onExpand(node: EosDictionaryNode) {
         node.isExpanded = !node.isExpanded;

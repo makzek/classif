@@ -1,16 +1,10 @@
 
 <div class="col-sm-3 tree-wrapper">
-    <eos-tree
-        [nodes]="nodes"
-        [selectedNode]="selectedNode"
-        (onSelectNode)="selectNode($event)"
-    >
-    </eos-tree>
+    <eos-tree [nodes]="nodes" [selectedNode]="selectedNode"></eos-tree>
 </div>
 <div class="col-sm-5">
     <eos-selected-node></eos-selected-node>
 </div>
 <div class="col-sm-4">
-    <!--<eos-opened-node *ngIf="!!openedNode"></eos-opened-node>-->
     <eos-opened-node ></eos-opened-node>
 </div>

@@ -43,13 +43,7 @@ export class DictionaryComponent {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 this.nodes = dictionary.rootNodes;
-                console.log('roots', this.nodes);
             }
         });
-    }
-
-    /* it's event of tree-node only, not dictionary */
-    selectNode(node: EosDictionaryNode) {
-        this._dictionaryService.selectNode(this._dictionaryId, node.id);
     }
 }
