@@ -11,7 +11,7 @@
         <span class="controller pull-right">
             <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-minus"></span></span>
-        <a routerLink="/spravochniki/{{dictionaryId}}/{{selectedNode.id}}/edit"><span class="circle"><span class="glyphicon glyphicon-pencil"></span></span></a>
+        <a routerLink="/spravochniki/{{dictionaryId}}/{{openedNode?openedNode.id:selectedNode.id}}/edit"><span class="circle"><span class="glyphicon glyphicon-pencil"></span></span></a>
         <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
         <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
         <span class="circle"><span class="dots">...</span></span>

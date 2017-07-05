@@ -27,13 +27,12 @@ export class EditComponent {
                 this.dictionaryId = params.dictionaryId;
                 this.nodeId = params.nodeId;
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
-                return this.eosDictService.getNode(this.dictionaryId, this.nodeId);
+                return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
-            .subscribe((node) => this._update(node), (error) => console.log('error', error));
+            .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
     }
 
     private _update(node: EosDictionaryNode) {
-        console.log('node', node);
         this.node = Object.assign({}, node);
     }
 
@@ -46,13 +45,16 @@ export class EditComponent {
     }
 
     save(): void {
-        console.log('node', this.node);
-        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node);
+        // console.log('node', this.node);
+        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
+            () => {},
+            (err) => alert('err: ' + err)
+        );
     }
 
     cancel(): void {
-        this.eosDictService.getNode(this.node.title, this.node.id)
+        this.eosDictService.getNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
-            .catch((error) => console.log('error', error));
+            .catch((error) => alert('error: ' + error));
     }
 }

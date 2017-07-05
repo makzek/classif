@@ -169,7 +169,15 @@ export class EosDictService {
 
     public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            rej('not implemented');
+            this.getNode(dictionaryId, nodeId)
+            .then((node) => {
+                Object.assign(node, value);
+                // this._selectedNode$.next(this._selectedNode);
+                res(node);
+            }).catch(
+                (err) => rej(err)
+            );
+            // rej('not implemented');
         });
     }
 }

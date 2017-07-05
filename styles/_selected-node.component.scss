@@ -4,17 +4,24 @@
     padding: 10px;
 
     .checkbox {
-        display: inline-block;
         margin-left: 5px;
         margin-right: -5px;
         vertical-align: middle;
     }
 
-    .code {
-        margin: 0 10px;
+    .table-title {
+
+        .checkbox {
+            display: inline-block;
+        }
+
+        .code {
+            margin: 0 20px;
+        }
     }
 
     .selected-node-header {
+
         .controller {
             margin-top: 10px;
 
@@ -45,13 +52,28 @@
             }
         }
     }
-
+    
     .elements {
         list-style: none;
         padding-left: 0;
 
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+        }
+
         .node-info {
+            align-self: center;
+
             cursor: pointer;
+            margin-left: 10px;
+
+            .code {
+                margin-right: 10px;
+            }
         }
 
         .highlight {

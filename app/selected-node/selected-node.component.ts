@@ -12,6 +12,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 export class SelectedNodeComponent {
 
     selectedNode: EosDictionaryNode;
+    openedNode: EosDictionaryNode;
 
     checkAll: boolean = false;
 
@@ -27,7 +28,15 @@ export class SelectedNodeComponent {
                     this.openedNodeId = this.selectedNode.id.toString();
                 }
             },
-            (error) => console.log(error)
+            (error) => alert(error)
+        );
+        this._eosDictService.openedNode$.subscribe(
+            (node) => {
+                if (node) {
+                    this.openedNode = node;
+                }
+            },
+            (error) => alert(error)
         );
         this.route.params
             .subscribe((params: Params) => {
@@ -35,23 +44,23 @@ export class SelectedNodeComponent {
                 this.selectedNodeId = params.nodeId;
                 // this.openedNodeId = params.openedNodeId;
                 // console.log('params', params);
-            }, (error) => console.log(error));
+            }, (error) => alert(error));
 
     }
 
     openFullInfo(childId: string): void {
         this.openedNodeId = childId.toString();
-        console.log('openFullInfo', this.dictionaryId, childId);
+        // console.log('openFullInfo', this.dictionaryId, childId);
         this._eosDictService.openNode(this.dictionaryId, childId);
     }
 
     openThisNode(childId: string): void {
-        console.log('openThisNode');
+        // console.log('openThisNode');
         this._eosDictService.selectNode(this.dictionaryId, childId);
     }
 
     goToTop(): void {
-        console.log('goToTop');
+        // console.log('goToTop');
         if (this.selectedNode.parent) {
             this._eosDictService.selectNode(this.dictionaryId, this.selectedNode.parent.id);
         } else {
