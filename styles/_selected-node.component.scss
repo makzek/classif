@@ -68,7 +68,7 @@
 
     .elements {
         list-style: none;
-        max-height: 70vh;
+        max-height: calc(100vh - 145px - 94px);
         overflow-y: auto;
         padding-left: 0;
 
@@ -76,7 +76,8 @@
             list-style: none;
         }
 
-        li {
+        li,
+        .is-deleted-wrap {
             display: flex;
         }
 
