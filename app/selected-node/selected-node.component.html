@@ -12,17 +12,17 @@
         </span>
         <span class="controller pull-right">
             <span class="circle"><span class="glyphicon glyphicon-plus"></span></span>
-            <span class="circle" (click)="deleteSelectedItems()">
+        <span class="circle" (click)="deleteSelectedItems()">
                 <span class="glyphicon glyphicon-minus control-implemented"></span>
-            </span>
-            <a (click)="editNode()">
-                <span class="circle">
+        </span>
+        <a (click)="editNode()">
+            <span class="circle">
                     <span class="glyphicon glyphicon-pencil"></span>
-                </span>
-            </a>
-            <span class="circle"><span class="glyphicon glyphicon-chevron-up"></span></span>
-            <span class="circle"><span class="glyphicon glyphicon-chevron-down"></span></span>
-            <span class="circle"><span class="dots">...</span></span>
+            </span>
+        </a>
+        <span class="circle"><span class="glyphicon glyphicon-chevron-up" (click)="nextItem(true)"></span></span>
+        <span class="circle"><span class="glyphicon glyphicon-chevron-down" (click)="nextItem(false)"></span></span>
+        <span class="circle"><span class="dots">...</span></span>
         </span>
     </div>
     <div class="selected-node-content">
@@ -49,8 +49,7 @@
                             </label>
                             </span>
                             <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
-                                <span class="code">{{child.code}}</span>
-                                {{child.title}}
+                                <span class="code">{{child.code}}</span> {{child.title}}
                             </span>
                         </div>
                     </li>

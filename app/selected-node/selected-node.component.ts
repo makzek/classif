@@ -101,4 +101,22 @@ export class SelectedNodeComponent {
         });
         this._eosDictService.deleteSelectedNodes(this._dictionaryId, selectedNodes);
     }
+    nextItem(goBack: boolean): void {
+        if (this.selectedNode.id !== this.openedNode.id) {
+            let i = 0;
+            for (const child of this.selectedNode.children) {
+                if (child.id === this.openedNode.id) {
+                    break;
+                }
+                i++;
+            }
+            if (goBack) {
+                this._eosDictService.openNode(this._dictionaryId, this.selectedNode.children[(i - 1 +
+                    this.selectedNode.children.length) % this.selectedNode.children.length].id);
+            } else {
+                this._eosDictService.openNode(this._dictionaryId, this.selectedNode.children[(i + 1 +
+                    this.selectedNode.children.length) % this.selectedNode.children.length].id);
+            }
+        }
+    }
 }
