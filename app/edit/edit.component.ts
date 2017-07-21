@@ -16,6 +16,8 @@ export class EditComponent {
     nodeId: string;
     selfLink: string;
     editMode: boolean = false;
+    wasEdit: boolean = false;
+    hideWarning: boolean = true;
 
     constructor(
         private eosDictService: EosDictService,
@@ -38,15 +40,8 @@ export class EditComponent {
         }
     }
 
-    goPrevPage(): void {
-        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.node.parent).toString() + '/edit']);
-    }
-
-    goNextPage(): void { /* wtf */
-        this.router.navigate(['spravochniki/' + this.dictionaryId + '/' + (this.nodeId + 1).toString() + '/edit']);
-    }
-
     save(): void {
+        this.wasEdit = false;
         // console.log('node', this.node);
         this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
             () => {},
@@ -55,8 +50,27 @@ export class EditComponent {
     }
 
     cancel(): void {
+        this.wasEdit = false;
         this.eosDictService.getNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
             .catch((error) => alert('error: ' + error));
+    }
+
+    resetAndClose(): void {
+        this.cancel();
+        this.router.navigate([this.selfLink]);
+    }
+
+    saveAndClose(): void {
+        this.save();
+        this.router.navigate([this.selfLink]);
+    }
+
+    goTo(route: string): void {
+        if (!this.wasEdit) {
+            this.router.navigate([route]);
+        } else {
+            this.hideWarning = false;
+        }
     }
 }
