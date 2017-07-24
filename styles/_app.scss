@@ -1,4 +1,6 @@
 .main-container {
+    -ms-grid-columns: auto 1fr 0;
+    -ms-grid-rows: 100px 1fr 0;
     background: $background-color;
     color: $font-color;
     display: -ms-grid;
@@ -8,30 +10,28 @@
     right: 0;
     bottom: 0;
     left: 0;
-    -ms-grid-columns: auto 1fr 0;
-    -ms-grid-rows: 100px 1fr 0;
     grid-template-columns: auto 1fr 0;
     grid-template-rows: 100px 1fr 0;
 }
 
 .content-wrapper {
-    width: 100%;
     -ms-grid-column: 2;
     -ms-grid-row: 2;
+    width: 100%;
 }
 
 .sidebar-wrapper {
-    border-right: 1px solid $icon-color;
     -ms-grid-column: 1;
     -ms-grid-row: 2;
+    border-right: 1px solid $icon-color;
 }
 
 .header-wrapper {
-    border-bottom: 1px solid $icon-color;
-    padding: 10px;
     -ms-grid-column: 1;
     -ms-grid-column-span: 4;
     -ms-grid-row: 1;
+    border-bottom: 1px solid $icon-color;
+    padding: 10px;
     grid-column: 1/4;
 }
 
