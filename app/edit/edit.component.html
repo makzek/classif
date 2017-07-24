@@ -15,8 +15,10 @@
         <div class="col-sm-2 col-md-2 col-lg-2">
             <span class="pull-right">
         <a routerLink="{{selfLink}}/edit" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
-            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('')"></span>
-            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('')"></span>
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+             node.parent.children[(i-1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' + 
+            node.parent.children[(i+1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
             <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="goTo(selfLink)"></span>
             </span>
         </div>

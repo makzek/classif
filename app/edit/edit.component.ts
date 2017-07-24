@@ -18,6 +18,7 @@ export class EditComponent {
     editMode: boolean = false;
     wasEdit: boolean = false;
     hideWarning: boolean = true;
+    i: number = -1;
 
     constructor(
         private eosDictService: EosDictService,
@@ -37,6 +38,13 @@ export class EditComponent {
     private _update(node: EosDictionaryNode) {
         if (node) {
             this.node = new EosDictionaryNode(node);
+            let k = 0;
+            for (const item of node.parent.children) {
+                if (item.id === node.id) {
+                    this.i = k;
+                }
+                k++;
+            }
         }
     }
 
@@ -67,6 +75,7 @@ export class EditComponent {
     }
 
     goTo(route: string): void {
+        // console.log('route', route);
         if (!this.wasEdit) {
             this.router.navigate([route]);
         } else {
