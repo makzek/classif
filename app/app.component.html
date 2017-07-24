@@ -1,14 +1,15 @@
-<div class="container">
-    <header class="header-wrapper "><h1 class="title">EOS{{title}}</h1></header>
-    <div class="wrapper">
-    <aside class="sidebar-wrapper">
+<div class="main-container">
+    <!-- DON'T USE class="container" with display: grid -->
+    <div class="header-wrapper">
+        <h1 class="title">EOS{{title}}</h1>
+    </div>
+    <div class="sidebar-wrapper">
         <eos-sidebar></eos-sidebar>
-    </aside>
-    <article class="content-wrapper">
+    </div>
+    <div class="content-wrapper">
         <eos-breadcrumb></eos-breadcrumb>
-        <article class="content-outlet">
+        <div class="content-outlet">
             <router-outlet></router-outlet>
-        </article>
-    </article >
+        </div>
     </div>
 </div>

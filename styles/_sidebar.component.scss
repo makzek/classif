@@ -2,14 +2,14 @@
 .sidebar {
     background: $background-color;
     padding: 10px;
-
     .menu {
         list-style: none;
         padding: 10px 0 0;
-
+        .glyphicon {
+            width: 20px;
+        }
         .link-text {
             white-space: nowrap;
-
             &:hover,
             &:focus,
             &:active {
@@ -17,17 +17,14 @@
             }
         }
     }
-
     .sandwich-wrapper {
         height: 40px;
-
         .sandwich {
             background: $icon-color;
             display: inline-block;
             height: 3px;
             position: relative;
             width: 20px;
-
             &::before,
             &::after {
                 background: $icon-color;
@@ -37,11 +34,9 @@
                 position: absolute;
                 width: 20px;
             }
-
             &::before {
                 top: 6px;
             }
-
             &::after {
                 top: 12px;
             }
