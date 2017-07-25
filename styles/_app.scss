@@ -11,7 +11,7 @@
     bottom: 0;
     left: 0;
     grid-template-columns: auto 1fr 0;
-    grid-template-rows: 100px 1fr 0;
+    grid-template-rows: $breadcrumbs-height 1fr 0;
 }
 
 .content-wrapper {
@@ -31,8 +31,14 @@
     -ms-grid-column-span: 4;
     -ms-grid-row: 1;
     border-bottom: 1px solid $icon-color;
-    padding: 10px;
-    grid-column: 1/4;
+    padding: 7px;
+    grid-column: 1 / 4;
+
+    .title{
+        margin: 5px;
+        font-size: 16px;
+        display: inline-block;
+    }
 }
 
 .breadcrumb,

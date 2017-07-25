@@ -1,0 +1,14 @@
+eos-user {
+    display: inline-block;
+    margin-left: 10px;
+
+    .avatar {
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        border: 1px transparent solid;
+        border-radius: 50%; 
+        background: white;
+
+    }
+}

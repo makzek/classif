@@ -17,6 +17,9 @@ import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 import { SelectedNodeComponent } from './selected-node/selected-node.component';
 import { OpenedNodeComponent } from './opened-node/opened-node.component';
+import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
+import { SearchComponent } from './search/search.component';
+import { UserComponent } from './user/user.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -34,6 +37,9 @@ import { EosDictService } from './services/eos-dict.service';
         TreeNodeComponent,
         SelectedNodeComponent,
         OpenedNodeComponent,
+        DesktopSwitcherComponent,
+        SearchComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
