@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { HomeComponent } from './home/home.component';
-import { EditComponent } from './edit/edit.component';
+import { EditCardComponent } from './edit-card/edit-card.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
@@ -19,7 +19,7 @@ const routes: Routes = [{
         children: [{
             path: ':nodeId/edit',
             pathMatch: 'full',
-            component: EditComponent,
+            component: EditCardComponent,
             data: { title: 'Редактирвание' },
         }, {
             path: ':nodeId',

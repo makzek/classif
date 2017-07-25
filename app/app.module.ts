@@ -12,7 +12,7 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { EditComponent } from './edit/edit.component';
+import { EditCardComponent } from './edit-card/edit-card.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 import { SelectedNodeComponent } from './selected-node/selected-node.component';
@@ -29,7 +29,7 @@ import { EosDictService } from './services/eos-dict.service';
         DictionariesComponent,
         HomeComponent,
         SidebarComponent,
-        EditComponent,
+        EditCardComponent,
         TreeComponent,
         TreeNodeComponent,
         SelectedNodeComponent,

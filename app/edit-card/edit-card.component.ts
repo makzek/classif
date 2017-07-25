@@ -6,10 +6,10 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
-    selector: 'eos-edit',
-    templateUrl: 'edit.component.html',
+    selector: 'eos-edit-card',
+    templateUrl: 'edit-card.component.html',
 })
-export class EditComponent {
+export class EditCardComponent {
 
     node: EosDictionaryNode;
     dictionaryId: string;
