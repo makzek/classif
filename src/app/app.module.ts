@@ -6,6 +6,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { Ng2BootstrapModule } from 'ngx-bootstrap';
+
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
@@ -46,6 +48,7 @@ import { EosDictService } from './services/eos-dict.service';
         FormsModule,
         AppRoutingModule,
         HttpModule,
+        Ng2BootstrapModule.forRoot(),
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -11,7 +11,9 @@
     "lint": "npm run saas-lint && ng lint --type-check",
     "e2e": "ng e2e"
   },
-  "pre-commit": [ "lint" ],
+  "pre-commit": [
+    "lint"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.0.0",
@@ -24,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
+    "ngx-bootstrap": "^1.8.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
