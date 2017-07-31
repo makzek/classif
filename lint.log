@@ -1,0 +1,39 @@
+
+> eos@0.0.2 lint /home/igi/projects/eos
+> npm run saas-lint && ng lint --type-check
+
+
+> eos@0.0.2 saas-lint /home/igi/projects/eos
+> ./node_modules/sass-lint/bin/sass-lint.js -c ./.sass-lint.yml -v -q
+
+
+src/styles/_app.scss
+   7:5   warning  Duplicate properties are not allowed within a block            no-duplicate-properties
+  31:5   warning  Property `grid-column-span` appears to be spelled incorrectly  no-misspelled-properties
+  37:10  warning  Whitespace required before {                                   space-before-brace
+
+src/styles/_desktop-switcher.component.scss
+  4:1  warning  Files must end with a new line  final-newline
+
+src/styles/_dictionaries.component.scss
+  2:19  warning  !important not allowed  no-important
+  4:18  warning  !important not allowed  no-important
+
+src/styles/_edit-card.component.scss
+  73:35  warning  Don't include leading zeros on numbers  leading-zero
+
+src/styles/_search.component.scss
+  4:1  warning  Files must end with a new line  final-newline
+
+src/styles/_user.component.scss
+  10:28  warning  No trailing whitespace allowed  no-trailing-whitespace
+
+src/styles/_variables.scss
+  1:1  warning  Multiline style comments should not be used  no-css-comments
+  2:1  warning  Multiline style comments should not be used  no-css-comments
+
+✖ 11 problems (0 errors, 11 warnings)
+
+
+
+All files pass linting.
