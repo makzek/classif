@@ -22,13 +22,16 @@ import { OpenedNodeComponent } from './opened-node/opened-node.component';
 import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
+import { MessagesComponent } from './messages/messages.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
+import { EosMessageService } from './services/eos-message.service';
 
 @NgModule({
     declarations: [
         AppComponent,
+        MessagesComponent,
         BreadcrumbsComponent,
         DictionaryComponent,
         DictionariesComponent,
@@ -54,6 +57,7 @@ import { EosDictService } from './services/eos-dict.service';
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosApiService,
         EosDictService,
+        EosMessageService,
     ],
     bootstrap: [AppComponent],
 })

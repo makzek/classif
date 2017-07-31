@@ -34,11 +34,20 @@
     padding: 7px;
     grid-column: 1 / 4;
 
-    .title{
+    .title {
         margin: 5px;
         font-size: 16px;
         display: inline-block;
     }
+}
+
+.messages-wrapper {
+    position: fixed;
+    top: 48px;
+    right: 0;
+    padding: 5px;
+    min-width: 200px;
+    width: 30%;
 }
 
 .breadcrumb,
