@@ -17,7 +17,7 @@
         <a routerLink="{{selfLink}}/edit" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
              node.parent.children[(i-1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
-            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' + 
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
             node.parent.children[(i+1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
             <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="goTo(selfLink)"></span>
             </span>
@@ -34,12 +34,12 @@
         <div class="input-line row">
             <div class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="code">Код:</label>
-                <input [hidden]="!editMode" class="" id="code" (change)="wasEdit = true" [(ngModel)]="node.code"></input>
+                <input [hidden]="!editMode" class="" id="code" (change)="wasEdit = true" [(ngModel)]="node.code"/>
                 <span [hidden]="editMode" class="">{{node.code}}</span>
             </div>
             <div class="form-group col-sm-8 col-md-8 col-lg-8">
                 <label for="shortName">Краткое наименование:</label>
-                <input [hidden]="!editMode" class="" id="shortName" (change)="wasEdit = true" [(ngModel)]="node.title"></input>
+                <input [hidden]="!editMode" class="" id="shortName" (change)="wasEdit = true" [(ngModel)]="node.title"/>
                 <span [hidden]="editMode" class="">{{node.title}}</span>
             </div>
         </div>
@@ -52,12 +52,12 @@
             </div>
             <div *ngIf="node.data" class="form-group col-sm-4 col-md-4 col-lg-4">
                 <label for="note">Примечание:</label>
-                <input [hidden]="!editMode" class="" id="note" (change)="wasEdit = true" [(ngModel)]="node.data.note"></input>
+                <input [hidden]="!editMode" class="" id="note" (change)="wasEdit = true" [(ngModel)]="node.data.note"/>
                 <span [hidden]="editMode" class="">{{node.data.note}}</span>
             </div>
             <div *ngIf="node.data" class="form-group col-sm-2 col-md-2 col-lg-2">
                 <label for="indexSEV">Индекс СЭВ:</label>
-                <input [hidden]="!editMode" class="" id="indexSEV" (change)="wasEdit = true" [(ngModel)]="node.data.indexSEV"></input>
+                <input [hidden]="!editMode" class="" id="indexSEV" (change)="wasEdit = true" [(ngModel)]="node.data.indexSEV"/>
                 <span [hidden]="editMode" class="">{{node.data.indexSEV}}</span>
             </div>
         </div>

@@ -4,7 +4,8 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-tree',
-    templateUrl: 'tree.component.html',
+    templateUrl: './tree.component.html',
+    styleUrls: ['./tree.component.scss']
 })
 export class TreeComponent {
     @Input() nodes: EosDictionaryNode[];

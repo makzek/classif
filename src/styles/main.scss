@@ -6,8 +6,8 @@
 // @import "fontawesome/variables";
 // VENDOR - Default fall-backs and external files.
 // ==========================================================================
-@import "../node_modules/font-awesome/scss/font-awesome";
-@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../node_modules/font-awesome/scss/font-awesome";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 @import "app";
 @import "sidebar.component";
