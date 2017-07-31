@@ -6,9 +6,37 @@ eos-user {
         display: inline-block;
         height: 30px;
         width: 30px;
-        border: 1px transparent solid;
-        border-radius: 50%; 
+        border: 1px black solid;
+        border-radius: 50%;
         background: white;
 
+    }
+
+    .dropdown li {
+        color: black;
+    }
+
+    .form-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.3); // sass-lint:disable-line leading-zero
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .modal-window {
+            background: $modal-background;
+            width: 500px;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 30px;
+        }
+    }
+
+    .hidden {
+        display: none;
     }
 }

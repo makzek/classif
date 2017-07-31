@@ -1,4 +1,8 @@
 eos-desktop-switcher {
     display: inline-block;
     margin: 0 10px;
+
+    .btn {
+        height: $header-element-height;
+    }
 }

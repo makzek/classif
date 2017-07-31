@@ -70,7 +70,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.3); // sass-lint:disable-line leading-zero
         display: flex;
         flex-direction: column;
         justify-content: space-around;

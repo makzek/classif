@@ -6,6 +6,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 
+// import { Ng2BootstrapModule } from 'ngx-bootstrap/ng2-bootstrap';
+
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
@@ -23,6 +25,10 @@ import { UserComponent } from './user/user.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
+import { EosDeskService } from './services/eos-desk.service';
+import { EosUserService } from './services/eos-user.service';
+import { EosUserSettingsService } from './services/eos-user-settings.service';
+import { EosNoticeService } from './services/eos-notice.service';
 
 @NgModule({
     declarations: [
@@ -42,15 +48,21 @@ import { EosDictService } from './services/eos-dict.service';
         UserComponent,
     ],
     imports: [
+
         BrowserModule,
         FormsModule,
         AppRoutingModule,
         HttpModule,
+        // Ng2BootstrapModule.forRoot(),
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosApiService,
         EosDictService,
+        EosDeskService,
+        EosUserService,
+        EosUserSettingsService,
+        EosNoticeService,
     ],
     bootstrap: [AppComponent],
 })
