@@ -56,24 +56,17 @@ import { EosMessageService } from './services/eos-message.service';
         FormsModule,
         AppRoutingModule,
         HttpModule,
-<<<<<<< HEAD:app/app.module.ts
-        // Ng2BootstrapModule.forRoot(),
-=======
         Ng2BootstrapModule.forRoot(),
->>>>>>> origin/master:src/app/app.module.ts
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosApiService,
         EosDictService,
-<<<<<<< HEAD:app/app.module.ts
         EosDeskService,
         EosUserService,
         EosUserSettingsService,
         EosNoticeService,
-=======
         EosMessageService,
->>>>>>> origin/master:src/app/app.module.ts
     ],
     bootstrap: [AppComponent],
 })

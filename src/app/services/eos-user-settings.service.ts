@@ -26,15 +26,9 @@ export class EosUserSettingsService {
     get settings(): Observable<any> {
         return this._settings$.asObservable();
     }
-/* tslint:disable:arrow-parens */
-    changeSetting(id: string, value: boolean) {
-        this._settings.forEach(elem => {
 
-            if (elem.id === id) {
-                elem.value = value;
-            }
-        });
+    saveSettings(settings: any) {
+        this._settings = settings;
         this._settings$.next(this._settings);
     }
-/* tslint:enable:arrow-parens */
 }

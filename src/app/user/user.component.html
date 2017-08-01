@@ -1,4 +1,4 @@
-<!--<div class="btn-group" dropdown>
+<div class="btn-group" dropdown>
   <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
     <span class="glyphicon glyphicon-bell" aria-hidden="true"><span class="badge pull-right">{{messages}}</span></span>
         <span class="text">{{'Пользователь' || fullname}}</span>
@@ -6,44 +6,21 @@
         <span class="caret"></span>
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Option</a></li>
-    <li role="menuitem" *ngIf="!fullname"><a class="dropdown-item" (click)="hideLogInForm = false">Войти</a></li>
+    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Option1</a></li>
+    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li>
+    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки</a></li>
+    <li role="menuitem" *ngIf="!fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
     <li class="divider dropdown-divider" *ngIf="fullname"></li>
     <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Выйти</a>
     </li>
   </ul>
-</div> -->
-
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="true">
-        <span class="glyphicon glyphicon-bell" aria-hidden="true"><span class="badge pull-right">{{noticeCount}}</span></span>
-        <span class="text">{{ fullname || 'Пользователь' }}</span>
-        <span class="avatar"></span>
-        <span class="caret"></span>
-  </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li *ngIf="fullname"><a class="dropdown-item" href="#">Option</a></li>
-        <li *ngIf="fullname"><a class="dropdown-item" href="#">Option</a></li>
-        <li *ngIf="fullname"><a class="dropdown-item" href="#">Option</a></li>
-        <li *ngIf="!fullname"><a class="dropdown-item" (click)="hideLogInForm = false">Войти</a></li>
-        <li class="divider dropdown-divider" *ngIf="fullname"></li>
-        <li *ngIf="fullname"><a class="dropdown-item">Настройки:</a>
-            <ul>
-                <li *ngFor="let setting of settings">{{setting.name}}
-                    <span *ngIf="setting.value" class="glyphicon glyphicon-ok" aria-hidden="true" (click)="changeSettings(setting.id, !setting.value)"></span>
-                    <span *ngIf="!setting.value" class="glyphicon glyphicon-remove" aria-hidden="true" (click)="changeSettings(setting.id, !setting.value)"></span>
-                </li>
-            </ul>
-        </li>
-        <li class="divider dropdown-divider" *ngIf="fullname"></li>
-        <li *ngIf="fullname"><a class="dropdown-item" href="#">Выйти</a>
-    </ul>
 </div>
 
-<div class="form-wrapper" [ngClass]="{'hidden': hideLogInForm}">
-    <div class="modal-window">
-        <h2>Введите свой логин и пароль</h2>
+<template #loginWindow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
+  </div>
+  <div class="modal-body">
         <br>
         <label for="basic-url">Ваш логин</label>
         <div class="input-group">
@@ -54,5 +31,20 @@
             <input type="text" [(ngModel)]="inputPassword" class="form-control" id="password" />
         </div>
         <button type="button" class="btn btn-default" (click)="login()" [disabled]="!inputName || !inputPassword">Войти</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Отмена</button>
+  </div>
+</template>
+
+<template #settingsWindow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Настройки</h4>
+    
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let setting of settings" class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="setting.value">{{setting.name}}</label>
     </div>
-</div>
+    <button class="btn btn-default" (click)="saveSettings()">Сохранить настройки</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Отмена</button>
+  </div>
+</template>

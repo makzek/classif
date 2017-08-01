@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { EosUserService } from '../services/eos-user.service';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
@@ -10,18 +12,19 @@ import { EosNoticeService } from '../services/eos-notice.service';
 })
 export class UserComponent {
     fullname: string;
-    hideLogInForm: boolean = true;
     inputName: string = null;
     inputPassword: string = null;
     noticeCount: number = 0;
 
     settings: any;
+    public modalRef: BsModalRef;
 
     constructor(
-        private eosUserSevice: EosUserService,
+        private eosUserService: EosUserService,
         private eosUserSettingsService: EosUserSettingsService,
-        private eosNoticeService: EosNoticeService) {
-        this.fullname = this.eosUserSevice.userName();
+        private eosNoticeService: EosNoticeService,
+        private modalService: BsModalService) {
+        this.fullname = this.eosUserService.userName();
         this.noticeCount = this.eosNoticeService.noticeCount;
         this.eosUserSettingsService.settings.subscribe(
             (res) => this.settings = res,
@@ -29,12 +32,17 @@ export class UserComponent {
         );
     }
 
+ 
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
     login(): void {
-        this.hideLogInForm = true;
-        this.eosUserSevice.login(this.inputName, this.inputPassword);
+        this.eosUserService.login(this.inputName, this.inputPassword);
     }
 
-    changeSettings(id: string, value: boolean): void {
-        this.eosUserSettingsService.changeSetting(id, value);
+    saveSettings(): void {
+        this.modalRef.hide();
+        this.eosUserSettingsService.saveSettings(this.settings);
     }
 }
