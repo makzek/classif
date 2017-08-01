@@ -2,14 +2,16 @@
     'use strict';
 
     var paths = {
-            // paths serve as alias
-            'npm:': './node_modules/'
-        },
+        // paths serve as alias
+        'npm:': './node_modules/'
+    },
         map = {
             'app': 'app',
             'rxjs': 'lib/js/rxjs',
             '@angular': 'lib/js/@angular',
             'zone.js': 'lib/js/zone.js/dist',
+            'moment': 'lib/js/moment.js',
+            //'ngx-bootstrap/ng2-bootstrap': 'lib/js/ngx-bootstrap.umd.js',
         },
         packages = {
             'app': {

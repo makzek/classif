@@ -1,4 +1,8 @@
 eos-search {
     display: inline-block;
     width: 300px;
+
+    .form-control {
+        height: $header-element-height;
+    }
 }

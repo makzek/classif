@@ -24,7 +24,7 @@ const tsconfig = require('tsconfig-glob');
 const tscConfig = require('./tsconfig.json');
 const testTscConfig = require('./tests/tsconfig.json');
 
-const embedTemplates = require ('gulp-angular-embed-templates');
+const embedTemplates = require('gulp-angular-embed-templates');
 
 tscConfig.compilerOptions['typescript'] = require('typescript');
 
@@ -75,7 +75,7 @@ gulp.task('lint:ts', function () {
 gulp.task('compile:ts', function () {
     return gulp
         .src(tscConfig.filesGlob)
-        .pipe(embedTemplates({sourceType:'ts'}))
+        .pipe(embedTemplates({ sourceType: 'ts' }))
         .pipe(plumber({
             errorHandler: function (err) {
                 console.error('>>> [tsc] Typescript compilation failed'.bold.green);
@@ -92,9 +92,9 @@ gulp.task('compile:ts', function () {
 gulp.task('bundle:js', function () {
     var builder = new sysBuilder('dist', './system.config.js');
     return builder.buildStatic('app', 'dist/app/app.min.js', {
-            minify: false,
-            sourceMaps: true
-        })
+        minify: false,
+        sourceMaps: true
+    })
         .then(function () {
             //            return del(['dist/app/**/*.js', 'dist/app/**/*.map','!dist/app/app.min.*']);
         })
@@ -134,8 +134,8 @@ gulp.task('compile:sass', function () {
     // concat and minify global scss files
     return gulp
         .src([
-          'styles/*.scss',
-          'app/**/*.scss'
+            'styles/*.scss',
+            'app/**/*.scss'
         ])
         .pipe(plumber({
             errorHandler: function (err) {
@@ -168,26 +168,29 @@ gulp.task('copy:libs', function () {
         .pipe(gulp.dest('dist/lib/js/rxjs'));
 
     gulp.src([
-            'node_modules/jquery/dist/jquery.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
-            'node_modules/core-js/client/shim.min.js',
-            // 'node_modules/es6-shim/es6-shim.min.js',
-            'node_modules/es6-promise/dist/es6-promise.min.js',
-            'node_modules/zone.js/dist/zone.js',
-            'node_modules/reflect-metadata/Reflect.js',
-            // 'node_modules/systemjs/dist/system-polyfills.js',
-            'node_modules/systemjs/dist/system.src.js',
-            'system.config.js'
-        ])
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
+        'node_modules/core-js/client/shim.min.js',
+        // 'node_modules/es6-shim/es6-shim.min.js',
+        'node_modules/es6-promise/dist/es6-promise.min.js',
+        'node_modules/zone.js/dist/zone.js',
+        'node_modules/reflect-metadata/Reflect.js',
+        // 'node_modules/systemjs/dist/system-polyfills.js',
+        'node_modules/systemjs/dist/system.src.js',
+        'system.config.js',
+
+    ])
         .pipe(concat('vendors.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist/lib/js'));
 
     gulp.src([
-            // 'node_modules/es6-shim/es6-shim.map',
-            'node_modules/reflect-metadata/Reflect.js.map',
-            // 'node_modules/systemjs/dist/system-polyfills.js.map'
-        ])
+        // 'node_modules/es6-shim/es6-shim.map',
+        'node_modules/reflect-metadata/Reflect.js.map',
+        // 'node_modules/systemjs/dist/system-polyfills.js.map'
+        'node_modules/moment/moment.js',
+        'node_modules/ngx-bootstrap/bundles/ngx-bootstrap.umd.js',
+    ])
         .pipe(gulp.dest('dist/lib/js'));
 
     /* copy fonts */
@@ -213,8 +216,8 @@ gulp.task('copy:html', function () {
 
 gulp.task('copy:assets', function () {
     return gulp.src([
-            'assets/**/*'
-        ])
+        'assets/**/*'
+    ])
         .pipe(gulp.dest('dist/assets'));
 });
 

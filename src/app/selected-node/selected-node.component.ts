@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosDictionary } from '../core/eos-dictionary';
 
 @Component({
     selector: 'eos-selected-node',
@@ -13,6 +14,8 @@ export class SelectedNodeComponent {
     selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
 
+    dictionary: EosDictionary;
+
     checkAll: boolean = false;
 
     private _dictionaryId: string;
@@ -20,6 +23,7 @@ export class SelectedNodeComponent {
     constructor(private _eosDictService: EosDictService, private router: Router) {
         this._eosDictService.dictionary$.subscribe(
             (dictionary) => {
+                this.dictionary = dictionary;
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
                 }
@@ -35,6 +39,15 @@ export class SelectedNodeComponent {
                         this.checkAllItems(false);
                     }
                     this.openFullInfo(node.id);
+                } else {
+                    if (this.dictionary) {
+                        this.selectedNode = new EosDictionaryNode({
+                            code: '',
+                            id: this.dictionary.id,
+                            title: this.dictionary.title,
+                            children: this.dictionary.rootNodes
+                        });
+                    }
                 }
             },
             (error) => alert(error)
@@ -42,6 +55,14 @@ export class SelectedNodeComponent {
         this._eosDictService.openedNode$.subscribe(
             (node) => {
                 this.openedNode = node;
+                if (!this.openedNode && this.dictionary) {
+                    this.openedNode = new EosDictionaryNode({
+                            code: '',
+                            id: this.dictionary.id,
+                            title: this.dictionary.title,
+                            children: this.dictionary.rootNodes
+                        });
+                }
             },
             (error) => alert(error)
         );

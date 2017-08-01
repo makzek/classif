@@ -23,9 +23,14 @@ import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.co
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
 import { MessagesComponent } from './messages/messages.component';
+import { NoticeComponent } from './notice/notice.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
+import { EosDeskService } from './services/eos-desk.service';
+import { EosUserService } from './services/eos-user.service';
+import { EosUserSettingsService } from './services/eos-user-settings.service';
+import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
 import { TestPageComponent } from './test-page/test-page.component';
 
@@ -47,8 +52,10 @@ import { TestPageComponent } from './test-page/test-page.component';
         SearchComponent,
         UserComponent,
         TestPageComponent,
+        NoticeComponent,
     ],
     imports: [
+
         BrowserModule,
         FormsModule,
         AppRoutingModule,
@@ -59,6 +66,10 @@ import { TestPageComponent } from './test-page/test-page.component';
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosApiService,
         EosDictService,
+        EosDeskService,
+        EosUserService,
+        EosUserSettingsService,
+        EosNoticeService,
         EosMessageService,
     ],
     bootstrap: [AppComponent],
