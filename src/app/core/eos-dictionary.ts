@@ -31,9 +31,11 @@ export class EosDictionary {
                     if (!parent.children) {
                         parent.children = [];
                     }
+                    /* tslint:disable:no-bitwise */
                     if (!~parent.children.findIndex((_chld) => _chld.id === _node.id)) {
                         parent.children.push(_node);
                     }
+                    /* tslint:enable:no-bitwise */
                 }
             }
         });

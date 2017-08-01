@@ -1,17 +1,11 @@
 import { Component } from '@angular/core';
 
 import { EosMessageService } from '../services/eos-message.service';
-
-export interface IMessage {
-    type: 'success' | 'info' | 'warning' | 'danger',
-    title: string,
-    msg: string,
-    dismissOnTimeout?: number,
-}
+import { IMessage } from '../core/message.interface';
 
 @Component({
-  selector: 'eos-messages',
-  templateUrl: 'messages.template.html',
+    selector: 'eos-messages',
+    templateUrl: 'messages.template.html',
 })
 export class MessagesComponent {
     messages: IMessage[];

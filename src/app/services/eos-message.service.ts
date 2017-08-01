@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { IMessage } from '../messages/messages.component';
+import { IMessage } from '../core/message.interface';
 
 @Injectable()
 export class EosMessageService {
