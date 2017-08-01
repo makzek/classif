@@ -1,0 +1,21 @@
+<div class="main-container">
+    <!-- DON'T USE class="container" with display: grid -->
+    <div class="header-wrapper">
+        <h1 class="title">EOS{{title}}</h1>
+        <eos-desktop-switcher></eos-desktop-switcher>
+        <eos-user class="pull-right"></eos-user>
+        <eos-search class="pull-right"></eos-search>
+    </div>
+    <div class="sidebar-wrapper">
+        <eos-sidebar></eos-sidebar>
+    </div>
+    <div class="content-wrapper">
+        <eos-breadcrumb></eos-breadcrumb>
+        <div class="messages-wrapper">
+            <eos-messages></eos-messages>
+        </div>
+        <div class="content-outlet">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

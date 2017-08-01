@@ -1,0 +1,9 @@
+<alert *ngFor="let message of messages"
+    [type]="message.type"
+    [dismissible]="true"
+    (onClose)="onClose(message)"
+    [dismissOnTimeout]="message.dismissOnTimeout"
+>
+    <strong>{{message.title}}</strong>
+    <span [innerHtml]="message.msg"></span>
+</alert>

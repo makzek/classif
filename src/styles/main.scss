@@ -1,0 +1,22 @@
+@import "variables";
+@import "fonts";
+
+// override bootstrap variables
+// @import "bootstrap/variables";
+// @import "fontawesome/variables";
+// VENDOR - Default fall-backs and external files.
+// ==========================================================================
+@import "../../node_modules/font-awesome/scss/font-awesome";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "app";
+@import "sidebar.component";
+@import "dictionaries.component";
+@import "edit-card.component";
+@import "selected-node.component";
+@import "opened-node.component";
+@import "breadcrumb.component";
+@import "desktop-switcher.component";
+@import "search.component";
+@import "user.component";
+@import "tree.component";
