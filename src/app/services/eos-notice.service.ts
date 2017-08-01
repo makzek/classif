@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class EosNoticeService {
-    _notice: string[];
+    _notices: string[];
 
     constructor() {
-        this._notice = ['Notice1', 'Notice2', 'Notice3'];
+        this._notices = ['Notice1', 'Notice2', 'Notice3'];
     }
 
-    get notice() {
-        return this._notice;
+    get notices() {
+        return this._notices;
     }
 
-    get noticeCount() {
-        return this._notice.length;
+    get noticesCount() {
+        return this._notices.length;
     }
 
 }

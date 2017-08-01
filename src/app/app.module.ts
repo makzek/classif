@@ -23,6 +23,7 @@ import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.co
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
 import { MessagesComponent } from './messages/messages.component';
+import { NoticeComponent } from './notice/notice.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -49,6 +50,7 @@ import { EosMessageService } from './services/eos-message.service';
         DesktopSwitcherComponent,
         SearchComponent,
         UserComponent,
+        NoticeComponent,
     ],
     imports: [
 
