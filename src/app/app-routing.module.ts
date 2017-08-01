@@ -5,10 +5,11 @@ import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { HomeComponent } from './home/home.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
+import { TestPageComponent } from './test-page/test-page.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
-    data: { title: 'Справочники', showInBreadcrumb: true  },
+    data: { title: 'Справочники', showInBreadcrumb: true },
     children: [{
         path: '',
         pathMatch: 'full',
@@ -35,6 +36,10 @@ const routes: Routes = [{
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home', showInBreadcrumb: true },
+}, {
+    path: 'test',
+    component: TestPageComponent,
+    data: { title: 'Test page for UI components', showInBreadcrumb: true }
 }, {
     path: '',
     redirectTo: '/home',

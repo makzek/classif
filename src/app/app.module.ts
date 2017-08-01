@@ -27,6 +27,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosMessageService } from './services/eos-message.service';
+import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { EosMessageService } from './services/eos-message.service';
         DesktopSwitcherComponent,
         SearchComponent,
         UserComponent,
+        TestPageComponent,
     ],
     imports: [
         BrowserModule,
