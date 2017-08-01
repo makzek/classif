@@ -35,7 +35,7 @@ export class EosDeskService {
     }*/
 
 }
-
+/* tslint:disable:max-classes-per-file */
 export class EosDesk {
     id: string;
     name: string;
@@ -46,3 +46,4 @@ export class EosDesk {
         Object.assign(this, data);
     }
 }
+/* tslint:enable:max-classes-per-file */

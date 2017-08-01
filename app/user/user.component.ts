@@ -18,7 +18,7 @@ export class UserComponent {
     settings: any;
 
     constructor(
-        private eosUserSevice: EosUserService, 
+        private eosUserSevice: EosUserService,
         private eosUserSettingsService: EosUserSettingsService,
         private eosNoticeService: EosNoticeService) {
         this.fullname = this.eosUserSevice.userName();

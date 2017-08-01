@@ -16,6 +16,20 @@ eos-user {
         color: black;
     }
 
+    .btn-default .badge {
+        font-size: 10px;
+        line-height: 5px;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        padding: 4px;
+        background-color: darkred;
+    }
+
+    .glyphicon-bell {
+        font-size: 24px;
+    }
+
     .form-wrapper {
         position: fixed;
         top: 0;
