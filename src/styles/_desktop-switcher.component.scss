@@ -1,8 +1,19 @@
 eos-desktop-switcher {
     display: inline-block;
     margin: 0 10px;
+    color: black;
 
     .btn {
         height: $header-element-height;
+    }
+
+    .dropdown-menu > li > a {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .actions {
+        position: absolute;
+        right: 5px;
     }
 }

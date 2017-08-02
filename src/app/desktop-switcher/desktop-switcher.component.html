@@ -3,6 +3,49 @@
     {{selectedDesk.name}}<span class="caret"></span>
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li *ngFor="let desk of deskList" role="menuitem" (click)="selectDesk(desk)"><a class="dropdown-item">{{desk.name}}</a></li>
+    <li *ngFor="let desk of deskList" role="menuitem">
+      <a class="dropdown-item">
+      <span (click)="selectDesk(desk)">{{desk.name}}</span>
+      <span class="actions">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="openEditModal(editWindow, desk)"></span>
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeDesk(desk)"></span>
+      </span>
+      </a>
+      
+    </li>
+    <li class="divider dropdown-divider"></li>
+    <li (click)="openCreateModal(createWindow)"><a>Создать рабочий стол</a></li>
   </ul>
 </div>
+
+<template #editWindow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Редактирование рабочего стола</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">Название рабочего стола</span>
+      <input type="text" class="form-control" [(ngModel)]="editedDesk.name" aria-describedby="basic-addon1">
+    </div>
+    <button class="btn btn-default" (click)="editDesk(editedDesk)">Сохранить</button>
+  </div>
+</template>
+
+<template #createWindow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Создание рабочего стола</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">Введите рабочего стола</span>
+      <input type="text" class="form-control" [(ngModel)]="emptyDesk.name" aria-describedby="basic-addon1">
+    </div>
+    <button class="btn btn-default" (click)="createDesk(emptyDesk)">Сохранить</button>
+  </div>
+</template>

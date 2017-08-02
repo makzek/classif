@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../services/eos-desk.service';
@@ -10,7 +12,14 @@ import { EosDesk } from '../services/eos-desk.service';
 export class DesktopSwitcherComponent {
     deskList: EosDesk[];
     selectedDesk: EosDesk;
-    constructor(private eosDeskService: EosDeskService) {
+    public modalRef: BsModalRef;
+    editedDesk: EosDesk;
+    emptyDesk: EosDesk = {
+        id: null,
+        name: null,
+        references: [],
+    };
+    constructor(private eosDeskService: EosDeskService, private modalService: BsModalService) {
         this.eosDeskService.desksList.subscribe(
             (res) => {
                 this.deskList = res;
@@ -26,5 +35,28 @@ export class DesktopSwitcherComponent {
 
     selectDesk(desk: EosDesk): void {
         this.eosDeskService.setSelectedDesk(desk);
+    }
+
+    editDesk(desk: EosDesk): void {
+        this.modalRef.hide();
+        this.eosDeskService.editDesk(desk);
+    }
+
+    removeDesk(desk: EosDesk): void {
+        this.eosDeskService.removeDesk(desk);
+    }
+
+    createDesk(desk: EosDesk): void {
+        this.modalRef.hide();
+        this.eosDeskService.createDesk(desk);
+    }
+
+    public openEditModal(template: TemplateRef<any>, desk: EosDesk) {
+        this.editedDesk = desk;
+        this.modalRef = this.modalService.show(template);
+    }
+
+    public openCreateModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
     }
 }
