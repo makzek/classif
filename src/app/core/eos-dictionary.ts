@@ -3,18 +3,25 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 export class EosDictionary {
     readonly id: string;
     public title: string;
+    root: EosDictionaryNode;
     private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<string, EosDictionaryNode>;
 
     constructor(data: any) {
-        Object.assign(this, data);
+        this.id = data.id;
+        this.root = new EosDictionaryNode({
+            id: '',
+            title: data.title,
+            isNode: true,
+            children: []
+        })
         this._nodes = new Map<string, EosDictionaryNode>();
-        this._rootNodes = [];
     }
 
     init(data: any[]) {
         this._nodes.clear();
-        this._rootNodes.splice(0, this._rootNodes.length);
+        this.root.children = [];
+        this.root.hasSubnodes = false;
 
         /* add nodes */
         data.forEach((nodeData) => {
@@ -43,10 +50,12 @@ export class EosDictionary {
         /* build roots */
         this._nodes.forEach((_node) => {
             if (!_node.parent) {
-                this._rootNodes.push(_node);
+                this.root.children.push(_node);
+                _node.parent = this.root;
             }
         });
 
+        this.root.hasSubnodes = this.root.children.length > 0;
         /* console.log('init dictionary', this._nodes); */
         /* console.log('roots', this._rootNodes); */
     }

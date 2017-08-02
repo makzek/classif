@@ -16,7 +16,7 @@ export class SelectedNodeComponent {
 
     dictionary: EosDictionary;
 
-    checkAll: boolean = false;
+    checkAll = false;
 
     private _dictionaryId: string;
 
@@ -41,12 +41,7 @@ export class SelectedNodeComponent {
                     this.openFullInfo(node.id);
                 } else {
                     if (this.dictionary) {
-                        this.selectedNode = new EosDictionaryNode({
-                            code: '',
-                            id: this.dictionary.id,
-                            title: this.dictionary.title,
-                            children: this.dictionary.rootNodes
-                        });
+                        this.selectedNode = this.dictionary.root;
                     }
                 }
             },
@@ -56,12 +51,7 @@ export class SelectedNodeComponent {
             (node) => {
                 this.openedNode = node;
                 if (!this.openedNode && this.dictionary) {
-                    this.openedNode = new EosDictionaryNode({
-                            code: '',
-                            id: this.dictionary.id,
-                            title: this.dictionary.title,
-                            children: this.dictionary.rootNodes
-                        });
+                    this.openedNode = this.dictionary.root;
                 }
             },
             (error) => alert(error)

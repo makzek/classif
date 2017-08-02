@@ -32,6 +32,7 @@ import { EosUserService } from './services/eos-user.service';
 import { EosUserSettingsService } from './services/eos-user-settings.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
+import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { EosMessageService } from './services/eos-message.service';
         DesktopSwitcherComponent,
         SearchComponent,
         UserComponent,
+        TestPageComponent,
         NoticeComponent,
     ],
     imports: [
