@@ -31,7 +31,7 @@ export class DictionaryComponent {
         this._dictionaryService.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
-                this.nodes = dictionary.rootNodes;
+                this.nodes = [dictionary.root];
             }
         });
     }
