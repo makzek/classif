@@ -12,6 +12,12 @@ eos-user {
 
     }
 
+    .text,
+    .caret {
+        position: relative;
+        top: -8px;
+    }
+
     .dropdown li {
         color: black;
     }
