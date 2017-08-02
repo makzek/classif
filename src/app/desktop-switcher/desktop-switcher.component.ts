@@ -9,12 +9,7 @@ import { EosDesk } from '../services/eos-desk.service';
 })
 export class DesktopSwitcherComponent {
     deskList: EosDesk[];
-    selectedDesk: EosDesk = {
-        id: '100',
-        name: 'Selected Desk',
-        references: [],
-        lastEditList: [],
-    };
+    selectedDesk: EosDesk;
     constructor(private eosDeskService: EosDeskService) {
         this.eosDeskService.desksList.subscribe(
             (res) => {
@@ -22,5 +17,14 @@ export class DesktopSwitcherComponent {
             }, (err) => alert('err' + err)
         );
 
+        this.eosDeskService.selectedDesk.subscribe(
+            (res) => {
+                this.selectedDesk = res;
+            }, (err) => alert('err' + err)
+        );
+    }
+
+    selectDesk(desk: EosDesk): void {
+        this.eosDeskService.setSelectedDesk(desk);
     }
 }

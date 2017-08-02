@@ -1,11 +1,8 @@
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    {{selectedDesk.name}}
-    <span class="caret"></span>
+<div *ngIf="deskList"  class="btn-group" dropdown>
+  <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+    {{selectedDesk.name}}<span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li *ngIf="deskList"><a *ngFor="let desk of deskList">{{desk.name}}</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Ла-ла-ла-4</a></li>
+  <ul *dropdownMenu class="dropdown-menu" role="menu">
+    <li *ngFor="let desk of deskList" role="menuitem" (click)="selectDesk(desk)"><a class="dropdown-item">{{desk.name}}</a></li>
   </ul>
 </div>
