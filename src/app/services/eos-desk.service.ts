@@ -2,33 +2,35 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { IDeskItem } from '../core/desk-item.interface';
+import { EosDesk } from '../core/eos-desk';
 
 @Injectable()
 export class EosDeskService {
     private _desksList: EosDesk[];
     private _selectedDesk: EosDesk;
-    private _lastEditItems: Array<{ link: string, title: string }>;
+    private _lastEditItems: IDeskItem[];
 
     private _desksList$: BehaviorSubject<EosDesk[]>;
-    private _selectedDesk$:  BehaviorSubject<EosDesk>;
-    private _lastEditItems$: BehaviorSubject<Array<{ link: string, title: string }>>;
+    private _selectedDesk$: BehaviorSubject<EosDesk>;
+    private _lastEditItems$: BehaviorSubject<IDeskItem[]>;
 
     constructor(private eosDictionaryService: EosDictService, private router: Router) {
         this._desksList = [{
-            id: '0', 
-            name: 'System desk', 
+            id: '0',
+            name: 'System desk',
             references: [],
-        },{
-           id: '2', 
-            name: 'Desk2', 
+        }, {
+            id: '2',
+            name: 'Desk2',
             references: [{
-                link: 'rubricator', 
+                link: 'rubricator',
                 title: 'Рубрикатор',
             }],
-        },{
+        }, {
             id: '100',
             name: 'Desk100',
             references: [],
@@ -52,12 +54,12 @@ export class EosDeskService {
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._lastEditItems$ = new BehaviorSubject([{
-                link: '/spravochniki/rubricator', 
-                title: 'Рубрикатор',
-            }]);
+            link: '/spravochniki/rubricator',
+            title: 'Рубрикатор',
+        }]);
 
     }
-        
+
 
     get desksList(): Observable<EosDesk[]> {
         return this._desksList$.asObservable();
@@ -67,7 +69,7 @@ export class EosDeskService {
         return this._selectedDesk$.asObservable();
     }
 
-    get lastEditItems(): Observable<Array<{ link: string, title: string }>> {
+    get lastEditItems(): Observable<IDeskItem[]> {
         return this._lastEditItems$.asObservable();
     }
 
@@ -77,45 +79,30 @@ export class EosDeskService {
     }*/
 
     setSelectedDesk(deskId: string) {
-        let finded: boolean = false;
-        this._desksList.forEach(element => {
-            if (element.id === deskId) {
-                this._selectedDesk = element;
-                finded = true;
-            }
-        });
-        if (finded) {
-            this._selectedDesk$.next(this._selectedDesk);
-        } else {
-            this.router.navigate(['']);
-        }
-
+        this._selectedDesk = this._desksList.find((d) => d.id === deskId);
+        this._selectedDesk$.next(this._selectedDesk);
     }
 
-    pinRef(i: number, link: { link: string, title: string }): void {
+    pinRef(i: number, link: IDeskItem): void {
         this._desksList[i].references.push(link);
         this._desksList$.next(this._desksList);
     }
 
-    unpinRef(i: number, link: { link: string, title: string }): void {
-        this._desksList[i].references.splice(this._desksList[i].references.indexOf(link), 1);
+    unpinRef(i: number, link: IDeskItem): void {
+        this._desksList[i].references = this._desksList[i].references.filter((r) => r !== link);
         this._desksList$.next(this._desksList);
     }
 
-    addEditItem(link: { link: string, title: string }): void {
-        if (this._lastEditItems.length < 10) {
-            this._lastEditItems.push(link);
-        } else {
-            this._lastEditItems.reverse();
-            this._lastEditItems.pop();
-            this._lastEditItems.reverse();
-            this._lastEditItems.push(link);
+    addRecentItem(link: IDeskItem): void {
+        this._lastEditItems.push(link);
+        if (this._lastEditItems.length > 10) {
+            this._lastEditItems.shift();
         }
         this._lastEditItems$.next(this._lastEditItems);
     }
 
     removeDesk(desk: EosDesk): void {
-        if(this._selectedDesk === desk) {
+        if (this._selectedDesk === desk) {
             console.log('Это текущий стол!!');
         } else {
             this._desksList.splice(this._desksList.indexOf(desk), 1);
@@ -133,15 +120,3 @@ export class EosDeskService {
         this._desksList$.next(this._desksList);
     }
 }
-
-/* tslint:disable:max-classes-per-file */
-export class EosDesk {
-    id: string;
-    name: string;
-    references: Array<{ link: string, title: string }>;
-
-    constructor(data: any) {
-        Object.assign(this, data);
-    }
-}
-/* tslint:enable:max-classes-per-file */
