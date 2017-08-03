@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+import { Router,ActivatedRoute } from '@angular/router';
+
 import { EosDictService } from '../services/eos-dict.service';
 
 @Injectable()
 export class EosDeskService {
     private _desksList: EosDesk[];
     private _selectedDesk: EosDesk;
-    private _lastEditItems: Array<{ id: string, title: string }>;
+    private _lastEditItems: Array<{ link: string, title: string }>;
 
     private _desksList$: BehaviorSubject<EosDesk[]>;
     private _selectedDesk$:  BehaviorSubject<EosDesk>;
-    private _lastEditItems$: BehaviorSubject<Array<{ id: string, title: string }>>;
+    private _lastEditItems$: BehaviorSubject<Array<{ link: string, title: string }>>;
 
-    constructor(private eosDictionaryService: EosDictService) {
+    constructor(private eosDictionaryService: EosDictService, private router: Router) {
         this._desksList = [{
             id: '0', 
             name: 'System desk', 
@@ -23,7 +25,7 @@ export class EosDeskService {
            id: '2', 
             name: 'Desk2', 
             references: [{
-                id: 'rubricator', 
+                link: 'rubricator', 
                 title: 'Рубрикатор',
             }],
         },{
@@ -34,21 +36,28 @@ export class EosDeskService {
 
         eosDictionaryService.dictionariesList$
             .subscribe((dictionariesList) => {
-                this._desksList[0].references = dictionariesList;
+                this._desksList[0].references = dictionariesList.map((dictionary) => {
+                    return {
+                        link: '/spravochniki/' + dictionary.id,
+                        title: dictionary.title,
+                    };
+                });
                 if (this._selectedDesk$) {
                     this._selectedDesk = this._desksList[0];
                     this._selectedDesk$.next(this._desksList[0])
                 };
             });
+
         this._desksList$ = new BehaviorSubject(this._desksList);
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._lastEditItems$ = new BehaviorSubject([{
-                id: 'rubricator', 
+                link: '/spravochniki/rubricator', 
                 title: 'Рубрикатор',
             }]);
 
     }
+        
 
     get desksList(): Observable<EosDesk[]> {
         return this._desksList$.asObservable();
@@ -58,26 +67,42 @@ export class EosDeskService {
         return this._selectedDesk$.asObservable();
     }
 
-    get lastEditItems(): Observable<Array<{ id: string, title: string }>> {
+    get lastEditItems(): Observable<Array<{ link: string, title: string }>> {
         return this._lastEditItems$.asObservable();
     }
 
-    setSelectedDesk(desk: EosDesk) {
+    /*setSelectedDesk(desk: EosDesk) {
         this._selectedDesk = desk;
         this._selectedDesk$.next(this._selectedDesk);
+    }*/
+
+    setSelectedDesk(deskId: string) {
+        let finded: boolean = false;
+        this._desksList.forEach(element => {
+            if (element.id === deskId) {
+                this._selectedDesk = element;
+                finded = true;
+            }
+        });
+        if (finded) {
+            this._selectedDesk$.next(this._selectedDesk);
+        } else {
+            this.router.navigate(['']);
+        }
+
     }
 
-    pinRef(i: number, link: { id: string, title: string }): void {
+    pinRef(i: number, link: { link: string, title: string }): void {
         this._desksList[i].references.push(link);
         this._desksList$.next(this._desksList);
     }
 
-    unpinRef(i: number, link: { id: string, title: string }): void {
+    unpinRef(i: number, link: { link: string, title: string }): void {
         this._desksList[i].references.splice(this._desksList[i].references.indexOf(link), 1);
         this._desksList$.next(this._desksList);
     }
 
-    addEditItem(link: { id: string, title: string }): void {
+    addEditItem(link: { link: string, title: string }): void {
         if (this._lastEditItems.length < 10) {
             this._lastEditItems.push(link);
         } else {
@@ -113,7 +138,7 @@ export class EosDeskService {
 export class EosDesk {
     id: string;
     name: string;
-    references: Array<{ id: string, title: string }>;
+    references: Array<{ link: string, title: string }>;
 
     constructor(data: any) {
         Object.assign(this, data);

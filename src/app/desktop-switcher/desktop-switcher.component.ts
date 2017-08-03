@@ -1,6 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { Router } from '@angular/router';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../services/eos-desk.service';
@@ -19,7 +20,7 @@ export class DesktopSwitcherComponent {
         name: null,
         references: [],
     };
-    constructor(private eosDeskService: EosDeskService, private modalService: BsModalService) {
+    constructor(private eosDeskService: EosDeskService, private modalService: BsModalService, private router: Router) {
         this.eosDeskService.desksList.subscribe(
             (res) => {
                 this.deskList = res;
@@ -34,7 +35,7 @@ export class DesktopSwitcherComponent {
     }
 
     selectDesk(desk: EosDesk): void {
-        this.eosDeskService.setSelectedDesk(desk);
+        //this.eosDeskService.setSelectedDesk(desk);
     }
 
     editDesk(desk: EosDesk): void {

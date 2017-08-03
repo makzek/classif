@@ -6,6 +6,7 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { HomeComponent } from './home/home.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
+import { DesktopComponent } from './desktop/desktop.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
@@ -34,8 +35,18 @@ const routes: Routes = [{
     }],
 }, {
     path: 'home',
-    component: HomeComponent,
     data: { title: 'Home', showInBreadcrumb: true },
+    children: [{
+        path: '',
+        pathMatch: 'full',
+        component: HomeComponent,
+    },
+    {
+        path: ':desktopId',
+        component: DesktopComponent,
+        data: { title: 'Desktop', showInBreadcrumb: true }
+    }
+    ]
 }, {
     path: 'test',
     component: TestPageComponent,

@@ -4,7 +4,7 @@
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
     <li *ngFor="let desk of deskList" role="menuitem">
-      <a class="dropdown-item">
+      <a class="dropdown-item" [routerLink]="['/home', desk.id]">
       <span (click)="selectDesk(desk)">{{desk.name}}</span>
       <span class="actions">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="openEditModal(editWindow, desk)"></span>
