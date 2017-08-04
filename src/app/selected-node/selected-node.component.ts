@@ -59,12 +59,16 @@ export class SelectedNodeComponent {
     }
 
     openFullInfo(childId: string): void {
-        this._eosDictService.openNode(this._dictionaryId, childId);
+        if (childId !== '') {
+            this._eosDictService.openNode(this._dictionaryId, childId);
+        }
     }
 
     selectNode(nodeId: string): void {
-        this.checkAllItems(false);
-        this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
+        if (nodeId !== '') {
+            this.checkAllItems(false);
+            this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
+        }
     }
 
     editNode() {
