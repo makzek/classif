@@ -29,8 +29,8 @@
         <a *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
 
         <ul class="elements">
-            <li *ngIf="!selectedNode.isDeleted" [ngClass]="{'highlight': openedNode.id === selectedNode.id}">
-                <span class="checkbox">
+            <li *ngIf="!selectedNode.isDeleted" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}">
+                <span *ngIf="selectedNode.id !== ''" class="checkbox">
                     <label>
                         <input type="checkbox" [(ngModel)]="selectedNode.selected" (click)="checkItem(selectedNode)">
                     </label>
