@@ -1,6 +1,6 @@
 <div *ngIf="node && !node.isDeleted">
     <i *ngIf="node.hasSubnodes" class="fa"
         [ngClass]="{'fa-minus':node.isExpanded, 'fa-plus': !node.isExpanded}" (click)="onExpand($event)"></i>
-    <span [ngClass]="{active: isActive}" (click)="onSelect($event);">{{node.code}} {{node.title}}</span>
+    <span [ngClass]="{active: isActive}" (dblclick)="onSelect($event);">{{node.code}} {{node.title}}</span>
     <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children"></eos-tree>
 </div>

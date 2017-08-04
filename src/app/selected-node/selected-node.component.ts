@@ -69,11 +69,20 @@ export class SelectedNodeComponent {
         this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
     }
 
-    editNode() {
+    /*editNode() {
         this.router.navigate([
             'spravochniki',
             this._dictionaryId,
             this.openedNode ? this.openedNode.id : this.selectedNode.id,
+            'edit',
+        ]);
+    }*/
+
+    editNode(nodeId?: string) {
+        this.router.navigate([
+            'spravochniki',
+            this._dictionaryId,
+            nodeId || (this.openedNode ? this.openedNode.id : this.selectedNode.id),
             'edit',
         ]);
     }

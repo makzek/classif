@@ -35,7 +35,10 @@
                         <input type="checkbox" [(ngModel)]="selectedNode.selected" (click)="checkItem(selectedNode)">
                     </label>
                 </span>
-                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="selectNode(selectedNode.id)">
+                <!--<span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="selectNode(selectedNode.id)">
+                    <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
+                </span>-->
+                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="editNode(selectedNode.id)">
                     <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
                 </span>
             </li>
@@ -48,7 +51,10 @@
                                 <input type="checkbox" [(ngModel)]="child.selected" (click)="checkItem(child)">
                             </label>
                             </span>
-                            <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
+                            <!--<span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
+                                <span class="code">{{child.code}}</span> {{child.title}}
+                            </span>-->
+                            <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="editNode(child.id)">
                                 <span class="code">{{child.code}}</span> {{child.title}}
                             </span>
                         </div>
