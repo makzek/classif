@@ -65,10 +65,8 @@ export class SelectedNodeComponent {
     }
 
     selectNode(nodeId: string): void {
-        if (nodeId !== '') {
-            this.checkAllItems(false);
-            this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
-        }
+        this.checkAllItems(false);
+        this.router.navigate(['spravochniki', this._dictionaryId, nodeId]);
     }
 
     editNode() {
