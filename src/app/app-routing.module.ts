@@ -35,16 +35,16 @@ const routes: Routes = [{
     }],
 }, {
     path: 'home',
-    data: { title: 'Home', showInBreadcrumb: true },
+    data: { title: 'Системный рабочий стол', showInBreadcrumb: true },
     children: [{
         path: '',
         pathMatch: 'full',
-        component: HomeComponent,
+        component: DesktopComponent,
     },
     {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Desktop', showInBreadcrumb: true }
+        data: { title: 'Рабочий стол', showInBreadcrumb: true }
     }
     ]
 }, {

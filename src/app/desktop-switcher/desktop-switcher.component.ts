@@ -3,6 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
+import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
@@ -15,14 +16,10 @@ export class DesktopSwitcherComponent {
     deskList: EosDesk[];
     selectedDesk: EosDesk;
     public modalRef: BsModalRef;
-    editedDesk: EosDesk;
-    emptyDesk: EosDesk = {
-        id: null,
-        name: null,
-        references: [],
-    };
+    deskName: string;
+    creating = false;
 
-    @ViewChild('editWindow') private _editWindow: ModalDirective;
+    @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
     constructor(private eosDeskService: EosDeskService, private modalService: BsModalService, private router: Router) {
         this.eosDeskService.desksList.subscribe(
@@ -33,39 +30,64 @@ export class DesktopSwitcherComponent {
 
         this.eosDeskService.selectedDesk.subscribe(
             (res) => {
-                this.selectedDesk = res;
+                if (res) this.selectedDesk = res;
             }, (err) => alert('err' + err)
         );
     }
 
-    selectDesk(desk: EosDesk): void {
-        // this.eosDeskService.setSelectedDesk(desk);
+    openEditForm(evt:Event, desk: EosDesk) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        desk.edited = true; 
+        this.deskName = desk.name;
     }
 
-    editDesk(desk: EosDesk): void {
-        this.modalRef.hide();
-        this.eosDeskService.editDesk(desk);
+    saveDesk(desk: EosDesk): void {
+        desk.edited = false;
+        if (desk.id) {
+            desk.name = this.deskName;
+            this.eosDeskService.editDesk(desk);
+        } else {
+            desk.name = this.deskName;
+            this.eosDeskService.createDesk(desk);
+        }
+        this.deskName = '';
+    }
+
+    create() {
+        let _desk: EosDesk = {
+            id: null,
+            name: this.deskName,
+            references: [],
+            edited: false,
+        };
+        this.closeAndSave(_desk);
+        this.creating = false;
+    }
+
+    closeAndSave(desk: EosDesk) {
+        this._dropDown.toggle(false);
+        this.saveDesk(desk);
+    }
+
+    cancelEdit(desk: EosDesk) {
+        this._dropDown.toggle(false);
+        desk.edited = false;
+        this.deskName = desk.name;
+    }
+
+    hideDropDown() {
+        this._dropDown.toggle(false);
     }
 
     removeDesk(desk: EosDesk): void {
+        this._dropDown.toggle(false);
         this.eosDeskService.removeDesk(desk);
     }
 
-    createDesk(desk: EosDesk): void {
-        this.modalRef.hide();
-        this.eosDeskService.createDesk(desk);
-    }
-
-    public openEditModal(/*template: TemplateRef<any>, */evt: Event, desk: EosDesk) {
-        evt.stopPropagation();
-        this.editedDesk = desk;
-        if (this._editWindow) {
-            this._editWindow.show();
-        }
-        /*this.modalRef = this.modalService.show(template);*/
-    }
-
-    public openCreateModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+    cancelCreating() {
+        this.creating = false;
+        this.deskName = '';
+        this._dropDown.toggle(false);
     }
 }

@@ -1,51 +1,40 @@
-<div *ngIf="deskList"  class="btn-group" dropdown>
+<div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown  class="btn-group" dropdown [autoClose]="false">
   <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
     {{selectedDesk.name}}<span class="caret"></span>
   </button>
-  <ul *dropdownMenu class="dropdown-menu" role="menu">
+  <ul class="dropdown-menu" role="menu">
     <li *ngFor="let desk of deskList" role="menuitem">
       <a class="dropdown-item" [routerLink]="['/home', desk.id]">
-      <span (click)="selectDesk(desk)">{{desk.name}}</span>
-      <span class="actions">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="openEditModal($event, desk)"></span>
-        <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeDesk(desk)"></span>
-      </span>
+        <span [hidden]="desk.edited" >
+          <span (click)="hideDropDown()">{{desk.name}}</span>
+          <span *ngIf="desk.id !== 'system'" class="actions">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true" (click)="openEditForm($event, desk)"></span>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeDesk(desk)"></span>
+          </span>
+        </span>
+    <span [hidden]="!desk.edited">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="deskName"/>
+        <div class="input-group-btn">
+          <button type="button" (click)="closeAndSave(desk)" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
+          <button type="button" (click)="cancelEdit(desk)" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </span>
       </a>
-
+    
     </li>
     <li class="divider dropdown-divider"></li>
-    <li (click)="openCreateModal(createWindow)"><a>Создать рабочий стол</a></li>
+    <li>
+      <a><span *ngIf="!creating" (click)="creating = true">Создать рабочий стол</span>
+        <div *ngIf="creating" class="input-group">
+          <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName"/>
+          <span class="input-group-btn">
+            <button class="btn btn-default" (click)="create()" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
+            <button class="btn btn-default" (click)="cancelCreating()" type="button"><span class="glyphicon glyphicon-remove" (click)="cancelCreating()" aria-hidden="true" ></span></button>
+          </span>
+        </div>
+      </a>
+    </li>
   </ul>
 </div>
-
-<div bsModal #editWindow="bs-modal">
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Редактирование рабочего стола</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">Название рабочего стола</span>
-      <input type="text" class="form-control" [(ngModel)]="editedDesk.name" aria-describedby="basic-addon1">
-    </div>
-    <button class="btn btn-default" (click)="editDesk(editedDesk)">Сохранить</button>
-  </div>
-</div>
-
-<template #createWindow>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Создание рабочего стола</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">Введите рабочего стола</span>
-      <input type="text" class="form-control" [(ngModel)]="emptyDesk.name" aria-describedby="basic-addon1">
-    </div>
-    <button class="btn btn-default" (click)="createDesk(emptyDesk)">Сохранить</button>
-  </div>
-</template>

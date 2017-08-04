@@ -14,7 +14,13 @@ export class AppComponent {
         this._containerRef = viewContainerRef;
 
         this._deskService.selectedDesk.subscribe(
-            (link) => this.currentDesk = '/home/' + link.id
+            (link) => {
+                if (link) {
+                    this.currentDesk = '/home/' + link.id;
+                } else {
+                    this.currentDesk = '';
+                }
+            }
         );
     }
 }

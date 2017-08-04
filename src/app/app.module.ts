@@ -25,6 +25,7 @@ import { UserComponent } from './user/user.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { TitleComponent } from './title/title.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -55,6 +56,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         TestPageComponent,
         NoticeComponent,
         DesktopComponent,
+        TitleComponent,
     ],
     imports: [
 

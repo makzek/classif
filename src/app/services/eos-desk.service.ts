@@ -12,17 +12,18 @@ import { EosDesk } from '../core/eos-desk';
 export class EosDeskService {
     private _desksList: EosDesk[];
     private _selectedDesk: EosDesk;
-    private _lastEditItems: IDeskItem[];
+    private _recentItems: IDeskItem[];
 
     private _desksList$: BehaviorSubject<EosDesk[]>;
     private _selectedDesk$: BehaviorSubject<EosDesk>;
-    private _lastEditItems$: BehaviorSubject<IDeskItem[]>;
+    private _recentItems$: BehaviorSubject<IDeskItem[]>;
 
     constructor(private eosDictionaryService: EosDictService, private router: Router) {
         this._desksList = [{
-            id: '0',
+            id: 'system',
             name: 'System desk',
             references: [],
+            edited: false,
         }, {
             id: '2',
             name: 'Desk2',
@@ -30,10 +31,12 @@ export class EosDeskService {
                 link: 'rubricator',
                 title: 'Рубрикатор',
             }],
+            edited: false,
         }, {
             id: '100',
             name: 'Desk100',
             references: [],
+            edited: false,
         }];
 
         eosDictionaryService.dictionariesList$
@@ -44,8 +47,9 @@ export class EosDeskService {
                         title: dictionary.title,
                     };
                 });
-                if (this._selectedDesk$) {
-                    this._selectedDesk = this._desksList[0];
+
+                if (this._selectedDesk$ && this._selectedDesk) {
+                    if (this._selectedDesk.id == 'system')
                     this._selectedDesk$.next(this._desksList[0])
                 };
             });
@@ -53,7 +57,7 @@ export class EosDeskService {
         this._desksList$ = new BehaviorSubject(this._desksList);
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
-        this._lastEditItems$ = new BehaviorSubject([{
+        this._recentItems$ = new BehaviorSubject([{
             link: '/spravochniki/rubricator',
             title: 'Рубрикатор',
         }]);
@@ -69,18 +73,13 @@ export class EosDeskService {
         return this._selectedDesk$.asObservable();
     }
 
-    get lastEditItems(): Observable<IDeskItem[]> {
-        return this._lastEditItems$.asObservable();
+    get recentItems(): Observable<IDeskItem[]> {
+        return this._recentItems$.asObservable();
     }
 
-    /*setSelectedDesk(desk: EosDesk) {
-        this._selectedDesk = desk;
-        this._selectedDesk$.next(this._selectedDesk);
-    }*/
-
     setSelectedDesk(deskId: string) {
-        this._selectedDesk = this._desksList.find((d) => d.id === deskId);
-        this._selectedDesk$.next(this._selectedDesk);
+        this._selectedDesk = this._desksList.find((d) =>  d.id === deskId);
+        this._selectedDesk$.next(this._selectedDesk || this._desksList[0]);
     }
 
     pinRef(i: number, link: IDeskItem): void {
@@ -88,26 +87,27 @@ export class EosDeskService {
         this._desksList$.next(this._desksList);
     }
 
-    unpinRef(i: number, link: IDeskItem): void {
-        this._desksList[i].references = this._desksList[i].references.filter((r) => r !== link);
-        this._desksList$.next(this._desksList);
+    unpinRef(link: IDeskItem): void {
+        this._selectedDesk.references = this._selectedDesk.references.filter((r) => r !== link);
+        this._selectedDesk$.next(this._selectedDesk);
     }
 
     addRecentItem(link: IDeskItem): void {
-        this._lastEditItems.push(link);
-        if (this._lastEditItems.length > 10) {
-            this._lastEditItems.shift();
+        this._recentItems.push(link);
+        if (this._recentItems.length > 10) {
+            this._recentItems.shift();
         }
-        this._lastEditItems$.next(this._lastEditItems);
+        this._recentItems$.next(this._recentItems);
     }
 
     removeDesk(desk: EosDesk): void {
         if (this._selectedDesk === desk) {
-            console.log('Это текущий стол!!');
-        } else {
-            this._desksList.splice(this._desksList.indexOf(desk), 1);
-            this._desksList$.next(this._desksList);
+            this._selectedDesk = this._desksList[0]; // system desk
+            this._selectedDesk$.next(this._selectedDesk);
         }
+
+        this._desksList = this._desksList.filter((d) => d !== desk);
+        this._desksList$.next(this._desksList);
     }
 
     editDesk(desk: EosDesk): void {
@@ -116,6 +116,7 @@ export class EosDeskService {
     }
 
     createDesk(desk: EosDesk): void {
+        if (!desk.id) desk.id = (this._desksList.length + 1).toString();
         this._desksList.push(desk);
         this._desksList$.next(this._desksList);
     }
