@@ -1,10 +1,14 @@
 
-<div class="col-sm-3 tree-wrapper">
-    <eos-tree [nodes]="nodes"></eos-tree>
+<div class="tree-wrapper" [ngClass]="hideTree ? 'vertical': 'col-sm-3'">
+    <div class="aside">
+        <div class="sandwich-wrapper" (click)="hideTree = !hideTree"><span class="sandwich"></span></div>
+    </div>
+    <eos-tree [hidden]="hideTree" [nodes]="nodes"></eos-tree>
+    <div class="root-title" [hidden]="!hideTree">{{ dictionaryName }}</div>
 </div>
-<div class="col-sm-5 selected-wrapper">
+<div class="selected-wrapper" [ngClass]="hideTree ? 'col-sm-6': 'col-sm-5'" >
     <eos-selected-node></eos-selected-node>
 </div>
-<div class="col-sm-4 opened-wrapper">
+<div class="opened-wrapper" [ngClass]="hideTree ? 'col-sm-5': 'col-sm-4'">
     <eos-opened-node ></eos-opened-node>
 </div>

@@ -13,6 +13,9 @@ export class DictionaryComponent {
     private _dictionaryId: string;
     public nodes: EosDictionaryNode[];
 
+    hideTree = false;
+    dictionaryName: string;
+
     constructor(private _dictionaryService: EosDictService, private route: ActivatedRoute) {
 
         this.route.params.subscribe((params) => {
@@ -31,6 +34,7 @@ export class DictionaryComponent {
         this._dictionaryService.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
+                this.dictionaryName = dictionary.root.title;
                 this.nodes = [dictionary.root];
             }
         });
