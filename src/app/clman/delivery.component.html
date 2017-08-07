@@ -1,0 +1,23 @@
+﻿<div>
+    ВИды доставки <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>
+    <ul>
+        <li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>
+    </ul>
+</div>
+<eos-delivery-detail [it]=currentItem></eos-delivery-detail>
+<!--
+<div>
+    ВИды доставки
+
+    <ul>
+        <li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>
+    </ul>
+
+</div>
+
+<div *ngIf="currentItem">
+    текуйщий элемент {{currentItem.CLASSIF_NAME}}
+
+    <eos-delivery-detail [item]="currentItem"></eos-delivery-detail>
+</div>
+-->

@@ -53,19 +53,21 @@ export class BreadcrumbsComponent {
                     params: routeSnaphot.params,
                 };
 
-               /*if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
-                    if (routeSnaphot.params.dictionaryId) {
-                        this._dictionaryBc = bc;
-                        
-                        this._dictionaryService.getDictionariesList()
-                            .then((list) => {
-                                const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
-                                if (_d) {
-                                    this._dictionaryBc.title = _d.title;
-                                }
-                            });
-                    }*/
-                //}
+                /*
+                if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
+                     if (routeSnaphot.params.dictionaryId) {
+                         this._dictionaryBc = bc;
+
+                         this._dictionaryService.getDictionariesList()
+                             .then((list) => {
+                                 const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                                 if (_d) {
+                                     this._dictionaryBc.title = _d.title;
+                                 }
+                             });
+                     }
+                }
+                */
 
                 if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
                     if (routeSnaphot.params.dictionaryId && !routeSnaphot.params.nodeId) {
@@ -79,7 +81,7 @@ export class BreadcrumbsComponent {
                     }
                     if (routeSnaphot.params.nodeId && subpath !== 'edit') {
                         this._dictionaryService.getNode(routeSnaphot.params.dictionaryId, routeSnaphot.params.nodeId)
-                            .then((node) => { 
+                            .then((node) => {
                                 bc.title = node.title;
                             });
                     }
