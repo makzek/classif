@@ -1,5 +1,55 @@
-.opened-node-wrapper {
-    background: white;
-    color: black;
-    padding: 10px;
+
+.opened-wrapper {
+    .sandwich-wrapper {
+        position: relative;
+        left: -10px;
+        &.vertical {
+            //top: -40px;
+            left: -29px;
+        }
+
+        .sandwich {
+            background: black;
+
+            &::before,
+            &::after {
+                background: black;
+            }
+        }
+    }
+
+    .opened-node-wrapper {
+        background: white;
+        color: black;
+
+        .short-info {
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .full-info {
+            border-top: 5px solid $background-color;
+            padding: 10px;
+        }
+    }
+
+    &.vertical {
+        .opened-node-wrapper {
+            width: 40px;
+            float: right;
+            height: 300px;
+        }
+
+        .short-info {
+            transform: rotate(-90deg) translateX(-300px);
+            transform-origin: top left;
+            width: 300px;
+            text-overflow: ellipsis;
+        }
+
+        .full-info {
+            display: none;
+        }
+    }
+
 }

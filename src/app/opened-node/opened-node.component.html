@@ -1,9 +1,10 @@
 <div *ngIf="!openedNode">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
-<div *ngIf="openedNode" class="opened-node-wrapper">
-    <div class="opened-node-header">
-        <b>Краткое наименование:</b>{{openedNode.title}}
+<div *ngIf="openedNode"  [ngClass]="{'vertical': hideFull}" class="opened-node-wrapper">
+    <div class="short-info" [ngClass]="{'vertical': hideFull}">
+        {{openedNode.title}}
     </div>
-    <div class="opened-node-content">
+    
+    <div [hidden]="hideFull" class="full-info">
         <b>Полное наименование:</b> {{openedNode.description}}
         <br>
         <b>Примечание:</b> {{note}}

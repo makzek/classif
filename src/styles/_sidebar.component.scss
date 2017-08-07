@@ -1,4 +1,3 @@
-// sass-lint:disable nesting-depth
 .sidebar {
     background: $background-color;
 
@@ -28,27 +27,10 @@
 
         .sandwich {
             background: $icon-color;
-            display: inline-block;
-            height: 3px;
-            position: relative;
-            width: 20px;
 
             &::before,
             &::after {
                 background: $icon-color;
-                content: "";
-                display: inline-block;
-                height: 3px;
-                position: absolute;
-                width: 20px;
-            }
-
-            &::before {
-                top: 6px;
-            }
-
-            &::after {
-                top: 12px;
             }
         }
     }

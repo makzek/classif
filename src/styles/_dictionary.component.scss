@@ -1,51 +1,28 @@
 
 eos-dictionary {
-    .tree-wrapper > eos-tree > .eos-tree {
-        max-height: calc(100vh - 172px);
-        overflow-y: auto;
-    }
+    .tree-wrapper {
+        & > eos-tree > .eos-tree {
+            max-height: calc(100vh - 172px);
+            overflow-y: auto;
+        }
+    
 
-    .vertical {
-        width: 50px;
-        float: left;
-        position: relative;
-        min-height: 1px;
-        padding-left: 15px;
-        padding-right: 15px;
+        &.vertical {
+            width: 50px;
+            float: left;
+            position: relative;
+            min-height: 1px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
     }
 
     .aside {
         overflow-x: hidden;
-    }
 
-    .sandwich-wrapper {
-        position: relative;
-        top: -11px;
-
-        .sandwich {
-            background: white;
-            display: inline-block;
-            height: 3px;
+        .sandwich-wrapper {
             position: relative;
-            width: 20px;
-
-            &::before,
-            &::after {
-                background: white;
-                content: "";
-                display: inline-block;
-                height: 3px;
-                position: absolute;
-                width: 20px;
-            }
-
-            &::before {
-                top: 6px;
-            }
-
-            &::after {
-                top: 12px;
-            }
+            top: -11px;
         }
     }
 
