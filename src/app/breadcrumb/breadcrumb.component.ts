@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/route
 import 'rxjs/add/operator/filter';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDeskService } from '../services/eos-desk.service';
 
 interface IBreadcrumb {
     url: string;
@@ -17,9 +18,10 @@ interface IBreadcrumb {
 export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
     private _dictionaryBc: IBreadcrumb;
+    private _nodeBc: IBreadcrumb;
     dictionariesList: Array<{ id: string, title: string }>;
 
-    constructor(private _router: Router, private _dictionaryService: EosDictService) {
+    constructor(private _router: Router, private _dictionaryService: EosDictService, private _deskService: EosDeskService) {
         _router.events
             .filter((e) => e instanceof RoutesRecognized)
             .subscribe((e) => this._update(e));
@@ -51,9 +53,10 @@ export class BreadcrumbsComponent {
                     params: routeSnaphot.params,
                 };
 
-                if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
+               /*if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
                     if (routeSnaphot.params.dictionaryId) {
                         this._dictionaryBc = bc;
+                        
                         this._dictionaryService.getDictionariesList()
                             .then((list) => {
                                 const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
@@ -61,6 +64,34 @@ export class BreadcrumbsComponent {
                                     this._dictionaryBc.title = _d.title;
                                 }
                             });
+                    }*/
+                //}
+
+                if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
+                    if (routeSnaphot.params.dictionaryId && !routeSnaphot.params.nodeId) {
+                        this._dictionaryService.getDictionariesList()
+                            .then((list) => {
+                                const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                                if (_d) {
+                                    bc.title = _d.title;
+                                }
+                            });
+                    }
+                    if (routeSnaphot.params.nodeId && subpath !== 'edit') {
+                        this._dictionaryService.getNode(routeSnaphot.params.dictionaryId, routeSnaphot.params.nodeId)
+                            .then((node) => { 
+                                bc.title = node.title;
+                            });
+                    }
+                    if (routeSnaphot.params.desktopId && routeSnaphot.data.showInBreadcrumb) {
+                        this._deskService.desksList.subscribe(
+                            (list) => {
+                                const _d = list.find((e: any) => e.id === routeSnaphot.params.desktopId);
+                                if (_d) {
+                                    bc.title = _d.name;
+                                }
+                            }
+                        );
                     }
                 }
 

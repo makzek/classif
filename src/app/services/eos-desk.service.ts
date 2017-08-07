@@ -29,7 +29,7 @@ export class EosDeskService {
             id: '2',
             name: 'Desk2',
             references: [{
-                link: 'rubricator',
+                link: '/spravochniki/rubricator',
                 title: 'Рубрикатор',
             }],
             edited: false,

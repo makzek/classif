@@ -19,14 +19,18 @@ const routes: Routes = [{
         path: ':dictionaryId',
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
-            path: ':nodeId/edit',
-            pathMatch: 'full',
-            component: EditCardComponent,
-            data: { title: 'Редактирвание' },
-        }, {
             path: ':nodeId',
-            data: { showInBreadcrumb: false },
-            component: DictionaryComponent,
+            data: { title:'node', showInBreadcrumb: true },
+            children: [{
+                path: 'edit',
+                pathMatch: 'full',
+                component: EditCardComponent,
+                data: { title: 'Редактирвание', showInBreadcrumb: true }
+            },{
+                path: '',
+                component: DictionaryComponent,
+                pathMatch: 'full',
+            }],
         }, {
             path: '',
             component: DictionaryComponent,
