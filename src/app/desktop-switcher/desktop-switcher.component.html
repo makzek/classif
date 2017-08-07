@@ -24,9 +24,9 @@
       </a>
     
     </li>
-    <li class="divider dropdown-divider"></li>
-    <li>
-      <a><span *ngIf="!creating" (click)="creating = true">Создать рабочий стол</span>
+    <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
+    <li *ngIf="deskList.length < 6">
+      <a><span *ngIf="!creating" (click)="openCreateForm()">Создать рабочий стол</span>
         <div *ngIf="creating" class="input-group">
           <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName"/>
           <span class="input-group-btn">

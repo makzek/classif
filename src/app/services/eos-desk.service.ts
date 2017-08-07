@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosMessageService } from '../services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
 
@@ -18,7 +19,7 @@ export class EosDeskService {
     private _selectedDesk$: BehaviorSubject<EosDesk>;
     private _recentItems$: BehaviorSubject<IDeskItem[]>;
 
-    constructor(private eosDictionaryService: EosDictService, private router: Router) {
+    constructor(private eosDictionaryService: EosDictService, private eosMessageService : EosMessageService, private router: Router) {
         this._desksList = [{
             id: 'system',
             name: 'System desk',
@@ -116,8 +117,16 @@ export class EosDeskService {
     }
 
     createDesk(desk: EosDesk): void {
-        if (!desk.id) desk.id = (this._desksList.length + 1).toString();
-        this._desksList.push(desk);
-        this._desksList$.next(this._desksList);
+        if (this._desksList.length < 6) {// users desk + system desk
+            if (!desk.id) desk.id = (this._desksList.length + 1).toString();
+            this._desksList.push(desk);
+            this._desksList$.next(this._desksList);
+        } else {
+            this.eosMessageService.addNewMessage({ 
+                type: 'warning',
+                title: 'Предупреждение: максимальное колличество рабочих столов!',
+                msg: 'У вас может быть не более 5 рабочих столов',
+            });
+        }
     }
 }

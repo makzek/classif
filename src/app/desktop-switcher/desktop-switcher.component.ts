@@ -42,6 +42,11 @@ export class DesktopSwitcherComponent {
         this.deskName = desk.name;
     }
 
+    openCreateForm() {
+        this.creating = true;
+        this.deskName = "Мой рабочий стол " + this.deskList.length;
+    }
+
     saveDesk(desk: EosDesk): void {
         desk.edited = false;
         if (desk.id) {

@@ -9,9 +9,13 @@ eos-desktop-switcher {
         }
     }
 
-    .dropdown-menu > li > a {
-        display: inline-block;
-        width: 100%;
+    .dropdown-menu {
+        width: 300px;
+
+        & > li > a {
+            display: inline-block;
+            width: 100%;
+        }
     }
 
     .actions {
