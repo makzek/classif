@@ -1,9 +1,9 @@
 ﻿import { Component, Input } from '@angular/core';
-import { DELIVERY_CL } from './../models/ViewModelResponse';
-import { pipRX, changeList, prepareForEdit } from './../services/pipRX.service';
+import { DELIVERY_CL } from '../core/models/ViewModelResponse';
+import { PipRX, changeList, prepareForEdit } from '../core/services/pipRX.service';
 
 @Component({
-	selector: 'delivery-detail',
+	selector: 'eos-delivery-detail',
 	template: `
 	   <div *ngIf="item">
 	     <h2>{{item.CLASSIF_NAME}} details!</h2>
@@ -17,7 +17,7 @@ import { pipRX, changeList, prepareForEdit } from './../services/pipRX.service';
 	 `
 })
 export class DeliveryDetailComponent {
-	constructor(private pip: pipRX) { }
+	constructor(private pip: PipRX) { }
 
 	private item: DELIVERY_CL;
 
@@ -34,7 +34,7 @@ export class DeliveryDetailComponent {
 			//create()
             this.item = it;
 	}
-	
+
 	//create() {
  //       this.item = { ISN_LCLASSIF: -10000, CLASSIF_NAME: '' };
 	//}

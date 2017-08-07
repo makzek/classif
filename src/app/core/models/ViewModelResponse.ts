@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { iEnt } from './../services/pipRX.service';
+import { IEnt } from './../services/pipRX.service';
 
 export class ViewModelResponse {
     value: any;
@@ -9,7 +9,7 @@ export class ViewModelResponse {
     statusCode: number;
 }
 
-export class DELIVERY_CL implements iEnt {
-	ISN_LCLASSIF: any;
-	CLASSIF_NAME: any;
+export class DELIVERY_CL implements IEnt {
+    ISN_LCLASSIF: any;
+    CLASSIF_NAME: any;
 }
