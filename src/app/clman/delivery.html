@@ -1,0 +1,17 @@
+﻿<div>
+	ВИды доставки
+	
+	<ul>
+		<li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>
+	</ul>
+	
+</div>
+
+<div *ngIf="currentItem">
+	текуйщий элемент
+	{{currentItem.CLASSIF_NAME}}
+
+	<delivery-detail [item]="currentItem"></delivery-detail>
+</div>
+
+
