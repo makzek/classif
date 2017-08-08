@@ -1,0 +1,9 @@
+<div *ngIf="item">
+    <h2>{{item.CLASSIF_NAME}} details!</h2>
+    <div><label>id: </label>{{item.ISN_LCLASSIF}}</div>
+    <div>
+        <label>name: </label>
+        <input [(ngModel)]="item.CLASSIF_NAME" placeholder="name" />
+    </div>
+    <div style="border:1px rised gray" (click)="onSave()">Сохранить</div>
+</div>

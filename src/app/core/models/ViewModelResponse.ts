@@ -9,7 +9,7 @@ export class ViewModelResponse {
     statusCode: number;
 }
 
-export class DELIVERY_CL implements IEnt {
+export interface IDeliveryCl extends IEnt {
     ISN_LCLASSIF: any;
     CLASSIF_NAME: any;
 }
