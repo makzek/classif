@@ -18,6 +18,25 @@
         vertical-align: middle;
     }
 
+    .deleted {
+        color: $icon-color;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: space-around;
+
+        .show-more,
+        .item-count {
+            line-height: 75px;
+            cursor: pointer;
+        }
+
+        .item-count-select {
+            margin: 25px 5px 25px -15px;
+        }
+    }
+
     .table-title {
 
         .checkbox {
@@ -30,34 +49,47 @@
     }
 
     .selected-node-header {
-
-        .controller {
-            margin-top: 10px;
-
-            .circle {
-                border: 1px solid gray;
-                border-radius: 50%;
-                display: inline-block;
-                height: 25px;
-                width: 25px;
+        &.first-line {
+            span {
+                cursor: pointer;
             }
+        }
 
-            .glyphicon {
-                display: inline-block;
-                margin-left: 5px;
-                margin-top: 3px;
+        &.second-line {
 
-                &.glyphicon-minus {
-                    margin-left: 3px;
+            .controller {
+                margin-top: 10px;
+
+                .circle {
+                    border: 1px solid gray;
+                    border-radius: 50%;
+                    display: inline-block;
+                    height: 25px;
+                    width: 25px;
+
+                    &:last-child {
+                        position: relative;
+                        top: -2px;
+                    }
                 }
-            }
 
-            .dots {
-                display: inline-block;
-                font-size: 20px;
-                line-height: -35px;
-                margin-left: 3px;
-                margin-top: -4px;
+                .glyphicon {
+                    display: inline-block;
+                    margin-left: 5px;
+                    margin-top: 3px;
+
+                    &.glyphicon-minus {
+                        margin-left: 3px;
+                    }
+                }
+
+                .dots {
+                    display: inline-block;
+                    font-size: 20px;
+                    line-height: -35px;
+                    margin-left: 3px;
+                    margin-top: -4px;
+                }
             }
         }
     }
@@ -70,7 +102,7 @@
 
     .elements {
         list-style: none;
-        max-height: calc(100vh - 150px - 95px);
+        max-height: calc(100vh - 150px - 95px - 75px);
         overflow-y: auto;
         padding-left: 0;
 
@@ -96,6 +128,14 @@
 
         .highlight {
             background: yellow;
+        }
+    }
+}
+
+.create-new-node {
+    &.modal-body {
+        .input-group {
+            margin-bottom: 10px;
         }
     }
 }
