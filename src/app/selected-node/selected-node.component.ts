@@ -70,12 +70,14 @@ export class SelectedNodeComponent {
                 this.selectedNode = node;
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
-                    if (this.selectedNode) {
-                        this.checkAllItems(false);
-                    }
+                    // if (this.selectedNode) {
+                        // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
+                    // }
                     this.openFullInfo(node.id);
-                    this.totalItems = node.children.length;
-                    this.childrenListPerPage = node.children.slice(0, this.itemsPerPage);
+                    if (node.children) {
+                        this.totalItems = node.children.length;
+                        this.childrenListPerPage = node.children.slice(0, this.itemsPerPage);
+                    }
                 } else {
                     if (this.dictionary) {
                         this.selectedNode = this.dictionary.root;

@@ -15,5 +15,7 @@ export class EosDictionaryNode {
 
     constructor(data: any) {
         Object.assign(this, data);
+        this.selected = !!this.selected;
+        this.isDeleted = !!this.isDeleted;
     }
 }

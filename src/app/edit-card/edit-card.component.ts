@@ -50,7 +50,6 @@ export class EditCardComponent {
 
     save(): void {
         this.wasEdit = false;
-        // console.log('node', this.node);
         this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
             () => {},
             (err) => alert('err: ' + err)
@@ -75,11 +74,20 @@ export class EditCardComponent {
     }
 
     goTo(route: string): void {
-        // console.log('route', route);
         if (!this.wasEdit) {
             this.router.navigate([route]);
         } else {
             this.hideWarning = false;
+        }
+    }
+
+    check() {
+        this.node.selected = !this.node.selected;
+        if (!this.wasEdit) {
+            this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
+                () => {},
+                (err) => alert('err: ' + err)
+            );
         }
     }
 }

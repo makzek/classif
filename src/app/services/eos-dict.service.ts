@@ -181,7 +181,7 @@ export class EosDictService {
             this.getNode(dictionaryId, nodeId)
             .then((node) => {
                 Object.assign(node, value);
-                // this._selectedNode$.next(this._selectedNode);
+                this._selectedNode$.next(this._selectedNode);
                 res(node);
             }).catch(
                 (err) => rej(err)
