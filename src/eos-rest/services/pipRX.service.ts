@@ -21,6 +21,7 @@ export class PipRX {
 
         console.log('create service with config', cfg);
         this._metadata = new Metadata(cfg);
+        this._metadata.init();
     }
 
     private getData(url: string) {
