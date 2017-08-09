@@ -1,3 +1,6 @@
 export const APP_CONFIG = {
-    apiBaseUrl: 'http://localhost/api'
+    apiCfg: {
+        dataSrv: 'http://192.168.1.50/eos/OData.svc/',
+        metadataJs: ['http://192.168.1.50/eos/libs/Delo/types.js']
+    }
 };

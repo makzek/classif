@@ -1,10 +1,12 @@
 ﻿import { Component, Input } from '@angular/core';
-import { IDeliveryCl } from '../core/models/ViewModelResponse';
-import { PipRX, changeList, prepareForEdit } from '../core/services/pipRX.service';
+
+import { IDeliveryCl } from '../interfaces/interfaces';
+import { PipRX } from '../services/pipRX.service';
+import { Utils } from '../core/utils';
 
 @Component({
     selector: 'eos-delivery-detail',
-    templateUrl: 'delivery-detail.component'
+    templateUrl: './delivery-detail.component.html'
 })
 export class DeliveryDetailComponent {
     private item: IDeliveryCl;
@@ -34,17 +36,17 @@ export class DeliveryDetailComponent {
     */
 
     read(isn: number) {
-        this.pip.read<IDeliveryCl>({ IDeliveryCl: [isn] })
+        this.pip.read<IDeliveryCl>({ 'DELIVERY_CL': [isn] })
             .subscribe((r) => {
-                prepareForEdit(r[0]);
+                Utils.prepareForEdit(r[0]);
                 this.item = r[0];
             });
     }
 
     onSave() {
-        const chl = changeList([this.item]);
+        const chl = Utils.changeList([this.item]);
         this.pip.batch(chl, '').subscribe((r) => {
-            alert(this.pip.SequenceMap.GetFixed(this.item.ISN_LCLASSIF));
+            alert(this.pip.sequenceMap.GetFixed(this.item.ISN_LCLASSIF));
         });
 
     }

@@ -3,10 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { EosRestModule } from '../eos-rest/eos-rest.module';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+
+import { APP_CONFIG } from './app.config';
 
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
@@ -59,12 +62,12 @@ import { TestPageComponent } from './test-page/test-page.component';
         TitleComponent,
     ],
     imports: [
-
         BrowserModule,
         FormsModule,
         AppRoutingModule,
         HttpModule,
         Ng2BootstrapModule.forRoot(),
+        EosRestModule.forRoot(APP_CONFIG.apiCfg),
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
