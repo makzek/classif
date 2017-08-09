@@ -8,7 +8,7 @@ export class EosUserSettingsService {
         {
             name: 'Показывать логически удалённые элементы',
             id: 'showDeleted',
-            value: false,
+            value: true,
         },
         {
             name: 'Тёмная тема',
@@ -29,6 +29,11 @@ export class EosUserSettingsService {
 
     saveSettings(settings: any) {
         this._settings = settings;
+        this._settings$.next(this._settings);
+    }
+
+    saveShowDeleted(value: boolean) {
+        this._settings.find((item) => item.id === 'showDeleted').value = value;
         this._settings$.next(this._settings);
     }
 }

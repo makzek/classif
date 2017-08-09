@@ -18,6 +18,25 @@
         vertical-align: middle;
     }
 
+    .deleted {
+        color: $icon-color;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: space-around;
+
+        .show-more,
+        .item-count {
+            line-height: 75px;
+            cursor: pointer;
+        }
+
+        .item-count-select {
+            margin: 20px 5px 25px -15px;
+        }
+    }
+
     .table-title {
 
         .checkbox {
@@ -29,8 +48,13 @@
         }
     }
 
-    .selected-node-header {
+    .first-line {
+        span {
+            cursor: pointer;
+        }
+    }
 
+    .second-line {
         .controller {
             margin-top: 10px;
 
@@ -40,6 +64,11 @@
                 display: inline-block;
                 height: 25px;
                 width: 25px;
+
+                &:last-child {
+                    position: relative;
+                    top: -2px;
+                }
             }
 
             .glyphicon {
@@ -61,7 +90,7 @@
             }
         }
     }
-
+    
     .selected-node-content {
         a {
             cursor: pointer;
@@ -70,7 +99,7 @@
 
     .elements {
         list-style: none;
-        max-height: calc(100vh - 150px - 95px);
+        max-height: calc(100vh - 150px - 95px - 75px);
         overflow-y: auto;
         padding-left: 0;
 
@@ -96,6 +125,14 @@
 
         .highlight {
             background: yellow;
+        }
+    }
+}
+
+.create-new-node {
+    &.modal-body {
+        .input-group {
+            margin-bottom: 10px;
         }
     }
 }

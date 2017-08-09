@@ -7,8 +7,8 @@
     <div [hidden]="hideFull" class="full-info">
         <b>Полное наименование:</b> {{openedNode.description}}
         <br>
-        <b>Примечание:</b> {{note}}
+        <b *ngIf="note">Примечание:</b> {{note}}
         <br>
-        <b>Индекс СЭВ:</b> {{SEV}}
+        <b *ngIf="SEV">Индекс СЭВ:</b> {{SEV}}
     </div>
 </div>

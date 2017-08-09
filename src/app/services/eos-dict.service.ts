@@ -207,4 +207,10 @@ export class EosDictService {
         });
         this._dictionary$.next(this._dictionary);
     }
+
+    public addChild(child: EosDictionaryNode) {
+       this._selectedNode.children.push(child);
+       this._selectedNode$.next(this._selectedNode);
+        
+    }
 }
