@@ -1,6 +1,18 @@
-.breadcrumb {
+.breadcrumb-wrapper {
     height: $breadcrumbs-height;
     border-bottom: 1px solid $icon-color;
     border-radius: 0;
     padding: 15px;
+    margin-bottom: 20px;
+
+    .breadcrumb {
+        display: inline-block;
+    }
+
+    .pushpin {
+        .desk {
+            color: black;
+            cursor: pointer;
+        }
+    }
 }

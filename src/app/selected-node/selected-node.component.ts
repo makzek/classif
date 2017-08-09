@@ -73,7 +73,7 @@ export class SelectedNodeComponent {
                     // if (this.selectedNode) {
                         // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
                     // }
-                    this.openFullInfo(node.id);
+                    this.openFullInfo(node);
                     if (node.children) {
                         this.totalItems = node.children.length;
                         this.childrenListPerPage = node.children.slice(0, this.itemsPerPage);
@@ -101,9 +101,11 @@ export class SelectedNodeComponent {
         }); 
     }
 
-    openFullInfo(childId: string): void {
-        if (childId !== '') {
-            this._eosDictService.openNode(this._dictionaryId, childId);
+    openFullInfo(child: EosDictionaryNode): void {
+        if (!child.isDeleted) {
+                if (child.id !== '') {
+                this._eosDictService.openNode(this._dictionaryId, child.id);
+            }
         }
     }
 
@@ -121,13 +123,28 @@ export class SelectedNodeComponent {
         ]);
     }*/
 
-    editNode(nodeId?: string) {
+    editNode(node?: EosDictionaryNode) {
+        let nodeId: string;
+        if (node) {
+            if (!node.isDeleted) {
+                nodeId = node.id;
+            }
+        } else {
+            if (this.openedNode) {
+                if(!this.openedNode.isDeleted) {
+                    nodeId = this.openedNode.id;
+                } else {
+                    nodeId = this.selectedNode.id;
+                }
+            }
+        }
+
         this.router.navigate([
             'spravochniki',
             this._dictionaryId,
-            nodeId || (this.openedNode ? this.openedNode.id : this.selectedNode.id),
+            nodeId,
             'edit',
-        ]);
+        ]);    
     }
 
     checkAllItems(value: boolean = !this.checkAll): void {
@@ -146,9 +163,8 @@ export class SelectedNodeComponent {
     }
 
     deleteSelectedItems(): void {
-        
         if (this.openedNode.selected && this.openedNode !== this.selectedNode) {
-            this.openFullInfo(this.openedNode.parent.id);
+            this.openFullInfo(this.openedNode.parent);
         }
         if (this.selectedNode.selected) {
             this._eosDictService.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id]);
@@ -228,5 +244,33 @@ export class SelectedNodeComponent {
     }
 
     physicallyDelete() {
+    }
+
+    restoringLogicallyDeletedItem() {
+        if (this.selectedNode.selected && this.selectedNode.isDeleted) {
+            this.selectedNode.isDeleted = false;
+            this.selectedNode.selected = false;
+        }
+
+        this.selectedNode.children.forEach(child => {
+            if (child.selected && child.isDeleted) {
+                this._restoringLogicallyDeletedItem(child);
+            }
+        });
+    }
+
+    private _restoringLogicallyDeletedItem(node: EosDictionaryNode) {
+        if (node.isDeleted) {
+            node.isDeleted = false;
+            node.selected = false;
+        }
+
+        if (node.children) {
+            node.children.forEach(child => {
+                if (child.isDeleted) {
+                    this._restoringLogicallyDeletedItem(child);
+                }
+            });
+        }
     }
 }

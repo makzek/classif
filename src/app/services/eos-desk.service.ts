@@ -83,11 +83,6 @@ export class EosDeskService {
         this._selectedDesk$.next(this._selectedDesk || this._desksList[0]);
     }
 
-    pinRef(i: number, link: IDeskItem): void {
-        this._desksList[i].references.push(link);
-        this._desksList$.next(this._desksList);
-    }
-
     unpinRef(link: IDeskItem): void {
         this._selectedDesk.references = this._selectedDesk.references.filter((r) => r !== link);
         this._selectedDesk$.next(this._selectedDesk);

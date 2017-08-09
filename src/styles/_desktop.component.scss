@@ -4,6 +4,8 @@ eos-desktop {
         margin: 5px;
         width: 150px;
         background-color: $modal-background;
+        white-space: normal;
+        overflow: hidden;
     }
 
     .btn-wrapper {
@@ -14,6 +16,16 @@ eos-desktop {
             position: absolute;
             top: 10px;
             right: 10px;
+        }
+
+        .end-hidder {
+            display: inline-block;
+            position: absolute;
+            bottom: 5px;
+            right: 15px;
+            height: 1.42857143em;
+            width: 60px;
+            background: linear-gradient(to right, transparent 0%, $modal-background 50%);
         }
     }
 }

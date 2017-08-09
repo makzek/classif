@@ -36,6 +36,7 @@
                 </span>
                 <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
+                    <li role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
                 </ul>
             </div>
         </span>
@@ -53,7 +54,7 @@
                 <!--<span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="selectNode(selectedNode.id)">
                     <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
                 </span>-->
-                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="editNode(selectedNode.id)">
+                <span class="node-info" (click)="openFullInfo(selectedNode)" (dblclick)="editNode(selectedNode)">
                     <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
                 </span>
             </li>
@@ -63,13 +64,13 @@
                         <div *ngIf="!child.isDeleted || showDeleted" [ngClass]="{'deleted': child.isDeleted && showDeleted}" class="is-deleted-wrap">
                             <span class="checkbox">
                             <label>
-                                <input type="checkbox" [disabled]="child.isDeleted" [(ngModel)]="child.selected" (click)="checkItem(child)">
+                                <input type="checkbox" [(ngModel)]="child.selected" (click)="checkItem(child)">
                             </label>
                             </span>
                             <!--<span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
                                 <span class="code">{{child.code}}</span> {{child.title}}
                             </span>-->
-                            <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="editNode(child.id)">
+                            <span class="node-info" (click)="openFullInfo(child)" (dblclick)="editNode(child)">
                                 <span class="code">{{child.code}}</span> {{child.title}}
                             </span>
                         </div>

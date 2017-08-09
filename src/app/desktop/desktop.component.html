@@ -2,8 +2,9 @@
     <div class="col-lg-12">
         <div class="btn-wrapper" *ngFor="let dictionary of dictionariesList">
             <button class="btn btn-sq-lg"
-                [routerLink]="[dictionary.link]">
-                {{dictionary.title}}
+                [routerLink]="[dictionary.link]" tooltip="{{dictionary.title}}" placement="right" >
+                <span class="button-title">{{dictionary.title}}</span>
+                <span class="end-hidder"></span>
             </button>
             <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(dictionary)"></span>
         </div>
@@ -19,7 +20,8 @@
                 *ngFor="let item of recentItems"
                 [routerLink]="[item.link]"
                 class="btn btn-sq-lg">
-                {{item.title}}
+                <span class="button-title">{{item.title}}</span>
+                <span class="end-hidder"></span>
             </button>
     </div>   
 </div>

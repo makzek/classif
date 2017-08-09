@@ -125,10 +125,10 @@ export class EosDictService {
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             if (!nodeId) {
-                this._selectedNode = null;
-                this._selectedNode$.next(null);
-                this._openedNode = null;
-                this._openedNode$.next(null);
+                this._selectedNode = this._dictionary.root;
+                this._selectedNode$.next(this._selectedNode);
+                this._openedNode = this._dictionary.root;
+                this._openedNode$.next(this._openedNode);
                 res(null);
             }
             this.getNode(dictionaryId, nodeId)
