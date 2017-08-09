@@ -4,7 +4,7 @@
         <li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>
     </ul>
 </div>
-<eos-delivery-detail [it]=currentItem></eos-delivery-detail>
+<eos-delivery-detail *ngIf="currentItem" [it]="currentItem"></eos-delivery-detail>
 <!--
 <div>
     ВИды доставки

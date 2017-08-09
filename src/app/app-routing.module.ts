@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
@@ -20,13 +21,13 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title:'node', showInBreadcrumb: true },
+            data: { title: 'node', showInBreadcrumb: true },
             children: [{
                 path: 'edit',
                 pathMatch: 'full',
                 component: EditCardComponent,
                 data: { title: 'Редактирвание', showInBreadcrumb: true }
-            },{
+            }, {
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
@@ -55,6 +56,10 @@ const routes: Routes = [{
     path: 'test',
     component: TestPageComponent,
     data: { title: 'Test page for UI components', showInBreadcrumb: true }
+}, {
+    path: 'delivery',
+    component: DeliveryComponent,
+    data: { title: 'delivery page', showInBreadcrumb: true }
 }, {
     path: '',
     redirectTo: '/home',
