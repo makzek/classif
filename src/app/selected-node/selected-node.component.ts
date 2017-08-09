@@ -195,6 +195,21 @@ export class SelectedNodeComponent {
     createItem() {
         this.modalRef.hide();
         this._eosDictService.addChild(this.newNode);
+        this.newNode = new EosDictionaryNode({
+            id: null,
+            code: null,
+            title: null,
+            parentId: null,
+            parent: null,
+            children: [],
+            description: null,
+            isNode: null,
+            hasSubnodes: null,
+            isExpanded: null,
+            isDeleted: false,
+            selected: false,
+            data: null,
+        });
     }
 
     openCreatingForm(template: TemplateRef<any>) {
