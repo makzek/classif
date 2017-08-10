@@ -2,5 +2,6 @@
     <i *ngIf="node.hasSubnodes" class="fa"
         [ngClass]="{'fa-minus':node.isExpanded, 'fa-plus': !node.isExpanded}" (click)="onExpand($event)"></i>
     <span [ngClass]="{active: isActive}" (click)="onExpand($event)" (dblclick)="onSelect($event);">{{node.code}} {{node.title}}</span>
+    <eos-info [info]="'Some info which I want to show at tooltip'"></eos-info>
     <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children"></eos-tree>
 </div>

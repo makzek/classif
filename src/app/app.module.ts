@@ -29,6 +29,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
+import { InfoComponent } from './info/info.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -60,6 +61,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         NoticeComponent,
         DesktopComponent,
         TitleComponent,
+        InfoComponent,
     ],
     imports: [
         BrowserModule,

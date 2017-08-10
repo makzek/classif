@@ -1,0 +1,18 @@
+.tooltip-inner {
+    background-color: $icon-color;
+    color: #fff;
+}
+
+.tooltip {
+    .tooltip-arrow {
+        border-bottom-color: $icon-color;
+    }
+}
+
+span.tt-wrapper {
+       &,
+       span {
+        margin: 0;
+        width: 14px;
+    }
+}
