@@ -15,9 +15,9 @@ export class EditCardComponent {
     dictionaryId: string;
     nodeId: string;
     selfLink: string;
-    editMode: boolean = false;
-    wasEdit: boolean = false;
-    hideWarning: boolean = true;
+    editMode = false;
+    wasEdit = false;
+    hideWarning = true;
     i: number = -1;
 
     constructor(

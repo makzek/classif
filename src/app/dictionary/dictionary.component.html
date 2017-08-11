@@ -1,4 +1,3 @@
-
 <div class="tree-wrapper" [ngClass]="hideTree ? 'vertical': 'col-sm-3'">
     <div class="aside">
         <div class="sandwich-wrapper" (click)="hideTree = !hideTree"><span class="sandwich"></span></div>
@@ -12,7 +11,8 @@
     <eos-search-result [hidden]="!hideSelectedNode" (hasResult)="hideSelectedNode = $event"></eos-search-result>
 </div>
 <!--<div class="opened-wrapper" [ngClass]="hideTree ? 'col-sm-5': 'col-sm-4'">-->
-    <div class="opened-wrapper col-sm-4" [ngClass]="{'vertical': hideFullInfo, 'col-sm-5': hideTree && !hideFullInfo, 'col-sm-4': !hideTree && !hideFullInfo}" (click)="hideFullInfo = !hideFullInfo">
+<div class="opened-wrapper col-sm-4" [ngClass]="{'vertical': hideFullInfo, 'col-sm-5': hideTree && !hideFullInfo, 'col-sm-4': !hideTree && !hideFullInfo}"
+    (click)="hideFullInfo = !hideFullInfo">
     <div [ngClass]="{'vertical': hideFullInfo}" class="sandwich-wrapper pull-right"><span class="sandwich"></span></div>
-    <eos-opened-node ></eos-opened-node>
+    <eos-opened-node></eos-opened-node>
 </div>

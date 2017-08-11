@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
-import { HomeComponent } from './home/home.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';

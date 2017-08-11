@@ -5,5 +5,14 @@ import { Component } from '@angular/core';
     templateUrl: 'sidebar.component.html',
 })
 export class SidebarComponent {
-    hideMenu: boolean = true;
+    hideMenu = true;
+    modules = [{
+        icon: 'fa-list',
+        title: 'Cправочники',
+        url: '/spravochniki'
+    }, {
+        icon: 'fa-code',
+        title: 'Тестовая страница',
+        url: '/test'
+    }];
 }

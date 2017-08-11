@@ -10,9 +10,9 @@ export class InfoComponent {
     @ViewChild('pop') private _tooltip: TooltipDirective;
 
     clicked = false;
-    
+
     check() {
-        if(!this.clicked) this._tooltip.hide();
+        if (!this.clicked) { this._tooltip.hide(); }
     }
 
     hide() {
