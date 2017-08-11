@@ -6,4 +6,13 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
     hideMenu = true;
+    modules = [{
+        icon: 'fa-list',
+        title: 'Cправочники',
+        url: '/spravochniki'
+    }, {
+        icon: 'fa-code',
+        title: 'Тестовая страница',
+        url: '/test'
+    }];
 }
