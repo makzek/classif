@@ -3,8 +3,13 @@
 </div>
 <div *ngIf="selectedNode" class="selected-node-wrapper">
     <div class="selected-node-header first-line">
-        <span *ngIf="!showDeleted" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span *ngIf="showDeleted" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="!showDeleted" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="showDeleted" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
+        <div class="input-group search pull-right">
+            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="search()"></span></span>
+            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
+            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре"></span>
+        </div>
     </div>
     <div class="selected-node-header second-line">
         <span class="table-title">

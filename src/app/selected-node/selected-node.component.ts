@@ -21,7 +21,7 @@ export class SelectedNodeComponent {
 
     dictionary: EosDictionary;
 
-    checkAll = false;
+    checkAll = true;
 
     totalItems: number;
     itemsPerPage = 10;
@@ -51,6 +51,9 @@ export class SelectedNodeComponent {
 
     showDeleted: boolean;
 
+    searchString: string;
+    searchInAllDict = false;
+
     constructor(private _eosDictService: EosDictService,
         private _eosMessageService: EosMessageService,
         private router: Router,
@@ -78,6 +81,13 @@ export class SelectedNodeComponent {
                         this.totalItems = node.children.length;
                         this.childrenListPerPage = node.children.slice(0, this.itemsPerPage);
                     }
+
+                    if (node.children) {
+                        node.children.forEach(child => {
+                            this.checkAll = this.checkAll && child.selected;
+                        });
+                    }
+                    this.checkAll = this.checkAll && node.selected;
                 } else {
                     if (this.dictionary) {
                         this.selectedNode = this.dictionary.root;
@@ -230,11 +240,13 @@ export class SelectedNodeComponent {
             if (goBack) {
                 this._eosDictService.openNode(this._dictionaryId, this.selectedNode.children[(i - 1 +
                     this.selectedNode.children.length) % this.selectedNode.children.length].id);
-                this.currentPage = Math.floor(((i - 1 + this.selectedNode.children.length) % this.selectedNode.children.length) / (this.itemsPerPage)) + 1;
+                this.currentPage = Math.floor(((i - 1 + this.selectedNode.children.length)
+                    % this.selectedNode.children.length) / (this.itemsPerPage)) + 1;
             } else {
                 this._eosDictService.openNode(this._dictionaryId, this.selectedNode.children[(i + 1 +
                     this.selectedNode.children.length) % this.selectedNode.children.length].id);
-                this.currentPage = Math.floor(((i + 1 + this.selectedNode.children.length) % this.selectedNode.children.length) / (this.itemsPerPage)) + 1;
+                this.currentPage = Math.floor(((i + 1 + this.selectedNode.children.length)
+                    % this.selectedNode.children.length) / (this.itemsPerPage)) + 1;
             }
         }
     }
@@ -251,7 +263,8 @@ export class SelectedNodeComponent {
 
     showMore() {
         this.pageAtList++;
-        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
+        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage - 1)
+            * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
     }
 
     switchShowDeleted(value: boolean) {
@@ -259,6 +272,32 @@ export class SelectedNodeComponent {
     }
 
     physicallyDelete() {
+        if (this.selectedNode.children) {
+            this.selectedNode.children.forEach(child => {
+                if (child.selected) {
+                    if (child.title.length % 3) { // here must be API request for check if possible to delete
+                        this._eosMessageService.addNewMessage({
+                            type: 'danger',
+                            title: 'Ошибка удаления элемента: ',
+                            msg: 'на этот объект (' + child.title + ') ссылаются другие объекты системы',
+                        });
+                    } else {
+                        this._eosDictService.physicallyDelete(child.id);
+                    }
+                }
+            });
+        }
+        if (this.selectedNode.selected) {
+            if (this.selectedNode.title.length % 3) { // here must be API request for check if possible to delete
+                        this._eosMessageService.addNewMessage({
+                            type: 'danger',
+                            title: 'Ошибка удаления элемента: ',
+                            msg: 'на этот объект (' + this.selectedNode.title + ') ссылаются другие объекты системы',
+                        });
+                    } else {
+                        this._eosDictService.physicallyDelete(this.selectedNode.id);
+                    }
+        }
     }
 
     restoringLogicallyDeletedItem() {
@@ -287,5 +326,9 @@ export class SelectedNodeComponent {
                 }
             });
         }
+    }
+
+    search() {
+        this._eosDictService.search(this.searchString, this.searchInAllDict, this.selectedNode);
     }
 }

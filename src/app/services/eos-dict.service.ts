@@ -13,11 +13,13 @@ export class EosDictService {
     private _dictionary: EosDictionary;
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
+    private _searchResults: EosDictionaryNode[];
 
     private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>;
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
+    private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
 
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
@@ -29,6 +31,7 @@ export class EosDictService {
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
+        this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -49,6 +52,10 @@ export class EosDictService {
     /* Observable openNode for subscribing on updates in components */
     get openedNode$(): Observable<EosDictionaryNode> {
         return this._openedNode$.asObservable();
+    }
+
+    get searchResults$(): Observable<EosDictionaryNode[]> {
+        return this._searchResults$.asObservable();
     }
 
     public getDictionariesList(): Promise<any> {
@@ -200,6 +207,7 @@ export class EosDictService {
             node.children.forEach((subNode) => this._deleteNode(subNode));
         }
     }
+
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
@@ -208,9 +216,20 @@ export class EosDictService {
         this._dictionary$.next(this._dictionary);
     }
 
-    public addChild(child: EosDictionaryNode) {
-       this._selectedNode.children.push(child);
+    public addChild(node: EosDictionaryNode) {
+       this._selectedNode.children.push(node);
        this._selectedNode$.next(this._selectedNode);
-        
+    }
+
+    public physicallyDelete(nodeId: string) {
+        this._dictionary.deleteNode(nodeId, true);
+        this._dictionary$.next(this._dictionary);
+        this._selectedNode$.next(this._selectedNode);
+    }
+
+    public search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
+        this._searchResults = this._dictionary.search(searchString, globalSearch, selectedNode);
+        // console.log(this._searchResults);
+        this._searchResults$.next(this._searchResults);
     }
 }

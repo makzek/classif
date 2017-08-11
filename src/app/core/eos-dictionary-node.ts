@@ -18,4 +18,16 @@ export class EosDictionaryNode {
         this.selected = !!this.selected;
         this.isDeleted = !!this.isDeleted;
     }
+
+    hasParent(parent: EosDictionaryNode): boolean {
+        if (this.parent) {
+            if (this.parent.id === parent.id) {
+                return true;
+            } else {
+                return this.parent.hasParent(parent);
+            }
+        } else {
+            return false;
+        }
+    }
 }

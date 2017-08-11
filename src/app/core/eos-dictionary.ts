@@ -1,4 +1,5 @@
 import { EosDictionaryNode } from './eos-dictionary-node';
+import { SEARCH_KEYS } from '../core/consts';
 
 export class EosDictionary {
     readonly id: string;
@@ -63,6 +64,10 @@ export class EosDictionary {
     /* return dictionary root nodes */
     get rootNodes(): EosDictionaryNode[] {
         return this._rootNodes;
+    }
+
+    get nodes(): Map<string, EosDictionaryNode> {
+        return this._nodes;
     }
 
     setChildren(parentId: string, children: EosDictionaryNode[]) {
@@ -132,6 +137,19 @@ export class EosDictionary {
         }
 
         return _result;
+    }
+
+    search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
+        let searchResult = [];
+            this._nodes.forEach((node) => {  
+                if ( !!~SEARCH_KEYS.findIndex((key) => !!~node[key].search(searchString))) {
+                    searchResult.push(node);
+                }
+            });
+        if (!globalSearch) {
+            searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
+        }
+        return searchResult;
     }
 
 }

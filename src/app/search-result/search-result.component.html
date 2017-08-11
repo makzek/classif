@@ -1,0 +1,16 @@
+<div class="result-wrapper">
+
+    <ul class="result-list">
+        <li *ngFor="let node of nodes">
+            <div *ngIf="!node.isDeleted || showDeleted" [ngClass]="{'deleted': node.isDeleted && showDeleted}" class="is-deleted-wrap">
+                <span class="checkbox">
+                    <label><input type="checkbox" [(ngModel)]="node.selected" (click)="checkItem(node)"></label>
+                </span>
+                <span class="node-info">
+                    <span class="code">{{node.code}}</span> {{node.title}}
+                </span>
+            </div>
+        </li>
+    </ul>
+
+</div>

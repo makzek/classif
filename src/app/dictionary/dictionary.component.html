@@ -5,9 +5,10 @@
     <eos-tree [hidden]="hideTree" [nodes]="nodes"></eos-tree>
     <div class="root-title" [hidden]="!hideTree">{{ dictionaryName }}</div>
 </div>
-<div class="selected-wrapper" [ngClass]="{'col-sm-5': !hideTree && !hideFullInfo,
-    'col-sm-6': (hideTree && !hideFullInfo), 'col-sm-8': (!hideTree && hideFullInfo), 'col-sm-10': hideTree && hideFullInfo}">
-    <eos-selected-node></eos-selected-node>
+<div class="selected-wrapper" [ngClass]="{'col-sm-5': !hideTree && !hideFullInfo, 
+    'col-sm-6': (hideTree && !hideFullInfo), 'col-sm-8': (!hideTree && hideFullInfo), 'col-sm-10': hideTree && hideFullInfo}" >
+    <eos-selected-node [hidden]="hideSelectedNode"></eos-selected-node>
+    <eos-search-result [hidden]="!hideSelectedNode" (hasResult)="hideSelectedNode = $event"></eos-search-result>
 </div>
 <!--<div class="opened-wrapper" [ngClass]="hideTree ? 'col-sm-5': 'col-sm-4'">-->
 <div class="opened-wrapper col-sm-4" [ngClass]="{'vertical': hideFullInfo, 'col-sm-5': hideTree && !hideFullInfo, 'col-sm-4': !hideTree && !hideFullInfo}"
