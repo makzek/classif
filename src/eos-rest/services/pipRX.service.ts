@@ -1,5 +1,5 @@
 ﻿import { Injectable, Optional } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { IAsk, IApiCfg, IEnt, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
@@ -13,20 +13,22 @@ import { Utils } from '../core/utils';
 export class PipRX {
     private _metadata: Metadata;
     private _cfg: ApiCfg;
+    private _options: any = {
+        withCredentials: true
+    };
 
     public sequenceMap: SequenceMap = new SequenceMap();
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
 
-        console.log('create service with config', cfg);
         this._metadata = new Metadata(cfg);
         this._metadata.init();
     }
 
     private getData(url: string) {
         return this.http
-            .get(this._cfg.dataSrv + url)
+            .get(this._cfg.dataSrv + url, this._options)
             .map((r) => {
                 return r.json().value;
             });
@@ -115,14 +117,16 @@ export class PipRX {
 
     //
     private _odataGet<T>(urls: string[], req: IRequest): Observable<T[]> {
+        const _options = Object.assign({}, this._options, {
+            headers: new Headers({
+                'MaxDataServiceVersion': '3.0',
+                'Accept': 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;'
+            })
+        });
+
         const rl = Observable.of(...urls).flatMap(url => {
             return this.http
-                .get(url, {
-                    headers: new Headers({
-                        'MaxDataServiceVersion': '3.0',
-                        'Accept': 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;'
-                    })
-                })
+                .get(url, _options)
                 .map(r => {
                     try {
                         return Utils.nativeParser(r.json());
@@ -146,16 +150,20 @@ export class PipRX {
         if (changeSet.length === 0) {
             return Observable.of([]);
         }
-        const d = Utils.buildBatch(changeSet);
-        return this.http
-            .post(this._cfg.dataSrv + '$batch?' + vc, d, {
-                headers: new Headers({
-                    'DataServiceVersion': '1.0',
-                    'Accept': 'multipart/mixed',
-                    'Content-Type': 'multipart/mixed;boundary=' + BATCH_BOUNDARY,
-                    'MaxDataServiceVersion': '3.0'
-                })
+
+        const _options = Object.assign({}, this._options, {
+            headers: new Headers({
+                'DataServiceVersion': '1.0',
+                'Accept': 'multipart/mixed',
+                'Content-Type': 'multipart/mixed;boundary=' + BATCH_BOUNDARY,
+                'MaxDataServiceVersion': '3.0'
             })
+        });
+
+        const d = Utils.buildBatch(changeSet);
+
+        return this.http
+            .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
                 const answer: any[] = [];
                 const e = Utils.parseBatchResponse(r, answer);
