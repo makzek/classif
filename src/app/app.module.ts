@@ -15,7 +15,6 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TreeComponent } from './tree/tree.component';
@@ -47,7 +46,6 @@ import { TestPageComponent } from './test-page/test-page.component';
         BreadcrumbsComponent,
         DictionaryComponent,
         DictionariesComponent,
-        HomeComponent,
         SidebarComponent,
         EditCardComponent,
         TreeComponent,
