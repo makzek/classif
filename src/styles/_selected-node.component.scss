@@ -49,8 +49,16 @@
     }
 
     .first-line {
-        span {
+        height: 50px;
+
+        .deleted-toggle {
             cursor: pointer;
+            position: relative;
+            top: 4px;
+        }
+
+        .search {
+            width: 240px;
         }
     }
 

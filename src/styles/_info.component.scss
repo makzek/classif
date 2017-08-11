@@ -9,10 +9,12 @@
     }
 }
 
-span.tt-wrapper {
-       &,
-       span {
-        margin: 0;
-        width: 14px;
+span {
+    &.tt-wrapper {
+        &,
+        span {
+            margin: 0;
+            width: 14px;
+        }
     }
 }
