@@ -41,7 +41,7 @@ export class TreeNodeComponent implements OnInit {
 
     onSelect(evt: Event) {
         evt.stopPropagation();
-        
+
         const _path = [
             'spravochniki',
             this._dictionaryId,

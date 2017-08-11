@@ -24,7 +24,7 @@ export class SelectedNodeComponent {
     checkAll = false;
 
     totalItems: number;
-    itemsPerPage: number = 10;
+    itemsPerPage = 10;
 
     currentPage = 1;
     pageAtList = 1;
@@ -51,9 +51,9 @@ export class SelectedNodeComponent {
 
     showDeleted: boolean;
 
-    constructor(private _eosDictService: EosDictService, 
-        private _eosMessageService: EosMessageService, 
-        private router: Router, 
+    constructor(private _eosDictService: EosDictService,
+        private _eosMessageService: EosMessageService,
+        private router: Router,
         private modalService: BsModalService,
         private _eosUserSettingsService: EosUserSettingsService) {
         this._eosDictService.dictionary$.subscribe(
@@ -71,7 +71,7 @@ export class SelectedNodeComponent {
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
                     // if (this.selectedNode) {
-                        // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
+                    // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
                     // }
                     this.openFullInfo(node);
                     if (node.children) {
@@ -98,12 +98,12 @@ export class SelectedNodeComponent {
 
         this._eosUserSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        }); 
+        });
     }
 
     openFullInfo(child: EosDictionaryNode): void {
         if (!child.isDeleted) {
-                if (child.id !== '') {
+            if (child.id !== '') {
                 this._eosDictService.openNode(this._dictionaryId, child.id);
             }
         }
@@ -131,7 +131,7 @@ export class SelectedNodeComponent {
             }
         } else {
             if (this.openedNode) {
-                if(!this.openedNode.isDeleted) {
+                if (!this.openedNode.isDeleted) {
                     nodeId = this.openedNode.id;
                 } else {
                     nodeId = this.selectedNode.id;
@@ -144,7 +144,7 @@ export class SelectedNodeComponent {
             this._dictionaryId,
             nodeId,
             'edit',
-        ]);    
+        ]);
     }
 
     checkAllItems(value: boolean = !this.checkAll): void {
@@ -173,7 +173,7 @@ export class SelectedNodeComponent {
             } else {
                 this.selectNode('');
             }
-           return;
+            return;
         }
         const selectedNodes: string[] = [];
         this.selectedNode.children.forEach((child) => {
@@ -181,7 +181,7 @@ export class SelectedNodeComponent {
                 selectedNodes.push(child.id);
             }
         });
-        if (!selectedNodes.length ) {
+        if (!selectedNodes.length) {
             this._eosMessageService.addNewMessage({
                 type: 'warning',
                 title: 'Ошибка удаления: ',
@@ -241,17 +241,17 @@ export class SelectedNodeComponent {
 
     pageChanged(event: any): void {
         this.pageAtList = 1;
-        this.childrenListPerPage = this.selectedNode.children.slice((event.page-1)*event.itemsPerPage, event.page*event.itemsPerPage);
+        this.childrenListPerPage = this.selectedNode.children.slice((event.page - 1) * event.itemsPerPage, event.page * event.itemsPerPage);
     }
 
     setItemCount(value: string) {
         this.itemsPerPage = +value;
-        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage-1)*+value, this.currentPage*+value);
+        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage - 1) * +value, this.currentPage * +value);
     }
 
     showMore() {
         this.pageAtList++;
-        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage-1)*this.itemsPerPage, this.currentPage*this.itemsPerPage*this.pageAtList);
+        this.childrenListPerPage = this.selectedNode.children.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
     }
 
     switchShowDeleted(value: boolean) {

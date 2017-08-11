@@ -10,8 +10,8 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 export class OpenedNodeComponent {
 
     openedNode: EosDictionaryNode;
-    note: string = '';
-    SEV: string = '';
+    note = '';
+    SEV = '';
 
     constructor(private eosDictService: EosDictService) {
 
@@ -19,9 +19,9 @@ export class OpenedNodeComponent {
             (node) => {
                 this.openedNode = node;
                 if (node) {
-                    if (node.data) {
+                    if (node.data) { /* why so? */
                         this.note = node.data.note;
-                        this.note = node.data.SEV;
+                        this.SEV = node.data.SEV;
                     }
                 }
             },

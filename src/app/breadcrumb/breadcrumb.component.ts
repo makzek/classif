@@ -4,7 +4,7 @@ import 'rxjs/add/operator/filter';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
-import { EosDesk} from '../core/eos-desk';
+import { EosDesk } from '../core/eos-desk';
 
 interface IBreadcrumb {
     url: string;
@@ -117,7 +117,7 @@ export class BreadcrumbsComponent {
             title += element.title + '/';
         });
         title = title.slice(0, title.length - 1);
-        
+
         desk.references.push({
             link: this.currentLink,
             title: title,

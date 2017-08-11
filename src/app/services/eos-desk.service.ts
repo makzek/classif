@@ -19,7 +19,7 @@ export class EosDeskService {
     private _selectedDesk$: BehaviorSubject<EosDesk>;
     private _recentItems$: BehaviorSubject<IDeskItem[]>;
 
-    constructor(private eosDictionaryService: EosDictService, private eosMessageService : EosMessageService, private router: Router) {
+    constructor(private eosDictionaryService: EosDictService, private eosMessageService: EosMessageService, private router: Router) {
         this._desksList = [{
             id: 'system',
             name: 'System desk',
@@ -50,8 +50,9 @@ export class EosDeskService {
                 });
 
                 if (this._selectedDesk$ && this._selectedDesk) {
-                    if (this._selectedDesk.id == 'system')
-                    this._selectedDesk$.next(this._desksList[0])
+                    if (this._selectedDesk.id === 'system') {
+                        this._selectedDesk$.next(this._desksList[0])
+                    }
                 };
             });
 
@@ -79,7 +80,7 @@ export class EosDeskService {
     }
 
     setSelectedDesk(deskId: string) {
-        this._selectedDesk = this._desksList.find((d) =>  d.id === deskId);
+        this._selectedDesk = this._desksList.find((d) => d.id === deskId);
         this._selectedDesk$.next(this._selectedDesk || this._desksList[0]);
     }
 
@@ -113,11 +114,11 @@ export class EosDeskService {
 
     createDesk(desk: EosDesk): void {
         if (this._desksList.length < 6) {// users desk + system desk
-            if (!desk.id) desk.id = (this._desksList.length + 1).toString();
+            if (!desk.id) { desk.id = (this._desksList.length + 1).toString(); }
             this._desksList.push(desk);
             this._desksList$.next(this._desksList);
         } else {
-            this.eosMessageService.addNewMessage({ 
+            this.eosMessageService.addNewMessage({
                 type: 'warning',
                 title: 'Предупреждение: максимальное колличество рабочих столов!',
                 msg: 'У вас может быть не более 5 рабочих столов',
