@@ -1,16 +1,19 @@
+import { DictionaryDescriptor } from './dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { SEARCH_KEYS } from '../core/consts';
 
 export class EosDictionary {
     readonly id: string;
+    descriptor: DictionaryDescriptor;
     public title: string;
     root: EosDictionaryNode;
     private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<string, EosDictionaryNode>;
 
-    constructor(data: any) {
+    constructor(descriptor: DictionaryDescriptor, data: any) {
+        this.descriptor = descriptor;
         this.id = data.id;
-        this.root = new EosDictionaryNode({
+        this.root = new EosDictionaryNode(this.descriptor.record, {
             id: '',
             title: data.title,
             isNode: true,
@@ -26,7 +29,7 @@ export class EosDictionary {
 
         /* add nodes */
         data.forEach((nodeData) => {
-            const node: EosDictionaryNode = new EosDictionaryNode(nodeData);
+            const node: EosDictionaryNode = new EosDictionaryNode(this.descriptor.record, nodeData);
             this._nodes.set(node.id, node);
         });
 
@@ -141,11 +144,13 @@ export class EosDictionary {
 
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
         let searchResult = [];
-            this._nodes.forEach((node) => {  
-                if ( !!~SEARCH_KEYS.findIndex((key) => !!~node[key].search(searchString))) {
-                    searchResult.push(node);
-                }
-            });
+        /* tslint:disable:no-bitwise */
+        this._nodes.forEach((node) => {
+            if (!!~SEARCH_KEYS.findIndex((key) => !!~node[key].search(searchString))) {
+                searchResult.push(node);
+            }
+        });
+        /* tslint:enable:no-bitwise */
         if (!globalSearch) {
             searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
         }
