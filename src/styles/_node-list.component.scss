@@ -103,9 +103,13 @@ eos-node-list {
 
         .elements {
             list-style: none;
-            max-height: calc(100vh - 150px - 95px - 130px);
+            max-height: calc(100vh - 150px - 95px - 136px);
             overflow-y: auto;
             padding-left: 20px;
+
+            &.has-parent {
+                max-height: calc(100vh - 150px - 95px - 201px);
+            }
 
             li,
             .is-deleted-wrap {
