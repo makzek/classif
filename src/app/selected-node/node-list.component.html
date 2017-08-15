@@ -7,23 +7,12 @@
                 <bs-sortable
                     [(ngModel)]="nodeListPerPage"
                     [itemTemplate]="childTemplate"
-                    itemClass="{'highlight': openedNode.id === item.id}"
+                    itemClass="{'highlight': openedNode && openedNode.id === item.id}"
                     itemActiveClass="sortable-item-active"
                     placeholderItem="Drag here"
                     placeholderClass="placeholderStyle"
                     wrapperClass="sortable-wrapper">
                 </bs-sortable>
-
-                <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === node.id}">
-                    <div *ngIf="!node.isDeleted || showDeleted" [ngClass]="{'deleted': node.isDeleted && showDeleted}" class="is-deleted-wrap">
-                        <span class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="node.selected"></label>
-                    </span>
-                        <span class="node-info" (click)="openFullInfo(node)" (dblclick)="editNode(node)">
-                        <span class="code">{{node.code}}</span> {{node.title}}
-                        </span>
-                    </div>
-                </div>
             </li>
         </ul>
         <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}"
