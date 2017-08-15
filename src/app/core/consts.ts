@@ -5,7 +5,7 @@ export const BASIC_DICT: IDictionaryDescriptor = {
     id: 'rubricator',
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearh', 'markRecords'],
-    itemActions: ['edit', 'view', 'remove', 'removeHard', 'order', 'userOrder', 'quickSearch', 'fullSearh'],
+    itemActions: ['edit', 'view', 'remove', 'removeHard', 'order', 'userOrder', 'quickSearch', 'fullSearh', 'sorting'],
     groupActions: ['remove', 'removeHard'],
     keyField: 'id',
     fields: [{

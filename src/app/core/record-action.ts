@@ -11,5 +11,6 @@ export enum E_RECORD_ACTIONS {
     import,
     export,
     markRecords,
+    sorting
     /* to be extended */
 };

@@ -16,6 +16,7 @@ export class EosDictionaryNode {
     isDeleted: boolean;
     selected: boolean;
     data: any;
+    sorting: number;
     /* made public for a while */
     public _descriptor: RecordDescriptor;
 

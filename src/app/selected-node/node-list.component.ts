@@ -130,6 +130,13 @@ export class NodeListComponent {
         }
     }
 
+    sortItems(): void {
+        let i = 1;
+        for (const item of this.nodes) {
+            item.sorting = i++;
+        }
+    }
+
     editNode(node: EosDictionaryNode) {
         if (node) {
             if (!node.isDeleted) {

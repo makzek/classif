@@ -5,13 +5,14 @@
         <ul *ngIf="nodes" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li>
                 <bs-sortable
-                    [(ngModel)]="nodeListPerPage"
+                    [(ngModel)]="nodes"
                     [itemTemplate]="childTemplate"
                     itemClass="{'highlight': openedNode && openedNode.id === item.id}"
                     itemActiveClass="sortable-item-active"
                     placeholderItem="Drag here"
                     placeholderClass="placeholderStyle"
-                    wrapperClass="sortable-wrapper">
+                    wrapperClass="sortable-wrapper"
+                    (onChange)="sortItems()">
                 </bs-sortable>
             </li>
         </ul>

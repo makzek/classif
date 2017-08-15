@@ -8,7 +8,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0001.0001 Конституция Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd4c6b0c3-bebc-4632-81b4-f3946b2e756f',
@@ -18,7 +19,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0001.1228 Конституции, уставы субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -28,7 +30,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0001.0000 Конституция Российской Федерации. Конституции, уставы субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '65a8a3d2-be4a-4004-a2bc-5c736d2af725',
@@ -38,7 +41,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0002.0002 Государственные символы Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -48,7 +52,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0002.0000 Государственные символы Российской Федерации и субъектов Российской Федерации. Столицы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2a99f7d0-fcfb-43a1-b062-16063144e50c',
@@ -58,7 +63,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0003.0276 Использование и защита языков в Российской Федерации. Государственный язык Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -68,7 +74,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0003.0000 Государственные языки (языки народов) в Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '110d7f61-d7a3-4154-90aa-70a385f6c90b',
@@ -78,7 +85,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0004.0003 Административно-территориальное деление Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '110d7f61-d7a3-4154-90aa-70a385f6c90b',
@@ -88,7 +96,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0004.0646 Административно-территориальное деление субъектов Российской Федерации и их территорий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -98,7 +107,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0004.0000 Территория Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -108,7 +118,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0004 Демография. Перепись населения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -118,7 +129,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0005 Миграционное законодательство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -128,7 +140,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0006 Органы миграционного учета',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -138,7 +151,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0007 Предоставление политического убежища, статуса беженца, вынужденного переселенца, временного убежища',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -148,7 +162,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0008 Внутрироссийская миграция и рынок труда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -158,7 +173,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0009 Внутрироссийская миграция и межнациональные отношения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -168,7 +184,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0010 Проблемы внутрироссийских вынужденных переселенцев',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -178,7 +195,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0011 Внутрироссийская миграция в субъектах Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -188,7 +206,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0012 Привлечение и использование иностранной рабочей силы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -198,7 +217,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0013 Нелегальная миграция, иммиграционный контроль',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -208,7 +228,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0014 Визовая политика. Депортация иностранных граждан, незаконно въехавших на территорию Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -218,7 +239,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0016 Государственная программа по оказанию содействия добровольному переселению в Российскую Федерацию соотечественников, проживающих за рубежом, и ее реализация. Межведомственная комиссия по реализации Государственной программы по оказанию содействия добровольному переселению в Российскую Федерацию соотечественников, проживающих за рубежом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -228,7 +250,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0017 Переселение соотечественников из стран СНГ, Грузии, Республики Абхазии, Республики Южной Осетии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -238,7 +261,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0018 Переселение соотечественников из иностранных государств (кроме стран СНГ, Грузии, Республики Абхазии, Республики Южной Осетии)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -248,7 +272,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0019 Обустройство соотечественников переселенцев (жилье, работа, учеба, подъемные и т.д.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -258,7 +283,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0020 Работа органов государственной власти Российской Федерации, органов государственной власти субъектов Российской Федерации и органов местного самоуправления с соотечественниками – переселенцами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -268,7 +294,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0023 Прекращение гражданства Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -278,7 +305,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0024 Законодательство Российской Федерации о гражданстве. Деятельность МВД России в отношении мигрантов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2d66cc01-2515-4588-ad1a-be997900e978',
@@ -288,7 +316,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0005.0025 Предоставление вида на жительство, разрешения на временное проживание, миграционный учет',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -298,7 +327,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0005.0000 Население Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -308,7 +338,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0026 Право на приобретение и прекращение гражданства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -318,7 +349,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0027 Равенство перед законом и судом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -328,7 +360,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0028 Свобода совести и вероисповедания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -338,7 +371,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0029 Право на свободу и личную неприкосновенность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -348,7 +382,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0030 Право на неприкосновенность частной жизни',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -358,7 +393,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0031 Право на получение и распространение информации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -368,7 +404,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0032 Свобода мысли, слова. Право на собрания, митинги, демонстрации, шествия, пикеты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -378,7 +415,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0033 Избирательное право. Право участвовать в управлении делами государства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -388,7 +426,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0034 Право частной собственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -398,7 +437,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0035 Право на предпринимательскую деятельность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -408,7 +448,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0036 Право на труд',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -418,7 +459,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0037 Право на вознаграждение за труд',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -428,7 +470,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0038 Право на отдых',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -438,7 +481,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0039 Право на социальное обеспечение (по возрасту, в случае болезни, инвалидности)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -448,7 +492,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0040 Право на свободу передвижения, выбор места пребывания и жительства в пределах Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -458,7 +503,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0041 Право на жилище и его неприкосновенность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -468,7 +514,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0042 Право на охрану здоровья и медицинскую помощь',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -478,7 +525,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0043 Право на благоприятную окружающую среду и возмещение ущерба от экологических правонарушений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -488,7 +536,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0044 Право на образование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -498,7 +547,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0045 Право на творчество, преподавание, пользование учреждениями и достижениями культуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -508,7 +558,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0046 Право на личные и коллективные обращения граждан',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -518,7 +569,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0047 Права иностранных граждан и лиц без гражданства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -528,7 +580,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0048 Права различных категорий граждан, правозащитные организации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -538,7 +591,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0049 Права потребителя',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -548,7 +602,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0050 Права человека в исправительно-трудовых (пенитенциарных) учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -558,7 +613,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0051 Права человека в Вооруженных Силах и других войсках Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -568,7 +624,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0053 Права и свободы человека в других странах мира',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -578,7 +635,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0054 Право на льготы и социальное обеспечение, установленные законодательством Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -588,7 +646,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0055 Право на льготы, установленные государственными органами субъектов Российской Федерации и органами местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -598,7 +657,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0056 Права беженцев и вынужденных переселенцев',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -608,7 +668,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0057 Права инвалидов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -618,7 +679,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0058 Права реабилитированных жертв политических репрессий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -628,7 +690,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0059 Уполномоченный по правам человека в Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -638,7 +701,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0062 Права несовершеннолетних',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -648,7 +712,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0063 Права коренных, малочисленных народов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -658,7 +723,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0064 Права человека при оказании психиатрической помощи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -668,7 +734,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0065 Государственная защита прав и свобод человека (возмещение гражданам ущерба от противоправной деятельности государственных органов или должностных лиц)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -678,7 +745,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0066 Процессуальные права человека',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -688,7 +756,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0067 Резолюции митингов, вопросы, поднимаемые на шествиях, манифестациях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -698,7 +767,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0151 Соблюдение и защита прав человека (обращения из зарубежных стран)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -708,7 +778,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0647 Уполномоченный по правам человека в субъекте Российской Федерации и уполномоченный по правам ребенка в субъекте Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -718,7 +789,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0648 Обжалование решений государственных органов и должностных лиц в административном порядке',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -728,7 +800,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0649 Рассмотрение в административном порядке действий (бездействия) государственных органов, органов местного самоуправления и должностных лиц в связи с рассмотрением обращений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -738,7 +811,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0650 Рассмотрение в административном порядке действий (бездействия) должностных лиц органов государственной власти, органов местного самоуправления и должностных лиц (за исключением связанных с рассмотрением обращений)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -748,7 +822,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0780 Права ветеранов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -758,7 +833,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0809 Право на свободный выезд за пределы Российской Федерации и въезд в Российскую Федерацию',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -768,7 +844,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0811 Право защищать свои права и свободы всеми способами, не запрещенными законами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -778,7 +855,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0813 Обязанность платить законно установленные налоги и сборы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -788,7 +866,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.0872 Уполномоченный при Президенте Российской Федерации по правам ребенка',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '99ef40f1-5f23-4f99-907e-a92cbca01ef8',
@@ -798,7 +877,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0006.1229 Права и свободы российских граждан за рубежом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -808,7 +888,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0006.0000 Права, свободы и обязанности человека и гражданина (за исключением международной защиты прав человека)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '061af112-22bf-4630-acce-6c81cfc2c85a',
@@ -818,7 +899,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0007.0069 Разграничение предметов ведения, полномочий и функций между федеральными государственными органами, государственными органами субъектов Российской Федерации и органами местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '061af112-22bf-4630-acce-6c81cfc2c85a',
@@ -828,7 +910,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0007.0096 Национальная политика и межнациональные отношения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '061af112-22bf-4630-acce-6c81cfc2c85a',
@@ -838,7 +921,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0007.0725 Права репрессированных народов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -848,7 +932,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0007.0000 Федеративное устройство Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77658afa-772f-4671-822c-a783ed8ce387',
@@ -858,7 +943,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0008.0070 Референдумы Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77658afa-772f-4671-822c-a783ed8ce387',
@@ -868,7 +954,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0008.0071 Выборы в законодательные (представительные) органы государственной власти субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77658afa-772f-4671-822c-a783ed8ce387',
@@ -878,7 +965,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0008.0072 Избирательные комиссии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77658afa-772f-4671-822c-a783ed8ce387',
@@ -888,7 +976,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0008.0620 Выборы, избирательная система',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77658afa-772f-4671-822c-a783ed8ce387',
@@ -898,7 +987,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0008.0621 Выборы в органы местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -908,7 +998,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0008.0000 Референдум. Выборы. Избирательная система',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -918,7 +1009,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0060 Совет при Президенте Российской Федерации по развитию гражданского общества и правам человека',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -928,7 +1020,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0075 Выборы Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -938,7 +1031,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0076 Публичные выступления, указы и распоряжения Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -948,7 +1042,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0078 Администрация Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -958,7 +1053,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0081 Советы при Президенте Российской Федерации, кроме Совета при Президенте Российской Федерации по развитию гражданского общества и правам человека',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -968,7 +1064,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0082 Комиссии при Президенте Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd769031-d0de-40c3-a49a-fe4f5a71ea36',
@@ -978,7 +1075,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0009.0083 Послание Президента Российской Федерации Федеральному Собранию Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -988,7 +1086,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0009.0000 Президент Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -998,7 +1097,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.0086 Выборы депутатов Государственной Думы Федерального Собрания Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1008,7 +1108,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.0087 Государственная Дума Федерального Собрания Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1018,7 +1119,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.0088 Амнистия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1028,7 +1130,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.0965 Внесение изменений в федеральные законы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1038,7 +1141,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1074 Деятельность депутатов, комитетов, Аппарата Государственной Думы Федерального Собрания Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1048,7 +1152,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1075 Обращения, поступившие в Государственную Думу Федерального Собрания Российской Федерации, касающиеся проектов федеральных законов, опубликованных на Интернет-сайтах органов государственной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1058,7 +1163,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1076 Обращения, касающиеся рассматриваемых Государственной Думой Федерального Собрания Российской Федерации проектов федеральных законов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1068,7 +1174,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1077 Обращения, касающиеся принятых Государственной Думой Федерального Собрания Российской Федерации федеральных законов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1078,7 +1185,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1078 Законодательные инициативы, направленные в Государственную Думу Федерального Собрания Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1088,7 +1196,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1230 Деятельность членов Совета Федерации, комитетов Совета Федерации, Аппарата Совета Федерации Федерального Собрания Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1098,7 +1207,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1265 Общественное обсуждение проектов нормативных правовых актов (в том числе в сети «Интернет»)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1108,7 +1218,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1272 Федеральный закон об охране здоровья граждан от воздействия окружающего табачного дыма и последствий потребления табака',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '55e17889-6d10-46ab-93d9-752dc4fcbb24',
@@ -1118,7 +1229,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0010.1273 Федеральный закон об образовании',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1128,7 +1240,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0010.0000 Федеральное Собрание - парламент Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586c47f4-6750-4d86-b9c4-f6ab42568f35',
@@ -1138,7 +1251,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0011.0073.0004 Оценка деятельности региональных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586c47f4-6750-4d86-b9c4-f6ab42568f35',
@@ -1148,7 +1262,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0011.0073.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dbd5f42f-8d4f-4378-9d29-85d5372f2a8b',
@@ -1158,7 +1273,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0011.0073 Законодательные (представительные) органы государственной власти субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dbd5f42f-8d4f-4378-9d29-85d5372f2a8b',
@@ -1168,7 +1284,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0011.0074 Законодательство субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1178,7 +1295,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0011.0000 Органы законодательной (представительной) власти субъектов Российской Федерации',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1188,7 +1306,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0012.0000 Исполнительная власть (в рамках разделения государственной власти)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1198,7 +1317,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0013.0000 Судебная власть (в рамках разделения государственной власти)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9fd57000-d5b1-4b9d-9187-9b9e050efe09',
@@ -1208,7 +1328,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0014.1163 Право законодательной инициативы органов государственной власти по вопросам своего ведения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1218,7 +1339,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0014.0000 Правотворческая деятельность органов государственной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7b70323e-ef60-47aa-aeac-26882e42d275',
@@ -1228,7 +1350,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0015.0090 Должностные лица местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '03f53f76-1cd3-4d74-b62b-de8f5ebddad8',
@@ -1238,7 +1361,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0015.0091.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '03f53f76-1cd3-4d74-b62b-de8f5ebddad8',
@@ -1248,7 +1372,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0015.0091.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7b70323e-ef60-47aa-aeac-26882e42d275',
@@ -1258,7 +1383,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0015.0091 Представительные органы местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7b70323e-ef60-47aa-aeac-26882e42d275',
@@ -1268,7 +1394,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0015.0092 Муниципальная служба',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7b70323e-ef60-47aa-aeac-26882e42d275',
@@ -1278,7 +1405,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0015.0093 Территориальное общественное самоуправление',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1288,7 +1416,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0015.0000 Местное самоуправление',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'ed779f03-6709-419a-a3e4-8908aab403a1',
@@ -1298,7 +1427,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0016.1164 Статус депутата. Прекращение полномочий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1308,7 +1438,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0016.0000 Статус депутата',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1318,7 +1449,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0097 Политическая система, политические партии и общественные объединения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1328,7 +1460,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0099 Молодежная политика',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1338,7 +1471,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0100 Профсоюзы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1348,7 +1482,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0101 Казачество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1358,7 +1493,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0102 Свобода совести и религиозные объединения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1368,7 +1504,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.0652 Тоталитарные секты. Урон личности и государству',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1378,7 +1515,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.1232 Религиозные проблемы (обращения из Российской Федерации и стран ближнего зарубежья)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1388,7 +1526,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.1274 Политические партии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1398,7 +1537,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.1275 Общественные объединения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1408,7 +1548,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.1276 Социально ориентированные некоммерческие организации (НКО)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1b3b9007-ee56-43fa-b9bf-43053c4b6a1c',
@@ -1418,7 +1559,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0017.1277 Развитие общественных отношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1428,7 +1570,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0017.0000 Общественные и религиозные объединения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0002c122-d3be-4817-bf63-1c036595d8b1',
@@ -1438,7 +1581,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0018.0103 Государственные награды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0002c122-d3be-4817-bf63-1c036595d8b1',
@@ -1448,7 +1592,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0018.0104 Почетные звания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3f3b6ec5-8f9c-4b6e-99bf-40453ca2c74c',
@@ -1458,7 +1603,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0018.0875.0007 Награды и почетные знаки субъекта Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3f3b6ec5-8f9c-4b6e-99bf-40453ca2c74c',
@@ -1468,7 +1614,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0018.0875.0008 Ведомственные награды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0002c122-d3be-4817-bf63-1c036595d8b1',
@@ -1478,7 +1625,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0018.0875 Награды и почетные знаки субъекта Российской Федерации. Ведомственные награды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1488,7 +1636,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0018.0000 Государственные награды. Высшие степени и знаки отличия. Почетные звания. Знаки, значки',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '81cdd81a-7eb8-4b8b-ac69-004d03122b87',
@@ -1498,7 +1647,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0019.1165 Государственные и иные премии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1508,7 +1658,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0019.0000 Государственные и иные премии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '044061bc-0ca2-4c87-9fd5-20e3759df17b',
@@ -1518,7 +1669,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0020.0105 Праздники. Памятные даты. Юбилеи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1528,7 +1680,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0020.0000 Праздники. Памятные даты. Юбилеи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f3128f00-690d-484e-bc8d-8c4a24225f3b',
@@ -1538,7 +1691,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0021.0106 Увековечение памяти выдающихся людей, исторических событий. Присвоение имен',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1548,7 +1702,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0021.0000 Увековечение памяти выдающихся людей, исторических событий. Присвоение имен',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7ae52a5-ee06-40c4-a0fb-c0f0beb58d72',
@@ -1558,7 +1713,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0001.0022.0127 Наименование и переименование населенных пунктов, предприятий, учреждений и организаций, а также физико-географических объектов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7edddcb9-edf2-4d31-842d-dd92f442eff8',
@@ -1568,7 +1724,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0022.0000 Порядок наименования и переименования населенных пунктов, предприятий, учреждений и организаций, а также физико-географических объектов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ab83e361-f3d7-4c67-84b3-e4566c324565',
@@ -1578,7 +1735,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0001.0000.0000 Конституционный строй',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '9b8c3833-8f73-44c1-be00-ffd387dc5679',
@@ -1588,7 +1746,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0167.0002 Оценка деятельности федеральных государственных органов по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9b8c3833-8f73-44c1-be00-ffd387dc5679',
@@ -1598,7 +1757,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0167.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1608,7 +1768,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0167 Деятельность Правительства Российской Федерации. Принимаемые решения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '096f6515-af53-41ce-acb2-174e32dbc015',
@@ -1618,7 +1779,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0168.0002 Оценка деятельности федеральных государственных органов по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '096f6515-af53-41ce-acb2-174e32dbc015',
@@ -1628,7 +1790,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0168.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1638,7 +1801,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0168 Работа Аппарата Правительства Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4737221a-5999-49f4-b57c-904b4552a803',
@@ -1648,7 +1812,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0169.0002 Оценка деятельности федеральных государственных органов по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4737221a-5999-49f4-b57c-904b4552a803',
@@ -1658,7 +1823,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0169.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1668,7 +1834,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0169 Работа министерств и других федеральных органов исполнительной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1db0b35f-4fa8-49e0-98b7-b8c0bb72db80',
@@ -1678,7 +1845,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0170.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1db0b35f-4fa8-49e0-98b7-b8c0bb72db80',
@@ -1688,7 +1856,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0170.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1698,7 +1867,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0170 Работа органов исполнительной власти субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1708,7 +1878,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0171 Структура государственного и хозяйственного управления. Расходы на содержание аппарата',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5f04b519-6d9f-4035-a381-b3e033d8869d',
@@ -1718,7 +1889,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0726.0004 Оценка деятельности региональных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5f04b519-6d9f-4035-a381-b3e033d8869d',
@@ -1728,7 +1900,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.0726.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1738,7 +1911,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0726 Государственные услуги, оказываемые органом исполнительной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f70c9f1d-20dc-47f4-b833-f8a213ba28be',
@@ -1748,7 +1922,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1035.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f70c9f1d-20dc-47f4-b833-f8a213ba28be',
@@ -1758,7 +1933,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1035.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1768,7 +1944,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.1035 Федеральный орган исполнительной власти и его территориальные органы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7d8c0944-677e-4352-b5f7-a65e5c43b34d',
@@ -1778,7 +1955,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1278.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7d8c0944-677e-4352-b5f7-a65e5c43b34d',
@@ -1788,7 +1966,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1278.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1798,7 +1977,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.1278 Разработка проектов законов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d0fb24d-a474-41fe-8182-82955f1186da',
@@ -1808,7 +1988,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1279.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d0fb24d-a474-41fe-8182-82955f1186da',
@@ -1818,7 +1999,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1279.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1828,7 +2010,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.1279 Разработка проектов нормативных правовых актов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '802a7d71-933f-4e40-b865-301367fa5b02',
@@ -1838,7 +2021,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1281.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '802a7d71-933f-4e40-b865-301367fa5b02',
@@ -1848,7 +2032,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1281.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1858,7 +2043,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.1281 Стандарты предоставления услуг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3bf4dbdc-6f5f-442a-9679-fb9867b51943',
@@ -1868,7 +2054,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1282.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3bf4dbdc-6f5f-442a-9679-fb9867b51943',
@@ -1878,7 +2065,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0023.1282.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6c8d809-3935-48ed-ae40-e2ab7efc24b9',
@@ -1888,7 +2076,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.1282 Контроль за предоставлением услуг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -1898,7 +2087,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0023.0000 Органы исполнительной власти',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1908,7 +2098,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.0172 Федеральная государственная гражданская служба',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1918,7 +2109,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.0173 Государственная гражданская служба субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1928,7 +2120,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.0174 Правоохранительная служба',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1938,7 +2131,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.0175 Военная служба',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1948,7 +2142,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.0653 Законодательство о государственной службе. Должностной регламент государственного служащего',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1958,7 +2153,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1239 Исполнение должностных обязанностей государственными гражданскими служащими субъекта Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1968,7 +2164,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1286 Критерии оценки эффективности деятельности государственных гражданских служащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1978,7 +2175,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1289 Предоставление сведений о доходах, расходах, об имуществе и обязательствах имущественного характера',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1988,7 +2186,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1290 Исполнение должностных обязанностей федеральными государственными служащими и работниками государственных корпораций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -1998,7 +2197,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1291 Аттестационные комиссии при органах государственной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -2008,7 +2208,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1293 Система оплаты труда государственных гражданских служащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -2018,7 +2219,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1294 Коррупционные риски на государственной гражданской службе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -2028,7 +2230,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1295 Конкурсный отбор кандидатов на замещение должностей государственной гражданской службы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4a95ffbd-39f4-4570-bb7f-9f1ca5770a36',
@@ -2038,7 +2241,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0024.1296 Квалификационные требования для замещения должностей государственной гражданской службы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -2048,7 +2252,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0024.0000 Государственная служба в Российской Федерации (за исключением особенностей регулирования службы отдельных категорий работников, государственных служащих)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5f1f58ad-ac6b-421e-b91a-a259e82ac82f',
@@ -2058,7 +2263,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0094.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2068,7 +2274,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.0094 Многофункциональные центры предоставления государственных (муниципальных) услуг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2078,7 +2285,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0176 Качество продукции. Стандартизация. Сертификация',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2088,7 +2296,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0177 Лицензирование (за исключением внешнеэкономической деятельности)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2098,7 +2307,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0178 Учет. Отчетность. Статистика',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2108,7 +2318,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0179 Цены и ценообразование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2118,7 +2329,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0180 Прожиточный минимум. Размер «потребительской корзины». Уровень жизни',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14212cc0-647b-4960-a952-b4f439337db4',
@@ -2128,7 +2340,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0465.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14212cc0-647b-4960-a952-b4f439337db4',
@@ -2138,7 +2351,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0465.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2148,7 +2362,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.0465 Государственное регулирование экономики. Федеральные целевые программы. Государственные программы Российской Федерации. Экономическое развитие территорий. Борьба с монополизмом, развитие конкуренции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2158,7 +2373,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0466 Развитие предпринимательской деятельности, малый и средний бизнес',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2168,7 +2384,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0467 Приватизация объектов государственной и муниципальной собственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2178,7 +2395,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0468 Акционирование предприятий промышленности, строительства, агропромышленного комплекса, транспорта и связи, социально-бытовой инфраструктуры и военно-промышленного комплекса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2188,7 +2406,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0474 Споры хозяйствующих субъектов (не судебные)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2198,7 +2417,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0476 Арендные отношения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2208,7 +2428,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0784 Инвестиционная политика',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2218,7 +2439,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0858 Социально-экономическое развитие субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a62a8ca1-944c-4142-baac-41a00b5a40a6',
@@ -2228,7 +2450,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0888.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a62a8ca1-944c-4142-baac-41a00b5a40a6',
@@ -2238,7 +2461,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0888.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2248,7 +2472,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.0888 Социально-экономическое развитие муниципальных образований',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2258,7 +2483,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0974 Проведение проверок, мероприятий по контролю за деятельностью организаций в сфере производства и оборота этилового спирта, алкогольной и спиртосодержащей продукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2268,7 +2494,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0981 Лицензирование производства и оборота этилового спирта, алкогольной и спиртосодержащей продукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2278,7 +2505,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.0982 Порядок получения лицензии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2288,7 +2516,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1017 Федеральный общественно-государственный фонд по защите прав вкладчиков и акционеров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2298,7 +2527,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1259 Техническое регулирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54914e8c-7508-4293-849f-25d3fdff27cc',
@@ -2308,7 +2538,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1302.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54914e8c-7508-4293-849f-25d3fdff27cc',
@@ -2318,7 +2549,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1302.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2328,7 +2560,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1302 Государственная программа «Развитие промышленности и повышение ее конкурентоспособности»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f2f6276d-1040-4f32-93e9-8120852618ab',
@@ -2338,7 +2571,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1303.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f2f6276d-1040-4f32-93e9-8120852618ab',
@@ -2348,7 +2582,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1303.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2358,7 +2593,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1303 Государственная программа «Развитие авиационной промышленности на 2013-2025 годы»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd04efa1-e477-42fb-84b4-afa0e037f012',
@@ -2368,7 +2604,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1308.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cd04efa1-e477-42fb-84b4-afa0e037f012',
@@ -2378,7 +2615,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1308.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2388,7 +2626,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1308 Государственная программа «Развитие сельского хозяйства и регулирования рынков сельскохозяйственной продукции, сырья и продовольствия на 2013-2020 годы»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2398,7 +2637,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1309 Внедрение изобретательских и рационализаторских предложений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cd311fd-ac81-4f97-9d85-9111a66a9c67',
@@ -2408,7 +2648,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1316.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cd311fd-ac81-4f97-9d85-9111a66a9c67',
@@ -2418,7 +2659,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1316.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2428,7 +2670,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1316 Государственная программа «Развитие культуры и туризма на 2013–2020 годы»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77f8b2a9-abc5-465c-a750-c42689e33784',
@@ -2438,7 +2681,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1320.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '77f8b2a9-abc5-465c-a750-c42689e33784',
@@ -2448,7 +2692,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1320.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2458,7 +2703,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1320 Государственная программа «Социально-экономическое развитие Дальнего Востока и Байкальского региона»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2468,7 +2714,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1321 Качество конкурентной среды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2478,7 +2725,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1322 Деятельность в области создания конкурентной среды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2488,7 +2736,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1323 Антимонопольное законодательство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2498,7 +2747,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1324 Финансовая деятельность хозяйствующих субъектов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2508,7 +2758,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1326 Условия ведения предпринимательской деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f16115ff-b3ae-4419-b0b6-6231c7ed93f2',
@@ -2518,7 +2769,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1327.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f16115ff-b3ae-4419-b0b6-6231c7ed93f2',
@@ -2528,7 +2780,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1327.0004 Оценка деятельности региональных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f16115ff-b3ae-4419-b0b6-6231c7ed93f2',
@@ -2538,7 +2791,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1327.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2548,7 +2802,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1327 Реализация программы поддержки малого и среднего предпринимательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2558,7 +2813,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1332 Бюджетные расходы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2568,7 +2824,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1334 Государственные конкурсы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2578,7 +2835,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1335 Муниципальные конкурсы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2588,7 +2846,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1336 Государственные аукционы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2598,7 +2857,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1337 Муниципальные аукционы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2608,7 +2868,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1338 Эффективность закупок и расходов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2618,7 +2879,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1342 Государственные закупки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2628,7 +2890,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1343 Муниципальные закупки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2638,7 +2901,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1348 Деятельность в области привлечения инвестиций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2648,7 +2912,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1353 Обеспечение бескризисного развития экономики',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd3963da1-5852-4e36-9532-486f5646cb68',
@@ -2658,7 +2923,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1354.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd3963da1-5852-4e36-9532-486f5646cb68',
@@ -2668,7 +2934,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1354.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2678,7 +2945,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1354 Социально-экономическое развитие городских и сельских поселений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '953eae85-a3c3-47e5-915d-302c22f867f4',
@@ -2688,7 +2956,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1355.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '953eae85-a3c3-47e5-915d-302c22f867f4',
@@ -2698,7 +2967,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1355.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2708,7 +2978,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1355 Социально-экономическое развитие муниципальных районов и городских округов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2718,7 +2989,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1466 Государственное стратегическое планирование, координация стратегического управления и мер бюджетной политики',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebce4885-5df7-4c59-9274-85148dda72e4',
@@ -2728,7 +3000,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1523.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebce4885-5df7-4c59-9274-85148dda72e4',
@@ -2738,7 +3011,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1523.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2748,7 +3022,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1523 Государственная программа «Содействие занятости населения»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '06524480-f31c-4c23-85c4-cc6b79275410',
@@ -2758,7 +3033,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1540.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '06524480-f31c-4c23-85c4-cc6b79275410',
@@ -2768,7 +3044,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1540.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2778,7 +3055,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.1540 Государственная программа «Защита населения и территории от чрезвычайных ситуаций, обеспечение пожарной безопасности и безопасности людей на водных объектах»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2788,7 +3066,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1566 Государственная кадастровая оценка',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9600b9f5-3dfb-4901-884f-9a5c8c40e889',
@@ -2798,7 +3077,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0025.1567 Оценка собственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -2808,7 +3088,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0025.0000 Общие вопросы государственного управления в сфере экономики, социально-культурного и административно-политического строительства',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -2818,7 +3099,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0026.0000 Административно-правовые режимы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2828,7 +3110,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0107 Личный приём Главой государства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2838,7 +3121,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0108 Личный приём руководителями федеральных органов исполнительной власти',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2848,7 +3132,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0109 Личный приём высшими должностными лицами субъекта Российской Федерации (руководителями высших исполнительных органов государственной власти субъектов Российской Федерации), их заместителями',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2858,7 +3143,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0110 Работа государственных органов и органов местного самоуправления с обращениями в письменной форме, в форме электронного документа и в устной форме',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2868,7 +3154,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0111 Рассмотрение обращения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2878,7 +3165,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0112 Личный приём должностными лицами органов местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2888,7 +3176,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0113 Личный приём должностными лицами Администрации Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2898,7 +3187,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0114 Благодарности, пожелания, приглашения, поздравления Президенту Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2908,7 +3198,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0115 Благодарности, пожелания, приглашения и поздравления, адресованные Администрации Президента Российской Федерации (за исключением зарубежных стран)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2918,7 +3209,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0116 Соболезнования (за исключением зарубежных стран)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2928,7 +3220,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0117 Персональные поздравления участников ВОВ, инвалидов ВОВ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2938,7 +3231,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0118 Просьбы о памятных подарках, книгах, фотографиях, автографах (за исключением зарубежных стран)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2948,7 +3242,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0119 Обращения, не подписанные авторами, без указания адреса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2958,7 +3253,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0120 Запросы архивных данных (за исключением зарубежных стран)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2968,7 +3264,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0121 Переписка прекращена',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2978,7 +3275,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0123 Обработка персональных данных, содержащихся в обращении',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2988,7 +3286,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0124 Некорректные обращения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -2998,7 +3297,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0125 Почтовое отправление или электронное сообщение (за исключением зарубежных стран), не имеющее смысла или содержащее рассуждения общего характера – не являющееся обращением',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3008,7 +3308,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0126 Обращения, не поддающиеся прочтению',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3018,7 +3319,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0155 Просьбы об автографах из зарубежных стран',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3028,7 +3330,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0156 Личный приём иностранных граждан',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3038,7 +3341,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0158 Поступившие подарки, сувениры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3048,7 +3352,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0159 Благодарности, приглашения, поздравления из зарубежных стран',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3058,7 +3363,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0160 Соболезнования из зарубежных стран',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3068,7 +3374,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0162 Обращение в форме электронного документа без точного адреса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3078,7 +3385,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0163 Почтовое отправление или электронное сообщение из зарубежных стран, не имеющее смысла или содержащее рассуждения общего характера – не являющееся обращением',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3088,7 +3396,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0164 Деятельность Президента Российской Федерации, Администрации Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3098,7 +3407,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0165 Деятельность федерального государственного органа и его руководителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3108,7 +3418,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0166 Деятельность органов местного самоуправления и его руководителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3118,7 +3429,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0614 Приемные Президента Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3128,7 +3440,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0615 Приемные федеральных государственных органов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3138,7 +3451,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0616 Приемные региональных государственных органов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3148,7 +3462,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0617 Приемные органов местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3158,7 +3473,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0654 Результаты рассмотрения обращения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3168,7 +3484,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0758 Заявление о прекращении рассмотрения обращения заявителя',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3178,7 +3495,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.0985 Меры, принятые по результатам рассмотрения обращений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3188,7 +3506,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.1069 Благодарности, пожелания, приглашения, поздравления должностным лицам федеральных органов исполнительной власти и их территориальных органов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3198,7 +3517,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.1156 Благодарности, пожелания, приглашения, поздравления высшим должностным лицам субъекта Российской Федерации (руководителям высших исполнительных органов государственной власти субъектов Российской Федерации), их заместителям',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3208,7 +3528,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.1157 Благодарности, приглашения, поздравления органам исполнительной власти субъекта Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b06cd161-6b70-4848-b841-3f613421c250',
@@ -3218,7 +3539,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0027.1158 Благодарности, приглашения, поздравления органу местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -3228,7 +3550,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0027.0000 Обращения, заявления и жалобы граждан',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3238,7 +3561,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.0623 Административные взыскания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3248,7 +3572,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.0624 Иные меры административного принуждения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3258,7 +3583,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.0979 Контроль за соблюдением законодательства Российской Федерации в сфере производства и оборота этилового спирта, алкогольной и спиртосодержащей продукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3268,7 +3594,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.0990 Рассмотрение в административном порядке принятого по обращению решения должностными и уполномоченными лицами государственных органов и органов местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3278,7 +3605,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.1011 Деятельность акционерных инвестиционных фондов, паевых инвестиционных фондов негосударственных пенсионных фондов, их управляющих компаний и специализированных депозитариев',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3288,7 +3616,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.1013 Деятельность товарных бирж, биржевых посредников, биржевых брокеров, в том числе по применению товарными биржами санкций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3298,7 +3627,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.1014 Деятельность жилищных накопительных кооперативов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2aff598b-fd0c-4bdc-af44-c89dac5975f7',
@@ -3308,7 +3638,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0002.0028.1015 Деятельность застройщиков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '254f6fdb-a703-45aa-b66d-86ea8d70ba1d',
@@ -3318,7 +3649,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0028.0000 Административные правонарушения и административная ответственность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ab83e361-f3d7-4c67-84b3-e4566c324565',
@@ -3328,7 +3660,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0002.0000.0000 Основы государственного управления',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'c01f41c9-7422-4376-acb4-e62aba5cca99',
@@ -3338,7 +3671,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0029.1173 Общие положения гражданского законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3348,7 +3682,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0029.0000 Общие положения гражданского законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '12b361b6-e8e3-4e93-85fb-8461db2f06e2',
@@ -3358,7 +3693,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0030.0471 Предприниматели, работающие без образования юридического лица',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3368,7 +3704,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0030.0000 Граждане (физические лица)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9823fc94-6838-4571-91bd-183d13d6c26a',
@@ -3378,7 +3715,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0031.0472 Несостоятельность (банкротство) и финансовое оздоровление юридических лиц, индивидуальных предпринимателей, физических лиц. Деятельность арбитражных управляющих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9823fc94-6838-4571-91bd-183d13d6c26a',
@@ -3388,7 +3726,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0031.0475 Регистрация, перерегистрация юридических лиц всех форм собственности и видов деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3398,7 +3737,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0031.0000 Юридические лица',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3408,7 +3748,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0032.0000 Публично-правовые образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1e437886-a508-4cf9-a8a7-46be270c08aa',
@@ -3418,7 +3759,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0033.1175 Объекты гражданских прав',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3428,7 +3770,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0033.0000 Объекты гражданских прав',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9a614486-8b74-44d7-88f3-645574781736',
@@ -3438,7 +3781,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0034.1176 Сделки (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3448,7 +3792,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0034.0000 Сделки (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3458,7 +3803,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0035.0000 Представительство. Доверенность (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '06f2e9f1-2b0c-4910-89ef-8709fb416706',
@@ -3468,7 +3814,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0036.1178 Сроки. Исковая давность (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3478,7 +3825,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0036.0000 Сроки. Исковая давность (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3488,7 +3836,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.0699 Оформление недвижимости в собственность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3498,7 +3847,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.0723 Регистрация прав на недвижимое имущество и сделок с ним',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3508,7 +3858,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.0732 Распоряжение имуществом, обращенным в собственность государства, и иным изъятым имуществом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3518,7 +3869,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.1241 Приобретение права собственности. Прекращение права собственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3528,7 +3880,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.1375 Обращение имущества в муниципальную собственность и распоряжение им',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '053589b3-7e22-41f1-bc90-2d0b9a516462',
@@ -3538,7 +3891,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0037.1378 Оказание услуг в электронном виде',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3548,7 +3902,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0037.0000 Право собственности и другие вещные права (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3558,7 +3913,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0038.0000 Общие положения об обязательствах (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3568,7 +3924,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0039.0000 Общие положения о договоре (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5148bfa2-3955-48c9-a403-766371ba7f45',
@@ -3578,7 +3935,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0040.1227 Договоры и другие обязательства (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3588,7 +3946,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0040.0000 Договоры и другие обязательства (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '032943d8-b870-414c-9719-6eb243fe9ca3',
@@ -3598,7 +3957,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0041.0672 Патенты. Интеллектуальная собственность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '032943d8-b870-414c-9719-6eb243fe9ca3',
@@ -3608,7 +3968,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0041.0837 Соблюдение авторского права и смежных прав',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3618,7 +3979,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0041.0000 Интеллектуальная собственность (исключительные права) (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f58fa6ec-8c9e-4399-adc8-98b8898e0de8',
@@ -3628,7 +3990,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0042.1181 Наследование (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3638,7 +4001,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0042.0000 Наследование (за исключением международного частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '620ffde3-5e90-4b6f-9f0b-a5c798272798',
@@ -3648,7 +4012,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0003.0043.0000 Международное частное право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ab83e361-f3d7-4c67-84b3-e4566c324565',
@@ -3658,7 +4023,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0003.0000.0000 Гражданское право',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '9380a00b-bfa0-4375-b2d9-290f6beb8f4e',
@@ -3668,7 +4034,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0182.0198 Россия – США',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9380a00b-bfa0-4375-b2d9-290f6beb8f4e',
@@ -3678,7 +4045,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0182.0203 Другие вопросы международной политики и сотрудничества с иностранными государствами (кроме стран СНГ, Грузии, Республики Абхазии, Республики Южной Осетии)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9380a00b-bfa0-4375-b2d9-290f6beb8f4e',
@@ -3688,7 +4056,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0182.0204 Внешняя политика Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3698,7 +4067,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0182.0000 Общие вопросы межгосударственных отношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '26678456-34e6-4f9c-9f68-b32c4beee473',
@@ -3708,7 +4078,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0183.0193 Политика в отношении иностранных государств (кроме стран СНГ, Грузии, Республики Абхазии, Республики Южной Осетии)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '26678456-34e6-4f9c-9f68-b32c4beee473',
@@ -3718,7 +4089,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0183.0870 Деятельность МИДа России и его руководителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3728,7 +4100,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0183.0000 Организация внешних сношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3738,7 +4111,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0184.0000 Правопреемство государств в международных отношениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3748,7 +4122,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0185.0000 Территория (международное право)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '01032aae-a62d-4aba-ac58-1c4460d9c2c8',
@@ -3758,7 +4133,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0188.1235 Ратификация международных договоров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3768,7 +4144,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0188.0000 Право международных договоров (за исключением правопреемства государств в отношении международных договоров)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '60d670b0-78c5-44d7-ae84-233c245428b2',
@@ -3778,7 +4155,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0189.0181 Зарубежные представительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '60d670b0-78c5-44d7-ae84-233c245428b2',
@@ -3788,7 +4166,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0189.0182 Дипломатические представительства и консульские учреждения Российской Федерации, постоянные представительства Российской Федерации при международных организациях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '60d670b0-78c5-44d7-ae84-233c245428b2',
@@ -3798,7 +4177,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0189.0871 Оформление и выдача виз',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3808,7 +4188,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0189.0000 Дипломатическое и консульское право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4489750c-5b57-48ef-ac7b-0e66ffe94275',
@@ -3818,7 +4199,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0190.0192 Другие вопросы международной политики и сотрудничества на пространстве СНГ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3828,7 +4210,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0190.0000 Международные организации и союзы (правовой механизм деятельности)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ab20b6a-f9ad-4f24-99fb-0024a1d69282',
@@ -3838,7 +4221,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0191.0704 Направления внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ab20b6a-f9ad-4f24-99fb-0024a1d69282',
@@ -3848,7 +4232,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0191.1357 Экономические связи России с иностранными государствами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ab20b6a-f9ad-4f24-99fb-0024a1d69282',
@@ -3858,7 +4243,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0191.1358 Торговые связи России с иностранными государствами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ab20b6a-f9ad-4f24-99fb-0024a1d69282',
@@ -3868,7 +4254,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0191.1361 Экспорт и импорт продукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ab20b6a-f9ad-4f24-99fb-0024a1d69282',
@@ -3878,7 +4265,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0191.1363 Политика государства в области экономического сотрудничества и торговли с иностранными государствами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3888,7 +4276,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0191.0000 Международное экономическое сотрудничество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6100b0e-a069-4d28-a3c4-6d68c9d342be',
@@ -3898,7 +4287,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0192.0135 Международное сотрудничество в гуманитарных областях. Научные работы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3908,7 +4298,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0192.0000 Международное научно-техническое сотрудничество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3918,7 +4309,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0193.0000 Международное морское право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3928,7 +4320,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0194.0000 Международное воздушное право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3938,7 +4331,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0195.0000 Международное космическое право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '01ea77f2-bd7c-49e8-9aab-8207b8a63ad5',
@@ -3948,7 +4342,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0196.0142 Сотрудничество и проблемы в области экологии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3958,7 +4353,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0196.0000 Международно-правовая охрана окружающей среды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '06fe2fd6-74b4-4120-b22e-2fa88665a0f6',
@@ -3968,7 +4364,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0197.0128 Международное сотрудничество в социально-культурной сфере. Труд, занятость',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '06fe2fd6-74b4-4120-b22e-2fa88665a0f6',
@@ -3978,7 +4375,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0197.0866 Культурные связи России с иностранными государствами (кроме стран СНГ, Республики Абхазии, Грузии, Республики Южной Осетии)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -3988,7 +4386,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0197.0000 Международное сотрудничество в социально-культурной сфере. Труд, занятость',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b095b86a-331d-4edb-9864-c4e5417ccbf3',
@@ -3998,7 +4397,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0198.1372 Состояние национальной безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -4008,7 +4408,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0198.0000 Право международной безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4642cf3-7f24-4952-80ef-dde88c8b35f3',
@@ -4018,7 +4419,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0199.0196 Военно-техническое сотрудничество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -4028,7 +4430,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0199.0000 Сотрудничество по военным вопросам в сфере международных отношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cf6c1f4-47ef-4349-bd36-48c99160d155',
@@ -4038,7 +4441,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0200.0129 Вооруженные конфликты и международное право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -4048,7 +4452,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0200.0000 Вооруженные конфликты и международное право',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6286c647-e385-4851-bce0-3f20a388bbbb',
@@ -4058,7 +4463,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0020.0201.0197 Участие России в международных антитеррористических акциях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '72d14dd8-c205-4722-8af0-3f6ae7577d9a',
@@ -4068,7 +4474,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0201.0000 Международная борьба с преступностью и терроризмом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ab83e361-f3d7-4c67-84b3-e4566c324565',
@@ -4078,7 +4485,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0020.0000.0000 Международные отношения. Международное право',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '8f4332b5-e665-4c63-ae17-8bf6a59b35a4',
@@ -4088,7 +4496,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0202.1183 Решения о назначении на должность, освобождении (отзыве) от должности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ec761eb-64aa-4f36-ae90-0e7dda38f6bf',
@@ -4098,7 +4507,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0202.0000 Решения о назначении на должность, освобождении (отзыве) от должности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2496a745-1a09-458b-be28-45e82cfa5e8c',
@@ -4108,7 +4518,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0203.0157 Награждение государственными наградами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ec761eb-64aa-4f36-ae90-0e7dda38f6bf',
@@ -4118,7 +4529,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0203.0000 Решения по вопросам награждения государственными наградами Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90db8deb-a50d-495b-b2e1-a3b999de2f46',
@@ -4128,7 +4540,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0204.0077 Помилование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ec761eb-64aa-4f36-ae90-0e7dda38f6bf',
@@ -4138,7 +4551,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0204.0000 Решения по вопросам помилования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '95d446a5-37b4-4a96-bc69-e4ddf6b4af63',
@@ -4148,7 +4562,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0205.0022 Прием в гражданство Российской Федерации и восстановление в гражданстве Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ec761eb-64aa-4f36-ae90-0e7dda38f6bf',
@@ -4158,7 +4573,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0205.0000 Решения по вопросам гражданства Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '12553b90-e78b-4490-85a5-a335aba54e77',
@@ -4168,7 +4584,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0206.0625 Присвоение почетных званий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '12553b90-e78b-4490-85a5-a335aba54e77',
@@ -4178,7 +4595,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0001.0021.0206.0626 Присвоение высших воинских (высших специальных) званий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2ec761eb-64aa-4f36-ae90-0e7dda38f6bf',
@@ -4188,7 +4606,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0206.0000 Решения о присвоении почетных званий Российской Федерации, высших воинских (высших специальных) и иных званий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ab83e361-f3d7-4c67-84b3-e4566c324565',
@@ -4198,7 +4617,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0021.0000.0000 Индивидуальные правовые акты по кадровым вопросам, вопросам награждения, помилования, гражданства, присвоения почетных и иных званий',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: null,
@@ -4208,7 +4628,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0001.0000.0000.0000 Государство, общество, политика',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '6747abc6-8a51-41ec-b464-00e56bcba61b',
@@ -4218,7 +4639,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0044.1184 Общие положения семейного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4228,7 +4650,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0044.0000 Общие положения семейного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6471f1b8-2ce6-49db-8313-8bc41b87dc72',
@@ -4238,7 +4661,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0045.1185 Заключение и прекращение брака',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4248,7 +4672,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0045.0000 Заключение и прекращение брака',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4258,7 +4683,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0046.0000 Права и обязанности супругов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f1f78897-8ba6-4384-81b6-4e4004c13f35',
@@ -4268,7 +4694,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0047.0211 Права и обязанности родителей и детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4278,7 +4705,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0047.0000 Права и обязанности родителей и детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba5f2e64-ffb2-45d0-b03b-7b501d6583f5',
@@ -4288,7 +4716,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0048.1186 Алиментные обязательства членов семьи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4298,7 +4727,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0048.0000 Алиментные обязательства членов семьи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54028c8f-a29c-48d6-bb76-33d0f3711e72',
@@ -4308,7 +4738,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0049.0212 Усыновление (удочерение) детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54028c8f-a29c-48d6-bb76-33d0f3711e72',
@@ -4318,7 +4749,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0049.0705 Семейные формы устройства детей-сирот. Приемные семьи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54028c8f-a29c-48d6-bb76-33d0f3711e72',
@@ -4328,7 +4760,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0049.0706 Опека. Попечительство. Службы по обслуживанию детей, оказавшихся в трудной жизненной ситуации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54028c8f-a29c-48d6-bb76-33d0f3711e72',
@@ -4338,7 +4771,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0049.1149 Установление опеки над недееспособными',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '54028c8f-a29c-48d6-bb76-33d0f3711e72',
@@ -4348,7 +4782,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0049.1150 Назначение опекунского пособия (увеличение размера)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4358,7 +4793,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0049.0000 Формы воспитания детей, оставшихся без попечения родителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e73ffb9-8c15-42a9-b15e-5ee77fd8ab57',
@@ -4368,7 +4804,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0050.1187 Регистрация актов гражданского состояния',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4378,7 +4815,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0050.0000 Регистрация актов гражданского состояния (в рамках семейного законодательства)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90420a96-18de-4ed9-b1fc-5c142f7ac4e9',
@@ -4388,7 +4826,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0051.0207 Многодетные семьи. Малоимущие семьи. Неполные семьи. Молодые семьи. Семья, материнство, отцовство и детство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90420a96-18de-4ed9-b1fc-5c142f7ac4e9',
@@ -4398,7 +4837,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0051.0209 Выплаты пособий и компенсаций на детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90420a96-18de-4ed9-b1fc-5c142f7ac4e9',
@@ -4408,7 +4848,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0051.0655 Система поиска и поддержки талантливых детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90420a96-18de-4ed9-b1fc-5c142f7ac4e9',
@@ -4418,7 +4859,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0051.0825 Поддержка матерей-одиночек',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '90420a96-18de-4ed9-b1fc-5c142f7ac4e9',
@@ -4428,7 +4870,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0051.0944 Повышение размеров пособий на ребенка',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4438,7 +4881,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0051.0000 Охрана семьи, материнства, отцовства и детства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '870f7677-ec1a-47cf-8530-227800e0b978',
@@ -4448,7 +4892,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0004.0052.0727 Воссоединение с близкими родственниками',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3a6fe7b6-0eda-4fee-8907-478d6efb4d87',
@@ -4458,7 +4903,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0052.0000 Регулирование семейных отношений с участием иностранных граждан и лиц без гражданства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47f68372-6e95-4a02-9f14-137db5416de9',
@@ -4468,7 +4914,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0004.0000.0000 Семья',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4478,7 +4925,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.0213 Организация труда в бюджетной сфере и учреждениях, на унитарных предприятиях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4488,7 +4936,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.0214 Организация, нормирование труда и зарплата в сфере частного бизнеса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4498,7 +4947,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.0219 Безработица. Биржи труда. Трудоустройство. Общественные работы и т.д.',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4508,7 +4958,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.0656 Трудовые отношения. Заключение, изменение и прекращение трудового договора',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4518,7 +4969,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1380 Трудоустройство в органах, организациях и на предприятиях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4528,7 +4980,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1385 Рабочие места для инвалидов (лиц с ограниченными возможностями)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4538,7 +4991,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1386 Оплата труда в бюджетной сфере, учреждениях и на унитарных предприятиях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4548,7 +5002,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1388 Размер реальной заработной платы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4558,7 +5013,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1389 Заработная плата в бюджетной сфере',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4568,7 +5024,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1390 Система оплаты бюджетных работников (включая руководителей)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4578,7 +5035,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1391 Заработная плата педагогических работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4588,7 +5046,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1392 Заработная плата работников культуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4598,7 +5057,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1393 Заработная плата медицинских работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4608,7 +5068,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1394 Заработная плата социальных работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '82008eb4-50e5-4198-bd1f-0f1fd422a9fc',
@@ -4618,7 +5079,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0064.1514 Создание рабочих мест',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6af0505-2a07-44a7-aa3e-6a599c6a275a',
@@ -4628,7 +5090,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0006.0064.0000 Трудоустройство и занятость населения (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4638,7 +5101,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0215 Техника безопасности на производстве. Расследование несчастных случаев на производстве. Оформление документов по трудовому увечью. Выплата компенсаций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4648,7 +5112,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0216 Рынок труда и работодатели',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4658,7 +5123,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0217 Труд, зарплата, пособия в связи с закрытием, банкротством и ликвидацией предприятий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4668,7 +5134,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0218 Увольнение и восстановление на работе (кроме обжалования решений судов)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4678,7 +5145,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0220 Трудовые вопросы работающих в районах Крайнего Севера',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4688,7 +5156,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0221 Трудовой стаж и трудовые книжки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4698,7 +5167,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0222 Отпуска. Оплата бюллетеней (по болезни, уходу за ребенком и т.д.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4708,7 +5178,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0223 Трудовое законодательство. Трудовой кодекс Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4718,7 +5189,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0224 Резерв управленческих кадров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4728,7 +5200,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0226 Организация, оплата и нормирование труда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4738,7 +5211,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0227 Выплата заработной платы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4748,7 +5222,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0228 Забастовки, трудовые конфликты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4758,7 +5233,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0229 Надзор и контроль за соблюдением законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4768,7 +5244,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0297 Вопросы кадрового обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4778,7 +5255,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0298 Вопросы социального обеспечения работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4788,7 +5266,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0657 Особенности регулирования труда отдельных категорий граждан',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4798,7 +5277,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0658 Рассмотрение и разрешение индивидуальных трудовых споров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4808,7 +5288,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0659 Охрана труда. Условия труда. Организация техники безопасности. Аттестация рабочих мест и работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4818,7 +5299,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.0661 Скрытая безработица. Вынужденные отпуска. Сокращение рабочего дня. Факты незаконных увольнений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4828,7 +5310,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1405 Организация труда и зарплата государственных служащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4838,7 +5321,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1406 Организация труда и зарплата муниципальных служащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4848,7 +5332,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1408 Выплата премий за выполнение особо важных и сложных заданий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4858,7 +5343,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1413 Начисление заработной платы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4868,7 +5354,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1414 Индексация заработной платы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b8116699-f913-4a55-9e91-c8de80958972',
@@ -4878,7 +5365,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0006.0065.1415 Деятельность в области роста заработной платы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6af0505-2a07-44a7-aa3e-6a599c6a275a',
@@ -4888,7 +5376,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0006.0065.0000 Труд (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47f68372-6e95-4a02-9f14-137db5416de9',
@@ -4898,7 +5387,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0006.0000.0000 Труд и занятость населения',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'e6ab9130-7a72-439e-b241-6a003a0e0c75',
@@ -4908,7 +5398,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0066.0231 Законодательство в области социального обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -4918,7 +5409,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0066.0000 Общие положения в законодательстве о социальном обеспечении и социальном страховании',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4928,7 +5420,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0230 Деятельность органов системы социального обеспечения и их должностных лиц',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4938,7 +5431,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0244 Общественные благотворительные фонды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4948,7 +5442,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0245 Пенсионный фонд Российской Федерации и негосударственные пенсионные фонды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4958,7 +5453,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0257 Фонд социального страхования Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4968,7 +5464,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0316 Фонд обязательного медицинского страхования (ФОМС)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dfcd0216-82f4-48a8-a48c-a26b26a42e41',
@@ -4978,7 +5475,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0662.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dfcd0216-82f4-48a8-a48c-a26b26a42e41',
@@ -4988,7 +5486,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.0662.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -4998,7 +5497,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0067.0662 Социальная защита инвалидов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5008,7 +5508,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1041 Обязательное медицинское страхование (ОМС)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5018,7 +5519,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1400 Трудоустройство инвалидов (лиц с ограниченными возможностями здоровья)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5028,7 +5530,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1418 Обеспечение активной жизни инвалидов (лиц с ограниченными физическими возможностями здоровья)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '417590fe-56d1-4ac2-8668-95aa268f34a1',
@@ -5038,7 +5541,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1419.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '417590fe-56d1-4ac2-8668-95aa268f34a1',
@@ -5048,7 +5552,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1419.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5058,7 +5563,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0067.1419 Реализация государственной программы «Доступная среда»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5068,7 +5574,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1420 Профессиональное образование (обучение) инвалидов (лиц с ограниченными физическими возможностями здоровья)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd830c26d-cbb4-4860-a26c-7e6155e30f37',
@@ -5078,7 +5585,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0067.1422 Индивидуальные программы реабилитации инвалидов (лиц с ограниченными физическими возможностями здоровья)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5088,7 +5596,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0067.0000 Управление социальным обеспечением и социальным страхованием',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'dcb8b882-6b25-4f6c-894a-a7d1a494fdbd',
@@ -5098,7 +5607,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0068.0795 Исчисление и уплата страховых взносов в бюджеты государственных внебюджетных фондов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5108,7 +5618,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0068.0000 Финансирование социального обеспечения и социального страхования (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '53c9be6e-9858-4494-9701-5af75910f52f',
@@ -5118,7 +5629,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0069.0221 Трудовой стаж и трудовые книжки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5128,7 +5640,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0069.0000 Трудовой стаж',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a33e6d8a-216d-4aff-82fd-bf4a4ef540cd',
@@ -5138,7 +5651,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0070.0233 Установление группы инвалидности, в том числе связанной с пребыванием на фронте. Вопросы медико-социальной экспертизы (МСЭ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5148,7 +5662,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0070.0000 Установление инвалидности, временной нетрудоспособности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5158,7 +5673,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.0232 Назначение трудовой пенсии (по старости, по инвалидности, в случае потери кормильца)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5168,7 +5684,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.0663 Своевременность и качество пенсионного обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5178,7 +5695,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1113 Тождество профессий, должностей, организаций при назначении пенсий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5188,7 +5706,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1416 Исполнение законодательства в области социального обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5198,7 +5717,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1417 Стратегия долгосрочного развития пенсионной системы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5208,7 +5728,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1423 Назначение пенсии по государственному пенсионному обеспечению (за выслугу лет, социальной)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5218,7 +5739,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1424 Пересмотр размеров пенсий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '76f1a735-e05e-4838-a315-310ffded017f',
@@ -5228,7 +5750,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0071.1425 Программа увеличения размера пенсии гражданам, выразившим намерение продолжать работать по достижении пенсионного возраста',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5238,7 +5761,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0071.0000 Пенсии (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5248,7 +5772,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.0241 Компенсационные выплаты за утраченное имущество, в том числе жилье',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5258,7 +5783,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.0260 Оказание финансовой помощи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5268,7 +5794,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.0796 Обязательное социальное страхование на случай временной нетрудоспособности и в связи с материнством',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5278,7 +5805,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.0797 Исчисление пособий гражданам, имеющим детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5288,7 +5816,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.0876 Выплата пособия на погребение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5298,7 +5827,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.1118 Возмещение вреда вследствие получения производственной травмы, профзаболевания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5308,7 +5838,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.1568 Получение и использование материнского капитала на федеральном уровне',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9bbccaa0-a048-4ba6-b6b1-ac6d6264ea91',
@@ -5318,7 +5849,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0072.1569 Получение и использование материнского капитала на региональном уровне',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5328,7 +5860,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0072.0000 Пособия. Компенсационные выплаты (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5338,7 +5871,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.0234 Определение в дома-интернаты для престарелых и инвалидов, психоневрологические интернаты. Деятельность названных учреждений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5348,7 +5882,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.0242 Социальное обеспечение, материальная помощь многодетным, пенсионерам и малообеспеченным слоям населения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5358,7 +5893,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.0942 Набор социальных услуг (НСУ). Получение, отказ, использование НСУ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5368,7 +5904,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.1111 Размер выплат по уходу за инвалидами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5378,7 +5915,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.1112 Плата за стационарное социальное обслуживание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5388,7 +5926,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.1145 Обеспечение бесплатным питанием детей до 1,5 лет',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd1d7b785-6b43-4081-9575-c69b4e646d3c',
@@ -5398,7 +5937,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0073.1162 Обеспечение техническими средствами реабилитации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5408,7 +5948,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0073.0000 Социальное обслуживание (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5418,7 +5959,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0236 Социальное обеспечение и льготы инвалидов ВОВ, участников ВОВ, участников боевых действий, инвалидов Вооруженных сил, блокадников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5428,7 +5970,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0237 Вопросы пострадавших от нацистских преследований',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5438,7 +5981,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0239 Социальное обеспечение, материальная помощь и льготы инвалидам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5448,7 +5992,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0246 Социальная защита пострадавших от радиоактивного заражения (ЧАЭС, Семипалатинский полигон, НПО «Маяк» и т.п.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5458,7 +6003,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0247 Социальная защита молодежи, детей, в т.ч. детей-сирот, воспитанников детдомов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5468,7 +6014,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0248 Социальная защита работающих в условиях Крайнего Севера, Сибири и Дальнего Востока',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5478,7 +6025,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0249 Социальная защита участников подразделений особого риска',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5488,7 +6036,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0250 Социальная защита пострадавших от стихийных бедствий, чрезвычайных происшествий, терактов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5498,7 +6047,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0251 Социальная защита ветеранов военной службы, ветеранов государственной службы, ветеранов труда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5508,7 +6058,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0252 Социальная защита родственников погибших и умерших военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5518,7 +6069,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0253 Социальная защита детей военного времени',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5528,7 +6080,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0254 Социальная защита жертв политических репрессий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5538,7 +6091,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0255 Звание «Ветеран труда», «Участник трудового фронта»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5548,7 +6102,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0258 Монетизация льгот, ежемесячная денежная выплата, дополнительное ежемесячное материальное обеспечение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5558,7 +6113,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0490 Признание участником ВОВ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5568,7 +6124,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0665 Предоставление дополнительных льгот отдельным категориям граждан, установленных законодательством субъекта Российской Федерации (в том числе предоставление земельных участков многодетным семьям и др.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5578,7 +6135,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0666 Предоставление льгот в связи с награждением или присвоением почетных званий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5588,7 +6146,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0707 Социальное обеспечение и льготы лиц, работавших на объектах противовоздушной обороны, местной противовоздушной обороны, на строительстве оборонительных сооружений, в тылу не менее шести месяцев, награжденных знаком «Жителю блокадного Ленинграда»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5598,7 +6157,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0794 Обеспечение мер социальной поддержки для лиц, награжденных знаком «Почетный донор СССР», «Почетный донор России»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5608,7 +6168,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0943 Реализация социальных гарантий и льгот, установленных действующим законодательством',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5618,7 +6179,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.0956 Социальная защита бывших работников угольной отрасли',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5628,7 +6190,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.1105 Проезд к месту лечения и обратно',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5638,7 +6201,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.1107 Проезд льготных категорий граждан на городском и пригородном транспорте',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5648,7 +6212,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.1108 Проезд льготных категорий граждан на междугороднем транспорте',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3af0cf70-90c8-4fad-a353-2837dac34c63',
@@ -5658,7 +6223,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0074.1109 Проезд льготных категорий граждан по территории России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5668,7 +6234,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0074.0000 Льготы в законодательстве о социальном обеспечении и социальном страховании',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'edc90fd1-ffde-4074-8dda-f514b35b6bfa',
@@ -5678,7 +6245,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0075.0256 Выплата пенсий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'edc90fd1-ffde-4074-8dda-f514b35b6bfa',
@@ -5688,7 +6256,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0075.0945 Учреждения социальной защиты (соцзащиты)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5698,7 +6267,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0075.0000 Ответственность за нарушение законодательства о социальном обеспечении и социальном страховании',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e217269d-c288-47ea-b7e6-756712ea84b4',
@@ -5708,7 +6278,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0007.0076.1188 Споры в области социального обеспечения и социального страхования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5e24231a-4bf0-4f65-ba26-8ee4eb98769d',
@@ -5718,7 +6289,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0076.0000 Порядок разрешения споров в области социального обеспечения и социального страхования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47f68372-6e95-4a02-9f14-137db5416de9',
@@ -5728,7 +6300,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0007.0000.0000 Социальное обеспечение и социальное страхование',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5738,7 +6311,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0261 Управление системой образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5748,7 +6322,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0262 Образовательный процесс. Укрепление материальной базы системы образования и финансирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5758,7 +6333,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0263 Система высшего профессионального образования. Деятельность вузов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5768,7 +6344,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0264 Система среднего профессионального образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5778,7 +6355,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0265 Система начального профессионального образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5788,7 +6366,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0266 Государственные общеобразовательные школы, кадетские и иные образовательные учреждения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5798,7 +6377,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0267 Негосударственные формы обучения детей и подростков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5808,7 +6388,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0268 Внешкольные учреждения – юных техников, лагеря отдыха и т.д.',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5818,7 +6399,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0269 Детские дошкольные воспитательные учреждения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5828,7 +6410,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0270 Труд и социальная защита работников системы образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5838,7 +6421,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0272 Платное образование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5848,7 +6432,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0273 Связь образовательных учреждений с институтами опекунства, патроната, усыновления, лишения родительских прав',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5858,7 +6443,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0275 Программы обучения и учебники',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5868,7 +6454,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0277 Единый государственный экзамен',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5878,7 +6465,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0278 Внеконкурсное поступление в вузы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5888,7 +6476,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0279 Образование и патриотическое воспитание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5898,7 +6487,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0280 Система основного общего образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5908,7 +6498,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0281 Система дошкольного образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5918,7 +6509,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0286 Присвоение ученых степеней и званий. Работа Высшей аттестационной комиссии Министерства образования и науки Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5928,7 +6520,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0667 Мероприятия стимулирующего характера. Поощрения (гранты, награждения, стипендии и пр.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5938,7 +6531,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0668 Модернизация и развитие системы образования на территории субъекта Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5948,7 +6542,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0669 Повышение квалификации педагогов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5958,7 +6553,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0670 Разработка и использование новых технологий в сфере образования (в том числе вариативные формы дошкольного образования, создание дошкольных групп в общеобразовательных школах и пр.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5968,7 +6564,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0709 Государственные интернаты и детские дома',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5978,7 +6575,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0783 Система послевузовского образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5988,7 +6586,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0826 Малокомплектные школы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -5998,7 +6597,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0827 Доставка детей в образовательные учреждения и учреждения внешкольного образования и воспитания в сельской местности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6008,7 +6608,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0851 Конфликтные ситуации в образовательных учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6018,7 +6619,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.0877 Социальные стипендии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6028,7 +6630,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1115 Подготовка медицинских кадров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6038,7 +6641,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1116 Эквивалентность дипломов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6048,7 +6652,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1117 Обучение на бюджетной основе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6058,7 +6663,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1151 Определение в коррекционные школы (содержание, нарушения)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6068,7 +6674,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1152 Бесплатное предоставление учебной литературы в общеобразовательных учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6078,7 +6685,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1153 Ремонт образовательных учреждений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6088,7 +6696,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1428 Реорганизация образовательных учреждений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6098,7 +6707,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1429 Федеральные государственные образовательные стандарты среднего (полного) общего образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6108,7 +6718,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1431 Деятельность руководителей вузов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6118,7 +6729,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1432 Выплата стипендий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6128,7 +6740,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1433 Размер стипендий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6138,7 +6751,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1434 Аккредитация образовательных программ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6148,7 +6762,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1435 Предоставление общежития',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6158,7 +6773,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1436 Образовательные учреждения среднего профессионального образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6168,7 +6784,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1438 Получение места в детских дошкольных воспитательных учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6178,7 +6795,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1439 Оплата за детские дошкольные воспитательные учреждения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6188,7 +6806,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1440 Расширение форм получения дошкольного образования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '543a641d-6610-4822-9892-375aa7e272dc',
@@ -6198,7 +6817,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0139.1441 Частные дошкольные образовательные учреждения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3328dd7e-00f7-4e8d-aa45-3e38487604cc',
@@ -6208,7 +6828,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0139.0000 Образование (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1ecabcf6-1987-4247-9de4-63b7991c5ee9',
@@ -6218,7 +6839,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0282.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1ecabcf6-1987-4247-9de4-63b7991c5ee9',
@@ -6228,7 +6850,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0282.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6238,7 +6861,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0140.0282 Управление в сфере научной и научно-технической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6248,7 +6872,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0283 Научные исследования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6258,7 +6883,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0284 Научно-техническая деятельность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6268,7 +6894,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0285 Развитие науки и ее материальной базы. Работа научных учреждений и их руководителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6278,7 +6905,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.0671 Инновации и нанотехнологии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e6e3c164-5685-49fc-ba6b-cc198011f704',
@@ -6288,7 +6916,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0140.1260 Единство измерений, метрология, классификация, каталогизация и государственный (контроль) надзор',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3328dd7e-00f7-4e8d-aa45-3e38487604cc',
@@ -6298,7 +6927,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0140.0000 Наука (за исключением международного сотрудничества и военной науки)',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6308,7 +6938,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0287 Управление в сфере культуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6318,7 +6949,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0288 Культура и ее материальная база. О работе руководителей органов и учреждений культуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6328,7 +6960,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0289 Памятники архитектуры, истории и культуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6338,7 +6971,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0290 Национальное культурное наследие народов России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6348,7 +6982,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0291 Особо охраняемые историко-культурные территории',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6358,7 +6993,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0673 Система развития культуры и нравственности на территории субъекта Российской Федерации. Национальное многообразие',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6368,7 +7004,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0828 Библиотеки, Дома культуры, кинотеатры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6378,7 +7015,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0834 Театры, концертные организации, цирки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6388,7 +7026,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0835 Музейное дело. Музеи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6398,7 +7037,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0836 Кинопрокат, кинематография, кинопроизводство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6408,7 +7048,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0838 Передача культовых зданий. Отношения с религиозными конфессиями',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6418,7 +7059,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.0839 Профессиональное искусство и народное творчество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6f18167-06b6-44f1-9ac7-c06d27b1fe62',
@@ -6428,7 +7070,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0141.1445 Музейный фонд Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3328dd7e-00f7-4e8d-aa45-3e38487604cc',
@@ -6438,7 +7081,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0141.0000 Культура (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6448,7 +7092,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.0292 Средства массовой информации (телевидение, радио, пресса, электронные). Реклама в СМИ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6458,7 +7103,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.0294 Телевидение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6468,7 +7114,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.0295 Издательство и книжная торговля. Отклики на печатные издания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6478,7 +7125,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.0829 Доступ населения к общероссийским каналам телевидения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6488,7 +7136,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.0874 Радиовещание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4d37a78-6b1a-4321-8c9c-5dfe87077403',
@@ -6498,7 +7147,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0013.0142.1155 Публичные выступления должностных лиц государственных органов и органов местного самоуправления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3328dd7e-00f7-4e8d-aa45-3e38487604cc',
@@ -6508,7 +7158,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0142.0000 Средства массовой информации (за исключением вопросов информатизации)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47f68372-6e95-4a02-9f14-137db5416de9',
@@ -6518,7 +7169,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0013.0000.0000 Образование. Наука. Культура',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '3b758d12-bb4b-441d-aeba-859b81ec1699',
@@ -6528,7 +7180,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0299.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b758d12-bb4b-441d-aeba-859b81ec1699',
@@ -6538,7 +7191,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0299.0004 Оценка деятельности региональных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b758d12-bb4b-441d-aeba-859b81ec1699',
@@ -6548,7 +7202,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0299.0005 Оценка деятельности органов местного самооуправления Российской Федерации по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b758d12-bb4b-441d-aeba-859b81ec1699',
@@ -6558,7 +7213,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0299.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6568,7 +7224,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0014.0143.0299 Управление в сфере здравоохранения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6578,7 +7235,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0300 Укрепление материально-технической базы здравоохранения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6588,7 +7246,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0301 Государственное и муниципальное здравоохранение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6598,7 +7257,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0303 Помещение в больницы и специализированные лечебные учреждения. Оплата за лечение, пребывание в лечебных учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6608,7 +7268,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0304 Врачебно-консультационная комиссия. О медицинском обслуживании, диагностике',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6618,7 +7279,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0305 Обеспечение населения изделиями медицинского назначения. Фармацевтика. Аптеки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6628,7 +7290,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0306 Санаторно-курортное лечение, его стоимость, выделение льготных путевок',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6638,7 +7301,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0307 Служба скорой и неотложной медицинской помощи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6648,7 +7312,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0308 Медицинское обслуживание сельских жителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6658,7 +7323,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0309 Санитарно-эпидемиологическое благополучие населения. Профилактика и лечение инфекционных заболеваний, работа санэпидемнадзора',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6668,7 +7334,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0310 Направление на лечение за рубеж',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6678,7 +7345,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0311 Протезирование (зубное, глазное и другое – кроме конечностей)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6688,7 +7356,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0312 Борьба с алкоголизмом и наркоманией, табакокурением',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6698,7 +7367,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0313 Борьба со СПИДом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6708,7 +7378,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0314 Донорство. О звании «Почетный донор»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6718,7 +7389,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0315 Медицинские советы, народная и нетрадиционная медицина',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6728,7 +7400,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0317 Работа медицинских учреждений и их сотрудников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6738,7 +7411,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0318 Вопросы высокотехнологичной медицинской помощи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6748,7 +7422,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0675 Модернизация и развитие системы здравоохранения. Развитие инфраструктуры здравоохранения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6758,7 +7433,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0676 Обеспечение потребности в медицинской помощи и объемов ее получения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6768,7 +7444,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0677 Диспансеризация взрослого и детского населения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6778,7 +7455,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0678 Детская медицина. Сокращение младенческой смертности. Программа «Родовой сертификат»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6788,7 +7466,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0679 Лечение бесплодия. Технология экстракорпорального оплодотворения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6798,7 +7477,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0680 Законодательство об охране здоровья',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6808,7 +7488,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0878 Закрытие медицинских учреждений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6818,7 +7499,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0936 Лечение и оказание медицинской помощи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6828,7 +7510,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0937 Лекарственное обеспечение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6838,7 +7521,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0938 Психоневрологические диспансеры (ПНД). Помещение и лечение в ПНД. Снятие с учета в ПНД',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6848,7 +7532,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0939 Судебно-медицинская экспертиза',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6858,7 +7543,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.0940 Государственные учреждения медико-санитарной экспертизы (МСЭ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6868,7 +7554,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1087 Установление причинной связи заболевания с профессией',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6878,7 +7565,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1089 Отношение к больным и их родственникам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6888,7 +7576,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1090 Качество оказания медицинской помощи, причины смерти взрослых',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6898,7 +7587,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1091 Качество оказания медицинской помощи, причины смерти детей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6908,7 +7598,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1092 Строительство медицинских центров, оснащение лечебно-профилактических учреждений специализированным оборудованием (национальный проект «Здоровье»)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6918,7 +7609,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1093 Внедрение новых методик лечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6928,7 +7620,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1095 Стоимость лекарственных средств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6938,7 +7631,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1096 Качество лекарственных средств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6948,7 +7642,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1097 Обеспеченность лекарственными средствами аптек',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6958,7 +7653,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1098 Регистрация лекарственных средств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6968,7 +7664,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1100 Решения Федерального бюро медико-социальной экспертизы (ФБ МСЭ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6978,7 +7675,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1101 Решения Главного бюро медико-социальной экспертизы (ГБ МСЭ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6988,7 +7686,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1103 Определение степени утраты профессиональной трудоспособности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -6998,7 +7697,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1114 Законодательство в сфере здравоохранения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7008,7 +7708,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1452 Стратегия лекарственного обеспечения. Увеличение объема отечественных лекарственных средств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7018,7 +7719,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1453 Стратегия развития медицинской науки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7028,7 +7730,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1454 Политика здорового питания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7038,7 +7741,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1456 Повышение квалификации медицинских кадров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7048,7 +7752,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1457 Обеспеченность медицинскими кадрами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8008749f-b88e-4d52-b1f1-5a9f05085a50',
@@ -7058,7 +7763,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0143.1458 Меры социальной поддержки медицинских работников',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '93362220-3363-4ece-b671-544ed9bc754d',
@@ -7068,7 +7774,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0014.0143.0000 Здравоохранение (за исключением международного сотрудничества)',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7078,7 +7785,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0319 Управление в сфере физической культуры и спорта',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7088,7 +7796,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0320 Общественные объединения физкультурно-оздоровительной и спортивной направленности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7098,7 +7807,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0321 Олимпийское движение. Развитие физической культуры и спорта, спорта высших достижений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7108,7 +7818,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0322 Физическая культура населения. Физическое воспитание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7118,7 +7829,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0323 Спорт. Деятельность руководителей этой сферы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7128,7 +7840,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0324 Спортивные сооружения, укрепление материальной базы спорта',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7138,7 +7851,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0681 Формирование и развитие ценностей здорового образа жизни',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7148,7 +7862,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0682 Модернизация и развитие учреждений физкультуры и спорта',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7158,7 +7873,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.0733 Адаптивная физическая культура и спорт (физическая культура и спорт для людей с ограниченными возможностями)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '15ce2765-63b5-49db-baef-4d9e9be2fa59',
@@ -7168,7 +7884,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0144.1459 Развитие военно-прикладных видов спорта среди граждан призывного возраста',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '93362220-3363-4ece-b671-544ed9bc754d',
@@ -7178,7 +7895,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0014.0144.0000 Физическая культура и спорт (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0393e7b7-f9b6-41db-9681-47b87cad0999',
@@ -7188,7 +7906,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0002.0014.0145.0325 Туризм. Экскурсии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '93362220-3363-4ece-b671-544ed9bc754d',
@@ -7198,7 +7917,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0014.0145.0000 Туризм. Экскурсии (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47f68372-6e95-4a02-9f14-137db5416de9',
@@ -7208,7 +7928,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0014.0000.0000 Здравоохранение. Физическая культура и спорт. Туризм',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: null,
@@ -7218,7 +7939,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0002.0000.0000.0000 Социальная сфера',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7228,7 +7950,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.0683 Стратегия и перспективы развития',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7238,7 +7961,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1006 Невыплата дивидендов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7248,7 +7972,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1027 Организации с признаками финансовой пирамиды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7258,7 +7983,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1028 Выплата дивидендов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7268,7 +7994,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1030 Компенсация, возврат, индексация вкладов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7278,7 +8005,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1031 Реализация приватизационных чеков (ваучеров)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7288,7 +8016,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1033 Законодательство Российской Федерации в сфере финансовых рынков и страхового дела',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7298,7 +8027,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1037 Кредитные потребительские кооперативы и микрофинансовые организации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7308,7 +8038,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1040 Обязательное страхование транспортных средств (ОСАГО)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7318,7 +8049,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1044 Иные обязательные виды страхования',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7328,7 +8060,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1046 Страхование транспортных средств (КАСКО)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7338,7 +8071,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1050 Страхование от несчастных случаев',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7348,7 +8082,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1055 Страхование финансовых, предпринимательских рисков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7358,7 +8093,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1058 Размер страхового возмещения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7368,7 +8104,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1059 Работа с документами, заявлениями по выплате страховых сумм',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7378,7 +8115,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1060 Выплата страховых сумм',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7388,7 +8126,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1062 Процедура прямого возмещения убытков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7398,7 +8137,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1064 Организации (представительства) субъектов страхового дела',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '5689e215-c44a-4c2b-a129-f7ec0da69e49',
@@ -7408,7 +8148,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0077.1065 Деятельность субъектов страхового дела после отзыва лицензий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7418,7 +8159,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0077.0000 Общие положения финансовой системы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7428,7 +8170,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.0327 Управление в сфере финансов и денежного обращения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7438,7 +8181,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.0342 Работа страховых организаций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7448,7 +8192,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.0928 Страховое дело',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7458,7 +8203,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.0929 Страховое законодательство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7468,7 +8214,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.0932 Органы государственного финансового контроля',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7478,7 +8225,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.1018 Акционерные инвестиционные фонды, паевые инвестиционные фонды, негосударственные пенсионные фонды, их управляющие компании и специализированные депозитарии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7488,7 +8236,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.1019 Профессиональные участники рынка ценных бумаг (брокеры, дилеры, управляющие компании, регистраторы, депозитарии, клиринговые организации, организаторы торговли и товарных бирж)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '30198216-fec1-4319-a852-b61e9b6a23d2',
@@ -7498,7 +8247,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0078.1034 Предоставление выписок из реестров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7508,7 +8258,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0078.0000 Управление в сфере финансов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7518,7 +8269,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0328 Денежная наличность. Эмиссия денег',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7528,7 +8280,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0329 Ценообразование, государственная политика в области цен',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7538,7 +8291,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0342 Работа страховых организаций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7548,7 +8302,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0343 Индексация и выплата сбережений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7558,7 +8313,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0344 Инфляция',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7568,7 +8324,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0347 Игорный бизнес. Лотереи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7578,7 +8335,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.0923 Долговые обязательства государства по товарным целевым чекам, облигациям и другим видам государственного долга',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '41d66b81-e5de-4ee1-9894-8bce5e4f44e8',
@@ -7588,7 +8346,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0079.1067 Выплата компенсации по вкладам в органы Госстраха',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7598,7 +8357,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0079.0000 Денежная система и денежное обращение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3de6bb9d-ead8-424d-95a5-6fbfba40dd1b',
@@ -7608,7 +8368,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0080.0331 Исполнение федерального бюджета, региональных и местных бюджетов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3de6bb9d-ead8-424d-95a5-6fbfba40dd1b',
@@ -7618,7 +8379,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0080.0954 Бюджетное законодательство Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3de6bb9d-ead8-424d-95a5-6fbfba40dd1b',
@@ -7628,7 +8390,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0080.1461 Исполнение региональных бюджетов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3de6bb9d-ead8-424d-95a5-6fbfba40dd1b',
@@ -7638,7 +8401,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0080.1462 Исполнение местных бюджетов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7648,7 +8412,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0080.0000 Общие положения бюджетного устройства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b751e274-9cb5-4935-ab9d-76e0461b6902',
@@ -7658,7 +8423,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0081.0330 Бюджетная система Российской Федерации. Межбюджетные отношения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b751e274-9cb5-4935-ab9d-76e0461b6902',
@@ -7668,7 +8434,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0081.0346 Долговые обязательства государства по облигациям государственных займов, государственным долговым обязательствам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b751e274-9cb5-4935-ab9d-76e0461b6902',
@@ -7678,7 +8445,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0081.0627 Доходы федерального бюджета',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b751e274-9cb5-4935-ab9d-76e0461b6902',
@@ -7688,7 +8456,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0081.0628 Расходы федерального бюджета',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7698,7 +8467,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0081.0000 Федеральный бюджет',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6be398fd-5f7a-4088-a67a-40e25a54e0cc',
@@ -7708,7 +8478,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0082.0630 Расходы бюджетов субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6be398fd-5f7a-4088-a67a-40e25a54e0cc',
@@ -7718,7 +8489,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0082.0949 Контроль исполнения бюджетов субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7728,7 +8500,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0082.0000 Бюджеты субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '518f5388-38f1-4099-b968-0bd62a9b03e7',
@@ -7738,7 +8511,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0083.0632 Расходы местных бюджетов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7748,7 +8522,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0083.0000 Местные бюджеты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e290fd55-e06a-4577-8541-75a6fd099902',
@@ -7758,7 +8533,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0084.0879 Использование бюджетных средств, средств государственных внебюджетных фондов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7768,7 +8544,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0084.0000 Иные вопросы бюджетного устройства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '95e6b7e1-6dc7-4c55-9297-f6c41c41a13a',
@@ -7778,7 +8555,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0085.1189 Казначейство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -7788,7 +8566,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0085.0000 Казначейство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7798,7 +8577,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0333 Налоговая служба: налоги, сборы и штрафы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7808,7 +8588,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0334 Налоговые правонарушения, ответственность за их совершение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7818,7 +8599,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0684 Налоговые преференции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7828,7 +8610,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0760 Земельный налог',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7838,7 +8621,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0761 Налог на добавленную стоимость',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7848,7 +8632,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0763 Транспортный налог',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7858,7 +8643,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0764 Налог на имущество',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7868,7 +8654,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0765 Налог на доходы физических лиц',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7878,7 +8665,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0766 Налог на прибыль',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7888,7 +8676,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0767 Госпошлина',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7898,7 +8687,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0768 Налогообложение малого бизнеса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7908,7 +8698,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0769 Задолженность по налогам и сборам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7918,7 +8709,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0772 Получение и отказ от ИНН',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7928,7 +8720,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0774 Юридические вопросы по налогам и сборам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7938,7 +8731,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0775 Зачет и возврат излишне уплаченных или излишне взысканных сумм налогов, сборов, пеней, штрафов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7948,7 +8742,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0776 Предоставление отсрочки или рассрочки по уплате налога, сбора, пени, штрафа',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7958,7 +8753,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0777 Организация работы с налогоплательщиками',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7968,7 +8764,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0779 Осуществление организации и контроля за проведением лотерей и азартных игр в букмекерских конторах и тотализаторах',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7978,7 +8775,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.0970 Возврат уплаченной госпошлины',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7988,7 +8786,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.1470 Налоговое администрирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -7998,7 +8797,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.1471 Государственная регистрация юридических лиц',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -8008,7 +8808,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.1563 Федеральные налоги и сборы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -8018,7 +8819,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.1564 Региональные налоги и сборы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4e5dc39-d5f8-449c-bc11-c6a0c4220190',
@@ -8028,7 +8830,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0086.1565 Местные налоги и сборы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8038,7 +8841,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0086.0000 Налоги и сборы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8048,7 +8852,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0335 Банковская система (в том числе коммерческие банки)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8058,7 +8863,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0336 Ссуды, субсидии и потребительские кредиты гражданам и индивидуальным предпринимателям',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8068,7 +8874,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0685 Вклады в коммерческие банки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8078,7 +8885,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0686 Оформление и обслуживание электронных карт',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8088,7 +8896,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0933 Взимание банками коммерческих вознаграждений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8098,7 +8907,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0934 Наследование денежных средств со счетов в банках',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8108,7 +8918,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0935 Возврат денежных средств и банкротство банков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8118,7 +8929,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.0953 Контроль за банковской системой',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8128,7 +8940,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.1474 Реформа банковской системы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8138,7 +8951,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.1478 Кредитная информация',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8148,7 +8962,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.1479 Вопросы заемщиков и кредиторов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0e19b1bc-cf25-4f47-bf29-54fc5df8d555',
@@ -8158,7 +8973,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0087.1480 Деятельность коллекторских агентств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8168,7 +8984,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0087.0000 Банковское дело',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b0bae6a1-569b-4691-a1f1-58efdfa49b7e',
@@ -8178,7 +8995,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0088.0337 Рынок ценных бумаг. Деятельность организаций, производящих операции с ценными бумагами, их взаимоотношения с владельцами и держателями ценных бумаг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b0bae6a1-569b-4691-a1f1-58efdfa49b7e',
@@ -8188,7 +9006,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0088.1032 Продажа, выкуп, обмен, приобретение, перерегистрация прав собственности на ценные бумаги',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b0bae6a1-569b-4691-a1f1-58efdfa49b7e',
@@ -8198,7 +9017,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0088.1481 Права владельцев акций акционированных предприятий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b0bae6a1-569b-4691-a1f1-58efdfa49b7e',
@@ -8208,7 +9028,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0088.1484 Права акционеров и недобросовестные действия исполнительных органов акционерных обществ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8218,7 +9039,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0088.0000 Ценные бумаги. Рынок ценных бумаг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '40f875b5-df57-4fc5-ac48-b6a79c187679',
@@ -8228,7 +9050,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0089.0339 Валютное регулирование, конвертируемость рубля',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '40f875b5-df57-4fc5-ac48-b6a79c187679',
@@ -8238,7 +9061,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0089.0340 Внешняя торговля, ВТО',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8248,7 +9072,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0089.0000 Валютное регулирование и валютный контроль',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8258,7 +9083,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0090.0000 Инвестиции (за исключением иностранных и капитальных вложений)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52724ecf-5d3a-4b32-a07b-afec9dddc84e',
@@ -8268,7 +9094,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0091.0804 Методология и организация бухгалтерского учета и отчетности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8278,7 +9105,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0091.0000 Бухгалтерский учет и финансовая отчетность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '22878e95-27a8-43f8-9203-484c0bcd362a',
@@ -8288,7 +9116,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0008.0092.0477 Проверка деятельности хозяйствующих субъектов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba372a9b-19a9-4272-9cfa-5c50bfacc71f',
@@ -8298,7 +9127,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0092.0000 Аудиторская деятельность (за исключением экологического аудита)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b86ea3fe-8e81-4e3b-ba04-5f7355d49b5d',
@@ -8308,7 +9138,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0008.0000.0000 Финансы',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '09692dab-b75a-40c7-b297-287a56bbceab',
@@ -8318,7 +9149,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0348.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '09692dab-b75a-40c7-b297-287a56bbceab',
@@ -8328,7 +9160,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0348.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8338,7 +9171,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0093.0348 Промышленная безопасность опасных производственных объектов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8348,7 +9182,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0349 Инновационная политика, внедрение высоких технологий. Изобретательская деятельность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8358,7 +9193,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0350 Конкурентоспособность промышленной продукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8368,7 +9204,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0351 Производство товаров широкого потребления',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8378,7 +9215,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0352 Энергоэффективность и ресурсосбережение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8388,7 +9226,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0353 Оборонно-промышленный комплекс, космос',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8398,7 +9237,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0354 Топливно-энергетический комплекс. Работа АЭС, ТЭС и ГЭС. Переход ТЭС на газ. Долги энергетикам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8408,7 +9248,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0356 Машиностроительный комплекс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8418,7 +9259,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0357 Частные промышленные предприятия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8428,7 +9270,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0358 Предприятия Крайнего Севера, Сибири и Дальнего Востока',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8438,7 +9281,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0359 Деятельность руководителей предприятий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8448,7 +9292,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0360 Местная промышленность и народные промыслы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8458,7 +9303,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0821 Деятельность предприятий лесопромышленного комплекса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8468,7 +9314,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0957 Производственная, хозяйственная и финансовая деятельность предприятий, организаций и флота рыбной отрасли',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8478,7 +9325,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0971 Закрытие предприятия (завода)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8488,7 +9336,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.0987 Использование ЕГАИС (Единой государственной автоматизированной информационной системы учета объема производства и оборота этилового спирта, алкогольной и спиртосодержащей продукции)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8498,7 +9347,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1081 Обеспечение снабжения садоводческих некоммерческих товариществ (СНТ) электроэнергией',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8508,7 +9358,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1082 Технологическое присоединение потребителей электрической энергии к электрическим сетям',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8518,7 +9369,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1083 Нормативы технологических потерь при передаче тепло- и электроэнергии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8528,7 +9380,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1084 Прокладка нефте- и газопроводов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8538,7 +9391,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1131 Нефтегазовый комплекс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8548,7 +9402,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1132 Нефтехимическая промышленность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8558,7 +9413,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1133 Электроэнергетика',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8568,7 +9424,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1134 Угольная промышленность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8578,7 +9435,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1135 Возобновляемые источники электроэнергии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8588,7 +9446,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1137 Металлургический комплекс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8598,7 +9457,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1138 Легкая промышленность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8608,7 +9468,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1485 Качество управления в сфере промышленности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8618,7 +9479,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1486 Система управления в сфере промышленности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cae06032-c71c-4f93-9839-c02c482c9806',
@@ -8628,7 +9490,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0093.1487 Деятельность в области управления в сфере промышленности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -8638,7 +9501,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0093.0000 Промышленность',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '6b4691de-617b-4371-91be-d6d2f050ea87',
@@ -8648,7 +9512,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0094.0833 Работа Росреестра в федеральных округах и в субъектах Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -8658,7 +9523,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0094.0000 Геология. Геодезия и картография',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1541532b-d244-4f35-8c7e-4340443ecb20',
@@ -8668,7 +9534,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0095.1191 Использование атомной энергии. Захоронение радиоактивных отходов и материалов (за исключением вопросов безопасности)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -8678,7 +9545,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0095.0000 Использование атомной энергии. Захоронение радиоактивных отходов и материалов (за исключением вопросов безопасности)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8688,7 +9556,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0361 Управление в сфере строительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8698,7 +9567,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0362 Деятельность в сфере строительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8708,7 +9578,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0363 Нарушения законодательства, СНИПов при строительстве',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8718,7 +9589,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0364 Строительство и реконструкция предприятий промышленности, в том числе – энергетики',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8728,7 +9600,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0365 Строительство на селе (кроме жилищного)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8738,7 +9611,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0370 Строительство и реконструкция объектов железнодорожного, авиа- и водного транспорта, дорог',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8748,7 +9622,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0633 Строительные организации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8758,7 +9633,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0714 Технический учет и инвентаризация объектов капитального строительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8768,7 +9644,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0883 Выполнение работ и применение строительных материалов по требованиям технических регламентов и проектов (организация строительной площадки, противопожарная безопасность, соблюдение техники безопасности строительно-монтажных работ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8778,7 +9655,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0889 Строительные недоделки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8788,7 +9666,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.0893 Государственный контроль и надзор в области долевого строительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8798,7 +9677,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.1495 Разрешительные процедуры на капитальное строительство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0eb54d0e-da1f-4ab1-8337-0cfa8b547d2e',
@@ -8808,7 +9688,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0096.1496 Время прохождения разрешительных процедур на капитальное строительство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -8818,7 +9699,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0096.0000 Строительство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8828,7 +9710,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0366 Строительство объектов социальной сферы (науки, культуры, спорта, народного образования, здравоохранения, торговли)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8838,7 +9721,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0367 Градостроительство. Архитектура и проектирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8848,7 +9732,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0368 Жилищное строительство в городах',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8858,7 +9743,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0369 Жилищное строительство в поселках городского типа и на селе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8868,7 +9754,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0605 Газификация поселений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8878,7 +9765,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0607 Благоустройство городов и поселков. Обустройство придомовых территорий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8888,7 +9776,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0634 Градостроительные нормативы. Градостроительное законодательство Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8898,7 +9787,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0880 Применение органами местного самоуправления законодательства о градостроительной деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8908,7 +9798,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.0881 Государственный строительный надзор',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8918,7 +9809,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.1243 Водоснабжение поселений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8928,7 +9820,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.1244 Канализование поселений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f7314cc9-5aff-46da-9806-2737a25c9f06',
@@ -8938,7 +9831,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0097.1245 Электрификация поселений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -8948,7 +9842,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0097.0000 Градостроительство и архитектура',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -8958,7 +9853,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0371 Государственное регулирование агропромышленного производства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -8968,7 +9864,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0372 Аграрная политика, управление агропромышленным комплексом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -8978,7 +9875,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0373 Земельная реформа. Частная собственность на землю',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -8988,7 +9886,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0374 Акционерные общества в агропромышленном комплексе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -8998,7 +9897,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0375 Фермерские (крестьянские) хозяйства и аренда на селе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9008,7 +9908,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0376 Личные подсобные хозяйства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9018,7 +9919,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0377 Пищевая и перерабатывающая промышленность. Сельскохозяйственные кооперативы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9028,7 +9930,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0378 Закупка, хранение и реализация сельхозпродукции. Цены. Сельскохозяйственные выставки, рынки, ярмарки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9038,7 +9941,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0379 Коллективное садоводство и огородничество, некоммерческие садовые товарищества',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9048,7 +9952,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0380 Выделение земельных участков для строительства, фермерства, садоводства и огородничества',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9058,7 +9963,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0381 Приватизация земельных участков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9068,7 +9974,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0382 Изменения статуса земельных участков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9078,7 +9985,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0383 Выделение земельных и имущественных паев',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9088,7 +9996,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0384 Земельные споры (не судебные)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9098,7 +10007,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0385 Нецелевое использование земель сельхозназначения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9108,7 +10018,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0386 Производство и хранение сельхозпродукции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9118,7 +10029,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0387 Закупка сельхозпродукции и закупочные цены',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9128,7 +10040,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0388 Материально-техническое оснащение производства сельскохозяйственной продукции. Цены на сельскохозяйственную технику',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9138,7 +10051,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0390 Охотничье хозяйство, пчеловодство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9148,7 +10062,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0391 Рыбное хозяйство. Производство рыбопродуктов и морепродуктов. Борьба с браконьерством',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9158,7 +10073,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0392 Работа ветеринарной службы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9168,7 +10084,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0393 Трудовые, кадровые, пенсионные и социальные вопросы. Социальное развитие села',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9178,7 +10095,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0687 Земледелие и производство продукции растениеводства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9188,7 +10106,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0688 Изобретательские и рационализаторские предложения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9198,7 +10117,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.0852 Компенсация ущерба от стихийных бедствий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '18b63776-8028-494c-bd58-090acb448838',
@@ -9208,7 +10128,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0098.1119 Животноводство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9218,7 +10139,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0098.0000 Сельское хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7679fe5-e10c-460e-8470-7cf1e1b42d7b',
@@ -9228,7 +10150,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0395.0001 Оценка достижений целевых показателей социально-экономического развития Российской Федерации, определенных Президентом Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7679fe5-e10c-460e-8470-7cf1e1b42d7b',
@@ -9238,7 +10161,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0395.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9248,7 +10172,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0099.0395 Управление транспортом. Работа руководителей транспортных организаций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9258,7 +10183,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0396 Железнодорожный транспорт (кроме перевозок пассажиров). Реформа отрасли',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9268,7 +10194,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0397 Водный транспорт (кроме перевозок пассажиров)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9278,7 +10205,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0398 Воздушный транспорт (кроме перевозок пассажиров)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9288,7 +10216,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0399 Автомобильный транспорт (кроме пассажирского)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9298,7 +10227,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0400 Городской транспорт',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9308,7 +10238,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0401 Дорожное хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9318,7 +10249,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0403 Борьба с аварийностью. Безопасность дорожного движения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9328,7 +10260,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0404 Транспортное обслуживание населения (вопросы сервиса, удобство и безопасность пассажирских перевозок)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9338,7 +10271,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0405 Междугородные и пригородные перевозки пассажиров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9348,7 +10282,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0406 Городской пассажирский транспорт, в том числе метро',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9358,7 +10293,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0407 Пассажирский транспорт на селе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9368,7 +10304,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0408 Железнодорожный транспорт (транспортное обслуживание населения)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9378,7 +10315,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0409 Автомобильный транспорт',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9388,7 +10326,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0410 Воздушный транспорт (транспортное обслуживание населения)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9398,7 +10337,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0411 Водный транспорт (транспортное обслуживание населения)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9408,7 +10348,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0412 Тарифы, сборы и льготы на транспортные услуги',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9418,7 +10359,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0689 Автостоянки и автопарковки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9428,7 +10370,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0690 Программа по утилизации старых автомобилей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9438,7 +10381,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0691 Установка и содержание остановок общественного транспорта',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9448,7 +10392,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.0850 Эксплуатация и сохранность автомобильных дорог',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9458,7 +10403,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.1125 Транспортная безопасность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '14a870b9-9e6b-4227-b691-6f22fc4bb083',
@@ -9468,7 +10414,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0099.1126 Развитие транспортного комплекса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9478,7 +10425,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0099.0000 Транспорт',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9488,7 +10436,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0413 Регулирование деятельности в области оказания услуг связи. Руководство отраслью',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9498,7 +10447,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0414 Почтовая связь',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9508,7 +10458,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0416 Электрическая связь',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9518,7 +10469,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0417 Развитие инфраструктуры связи. Телефонизация',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9528,7 +10480,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0418 Доступ к сети местной телефонной связи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9538,7 +10491,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0419 Качество оказания услуг связи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9548,7 +10502,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0420 Технические средства радиовещания и телевидения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9558,7 +10513,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0421 Развитие цифрового теле- и радиовещания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9568,7 +10524,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0423 Электронная связь. Интернет',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9578,7 +10535,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0424 Подвижная радиотелефонная связь',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9588,7 +10546,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0425 Телекоммуникации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9598,7 +10557,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0426 Оплата услуг связи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9608,7 +10568,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.0731 Почтово-банковские услуги (доставка пенсий и пособий, прием коммунальных платежей)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9618,7 +10579,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.1497 Социальные сети и сетевые сообщества',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9628,7 +10590,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.1498 Информационные системы органов государственной власти Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9638,7 +10601,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.1570 Работа почты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13add159-76cf-4987-8cc2-9e2f43390f1b',
@@ -9648,7 +10612,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0100.1571 Работа телеграфа',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9658,7 +10623,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0100.0000 Связь',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '50977f78-c535-410d-8c9b-cd65893e9e85',
@@ -9668,7 +10634,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0101.0427 Управление в сфере космической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9678,7 +10645,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0101.0000 Космическая деятельность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9688,7 +10656,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0428 Управление в сфере торговли',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9698,7 +10667,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0432 Работа рынков',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9708,7 +10678,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0433 Качество товаров. Защита прав потребителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9718,7 +10689,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0435 Торговля и органы местного самоуправления. Размещение торговых точек',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9728,7 +10700,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0692 Рост цен на продукты питания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9738,7 +10711,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0946 Биологически-активные добавки (БАД). Генно-модифицированные продукты (ГМП)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9748,7 +10722,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0966 Некачественная алкогольная продукция',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9758,7 +10733,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0992 Торговля товарами длительного пользования (телефоны, холодильники, стиральные машины, пылесосы, автомобили)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9768,7 +10744,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0993 Торговля продовольственными товарами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9778,7 +10755,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.0994 Торговля промышленными товарами повседневного спроса (одежда, обувь и т.д.)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a2399fd2-5551-4c03-b6f5-8c8100d58dfe',
@@ -9788,7 +10766,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0102.1246 Законодательство в сфере торговли',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9798,7 +10777,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0102.0000 Торговля',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6e35f75-aa3d-41f5-8702-0927792d8792',
@@ -9808,7 +10788,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0103.0436 Управление в сфере общественного питания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd6e35f75-aa3d-41f5-8702-0927792d8792',
@@ -9818,7 +10799,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0103.0437 Предприятия общественного питания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9828,7 +10810,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0103.0000 Общественное питание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd3ea6405-d186-4f22-9cbe-7e5d3c6d77f1',
@@ -9838,7 +10821,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0104.0610 Обслуживание автолюбителей (автосервис, АЗС, гаражи, стоянки)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd3ea6405-d186-4f22-9cbe-7e5d3c6d77f1',
@@ -9848,7 +10832,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0104.0612 Работа ателье, прачечных, химчисток, парикмахерских, бань',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd3ea6405-d186-4f22-9cbe-7e5d3c6d77f1',
@@ -9858,7 +10843,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0009.0104.0613 Ритуальные услуги',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '0d34fec0-c8f9-4c0e-b0c3-796b183ae43c',
@@ -9868,7 +10854,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0104.0000 Бытовое обслуживание населения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b86ea3fe-8e81-4e3b-ba04-5f7355d49b5d',
@@ -9878,7 +10865,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0009.0000.0000 Хозяйственная деятельность',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9888,7 +10876,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0105.0000 Общие положения в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4b5df4ae-5e91-4711-95ac-4cae24158b0d',
@@ -9898,7 +10887,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0106.1193.0003 Оценка деятельности федеральных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4b5df4ae-5e91-4711-95ac-4cae24158b0d',
@@ -9908,7 +10898,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0106.1193.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6a81e856-5ece-465d-8287-7cc5b76ff5eb',
@@ -9918,7 +10909,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0106.1193 Управление внешнеэкономической деятельностью',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9928,7 +10920,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0106.0000 Управление внешнеэкономической деятельностью',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9938,7 +10931,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0107.0000 Субъекты внешнеэкономических отношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9948,7 +10942,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0108.0000 Внешнеэкономические сделки (за исключением частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'fcc199e0-c808-46cc-b6ee-53ddede72919',
@@ -9958,7 +10953,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0109.1196 Оказание услуг (за исключением частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9968,7 +10964,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0109.0000 Оказание услуг (за исключением частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9978,7 +10975,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0110.0000 Иностранные инвестиции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9988,7 +10986,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0111.0000 Свободные экономические зоны (за исключением налогов и сборов)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -9998,7 +10997,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0112.0000 Зоны свободной торговли и таможенные союзы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10008,7 +11008,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0113.0000 Расчеты при осуществлении внешнеэкономической деятельности (за исключением частного права и банковской сферы)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10018,7 +11019,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0114.0000 Гуманитарная и техническая помощь в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e4195693-7ea1-429b-ad6d-db65ba093121',
@@ -10028,7 +11030,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0115.1201 Международные выставки, торги, аукционы, ярмарки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10038,7 +11041,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0115.0000 Международные выставки, торги, аукционы, ярмарки',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9cf5da1d-95cb-4ffc-b014-f9454d38a8f8',
@@ -10048,7 +11052,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0116.0440 Таможенно-тарифное регулирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9cf5da1d-95cb-4ffc-b014-f9454d38a8f8',
@@ -10058,7 +11063,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0116.0635 Ввозные таможенные пошлины',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10068,7 +11074,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0116.0000 Таможенно-тарифное регулирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8201c3df-4189-453b-b21c-42edea5195a8',
@@ -10078,7 +11085,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0117.0478 Лицензирование, квотирование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10088,7 +11096,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0117.0000 Нетарифные ограничения в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10098,7 +11107,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0118.0000 Государственные меры по защите национальной экономики в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '33e2e9ac-b275-42d6-bccc-764007d6d83b',
@@ -10108,7 +11118,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0119.1203 Ограничения и запреты на ввоз и вывоз в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10118,7 +11129,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0119.0000 Запреты на ввоз и вывоз в сфере внешнеэкономической деятельности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10128,7 +11140,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0120.0000 Применение косвенных (внутренних) налогов при экспорте и импорте (за исключением федеральных налогов и сборов)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'efe726d5-58bb-4ba9-b316-0640a626fa1a',
@@ -10138,7 +11151,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0121.0441 Таможенные органы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'efe726d5-58bb-4ba9-b316-0640a626fa1a',
@@ -10148,7 +11162,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0121.0442 Таможенная политика государства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'efe726d5-58bb-4ba9-b316-0640a626fa1a',
@@ -10158,7 +11173,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0121.0444 Таможенные пошлины и налоги',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'efe726d5-58bb-4ba9-b316-0640a626fa1a',
@@ -10168,7 +11184,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0121.0445 Таможенные режимы. Таможенное оформление. Таможенные платежи. Таможенный контроль. Таможенная инфраструктура',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'efe726d5-58bb-4ba9-b316-0640a626fa1a',
@@ -10178,7 +11195,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0010.0121.0446 Таможенные правила и ответственность за их нарушение',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '52a5bd87-caa4-4ee1-81df-4ac3369c48ef',
@@ -10188,7 +11206,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0121.0000 Таможенное дело (за исключением международного экономического сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b86ea3fe-8e81-4e3b-ba04-5f7355d49b5d',
@@ -10198,7 +11217,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0010.0000.0000 Внешнеэкономическая деятельность. Таможенное дело',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10208,7 +11228,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0447 Промышленное производство и окружающая среда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10218,7 +11239,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0448 Энергетика и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10228,7 +11250,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0449 Транспорт и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10238,7 +11261,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0450 Сельхозпроизводство и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10248,7 +11272,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0451 Лесное хозяйство и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10258,7 +11283,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0452 Строительство и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10268,7 +11294,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0453 Экономические и экологические аспекты охраны окружающей среды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10278,7 +11305,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0454 Природоохранное законодательство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10288,7 +11316,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0455 Природоохранные общественные организации: социальные и экономические аспекты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10298,7 +11327,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0456 Геология и использование природных ресурсов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10308,7 +11338,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0457 Транспортировка, переработка и хранение токсичных отходов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10318,7 +11349,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0458 Переработка вторичного сырья и бытовых отходов. Полигоны бытовых отходов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10328,7 +11360,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0459 Ликвидация последствий стихийных бедствий и чрезвычайных происшествий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10338,7 +11371,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0460 Преодоление последствий техногенных аварий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10348,7 +11382,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0693 Создание пожарных постов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10358,7 +11393,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0846 Загрязнение окружающей среды: сбросы, выбросы, отходы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10368,7 +11404,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0847 Экологический контроль, надзор',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10378,7 +11415,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0848 Экологическая безопасность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10388,7 +11426,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0849 Особо охраняемые природные территории. Заповедники',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10398,7 +11437,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.0958 Охрана, воспроизводство водных биологических ресурсов. Аквакультура и марикультура. Правила рыболовства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10408,7 +11448,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.1121 Государственная инспекция по маломерным судам (ГИМС)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e7b95039-0599-4cda-b1e9-71376f59eb27',
@@ -10418,7 +11459,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0122.1122 Предупреждение чрезвычайных ситуаций природного и техногенного характера',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10428,7 +11470,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0122.0000 Общие вопросы охраны окружающей природной среды (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10438,7 +11481,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.0715 Полномочия государственных органов и органов местного самоуправления в области земельных отношений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10448,7 +11492,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.0716 Землеустройство. Землеустроительный процесс. Установление границ. Мониторинг земель. Кадастровая деятельность (деятельность кадастровых инженеров)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10458,7 +11503,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.0717 Земельные споры (судебные)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10468,7 +11514,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.1139 Постоянное (бессрочное) пользование земельными участками',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10478,7 +11525,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.1140 Безвозмездное срочное пользование земельными участками',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10488,7 +11536,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.1247 Воздействие на окружающую среду при мелиорации земель (мелиоративные системы и гидротехнические сооружения)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dddf5fab-2aef-439d-9069-c2004c66d123',
@@ -10498,7 +11547,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0123.1257 Ответственность за нарушение земельного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10508,7 +11558,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0123.0000 Использование и охрана земель (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'bb214167-9796-4100-b344-0ad412a37d69',
@@ -10518,7 +11569,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0124.1205 Использование и охрана недр (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10528,7 +11580,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0124.0000 Использование и охрана недр (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9e37f35c-7f6d-4b46-b808-2fe99a300880',
@@ -10538,7 +11591,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0125.0757 Охрана и использование водных ресурсов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9e37f35c-7f6d-4b46-b808-2fe99a300880',
@@ -10548,7 +11602,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0125.0831 Очистные сооружения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '9e37f35c-7f6d-4b46-b808-2fe99a300880',
@@ -10558,7 +11613,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0125.0842 Водное хозяйство и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10568,7 +11624,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0125.0000 Использование и охрана вод (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10578,7 +11635,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.0819 Выделение леса для строительства жилых домов и собственных нужд населения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10588,7 +11646,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.0820 Лесное законодательство. Незаконная рубка леса',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10598,7 +11657,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.1070 Охрана и защита лесов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10608,7 +11668,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.1071 Использование и воспроизводство лесов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10618,7 +11679,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.1072 Земли лесного фонда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2f13e1e3-7ea1-4cac-8269-29f392e8d834',
@@ -10628,7 +11690,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0126.1073 Инвентаризация лесов, лесоустройство и лесной реестр',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10638,7 +11701,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0126.0000 Использование, охрана, защита и воспроизводство лесов (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1d4a3e5e-173b-41ba-ba0f-7bdda035baee',
@@ -10648,7 +11712,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0127.0694 Гуманное отношение к животным. Создание приютов для безнадзорных животных',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1d4a3e5e-173b-41ba-ba0f-7bdda035baee',
@@ -10658,7 +11723,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0127.0843 Охотничьи ресурсы и экология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1d4a3e5e-173b-41ba-ba0f-7bdda035baee',
@@ -10668,7 +11734,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0127.0924 Охрана фауны',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10678,7 +11745,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0127.0000 Охрана и использование животного мира (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10688,7 +11756,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0128.0000 Использование и охрана природных ресурсов континентального шельфа (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10698,7 +11767,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0129.0000 Использование и охрана природных ресурсов исключительной экономической зоны (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1593f883-770b-4c80-90bd-a3c2a1be9f3d',
@@ -10708,7 +11778,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0130.1208 Охрана атмосферного воздуха (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10718,7 +11789,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0130.0000 Охрана атмосферного воздуха (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2e33173-ea3a-42e1-880f-f7f38b1d98ed',
@@ -10728,7 +11800,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0011.0131.0718 Гидрометеорология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '24e76c0f-f0f0-4be0-96a7-4fdf1febcd37',
@@ -10738,7 +11811,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0131.0000 Гидрометеорология',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b86ea3fe-8e81-4e3b-ba04-5f7355d49b5d',
@@ -10748,7 +11822,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0011.0000.0000 Природные ресурсы и охрана окружающей природной среды',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '6676e176-cc4b-4a72-8df4-851c077724e1',
@@ -10758,7 +11833,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0132.0638 Информация о гражданах (персональные данные)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10768,7 +11844,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0132.0000 Общие положения в сфере информации и информатизации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '21b7f14d-4722-4952-aa55-cf1b4c59a2ce',
@@ -10778,7 +11855,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0133.0695 Электронное правительство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '21b7f14d-4722-4952-aa55-cf1b4c59a2ce',
@@ -10788,7 +11866,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0133.0815 Управление архивным делом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10798,7 +11877,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0133.0000 Управление в сфере информации и информатизации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b1f1b8f5-9005-4153-8844-e054386e1719',
@@ -10808,7 +11888,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0134.0461 Информационные ресурсы. Пользование информационными ресурсами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b1f1b8f5-9005-4153-8844-e054386e1719',
@@ -10818,7 +11899,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0134.0816 Архивный фонд. Архивы. Структура архивов. Сеть государственных и муниципальных архивов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b1f1b8f5-9005-4153-8844-e054386e1719',
@@ -10828,7 +11910,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0134.0817 Предоставление генеалогических и других архивных данных',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10838,7 +11921,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0134.0000 Информационные ресурсы. Пользование информационными ресурсами',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3fbbe445-d62e-4f82-a2eb-41c99419452c',
@@ -10848,7 +11932,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0135.0462 Информатизация. Информационные системы, технологии и средства их обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10858,7 +11943,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0135.0000 Информатизация. Информационные системы, технологии и средства их обеспечения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '949ff37b-43be-4a8c-a893-1a799bf0c086',
@@ -10868,7 +11954,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0136.0463 Информация и информатизация СМИ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10878,7 +11965,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0136.0000 Средства массовой информации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cac80805-891d-4526-ac60-7c5eeccec652',
@@ -10888,7 +11976,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0137.1210 Реклама (за исключением рекламы в СМИ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10898,7 +11987,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0137.0000 Реклама (за исключением рекламы в СМИ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7afa6551-ea60-4a85-95cf-223751f1c8e0',
@@ -10908,7 +11998,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0003.0012.0138.0464 Информационная безопасность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ebfb9d9f-36fe-487b-afee-1d2a40570e6d',
@@ -10918,7 +12009,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0138.0000 Информационная безопасность. Защита информации и прав субъектов в области информационных процессов и информатизации (за исключением информационной безопасности общества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b86ea3fe-8e81-4e3b-ba04-5f7355d49b5d',
@@ -10928,7 +12020,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0012.0000.0000 Информация и информатизация',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: null,
@@ -10938,7 +12031,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0003.0000.0000.0000 Экономика',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '6be98f13-604f-46c4-9d86-fe5e41cc4dec',
@@ -10948,7 +12042,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0146.1212 Общие положения в сфере обороны',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -10958,7 +12053,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0146.0000 Общие положения в сфере обороны',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -10968,7 +12064,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0486 Льготы военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -10978,7 +12075,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0488 Символика родов и видов войск Вооруженных Сил Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -10988,7 +12086,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0499 Военные архивы. Получение сведений и документов из архивов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -10998,7 +12097,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0500 Факты противоправного поведения военнослужащих и сотрудников Минобороны России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11008,7 +12108,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0501 Памятники воинам, воинские захоронения, мемориалы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11018,7 +12119,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0745 Факты противоправного поведения сотрудников МВД России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11028,7 +12130,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0746 Факты противоправного поведения сотрудников МЧС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11038,7 +12141,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0748 Факты противоправного поведения сотрудников ФСБ России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11048,7 +12152,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0751 Факты противоправного поведения сотрудников ФСИН России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11058,7 +12163,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0752 Факты противоправного поведения сотрудников ФССП России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11068,7 +12174,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0753 Факты противоправного поведения сотрудников Росгвардии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11078,7 +12185,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0754 Факты противоправного поведения сотрудников ФТС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11088,7 +12196,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0907 Боевая готовность и боевая подготовка',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '228c9ab9-f593-4d54-b38f-c88cd344e3e4',
@@ -11098,7 +12207,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0147.0908 Модернизация Вооруженных Сил, изобретения в области вооружений и т.п.',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11108,7 +12218,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0147.0000 Вооруженные Силы Российской Федерации, другие войска, воинские формирования и органы, привлекаемые к выполнению задач в области обороны',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'aa8c096b-0b50-4265-8ae1-accd4b56244f',
@@ -11118,7 +12229,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0148.1213 Состояние войны. Военное положение. Мобилизация. Гражданская оборона. Территориальная оборона',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11128,7 +12240,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0148.0000 Состояние войны. Военное положение. Мобилизация. Гражданская оборона. Территориальная оборона',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11138,7 +12251,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.0480 Присвоение воинских званий, переводы по службе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11148,7 +12262,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.0481 Увольнение кадровых военнослужащих из Вооруженных Сил Российской Федерации, в том числе – досрочное',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11158,7 +12273,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.0482 Восстановление военнослужащих в кадрах Вооруженных Сил Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11168,7 +12284,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.0489 Подготовка военных кадров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11178,7 +12295,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.0896 Обучение в гражданских учебных заведениях в период прохождения военной службы по контракту, переподготовки в связи с предстоящим увольнением',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ed9eb57c-6fe5-4dee-b6b4-db9f271b1554',
@@ -11188,7 +12306,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0149.1511 Работа военных учебных заведений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11198,7 +12317,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0149.0000 Кадры Вооруженных Сил Российской Федерации, других войск',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'c4ecee53-6ba5-429b-a1e1-b5f988032c95',
@@ -11208,7 +12328,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0150.0495 Служащие гражданского персонала Вооруженных Сил Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'c4ecee53-6ba5-429b-a1e1-b5f988032c95',
@@ -11218,7 +12339,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0150.0898 Заработная плата гражданского персонала',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'c4ecee53-6ba5-429b-a1e1-b5f988032c95',
@@ -11228,7 +12350,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0150.0919 Санаторно-курортное обслуживание гражданского персонала Министерства обороны Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11238,7 +12361,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0150.0000 Гражданский персонал Вооруженных Сил Российской Федерации, других войск',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '7d22410c-382d-4b69-8717-46e456ff6034',
@@ -11248,7 +12372,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0151.1214 Вооружение и военная техника',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11258,7 +12383,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0151.0000 Вооружение и военная техника',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '049e0e0d-5908-4dbc-8340-34cb5e8bf291',
@@ -11268,7 +12394,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0152.0483 Финансовое обеспечение Вооруженных Сил Российской Федерации, других войск. Денежное довольствие военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '049e0e0d-5908-4dbc-8340-34cb5e8bf291',
@@ -11278,7 +12405,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0152.0902 Воинские перевозки (проезд к месту службы, месту проведения отпуска, лечения, к месту захоронения и т.д.). Возмещение стоимости проезда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '049e0e0d-5908-4dbc-8340-34cb5e8bf291',
@@ -11288,7 +12416,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0152.0904 Имущественные отношения Министерства обороны Российской Федерации (в т.ч. аренда нежилых объектов)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '049e0e0d-5908-4dbc-8340-34cb5e8bf291',
@@ -11298,7 +12427,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0152.0905 Закрытые военные городки (в т.ч. проживание населения, неудовлетворительные условия проживания). Определение статуса закрытого военного городка (ЗГВ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '049e0e0d-5908-4dbc-8340-34cb5e8bf291',
@@ -11308,7 +12438,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0152.0921 Материально-бытовое обеспечение военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11318,7 +12449,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0152.0000 Вопросы обеспечения Вооруженных Сил Российской Федерации, других войск',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'dfbc4280-e927-43fa-8efd-696e89860c6c',
@@ -11328,7 +12460,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0153.1215 Военная наука',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11338,7 +12471,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0153.0000 Военная наука',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'acbc1690-0604-401c-a8db-bf439d15b5b5',
@@ -11348,7 +12482,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0154.0491 Призыв в Вооруженные Силы Российской Федерации. Работа военных комиссариатов и призывных комиссий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11358,7 +12493,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0154.0000 Воинская обязанность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11368,7 +12504,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0487 Воинская присяга и прохождение военной службы по призыву',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11378,7 +12515,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0496 Прохождение службы в войсках национальной гвардии Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '015a87fe-1cdb-4e7a-9228-949e0b1cbf6a',
@@ -11388,7 +12526,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0497.0022 Прохождение службы в Государственной противопожарной службе и войсках гражданской обороны МЧС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '015a87fe-1cdb-4e7a-9228-949e0b1cbf6a',
@@ -11398,7 +12537,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0497.0023 Прохождение службы в противопожарной службе субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11408,7 +12548,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0155.0497 Прохождение службы в Государственной противопожарной службе и войсках гражданской обороны МЧС России, противопожарной службе субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11418,7 +12559,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0696 Увольнение военнослужащих, проходящих военную службу по контракту, в том числе досрочное',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11428,7 +12570,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0832 Поступление на военную службу по контракту. Заключение первого контракта',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11438,7 +12581,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0895 Заключение нового контракта с военнослужащим',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11448,7 +12592,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0899 Служебное время и отпуска военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11458,7 +12603,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0909 Воинская дисциплина. Ответственность военнослужащих. Привлечение к ответственности военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11468,7 +12614,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.0911 Исполнение должностных полномочий и служебных обязанностей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11478,7 +12625,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1542 Прохождение службы в МВД России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11488,7 +12636,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1543 Прохождение службы в МЧС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11498,7 +12647,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1544 Прохождение службы в ГФС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11508,7 +12658,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1545 Прохождение службы в СВР России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11518,7 +12669,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1546 Прохождение службы в ФСБ России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11528,7 +12680,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1547 Прохождение службы в Росгвардии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11538,7 +12691,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1548 Прохождение службы в ФСО России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11548,7 +12702,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1549 Прохождение службы в ФСИН России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11558,7 +12713,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1550 Прохождение службы в ФССП России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11568,7 +12724,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1551 Прохождение службы в ФТС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11578,7 +12735,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1552 Прохождение службы в противопожарной службе субъектов Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11588,7 +12746,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1553 Прохождение службы в Государственной противопожарной службе и спасательных воинских формированиях МЧС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '63fd567b-10fe-4b56-84da-fceeb8e8583e',
@@ -11598,7 +12757,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0155.1554 Прохождение службы в других войсках',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11608,7 +12768,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0155.0000 Военная служба',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11618,7 +12779,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0156.0000 Альтернативная гражданская служба',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'f4fdb821-1d98-4c81-b6e7-12ab7278c983',
@@ -11628,7 +12790,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0157.0897 Прохождение военной службы и пребывание в запасе',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11638,7 +12801,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0157.0000 Запас Вооруженных Сил Российской Федерации, других войск',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11648,7 +12812,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0034 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала МЧС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11658,7 +12823,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0036 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала СВР России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11668,7 +12834,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0035 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала ФСО России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11678,7 +12845,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0037 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала ФСИН России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11688,7 +12856,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0038 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала ФССП России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11698,7 +12867,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0039 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала ФТС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ce952c26-9b4a-483e-8af9-9d139b63aeb7',
@@ -11708,7 +12878,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0484.0054 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала Вооруженных Сил Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11718,7 +12889,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0158.0484 Жилищные вопросы военнослужащих, граждан, уволенных с военной службы, членов их семей и гражданского персонала Вооруженных Сил Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11728,7 +12900,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0485 Социальное обеспечение военнослужащих, граждан, уволенных с военной службы и членов их семей. Страховые выплаты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11738,7 +12911,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0498 Выплаты за участие в боевых действиях, выдача удостоверения участника боевых действий',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11748,7 +12922,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0906 О погребении. Выплата компенсаций за установку надгробия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11758,7 +12933,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0912 Ветераны (подтверждение участия и признание: ветераном (инвалидом) Великой Отечественной войны, ветераном военной службы, выдача удостоверений, меры социальной поддержки)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11768,7 +12944,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0913 Участники подразделений особого риска (подтверждение участия, признание участником, выдача удостоверений)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11778,7 +12955,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0914 Участники ликвидации аварии на ЧАЭС (подтверждение участия, признание участником, выдача удостоверений, меры социальной поддержки)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11788,7 +12966,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0915 Назначение и пересмотр размеров пенсий по линии Министерства обороны Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11798,7 +12977,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0916 Медицинское обслуживание военнослужащих, граждан, уволенных с военной службы, членов их семей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11808,7 +12988,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0917 Санаторно-курортное обслуживание военнослужащих, граждан, уволенных с военной службы, членов их семей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11818,7 +12999,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.0920 Медицинское освидетельствование, проведение военно-врачебной экспертизы (установление степени годности к военной службе, причины заболевания, его связи с исполнением обязанностей военной службы и т.д.), инвалидность (вид, группа, порядок установления)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '262be68a-9bfe-41e0-98bc-38f2d5dfe8a0',
@@ -11828,7 +13010,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0015.0158.1042 Обязательное страхование военнослужащих',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '213328bb-2613-4cb9-8763-a06332b5978c',
@@ -11838,7 +13021,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0158.0000 Статус военнослужащих. Социальная защита военнослужащих, граждан, уволенных с военной службы, и членов их семей',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '8fab68b0-feaa-48ae-94cb-c0e2d65cbbca',
@@ -11848,7 +13032,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0015.0000.0000 Оборона',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11858,7 +13043,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0505 Следственный комитет Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11868,7 +13054,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0507 Кадры Следственного комитета Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11878,7 +13065,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0510 Органы безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11888,7 +13076,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0516 Госавтоинспекция МВД России (ГИБДД)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11898,7 +13087,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0518 Прием, увольнение, восстановление и перевод сотрудников органов безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e0bfa186-435f-4555-95ad-3c6927d3d799',
@@ -11908,7 +13098,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0519.0052 Пенсионное, жилищное и материально-бытовое обеспечение работников ФСБ России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e0bfa186-435f-4555-95ad-3c6927d3d799',
@@ -11918,7 +13109,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0519.0053 Пенсионное, жилищное и материально-бытовое обеспечение работников пограничной службы ФСБ России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11928,7 +13120,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0159.0519 Пенсионное, жилищное и материально-бытовое обеспечение работников органов безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11938,7 +13131,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0522 Подготовка кадров. Работа учебных заведений системы органов безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11948,7 +13142,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0524 Деятельность органов дознания и следствия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'fc7ea9cc-eb4e-47ce-90e9-d2bcc2b8ef6a',
@@ -11958,7 +13153,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0736.0046 ...МВД России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'fc7ea9cc-eb4e-47ce-90e9-d2bcc2b8ef6a',
@@ -11968,7 +13164,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0736.0047 ...Росгвардии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'fc7ea9cc-eb4e-47ce-90e9-d2bcc2b8ef6a',
@@ -11978,7 +13175,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0736.0048 ...ГФС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -11988,7 +13186,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0159.0736 Органы внутренних дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cd0ec67-3e28-44d6-86cb-b02839a6ab54',
@@ -11998,7 +13197,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0739.0043 Прием, увольнение, восстановление и перевод сотрудников МВД России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cd0ec67-3e28-44d6-86cb-b02839a6ab54',
@@ -12008,7 +13208,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0739.0044 Прием, увольнение, восстановление и перевод сотрудников Росгвардии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '6cd0ec67-3e28-44d6-86cb-b02839a6ab54',
@@ -12018,7 +13219,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0739.0045 Прием, увольнение, восстановление и перевод сотрудников ГФС России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12028,7 +13230,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0159.0739 Прием, увольнение, восстановление и перевод сотрудников органов внутренних дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12038,7 +13241,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.0741 Подготовка кадров. Работа учебных заведений системы органов внутренних дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12048,7 +13252,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1240 Розыск граждан, находящийся в компетенции органов внутренних дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12058,7 +13263,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1256 Привлечение к административной ответственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12068,7 +13274,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1557 Пенсионное, жилищное и материально-бытовое обеспечение сотрудников МВД России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12078,7 +13285,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1558 Пенсионное, жилищное и материально-бытовое обеспечение сотрудников Росгвардии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12088,7 +13296,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1561 Паспортная система',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '586af0d6-dcbc-44be-bdce-96013b65e5a3',
@@ -12098,7 +13307,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0159.1562 Регистрация по месту жительства и месту пребывания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12108,7 +13318,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0159.0000 Общие положения в сфере обеспечения безопасности государства, общества и личности',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12118,7 +13329,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0160.0000 Силы обеспечения безопасности (за исключением Вооруженных Сил Российской Федерации, других войск, воинских формирований)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '818652b3-43ad-4c2d-9cbf-5e7f9ed42806',
@@ -12128,7 +13340,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0161.0503 Государственная безопасность, борьба с терроризмом и экстремизмом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '818652b3-43ad-4c2d-9cbf-5e7f9ed42806',
@@ -12138,7 +13351,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0161.0504 Пограничная служба и охрана государственных границ России и государств-участников СНГ',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '818652b3-43ad-4c2d-9cbf-5e7f9ed42806',
@@ -12148,7 +13362,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0161.0708 Пункты пропуска через государственную границу Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '818652b3-43ad-4c2d-9cbf-5e7f9ed42806',
@@ -12158,7 +13373,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0161.0719 Обустройство пунктов пропуска через государственную границу Российской Федерации и приграничной инфраструктуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12168,7 +13384,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0161.0000 Безопасность государства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12178,7 +13395,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0470 Законодательство в сфере экономики, в том числе – по вопросам приватизации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12188,7 +13406,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0473 Недружественное поглощение и захват предприятий (рейдерство)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12198,7 +13417,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0512 Борьба с коррупцией',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12208,7 +13428,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0513 Преступления против собственности (государственной, частной, личной)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12218,7 +13439,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0517 Порядок выезда из Российской Федерации и въезда в Российскую Федерацию',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12228,7 +13450,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0521 Охрана общественного порядка в городских и сельских поселениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12238,7 +13461,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0528 Преступления, правонарушения, имеющие широкий общественный резонанс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12248,7 +13472,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0698 Противопожарная служба, соблюдение норм противопожарной безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12258,7 +13483,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0724 Деятельность комиссий государственных органов по предупреждению и противодействию коррупции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12268,7 +13494,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0743 Борьба с организованной преступностью',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12278,7 +13505,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0824 Противодействие незаконному обороту наркотиков. Профилактика наркомании и алкоголизма',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12288,7 +13516,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0968 Факты коррупции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12298,7 +13527,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.0996 Использование государственного имущества и размещение заказов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12308,7 +13538,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.1001 Осуществление санитарно-карантинного контроля',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12318,7 +13549,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.1066 Противодействие легализации (отмыванию) доходов, полученных преступным путем, и финансированию терроризма',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12328,7 +13560,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.1123 Гражданская оборона',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '13d243e4-d81c-494e-9631-b8e1a01c54e7',
@@ -12338,7 +13571,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0162.1261 Ответственность за нарушение законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12348,7 +13582,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0162.0000 Безопасность общества',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12358,7 +13593,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.0508 Производство следствия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12368,7 +13604,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.0514 Преступления против личности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12378,7 +13615,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.0523 Просьбы о розыске военнопленных, интернированных и пропавших без вести в наши дни',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12388,7 +13626,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.0526 Правонарушения среди несовершеннолетних. Беспризорность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12398,7 +13637,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.0527 Конфликты на бытовой почве',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b4e205a2-1ec0-493b-b5ec-29d72f97ec02',
@@ -12408,7 +13648,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0163.1254 Вопросы возбуждения уголовных дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12418,7 +13659,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0163.0000 Безопасность личности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'baabc34f-16e7-4b1b-91d7-07ba8e0498ff',
@@ -12428,7 +13670,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0164.1217 Средства обеспечения безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12438,7 +13681,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0164.0000 Средства обеспечения безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a6386a95-2aff-4abc-b09c-f734392f48da',
@@ -12448,7 +13692,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0165.1218 Участие граждан и общественных объединений в обеспечении безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12458,7 +13703,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0165.0000 Участие граждан и общественных объединений в обеспечении безопасности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '23367de1-4553-4f6c-9835-94f3ae20eec3',
@@ -12468,7 +13714,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0016.0166.1219 Взаимодействие государственных органов обеспечения безопасности между собой и с правоохранительными органами иностранных государств (за исключением международной борьбы с преступностью и терроризмом)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '411adf1f-2ed8-491b-827d-799b1d1a6059',
@@ -12478,7 +13725,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0166.0000 Взаимодействие государственных органов обеспечения безопасности между собой и с правоохранительными органами иностранных государств (за исключением международной борьбы с преступностью и терроризмом)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8fab68b0-feaa-48ae-94cb-c0e2d65cbbca',
@@ -12488,7 +13736,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0016.0000.0000 Безопасность и охрана правопорядка',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '7646a130-8769-4976-8a66-91f53cde229c',
@@ -12498,7 +13747,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0167.1220 Общая часть уголовного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '97012267-8ba8-4d11-ada9-a5e257d4160d',
@@ -12508,7 +13758,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0017.0167.0000 Общая часть уголовного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ae8e6ad5-cf58-45ff-b522-448c79d99558',
@@ -12518,7 +13769,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0168.1221 Особенная часть уголовного законодательства (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '97012267-8ba8-4d11-ada9-a5e257d4160d',
@@ -12528,7 +13780,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0017.0168.0000 Особенная часть уголовного законодательства (за исключением международного сотрудничества)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47caadc9-3093-4a7f-9190-8731ce0b12b3',
@@ -12538,7 +13791,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0169.0550 Отбывание наказания в исправительных учреждениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47caadc9-3093-4a7f-9190-8731ce0b12b3',
@@ -12548,7 +13802,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0169.0551 Органы исполнения наказаний',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47caadc9-3093-4a7f-9190-8731ce0b12b3',
@@ -12558,7 +13813,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0169.0552 Отбывание осужденными наказаний, не связанных с лишением свободы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47caadc9-3093-4a7f-9190-8731ce0b12b3',
@@ -12568,7 +13824,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0169.0553 Перевод осужденных в другие учреждения. Снижение срока наказания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '47caadc9-3093-4a7f-9190-8731ce0b12b3',
@@ -12578,7 +13835,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0017.0169.0734 Содержание под стражей подозреваемых и обвиняемых в совершении преступлений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '97012267-8ba8-4d11-ada9-a5e257d4160d',
@@ -12588,7 +13846,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0017.0169.0000 Исполнение наказаний',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8fab68b0-feaa-48ae-94cb-c0e2d65cbbca',
@@ -12598,7 +13857,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0017.0000.0000 Уголовное право. Исполнение наказаний',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '596f48b7-9d72-43df-ae24-cb8bca11a41b',
@@ -12608,7 +13868,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0170.1222 Общие положения в сфере правосудия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12618,7 +13879,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0170.0000 Общие положения в сфере правосудия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12628,7 +13890,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0529 Конституционный Суд Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12638,7 +13901,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0530 Верховный Суд Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12648,7 +13912,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0532 Назначение и освобождение от должности федеральных судей. Статус судьи. Деятельность Комиссии при Президенте Российской Федерации по предварительному рассмотрению кандидатур на должности судей федеральных судов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12658,7 +13923,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0533 Финансирование и материально-техническое обеспечение судов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12668,7 +13934,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0534 Социальная защита работников судебных органов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12678,7 +13945,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0535 Мировые судьи',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12688,7 +13956,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0538 Арбитражные суды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12698,7 +13967,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0539 Длительное рассмотрение дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12708,7 +13978,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0540 Судебные решения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12718,7 +13989,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0541 Исполнение судебных решений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12728,7 +14000,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0542 Рассмотрение в судебном порядке решений государственных органов, органов местного самоуправления и должностных лиц (за исключением связанных с рассмотрением обращений)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12738,7 +14011,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0544 Органы судейского сообщества',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12748,7 +14022,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0545 Федеральные суды общей юрисдикции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12758,7 +14033,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0546 Порядок рассмотрения дела в суде',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12768,7 +14044,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0549 Рассмотрение в судебном порядке действий (бездействия) государственных органов, органов местного самоуправления и должностных лиц в связи с рассмотрением обращений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12778,7 +14055,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0622 Судебное законодательство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12788,7 +14066,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.0894 Защита прав участников долевого строительства в судебном порядке (в связи с нарушением сроков передачи имущества, по строительным недоделкам, о признании права собственности на долю в объекте незавершенного строительства)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12798,7 +14077,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.1237 Разрешение гражданско-правовых споров и иных имущественных дел',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12808,7 +14088,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.1333 Трансляция судебных заседаний, размещение судебных решений в сети «Интернет» и обеспечение доступа к этим решениям',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12818,7 +14099,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.1411 Независимость и объективность при вынесении судебных решений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ba687de2-fe10-4d5c-87d4-4cd1c3f375ed',
@@ -12828,7 +14110,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0171.1460 Решение хозяйственных споров',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12838,7 +14121,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0171.0000 Судоустройство. Судебная система',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12848,7 +14132,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0172.0000 Конституционное судопроизводство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2c7e4ac1-3dc5-4e8b-9cab-d2173e8ec341',
@@ -12858,7 +14143,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0173.1224 Гражданский процессуальный кодекс Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12868,7 +14154,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0173.0000 Гражданский процесс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12878,7 +14165,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0174.0000 Арбитражный процесс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd84f5939-bf36-430b-b82e-409567fb7fc4',
@@ -12888,7 +14176,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0175.1226 Уголовно-процессуальный кодекс Российской Федерации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12898,7 +14187,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0175.0000 Уголовный процесс',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '85499b3d-7d8c-46c6-9b68-c757d28821ec',
@@ -12908,7 +14198,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0176.1249 Международный коммерческий арбитраж',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12918,7 +14209,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0176.0000 Третейский суд. Международный коммерческий арбитраж (за исключением частного права)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b26e19e9-dc7f-458c-b4d2-c77ab99dd6fb',
@@ -12928,7 +14220,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0177.0571 Взыскание алиментов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b26e19e9-dc7f-458c-b4d2-c77ab99dd6fb',
@@ -12938,7 +14231,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0177.1127 Взыскание денежных средств',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b26e19e9-dc7f-458c-b4d2-c77ab99dd6fb',
@@ -12948,7 +14242,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0177.1128 Исполнение решения суда по трудовым спорам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b26e19e9-dc7f-458c-b4d2-c77ab99dd6fb',
@@ -12958,7 +14253,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0177.1129 Исполнение решения суда по жилищным вопросам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'b26e19e9-dc7f-458c-b4d2-c77ab99dd6fb',
@@ -12968,7 +14264,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0018.0177.1130 Исполнение решения суда по вопросам неимущественного характера',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '42cda4c2-f3c5-48d2-bc66-e970cbe6352d',
@@ -12978,7 +14275,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0177.0000 Исполнительное производство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8fab68b0-feaa-48ae-94cb-c0e2d65cbbca',
@@ -12988,7 +14286,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0018.0000.0000 Правосудие',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -12998,7 +14297,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0554 Органы прокуратуры. Кадры органов прокуратуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -13008,7 +14308,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0555 Работа прокуратуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -13018,7 +14319,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0556 Отказ и просьбы в принесении протеста на решение суда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -13028,7 +14330,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0557 Надзор за соблюдением законности в отношении лиц, отбывающих наказание',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -13038,7 +14341,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0560 Иски органов прокуратуры в суды по вопросам защиты прав человека',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'd2976c22-9c06-4376-b621-53515c2a0ec4',
@@ -13048,7 +14352,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0178.0562 Военные прокуратуры',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b38e43d-54d7-400e-8dd9-5dae72d37bd3',
@@ -13058,7 +14363,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0019.0178.0000 Прокуратура',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13068,7 +14374,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0563 Регистрация политических партий, общественных объединений, религиозных организаций',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13078,7 +14385,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0564 Деятельность судебных приставов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13088,7 +14396,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0565 Места лишения свободы. Места временного содержания задержанных и арестованных',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13098,7 +14407,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0566 Органы ЗАГСА',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13108,7 +14418,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0569 Работа органов юстиции в субъектах Российской Федерации и федеральных округах',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13118,7 +14429,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.0574 Усиление уголовной ответственности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13128,7 +14440,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.1559 Вопросы сотрудников ФСИН России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '221148c5-950e-472c-9081-5eb21bf38347',
@@ -13138,7 +14451,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0179.1560 Вопросы сотрудников ФССП России',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b38e43d-54d7-400e-8dd9-5dae72d37bd3',
@@ -13148,7 +14462,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0019.0179.0000 Органы юстиции',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ae9be82e-4fae-4a56-ac50-a029f04eb736',
@@ -13158,7 +14473,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0180.0567 Адвокатура и инюрколлегия',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b38e43d-54d7-400e-8dd9-5dae72d37bd3',
@@ -13168,7 +14484,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0019.0180.0000 Адвокатура',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '62631e1e-4a1d-4566-a3e7-9d453b032581',
@@ -13178,7 +14495,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0181.0568 Нотариат',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '62631e1e-4a1d-4566-a3e7-9d453b032581',
@@ -13188,7 +14506,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0004.0019.0181.0570 Право на наследство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '3b38e43d-54d7-400e-8dd9-5dae72d37bd3',
@@ -13198,7 +14517,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0019.0181.0000 Нотариат',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8fab68b0-feaa-48ae-94cb-c0e2d65cbbca',
@@ -13208,7 +14528,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0019.0000.0000 Прокуратура. Органы юстиции. Адвокатура. Нотариат',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: null,
@@ -13218,7 +14539,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0004.0000.0000.0000 Оборона, безопасность, законность',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '1e2b5e6a-183c-4390-985d-31e711d4c318',
@@ -13228,7 +14550,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0053.0575 Реформа жилищно-коммунального хозяйства (ЖКХ). Правовые основы рынка жилья',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1e2b5e6a-183c-4390-985d-31e711d4c318',
@@ -13238,7 +14561,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0053.0721 Государственная оценка объектов недвижимости',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1e2b5e6a-183c-4390-985d-31e711d4c318',
@@ -13248,7 +14572,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0053.0722 Возникновение и прекращение прав на объекты недвижимости',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '1e2b5e6a-183c-4390-985d-31e711d4c318',
@@ -13258,7 +14583,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0053.0884 Государственный жилищный контроль',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13268,7 +14594,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0053.0000 Общие положения жилищного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13278,7 +14605,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.0587 Приватизация государственного и муниципального жилищного фонда. Рынок жилья',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13288,7 +14616,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.0603 Вопросы частного домовладения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13298,7 +14627,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.0639 Управление жилищным фондом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13308,7 +14638,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.0641 Государственный жилищный фонд',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13318,7 +14649,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.0642 Муниципальный жилищный фонд',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '79462ce7-7400-4e5b-96d4-3c32ea4a5131',
@@ -13328,7 +14660,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0054.1159 Индивидуальное жилищное строительство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13338,7 +14671,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0054.0000 Жилищный фонд',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13348,7 +14682,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0576 Переселение из подвалов, бараков, коммуналок, общежитий, аварийных домов, ветхого жилья, санитарно-защитной зоны',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13358,7 +14693,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0577 Распределение жилых помещений, предоставляемых по договору социального найма',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13368,7 +14704,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0578 Вопросы лиц, имеющих право первоочередного получения жилплощади',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13378,7 +14715,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0581 Обеспечение жильем выезжающих северян и жителей закрытых административно-территориальных образований',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13388,7 +14726,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0583 Выделение жилья молодым семьям, специалистам',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2b4e304b-e3a5-4726-8de5-283e3f7be4ec',
@@ -13398,7 +14737,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0584.0004 Оценка деятельности региональных органов исполнительной власти по достижению целевых показателей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2b4e304b-e3a5-4726-8de5-283e3f7be4ec',
@@ -13408,7 +14748,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0584.0006 Иные подвопросы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13418,7 +14759,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0055.0584 Государственная программа «Обеспечение доступным и комфортным жильём и коммунальными услугами граждан Российской Федерации» в регионах',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13428,7 +14770,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0585 Проблемы жилья в сельской местности',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13438,7 +14781,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0586 Выселение из жилища',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13448,7 +14792,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0589 Обмен жилых помещений. Оформление договора социального найма (найма) жилого помещения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13458,7 +14803,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0700 Переустройство и перепланировка жилого помещения. Оформление перепланировки жилых помещений',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13468,7 +14814,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0790 Обеспечение жильем ветеранов, инвалидов и семей, имеющих детей-инвалидов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13478,7 +14825,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0890 Обследование жилого фонда на предмет пригодности для проживания (ветхое и аварийное жилье)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13488,7 +14836,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.0955 Переселение работников ликвидируемых шахт',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13498,7 +14847,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1142 Обеспечение жильем детей-сирот и детей, оставшихся без попечения родителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13508,7 +14858,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1143 Обеспечение жильем детей-сирот и детей, оставшихся без попечения родителей, по судебному решению',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13518,7 +14869,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1464 Строительство жилья экономического класса. Программа «Доступное жилье»',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13528,7 +14880,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1476 Арендное жилье',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13538,7 +14891,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1555 Постановка на учет в органе местного самоуправления и восстановление в очереди на получение жилья граждан, нуждающихся в жилых помещениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '96511b58-4caf-4c87-ae7a-36f82ff62450',
@@ -13548,7 +14902,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0055.1556 Улучшение жилищных условий, предоставление жилого помещения по договору социального найма гражданам, состоящим на учете в органе местного самоуправления в качестве нуждающихся в жилых помещениях',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13558,7 +14913,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0055.0000 Обеспечение граждан жилищем, пользование жилищным фондом, социальные гарантии в жилищной сфере (за исключением права собственности на жилище)',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13568,7 +14924,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0599 Коммунально-бытовое хозяйство и предоставление услуг в условиях рынка',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13578,7 +14935,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0600 Оплата жилищно-коммунальных услуг (ЖКХ)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2b7d59cd-7336-4ad3-83d0-21e01bdbb224',
@@ -13588,7 +14946,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0601.0016 Эксплуатация и ремонт квартир в домах муниципального жилищного фонда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '2b7d59cd-7336-4ad3-83d0-21e01bdbb224',
@@ -13598,7 +14957,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0601.0017 Эксплуатация и ремонт квартир в домах ведомственного жилищного фонда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13608,7 +14968,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0056.0601 Эксплуатация и ремонт квартир в домах муниципального и ведомственного жилищного фонда',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13618,7 +14979,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0602 Эксплуатация и ремонт приватизированных квартир',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13628,7 +14990,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0604 Подготовка жилищного фонда к зиме. Обеспечение населения топливом',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13638,7 +15001,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0606 Перебои в электроснабжении',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13648,7 +15012,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0608 Борьба с антисанитарией. Уборка мусора',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13658,7 +15023,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0609 Условия проживания в связи со строительством или работой объектов коммунального обслуживания',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13668,7 +15034,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0814 Субсидии по оплате жилищно-коммунальных услуг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13678,7 +15045,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0873 Управляющие организации, товарищества собственников жилья и иные формы управления собственностью',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13688,7 +15056,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0886 Содержание общего имущества (канализация, вентиляция, кровля, ограждающие конструкции, инженерное оборудование, места общего пользования, придомовая территория)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13698,7 +15067,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0887 Предоставление коммунальных услуг ненадлежащего качества (водоснабжение, отопление, канализация)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13708,7 +15078,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0891 Выполнение работ по капитальному ремонту',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13718,7 +15089,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.0998 Права потребителей в связи с неверным расчетом стоимости коммунальных услуг',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13728,7 +15100,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1144 Эксплуатация и ремонт многоквартирных жилых домов муниципального и ведомственного жилищного фондов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13738,7 +15111,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1146 Приборы учета коммунальных ресурсов в жилищном фонде (в том числе на общедомовые нужды)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13748,7 +15122,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1238 Оплата за электроэнергию на общедомовые нужды',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13758,7 +15133,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1250 Перебои в водоснабжении',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13768,7 +15144,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1251 Перебои в газоснабжении',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13778,7 +15155,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1252 Перебои в теплоснабжении',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13788,7 +15166,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1253 Перебои в работе канализации',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13798,7 +15177,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1473 Тарифы и льготы по оплате коммунальных услуг и электроэнергии',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'ef277e93-397a-4cad-8107-563cc149155a',
@@ -13808,7 +15188,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0056.1490 Установление социальной нормы потребления коммунальных ресурсов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13818,7 +15199,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0056.0000 Коммунальное хозяйство',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13828,7 +15210,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0582 Государственные жилищные сертификаты',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13838,7 +15221,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0594 Кредиты, компенсации, субсидии, льготы',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13848,7 +15232,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0595 Участие в долевом строительстве',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13858,7 +15243,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0596 Ипотечное кредитование',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13868,7 +15254,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0597 Соинвесторы жилищного строительства, товарищества собственников жилья',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13878,7 +15265,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0598 Управляющие компании, договоры на содержание и ремонт жилья',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13888,7 +15276,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.0999 Включение в договор о долевом участии условий, ущемляющих права потребителей',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13898,7 +15287,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.1000 Предоставление субсидий на жилье',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13908,7 +15298,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.1141 Права дольщиков и соинвесторов жилищного строительства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '39764758-2b23-4b3c-af53-533a7168575e',
@@ -13918,7 +15309,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0057.1506 Ипотечно-накопительная система',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13928,7 +15320,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0057.0000 Оплата строительства, содержания и ремонта жилья (кредиты, компенсации, субсидии, льготы)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '8bcd9f81-2dad-48b8-a274-2cd3fb25cb40',
@@ -13938,7 +15331,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0058.0591 Нежилые помещения',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13948,7 +15342,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0058.0000 Нежилые помещения. Административные здания (в жилищном фонде)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'c18c51fa-e0e7-4796-8963-8d9bcead2cdd',
@@ -13958,7 +15353,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0059.1160 Перевод помещений из жилых в нежилые',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13968,7 +15364,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0059.0000 Перевод помещений из жилых в нежилые',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4022aaf7-77a2-45e8-a8ef-6eb529b8e72e',
@@ -13978,7 +15375,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0060.0588 Риэлторская деятельность',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '4022aaf7-77a2-45e8-a8ef-6eb529b8e72e',
@@ -13988,7 +15386,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0060.0590 Купля-продажа квартир, домов',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -13998,7 +15397,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0060.0000 Риэлторская деятельность (в жилищном фонде)',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'e456ad33-f8f2-4fe2-b518-ceab578a0782',
@@ -14008,7 +15408,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0061.0593 Дачное хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -14018,7 +15419,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0061.0000 Дачное хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '38970ce6-548b-4d65-9f02-ef11db3d0028',
@@ -14028,7 +15430,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0062.0592 Гостиничное хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -14038,7 +15441,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0062.0000 Гостиничное хозяйство',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'cebf4330-b71e-40d7-8e77-47e6e3ddacbf',
@@ -14048,7 +15452,8 @@ export const MOCK_RUBRICS = [
     isNode: false,
     isDeleted: false,
     description: '0005.0005.0063.1161 Разрешение жилищных споров. Ответственность за нарушение жилищного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: 'a7dc2bca-6d57-40a9-9024-1be9e7d6b1bd',
@@ -14058,7 +15463,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0063.0000 Разрешение жилищных споров. Ответственность за нарушение жилищного законодательства',
-    hasSubnodes: false
+    hasSubnodes: false,
+    sorting:0
   },
   {
     parentId: '304519b4-7591-4bf0-b49d-0cceabde6ab3',
@@ -14068,7 +15474,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0005.0000.0000 Жилище',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   },
   {
     parentId: null,
@@ -14078,7 +15485,8 @@ export const MOCK_RUBRICS = [
     isNode: true,
     isDeleted: false,
     description: '0005.0000.0000.0000 Жилищно-коммунальная сфера',
-    hasSubnodes: true
+    hasSubnodes: true,
+    sorting:0
   }
 ];
 
