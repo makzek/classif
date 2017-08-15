@@ -7,10 +7,8 @@
 </div>
 <div class="selected-wrapper" [ngClass]="{'col-sm-5': !hideTree && !hideFullInfo, 
     'col-sm-6': (hideTree && !hideFullInfo), 'col-sm-8': (!hideTree && hideFullInfo), 'col-sm-10': hideTree && hideFullInfo}" >
-    <eos-selected-node [hidden]="hideSelectedNode"></eos-selected-node>
-    <eos-search-result [hidden]="!hideSelectedNode" (hasResult)="hideSelectedNode = $event"></eos-search-result>
+    <eos-node-list></eos-node-list>
 </div>
-<!--<div class="opened-wrapper" [ngClass]="hideTree ? 'col-sm-5': 'col-sm-4'">-->
 <div class="opened-wrapper col-sm-4" [ngClass]="{'vertical': hideFullInfo, 'col-sm-5': hideTree && !hideFullInfo, 'col-sm-4': !hideTree && !hideFullInfo}"
     (click)="hideFullInfo = !hideFullInfo">
     <div [ngClass]="{'vertical': hideFullInfo}" class="sandwich-wrapper pull-right"><span class="sandwich"></span></div>

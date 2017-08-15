@@ -16,7 +16,6 @@ export class DictionaryComponent {
     hideTree = false;
     hideFullInfo = false;
     dictionaryName: string;
-    hideSelectedNode = false;
 
     constructor(private _dictionaryService: EosDictService, private route: ActivatedRoute) {
 

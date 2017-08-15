@@ -217,8 +217,13 @@ export class EosDictService {
     }
 
     public addChild(node: EosDictionaryNode) {
-       this._selectedNode.children.push(node);
-       this._selectedNode$.next(this._selectedNode);
+        if (this._selectedNode) {
+           this._dictionary.addNode(node, this._selectedNode.id);
+        } else {
+            this._dictionary.addNode(node);
+        }
+        this._selectedNode$.next(this._selectedNode);
+        this._dictionary$.next(this._dictionary);
     }
 
     public physicallyDelete(nodeId: string) {
@@ -227,9 +232,16 @@ export class EosDictService {
         this._selectedNode$.next(this._selectedNode);
     }
 
-    public search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
-        this._searchResults = this._dictionary.search(searchString, globalSearch, selectedNode);
-        // console.log(this._searchResults);
+    public search(searchString: string, globalSearch: boolean) {
+        this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
         this._searchResults$.next(this._searchResults);
+    }
+
+    public restoreItem(node: EosDictionaryNode) {
+        Object.assign(node, { ...node,  isDeleted: false });
+        Object.assign(node, { ...node,  selected: false });
+        if (node.children) {
+            node.children.forEach((subNode) => this.restoreItem(subNode));
+        }
     }
 }

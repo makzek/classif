@@ -141,7 +141,7 @@ export class EosDictionary {
 
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
         let searchResult = [];
-            this._nodes.forEach((node) => {  
+            this._nodes.forEach((node) => {
                 if ( !!~SEARCH_KEYS.findIndex((key) => !!~node[key].search(searchString))) {
                     searchResult.push(node);
                 }

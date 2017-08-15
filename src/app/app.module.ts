@@ -29,7 +29,8 @@ import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
 import { InfoComponent } from './info/info.component';
-import { SearchResultComponent } from './search-result/search-result.component';
+import { NodeListComponent } from './selected-node/node-list.component';
+import { NodeActionsComponent } from './selected-node/node-actions.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -38,6 +39,8 @@ import { EosUserService } from './services/eos-user.service';
 import { EosUserSettingsService } from './services/eos-user-settings.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
+import { NodeListActionsService } from './selected-node/node-list-action.service';
+
 import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
@@ -61,7 +64,8 @@ import { TestPageComponent } from './test-page/test-page.component';
         DesktopComponent,
         TitleComponent,
         InfoComponent,
-        SearchResultComponent,
+        NodeListComponent,
+        NodeActionsComponent,
     ],
     imports: [
         BrowserModule,
@@ -80,6 +84,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         EosUserSettingsService,
         EosNoticeService,
         EosMessageService,
+        NodeListActionsService,
     ],
     bootstrap: [AppComponent],
 })

@@ -1,0 +1,31 @@
+<div class="nodes-wrapper">
+    <eos-node-actions></eos-node-actions>
+    <eos-selected-node *ngIf="hasParent"></eos-selected-node>
+    <div>
+        <ul *ngIf="nodes" class="elements">
+            <li *ngFor="let node of nodeListPerPage">
+                <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === node.id}">
+                    <div *ngIf="!node.isDeleted || showDeleted" [ngClass]="{'deleted': node.isDeleted && showDeleted}" class="is-deleted-wrap">
+                        <span class="checkbox">
+                        <label><input type="checkbox" [(ngModel)]="node.selected"></label>
+                    </span>
+                        <span class="node-info" (click)="openFullInfo(node)" (dblclick)="editNode(node)">
+                        <span class="code">{{node.code}}</span> {{node.title}}
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="pagination-wrapper">
+            <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [(ngModel)]="currentPage" class="pagination-sm"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+            <span class="show-more" (click)="showMore()">Показывать еще</span>
+            <label class="item-count" for="ItemCount">Показывать по</label>
+            <select id="ItemCount" class="item-count-select pull-right" (change)="setItemCount($event.target.value)">
+            <option selected value="10">10</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+        </select>
+        </div>
+    </div>
+</div>

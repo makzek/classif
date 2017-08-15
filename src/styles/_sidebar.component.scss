@@ -18,11 +18,13 @@
         .link-text {
             white-space: nowrap;
             color: $link-color;
+
             &:hover,
             &:focus,
             &:active {
                 text-decoration: none;
             }
+
             &.active {
                 color: $light-grey;
             }
