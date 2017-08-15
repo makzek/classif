@@ -30,7 +30,9 @@ export class EosDictionaryNode {
             this._descriptor.fields.forEach((fld) => {
                 this.data[fld.key] = data[fld.key];
             });
-            this.id = this.data[this._descriptor.keyField.key];
+            if (this.id === undefined) {
+                this.id = this.data[this._descriptor.keyField.key];
+            }
         }
     }
 

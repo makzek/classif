@@ -7,6 +7,7 @@ export class RecordDescriptor {
 
     constructor (keyFieldName: string, fields: IFieldDesriptor[]) {
         this.fieldsMap = new Map<string, FieldDescriptor>();
+        this.fields = [];
         fields.forEach((f) => {
             const _field = new FieldDescriptor(f);
             this.fields.push(_field);
@@ -18,7 +19,7 @@ export class RecordDescriptor {
         const fld = this.fieldsMap.get(name);
         /* tslint:disable:no-bitwise */
         if (fld && !~fieldSet.findIndex((f) => f.key === fld.key)) {
-            fieldSet.push(this.fieldsMap.get[name]);
+            fieldSet.push(fld);
         }
         /* tslint:enable:no-bitwise */
     }
