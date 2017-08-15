@@ -1,0 +1,68 @@
+    <div class="nodes-header first-line">
+        <span class="deleted-toggle" *ngIf="!showDeleted" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="showDeleted" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
+        <div class="input-group search pull-right">
+            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="search()"></span></span>
+            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
+            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре"></span>
+        </div>
+    </div>
+    <div class="nodes-header second-line">
+        <span class="table-title">
+            <span class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
+            </span>
+        <span class="code"><b>Код</b></span>
+        <b>Рубрика</b>
+        </span>
+
+        <span class="controller pull-right">
+            <span class="circle" (click)="openCreatingForm(creatingModal)">
+                <span class="glyphicon glyphicon-plus control-implemented"></span>
+        </span>
+        <span class="circle" (click)="deleteSelectedItems()">
+                <span class="glyphicon glyphicon-minus control-implemented"></span>
+        </span>
+        <span class="circle" (click)="editNode()">
+                <span class="glyphicon glyphicon-pencil control-implemented"></span>
+        </span>
+        <span class="circle" (click)="nextItem(true)">
+                <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
+        </span>
+        <span class="circle" (click)="nextItem(false)">
+                <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
+        </span>
+        <div class="circle btn-group" dropdown>
+            <span dropdownToggle><span class="dots control-implemented">...</span>
+            </span>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
+                <li role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
+            </ul>
+        </div>
+        </span>
+    </div>
+
+<template #creatingModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Создание новой ветки</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="create-new-node modal-body">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Код</span>
+            <input type="text" class="form-control" placeholder="Code" [(ngModel)]="newNode.code" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Название</span>
+            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newNode.title" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Описание</span>
+            <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newNode.description" aria-describedby="basic-addon1">
+        </div>
+        <button class="btn btn-default" (click)="createItem()">Создать</button>
+    </div>
+</template>

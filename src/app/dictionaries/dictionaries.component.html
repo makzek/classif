@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-            <button *ngFor="let dictionary of dictionariesList" class="btn btn-sq-lg"
-                [routerLink]="['/spravochniki', dictionary.id]">
-                {{dictionary.title}}
-            </button>    
-    </div>   
+        <button *ngFor="let dictionary of dictionariesList" class="btn btn-sq-lg" [routerLink]="['/spravochniki', dictionary.id]">{{dictionary.title}}</button>
+    </div>
 </div>

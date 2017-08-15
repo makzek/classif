@@ -1,0 +1,143 @@
+eos-node-list {
+    .nodes-wrapper {
+        background: white;
+        color: black;
+        padding: 10px;
+
+        .checkbox {
+            margin-left: 5px;
+            margin-right: -5px;
+            vertical-align: middle;
+        }
+
+        .deleted {
+            color: $icon-color;
+        }
+
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-around;
+
+            .show-more,
+            .item-count {
+                line-height: 75px;
+                cursor: pointer;
+            }
+
+            .item-count-select {
+                margin: 20px 5px 25px -15px;
+            }
+        }
+
+        .table-title {
+
+            .checkbox {
+                display: inline-block;
+            }
+
+            .code {
+                margin: 0 20px;
+            }
+        }
+
+        .first-line {
+            height: 50px;
+            border-bottom: 1px solid gray;
+
+            .deleted-toggle {
+                cursor: pointer;
+                position: relative;
+                top: 4px;
+            }
+        }
+
+        .second-line {
+            border-bottom: 1px solid gray;
+            margin-bottom: 10px;
+
+            .controller {
+                margin-top: 10px;
+
+                .circle {
+                    border: 1px solid gray;
+                    border-radius: 50%;
+                    display: inline-block;
+                    height: 25px;
+                    width: 25px;
+
+                    &:last-child {
+                        position: relative;
+                        top: -2px;
+                    }
+                }
+
+                .glyphicon {
+                    display: inline-block;
+                    margin-left: 5px;
+                    margin-top: 3px;
+
+                    &.glyphicon-minus {
+                        margin-left: 3px;
+                    }
+                }
+
+                .dots {
+                    display: inline-block;
+                    font-size: 20px;
+                    line-height: -35px;
+                    margin-left: 3px;
+                    margin-top: -4px;
+                }
+
+                .control-implemented {
+                    color: #337ab7;
+                }
+            }
+        }
+
+        .selected-node-content {
+            a {
+                cursor: pointer;
+            }
+        }
+
+        .elements {
+            list-style: none;
+            max-height: calc(100vh - 150px - 95px - 136px);
+            overflow-y: auto;
+            padding-left: 20px;
+
+            &.has-parent {
+                max-height: calc(100vh - 150px - 95px - 201px);
+            }
+
+            li,
+            .is-deleted-wrap {
+                display: flex;
+            }
+
+            .highlight {
+                background: yellow;
+            }
+
+            .node-info {
+                align-self: center;
+
+                cursor: pointer;
+                margin-left: 10px;
+
+                .code {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+.create-new-node {
+    &.modal-body {
+        .input-group {
+            margin-bottom: 10px;
+        }
+    }
+}
