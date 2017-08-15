@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 
 @Component({
@@ -15,25 +16,13 @@ export class NodeActionsComponent {
     showDeleted = false;
     modalRef: BsModalRef;
     checkAll = false;
-    newNode = new EosDictionaryNode({
-        id: null,
-        code: null,
-        title: null,
-        parentId: null,
-        parent: null,
-        children: [],
-        description: null,
-        isNode: null,
-        hasSubnodes: null,
-        isExpanded: null,
-        isDeleted: false,
-        selected: false,
-        data: null,
-    });
+    newNode: EosDictionaryNode;
 
     searchResults: EosDictionaryNode[];
     searchString: string;
     searchInAllDict = false;
+
+    dictionary: EosDictionary;
 
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
@@ -42,6 +31,9 @@ export class NodeActionsComponent {
         this._userSettingsService.settings.subscribe((res) => {
                 this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
             });
+        this._dictionaryService.dictionary$.subscribe((_d) => {
+            this.dictionary = _d;
+        });
     }
     switchShowDeleted(value: boolean) {
         this._userSettingsService.saveShowDeleted(value);
@@ -54,7 +46,7 @@ export class NodeActionsComponent {
     createItem() {
         this.modalRef.hide();
         this._dictionaryService.addChild(this.newNode);
-        this.newNode = new EosDictionaryNode({
+        this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
             id: null,
             code: null,
             title: null,

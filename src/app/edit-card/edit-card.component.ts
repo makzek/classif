@@ -37,23 +37,16 @@ export class EditCardComponent {
 
     private _update(node: EosDictionaryNode) {
         if (node) {
-            this.node = new EosDictionaryNode(node);
-            let k = 0;
-            for (const item of node.parent.children) {
-                if (item.id === node.id) {
-                    this.i = k;
-                }
-                k++;
-            }
+            this.node = new EosDictionaryNode(node._descriptor, node);
+            this.i = node.parent.children.findIndex((chld) => chld.id === node.id);
         }
     }
 
     save(): void {
         this.wasEdit = false;
-        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
-            () => {},
-            (err) => alert('err: ' + err)
-        );
+        this.eosDictService
+            .updateNode(this.dictionaryId, this.nodeId, this.node)
+            .catch((err) => alert('err: ' + err));
     }
 
     cancel(): void {
@@ -85,7 +78,7 @@ export class EditCardComponent {
         this.node.selected = !this.node.selected;
         if (!this.wasEdit) {
             this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
-                () => {},
+                () => { },
                 (err) => alert('err: ' + err)
             );
         }

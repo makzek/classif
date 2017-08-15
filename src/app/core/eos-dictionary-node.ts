@@ -1,22 +1,37 @@
+import { RecordDescriptor } from './record-descriptor';
+
 export class EosDictionaryNode {
-    id: string;
+    readonly id: any;
     code: string;
     title: string;
     parentId?: string;
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
     description: string;
+    /* ??? */
     isNode: boolean;
+    /* ??? */
     hasSubnodes: boolean;
     isExpanded?: boolean;
     isDeleted: boolean;
     selected: boolean;
     data: any;
+    /* made public for a while */
+    public _descriptor: RecordDescriptor;
 
-    constructor(data: any) {
-        Object.assign(this, data);
-        this.selected = !!this.selected;
-        this.isDeleted = !!this.isDeleted;
+    constructor(descriptor: RecordDescriptor, data: any) {
+        if (data) {
+            Object.assign(this, data);
+            console.warn('store data in EosDictionaryNode properties is deprecated')
+            this.selected = !!this.selected;
+            this.isDeleted = !!this.isDeleted;
+            this._descriptor = descriptor;
+            this.data = {};
+            this._descriptor.fields.forEach((fld) => {
+                this.data[fld.key] = data[fld.key];
+            });
+            this.id = this.data[this._descriptor.keyField.key];
+        }
     }
 
     hasParent(parent: EosDictionaryNode): boolean {
@@ -29,5 +44,43 @@ export class EosDictionaryNode {
         } else {
             return false;
         }
+    }
+
+    deleteChild(node: EosDictionaryNode) {
+        if (this.children && this.children.length > 0) {
+            this.children = this.children.filter((chld) => chld.id !== node.id);
+        }
+        this.hasSubnodes = (this.children.length > 0);
+    }
+
+    delete(hard = false) {
+        if (hard) {
+            if ((!this.children || this.children.length < 1) && this.parent) {
+                this.parent.deleteChild(this);
+                this.isDeleted = true;
+            }
+        } else {
+            this.isDeleted = true;
+        }
+    }
+
+    addChild(node: EosDictionaryNode) {
+
+        /* remove old parent if exist */
+        if (node.parent) {
+            node.parent.deleteChild(node);
+            node.parent = null;
+        }
+
+        if (!this.children) {
+            this.children = [];
+        }
+        /* tslint:disable:no-bitwise */
+        if (!~this.children.findIndex((chld) => chld.id === node.id)) {
+            this.children.push(node);
+            node.parent = this;
+        }
+        /* tslint:enable:no-bitwise */
+        this.hasSubnodes = (this.children.length > 0);
     }
 }
