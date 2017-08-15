@@ -155,11 +155,11 @@ export class NodeListComponent {
                 this.nodes.forEach((child) => {
                 if (child.selected && !child.isDeleted) {
                     selectedNodes.push(child.id);
+                    child.selected = false;
                 }
             });
         }
         this._dictionaryService.deleteSelectedNodes(this._dictionaryId, selectedNodes);
-        this.checkAllItems(false);
     }
 
     nextItem(goBack: boolean): void {

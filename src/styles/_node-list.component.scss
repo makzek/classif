@@ -101,6 +101,11 @@ eos-node-list {
             }
         }
 
+        .search {
+            width: 240px;
+        }
+
+
         .elements {
             list-style: none;
             max-height: calc(100vh - 150px - 95px - 136px);
