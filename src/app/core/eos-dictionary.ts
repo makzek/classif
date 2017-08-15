@@ -16,8 +16,6 @@ export class EosDictionary {
         this.root = new EosDictionaryNode(this.descriptor.record, {
             id: '',
             title: data.title,
-            isNode: true,
-            children: []
         })
         this._nodes = new Map<string, EosDictionaryNode>();
     }
@@ -25,7 +23,6 @@ export class EosDictionary {
     init(data: any[]) {
         this._nodes.clear();
         this.root.children = [];
-        this.root.hasSubnodes = false;
 
         /* add nodes */
         data.forEach((nodeData) => {
@@ -38,15 +35,7 @@ export class EosDictionary {
             if (_node.parentId) {
                 const parent = this._nodes.get(_node.parentId);
                 if (parent) {
-                    _node.parent = parent;
-                    if (!parent.children) {
-                        parent.children = [];
-                    }
-                    /* tslint:disable:no-bitwise */
-                    if (!~parent.children.findIndex((_chld) => _chld.id === _node.id)) {
-                        parent.children.push(_node);
-                    }
-                    /* tslint:enable:no-bitwise */
+                    parent.addChild(_node);
                 }
             }
         });
@@ -54,12 +43,10 @@ export class EosDictionary {
         /* build roots */
         this._nodes.forEach((_node) => {
             if (!_node.parent) {
-                this.root.children.push(_node);
-                _node.parent = this.root;
+                this.root.addChild(_node);
             }
         });
 
-        this.root.hasSubnodes = this.root.children.length > 0;
         /* console.log('init dictionary', this._nodes); */
         /* console.log('roots', this._rootNodes); */
     }
@@ -72,7 +59,7 @@ export class EosDictionary {
     get nodes(): Map<string, EosDictionaryNode> {
         return this._nodes;
     }
-
+    /*
     setChildren(parentId: string, children: EosDictionaryNode[]) {
         const parent = this._nodes.get(parentId);
         parent.children = children;
@@ -81,7 +68,7 @@ export class EosDictionary {
             this._nodes.set(node.id, node);
         });
     }
-
+    */
     /* get children nodes or first level nodes if parentNodeId is not specified */
     getChildrenNodes(parentNodeId?: string): EosDictionaryNode[] {
         if (typeof parentNodeId === 'undefined') {
@@ -109,10 +96,7 @@ export class EosDictionary {
                 const _parent: EosDictionaryNode = this._nodes.get(parentId);
 
                 if (_parent) {
-                    if (!_parent.children) {
-                        _parent.children = [];
-                    }
-                    _parent.children.push(node);
+                    _parent.addChild(node);
                     _result = true;
                 }
             }
@@ -123,19 +107,16 @@ export class EosDictionary {
     deleteNode(nodeId: string, hard = false): boolean {
         let _result = false;
         const _node: EosDictionaryNode = this._nodes.get(nodeId);
-        let _parent: EosDictionaryNode;
 
         if (_node) {
+            _node.delete(hard);
             if (hard) {
-                if (!_node.children || _node.children.length < 1) {
-                    _parent = _node.parent;
-                    _parent.children = _parent.children.filter((_n) => _n.id !== _node.id);
+                _result = _node.isDeleted;
+                if (_result) {
                     this._nodes.delete(nodeId);
-                    _result = true;
                 }
             } else {
-                _node.isDeleted = true;
-                _result = true;
+                _result = _node.isDeleted;
             }
         }
 

@@ -33,21 +33,7 @@ export class SelectedNodeComponent {
 
     modalRef: BsModalRef;
 
-    newNode = new EosDictionaryNode({
-        id: null,
-        code: null,
-        title: null,
-        parentId: null,
-        parent: null,
-        children: [],
-        description: null,
-        isNode: null,
-        hasSubnodes: null,
-        isExpanded: null,
-        isDeleted: false,
-        selected: false,
-        data: null,
-    });
+    newNode: EosDictionaryNode;
 
     showDeleted: boolean;
 
@@ -205,7 +191,8 @@ export class SelectedNodeComponent {
     createItem() {
         this.modalRef.hide();
         this._eosDictService.addChild(this.newNode);
-        this.newNode = new EosDictionaryNode({
+        /* todo: remove hardcode */
+        this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
             id: null,
             code: null,
             title: null,
@@ -289,14 +276,14 @@ export class SelectedNodeComponent {
         }
         if (this.selectedNode.selected) {
             if (this.selectedNode.title.length % 3) { // here must be API request for check if possible to delete
-                        this._eosMessageService.addNewMessage({
-                            type: 'danger',
-                            title: 'Ошибка удаления элемента: ',
-                            msg: 'на этот объект (' + this.selectedNode.title + ') ссылаются другие объекты системы',
-                        });
-                    } else {
-                        this._eosDictService.physicallyDelete(this.selectedNode.id);
-                    }
+                this._eosMessageService.addNewMessage({
+                    type: 'danger',
+                    title: 'Ошибка удаления элемента: ',
+                    msg: 'на этот объект (' + this.selectedNode.title + ') ссылаются другие объекты системы',
+                });
+            } else {
+                this._eosDictService.physicallyDelete(this.selectedNode.id);
+            }
         }
     }
 

@@ -6,6 +6,9 @@ import { EosApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
+import { BASIC_DICT } from '../core/consts';
+import { DictionaryDescriptor } from '../core/dictionary-descriptor';
+
 @Injectable()
 export class EosDictService {
     private _dictionaries: Map<string, EosDictionary>;
@@ -86,7 +89,7 @@ export class EosDictService {
                 } else {
                     this._api.getDictionaryMocked(dictionaryId)
                         .then((data: any) => {
-                            _dictionary = new EosDictionary(data);
+                            _dictionary = new EosDictionary(new DictionaryDescriptor(BASIC_DICT), data);
                             this._dictionary = _dictionary;
                             return this._api.getDictionaryNodesMocked(dictionaryId);
                         })
@@ -118,7 +121,7 @@ export class EosDictService {
                     } else {
                         this._api.getNodeMocked(dictionaryId, nodeId)
                             .then((data: any) => {
-                                _node = new EosDictionaryNode(data);
+                                _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                 _dict.addNode(_node, _node.parent.id);
                                 res(_node);
                             })
@@ -186,13 +189,13 @@ export class EosDictService {
     public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             this.getNode(dictionaryId, nodeId)
-            .then((node) => {
-                Object.assign(node, value);
-                this._selectedNode$.next(this._selectedNode);
-                res(node);
-            }).catch(
+                .then((node) => {
+                    Object.assign(node, value);
+                    this._selectedNode$.next(this._selectedNode);
+                    res(node);
+                }).catch(
                 (err) => rej(err)
-            );
+                );
             // rej('not implemented');
         });
     }
@@ -211,14 +214,14 @@ export class EosDictService {
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
-            .then((node) => this._deleteNode(node));
+                .then((node) => this._deleteNode(node));
         });
         this._dictionary$.next(this._dictionary);
     }
 
     public addChild(node: EosDictionaryNode) {
-       this._selectedNode.children.push(node);
-       this._selectedNode$.next(this._selectedNode);
+        this._selectedNode.children.push(node);
+        this._selectedNode$.next(this._selectedNode);
     }
 
     public physicallyDelete(nodeId: string) {
