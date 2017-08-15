@@ -14,7 +14,7 @@
         <span class="code"><b>Код</b></span>
         <b>Рубрика</b>
         </span>
-        
+
         <span class="controller pull-right">
             <span class="circle" (click)="openCreatingForm(creatingModal)">
                 <span class="glyphicon glyphicon-plus control-implemented"></span>
@@ -59,28 +59,20 @@
                 </span>
             </li>
             <li>
-                <ul>
-                    <li *ngFor="let child of childrenListPerPage" [ngClass]="{'highlight': openedNode.id === child.id}">
-                        <div *ngIf="!child.isDeleted || showDeleted" [ngClass]="{'deleted': child.isDeleted && showDeleted}" class="is-deleted-wrap">
-                            <span class="checkbox">
-                            <label>
-                                <input type="checkbox" [(ngModel)]="child.selected" (click)="checkItem(child)">
-                            </label>
-                            </span>
-                            <!--<span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
-                                <span class="code">{{child.code}}</span> {{child.title}}
-                            </span>-->
-                            <span class="node-info" (click)="openFullInfo(child)" (dblclick)="editNode(child)">
-                                <span class="code">{{child.code}}</span> {{child.title}}
-                            </span>
-                        </div>
-                    </li>
-                </ul>
+                <bs-sortable
+                    [(ngModel)]="childrenListPerPage"
+                    [itemTemplate]="childTemplate"
+                    itemClass="{'highlight': openedNode.id === item.value.id}"
+                    itemActiveClass="sortable-item-active"
+                    placeholderItem="Drag here"
+                    placeholderClass="placeholderStyle"
+                    wrapperClass="sortable-wrapper"
+                ></bs-sortable>
             </li>
         </ul>
     </div>
     <div class="pagination-wrapper">
-        <pagination (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [(ngModel)]="currentPage" [totalItems]="totalItems" class="pagination-sm" 
+        <pagination (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [(ngModel)]="currentPage" [totalItems]="totalItems" class="pagination-sm"
         [itemsPerPage]="itemsPerPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
         <span class="show-more" (click)="showMore()">Показывать еще</span>
         <label class="item-count" for="ItemCount">Показывать по</label>
@@ -92,7 +84,23 @@
     </div>
 </div>
 
-<template #creatingModal>
+<ng-template #childTemplate let-item="item" let-index="index">
+    <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'deleted': item.value.isDeleted && showDeleted}" class="is-deleted-wrap">
+        <span class="checkbox">
+        <label>
+            <input type="checkbox" [(ngModel)]="item.value.selected" (click)="checkItem(item.value)">
+        </label>
+        </span>
+        <!--<span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(item.id)">
+            <span class="code">{{item.code}}</span> {{item.title}}
+        </span>-->
+        <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="editNode(item.value)">
+            <span class="code">{{item.value.code}}</span> {{item.value.title}}
+        </span>
+    </div>
+</ng-template>
+
+<ng-template #creatingModal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Создание новой ветки</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -114,4 +122,4 @@
     </div>
     <button class="btn btn-default" (click)="createItem()">Создать</button>
   </div>
-</template>
+</ng-template>

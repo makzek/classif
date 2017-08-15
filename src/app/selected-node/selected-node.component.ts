@@ -51,9 +51,9 @@ export class SelectedNodeComponent {
 
     showDeleted: boolean;
 
-    constructor(private _eosDictService: EosDictService, 
-        private _eosMessageService: EosMessageService, 
-        private router: Router, 
+    constructor(private _eosDictService: EosDictService,
+        private _eosMessageService: EosMessageService,
+        private router: Router,
         private modalService: BsModalService,
         private _eosUserSettingsService: EosUserSettingsService) {
         this._eosDictService.dictionary$.subscribe(
@@ -98,7 +98,7 @@ export class SelectedNodeComponent {
 
         this._eosUserSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        }); 
+        });
     }
 
     openFullInfo(child: EosDictionaryNode): void {
@@ -144,7 +144,7 @@ export class SelectedNodeComponent {
             this._dictionaryId,
             nodeId,
             'edit',
-        ]);    
+        ]);
     }
 
     checkAllItems(value: boolean = !this.checkAll): void {

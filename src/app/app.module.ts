@@ -8,6 +8,7 @@ import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { APP_CONFIG } from './app.config';
 
@@ -69,6 +70,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         AppRoutingModule,
         HttpModule,
         Ng2BootstrapModule.forRoot(),
+        SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
     ],
     providers: [
