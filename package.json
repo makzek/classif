@@ -8,7 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "saas-lint": "./node_modules/sass-lint/bin/sass-lint.js -c ./.sass-lint.yml -v -q",
-    "lint": "npm run saas-lint && ng lint --type-check",
+    "lint": "ng lint --type-check",
     "e2e": "ng e2e"
   },
   "pre-commit": [
