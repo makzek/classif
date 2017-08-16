@@ -1,14 +1,16 @@
-<div *ngIf="!openedNode">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
-<div *ngIf="openedNode"  [ngClass]="{'vertical': hideFull}" class="opened-node-wrapper">
+<div *ngIf="!viewFields">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
+<div *ngIf="viewFields"  [ngClass]="{'vertical': hideFull}" class="opened-node-wrapper">
     <div class="short-info" [ngClass]="{'vertical': hideFull}">
-        {{openedNode.title}}
+        <span *ngFor="let field of shortViewFields">
+            {{field.value}}
+        </span>
     </div>
     
     <div [hidden]="hideFull" class="full-info">
-        <b>Полное наименование:</b> {{openedNode.description}}
-        <br>
-        <b *ngIf="note">Примечание:</b> {{note}}
-        <br>
-        <b *ngIf="SEV">Индекс СЭВ:</b> {{SEV}}
+        <div *ngFor="let field of viewFields">
+            <b>{{field.title}}:</b> {{field.value}}
+        </div>
     </div>
+
+    
 </div>

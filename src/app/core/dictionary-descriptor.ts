@@ -12,6 +12,7 @@ export interface IDictionaryDescriptor {
     keyField: string;
     listFields: string[];
     quickViewFields: string[];
+    shortQuickViewFields: string[];
     searchFields: string[];
     fullSearchFields: string[];
     editFields: string[];
@@ -40,6 +41,9 @@ export class DictionaryDescriptor {
 
     /* set of visible fields in quick view mode */
     quickViewFields: FieldDescriptor[];
+
+    /* set of visible fields in quick view (short) mode */
+    shortQuickViewFields: FieldDescriptor[];
 
     /* search fields */
     searchFields: FieldDescriptor[];
@@ -94,6 +98,7 @@ export class DictionaryDescriptor {
         const fsKeys = [
             'listFields',
             'quickViewFields',
+            'shortQuickViewFields',
             'searchFields',
             'fullSearchFields',
             'editFields'

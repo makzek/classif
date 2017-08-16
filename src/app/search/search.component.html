@@ -1,4 +1,17 @@
 <div class="input-group">
-  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+  <span class="input-group-addon" id="basic-addon1"><span (click)="openModal(searchModal)" class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
   <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" />
 </div>
+ 
+<template #searchModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Здесь будут поля
+  </div>
+  <button (click)="search()" class="btn btn-primary">Искать</button>
+</template>

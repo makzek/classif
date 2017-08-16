@@ -1,4 +1,5 @@
 import { RecordDescriptor } from './record-descriptor';
+import { FieldDescriptor, IFieldView } from './field-descriptor';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -86,4 +87,10 @@ export class EosDictionaryNode {
         /* tslint:enable:no-bitwise */
         this.hasSubnodes = (this.children.length > 0);
     }
+
+    getValues(fields: FieldDescriptor[]): IFieldView[] {
+        return fields.map((fld) => Object.assign({}, fld, { value: this.data[fld.key] }));
+    }
 }
+
+

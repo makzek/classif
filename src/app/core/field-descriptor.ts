@@ -19,7 +19,19 @@ export interface IFieldGroup {
     fields: string[];
 }
 
-export class FieldDescriptor {
+export interface IFieldDesriptorBase {
+    readonly key: string;
+    readonly title: string;
+    readonly type: E_FIELD_TYPE;
+    readonly length?: number;
+    readonly format?: string;
+};
+
+export interface IFieldView extends IFieldDesriptorBase {
+    value: any;
+}
+
+export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
     readonly type: E_FIELD_TYPE;

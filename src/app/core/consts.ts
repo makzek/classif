@@ -17,6 +17,10 @@ export const BASIC_DICT: IDictionaryDescriptor = {
         title: 'Код',
         type: 'string'
     }, {
+        key: 'title',
+        title: 'Заголовок',
+        type: 'text'
+    }, {
         key: 'description',
         title: 'Описание',
         type: 'text'
@@ -25,5 +29,6 @@ export const BASIC_DICT: IDictionaryDescriptor = {
     searchFields: ['code', 'title', 'description'],
     fullSearchFields: ['code', 'title', 'description'],
     quickViewFields: ['code', 'title', 'description'],
+    shortQuickViewFields: ['title'],
     listFields: ['code', 'title']
 };
