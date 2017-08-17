@@ -8,6 +8,8 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { FieldDescriptor } from '../core/field-descriptor';
+import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-node-list',
@@ -21,6 +23,7 @@ export class NodeListComponent {
 
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
+    viewFields: FieldDescriptor[];
 
     totalItems: number;
     itemsPerPage = 10;
@@ -30,6 +33,7 @@ export class NodeListComponent {
     showDeleted: boolean;
 
     hasParent = true;
+    showCheckbox: boolean;
 
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
@@ -45,6 +49,8 @@ export class NodeListComponent {
                 (dictionary) => {
                     if (dictionary) {
                         this._dictionaryId = dictionary.id;
+                        this.viewFields = dictionary.descriptor.listFields;
+                        this.showCheckbox = !!dictionary.descriptor.actions.find((item) => E_RECORD_ACTIONS[item] === 'markRecords');
                     }
                 },
                 (error) => alert(error)
@@ -200,7 +206,7 @@ export class NodeListComponent {
                         this._messageService.addNewMessage({
                             type: 'danger',
                             title: 'Ошибка удаления элемента: ',
-                            msg: 'на этот объект (' + node.title + ') ссылаются другие объекты системы',
+                            msg: 'на этот объект ссылаются другие объекты системы',
                         });
                     } else {
                         this._dictionaryService.physicallyDelete(node.id);

@@ -33,11 +33,11 @@
 <ng-template #childTemplate let-item="item" let-index="index">
     <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.value.id}">
         <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'deleted': item.value.isDeleted && showDeleted}" class="is-deleted-wrap">
-            <span class="checkbox">
+            <span *ngIf="showCheckbox" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="item.value.selected"></label>
             </span>
             <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="editNode(item.value)">
-                <span class="code">{{item.value.code}}</span> {{item.value.title}}
+                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span> 
             </span>
         </div>
     </div>

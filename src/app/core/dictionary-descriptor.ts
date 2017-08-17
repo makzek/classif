@@ -77,7 +77,7 @@ export class DictionaryDescriptor {
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {
         const _action = E_RECORD_ACTIONS[name];
         /* tslint:disable:no-bitwise */
-        if (_action && !~group.findIndex((a) => a === _action)) {
+        if (_action !== undefined && !~group.findIndex((a) => a === _action)) {
             group.push(_action);
         }
         /* tslint:enable:no-bitwise */

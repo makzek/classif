@@ -1,6 +1,6 @@
     <div class="nodes-header first-line">
-        <span class="deleted-toggle" *ngIf="!showDeleted" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span class="deleted-toggle" *ngIf="showDeleted" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
         <div class="input-group search pull-right">
             <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="search()"></span></span>
             <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
@@ -9,38 +9,38 @@
     </div>
     <div class="nodes-header second-line">
         <span class="table-title">
-            <span class="checkbox">
+            <span *ngIf="showCheckbox" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
             </span>
-        <span class="code"><b>Код</b></span>
-        <b>Рубрика</b>
+        <span *ngFor="let field of viewFields" class="code"><b>{{field.title}}</b></span>
         </span>
 
         <span class="controller pull-right">
-            <span class="circle" (click)="openCreatingForm(creatingModal)">
+            <span *ngIf="showAdd" class="circle" (click)="openCreatingForm(creatingModal)">
                 <span class="glyphicon glyphicon-plus control-implemented"></span>
-        </span>
-        <span class="circle" (click)="deleteSelectedItems()">
-                <span class="glyphicon glyphicon-minus control-implemented"></span>
-        </span>
-        <span class="circle" (click)="editNode()">
-                <span class="glyphicon glyphicon-pencil control-implemented"></span>
-        </span>
-        <span class="circle" (click)="nextItem(true)">
-                <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
-        </span>
-        <span class="circle" (click)="nextItem(false)">
-                <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
-        </span>
-        <div class="circle btn-group" dropdown>
-            <span dropdownToggle><span class="dots control-implemented">...</span>
             </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
-            </ul>
-        </div>
+            <span *ngIf="showDelete" class="circle" (click)="deleteSelectedItems()">
+                    <span class="glyphicon glyphicon-minus control-implemented"></span>
+            </span>
+            <span *ngIf="showEdit" class="circle" (click)="editNode()">
+                    <span class="glyphicon glyphicon-pencil control-implemented"></span>
+            </span>
+            <span class="circle" (click)="nextItem(true)">
+                    <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
+            </span>
+            <span class="circle" (click)="nextItem(false)">
+                    <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
+            </span>
+            <div class="circle btn-group" dropdown>
+                <span dropdownToggle><span class="dots control-implemented">...</span>
+                </span>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
+                    <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
+                </ul>
+            </div>
         </span>
+        <div class="clear-all"></div>
     </div>
 
 <template #creatingModal>

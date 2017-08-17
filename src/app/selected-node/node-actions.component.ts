@@ -7,6 +7,8 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { FieldDescriptor } from '../core/field-descriptor';
+import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-node-actions',
@@ -23,6 +25,13 @@ export class NodeActionsComponent {
     searchInAllDict = false;
 
     dictionary: EosDictionary;
+    viewFields: FieldDescriptor[];
+
+    showCheckbox: boolean;
+    showAdd: boolean;
+    showDelete: boolean;
+    showEdit: boolean;
+    showDeleteHard: boolean;
 
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
@@ -33,6 +42,14 @@ export class NodeActionsComponent {
             });
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
+            if (_d) {
+                this.viewFields = _d.descriptor.listFields;
+                this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
+                this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
+                this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
+                this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
+                this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+            }
         });
     }
     switchShowDeleted(value: boolean) {
