@@ -1,6 +1,7 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { SEARCH_KEYS } from '../core/consts';
+import { IFieldView} from '../core/field-descriptor';
 
 export class EosDictionary {
     readonly id: string;
@@ -123,7 +124,7 @@ export class EosDictionary {
         return _result;
     }
 
-    search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode) {
+    search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
@@ -135,6 +136,29 @@ export class EosDictionary {
         if (!globalSearch) {
             searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
         }
+        return searchResult;
+    }
+
+    fullSearch(queries: IFieldView[], searchInDeleted: boolean): EosDictionaryNode[]  {
+        const searchResult = [];
+
+        this._nodes.forEach((node) => {
+            if (!node.isDeleted || searchInDeleted) {
+                let ok = true;
+                queries.forEach((_q) => {
+                    /* tslint:disable:no-bitwise */
+                    if (_q.value && !~node.data[_q.key].search(_q.value) && ok) {
+                        ok = false;
+                    }
+                    /* tslint:enable:no-bitwise */
+                });
+                if (ok) {
+                    searchResult.push(node);
+                }
+            }
+
+        });
+
         return searchResult;
     }
 

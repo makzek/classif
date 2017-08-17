@@ -1,8 +1,18 @@
 eos-search {
     display: inline-block;
-    width: 300px;
 
-    .form-control {
+    .btn {
         height: $header-element-height;
+        .glyphicon{
+            font-size: 24px;
+            margin-top: 4px;
+        }
+    }
+}
+
+.search-modal {
+    .input-group,
+    .intro-text {
+        margin-bottom: 20px;
     }
 }

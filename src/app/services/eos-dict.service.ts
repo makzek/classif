@@ -8,6 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { BASIC_DICT } from '../core/consts';
 import { DictionaryDescriptor } from '../core/dictionary-descriptor';
+import { IFieldView} from '../core/field-descriptor';
 
 @Injectable()
 export class EosDictService {
@@ -238,6 +239,11 @@ export class EosDictService {
 
     public search(searchString: string, globalSearch: boolean) {
         this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+        this._searchResults$.next(this._searchResults);
+    }
+
+    public fullSearch(queries: IFieldView[], searchInDeleted: boolean) {
+        this._searchResults = this._dictionary.fullSearch(queries, searchInDeleted);
         this._searchResults$.next(this._searchResults);
     }
 

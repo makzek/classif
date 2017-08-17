@@ -88,6 +88,8 @@ export class NodeActionsComponent {
     }
 
     search() {
-        this._dictionaryService.search(this.searchString, this.searchInAllDict);
+        if (this.searchString) {
+            this._dictionaryService.search(this.searchString, this.searchInAllDict);
+        }
     }
 }
