@@ -9,6 +9,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_RECORD_ACTIONS } from '../core/record-action';
+import { IFieldView} from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-node-actions',
@@ -33,6 +34,9 @@ export class NodeActionsComponent {
     showEdit: boolean;
     showDeleteHard: boolean;
 
+    fields: IFieldView[];
+    searchInDeleted = false;
+
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
@@ -51,6 +55,9 @@ export class NodeActionsComponent {
                     this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
                     this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
                 /* tslint:enable:no-bitwise */
+                if (_d) {
+                this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
+            }
             }
         });
     }
@@ -58,7 +65,7 @@ export class NodeActionsComponent {
         this._userSettingsService.saveShowDeleted(value);
     }
 
-    openCreatingForm(template: TemplateRef<any>) {
+    openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
     }
 
@@ -110,5 +117,10 @@ export class NodeActionsComponent {
         if (this.searchString) {
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
         }
+    }
+
+    fullSearch() {
+        this.modalRef.hide();
+        this._dictionaryService.fullSearch(this.fields, this.searchInDeleted);
     }
 }

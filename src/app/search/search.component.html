@@ -1,28 +1,5 @@
 <div class="input-group">
-  <span class="btn btn-primary" ><span (click)="openModal(searchModal)" class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+  <span class="btn btn-primary" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
 
 </div>
  
-<template #searchModal>
-  <div class="search-modal modal-header">
-    <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="search-modal modal-body">
-    <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
-    <div class="checkbox">
-      <label><input type="checkbox" [(ngModel)]="searchInDeleted">Учитывать логически удаленные</label>
-    </div>
-    <div *ngIf="fields">
-      <div *ngFor="let field of fields" class="input-group">
-        <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-        <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-      </div>
-    </div>
-    <div>
-      <button (click)="search()" class="btn btn-primary">Искать</button>
-    </div>
-  </div>
-</template>

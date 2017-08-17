@@ -10,25 +10,8 @@ import { IFieldView} from '../core/field-descriptor';
     templateUrl: 'search.component.html',
 })
 export class SearchComponent {
-    public modalRef: BsModalRef;
 
-    fields: IFieldView[];
-    searchInDeleted = false;
-
-    constructor(private modalService: BsModalService, private _dictionaryService: EosDictService) {
-        this._dictionaryService.dictionary$.subscribe((dict) => {
-            if (dict) {
-                this.fields = dict.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
-            }
-        });
+    constructor() {
     }
 
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
-    }
-
-    search() {
-        this.modalRef.hide();
-        this._dictionaryService.fullSearch(this.fields, this.searchInDeleted);
-    }
 }
