@@ -16,7 +16,7 @@
                 </bs-sortable>
             </li>
         </ul>
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}"
+        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [maxSize]="10" [boundaryLinks]="true" [rotate]="false"
             [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
         <div>
             <span class="show-more" (click)="showMore()">Показывать еще</span>

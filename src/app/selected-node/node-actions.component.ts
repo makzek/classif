@@ -44,11 +44,13 @@ export class NodeActionsComponent {
             this.dictionary = _d;
             if (_d) {
                 this.viewFields = _d.descriptor.listFields;
-                this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
-                this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
-                this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
-                this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
-                this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                /* tslint:disable:no-bitwise */
+                    this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
+                    this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
+                    this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
+                    this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
+                    this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                /* tslint:enable:no-bitwise */
             }
         });
     }
