@@ -1,25 +1,21 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="btn-wrapper" *ngFor="let dictionary of dictionariesList">
-            <button class="btn btn-sq-lg"
-                [routerLink]="[dictionary.link]">
-                {{dictionary.title}}
+            <button class="btn btn-sq-lg" [routerLink]="[dictionary.link]" tooltip="{{dictionary.title}}" placement="right">
+                <span class="button-title">{{dictionary.title}}</span>
+                <span class="end-hidder"></span>
             </button>
             <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(dictionary)"></span>
         </div>
-
-                
-    </div>   
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
         Последние изменнёные:
         <br>
-            <button
-                *ngFor="let item of recentItems"
-                [routerLink]="[item.link]"
-                class="btn btn-sq-lg">
-                {{item.title}}
-            </button>
-    </div>   
+        <button *ngFor="let item of recentItems" [routerLink]="[item.link]" class="btn btn-sq-lg">
+            <span class="button-title">{{item.title}}</span>
+            <span class="end-hidder"></span>
+        </button>
+    </div>
 </div>

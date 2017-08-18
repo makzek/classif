@@ -30,21 +30,21 @@ export class DesktopSwitcherComponent {
 
         this.eosDeskService.selectedDesk.subscribe(
             (res) => {
-                if (res) this.selectedDesk = res;
+                if (res) { this.selectedDesk = res; }
             }, (err) => alert('err' + err)
         );
     }
 
-    openEditForm(evt:Event, desk: EosDesk) {
+    openEditForm(evt: Event, desk: EosDesk) {
         evt.preventDefault();
         evt.stopPropagation();
-        desk.edited = true; 
+        desk.edited = true;
         this.deskName = desk.name;
     }
 
     openCreateForm() {
         this.creating = true;
-        this.deskName = "Мой рабочий стол " + this.deskList.length;
+        this.deskName = 'Мой рабочий стол ' + this.deskList.length;
     }
 
     saveDesk(desk: EosDesk): void {
@@ -60,7 +60,7 @@ export class DesktopSwitcherComponent {
     }
 
     create() {
-        let _desk: EosDesk = {
+        const _desk: EosDesk = {
             id: null,
             name: this.deskName,
             references: [],

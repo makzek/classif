@@ -1,116 +1,15 @@
-<div *ngIf="!selectedNode">
-    Здесь будет отображена информация о выбранной ветке справочника (Кликните на элемент из первого столбца)
-</div>
-<div *ngIf="selectedNode" class="selected-node-wrapper">
-    <div class="selected-node-header first-line">
-        <span *ngIf="!showDeleted" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span *ngIf="showDeleted" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
-    </div>
-    <div class="selected-node-header second-line">
-        <span class="table-title">
-            <span class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
-            </span>
-        <span class="code"><b>Код</b></span>
-        <b>Рубрика</b>
-        </span>
-        
-        <span class="controller pull-right">
-            <span class="circle" (click)="openCreatingForm(creatingModal)">
-                <span class="glyphicon glyphicon-plus control-implemented"></span>
-            </span>
-            <span class="circle" (click)="deleteSelectedItems()">
-                <span class="glyphicon glyphicon-minus control-implemented"></span>
-            </span>
-            <span class="circle" (click)="editNode()">
-                <span class="glyphicon glyphicon-pencil control-implemented"></span>
-            </span>
-            <span class="circle" (click)="nextItem(true)">
-                <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
-            </span>
-            <span class="circle" (click)="nextItem(false)">
-                <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
-            </span>
-            <div class="circle btn-group" dropdown>
-                <span dropdownToggle><span class="dots control-implemented">...</span>
-                </span>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
-                </ul>
-            </div>
-        </span>
-    </div>
-    <div class="selected-node-content">
-        <a *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
-
-        <ul class="elements">
-            <li *ngIf="!selectedNode.isDeleted || showDeleted" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}">
+<div *ngIf="selectedNode">
+    <a class="link" *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
+    <div class="selected-node">
+            <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}">
                 <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">
                     <label>
-                        <input type="checkbox" [(ngModel)]="selectedNode.selected" (click)="checkItem(selectedNode)">
+                        <input type="checkbox" [(ngModel)]="selectedNode.selected">
                     </label>
                 </span>
-                <!--<span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="selectNode(selectedNode.id)">
-                    <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
-                </span>-->
-                <span class="node-info" (click)="openFullInfo(selectedNode.id)" (dblclick)="editNode(selectedNode.id)">
+                <span (click)="openFullInfo(selectedNode)" (dblclick)="editNode(selectedNode)">
                     <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
                 </span>
-            </li>
-            <li>
-                <ul>
-                    <li *ngFor="let child of childrenListPerPage" [ngClass]="{'highlight': openedNode.id === child.id}">
-                        <div *ngIf="!child.isDeleted || showDeleted" [ngClass]="{'deleted': child.isDeleted && showDeleted}" class="is-deleted-wrap">
-                            <span class="checkbox">
-                            <label>
-                                <input type="checkbox" [disabled]="child.isDeleted" [(ngModel)]="child.selected" (click)="checkItem(child)">
-                            </label>
-                            </span>
-                            <!--<span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="selectNode(child.id)">
-                                <span class="code">{{child.code}}</span> {{child.title}}
-                            </span>-->
-                            <span class="node-info" (click)="openFullInfo(child.id)" (dblclick)="editNode(child.id)">
-                                <span class="code">{{child.code}}</span> {{child.title}}
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="pagination-wrapper">
-        <pagination (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [(ngModel)]="currentPage" [totalItems]="totalItems" class="pagination-sm" 
-        [itemsPerPage]="itemsPerPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
-        <span class="show-more" (click)="showMore()">Показывать еще</span>
-        <label class="item-count" for="ItemCount">Показывать по</label>
-        <select id="ItemCount" class="item-count-select pull-right" (change)="setItemCount($event.target.value)">
-            <option selected value="10">10</option>
-            <option value="20">20</option>
-            <option value="40">40</option>
-        </select>
+            </div>
     </div>
 </div>
-
-<template #creatingModal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Создание новой ветки</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="create-new-node modal-body">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Код</span>
-        <input type="text" class="form-control" placeholder="Code" [(ngModel)]="newNode.code" aria-describedby="basic-addon1">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Название</span>
-        <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newNode.title" aria-describedby="basic-addon1">
-    </div>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Описание</span>
-        <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newNode.description" aria-describedby="basic-addon1">
-    </div>
-    <button class="btn btn-default" (click)="createItem()">Создать</button>
-  </div>
-</template>

@@ -8,6 +8,7 @@ import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { APP_CONFIG } from './app.config';
 
@@ -15,7 +16,6 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TreeComponent } from './tree/tree.component';
@@ -29,6 +29,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
+import { InfoComponent } from './info/info.component';
+import { NodeListComponent } from './selected-node/node-list.component';
+import { NodeActionsComponent } from './selected-node/node-actions.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -37,6 +40,8 @@ import { EosUserService } from './services/eos-user.service';
 import { EosUserSettingsService } from './services/eos-user-settings.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
+import { NodeListActionsService } from './selected-node/node-list-action.service';
+
 import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
@@ -46,7 +51,6 @@ import { TestPageComponent } from './test-page/test-page.component';
         BreadcrumbsComponent,
         DictionaryComponent,
         DictionariesComponent,
-        HomeComponent,
         SidebarComponent,
         EditCardComponent,
         TreeComponent,
@@ -60,6 +64,9 @@ import { TestPageComponent } from './test-page/test-page.component';
         NoticeComponent,
         DesktopComponent,
         TitleComponent,
+        InfoComponent,
+        NodeListComponent,
+        NodeActionsComponent,
     ],
     imports: [
         BrowserModule,
@@ -67,6 +74,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         AppRoutingModule,
         HttpModule,
         Ng2BootstrapModule.forRoot(),
+        SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
     ],
     providers: [
@@ -78,6 +86,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         EosUserSettingsService,
         EosNoticeService,
         EosMessageService,
+        NodeListActionsService,
     ],
     bootstrap: [AppComponent],
 })

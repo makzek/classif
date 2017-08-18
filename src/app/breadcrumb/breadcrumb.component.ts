@@ -4,6 +4,7 @@ import 'rxjs/add/operator/filter';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
+import { EosDesk } from '../core/eos-desk';
 
 interface IBreadcrumb {
     url: string;
@@ -20,6 +21,8 @@ export class BreadcrumbsComponent {
     private _dictionaryBc: IBreadcrumb;
     private _nodeBc: IBreadcrumb;
     dictionariesList: Array<{ id: string, title: string }>;
+    deskList: EosDesk[];
+    currentLink: string;
 
     constructor(private _router: Router, private _dictionaryService: EosDictService, private _deskService: EosDeskService) {
         _router.events
@@ -28,9 +31,13 @@ export class BreadcrumbsComponent {
         _dictionaryService.dictionariesList$
             .subscribe((dictionariesList) => this.dictionariesList = dictionariesList);
         this.dictionariesList = [];
+        this._deskService.desksList.subscribe((res) => {
+            this.deskList = res.filter((d) => d.id !== 'system');
+        });
     }
 
     private _update(evt: any) {
+        this.currentLink = evt.url;
         let currentUrlPart = evt.state._root;
         let currUrl = '';
 
@@ -102,5 +109,19 @@ export class BreadcrumbsComponent {
                 }
             }
         }
+    }
+
+    pin(desk: EosDesk) {
+        let title = '';
+        this.breadcrumbs.forEach(element => {
+            title += element.title + '/';
+        });
+        title = title.slice(0, title.length - 1);
+
+        desk.references.push({
+            link: this.currentLink,
+            title: title,
+        })
+        this._deskService.editDesk(desk);
     }
 }

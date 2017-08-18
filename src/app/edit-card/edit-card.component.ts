@@ -4,6 +4,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { NodeListActionsService } from '../selected-node/node-list-action.service';
 
 @Component({
     selector: 'eos-edit-card',
@@ -15,13 +16,14 @@ export class EditCardComponent {
     dictionaryId: string;
     nodeId: string;
     selfLink: string;
-    editMode: boolean = false;
-    wasEdit: boolean = false;
-    hideWarning: boolean = true;
+    editMode = false;
+    wasEdit = false;
+    hideWarning = true;
     i: number = -1;
 
     constructor(
         private eosDictService: EosDictService,
+        private actionService: NodeListActionsService,
         private route: ActivatedRoute,
         private router: Router
     ) {
@@ -33,28 +35,21 @@ export class EditCardComponent {
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
+        this.actionService.emitAction(null);
     }
 
     private _update(node: EosDictionaryNode) {
         if (node) {
-            this.node = new EosDictionaryNode(node);
-            let k = 0;
-            for (const item of node.parent.children) {
-                if (item.id === node.id) {
-                    this.i = k;
-                }
-                k++;
-            }
+            this.node = new EosDictionaryNode(node._descriptor, node);
+            this.i = node.parent.children.findIndex((chld) => chld.id === node.id);
         }
     }
 
     save(): void {
         this.wasEdit = false;
-        // console.log('node', this.node);
-        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
-            () => {},
-            (err) => alert('err: ' + err)
-        );
+        this.eosDictService
+            .updateNode(this.dictionaryId, this.nodeId, this.node)
+            .catch((err) => alert('err: ' + err));
     }
 
     cancel(): void {
@@ -75,11 +70,20 @@ export class EditCardComponent {
     }
 
     goTo(route: string): void {
-        // console.log('route', route);
         if (!this.wasEdit) {
             this.router.navigate([route]);
         } else {
             this.hideWarning = false;
+        }
+    }
+
+    check() {
+        this.node.selected = !this.node.selected;
+        if (!this.wasEdit) {
+            this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
+                () => { },
+                (err) => alert('err: ' + err)
+            );
         }
     }
 }

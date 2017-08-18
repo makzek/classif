@@ -5,17 +5,28 @@
         list-style: none;
         padding: 10px 10px 0;
 
-        .glyphicon {
+        li {
+            padding-bottom: 10px;
+        }
+
+        .glyphicon,
+        .fa {
             width: 20px;
+            font-size: 20px;
         }
 
         .link-text {
             white-space: nowrap;
+            color: $link-color;
 
             &:hover,
             &:focus,
             &:active {
                 text-decoration: none;
+            }
+
+            &.active {
+                color: $light-grey;
             }
         }
     }

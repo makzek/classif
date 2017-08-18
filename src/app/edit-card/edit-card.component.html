@@ -2,7 +2,7 @@
     <header class="edit-header row">
         <div class="col-sm-2 col-md-2 col-lg-1">
             <span class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="node.selected">Выбрать</label>
+                <label><input type="checkbox" [(ngModel)]="node.selected" (click)="check()">Выбрать</label>
             </span>
         </div>
         <div class="col-sm-4 col-md-5 col-lg-6">
@@ -14,12 +14,16 @@
         </div>
         <div class="col-sm-2 col-md-2 col-lg-2">
             <span class="pull-right">
-        <a routerLink="{{selfLink}}/edit" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
-            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-             node.parent.children[(i-1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
-            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-            node.parent.children[(i+1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="goTo(selfLink)"></span>
+                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-dark" aria-hidden="true"></button></a>
+                <!--<span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+                node.parent.children[(i-1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+                node.parent.children[(i+1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>-->
+                <button [disabled]="i < 1" class="glyphicon glyphicon-arrow-left btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+                node.parent.children[i-1].id + '/edit')"></button>
+                <button [disabled]="i >= (node.parent.children.length - 1)" class="glyphicon glyphicon-arrow-right btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+                node.parent.children[i+1].id + '/edit')"></button>
+                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(selfLink)"></button>
             </span>
         </div>
     </header>

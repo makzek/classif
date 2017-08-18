@@ -7,10 +7,10 @@ import { EosNoticeService } from '../services/eos-notice.service';
     templateUrl: 'notice.component.html',
 })
 export class NoticeComponent {
-    noticesCount: number = 0;
+    noticesCount = 0;
     notices: string[];
 
-    constructor(private eosNoticeService: EosNoticeService){
+    constructor(private eosNoticeService: EosNoticeService) {
         this.noticesCount = this.eosNoticeService.noticesCount;
         this.notices = this.eosNoticeService.notices;
     }

@@ -1,0 +1,74 @@
+eos-node-actions {
+    .first-line {
+        height: 50px;
+        border-bottom: 1px solid gray;
+
+        .deleted-toggle {
+            cursor: pointer;
+            position: relative;
+            top: 4px;
+        }
+    }
+
+    .second-line {
+        border-bottom: 1px solid gray;
+        margin-bottom: 10px;
+
+        .controller {
+            margin-top: 10px;
+
+            .circle {
+                border: 1px solid gray;
+                border-radius: 50%;
+                display: inline-block;
+                height: 25px;
+                width: 25px;
+
+                &:last-child {
+                    position: relative;
+                    top: -2px;
+                }
+            }
+
+            .glyphicon {
+                display: inline-block;
+                margin-left: 5px;
+                margin-top: 3px;
+
+                &.glyphicon-minus {
+                    margin-left: 3px;
+                }
+            }
+
+            .dots {
+                display: inline-block;
+                font-size: 20px;
+                line-height: -35px;
+                margin-left: 3px;
+                margin-top: -4px;
+            }
+
+            .control-implemented {
+                color: #337ab7;
+            }
+        }
+
+        .clear-all {
+            clear: both;
+        }
+    }
+
+    .table-title {
+        .checkbox {
+            display: inline-block;
+        }
+
+        .code {
+            margin: 0 20px;
+        }
+    }
+
+    .search {
+        width: 240px;
+    }
+}

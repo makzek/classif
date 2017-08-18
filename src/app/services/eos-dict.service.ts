@@ -6,6 +6,10 @@ import { EosApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
+import { BASIC_DICT } from '../core/consts';
+import { DictionaryDescriptor } from '../core/dictionary-descriptor';
+import { IFieldView} from '../core/field-descriptor';
+
 @Injectable()
 export class EosDictService {
     private _dictionaries: Map<string, EosDictionary>;
@@ -13,11 +17,13 @@ export class EosDictService {
     private _dictionary: EosDictionary;
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
+    private _searchResults: EosDictionaryNode[];
 
     private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>;
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
+    private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
 
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
@@ -29,6 +35,7 @@ export class EosDictService {
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
+        this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -49,6 +56,10 @@ export class EosDictService {
     /* Observable openNode for subscribing on updates in components */
     get openedNode$(): Observable<EosDictionaryNode> {
         return this._openedNode$.asObservable();
+    }
+
+    get searchResults$(): Observable<EosDictionaryNode[]> {
+        return this._searchResults$.asObservable();
     }
 
     public getDictionariesList(): Promise<any> {
@@ -79,7 +90,7 @@ export class EosDictService {
                 } else {
                     this._api.getDictionaryMocked(dictionaryId)
                         .then((data: any) => {
-                            _dictionary = new EosDictionary(data);
+                            _dictionary = new EosDictionary(new DictionaryDescriptor(BASIC_DICT), data);
                             this._dictionary = _dictionary;
                             return this._api.getDictionaryNodesMocked(dictionaryId);
                         })
@@ -111,7 +122,7 @@ export class EosDictService {
                     } else {
                         this._api.getNodeMocked(dictionaryId, nodeId)
                             .then((data: any) => {
-                                _node = new EosDictionaryNode(data);
+                                _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                 _dict.addNode(_node, _node.parent.id);
                                 res(_node);
                             })
@@ -125,10 +136,10 @@ export class EosDictService {
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             if (!nodeId) {
-                this._selectedNode = null;
-                this._selectedNode$.next(null);
-                this._openedNode = null;
-                this._openedNode$.next(null);
+                this._selectedNode = this._dictionary.root;
+                this._selectedNode$.next(this._selectedNode);
+                this._openedNode = this._dictionary.root;
+                this._openedNode$.next(this._openedNode);
                 res(null);
             }
             this.getNode(dictionaryId, nodeId)
@@ -179,13 +190,13 @@ export class EosDictService {
     public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             this.getNode(dictionaryId, nodeId)
-            .then((node) => {
-                Object.assign(node, value);
-                // this._selectedNode$.next(this._selectedNode);
-                res(node);
-            }).catch(
+                .then((node) => {
+                    Object.assign(node, value);
+                    this._selectedNode$.next(this._selectedNode);
+                    res(node);
+                }).catch(
                 (err) => rej(err)
-            );
+                );
             // rej('not implemented');
         });
     }
@@ -200,17 +211,47 @@ export class EosDictService {
             node.children.forEach((subNode) => this._deleteNode(subNode));
         }
     }
+
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
-            .then((node) => this._deleteNode(node));
+                .then((node) => this._deleteNode(node));
         });
+        this._dictionary$.next(this._dictionary);
+        /* fake */
+    }
+
+    public addChild(node: EosDictionaryNode) {
+        if (this._selectedNode) {
+           this._dictionary.addNode(node, this._selectedNode.id);
+        } else {
+            this._dictionary.addNode(node);
+        }
+        this._selectedNode$.next(this._selectedNode);
         this._dictionary$.next(this._dictionary);
     }
 
-    public addChild(child: EosDictionaryNode) {
-       this._selectedNode.children.push(child);
-       this._selectedNode$.next(this._selectedNode);
-        
+    public physicallyDelete(nodeId: string) {
+        this._dictionary.deleteNode(nodeId, true);
+        this._dictionary$.next(this._dictionary);
+        this._selectedNode$.next(this._selectedNode);
+    }
+
+    public search(searchString: string, globalSearch: boolean) {
+        this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+        this._searchResults$.next(this._searchResults);
+    }
+
+    public fullSearch(queries: IFieldView[], searchInDeleted: boolean) {
+        this._searchResults = this._dictionary.fullSearch(queries, searchInDeleted);
+        this._searchResults$.next(this._searchResults);
+    }
+
+    public restoreItem(node: EosDictionaryNode) {
+        Object.assign(node, { ...node,  isDeleted: false });
+        Object.assign(node, { ...node,  selected: false });
+        if (node.children) {
+            node.children.forEach((subNode) => this.restoreItem(subNode));
+        }
     }
 }

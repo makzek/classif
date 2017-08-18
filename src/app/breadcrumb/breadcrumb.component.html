@@ -1,6 +1,16 @@
-<ol class="breadcrumb">
-    <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
-        <a [routerLink]="[route.url, route.params]" *ngIf="!isLast">{{route.title}}</a>
-        <span *ngIf="isLast">{{route.title}}</span>
-    </li>
-</ol>
+<div class="breadcrumb-wrapper">
+    <ol class="breadcrumb">
+        <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
+            <a [routerLink]="[route.url, route.params]" *ngIf="!isLast">{{route.title}}</a>
+            <span *ngIf="isLast">{{route.title}}</span>
+        </li>
+    </ol>
+    <div class="pushpin btn-group pull-right" dropdown placement="bottom right">
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+            <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)"><a>{{desk.name}}</a></li>
+        </ul>
+    </div>
+</div>
