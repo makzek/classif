@@ -5,6 +5,7 @@ import 'rxjs/add/operator/switchMap';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { IFieldView } from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-edit-card',
@@ -20,6 +21,8 @@ export class EditCardComponent {
     wasEdit = false;
     hideWarning = true;
     i: number = -1;
+    viewFields: IFieldView[];
+    shortViewFields: IFieldView[];
 
     constructor(
         private eosDictService: EosDictService,
@@ -36,6 +39,19 @@ export class EditCardComponent {
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
         this.actionService.emitAction(null);
+
+        this.eosDictService.dictionary$.subscribe((dict) => {
+            if (dict) {
+                this.eosDictService.openedNode$.subscribe(
+                (node) => {
+                    if (node) {
+                        this.viewFields = node.getValues(dict.descriptor.quickViewFields);
+                        this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
+                    }
+                },
+                (error) => alert(error));
+                }
+        });
     }
 
     private _update(node: EosDictionaryNode) {
