@@ -40,4 +40,9 @@ export class DictionaryComponent {
             }
         });
     }
+
+    gg() {
+        console.log('this.hideFullInfo', this.hideFullInfo);
+         this.hideFullInfo = !this.hideFullInfo
+    }
 }

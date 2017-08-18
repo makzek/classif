@@ -31,12 +31,12 @@ eos-node-list {
 
         .elements {
             list-style: none;
-            max-height: calc(100vh - 150px - 95px - 136px);
+            max-height: calc(100vh - 150px - 95px - 150px);
             overflow-y: auto;
             padding-left: 20px;
 
             &.has-parent {
-                max-height: calc(100vh - 150px - 95px - 201px);
+                max-height: calc(100vh - 150px - 95px - 215px);
             }
 
             li,

@@ -2,10 +2,7 @@
     .sandwich-wrapper {
         position: relative;
         left: -10px;
-
-        &.vertical {
-            left: -29px;
-        }
+        height: 40px;
 
         .sandwich {
             background: black;
@@ -34,15 +31,13 @@
 
     &.vertical {
         .opened-node-wrapper {
-            width: 40px;
-            float: right;
             height: 300px;
         }
 
         .short-info {
-            transform: rotate(-90deg) translateX(-300px);
+            transform: rotate(-90deg) translateX(-260px);
             transform-origin: top left;
-            width: 300px;
+            width: 260px;
             text-overflow: ellipsis;
         }
 

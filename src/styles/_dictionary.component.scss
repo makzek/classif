@@ -1,8 +1,34 @@
 
 eos-dictionary {
+    .dictionary-wrapper {
+        display: -ms-grid;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        overflow: hidden;
+
+        & > div:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        &.tree-hidden {
+            grid-template-columns: 50px 5fr 4fr;
+        }
+
+        &.info-hidden {
+            grid-template-columns: 3fr 5fr 50px;
+        }
+
+        &.only-selected {
+            grid-template-columns: 35px 1fr 50px;
+        }
+
+        &.full {
+            grid-template-columns: 3fr 5fr 4fr;
+        }
+    }
+
     .tree-wrapper {
         & > eos-tree > .eos-tree {
-            max-height: calc(100vh - 172px);
+            max-height: calc(100vh - 210px);
             overflow-y: auto;
         }
 
@@ -22,7 +48,8 @@ eos-dictionary {
 
         .sandwich-wrapper {
             position: relative;
-            top: -11px;
+            height: 40px;
+            margin-left: 10px;
         }
     }
 
