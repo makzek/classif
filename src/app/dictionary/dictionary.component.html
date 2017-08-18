@@ -1,22 +1,3 @@
-<!--<div class="dictionary-wrapper">
-    <div class="tree-wrapper" [ngClass]="hideTree ? 'vertical': 'col-sm-3'">
-        <div  (click)="hideTree = !hideTree" class="aside">
-            <div class="sandwich-wrapper"><span class="sandwich"></span></div>
-        </div>
-        <eos-tree [hidden]="hideTree" [nodes]="nodes"></eos-tree>
-        <div class="root-title" [hidden]="!hideTree">{{ dictionaryName }}</div>
-    </div>
-    <div class="selected-wrapper" [ngClass]="{'col-sm-5': !hideTree && !hideFullInfo, 
-        'col-sm-6': (hideTree && !hideFullInfo), 'col-sm-8': (!hideTree && hideFullInfo), 'col-sm-10': hideTree && hideFullInfo}" >
-        <eos-node-list></eos-node-list>
-    </div>
-    <div class="opened-wrapper col-sm-4" [ngClass]="{'vertical': hideFullInfo, 'col-sm-5': hideTree && !hideFullInfo, 'col-sm-4': !hideTree && !hideFullInfo}"
-        (click)="hideFullInfo = !hideFullInfo">
-        <div [ngClass]="{'vertical': hideFullInfo}" class="sandwich-wrapper pull-right"><span class="sandwich"></span></div>
-        <eos-opened-node></eos-opened-node>
-    </div>
-</div>-->
-
 <div class="dictionary-wrapper" [ngClass]="{'full': !hideTree && !hideFullInfo, 'only-selected': hideTree && hideFullInfo,
     'tree-hidden': hideTree && !hideFullInfo, 'info-hidden': !hideTree && hideFullInfo}">
     <div class="tree-wrapper">

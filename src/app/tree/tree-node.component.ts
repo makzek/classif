@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosUserSettingsService } from '../services/eos-user-settings.service';
 
 @Component({
     selector: 'eos-tree-node',
@@ -15,10 +16,14 @@ export class TreeNodeComponent implements OnInit {
 
     isActive = false;
     selectedNode: EosDictionaryNode;
+    showDeleted = false;
 
-    constructor(private _router: Router, private _dictSrv: EosDictService) {
+    constructor(private _router: Router, private _dictSrv: EosDictService, private _settingService: EosUserSettingsService) {
         _dictSrv.dictionary$.subscribe((dict) => this._dictionaryId = dict.id);
         _dictSrv.selectedNode$.subscribe((node) => this._update(node));
+        _settingService.settings.subscribe((res) => {
+            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
     }
 
     private _update(selected: EosDictionaryNode) {
@@ -34,19 +39,23 @@ export class TreeNodeComponent implements OnInit {
         }
     }
 
-    onExpand(evt: Event) {
+    onExpand(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
-        this.node.isExpanded = !this.node.isExpanded;
+        if (!isDeleted) {
+            this.node.isExpanded = !this.node.isExpanded;
+        }
     }
 
-    onSelect(evt: Event) {
+    onSelect(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
 
-        const _path = [
-            'spravochniki',
-            this._dictionaryId,
-            this.node.id + '',
-        ];
-        this._router.navigate(_path);
+        if (!isDeleted) {
+            const _path = [
+                'spravochniki',
+                this._dictionaryId,
+                this.node.id + '',
+            ];
+            this._router.navigate(_path);
+        }
     }
 }
