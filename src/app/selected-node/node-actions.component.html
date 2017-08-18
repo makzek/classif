@@ -86,7 +86,7 @@
       </div>
     </div>
     <div>
-      <button (click)="fullSearch()" class="btn btn-primary">Искать</button>
+      <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
     </div>
   </div>
 </template>

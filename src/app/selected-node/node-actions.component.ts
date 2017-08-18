@@ -9,7 +9,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { IFieldView} from '../core/field-descriptor';
+import { IFieldView } from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-node-actions',
@@ -37,23 +37,29 @@ export class NodeActionsComponent {
     fields: IFieldView[];
     searchInDeleted = false;
 
+    get noSearchData(): boolean {
+        /* tslint:disable:no-bitwise */
+        return !~this.fields.findIndex((f) =>  f.value);
+        /* tslint:enable:no-bitwise */
+    }
+
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
         private _actionService: NodeListActionsService) {
         this._userSettingsService.settings.subscribe((res) => {
-                this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-            });
+            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
                 this.viewFields = _d.descriptor.listFields;
                 /* tslint:disable:no-bitwise */
-                    this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
-                    this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
-                    this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
-                    this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
-                    this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
+                this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
+                this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
+                this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
+                this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
                 /* tslint:enable:no-bitwise */
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
                 this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
@@ -110,7 +116,7 @@ export class NodeActionsComponent {
         this._actionService.emitAction(E_RECORD_ACTIONS.edit);
     }
 
-    nextItem (value: boolean) {
+    nextItem(value: boolean) {
         if (value) {
             this._actionService.emitAction(E_RECORD_ACTIONS.navigateUp);
         } else {

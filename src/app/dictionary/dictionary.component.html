@@ -30,7 +30,7 @@
         <eos-node-list></eos-node-list>
     </div>
     <div class="opened-wrapper" [ngClass]="{'vertical': hideFullInfo}">
-        <div (click)="gg()" [ngClass]="{'vertical': hideFullInfo}" class="sandwich-wrapper pull-right"><span class="sandwich"></span></div>
+        <div (click)="hideFullInfo = !hideFullInfo" [ngClass]="{'vertical': hideFullInfo}" class="sandwich-wrapper pull-right"><span class="sandwich"></span></div>
         <eos-opened-node></eos-opened-node>
     </div>
 </div>
