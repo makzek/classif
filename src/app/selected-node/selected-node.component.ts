@@ -7,6 +7,7 @@ import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-selected-node',
@@ -66,33 +67,34 @@ export class SelectedNodeComponent {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionService.delete$.subscribe((res) => {
-            if (res) {
-                this.delete();
-            }
-        });
-
-        this._actionService.edit$.subscribe((res) => {
-            if (res && this.selectedNode.id === this.openedNode.id) {
-                this.editNode();
-            }
-        });
-
-        this._actionService.physicallyDelete$.subscribe((res) => {
-            if (res) {
-                this.physicallyDelete();
-            }
-        });
-
-        this._actionService.restore$.subscribe((res) => {
-            if (res) {
-                this.restoringLogicallyDeletedItem();
-            }
-        });
-
-        this._actionService.checkAll$.subscribe((res) => {
-            if (res !== null) {
-                this.selectedNode.selected = !res;
+        this._actionService.action$.subscribe((action) => {
+            switch (action) {
+                case E_RECORD_ACTIONS.remove: {
+                    this.delete();
+                    break;
+                }
+                case E_RECORD_ACTIONS.edit: {
+                    if (this.selectedNode.id === this.openedNode.id) {
+                        this.editNode();
+                    }
+                    break;
+                }
+                case E_RECORD_ACTIONS.removeHard: {
+                    this.physicallyDelete();
+                    break;
+                }
+                case E_RECORD_ACTIONS.restore: {
+                    this.restoringLogicallyDeletedItem();
+                    break;
+                }
+                case E_RECORD_ACTIONS.markRecords: {
+                    this.selectedNode.selected = true;
+                    break;
+                }
+                case E_RECORD_ACTIONS.unmarkRecords: {
+                    this.selectedNode.selected = false;
+                    break;
+                }
             }
         });
     }
@@ -106,12 +108,20 @@ export class SelectedNodeComponent {
     }
 
     editNode() {
-        this.router.navigate([
-            'spravochniki',
-            this._dictionaryId,
-            this.selectedNode.id,
-            'edit',
-        ]);
+        if (this.selectedNode.id.length) {
+            this.router.navigate([
+                'spravochniki',
+                this._dictionaryId,
+                this.selectedNode.id,
+                'edit',
+            ]);
+        } else {
+            this._eosMessageService.addNewMessage({
+                type: 'danger',
+                title: 'Ошибка редактирования элемента: ',
+                msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактирвать',
+            });
+        }
     }
 
     selectNode(nodeId: string) {

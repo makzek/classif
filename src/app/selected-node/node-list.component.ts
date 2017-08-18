@@ -50,7 +50,7 @@ export class NodeListComponent {
                     if (dictionary) {
                         this._dictionaryId = dictionary.id;
                         this.viewFields = dictionary.descriptor.listFields;
-                        this.showCheckbox = !!dictionary.descriptor.actions.find((item) => E_RECORD_ACTIONS[item] === 'markRecords');
+                        this.showCheckbox = !!dictionary.descriptor.actions.findIndex((item) => E_RECORD_ACTIONS.markRecords === item);
                     }
                 },
                 (error) => alert(error)
@@ -70,39 +70,42 @@ export class NodeListComponent {
                 this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
             });
 
-            this._actionService.delete$.subscribe((res) => {
-                if (res) {
-                    this.deleteSelectedItems();
-                }
-            });
-
-            this._actionService.edit$.subscribe((res) => {
-                if (res && this.openedNode) {
-                    this.editNode(this.openedNode);
-                }
-            });
-
-            this._actionService.nextItem$.subscribe((res) => {
-                if (res !== null) {
-                    this.nextItem(res);
-                }
-            });
-
-            this._actionService.physicallyDelete$.subscribe((res) => {
-                if (res) {
-                    this.physicallyDelete();
-                }
-            });
-
-            this._actionService.restore$.subscribe((res) => {
-                if (res) {
-                    this.restoringLogicallyDeletedItem();
-                }
-            });
-
-            this._actionService.checkAll$.subscribe((res) => {
-                if (res !== null) {
-                    this.checkAllItems(res);
+            this._actionService.action$.subscribe((action) => {
+                switch (action) {
+                    case E_RECORD_ACTIONS.edit: {
+                        if (this.openedNode) {
+                            this.editNode(this.openedNode);
+                        }
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.remove: {
+                        this.deleteSelectedItems();
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.navigateDown: {
+                        this.nextItem(false);
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.navigateUp: {
+                        this.nextItem(true);
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.removeHard: {
+                        this.physicallyDelete();
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.restore: {
+                        this.restoringLogicallyDeletedItem();
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.markRecords: {
+                        this.checkAllItems(true);
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.unmarkRecords: {
+                        this.checkAllItems(false);
+                        break;
+                    }
                 }
             });
     }
@@ -123,7 +126,7 @@ export class NodeListComponent {
     checkAllItems(value: boolean): void {
         if (this.nodes) {
             for (const item of this.nodes) {
-                item.selected = !value;
+                item.selected = value;
             }
         }
     }
@@ -145,7 +148,7 @@ export class NodeListComponent {
 
     editNode(node: EosDictionaryNode) {
         if (node) {
-            if (!node.isDeleted) {
+            if (node.id.length && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
                     this._dictionaryId,
@@ -227,11 +230,8 @@ export class NodeListComponent {
     }
 
     pageChanged(event: any): void {
-        console.log('2', this.itemsPerPage, event.itemsPerPage);
         this.pageAtList = 1;
         this.nodeListPerPage = this.nodes.slice((event.page - 1)
-            * event.itemsPerPage, event.page * event.itemsPerPage);
-            console.log((event.page - 1)
             * event.itemsPerPage, event.page * event.itemsPerPage);
     }
 

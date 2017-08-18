@@ -50,7 +50,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
     </div>
-    <div class="create-new-node modal-body">
+    <div  *ngIf="newNode" class="create-new-node modal-body">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Код</span>
             <input type="text" class="form-control" placeholder="Code" [(ngModel)]="newNode.code" aria-describedby="basic-addon1">

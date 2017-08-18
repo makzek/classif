@@ -55,9 +55,22 @@ export class NodeActionsComponent {
                     this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
                     this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
                 /* tslint:enable:no-bitwise */
-                if (_d) {
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
-            }
+                this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
+                    id: null,
+                    code: null,
+                    title: null,
+                    parentId: null,
+                    parent: null,
+                    children: [],
+                    description: null,
+                    isNode: null,
+                    hasSubnodes: null,
+                    isExpanded: null,
+                    isDeleted: false,
+                    selected: false,
+                    data: null,
+                });
             }
         });
     }
@@ -90,27 +103,35 @@ export class NodeActionsComponent {
     }
 
     deleteSelectedItems() {
-        this._actionService.emitDelete();
+        this._actionService.emitAction(E_RECORD_ACTIONS.remove);
     }
 
     editNode() {
-        this._actionService.emitEdit();
+        this._actionService.emitAction(E_RECORD_ACTIONS.edit);
     }
 
     nextItem (value: boolean) {
-        this._actionService.emitNextItem(value);
+        if (value) {
+            this._actionService.emitAction(E_RECORD_ACTIONS.navigateUp);
+        } else {
+            this._actionService.emitAction(E_RECORD_ACTIONS.navigateDown);
+        }
     }
 
     physicallyDelete() {
-        this._actionService.emitPhysicallyDelete();
+        this._actionService.emitAction(E_RECORD_ACTIONS.removeHard);
     }
 
     restoringLogicallyDeletedItem() {
-        this._actionService.emitRestore();
+        this._actionService.emitAction(E_RECORD_ACTIONS.restore);
     }
 
     checkAllItems() {
-        this._actionService.emitCheckAll(this.checkAll);
+        if (this.checkAll) {
+            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+        } else {
+            this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+        }
     }
 
     search() {

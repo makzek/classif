@@ -4,6 +4,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { NodeListActionsService } from '../selected-node/node-list-action.service';
 
 @Component({
     selector: 'eos-edit-card',
@@ -22,6 +23,7 @@ export class EditCardComponent {
 
     constructor(
         private eosDictService: EosDictService,
+        private actionService: NodeListActionsService,
         private route: ActivatedRoute,
         private router: Router
     ) {
@@ -33,6 +35,7 @@ export class EditCardComponent {
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
+        this.actionService.emitAction(null);
     }
 
     private _update(node: EosDictionaryNode) {

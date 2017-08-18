@@ -88,6 +88,7 @@ export class EosDictionary {
     }
 
     addNode(node: EosDictionaryNode, parentId?: string): boolean {
+        console.log('createNewNode does nothing yet because newNode.id === undefined ');
         let _result = false;
 
         // check that node with specified id does not exist in this instance

@@ -11,6 +11,10 @@ export enum E_RECORD_ACTIONS {
     import,
     export,
     markRecords,
-    sorting
+    unmarkRecords,
+    sorting,
+    navigateUp,
+    navigateDown,
+    restore,
     /* to be extended */
 };
