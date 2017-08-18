@@ -1,6 +1,6 @@
 <div class="tree-wrapper" [ngClass]="hideTree ? 'vertical': 'col-sm-3'">
-    <div class="aside">
-        <div class="sandwich-wrapper" (click)="hideTree = !hideTree"><span class="sandwich"></span></div>
+    <div  (click)="hideTree = !hideTree" class="aside">
+        <div class="sandwich-wrapper"><span class="sandwich"></span></div>
     </div>
     <eos-tree [hidden]="hideTree" [nodes]="nodes"></eos-tree>
     <div class="root-title" [hidden]="!hideTree">{{ dictionaryName }}</div>
