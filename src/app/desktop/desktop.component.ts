@@ -12,12 +12,15 @@ import { IDeskItem } from '../core/desk-item.interface';
     templateUrl: 'desktop.component.html',
 })
 export class DesktopComponent {
-    dictionariesList: IDeskItem[];
+    referencesList: IDeskItem[];
     recentItems: IDeskItem[];
+    deskId: string;
+
+    historyToLeft = false;
 
     constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService, private router: Router,
         private route: ActivatedRoute) {
-        this.dictionariesList = [];
+        this.referencesList = [];
         this.router.events
             .filter((evt) => evt instanceof NavigationEnd)
             .subscribe(() => this._dictionaryService.getDictionariesList());
@@ -26,6 +29,7 @@ export class DesktopComponent {
             (desk) => {
                 if (desk) {
                     this._update(desk.references);
+                    this.deskId = desk.id;
                 }
             }
         );
@@ -43,10 +47,24 @@ export class DesktopComponent {
     }
 
     _update(dictionariesList: IDeskItem[]) {
-        this.dictionariesList = dictionariesList;
+        this.referencesList = dictionariesList;
     }
 
     removeLink(link: IDeskItem) {
         this._deskService.unpinRef(link);
+    }
+
+    changeName(evt: Event, ref: IDeskItem) {
+        this.stopDefault(evt);
+        ref.edited = true;
+    }
+
+    save(evt: Event, ref: IDeskItem) {
+        ref.edited = false;
+    }
+
+    stopDefault(evt: Event) {
+        evt.preventDefault();
+        evt.stopPropagation();
     }
 }

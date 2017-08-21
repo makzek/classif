@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
+import { IDeskItem } from '../core/desk-item.interface';
 
 interface IBreadcrumb {
     url: string;
@@ -109,19 +110,38 @@ export class BreadcrumbsComponent {
                 }
             }
         }
+        let title = '';
+        this.breadcrumbs.forEach(element => {
+            title += element.title + '/';
+        });
+
+        setTimeout(() => {
+            this.addToRecentItems();
+        }, 0);
     }
 
     pin(desk: EosDesk) {
+        const link = this._constructLink();
+        desk.references.push(link);
+        this._deskService.editDesk(desk);
+    }
+
+    addToRecentItems() {
+        const link = this._constructLink();
+        this._deskService.addRecentItem(link);
+    }
+
+    private _constructLink(): IDeskItem {
         let title = '';
         this.breadcrumbs.forEach(element => {
             title += element.title + '/';
         });
         title = title.slice(0, title.length - 1);
 
-        desk.references.push({
+        return {
             link: this.currentLink,
             title: title,
-        })
-        this._deskService.editDesk(desk);
+            edited: false,
+        };
     }
 }
