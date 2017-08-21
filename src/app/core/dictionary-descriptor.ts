@@ -48,7 +48,7 @@ export class DictionaryDescriptor {
     /* search fields */
     searchFields: FieldDescriptor[];
 
-    /* fill search filed set */
+    /* full search filed set */
     fullSearchFields: FieldDescriptor[];
 
     /* set of fields for edit form */
