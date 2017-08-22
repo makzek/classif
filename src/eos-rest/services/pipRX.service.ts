@@ -14,7 +14,8 @@ export class PipRX {
     private _metadata: Metadata;
     private _cfg: ApiCfg;
     private _options: any = {
-        withCredentials: true
+        withCredentials: true,
+
     };
 
     public sequenceMap: SequenceMap = new SequenceMap();
@@ -22,8 +23,21 @@ export class PipRX {
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
 
-        this._metadata = new Metadata(cfg);
-        this._metadata.init();
+        // const _options = Object.assign({}, this._options, {
+        //     headers: new Headers({
+        //         'Origin': 'localhost',
+        //     })
+        // });
+
+
+        http
+            .get('http://192.168.1.50/eos/main.aspx?login=tver&pass=tver', this._options)
+            .subscribe(result => {
+                console.log(result.headers);
+            });
+
+        // this._metadata = new Metadata(cfg);
+        // this._metadata.init();
     }
 
     private getData(url: string) {

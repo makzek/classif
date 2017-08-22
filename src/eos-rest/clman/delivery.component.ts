@@ -18,20 +18,20 @@ export class DeliveryComponent implements OnInit {
     constructor(private pip: PipRX) { }
 
     ngOnInit() {
-        this.pip.read<IDeliveryCl>({
-            // - Загрузка всех строк
-            // DELIVERY_CL: ALL_ROWS
-
-            // - Загрузка по известным первичным ключам
-            // IDeliveryCl: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
-            // 1032930, 1032965, 1032932, 1033581, 1033582, 1037443, 1037634,
-            //     1037681, 1037682, 1037683, 1037684, 1037685]
-
-            // - поиск по критериям
-            DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
-        }).subscribe(r => {
-            this.items = r;
-        });
+        // this.pip.read<IDeliveryCl>({
+        //     // - Загрузка всех строк
+        //     // DELIVERY_CL: ALL_ROWS
+        //
+        //     // - Загрузка по известным первичным ключам
+        //     // IDeliveryCl: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
+        //     // 1032930, 1032965, 1032932, 1033581, 1033582, 1037443, 1037634,
+        //     //     1037681, 1037682, 1037683, 1037684, 1037685]
+        //
+        //     // - поиск по критериям
+        //     DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
+        // }).subscribe(r => {
+        //     this.items = r;
+        // });
     }
 
     onSelect(cur: IDeliveryCl): void {
