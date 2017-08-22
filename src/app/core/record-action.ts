@@ -16,5 +16,8 @@ export enum E_RECORD_ACTIONS {
     navigateUp,
     navigateDown,
     restore,
+    importPhotos,
+    createRepresentative,
+    slantForForms,
     /* to be extended */
 };

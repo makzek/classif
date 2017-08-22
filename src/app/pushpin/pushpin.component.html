@@ -1,0 +1,8 @@
+<div class="pushpin btn-group pull-right" dropdown placement="bottom right">
+    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+        </button>
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)"><a>{{desk.name}}</a></li>
+    </ul>
+</div>
