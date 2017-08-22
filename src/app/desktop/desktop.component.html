@@ -18,10 +18,11 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <button class="btn btn-sq-lg" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
-            <span [hidden]="item.value.edited" (click)="changeName($event, item.value)" class="button-title">{{item.value.title}}</span>
-            <textarea class="title-input" [hidden]="!item.value.edited" type="text" [(ngModel)]="item.value.title" (click)="stopDefault($event)" 
-                (keyup.enter)="save(item.value)"></textarea>
+            <span [hidden]="item.value.edited" class="button-title">{{item.value.title}}</span>
+            <textarea class="title-input" [hidden]="!item.value.edited" [(ngModel)]="item.value.title" (click)="stopDefault($event)"></textarea>
             <span class="end-hidder"></span>
         </button>
+    <span *ngIf="!item.value.edited" class="glyphicon glyphicon-pencil" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
+    <span *ngIf="item.value.edited" class="glyphicon glyphicon-ok" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="deskId !== 'system'" class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(item.value)"></span>
 </ng-template>
