@@ -49,11 +49,12 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'code',
         title: 'Код',
-        type: 'string'
+        type: 'string',
+        column: 2,
     }, {
         key: 'title',
         title: 'Заголовок',
-        type: 'text'
+        type: 'text',
     }, {
         key: 'description',
         title: 'Описание',
@@ -61,23 +62,24 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'titleRP',
         title: 'Заголовок в родительном падеже',
-        type: 'text'
+        type: 'text',
     }, {
         key: 'notInPositionTitle',
         title: 'Не использовать подразделение в названии должности',
-        type: 'boolean'
+        type: 'boolean',
     }, {
         key: 'SEV',
         title: 'Индекс СЭВ',
-        type: 'text'
+        type: 'text',
+        column: 2,
     }, {
         key: 'index',
         title: 'Индекс',
-        type: 'text'
+        type: 'text',
     }, {
         key: 'file',
         title: 'Картотека',
-        type: 'boolean'
+        type: 'boolean',
     }, {
         key: 'fileName',
         title: 'Наименование картотеки',
@@ -85,19 +87,24 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'organization',
         title: 'Организация',
-        type: 'text'
+        type: 'text',
     }, {
         key: 'note',
         title: 'Примечание',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'startDate',
         title: 'Дата начала действия',
-        type: 'date'
+        type: 'date',
+        column: 1,
+        subcolumn: 1,
     }, {
         key: 'endDate',
         title: 'Дата окончания действия',
-        type: 'date'
+        type: 'date',
+        column: 1,
+        subcolumn: 2,
     }, {
         key: 'isPerson',
         title: 'Должностное лицо',
@@ -105,39 +112,51 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'shortPosition',
         title: 'Наименование должности',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'fio',
         title: 'Фамилия И.О.',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'gender',
         title: 'Пол',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'lastName',
         title: 'Фамилия',
-        type: 'text'
+        type: 'text',
+        column: 1,
+        subcolumn: 1,
     }, {
         key: 'firstName',
         title: 'Имя',
-        type: 'text'
+        type: 'text',
+        column: 1,
+        subcolumn: 2,
     }, {
         key: 'fathersName',
         title: 'Отчество',
-        type: 'text'
+        type: 'text',
+        column: 1,
+        subcolumn: 3,
     }, {
         key: 'indexOfficial',
         title: 'Индекс должностного лица',
-        type: 'text'
+        type: 'text',
+        column: 2,
     }, {
         key: 'boss',
         title: 'Начальник',
-        type: 'boolean'
+        type: 'boolean',
+        column: 2,
     }, {
         key: 'localPhone',
         title: '№ местного телефона',
@@ -165,11 +184,13 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'photo',
         title: 'Фотография',
-        type: 'photo'
+        type: 'photo',
+        column: 2,
     }, {
         key: 'alternate',
         title: 'Заместитель',
-        type: 'text'
+        type: 'text',
+        column: 1,
     }, {
         key: 'extraData',
         title: 'Дополнительные сведения',
@@ -205,7 +226,7 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     }, {
         key: 'lastNameRP',
         title: 'Фамилия, родительный падеж',
-        type: 'text'
+        type: 'text',
     }, {
         key: 'firstNameRP',
         title: 'Имя, родительный падеж',

@@ -1,0 +1,37 @@
+<ul class="tabs">
+    <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
+        (click)="currTab = i">
+        <span>{{tab.title}}</span>
+    </li>
+</ul>
+<div class="wrapper" *ngIf="currTab === 0">
+    <div class="col-1">
+        <span class="subcol-wrapper">
+            <!--TODO: add *ngIf="node.data['fieldName']" to every field-->
+            <span class="subcol-1">Фамилия: {{node.data['lastName']}}</span>
+            <span class="subcol-2">Имя: {{node.data['firstName']}}</span>
+            <span class="subcol-3">Отчество: {{node.data['fathersName']}}</span>
+        </span>
+        <span class="full-line">Фамилия И.О.: {{node.data['fio']}}</span>
+        <span class="full-line">Краткое наименование должности: {{node.data['shortPosition']}}</span>
+        <span class="full-line">Полное наименование должности: {{node.data['fullPosition']}}</span>
+        <span class="subcol-wrapper">
+            <span class="subcol-1">Пол: {{node.data['gender']}}</span>
+        </span>
+        <span class="full-line">Заместитель: {{node.data['alternate']}}</span>
+        <span class="full-line">Примичание: {{node.data['note']}}</span>
+        <span class="subcol-wrapper">
+            <span class="subcol-1">Дата начала действия: {{node.data['startDate']}}</span>
+            <span class="subcol-2">Дата окончания действия: {{node.data['endDate']}}</span>
+        </span>
+    </div>
+    <div class="col-2">
+        <span class="photo">Фотография {{node.data['photo']}}</span>
+        <span class="checkbox">
+                <label><input type="checkbox" disabled [(ngModel)]="node.data['boss']">Начальник</label>
+            </span>
+        <span class="full-line">Код: {{node.data['code']}}</span>
+        <span class="full-line">Индекс ДЛ: {{node.data['indexOfficial']}}</span>
+        <span class="full-line">Индекс СЭВ: {{node.data['SEV']}}</span>
+    </div>
+</div>

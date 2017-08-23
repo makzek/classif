@@ -7,6 +7,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { IFieldView } from '../core/field-descriptor';
 import { FieldGroup } from '../core/field-descriptor';
+import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-edit-card',
@@ -24,15 +25,14 @@ export class EditCardComponent {
     i: number = -1;
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
-    fieldGroups: FieldGroup[];
-    currIndex = 0;
-    colCount: number;
+    dictIdFromDescriptor: string;
 
     constructor(
         private eosDictService: EosDictService,
-        private actionService: NodeListActionsService,
+        private nodeListActionService: NodeListActionsService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private actionService: EditCardActionService,
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
@@ -42,18 +42,16 @@ export class EditCardComponent {
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
-        this.actionService.emitAction(null);
+        this.nodeListActionService.emitAction(null);
 
         this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
-                this.fieldGroups = dict.descriptor.fieldGroups;
-                console.log('fieldGroups', dict.descriptor.fieldGroups);
+                this.dictIdFromDescriptor = dict.descriptor.id;
                 this.eosDictService.openedNode$.subscribe(
                 (node) => {
                     if (node) {
                         this.viewFields = node.getValues(dict.descriptor.quickViewFields);
                         // this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
-                        console.log('this.viewFields', dict.descriptor.quickViewFields);
                     }
                 },
                 (error) => alert(error));
@@ -69,17 +67,20 @@ export class EditCardComponent {
     }
 
     save(): void {
-        this.wasEdit = false;
-        this.eosDictService
-            .updateNode(this.dictionaryId, this.nodeId, this.node)
-            .catch((err) => alert('err: ' + err));
+        this.actionService.emitAction('save');
     }
 
     cancel(): void {
+        this.actionService.emitAction('cancel');
+    }
+
+    recordResult(evt: any) {
         this.wasEdit = false;
-        this.eosDictService.getNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((error) => alert('error: ' + error));
+        this.editMode = false;
+        this.node.data = evt;
+        this.eosDictService
+            .updateNode(this.dictionaryId, this.nodeId, this.node)
+            .catch((err) => alert('err: ' + err));
     }
 
     resetAndClose(): void {
@@ -108,9 +109,5 @@ export class EditCardComponent {
                 (err) => alert('err: ' + err)
             );
         }
-    }
-
-    setCurrent(i: number) {
-        this.currIndex = i;
     }
 }

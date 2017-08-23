@@ -1,0 +1,82 @@
+<ul class="tabs">
+    <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
+        (click)="currTab = i">
+        <span>{{tab.title}}</span>
+    </li>
+</ul>
+{{save}}{{cancel}}
+<div class="wrapper" *ngIf="currTab === 0">
+    <div class="col-1">
+        <span class="subcol-wrapper">
+                <div class="input-group subcol-1">
+                    <span class="input-group-addon" id="basic-addon1">Фамилия:</span>
+        <input type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastName']">
+    </div>
+    <div class="input-group subcol-2">
+        <span class="input-group-addon" id="basic-addon1">Имя:</span>
+        <input type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstName']">
+    </div>
+    <div class="input-group subcol-3">
+        <span class="input-group-addon" id="basic-addon1">Отчество:</span>
+        <input type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersName']">
+    </div>
+    </span>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Фамилия И.О.:</span>
+        <input type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fio']">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Краткое наименование должности:</span>
+        <input type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Полное наименование должности:</span>
+        <input type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fullPosition']">
+    </div>
+    <span class="subcol-wrapper">
+        <div class="input-group subcol-1">
+            <span class="input-group-addon" id="basic-addon1">Пол:</span>
+            <input type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['gender']">
+        </div>
+    </span>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Заместитель:</span>
+        <input type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['alternate']">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Примичание:</span>
+        <input type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+    </div>
+
+    <span class="subcol-wrapper">
+        <div class="input-group subcol-1">
+            <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
+            <input type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['startDate']">
+        </div>
+        <div class="input-group subcol-2">
+            <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
+            <input type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['endDate']">
+        </div>
+    </span>
+</div>
+<div class="col-2">
+    <span class="photo">Фотография {{node.data['photo']}}
+        <input type="image" [(ngModel)]="tmpObj['photo']">
+    </span>
+    <span class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="node.data['boss']">Начальник</label>
+    </span>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Код:</span>
+        <input type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
+        <input type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['indexOfficial']">
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
+        <input type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+    </div>
+</div>
+</div>
