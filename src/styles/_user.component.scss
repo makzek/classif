@@ -1,7 +1,4 @@
-eos-user {
-    display: inline-block;
-    margin-left: 10px;
-
+.eos-user {
     .avatar {
         display: inline-block;
         height: 30px;
@@ -9,21 +6,20 @@ eos-user {
         border: 1px black solid;
         border-radius: 50%;
         background: white;
-
+        margin: -9px 5px;
     }
-
+    /*
     .text,
     .caret {
         position: relative;
         top: -8px;
     }
-
+    */
     .dropdown {
         li {
             color: black;
         }
     }
-
     .form-wrapper {
         position: fixed;
         top: 0;
@@ -34,7 +30,6 @@ eos-user {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-
         .modal-window {
             background: $modal-background;
             width: 500px;
@@ -43,7 +38,6 @@ eos-user {
             padding: 30px;
         }
     }
-
     .hidden {
         display: none;
     }
