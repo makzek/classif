@@ -8,7 +8,7 @@
                     </label>
                 </span>
                 <span (click)="openFullInfo(selectedNode)" (dblclick)="editNode(selectedNode)">
-                    <span class="code">{{selectedNode.code}}</span>{{selectedNode.title}}
+                        <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.key]}}</span>
                 </span>
             </div>
     </div>

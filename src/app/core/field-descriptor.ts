@@ -3,7 +3,9 @@ export enum E_FIELD_TYPE {
     number,
     photo,
     text,
-    date
+    date,
+    icon,
+    boolean
 };
 
 export interface IFieldDesriptor {
@@ -12,6 +14,8 @@ export interface IFieldDesriptor {
     type: string;
     length?: number;
     format?: string;
+    column?: number;
+    subcolumn?: number;
 }
 
 export interface IFieldGroup {

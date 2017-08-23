@@ -113,10 +113,14 @@ export class DictionaryDescriptor {
     }
 
     private _initFieldGroups(data: IDictionaryDescriptor) {
+        this['fieldGroups'] = [];
         if (data.fieldGroups) {
             data.fieldGroups.forEach((fg) => {
                 const fldGroup = new FieldGroup(fg.title);
-                fg.fields.forEach((fld) => this.record.addFieldToSet(fld, fldGroup.fields));
+                fg.fields.forEach((fld) => {
+                    this.record.addFieldToSet(fld, fldGroup.fields);
+                });
+                this['fieldGroups'].push(fldGroup);
             });
         }
     }

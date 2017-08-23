@@ -6,6 +6,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { IFieldView } from '../core/field-descriptor';
+import { FieldGroup } from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-edit-card',
@@ -23,6 +24,9 @@ export class EditCardComponent {
     i: number = -1;
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
+    fieldGroups: FieldGroup[];
+    currIndex = 0;
+    colCount: number;
 
     constructor(
         private eosDictService: EosDictService,
@@ -42,11 +46,14 @@ export class EditCardComponent {
 
         this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
+                this.fieldGroups = dict.descriptor.fieldGroups;
+                console.log('fieldGroups', dict.descriptor.fieldGroups);
                 this.eosDictService.openedNode$.subscribe(
                 (node) => {
                     if (node) {
                         this.viewFields = node.getValues(dict.descriptor.quickViewFields);
-                        this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
+                        // this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
+                        console.log('this.viewFields', dict.descriptor.quickViewFields);
                     }
                 },
                 (error) => alert(error));
@@ -101,5 +108,9 @@ export class EditCardComponent {
                 (err) => alert('err: ' + err)
             );
         }
+    }
+
+    setCurrent(i: number) {
+        this.currIndex = i;
     }
 }

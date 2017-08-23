@@ -99,12 +99,12 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         title: 'Дата окончания действия',
         type: 'date'
     }, {
-        key: 'isLeaf',
-        title: 'Является листом',
+        key: 'isPerson',
+        title: 'Должностное лицо',
         type: 'boolean'
     }, {
         key: 'shortPosition',
-        title: 'Краткое наименование должности',
+        title: 'Наименование должности',
         type: 'text'
     }, {
         key: 'fullPosition',
@@ -112,12 +112,12 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         type: 'text'
     }, {
         key: 'fio',
-        title: 'ФИО',
+        title: 'Фамилия И.О.',
         type: 'text'
     }, {
-        key: 'sex',
+        key: 'gender',
         title: 'Пол',
-        type: '["unknown", "male", "female"]'
+        type: 'text'
     }, {
         key: 'lastName',
         title: 'Фамилия',
@@ -174,12 +174,114 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'extraData',
         title: 'Дополнительные сведения',
         type: 'text'
+    }, {
+        key: 'type',
+        title: 'Тип',
+        type: 'icon'
+    }, {
+        key: 'department',
+        title: 'Подразделение',
+        type: 'text'
+    }, {
+        key: 'shortPositionRP',
+        title: 'Наименование должности в родительном падеже',
+        type: 'text'
+    }, {
+        key: 'shortPositionDP',
+        title: 'Наименование должности в дательном падеже',
+        type: 'text'
+    }, {
+        key: 'shortPositionVP',
+        title: 'Наименование должности в винительном падеже',
+        type: 'text'
+    }, {
+        key: 'fioDP',
+        title: 'Фамилия И.О., дательный падеж',
+        type: 'text'
+    }, {
+        key: 'iof',
+        title: 'И.О. Фамилия',
+        type: 'text'
+    }, {
+        key: 'lastNameRP',
+        title: 'Фамилия, родительный падеж',
+        type: 'text'
+    }, {
+        key: 'firstNameRP',
+        title: 'Имя, родительный падеж',
+        type: 'text'
+    }, {
+        key: 'fathresNameRP',
+        title: 'Отчество, родительный падеж',
+        type: 'text'
+    }, {
+        key: 'lastNameDP',
+        title: 'Фамилия, дательный падеж',
+        type: 'text'
+    }, {
+        key: 'firstNameDP',
+        title: 'Имя, дательный падеж',
+        type: 'text'
+    }, {
+        key: 'fathresNameDP',
+        title: 'Отчество, дательный падеж',
+        type: 'text'
+    }, {
+        key: 'lastNameVP',
+        title: 'Фамилия, винительный падеж',
+        type: 'text'
+    }, {
+        key: 'firstNameVP',
+        title: 'Имя, винительный падеж',
+        type: 'text'
+    }, {
+        key: 'fathresNameVP',
+        title: 'Отчество, винительный падеж',
+        type: 'text'
+    }, {
+        key: 'lastNameTP',
+        title: 'Фамилия, творительный падеж',
+        type: 'text'
+    }, {
+        key: 'firstNameTP',
+        title: 'Имя, творительный падеж',
+        type: 'text'
+    }, {
+        key: 'fathresNameTP',
+        title: 'Отчество, творительный падеж',
+        type: 'text'
+    }, {
+        key: 'lastNamePP',
+        title: 'Фамилия, предложный падеж',
+        type: 'text'
+    }, {
+        key: 'firstNamePP',
+        title: 'Имя, предложный падеж',
+        type: 'text'
+    }, {
+        key: 'fathresNamePP',
+        title: 'Отчество, предложный падеж',
+        type: 'text'
     }],
 
-    fullSearchFields: ['type', 'code', 'title', 'description', 'fio', 'phone', 'email', 'note'],
+    fullSearchFields: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone',
+        'email', 'note'],
     editFields: ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers'],
-    quickViewFields: ['file-name', 'fio', 'organization', 'SEV'],
-    listFields: [],
-    shortQuickViewFields: [],
-    searchFields: []
+    quickViewFields: ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo'],
+    listFields: ['type', 'shortPosition'],
+    shortQuickViewFields: ['lastName', 'firstName', 'fathersName'],
+    searchFields: [],
+    fieldGroups: [{
+        title: 'Основаная информация',
+        fields: ['lastName', 'firstName', 'fathersName', 'fio', 'shortPosition', 'fullPosition', 'gender', 'alternate', 'note',
+            'startDate', 'endDate', 'photo', 'boss', 'code', 'indexOfficial', 'SEV'],
+    }, {
+        title: 'Контактные данные',
+        fields: ['phone', 'localPhone', 'email', 'skype', 'fax', 'room'],
+    }, {
+        title: 'Дополнительная информация',
+        fields: ['shortPositionRP', 'shortPositionDP', 'shortPositionVP', 'fioDP', 'iof', 'lastNameRP', 'firstNameRP', 'fathresNameRP',
+            'lastNameDP', 'firstNameDP', 'fathresNameDP', 'lastNameVP', 'firstNameVP', 'fathresNameVP', 'lastNameTP', 'firstNameTP',
+            'fathresNameTP', 'lastNamePP', 'firstNamePP', 'fathresNamePP', 'shortPosition', 'department'],
+    }],
 };

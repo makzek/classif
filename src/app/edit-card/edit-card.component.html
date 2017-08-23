@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
         </div>
     </aside>
-    <article class="edit-content">
+    <article *ngIf="!fieldGroups.length" class="edit-content">
         <div class="form form-horizontal" *ngIf="viewFields">
             <div class="form-group" *ngFor="let field of viewFields">
                 <label class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
@@ -51,6 +51,30 @@
             </div>
         </div>
     </article>
+
+<article *ngIf="fieldGroups.length" class="edit-content">
+    <ul class="tabs">
+        <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currIndex}" (click)="setCurrent(i)">
+            <span>{{tab.title}}</span>
+        </li>
+    </ul>
+    <div class="form form-horizontal" *ngIf="fieldGroups">
+        <div class="form-group" *ngFor="let field of fieldGroups[currIndex].fields">
+            <label class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
+            <div class="col-sm-2" *ngIf="field.type !== 3">
+                <input *ngIf="field.type == 0 || field.type == 1" type="text" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
+                <input *ngIf="field.type == 2" type="file" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
+                <input *ngIf="field.type == 4" type="date" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
+                <span [hidden]="editMode" class="">{{field.value}}</span>
+            </div>                
+            <div class="col-sm-6" *ngIf="field.type === 3">
+                 <textarea [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"></textarea>
+                 <span [hidden]="editMode" class="">{{field.value}}</span>
+            </div>              
+        </div>
+    </div>
+</article>
+
     <div class="warning-wrapper" [ngClass]="{'hidden': hideWarning}">
         <div class="warning">
             Имеются не сохранённые изменения! Выберете действие:
