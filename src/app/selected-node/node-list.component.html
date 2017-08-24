@@ -12,7 +12,8 @@
                     placeholderItem="Drag here"
                     placeholderClass="placeholderStyle"
                     wrapperClass="sortable-wrapper"
-                    (onChange)="sortItems()">
+                    (onChange)="userSortItems()"
+                    [isItemDisabled]="userSorting">
                 </bs-sortable>
             </li>
         </ul>
@@ -37,7 +38,7 @@
                 <label><input type="checkbox" [(ngModel)]="item.value.selected"></label>
             </span>
             <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="editNode(item.value)">
-                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span> 
+                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span>
             </span>
         </div>
     </div>

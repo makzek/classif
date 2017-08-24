@@ -4,9 +4,9 @@ export const SEARCH_KEYS = ['code', 'title', 'description'];
 export const BASIC_DICT: IDictionaryDescriptor = {
     id: 'rubricator',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch', 'sorting'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch'],
     itemActions: ['edit', 'view'],
-    groupActions: ['remove', 'removeHard'],
+    groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     fields: [{
         key: 'id',
@@ -37,7 +37,7 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     id: 'departments',
     title: 'Подразделения',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch',
-        'sorting', 'import', 'export', 'importPhotos', 'createRepresentative'],
+        'import', 'export', 'importPhotos', 'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],
     groupActions: ['remove', 'removeHard'],
 
