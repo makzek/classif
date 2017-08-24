@@ -3,16 +3,25 @@
     <div class="header-wrapper">
         <eos-title></eos-title>
         <eos-desktop-switcher></eos-desktop-switcher>
-        <eos-user class="pull-right"></eos-user>
-        <eos-notice class="pull-right"></eos-notice>
-        <eos-search class="pull-right"></eos-search>
+        <div class="pull-right header-wrapper-right">
+            <ul>
+                <li>
+                    <eos-search></eos-search>
+                </li>
+                <li>
+                    <eos-notice></eos-notice>
+                </li>
+                <li>
+                    <eos-user></eos-user>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="sidebar-wrapper">
         <eos-sidebar></eos-sidebar>
     </div>
     <div class="content-wrapper">
         <eos-breadcrumb></eos-breadcrumb>
-        <eos-pushpin></eos-pushpin>
         <div class="messages-wrapper">
             <eos-messages></eos-messages>
         </div>
