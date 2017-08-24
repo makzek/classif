@@ -106,10 +106,6 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         column: 1,
         subcolumn: 2,
     }, {
-        key: 'isPerson',
-        title: 'Должностное лицо',
-        type: 'boolean'
-    }, {
         key: 'shortPosition',
         title: 'Наименование должности',
         type: 'text',
