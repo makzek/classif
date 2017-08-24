@@ -34,7 +34,6 @@ import { NodeListComponent } from './selected-node/node-list.component';
 import { NodeActionsComponent } from './selected-node/node-actions.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
 
-import { DepartmentsCardViewComponent } from './card-views-and-edits/departments-card-view.component';
 import { DepartmentsCardEditComponent } from './card-views-and-edits/departments-card-edit.component';
 
 import { EosApiService } from './services/eos-api.service';
@@ -75,7 +74,6 @@ import { TestPageComponent } from './test-page/test-page.component';
         NodeActionsComponent,
         PushpinComponent,
 
-        DepartmentsCardViewComponent,
         DepartmentsCardEditComponent,
     ],
     imports: [

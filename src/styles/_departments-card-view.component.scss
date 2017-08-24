@@ -72,6 +72,12 @@ eos-departments-card-edit {
         width: 150px;
         margin: 0 auto;
     }
+
+    .edit-aside {
+        .vertical-buttons {
+            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
+        }
+    }
 }
 
 eos-departments-card-view {

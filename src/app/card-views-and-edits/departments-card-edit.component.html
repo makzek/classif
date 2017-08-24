@@ -1,3 +1,11 @@
+<aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
+    <div class="btn-group vertical-buttons" role="group">
+        <button type="button" class="btn btn-default">Что-то ещё</button>
+        <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
+        <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
+    </div>
+</aside>
+
 <ul class="tabs">
     <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
         (click)="setTab(i)">
@@ -9,73 +17,88 @@
         <span class="subcol-3-wrapper">
             <div class="input-group subcol-1">
                 <span class="input-group-addon" id="basic-addon1">Фамилия:</span>
-                <input type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastName']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastName']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['lastName']}}</p><!--TODO: add *ngIf="node.data['fieldName']" to every field-->
             </div>
             <div class="input-group subcol-2">
                 <span class="input-group-addon" id="basic-addon1">Имя:</span>
-                <input type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstName']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstName']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['firstName']}}</p>
             </div>
             <div class="input-group subcol-3">
                 <span class="input-group-addon" id="basic-addon1">Отчество:</span>
-                <input type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersName']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersName']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['fathersName']}}</p>
             </div>
         </span>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Фамилия И.О.:</span>
-        <input type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fio']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fio']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['fio']}}</p>
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Краткое наименование должности:</span>
-        <input type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['shortPosition']}}</p>
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Полное наименование должности:</span>
-        <input type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fullPosition']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fullPosition']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['fullPosition']}}</p>
     </div>
     <span class="subcol-3-wrapper">
         <div class="input-group subcol-1">
             <span class="input-group-addon" id="basic-addon1">Пол:</span>
-            <input type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['gender']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['gender']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['gender']}}</p>
         </div>
         </span>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Заместитель:</span>
-            <input type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['alternate']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['alternate']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['alternate']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-            <input type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['note']}}</p>
         </div>
 
         <span class="subcol-3-wrapper">
-                <div class="input-group subcol-1">
-                    <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-        <input type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['startDate']">
-        </div>
-        <div class="input-group subcol-2">
-            <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-            <input type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['endDate']">
-        </div>
+            <div class="input-group subcol-1">
+                <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
+                <input *ngIf="editMode" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['startDate']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['startDate']}}</p>
+            </div>
+            <div class="input-group subcol-2">
+                <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
+                <input *ngIf="editMode" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['endDate']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['endDate']}}</p>
+            </div>
         </span>
     </div>
     <div class="col-2">
     <span class="photo">Фотография {{node.data['photo']}}
-        <input type="image" [(ngModel)]="tmpObj['photo']">
+        <input *ngIf="editMode" type="image" [(ngModel)]="tmpObj['photo']">
+        <p class="photo" *ngIf="!editMode" class="form-control">{{node.data['photo']}}</p>
     </span>
     <span class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="node.data['boss']">Начальник</label>
+        <label><input type="checkbox" [disabled]="!editMode" [(ngModel)]="node.data['boss']">Начальник</label>
     </span>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Код:</span>
-        <input type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['code']}}</p>
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
-        <input type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['indexOfficial']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['indexOfficial']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['indexOfficial']}}</p>
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-        <input type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+        <input *ngIf="editMode" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+        <p *ngIf="!editMode" class="form-control">{{node.data['SEV']}}</p>
     </div>
 </div>
 </div>
@@ -83,27 +106,33 @@
     <div class="col-1">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Номер телефона:</span>
-            <input type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['phone']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['phone']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['phone']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Номер местного телефона:</span>
-            <input type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['localPhone']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['localPhone']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['localPhone']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">E-mail:</span>
-            <input type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['email']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['email']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['email']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Skype:</span>
-            <input type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['skype']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['skype']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['skype']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Факс:</span>
-            <input type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fax']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fax']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['fax']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Кабинет:</span>
-            <input type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['room']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['room']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['room']}}</p>
         </div>
 
     </div>
@@ -115,19 +144,22 @@
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Родительный падеж (кого, чего):</span>
-                <input type="text" class="form-control" placeholder="Родительный падеж (кого, чего)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionRP']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Родительный падеж (кого, чего)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionRP']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['shortPositionRP']}}</p>
             </div>
         </span>
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Дательный падеж (кому, чему):</span>
-                <input type="text" class="form-control" placeholder="Дательный падеж (кому, чему)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionDP']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Дательный падеж (кому, чему)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionDP']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['shortPositionDP']}}</p>
             </div>
         </span>
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Винительный падеж (кого, что):</span>
-                <input type="text" class="form-control" placeholder="Родительный падеж (кого, что)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionVP']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Родительный падеж (кого, что)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionVP']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['shortPositionVP']}}</p>
             </div>
         </span>
         
@@ -135,13 +167,15 @@
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Фамилия И.О., дат. падеж:</span>
-                <input type="text" class="form-control" placeholder="Фамилия И.О., дат. падеж" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fioDP']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Фамилия И.О., дат. падеж" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fioDP']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['fioDP']}}</p>
             </div>
         </span>
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">И.О. Фамилия:</span>
-                <input type="text" class="form-control" placeholder="И.О. Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['iof']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="И.О. Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['iof']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['iof']}}</p>
             </div>
         </span>
         <span class="subcol-4-wrapper">
@@ -152,45 +186,62 @@
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol">Род. падеж (кого)</span>
-            <input type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameRP']">
-            <input type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameRP']">
-            <input type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameRP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameRP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameRP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameRP']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['lastNameRP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['firstNameRP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['fathersNameRP']}}</p>
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol">Дат. падеж (кому)</span>
-            <input type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameDP']">
-            <input type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameDP']">
-            <input type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameDP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameDP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameDP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameDP']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['lastNameDP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['firstNameDP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['fathersNameDP']}}</p>
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol">Вин. падеж (кого)</span>
-            <input type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameVP']">
-            <input type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameVP']">
-            <input type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameVP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameVP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameVP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameVP']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['lastNameVP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['firstNameVP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['fathersNameVP']}}</p>
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol">Твор. падеж (кем)</span>
-            <input type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameTP']">
-            <input type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameTP']">
-            <input type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameTP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameTP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameTP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameTP']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['lastNameTP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['firstNameTP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['fathersNameTP']}}</p>
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol">Пр. падеж (о ком)</span>
-            <input type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNamePP']">
-            <input type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNamePP']">
-            <input type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNamePP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNamePP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNamePP']">
+            <input *ngIf="editMode" type="text" class="form-control" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNamePP']">
+            <p *ngIf="!editMode" class="form-control">{{node.data['lastNamePP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['firstNamePP']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{node.data['fathersNamePP']}}</p>
         </span>
         <span class="block-title">Данные для формирования поручений:</span>
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Должность:</span>
-                <input type="text" class="form-control" placeholder="Должность" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Должность" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['shortPosition']}}</p>
             </div>
         </span>
         <span class="subcol-3-wrapper">
             <div class="input-group dbl-subcol">
                 <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
-                <input type="text" class="form-control" placeholder="Подразделение" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['department']">
+                <input *ngIf="editMode" type="text" class="form-control" placeholder="Подразделение" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['department']">
+                <p *ngIf="!editMode" class="form-control">{{node.data['department']}}</p>
             </div>
         </span>
     </div>

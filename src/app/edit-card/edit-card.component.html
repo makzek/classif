@@ -27,7 +27,7 @@
             </span>
         </div>
     </header>
-    <aside class="edit-aside">
+    <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
             <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
@@ -51,8 +51,8 @@
             </div>
         </div>
     </article>
-    <eos-departments-card-view *ngIf="dictIdFromDescriptor === 'departments' && !editMode"></eos-departments-card-view>
-    <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments' && editMode"></eos-departments-card-edit>
+    <!--<eos-departments-card-view *ngIf="dictIdFromDescriptor === 'departments' && !editMode"></eos-departments-card-view>-->
+    <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
 
     <div class="warning-wrapper" [ngClass]="{'hidden': hideWarning}">
         <div class="warning">

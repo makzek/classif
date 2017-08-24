@@ -15,6 +15,7 @@ export class DepartmentsCardEditComponent {
     currTab = 0;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
+    editMode = false;
 
     constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
@@ -38,11 +39,9 @@ export class DepartmentsCardEditComponent {
                 }
             }
         );
-        this.currTab = this._actonService.currTab;
     }
 
     setTab(i: number) {
         this.currTab = i;
-        this._actonService.currTab = this.currTab;
     }
 }
