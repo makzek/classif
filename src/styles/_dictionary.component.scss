@@ -27,6 +27,9 @@ eos-dictionary {
     }
 
     .tree-wrapper {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+
         & > eos-tree > .eos-tree {
             max-height: calc(100vh - 210px);
             overflow-y: auto;
@@ -40,6 +43,16 @@ eos-dictionary {
             padding-left: 15px;
             padding-right: 15px;
         }
+    }
+
+    .selected-wrapper {
+        -ms-grid-row: 1;
+        -ms-grid-column: 2;
+    }
+
+    .opened-wrapper {
+        -ms-grid-row: 1;
+        -ms-grid-column: 3;
     }
 
     .aside {
