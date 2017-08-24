@@ -34,6 +34,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     dictIdFromDescriptor: string;
 
     @HostListener('window:beforeunload') canDeactivate2(): boolean {
+        this.clearStorage();
         return this.canDeactivate();
     }
     @HostListener('window:blur') canDeactivate3(): boolean {
