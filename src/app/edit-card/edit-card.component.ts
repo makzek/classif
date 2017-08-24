@@ -7,6 +7,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
+import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-edit-card',
@@ -30,6 +31,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     currIndex = 0;
     colCount: number;
     lastEditedCard: EditedCard;
+    dictIdFromDescriptor: string;
 
     @HostListener('window:beforeunload') canDeactivate2(): boolean {
         this.clearStorage();
@@ -41,9 +43,10 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
     constructor(
         private eosDictService: EosDictService,
-        private actionService: NodeListActionsService,
+        private nodeListActionService: NodeListActionsService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private actionService: EditCardActionService,
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
@@ -53,10 +56,11 @@ export class EditCardComponent implements CanDeactivateGuard {
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
-        this.actionService.emitAction(null);
+        this.nodeListActionService.emitAction(null);
 
         this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
+                this.dictIdFromDescriptor = dict.descriptor.id;
                 this.eosDictService.openedNode$.subscribe(
                 (node) => {
                     if (node) {
@@ -78,17 +82,20 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     save(): void {
-        this.wasEdit = false;
-        this.eosDictService
-            .updateNode(this.dictionaryId, this.nodeId, this.node)
-            .catch((err) => alert('err: ' + err));
+        this.actionService.emitAction('save');
     }
 
     cancel(): void {
+        this.actionService.emitAction('cancel');
+    }
+
+    recordResult(evt: any) {
         this.wasEdit = false;
-        this.eosDictService.getNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((error) => alert('error: ' + error));
+        this.editMode = false;
+        this.node.data = evt;
+        this.eosDictService
+            .updateNode(this.dictionaryId, this.nodeId, this.node)
+            .catch((err) => alert('err: ' + err));
     }
 
     resetAndClose(): void {

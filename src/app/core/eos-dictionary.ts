@@ -1,7 +1,7 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { SEARCH_KEYS } from '../core/consts';
-import { IFieldView} from '../core/field-descriptor';
+import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
     readonly id: string;

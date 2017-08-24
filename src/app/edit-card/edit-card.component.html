@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-default" (click)="openEditMode()">Редактирование</button>
         </div>
     </aside>
-    <article class="edit-content">
+    <article *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-content">
         <div class="form form-horizontal" *ngIf="viewFields">
             <div class="form-group" *ngFor="let field of viewFields">
                 <label *ngIf="field.value || editMode" class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
@@ -51,6 +51,9 @@
             </div>
         </div>
     </article>
+    <eos-departments-card-view *ngIf="dictIdFromDescriptor === 'departments' && !editMode"></eos-departments-card-view>
+    <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments' && editMode"></eos-departments-card-edit>
+
     <div class="warning-wrapper" [ngClass]="{'hidden': hideWarning}">
         <div class="warning">
             Имеются не сохранённые изменения! Выберете действие:
