@@ -51,7 +51,6 @@
             </div>
         </div>
     </article>
-    <!--<eos-departments-card-view *ngIf="dictIdFromDescriptor === 'departments' && !editMode"></eos-departments-card-view>-->
     <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
 
     <div class="warning-wrapper" [ngClass]="{'hidden': hideWarning}">
