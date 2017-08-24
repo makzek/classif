@@ -2,8 +2,8 @@
     <eos-node-actions></eos-node-actions>
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div>
-        <ul *ngIf="nodes" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li>
+        <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
+            <li *ngIf="userSorting">
                 <bs-sortable
                     [(ngModel)]="nodeListPerPage"
                     [itemTemplate]="childTemplate"
@@ -14,6 +14,20 @@
                     wrapperClass="sortable-wrapper"
                     (onChange)="userSortItems()">
                 </bs-sortable>
+            </li>
+        </ul>
+        <ul *ngIf="nodes && !userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
+            <li *ngFor="let item of nodeListPerPage">
+                <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.id}">
+                    <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap">
+                    <span *ngIf="showCheckbox" class="checkbox">
+                        <label><input type="checkbox" [(ngModel)]="item.selected"></label>
+                    </span>
+                        <span class="node-info" (click)="openFullInfo(item)" (dblclick)="editNode(item)">
+                        <span *ngFor="let field of viewFields" class="code">{{item.data[field.key]}}</span>
+                    </span>
+                    </div>
+                </div>
             </li>
         </ul>
         <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [maxSize]="8" [rotate]="true"

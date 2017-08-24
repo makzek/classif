@@ -41,6 +41,8 @@
                 <span *ngIf="!userSort">Включить пользователькую сортировку</span>
                 <span *ngIf="userSort">Отключить пользователькую сортировку</span>
             </a></li>
+            <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
+            <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
         </ul>
     </div>
     </span>

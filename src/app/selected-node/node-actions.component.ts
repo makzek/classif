@@ -141,6 +141,14 @@ export class NodeActionsComponent {
         this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
+    userSortingUp() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
+    userSortingDown() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
     checkAllItems() {
         if (this.checkAll) {
             this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
