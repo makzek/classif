@@ -34,11 +34,9 @@ export class EditCardComponent implements CanDeactivateGuard {
     dictIdFromDescriptor: string;
 
     @HostListener('window:beforeunload') canDeactivate2(): boolean {
-        this.clearStorage();
         return this.canDeactivate();
     }
     @HostListener('window:blur') canDeactivate3(): boolean {
-        this.clearStorage();
         return this.canDeactivate();
     }
     constructor(
@@ -101,12 +99,14 @@ export class EditCardComponent implements CanDeactivateGuard {
     resetAndClose(): void {
         this.cancel();
         this.clearStorage();
+        this.wasEdit = false;
         this.router.navigate([this.selfLink]);
     }
 
     saveAndClose(): void {
         this.save();
         this.clearStorage();
+        this.wasEdit = false;
         this.router.navigate([this.selfLink]);
     }
 
@@ -139,6 +139,7 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     openEditMode(): void {
         this.lastEditedCard = this.getLastEditedCard();
+        console.log(this.lastEditedCard);
         if (this.lastEditedCard) {
             if (this.wasEdit) { /* if we just switched from view-mode to edit-mode */
                 this.editMode = true;
