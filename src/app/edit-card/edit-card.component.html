@@ -63,8 +63,12 @@
             </div>
         </div>
     </div>
-    <div class="warning-wrapper" *ngIf="lastEditedCard" [ngClass]="{'hidden': hideWarningEditing}">
+    <div class="warning-wrapper" *ngIf="lastEditedCard" [ngClass]="{'hidden': hideWarningEditing}">       
         <div class="warning">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideCardWarning()">
+                <span aria-hidden="true">&times;</span>
+            </button> 
+            <br>
             В настоящее время в режиме редактирования находится карточка<br>    
             <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>
         </div>

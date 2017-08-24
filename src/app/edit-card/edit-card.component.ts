@@ -179,6 +179,11 @@ export class EditCardComponent implements CanDeactivateGuard {
         return JSON.parse(localStorage.getItem('lastEditedCard'));
     }
 
+    hideCardWarning(): void {
+        this.hideWarningEditing = true;
+        this.router.navigate([this.selfLink]);
+    }
+
 }
 
 /* Object that stores info about the last edited card in the LocalStorage */
