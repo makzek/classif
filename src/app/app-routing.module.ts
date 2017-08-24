@@ -7,6 +7,7 @@ import { EditCardComponent } from './edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 const routes: Routes = [{
     path: 'spravochniki',
@@ -25,7 +26,8 @@ const routes: Routes = [{
                 path: 'edit',
                 pathMatch: 'full',
                 component: EditCardComponent,
-                data: { title: 'Редактирвание', showInBreadcrumb: true }
+                data: { title: 'Редактирование', showInBreadcrumb: true },
+                canDeactivate: [CanDeactivateGuard]
             }, {
                 path: '',
                 component: DictionaryComponent,

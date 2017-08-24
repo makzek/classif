@@ -6,7 +6,7 @@
             </span>
         </div>
         <div class="col-sm-4 col-md-5 col-lg-6">
-            <span class="edit-title"></span>
+            <span class="edit-title">{{ nodeName }}</span>
         </div>
         <div class="edit-buttons col-sm-4 col-md-3 col-lg-3">
             <button class="btn btn-primary" (click)="save()">Сохранить</button>
@@ -29,25 +29,25 @@
     </header>
     <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
+            <button type="button" class="btn btn-default" (click)="clearStorage()">Что-то ещё</button>
+            <button type="button" class="btn btn-default" (click)="closeEditMode()">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="openEditMode()">Редактирование</button>
         </div>
     </aside>
     <article *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-content">
         <div class="form form-horizontal" *ngIf="viewFields">
             <div class="form-group" *ngFor="let field of viewFields">
-                <label class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
+                <label *ngIf="field.value || editMode" class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
                 <div class="col-sm-2" *ngIf="field.type !== 3">
-                    <input *ngIf="field.type == 0 || field.type == 1" type="text" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
-                    <input *ngIf="field.type == 2" type="file" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
-                    <input *ngIf="field.type == 4" type="date" [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"/>
-                    <span [hidden]="editMode" class="">{{field.value}}</span>
+                    <input *ngIf="field.type == 0 || field.type == 1" type="text" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <input *ngIf="field.type == 2" type="file" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <input *ngIf="field.type == 4" type="date" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
                 </div>                
                 <div class="col-sm-6" *ngIf="field.type === 3">
-                     <textarea [hidden]="!editMode" class="" id="{{field.id}}" (change)="wasEdit = true" [(ngModel)]="field.value"></textarea>
-                     <span [hidden]="editMode" class="">{{field.value}}</span>
-                </div>              
+                     <textarea [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"></textarea>
+                     <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
+                </div>
             </div>
         </div>
     </article>
@@ -64,4 +64,10 @@
             </div>
         </div>
     </div>
+    <div class="warning-wrapper" [ngClass]="{'hidden': hideWarningEditing}">
+        <div class="warning">
+            В настоящее время в режиме редактирования находится карточка<br>          
+            <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>
+        </div>
+    </div>    
 </div>

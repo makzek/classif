@@ -48,6 +48,7 @@ import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 import { EditCardActionService } from './edit-card/action.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 @NgModule({
     declarations: [
@@ -95,6 +96,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         EosNoticeService,
         EosMessageService,
         NodeListActionsService,
+        CanDeactivateGuard,
         EosBreadcrumbsService,
         EditCardActionService,
     ],
