@@ -22,22 +22,13 @@ export class PipRX {
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
+        this._metadata = new Metadata(cfg);
+        this._metadata.init();
+    }
 
-        // const _options = Object.assign({}, this._options, {
-        //     headers: new Headers({
-        //         'Origin': 'localhost',
-        //     })
-        // });
-
-
-        http
-            .get('http://192.168.1.50/eos/main.aspx?login=tver&pass=tver', this._options)
-            .subscribe(result => {
-                console.log(result.headers);
-            });
-
-        // this._metadata = new Metadata(cfg);
-        // this._metadata.init();
+    public login() {
+        return this.http
+            .get('http://192.168.1.50/eos/main.aspx?login=tver&pass=tver', this._options); // TODO move to authorize service
     }
 
     private getData(url: string) {
@@ -121,11 +112,13 @@ export class PipRX {
     read<T>(req: IRequest): Observable<T[]> {
         const r = req as IR;
         r._et = Object.keys(req)[0];
+
         const ask = req[r._et];
         delete req[r._et];
         const a = ask;
         const ids = (a.criteries === undefined && a.args === undefined && a !== ALL_ROWS) ? a : undefined;
         const urls = this._makeUrls(r, a, ids);
+
         return this._odataGet(urls, req);
     }
 

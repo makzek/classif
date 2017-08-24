@@ -1,7 +1,7 @@
 import { IApiCfg, ITypeDef } from '../interfaces/interfaces';
 
 declare let System: any;
-/* export let _metadata: Metadata; /* why we need global variable? */
+export let _metadata: Metadata; /* why we need global variable? */
 interface IScript {
     src: string;
     loaded: boolean;
@@ -38,14 +38,20 @@ export class Metadata {
     }
 
     public merge(types: any) {
-        types.keys.foreach((t) => {
-            const old = this[t];
-            if (!old) {
-                this[t] = types[t];
-            } else {
-                old.relations = (old.relations || []).concat(types[t].relations || []);
-            }
-        });
+         console.log(types);
+
+         for (let t in types) {
+             const old = this[t];
+             if (!old) {
+                 this[t] = types[t];
+             } else {
+                 old.relations = (old.relations || []).concat(types[t].relations || []);
+             }
+         }
+
+        // types.keys.foreach((t) => {
+        //
+        // });
     }
 
     etn(item: any) {

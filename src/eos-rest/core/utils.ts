@@ -1,6 +1,7 @@
 import { IEnt } from '../interfaces/interfaces';
 import { BATCH_BOUNDARY, CHANGESET_BOUNDARY, _ES, _T, URL_LIMIT } from './consts';
 import { Response } from '@angular/http';
+import { PipRX } from '../services/pipRX.service';
 
 import { Metadata } from './metadata';
 
@@ -8,9 +9,17 @@ declare let System: any;
 
 window['_t'] = _T;
 
-export let _metadata: Metadata; /* wtf? */
+//export var _metadata: Metadata; /* wtf? */
+
+// setInterval(function() {
+//     console.log();
+// }, 1000);
+
 
 export class Utils {
+
+    //constructor(private pip: PipRX) { }
+
     static distinctIDS(l: any[]): string {
         let result = ',';
         for (let i = 0; i < l.length; i++) {
@@ -55,13 +64,13 @@ export class Utils {
     }
 
     static parseEntity(items: any[], tn: string) {
-        const t = (tn) ? _metadata[tn] : undefined;
+        const t = (tn) ? window['_metadata'][tn] : undefined;
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (item._more_json) {
                 Utils.parseMoreJson(item, tn);
             }
-            item.keys.foreach((pn) => {
+            for (let pn in item) {
                 if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
                     delete item[pn];
                 } else if (t) {
@@ -74,7 +83,8 @@ export class Utils {
                         }
                     }
                 }
-            });
+            }
+
             item.__metadata = { __type: tn };
         }
     }
@@ -183,8 +193,8 @@ export class Utils {
     */
 
     static appendChange(it: any, chr: any[], path: string) {
-        const etn = _metadata.etn(it);
-        const et = _metadata[etn];
+        const etn = window['_metadata'].etn(it);
+        const et = window['_metadata'][etn];
         const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
@@ -248,8 +258,8 @@ export class Utils {
     }
 
     static PKinfo(it: any) {
-        const etn = _metadata.etn(it);
-        const et = _metadata[etn];
+        const etn = window['_metadata'].etn(it);
+        const et = window['_metadata'][etn];
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
