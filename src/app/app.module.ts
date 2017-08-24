@@ -43,6 +43,7 @@ import { EosMessageService } from './services/eos-message.service';
 import { NodeListActionsService } from './selected-node/node-list-action.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 @NgModule({
     declarations: [
@@ -87,6 +88,7 @@ import { TestPageComponent } from './test-page/test-page.component';
         EosNoticeService,
         EosMessageService,
         NodeListActionsService,
+        CanDeactivateGuard
     ],
     bootstrap: [AppComponent],
 })
