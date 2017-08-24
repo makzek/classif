@@ -37,7 +37,10 @@
         <ul *dropdownMenu class="dropdown-menu" role="menu">
             <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
             <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
-            <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">Включить пользователькую сортировку</a></li>
+            <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
+                <span *ngIf="!userSort">Включить пользователькую сортировку</span>
+                <span *ngIf="userSort">Отключить пользователькую сортировку</span>
+            </a></li>
         </ul>
     </div>
     </span>

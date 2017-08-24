@@ -33,7 +33,9 @@ export class NodeActionsComponent {
     showDelete: boolean;
     showEdit: boolean;
     showDeleteHard: boolean;
+
     showUserSort: boolean;
+    userSort = false;
 
     fields: IFieldView[];
     searchInDeleted = false;
@@ -135,6 +137,7 @@ export class NodeActionsComponent {
     }
 
     userSorting() {
+        this.userSort = !this.userSort;
         this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
