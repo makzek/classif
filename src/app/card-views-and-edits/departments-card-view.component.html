@@ -1,28 +1,28 @@
 <ul class="tabs">
     <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
-        (click)="currTab = i">
+        (click)="setTab(i)">
         <span>{{tab.title}}</span>
     </li>
 </ul>
 <div class="wrapper" *ngIf="currTab === 0">
     <div class="col-1">
-        <span class="subcol-wrapper">
+        <span class="subcol-3-wrapper">
             <!--TODO: add *ngIf="node.data['fieldName']" to every field-->
-            <span class="subcol-1">Фамилия: {{node.data['lastName']}}</span>
-            <span class="subcol-2">Имя: {{node.data['firstName']}}</span>
-            <span class="subcol-3">Отчество: {{node.data['fathersName']}}</span>
+            <span class="subcol">Фамилия: {{node.data['lastName']}}</span>
+            <span class="subcol">Имя: {{node.data['firstName']}}</span>
+            <span class="subcol">Отчество: {{node.data['fathersName']}}</span>
         </span>
         <span class="full-line">Фамилия И.О.: {{node.data['fio']}}</span>
         <span class="full-line">Краткое наименование должности: {{node.data['shortPosition']}}</span>
         <span class="full-line">Полное наименование должности: {{node.data['fullPosition']}}</span>
-        <span class="subcol-wrapper">
-            <span class="subcol-1">Пол: {{node.data['gender']}}</span>
+        <span class="subcol-3-wrapper">
+            <span class="subcol">Пол: {{node.data['gender']}}</span>
         </span>
         <span class="full-line">Заместитель: {{node.data['alternate']}}</span>
         <span class="full-line">Примичание: {{node.data['note']}}</span>
-        <span class="subcol-wrapper">
-            <span class="subcol-1">Дата начала действия: {{node.data['startDate']}}</span>
-            <span class="subcol-2">Дата окончания действия: {{node.data['endDate']}}</span>
+        <span class="subcol-3-wrapper">
+            <span class="subcol">Дата начала действия: {{node.data['startDate']}}</span>
+            <span class="subcol">Дата окончания действия: {{node.data['endDate']}}</span>
         </span>
     </div>
     <div class="col-2">
@@ -33,5 +33,89 @@
         <span class="full-line">Код: {{node.data['code']}}</span>
         <span class="full-line">Индекс ДЛ: {{node.data['indexOfficial']}}</span>
         <span class="full-line">Индекс СЭВ: {{node.data['SEV']}}</span>
+    </div>
+</div>
+
+<div class="wrapper" *ngIf="currTab === 1">
+    <div class="col-1">
+        <span class="full-line">Номер телефона: {{node.data['phone']}}</span>
+        <span class="full-line">Номер местного телефона: {{node.data['localPhone']}}</span>
+        <span class="full-line">E-mail: {{node.data['email']}}</span>
+        <span class="full-line">Skype: {{node.data['skype']}}</span>
+        <span class="full-line">Факс: {{node.data['fax']}}</span>
+        <span class="full-line">Кабинет: {{node.data['room']}}</span>
+    </div>
+</div>
+
+<div class="wrapper" *ngIf="currTab === 2">
+    <div class="col-1">
+        <span class="block-title">Склонение должности:</span>
+        <span class="subcol-4-wrapper">
+            <span>Родительный падеж (кого, чего):</span>
+            <span class="dbl-subcol">{{node.data['shortPositionRP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span>Дательный падеж (кому, чему):</span>
+            <span class="dbl-subcol">{{node.data['shortPositionDP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span>Винительный падеж (кого, что):</span>
+            <span class="dbl-subcol">{{node.data['shortPositionVP']}}</span>
+        </span>
+        <span class="block-title">Склонение фамилии, имени, отчества:</span>
+        <span class="subcol-4-wrapper">
+            <span>Фамилия И.О., дат. падеж:</span>
+            <span class="dbl-subcol">{{node.data['fioDP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span>И.О. Фамилия:</span>
+            <span class="dbl-subcol">{{node.data['iof']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol"></span>
+            <span class="subcol">Фамилия</span>
+            <span class="subcol">Имя</span>
+            <span class="subcol">Отчество</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol">Род. падеж (кого)</span>
+            <span class="subcol">{{node.data['lastNameRP']}}</span>
+            <span class="subcol">{{node.data['firstNameRP']}}</span>
+            <span class="subcol">{{node.data['fathersNameRP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol">Дат. падеж (кому)</span>
+            <span class="subcol">{{node.data['lastNameDP']}}</span>
+            <span class="subcol">{{node.data['firstNameDP']}}</span>
+            <span class="subcol">{{node.data['fathersNameDP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol">Вин. падеж (кого)</span>
+            <span class="subcol">{{node.data['lastNameVP']}}</span>
+            <span class="subcol">{{node.data['firstNameVP']}}</span>
+            <span class="subcol">{{node.data['fathersNameVP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol">Твор. падеж (кем)</span>
+            <span class="subcol">{{node.data['lastNameTP']}}</span>
+            <span class="subcol">{{node.data['firstNameTP']}}</span>
+            <span class="subcol">{{node.data['fathersNameTP']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span class="subcol">Пр. падеж (о ком)</span>
+            <span class="subcol">{{node.data['lastNamePP']}}</span>
+            <span class="subcol">{{node.data['firstNamePP']}}</span>
+            <span class="subcol">{{node.data['fathersNamePP']}}</span>
+        </span>
+        <span class="block-title">Данные для формирования поручений:</span>
+        <span class="subcol-4-wrapper">
+            <span>Должность:</span>
+            <span class="dbl-subcol">{{node.data['shortPosition']}}</span>
+        </span>
+        <span class="subcol-4-wrapper">
+            <span>Подразделение:</span>
+            <span class="dbl-subcol">{{node.data['department']}}</span>
+        </span>
+
     </div>
 </div>

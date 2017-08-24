@@ -38,5 +38,11 @@ export class DepartmentsCardEditComponent {
                 }
             }
         );
+        this.currTab = this._actonService.currTab;
+    }
+
+    setTab(i: number) {
+        this.currTab = i;
+        this._actonService.currTab = this.currTab;
     }
 }

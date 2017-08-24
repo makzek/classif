@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable() export class EditCardActionService {
     private _action$: BehaviorSubject<string>;
+    _currTab = 0;
 
     constructor() {
         this._action$ = new BehaviorSubject<string>(null);
@@ -15,5 +16,13 @@ import { Observable } from 'rxjs/Observable';
 
     emitAction(value: string) {
         this._action$.next(value);
+    }
+
+    get currTab(): number {
+        return this._currTab;
+    }
+
+    set currTab(val: number) {
+        this._currTab = val;
     }
 }

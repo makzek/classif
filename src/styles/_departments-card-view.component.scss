@@ -42,10 +42,27 @@ eos-departments-card-edit {
         margin-bottom: 10px;
     }
 
-    .subcol-wrapper {
+    .block-title {
+        font-weight: bold;
+    }
+
+    .subcol-3-wrapper,
+    .subcol-4-wrapper {
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
         grid-template-columns: 1fr 1fr 1fr;
+
+        .dbl-subcol {
+            grid-column: 1 / 3;
+        }
+    }
+
+    .subcol-4-wrapper {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        .dbl-subcol {
+            grid-column: 2 / 4;
+        }
     }
 
     .photo {
@@ -58,7 +75,8 @@ eos-departments-card-edit {
 }
 
 eos-departments-card-view {
-    .subcol-wrapper,
+    .subcol-3-wrapper,
+    .subcol-4-wrapper,
     .full-line {
         border: 1px dashed #d3d2d1;
         line-height: 3;
