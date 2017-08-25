@@ -8,7 +8,7 @@
         <div class="name-wrapper">
             <span class="edit-title">{{ nodeName }}</span>
         </div>
-        <div class="buttons-wrapper">
+        <div class="buttons-wrapper" *ngIf="editMode">
             <button class="btn btn-primary" (click)="save()">Сохранить</button>
             <button class="btn btn-primary" (click)="cancel()">Отменить</button>
         </div>
