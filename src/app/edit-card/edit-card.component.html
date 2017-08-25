@@ -8,7 +8,7 @@
         <div class="name-wrapper">
             <span class="edit-title">{{ nodeName }}</span>
         </div>
-        <div class="buttons-wrapper">
+        <div class="buttons-wrapper" *ngIf="editMode">
             <button class="btn btn-primary" (click)="save()">Сохранить</button>
             <button class="btn btn-primary" (click)="cancel()">Отменить</button>
         </div>
@@ -19,7 +19,7 @@
                 node.parent.children[i-1].id + '/edit')"></button>
                 <button [disabled]="i >= (node.parent.children.length - 1)" class="glyphicon glyphicon-arrow-right btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
                 node.parent.children[i+1].id + '/edit')"></button>
-                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(selfLink)"></button>
+                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(closeRedirect)"></button>
             </span>
         </div>
     </header>

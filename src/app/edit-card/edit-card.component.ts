@@ -9,6 +9,7 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
+import { EosDeskService } from '../services/eos-desk.service';
 
 @Component({
     selector: 'eos-edit-card',
@@ -33,6 +34,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     colCount: number;
     lastEditedCard: EditedCard;
     dictIdFromDescriptor: string;
+    closeRedirect: string; /* URL where to redirect after the cross is clicked */
 
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
@@ -50,6 +52,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         private route: ActivatedRoute,
         private router: Router,
         private actionService: EditCardActionService,
+        private _deskService: EosDeskService,
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
@@ -75,6 +78,17 @@ export class EditCardComponent implements CanDeactivateGuard {
                 (error) => alert(error));
                 }
         });
+        /* To identify the current desktop ID */
+        this.closeRedirect = this.selfLink;
+        this._deskService.selectedDesk.subscribe(
+            (link) => {
+                if (link && link.id !== 'system') {
+                    this.closeRedirect = '/home/' + link.id;
+                } else {
+                    this.closeRedirect = this.selfLink;
+                }
+            }
+        );
     }
 
     private _update(node: EosDictionaryNode) {
@@ -192,7 +206,6 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.modalUnsaveRef.hide();
         this.router.navigate([this.selfLink]);
     }
-
 }
 
 /* Object that stores info about the last edited card in the LocalStorage */
