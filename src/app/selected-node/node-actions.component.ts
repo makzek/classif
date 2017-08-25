@@ -46,6 +46,10 @@ export class NodeActionsComponent {
         /* tslint:enable:no-bitwise */
     }
 
+    get smallScreen(): boolean {
+        return window.matchMedia('(max-width: 1180px)').matches;
+    }
+
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
