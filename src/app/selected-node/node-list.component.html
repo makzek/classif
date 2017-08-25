@@ -20,15 +20,19 @@
         <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [maxSize]="8" [rotate]="true"
             [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
         </div>
-        <div>
+        <div class="options-bottom">
             <button class="btn btn-light show-more" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
-            <select id="ItemCount" class="item-count-select pull-right" (change)="setItemCount($event.target.value)">
-                    <option selected value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                </select>
-            <label class="item-count pull-right" for="ItemCount">Показывать по</label>
 
+            <form class="form-inline pull-right">
+                    <div class="form-group">
+                      <label for="ItemCount">Показывать по</label>
+                      <select id="ItemCount" class="form-control" (change)="setItemCount($event.target.value)">
+                            <option selected value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                        </select>
+                    </div>
+            </form>
         </div>
     </div>
 </div>

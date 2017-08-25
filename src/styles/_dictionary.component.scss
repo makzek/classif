@@ -71,7 +71,7 @@ eos-dictionary {
     }
 
     .root-title {
-        transform: rotate(-90deg) translateX(-120px);
+        transform: rotate(-90deg) translateX(-120px) translateY(9px);
         transform-origin: top left;
         width: 120px;
         text-overflow: ellipsis;
