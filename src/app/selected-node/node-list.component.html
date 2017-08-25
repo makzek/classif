@@ -16,8 +16,10 @@
                 </bs-sortable>
             </li>
         </ul>
+        <div class="pagination-wrapper">
         <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [maxSize]="8" [rotate]="true"
             [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+        </div>
         <div>
             <button class="btn btn-light show-more" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
             <select id="ItemCount" class="item-count-select pull-right" (change)="setItemCount($event.target.value)">
