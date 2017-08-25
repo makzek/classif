@@ -1,4 +1,4 @@
-<div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group" dropdown [autoClose]="false">
+<div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group" dropdown [autoClose]="!creating && !editing">
     <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">{{selectedDesk.name}}<span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu">
         <li *ngFor="let desk of deskList" role="menuitem">

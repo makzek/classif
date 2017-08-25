@@ -3,7 +3,7 @@ export const DICTIONARIE_LIST = [
     { id: 'rubricator', title: 'Рубрикатор' },
     { id: 'documents', title: 'Группы документов' },
     { id: 'regions', title: 'Регионы' },
-    { id: 'units', title: 'Подраздиления' },
+    { id: 'units', title: 'Подразделения' },
     { id: 'delivery', title: 'Виды доставки' },
     { id: 'reestrs', title: 'Типы реестров' },
     { id: 'visas', title: 'Типы виз' },
