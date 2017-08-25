@@ -11,24 +11,28 @@ eos-dictionary {
 
         &.tree-hidden {
             grid-template-columns: 50px 5fr 4fr;
+            -ms-grid-columns: 50px 5fr 4fr;
         }
 
         &.info-hidden {
             grid-template-columns: 3fr 5fr 50px;
+            -ms-grid-columns: 3fr 5fr 50px;
         }
 
         &.only-selected {
             grid-template-columns: 35px 1fr 50px;
+            -ms-grid-columns: 35px 1fr 50px;
         }
 
         &.full {
             grid-template-columns: 3fr 5fr 4fr;
+            -ms-grid-columns: 3fr 5fr 4fr;
         }
     }
 
     .tree-wrapper {
-        -ms-grid-row: 1;
-        -ms-grid-column: 1;
+        grid-row: 1;
+        grid-column: 1;
 
         & > eos-tree > .eos-tree {
             max-height: calc(100vh - 210px);
@@ -46,13 +50,13 @@ eos-dictionary {
     }
 
     .selected-wrapper {
-        -ms-grid-row: 1;
-        -ms-grid-column: 2;
+        grid-row: 1;
+        grid-column: 2;
     }
 
     .opened-wrapper {
-        -ms-grid-row: 1;
-        -ms-grid-column: 3;
+        grid-row: 1;
+        grid-column: 3;
     }
 
     .aside {
@@ -67,7 +71,7 @@ eos-dictionary {
     }
 
     .root-title {
-        transform: rotate(-90deg) translateX(-120px);
+        transform: rotate(-90deg) translateX(-120px) translateY(9px);
         transform-origin: top left;
         width: 120px;
         text-overflow: ellipsis;

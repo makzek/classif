@@ -4,6 +4,11 @@ eos-selected-node {
         cursor: pointer;
         margin-left: 10px;
         color: black;
+        display: flex;
+
+        .node-info {
+            margin-left: 10px;
+        }
 
         .code {
             margin-right: 10px;

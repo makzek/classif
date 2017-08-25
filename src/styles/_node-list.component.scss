@@ -18,14 +18,9 @@ eos-node-list {
             display: flex;
             justify-content: space-around;
 
-            .show-more,
-            .item-count {
+            .show-more {
                 line-height: 75px;
                 cursor: pointer;
-            }
-
-            .item-count-select {
-                margin: 20px 5px 25px -15px;
             }
         }
 

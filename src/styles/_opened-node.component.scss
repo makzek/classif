@@ -1,7 +1,7 @@
 .opened-wrapper {
     .sandwich-wrapper {
         position: relative;
-        left: -10px;
+        left: -20px;
         height: 40px;
 
         .sandwich {
@@ -32,6 +32,7 @@
     &.vertical {
         .opened-node-wrapper {
             height: 300px;
+            width: 38px;
         }
 
         .short-info {

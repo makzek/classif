@@ -191,7 +191,7 @@
             <input *ngIf="editMode" type="text" class="form-control subcol-4" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameRP']">
             <p *ngIf="!editMode" class="form-control subcol-2">{{node.data['lastNameRP']}}</p>
             <p *ngIf="!editMode" class="form-control subcol-3">{{node.data['firstNameRP']}}</p>
-            <p *ngIf="!editMode" class="form-control subcol-3">{{node.data['fathersNameRP']}}</p>
+            <p *ngIf="!editMode" class="form-control subcol-4">{{node.data['fathersNameRP']}}</p>
         </span>
         <span class="subcol-4-wrapper">
             <span class="subcol-1">Дат. падеж (кому)</span>
