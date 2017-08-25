@@ -18,6 +18,7 @@ export class DesktopSwitcherComponent {
     public modalRef: BsModalRef;
     deskName: string;
     creating = false;
+    editing = false;
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
@@ -40,6 +41,7 @@ export class DesktopSwitcherComponent {
         evt.stopPropagation();
         desk.edited = true;
         this.deskName = desk.name;
+        this.editing = true;
     }
 
     openCreateForm() {
