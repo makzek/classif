@@ -34,6 +34,9 @@ export class NodeActionsComponent {
     showEdit: boolean;
     showDeleteHard: boolean;
 
+    showUserSort: boolean;
+    userSort = false;
+
     fields: IFieldView[];
     searchInDeleted = false;
 
@@ -60,6 +63,7 @@ export class NodeActionsComponent {
                 this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
                 this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
                 this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                this.showUserSort = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.userOrder);
                 /* tslint:enable:no-bitwise */
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
                 this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
@@ -130,6 +134,19 @@ export class NodeActionsComponent {
 
     restoringLogicallyDeletedItem() {
         this._actionService.emitAction(E_RECORD_ACTIONS.restore);
+    }
+
+    userSorting() {
+        this.userSort = !this.userSort;
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
+    userSortingUp() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
+    userSortingDown() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
     checkAllItems() {

@@ -29,7 +29,7 @@
     </header>
     <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default" (click)="clearStorage()">Что-то ещё</button>
+            <button type="button" class="btn btn-default">Что-то ещё</button>
             <button type="button" class="btn btn-default" (click)="closeEditMode()">Просмотр</button>
             <button type="button" class="btn btn-default" (click)="openEditMode()">Редактирование</button>
         </div>
@@ -63,8 +63,12 @@
             </div>
         </div>
     </div>
-    <div class="warning-wrapper" *ngIf="lastEditedCard" [ngClass]="{'hidden': hideWarningEditing}">
+    <div class="warning-wrapper" *ngIf="lastEditedCard" [ngClass]="{'hidden': hideWarningEditing}">       
         <div class="warning">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="hideCardWarning()">
+                <span aria-hidden="true">&times;</span>
+            </button> 
+            <br>
             В настоящее время в режиме редактирования находится карточка<br>    
             <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>
         </div>

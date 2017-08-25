@@ -12,7 +12,6 @@ export enum E_RECORD_ACTIONS {
     export,
     markRecords,
     unmarkRecords,
-    sorting,
     navigateUp,
     navigateDown,
     restore,
