@@ -9,16 +9,9 @@ declare let System: any;
 
 window['_t'] = _T;
 
-//export var _metadata: Metadata; /* wtf? */
-
-// setInterval(function() {
-//     console.log();
-// }, 1000);
-
+// export var _metadata: Metadata; /* wtf? */
 
 export class Utils {
-
-    //constructor(private pip: PipRX) { }
 
     static distinctIDS(l: any[]): string {
         let result = ',';
@@ -56,9 +49,10 @@ export class Utils {
         item._more_json = JSON.parse(item._more_json);
         const exp = item._more_json.expand;
         if (exp) {
-            exp.keys.foreach((ln) => {
+            for (const ln in exp ) {
                 item[ln] = exp[ln];
-            })
+            }
+
             delete item._more_json.expand;
         }
     }
@@ -70,7 +64,7 @@ export class Utils {
             if (item._more_json) {
                 Utils.parseMoreJson(item, tn);
             }
-            for (let pn in item) {
+            for (const pn in item) {
                 if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
                     delete item[pn];
                 } else if (t) {
@@ -206,7 +200,8 @@ export class Utils {
 
         if (it._State === _ES.Added || it._State === _ES.Modified || (!it._State && it._orig)) {
             ch.data = {};
-            et.properties.keys.foreach((pn) => {
+
+            for (const pn in et.properties) {
                 if (et.readonly.indexOf(pn) === -1 && it[pn] !== undefined) {
                     let v = it[pn];
                     if (v instanceof Function) { v = v(); }
@@ -215,7 +210,8 @@ export class Utils {
                         hasChanges = true;
                     }
                 }
-            })
+            }
+
             if (hasChanges && !it._State) { ch.method = _ES.Modified; }
         }
         if (hasChanges) {
@@ -267,9 +263,9 @@ export class Utils {
 
     static clone<T>(o: T): T {
         const r = <T>{};
-        (<any>o).keys.foreach((pn) => {
+        for (const pn in <any>o) {
             r[pn] = o[pn];
-        })
+        }
         return r;
     }
 

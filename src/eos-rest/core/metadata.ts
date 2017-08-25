@@ -38,20 +38,16 @@ export class Metadata {
     }
 
     public merge(types: any) {
-         console.log(types);
-
-         for (let t in types) {
-             const old = this[t];
-             if (!old) {
-                 this[t] = types[t];
-             } else {
-                 old.relations = (old.relations || []).concat(types[t].relations || []);
-             }
-         }
-
-        // types.keys.foreach((t) => {
-        //
-        // });
+        if (types.length) {
+            for (const t in types) {
+                const old = this[t];
+                if (!old) {
+                    this[t] = types[t];
+                } else {
+                    old.relations = (old.relations || []).concat(types[t].relations || []);
+                }
+            }
+        }
     }
 
     etn(item: any) {
