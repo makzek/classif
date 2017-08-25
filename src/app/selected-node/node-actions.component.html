@@ -16,19 +16,19 @@
     </span>
 
     <span class="controller pull-right">
-        <span *ngIf="showAdd && !smallScreen" class="circle" (click)="openModal(creatingModal)">
+        <span *ngIf="showAdd" class="circle visible-lg-inline-block" (click)="openModal(creatingModal)">
             <span class="glyphicon glyphicon-plus control-implemented"></span>
         </span>
-        <span *ngIf="showDelete && !smallScreen" class="circle" (click)="deleteSelectedItems()">
+        <span *ngIf="showDelete" class="circle visible-lg-inline-block" (click)="deleteSelectedItems()">
             <span class="glyphicon glyphicon-minus control-implemented"></span>
         </span>
-        <span *ngIf="showEdit && !smallScreen" class="circle" (click)="editNode()">
+        <span *ngIf="showEdit" class="circle visible-lg-inline-block" (click)="editNode()">
             <span class="glyphicon glyphicon-pencil control-implemented"></span>
         </span>
-        <span *ngIf="!smallScreen" class="circle" (click)="nextItem(true)">
+        <span class="circle visible-lg-inline-block" (click)="nextItem(true)">
             <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
         </span>
-        <span *ngIf="!smallScreen" class="circle" (click)="nextItem(false)">
+        <span class="circle visible-lg-inline-block" (click)="nextItem(false)">
             <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
         </span>
         <div class="circle btn-group" dropdown>
@@ -43,11 +43,11 @@
                 </a></li>
                 <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
                 <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
-                <li *ngIf="showAdd && smallScreen" role="menuitem"><a class="dropdown-item" (click)="openModal(creatingModal)">Добавить элемент</a></li>
-                <li *ngIf="showDelete && smallScreen" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
-                <li *ngIf="showEdit && smallScreen" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
-                <li *ngIf="smallScreen" role="menuitem"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
-                <li *ngIf="smallScreen" role="menuitem"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
+                <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="openModal(creatingModal)">Добавить элемент</a></li>
+                <li *ngIf="showDelete" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
+                <li *ngIf="showEdit" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
+                <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
+                <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
             </ul>
         </div>
     </span>
