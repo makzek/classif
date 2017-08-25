@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
@@ -8,6 +8,8 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 @Component({
     selector: 'eos-edit-card',
@@ -32,6 +34,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     colCount: number;
     lastEditedCard: EditedCard;
     dictIdFromDescriptor: string;
+    public modalUnsaveRef: BsModalRef;
+    public modalOnlyRef: BsModalRef;
 
     @HostListener('window:beforeunload') canDeactivate2(): boolean {
         this.clearStorage();
@@ -46,6 +50,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         private route: ActivatedRoute,
         private router: Router,
         private actionService: EditCardActionService,
+        private modalService: BsModalService,
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
@@ -98,6 +103,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     resetAndClose(): void {
+        this.modalUnsaveRef.hide();
         this.cancel();
         this.clearStorage();
         this.wasEdit = false;
@@ -105,17 +111,18 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     saveAndClose(): void {
+        this.modalUnsaveRef.hide();
         this.save();
         this.clearStorage();
         this.wasEdit = false;
         this.router.navigate([this.selfLink]);
     }
 
-    goTo(route: string): void {
+    goTo(route: string, template: TemplateRef<any>): void {
         if (!this.wasEdit) {
             this.router.navigate([route]);
         } else {
-            this.hideWarning = false;
+            this.modalUnsaveRef = this.modalService.show(template);
         }
     }
 
@@ -138,7 +145,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         return true;
     }
 
-    openEditMode(): void {
+    openEditMode(template: TemplateRef<any>): void {
         this.lastEditedCard = this.getLastEditedCard();
         console.log(this.lastEditedCard);
         if (this.lastEditedCard) {
@@ -148,6 +155,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                  /* try to edit a different card */
                 if (this.nodeId !== this.lastEditedCard.id) {
                     this.hideWarningEditing = false;
+                    this.modalUnsaveRef = this.modalService.show(template);
                 /* forbid the edit-mode on other browser tabs */
                 } else {
                     this.editMode = false;
@@ -180,7 +188,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     hideCardWarning(): void {
-        this.hideWarningEditing = true;
+        // this.hideWarningEditing = true;
+        this.modalUnsaveRef.hide();
         this.router.navigate([this.selfLink]);
     }
 

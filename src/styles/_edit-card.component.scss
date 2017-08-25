@@ -1,39 +1,49 @@
 .edit-container {
     background: white;
     color: black;
-    // height: 450px;
     min-height: 450px;
 
     .edit-header {
         background: black;
         color: white;
         padding: 5px;
+        display: -ms-grid;
+        display: grid;
 
-        &.row {
-            margin: 0;
+        // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 100px 1fr 220px 172px;
+        grid-template-columns: 100px 1fr 220px 172px;
+
+        .check-wrapper {
+            grid-column: 1;
+            grid-row: 1;
+
+            .checkbox {
+                margin: 0;
+            }
         }
 
-        .checkbox {
-            display: inline-block;
+        .name-wrapper {
+            grid-column: 2;
+            grid-row: 1;
         }
 
-        .edit-title {
-            display: inline-block;
-            margin: 0 20px;
-            margin-top: 10px;
+        .buttons-wrapper {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .action-wrapper {
+            grid-column: 4;
+            grid-row: 1;
         }
 
         .glyphicon {
             color: white;
         }
-
-        .edit-buttons {
-            margin-top: 3px;
-        }
     }
 
     .edit-aside {
-
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
         }
@@ -67,7 +77,9 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.3); // sass-lint:disable-line leading-zero
+        background: rgba(0, 0, 0, 0.3);
+
+        // sass-lint:disable-line leading-zero
         display: flex;
         flex-direction: column;
         justify-content: space-around;
