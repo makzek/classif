@@ -1,6 +1,7 @@
-import { Component, HostListener, TemplateRef } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -8,8 +9,6 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 @Component({
     selector: 'eos-edit-card',
@@ -24,8 +23,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     selfLink: string;
     editMode = false;
     wasEdit = false;
-    hideWarning = true;
-    hideWarningEditing = true;
+    // hideWarning = true;
+    // hideWarningEditing = true;
     i: number = -1;
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
@@ -34,8 +33,9 @@ export class EditCardComponent implements CanDeactivateGuard {
     colCount: number;
     lastEditedCard: EditedCard;
     dictIdFromDescriptor: string;
-    public modalUnsaveRef: BsModalRef;
-    public modalOnlyRef: BsModalRef;
+
+    @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
+    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
     @HostListener('window:beforeunload') canDeactivate2(): boolean {
         this.clearStorage();
@@ -50,7 +50,6 @@ export class EditCardComponent implements CanDeactivateGuard {
         private route: ActivatedRoute,
         private router: Router,
         private actionService: EditCardActionService,
-        private modalService: BsModalService,
     ) {
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
@@ -118,11 +117,11 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.router.navigate([this.selfLink]);
     }
 
-    goTo(route: string, template: TemplateRef<any>): void {
+    goTo(route: string): void {
         if (!this.wasEdit) {
             this.router.navigate([route]);
         } else {
-            this.modalUnsaveRef = this.modalService.show(template);
+            this.modalUnsaveRef.show();
         }
     }
 
@@ -139,13 +138,14 @@ export class EditCardComponent implements CanDeactivateGuard {
     canDeactivate() {
         if (this.wasEdit) {
             /* if there are any unsaved changes, an action required */
-            this.hideWarning = false;
+            // this.hideWarning = false;
+            this.modalUnsaveRef.show();
             return false;
         }
         return true;
     }
 
-    openEditMode(template: TemplateRef<any>): void {
+    openEditMode(): void {
         this.lastEditedCard = this.getLastEditedCard();
         console.log(this.lastEditedCard);
         if (this.lastEditedCard) {
@@ -154,8 +154,8 @@ export class EditCardComponent implements CanDeactivateGuard {
             } else {
                  /* try to edit a different card */
                 if (this.nodeId !== this.lastEditedCard.id) {
-                    this.hideWarningEditing = false;
-                    this.modalUnsaveRef = this.modalService.show(template);
+                    // this.hideWarningEditing = false;
+                    this.modalOnlyRef.show();
                 /* forbid the edit-mode on other browser tabs */
                 } else {
                     this.editMode = false;
