@@ -10,6 +10,22 @@ eos-node-actions {
         }
     }
 
+    @media (max-width: 1180px) {
+        .first-line {
+            height: 100px;
+
+            .deleted-toggle {
+                top: 0;
+                line-height: 3;
+            }
+
+            .search {
+                float: none !important;
+                width: 100%;
+            }
+        }
+    }
+
     .second-line {
         border-bottom: 1px solid gray;
         margin-bottom: 10px;
