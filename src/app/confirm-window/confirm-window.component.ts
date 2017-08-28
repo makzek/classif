@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, Input, Output, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
@@ -11,9 +11,9 @@ export class ConfirmWindowComponent {
 
     public modalRef: BsModalRef;
 
-    title: string;
-    text: string;
-    isConfirm: boolean;
+    @Input() title: string;
+    @Input() body: string;
+    @Output() isConfirm: boolean;
 
     constructor(private modalService: BsModalService) {}
 
@@ -21,7 +21,7 @@ export class ConfirmWindowComponent {
         this.modalRef = this.modalService.show(template);
     }
 
-    public agree() {
+    public confirm() {
         this.isConfirm = true;
         this.modalRef.hide();
     }
