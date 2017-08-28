@@ -92,7 +92,7 @@ export class EosDictService {
                     this._api.getDictionaryMocked(dictionaryId)
                         .then((data: any) => {
                             _dictionary = new EosDictionary(new DictionaryDescriptor(BASIC_DICT), data);
-                            // _dictionary = new EosDictionary(new DictionaryDescriptor(DEPARTMENTS_DICT), data);
+                            //_dictionary = new EosDictionary(new DictionaryDescriptor(DEPARTMENTS_DICT), data);
                             console.log('_dictionary', _dictionary);
                             this._dictionary = _dictionary;
                             return this._api.getDictionaryNodesMocked(dictionaryId);

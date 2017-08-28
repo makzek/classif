@@ -3,7 +3,6 @@
         height: $desktop-link-size;
         margin: $desktop-link-margin;
         width: $desktop-link-size;
-        // background-color: $modal-background;
         white-space: normal;
         overflow: hidden;
     }
@@ -35,11 +34,9 @@
             right: 15px;
             height: 1.42857143em;
             width: 60px;
-            // background: linear-gradient(to right, transparent 0%, $modal-background 50%);
         }
 
         .title-input {
-            color: black;
             width: 100%;
             height: 100px;
         }
@@ -55,7 +52,6 @@
     .recent {
         height: 4 * ($desktop-link-size + $desktop-link-margin);
         width: 2 * $desktop-link-size;
-        // background-color: $modal-background;
         margin: $desktop-link-margin;
         padding: 0;
         grid-column: 2;
@@ -73,11 +69,10 @@
         .recent-list {
             list-style: none;
             padding: 0;
-            border-top: 1px solid #d3d2d1;
+            border-top: 1px solid transparent;
 
             .recent-item {
-                // background: white;
-                border-bottom: 1px solid #d3d2d1;
+                border-bottom: 1px solid transparent;
                 line-height: 3;
                 overflow: hidden;
                 text-overflow: ellipsis;

@@ -1,57 +1,44 @@
-eos-node-list {
-    .nodes-wrapper {
-        background: white;
-        color: black;
-        padding: 10px;
+.eos-node-list {
+    padding: 10px;
 
-        .checkbox {
-            margin-left: 5px;
-            margin-right: -5px;
-            vertical-align: middle;
+    .checkbox {
+        margin-left: 5px;
+        margin-right: -5px;
+        vertical-align: middle;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: space-around;
+
+        .show-more {
+            line-height: 75px;
+            cursor: pointer;
+        }
+    }
+
+    .elements {
+        list-style: none;
+        max-height: calc(100vh - 150px - 95px - 150px);
+        overflow-y: auto;
+        padding-left: 20px;
+
+        &.has-parent {
+            max-height: calc(100vh - 150px - 95px - 215px);
         }
 
-        .deleted {
-            color: $icon-color;
-        }
-
-        .pagination-wrapper {
+        li,
+        .is-deleted-wrap {
             display: flex;
-            justify-content: space-around;
-
-            .show-more {
-                line-height: 75px;
-                cursor: pointer;
-            }
         }
 
-        .elements {
-            list-style: none;
-            max-height: calc(100vh - 150px - 95px - 150px);
-            overflow-y: auto;
-            padding-left: 20px;
+        .node-info {
+            align-self: center;
+            cursor: pointer;
+            margin-left: 10px;
 
-            &.has-parent {
-                max-height: calc(100vh - 150px - 95px - 215px);
-            }
-
-            li,
-            .is-deleted-wrap {
-                display: flex;
-            }
-
-            .highlight {
-                background: yellow;
-            }
-
-            .node-info {
-                align-self: center;
-
-                cursor: pointer;
-                margin-left: 10px;
-
-                .code {
-                    margin-right: 10px;
-                }
+            .code {
+                margin-right: 10px;
             }
         }
     }

@@ -3,28 +3,16 @@
         position: relative;
         left: -20px;
         height: 40px;
-
-        .sandwich {
-            background: black;
-
-            &::before,
-            &::after {
-                background: black;
-            }
-        }
     }
 
     .opened-node-wrapper {
-        background: white;
-        color: black;
-
         .short-info {
             display: inline-block;
             padding: 10px;
         }
 
         .full-info {
-            border-top: 5px solid $background-color;
+            border-top: 5px solid transparent;
             padding: 10px;
         }
     }

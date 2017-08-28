@@ -1,7 +1,7 @@
-eos-node-actions {
+.eos-node-actions {
     .first-line {
         height: 50px;
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid transparent;
 
         .deleted-toggle {
             cursor: pointer;
@@ -27,14 +27,14 @@ eos-node-actions {
     }
 
     .second-line {
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid transparent;
         margin-bottom: 10px;
 
         .controller {
             margin-top: 10px;
 
             .circle {
-                border: 1px solid gray;
+                border: 1px solid transparent;
                 border-radius: 50%;
                 display: inline-block;
                 height: 25px;
@@ -62,10 +62,6 @@ eos-node-actions {
                 line-height: -35px;
                 margin-left: 3px;
                 margin-top: -4px;
-            }
-
-            .control-implemented {
-                color: #337ab7;
             }
         }
 

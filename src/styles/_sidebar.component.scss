@@ -1,6 +1,4 @@
 .sidebar {
-    background: $background-color;
-
     .glyphicon,
     .fa {
         width: 20px;
@@ -34,22 +32,13 @@
 
     .sandwich-wrapper {
         /* height: $breadcrumbs-height; */
-        border-bottom: 1px solid $icon-color;
-        padding: $grid-gutter-width /2 10px;
+        border-bottom: 1px solid transparent;
+        padding: $grid-gutter-width / 2 10px;
 
         .fa {
             font-size: 24px;
             line-height: 1px;
             vertical-align: middle;
-        }
-
-        .sandwich {
-            background: $icon-color;
-
-            &::before,
-            &::after {
-                background: $icon-color;
-            }
         }
     }
 }

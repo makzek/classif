@@ -1,8 +1,6 @@
 .main-container {
     -ms-grid-columns: auto 1fr 0;
     -ms-grid-rows: 100px 1fr 0;
-    background: $background-color;
-    color: $font-color;
     display: -ms-grid;
     display: grid; // sass-lint:disable-line no-duplicate-properties
     position: absolute;
@@ -27,14 +25,15 @@
 .sidebar-wrapper {
     grid-column: 1;
     grid-row: 2;
-    border-right: 1px solid $icon-color;
+    border-right: 1px solid transparent;
 }
 
 .header-wrapper {
     grid-column: 1;
-    -ms-grid-column-span: 4; // sass-lint:disable-line no-misspelled-properties
+    -ms-grid-column-span: 4;  // sass-lint:disable-line no-misspelled-properties
+
     grid-row: 1;
-    border-bottom: 1px solid $icon-color;
+    border-bottom: 1px solid transparent;
     padding: $grid-gutter-width / 2;
     grid-column-start: 1;
     grid-column-end: 4;
@@ -56,10 +55,6 @@
     width: 30%;
 }
 
-.title {
-    background: $background-color;
-}
-
 .header-wrapper-right {
     ul {
         list-style: none;
@@ -68,7 +63,7 @@
 
         li {
             display: inline-block;
-            margin: 0 0 0 $grid-gutter-width / 2;
+            margin: 0 0 0 ($grid-gutter-width / 2);
 
             &:first-child {
                 margin-left: 0;
