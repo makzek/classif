@@ -215,6 +215,18 @@ export class EosDictService {
         }
     }
 
+    private userOrderMove(nodes: EosDictionaryNode[], num: number) {
+        nodes.forEach((node, i) => {
+            const newIndex = i + num;
+            if (node.selected && newIndex >= 0 && newIndex < nodes.length) {
+                console.log(newIndex, node);
+                nodes.splice(i, 1);
+                nodes.splice(newIndex, 0, node);
+                this.userOrder(nodes);
+            }
+        });
+    }
+
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
@@ -256,5 +268,21 @@ export class EosDictService {
         if (node.children) {
             node.children.forEach((subNode) => this.restoreItem(subNode));
         }
+    }
+
+    public userOrder(nodes: EosDictionaryNode[]) {
+        nodes.forEach((node, i) => {
+            node.sorting = i;
+        });
+    }
+
+    public userOrderMoveUp(nodes: EosDictionaryNode[]) {
+        this.userOrderMove(nodes, -1);
+        this._selectedNode$.next(this._selectedNode);
+    }
+
+    public userOrderMoveDown(nodes: EosDictionaryNode[]) {
+        this.userOrderMove(nodes, 1);
+        this._selectedNode$.next(this._selectedNode);
     }
 }

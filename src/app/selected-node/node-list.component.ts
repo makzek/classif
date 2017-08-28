@@ -110,6 +110,15 @@ export class NodeListComponent {
                     }
                     case E_RECORD_ACTIONS.userOrder: {
                         this.toggleUserSort();
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.moveUp: {
+                        this.userSortMoveUp();
+                        break;
+                    }
+                    case E_RECORD_ACTIONS.moveDown: {
+                        this.userSortMoveDown();
+                        break;
                     }
                 }
             });
@@ -145,10 +154,15 @@ export class NodeListComponent {
     }
 
     userSortItems(): void {
-        let i = 1;
-        for (const item of this.nodes) {
-            item.sorting = i++;
-        }
+        this._dictionaryService.userOrder(this.nodes);
+    }
+
+    userSortMoveUp(): void {
+        this._dictionaryService.userOrderMoveUp(this.nodes);
+    }
+
+    userSortMoveDown(): void {
+        this._dictionaryService.userOrderMoveDown(this.nodes);
     }
 
     toggleUserSort(): void {

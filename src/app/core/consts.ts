@@ -4,8 +4,8 @@ export const SEARCH_KEYS = ['code', 'title', 'description'];
 export const BASIC_DICT: IDictionaryDescriptor = {
     id: 'rubricator',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch'],
-    itemActions: ['edit', 'view'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch', 'moveUp', 'moveDown'],
+    itemActions: ['edit', 'view', 'moveUp', 'moveDown'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     fields: [{

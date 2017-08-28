@@ -35,6 +35,8 @@ export class NodeActionsComponent {
     showDeleteHard: boolean;
 
     showUserSort: boolean;
+    showUserSortUp: boolean;
+    showUserSortDown: boolean;
     userSort = false;
 
     fields: IFieldView[];
@@ -64,6 +66,8 @@ export class NodeActionsComponent {
                 this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
                 this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
                 this.showUserSort = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.userOrder);
+                this.showUserSortUp = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.moveUp);
+                this.showUserSortDown = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.moveDown);
                 /* tslint:enable:no-bitwise */
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
                 this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
@@ -142,11 +146,11 @@ export class NodeActionsComponent {
     }
 
     userSortingUp() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+        this._actionService.emitAction(E_RECORD_ACTIONS.moveUp);
     }
 
     userSortingDown() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+        this._actionService.emitAction(E_RECORD_ACTIONS.moveDown);
     }
 
     checkAllItems() {
