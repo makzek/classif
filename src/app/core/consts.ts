@@ -50,7 +50,6 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'code',
         title: 'Код',
         type: 'string',
-        column: 2,
     }, {
         key: 'title',
         title: 'Заголовок',
@@ -61,7 +60,7 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         type: 'text'
     }, {
         key: 'titleRP',
-        title: 'Заголовок в родительном падеже',
+        title: 'Подразделение в родительном падеже',
         type: 'text',
     }, {
         key: 'notInPositionTitle',
@@ -71,7 +70,6 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'SEV',
         title: 'Индекс СЭВ',
         type: 'text',
-        column: 2,
     }, {
         key: 'index',
         title: 'Индекс',
