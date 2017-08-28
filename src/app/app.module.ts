@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 import { EosRestModule } from '../eos-rest/eos-rest.module';
 
 import { AppRoutingModule } from './app-routing.module';

@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { DeliveryComponent } from './clman/delivery.component';
 import { DeliveryDetailComponent } from './clman/delivery-detail.component';
 
+import { IApiCfg } from './interfaces/interfaces';
 import { ApiCfg } from './core/api-cfg';
 import { PipRX } from './services/pipRX.service';
 
@@ -31,7 +32,7 @@ import { PipRX } from './services/pipRX.service';
     ]
 })
 export class EosRestModule {
-    static forRoot(config: ApiCfg): ModuleWithProviders {
+    static forRoot(config: IApiCfg): ModuleWithProviders {
         return {
             ngModule: EosRestModule,
             providers: [

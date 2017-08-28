@@ -20,3 +20,9 @@ export enum E_RECORD_ACTIONS {
     slantForForms,
     /* to be extended */
 };
+
+export enum E_ACTION_GROUPS {
+    common,
+    item,
+    group
+};

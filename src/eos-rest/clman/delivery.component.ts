@@ -19,13 +19,13 @@ export class DeliveryComponent implements OnInit {
 
     ngOnInit() {
 
-        this.pip.login().subscribe((res) => {
+        this.pip.login('tver', 'tver').subscribe((res) => {
             this.pip.read<IDeliveryCl>({
                 // - Загрузка всех строк
                 // DELIVERY_CL: ALL_ROWS
 
                 // - Загрузка по известным первичным ключам
-                // IDeliveryCl: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
+                // DELIVERY_CL: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
                 // 1032930, 1032965, 1032932, 1033581, 1033582, 1037443, 1037634,
                 //     1037681, 1037682, 1037683, 1037684, 1037685]
 

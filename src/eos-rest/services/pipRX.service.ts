@@ -26,9 +26,9 @@ export class PipRX {
         this._metadata.init();
     }
 
-    public login() {
-        return this.http
-            .get('http://192.168.1.50/eos/main.aspx?login=tver&pass=tver', this._options); // TODO move to authorize service
+    public login(user: string, passwd: string) {
+        const _url = this._cfg.authSrv + '?' + 'login=' + user + '&pass=' + passwd;
+        return this.http.get(_url, this._options); // TODO move to authorize service
     }
 
     private getData(url: string) {

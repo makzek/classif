@@ -9,7 +9,7 @@ import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
-import { E_RECORD_ACTIONS } from '../core/record-action';
+import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-node-list',
@@ -43,88 +43,88 @@ export class NodeListComponent {
         private modalService: BsModalService,
         private router: Router,
         private _actionService: NodeListActionsService) {
-            this._dictionaryService.openedNode$.subscribe((node) => {
-                this.openedNode = node;
-            });
+        this._dictionaryService.openedNode$.subscribe((node) => {
+            this.openedNode = node;
+        });
 
-            this._dictionaryService.dictionary$.subscribe(
-                (dictionary) => {
-                    if (dictionary) {
-                        this._dictionaryId = dictionary.id;
-                        this.viewFields = dictionary.descriptor.listFields;
-                        this.showCheckbox = !!dictionary.descriptor.actions.findIndex((item) => E_RECORD_ACTIONS.markRecords === item);
-                    }
-                },
-                (error) => alert(error)
-            );
-            this._dictionaryService.selectedNode$.subscribe((node) => {
-                if (node) {
-                    this._update(node.children, true);
+        this._dictionaryService.dictionary$.subscribe(
+            (dictionary) => {
+                if (dictionary) {
+                    this._dictionaryId = dictionary.id;
+                    this.viewFields = dictionary.descriptor.listFields;
+                    this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
-            });
-            this._dictionaryService.searchResults$.subscribe((nodes) => {
-                if (nodes.length) {
-                    this._update(nodes, false);
-                }
-            });
+            },
+            (error) => alert(error)
+        );
+        this._dictionaryService.selectedNode$.subscribe((node) => {
+            if (node) {
+                this._update(node.children, true);
+            }
+        });
+        this._dictionaryService.searchResults$.subscribe((nodes) => {
+            if (nodes.length) {
+                this._update(nodes, false);
+            }
+        });
 
-            this._userSettingsService.settings.subscribe((res) => {
-                this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-            });
+        this._userSettingsService.settings.subscribe((res) => {
+            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
 
-            this._actionService.action$.subscribe((action) => {
-                switch (action) {
-                    case E_RECORD_ACTIONS.edit: {
-                        if (this.openedNode) {
-                            this.editNode(this.openedNode);
-                        }
-                        break;
+        this._actionService.action$.subscribe((action) => {
+            switch (action) {
+                case E_RECORD_ACTIONS.edit: {
+                    if (this.openedNode) {
+                        this.editNode(this.openedNode);
                     }
-                    case E_RECORD_ACTIONS.remove: {
-                        this.deleteSelectedItems();
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.navigateDown: {
-                        this.nextItem(false);
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.navigateUp: {
-                        this.nextItem(true);
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.removeHard: {
-                        this.physicallyDelete();
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.restore: {
-                        this.restoringLogicallyDeletedItem();
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.markRecords: {
-                        this.checkAllItems(true);
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.unmarkRecords: {
-                        this.checkAllItems(false);
-                        break;
-                    }
-                    case E_RECORD_ACTIONS.userOrder: {
-                        this.toggleUserSort();
-                    }
+                    break;
                 }
-            });
+                case E_RECORD_ACTIONS.remove: {
+                    this.deleteSelectedItems();
+                    break;
+                }
+                case E_RECORD_ACTIONS.navigateDown: {
+                    this.nextItem(false);
+                    break;
+                }
+                case E_RECORD_ACTIONS.navigateUp: {
+                    this.nextItem(true);
+                    break;
+                }
+                case E_RECORD_ACTIONS.removeHard: {
+                    this.physicallyDelete();
+                    break;
+                }
+                case E_RECORD_ACTIONS.restore: {
+                    this.restoringLogicallyDeletedItem();
+                    break;
+                }
+                case E_RECORD_ACTIONS.markRecords: {
+                    this.checkAllItems(true);
+                    break;
+                }
+                case E_RECORD_ACTIONS.unmarkRecords: {
+                    this.checkAllItems(false);
+                    break;
+                }
+                case E_RECORD_ACTIONS.userOrder: {
+                    this.toggleUserSort();
+                }
+            }
+        });
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
         this.nodes = nodes;
         this.hasParent = hasParent;
         this.totalItems = nodes.length;
-            if (nodes.length) {
-                    this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
-                    if (!this.hasParent) {
-                        this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
-                    }
-                }
+        if (nodes.length) {
+            this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
+            if (!this.hasParent) {
+                this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
+            }
+        }
 
     }
 
@@ -177,7 +177,7 @@ export class NodeListComponent {
     deleteSelectedItems(): void {
         const selectedNodes: string[] = [];
         if (this.nodes) {
-                this.nodes.forEach((child) => {
+            this.nodes.forEach((child) => {
                 if (child.selected && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.selected = false;
@@ -248,7 +248,7 @@ export class NodeListComponent {
         this.pageAtList++;
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
             * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
-            this.currentPage++;
+        this.currentPage++;
     }
 
     setItemCount(value: string) {
