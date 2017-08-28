@@ -1,6 +1,7 @@
 import { IEnt } from '../interfaces/interfaces';
 import { BATCH_BOUNDARY, CHANGESET_BOUNDARY, _ES, _T, URL_LIMIT } from './consts';
 import { Response } from '@angular/http';
+import { PipRX } from '../services/pipRX.service';
 
 import { Metadata } from './metadata';
 
@@ -8,9 +9,10 @@ declare let System: any;
 
 window['_t'] = _T;
 
-export let _metadata: Metadata; /* wtf? */
+// export var _metadata: Metadata; /* wtf? */
 
 export class Utils {
+
     static distinctIDS(l: any[]): string {
         let result = ',';
         for (let i = 0; i < l.length; i++) {
@@ -47,21 +49,24 @@ export class Utils {
         item._more_json = JSON.parse(item._more_json);
         const exp = item._more_json.expand;
         if (exp) {
-            exp.keys.foreach((ln) => {
-                item[ln] = exp[ln];
-            })
+            for (const ln in exp) {
+                if (exp.hasOwnProperty(ln)) {
+                    item[ln] = exp[ln];
+                }
+            }
+
             delete item._more_json.expand;
         }
     }
 
     static parseEntity(items: any[], tn: string) {
-        const t = (tn) ? _metadata[tn] : undefined;
+        const t = (tn) ? window['_metadata'][tn] : undefined;
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (item._more_json) {
                 Utils.parseMoreJson(item, tn);
             }
-            item.keys.foreach((pn) => {
+            for (const pn in item) {
                 if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
                     delete item[pn];
                 } else if (t) {
@@ -74,7 +79,8 @@ export class Utils {
                         }
                     }
                 }
-            });
+            }
+
             item.__metadata = { __type: tn };
         }
     }
@@ -183,8 +189,8 @@ export class Utils {
     */
 
     static appendChange(it: any, chr: any[], path: string) {
-        const etn = _metadata.etn(it);
-        const et = _metadata[etn];
+        const etn = window['_metadata'].etn(it);
+        const et = window['_metadata'][etn];
         const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
@@ -196,7 +202,8 @@ export class Utils {
 
         if (it._State === _ES.Added || it._State === _ES.Modified || (!it._State && it._orig)) {
             ch.data = {};
-            et.properties.keys.foreach((pn) => {
+
+            for (const pn in et.properties) {
                 if (et.readonly.indexOf(pn) === -1 && it[pn] !== undefined) {
                     let v = it[pn];
                     if (v instanceof Function) { v = v(); }
@@ -205,7 +212,8 @@ export class Utils {
                         hasChanges = true;
                     }
                 }
-            })
+            }
+
             if (hasChanges && !it._State) { ch.method = _ES.Modified; }
         }
         if (hasChanges) {
@@ -248,8 +256,8 @@ export class Utils {
     }
 
     static PKinfo(it: any) {
-        const etn = _metadata.etn(it);
-        const et = _metadata[etn];
+        const etn = window['_metadata'].etn(it);
+        const et = window['_metadata'][etn];
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
@@ -257,9 +265,11 @@ export class Utils {
 
     static clone<T>(o: T): T {
         const r = <T>{};
-        (<any>o).keys.foreach((pn) => {
-            r[pn] = o[pn];
-        })
+        for (const pn in <any>o) {
+            if (o.hasOwnProperty(pn)) {
+                r[pn] = o[pn];
+            }
+        }
         return r;
     }
 

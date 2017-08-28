@@ -1,28 +1,44 @@
 import { IApiCfg, ITypeDef } from '../interfaces/interfaces';
 
 declare let System: any;
-/* export let _metadata: Metadata; /* why we need global variable? */
+export let _metadata: Metadata; /* why we need global variable? */
+interface IScript {
+    src: string;
+    loaded: boolean;
+    status: string;
+}
+
+interface IScriptStore {
+    [name: string]: IScript;
+}
 
 export class Metadata {
+    private _scripts: IScriptStore;
     [key: string]: any;
 
-    constructor(cfg: IApiCfg) {
+    constructor(private _cfg: IApiCfg) {
         window['_metadata'] = this;
-        console.log('create Metadata', cfg.metadataJs);
-        this.init(cfg.metadataJs);
+        this._scripts = {};
+        _cfg.metadataJs.forEach((s) => {
+            this._scripts[s] = {
+                src: s,
+                loaded: false,
+                status: '',
+            };
+        });
     }
 
-    public init(paths: string[]) {
-        console.log('init', paths);
-
-        for (let i = 0; i < paths.length; i++) {
-            // require(paths[i], false);
-            // System.import(paths[i]);
-        }
+    public init(): Promise<any> {
+        const promises: Promise<any>[] = [];
+        console.log('init', this._cfg.metadataJs);
+        this._cfg.metadataJs.forEach((s) => {
+            promises.push(this._loadScript(s))
+        });
+        return Promise.all(promises);
     }
 
     public merge(types: any) {
-        types.keys.foreach((t) => {
+        Object.keys(types).forEach((t) => {
             const old = this[t];
             if (!old) {
                 this[t] = types[t];
@@ -38,6 +54,38 @@ export class Metadata {
 
     td(etn: string): ITypeDef {
         return this[etn];
+    }
+
+    private _loadScript(name: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // resolve if already loaded
+            if (this._scripts[name].loaded) {
+                resolve({ script: name, loaded: true, status: 'Already Loaded' });
+            } else {
+                // load script
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = this._scripts[name].src;
+                /*
+                if (script.readyState) {  // IE
+                    script.onreadystatechange = () => {
+                        if (script.readyState === "loaded" || script.readyState === "complete") {
+                            script.onreadystatechange = null;
+                            this.scripts[name].loaded = true;
+                            resolve({ script: name, loaded: true, status: 'Loaded' });
+                        }
+                    };
+                } else
+                */ {  // Others
+                    script.onload = () => {
+                        this._scripts[name].loaded = true;
+                        resolve({ script: name, loaded: true, status: 'Loaded' });
+                    };
+                }
+                script.onerror = (error: any) => resolve({ script: name, loaded: false, status: 'Loaded' });
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }
+        });
     }
 }
 
