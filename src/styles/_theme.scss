@@ -1,0 +1,185 @@
+.main-theme {
+
+    // main-layout
+
+    &.main-container {
+        background-color: $primary-color-main-theme;
+        color: $primary-font-color-main-theme;
+    }
+
+    .content-wrapper {
+        background: $secondary-color-main-theme;
+    }
+
+    .breadcrumb-wrapper {
+        background: $primary-color-main-theme;
+    }
+
+    .sidebar-wrapper,
+    .header-wrapper,
+    .breadcrumb-wrapper,
+    .sandwich-wrapper {
+        border-color: $deviders-color-main-theme;
+    }
+
+    .opened-wrapper {
+        background-color: $block-color-main-theme;
+        color: $secondary-font-color-main-theme;
+
+        .opened-node-wrapper {
+            .full-info {
+                border-color: $secondary-color-main-theme;
+            }
+        }
+    }
+
+    .tree-wrapper {
+        background: $block-color-main-theme;
+        color: $secondary-font-color-main-theme;
+    }
+
+    .sandwich-wrapper {
+        .sandwich {
+            background: $secondary-font-color-main-theme;
+
+            &::before,
+            &::after {
+                background: $secondary-font-color-main-theme;
+            }
+        }
+    }
+
+    // components
+
+    .eos-node-list {
+        background-color: $block-color-main-theme;
+        color: $secondary-font-color-main-theme;
+
+        .deleted {
+            color: $disabled-color-main-theme;
+        }
+
+        .highlight {
+            background: $highlight-color-main-theme;
+        }
+    }
+
+    .eos-tree-node {
+        .deleted {
+            color: $disabled-color-main-theme;
+        }
+
+        span {
+            &.active {
+                background-color: $highlight-color-main-theme;
+            }
+        }
+    }
+
+    .eos-desktop {
+        .btn-sq-lg,
+        .recent {
+            background: $block-color-main-theme;
+            color: $secondary-font-color-main-theme;
+        }
+
+        .btn-sq-lg {
+            .end-hidder {
+                background: linear-gradient(to right, transparent 0%, $block-color-main-theme 50%);
+            }
+        }
+
+        .recent {
+            .recent-list {
+                &,
+                .recent-item {
+                    border-color: $deviders-color-main-theme;
+                }
+            }
+        }
+
+        .glyphicon {
+            color: $secondary-font-color-main-theme;
+        }
+    }
+
+    .eos-dictionaries {
+        .btn-sq-lg {
+            background: $block-color-main-theme;
+            color: $secondary-font-color-main-theme;
+        }
+    }
+
+    .eos-user {
+        .avatar {
+            background: $block-color-main-theme;
+        }
+    }
+
+    .eos-desktop-switcher {
+        color: $secondary-font-color-main-theme;
+
+        .menuitem {
+            a {
+                color: $secondary-font-color-main-theme;
+            }
+
+            &:hover {
+                background-color: $secondary-color-main-theme;
+            }
+
+            &:active {
+                background-color: $secondary-color-main-theme;
+            }
+        }
+    }
+
+    .eos-edit-card {
+        background: $block-color-main-theme;
+        color: $secondary-font-color-main-theme;
+
+        .edit-header {
+            background: $primary-color-main-theme;
+            color: $primary-font-color-main-theme;
+
+            .glyphicon {
+                color: $primary-font-color-main-theme;
+            }
+        }
+    }
+
+    .eos-node-actions {
+        .first-line,
+        .second-line {
+            &,
+            .circle {
+                border-color: $deviders-color-main-theme;
+            }
+        }
+
+        .control-implemented {
+            color: $button-color-main-theme;
+        }
+    }
+
+
+    // spacial templates
+
+    .eos-departments-card-edit {
+        .tabs {
+            .tab-item {
+                border-color: $secondary-color-main-theme;
+
+                &.active {
+                    background-color: $button-color-main-theme;
+                    border-color: transparent;
+                    color: $block-color-main-theme;
+                }
+            }
+        }
+
+        .photo {
+            border-color: $secondary-color-main-theme;
+        }
+    }
+}

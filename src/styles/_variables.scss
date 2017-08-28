@@ -1,13 +1,19 @@
 $fa-font-path: "../../node_modules/font-awesome/fonts";
 $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 
-$white: #ffffff;
-$light-grey: #eeeeee;
+$white: #fff;
+$light-grey: #eee;
 
-$background-color: #0b1324;
-$icon-color: grey;
-$font-color: $white;
-$modal-background: #d1d2d3;
+$primary-color-main-theme: #0b1324;
+$primary-font-color-main-theme: $white;
+$secondary-color-main-theme: #f3f2f1;
+$secondary-font-color-main-theme: black;
+$deviders-color-main-theme: grey;
+$block-color-main-theme: $white;
+$button-color-main-theme: #337ab7;
+$highlight-color-main-theme: #d9edf7;
+$disabled-color-main-theme: grey;
+
 
 $breadcrumbs-height: 65px;
 $header-element-height: 49px;

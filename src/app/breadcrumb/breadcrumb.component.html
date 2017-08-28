@@ -1,6 +1,9 @@
 <div class="breadcrumb-wrapper">
     <ol class="breadcrumb">
-        <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;"><a [routerLink]="[route.url, route.params]" *ngIf="!isLast">{{route.title}}</a><span *ngIf="isLast">{{route.title}}</span></li>
+        <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
+            <a class="breadcrumb-item" [routerLink]="[route.url, route.params]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}</a>
+            <span class="breadcrumb-item" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
+        </li>
     </ol>
     <eos-pushpin></eos-pushpin>
 </div>

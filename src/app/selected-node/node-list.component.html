@@ -1,4 +1,4 @@
-<div class="nodes-wrapper">
+<div class="eos-node-list">
     <eos-node-actions></eos-node-actions>
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div>
@@ -18,8 +18,8 @@
         </ul>
         
         <ul *ngIf="nodes && !userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngFor="let item of nodeListPerPage">
-                <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.id}">
+            <li *ngFor="let item of nodeListPerPage" [ngClass]="{'highlight': openedNode.id === item.id}">
+                <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap">
                     <span *ngIf="showCheckbox" class="checkbox">
                         <label><input type="checkbox" [(ngModel)]="item.selected"></label>

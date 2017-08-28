@@ -9,8 +9,8 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     id: 'rubricator',
     apiInstance: 'RUBRIC_CL',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch'],
-    itemActions: ['edit', 'view'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch', 'moveUp', 'moveDown'],
+    itemActions: ['edit', 'view', 'moveUp', 'moveDown'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     fields: [{
@@ -56,7 +56,6 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'code',
         title: 'Код',
         type: 'string',
-        column: 2,
     }, {
         key: 'title',
         title: 'Заголовок',
@@ -67,7 +66,7 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         type: 'text'
     }, {
         key: 'titleRP',
-        title: 'Заголовок в родительном падеже',
+        title: 'Подразделение в родительном падеже',
         type: 'text',
     }, {
         key: 'notInPositionTitle',
@@ -77,7 +76,6 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'SEV',
         title: 'Индекс СЭВ',
         type: 'text',
-        column: 2,
     }, {
         key: 'index',
         title: 'Индекс',

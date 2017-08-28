@@ -3,7 +3,6 @@ eos-selected-node {
         align-self: center;
         cursor: pointer;
         margin-left: 10px;
-        color: black;
         display: flex;
 
         .node-info {
@@ -17,9 +16,5 @@ eos-selected-node {
         .checkbox {
             display: inline-block;
         }
-    }
-
-    .highlight {
-        background: yellow;
     }
 }

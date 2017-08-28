@@ -6,6 +6,8 @@ export enum E_RECORD_ACTIONS {
     removeHard,
     order,
     userOrder,
+    moveUp,
+    moveDown,
     quickSearch,
     fullSearch,
     import,
