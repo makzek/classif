@@ -1,6 +1,6 @@
 .sandwich-wrapper {
     .sandwich {
-        background: white;
+        // background: white;
         display: inline-block;
         height: 3px;
         position: relative;
@@ -8,7 +8,7 @@
 
         &::before,
         &::after {
-            background: white;
+            // background: white;
             content: "";
             display: inline-block;
             height: 3px;

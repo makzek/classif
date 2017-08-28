@@ -1,0 +1,43 @@
+.theme-1 {
+    .content-wrapper {
+        background: #f3f2f1;
+    }
+
+    .breadcrumb-wrapper {
+        background: #0b1324;
+    }
+
+    .eos-desktop {
+        .btn-sq-lg,
+        .recent {
+            background: white;
+            color: black;
+
+            .end-hidder {
+                background: linear-gradient(to right, transparent 0%, white 50%);
+            }
+        }
+    }
+
+    .opened-wrapper .opened-node-wrapper .full-info {
+        border-color: #f3f2f1;
+    }
+
+    .tree-wrapper {
+        background: white;
+        color: black;
+    }
+
+    .sandwich-wrapper .sandwich {
+        background: black;
+        
+        &::before,
+        &::after {
+            background: black;
+        }
+    }
+
+    .eos-tree-node span.active {
+        background-color: #d3d3d3;
+    }
+}

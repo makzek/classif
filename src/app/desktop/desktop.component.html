@@ -1,18 +1,20 @@
-<div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
-    <div [ngClass]="{'right': historyToLeft}">
-    <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
-        placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
-    </div>
+<div class="eos-desktop">
+    <div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
+        <div [ngClass]="{'right': historyToLeft}">
+        <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
+            placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
+        </div>
 
-    <div [ngClass]="{'left': historyToLeft}" class="btn recent">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
-        <span class="recent-title">История:</span>
-        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
-        <ul *ngIf="recentItems" class="recent-list">
-            <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="top">
-                <a [routerLink]="[link.link]">{{link.title}}</a>
-            </li>
-        </ul>
+        <div [ngClass]="{'left': historyToLeft}" class="btn recent">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
+            <span class="recent-title">История:</span>
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
+            <ul *ngIf="recentItems" class="recent-list">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="top">
+                    <a [routerLink]="[link.link]">{{link.title}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 

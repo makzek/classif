@@ -1,11 +1,17 @@
-eos-desktop {
+.eos-desktop {
     .btn-sq-lg {
         height: $desktop-link-size;
         margin: $desktop-link-margin;
         width: $desktop-link-size;
-        background-color: $modal-background;
+        // background-color: $modal-background;
         white-space: normal;
         overflow: hidden;
+    }
+
+    .sortable-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-around;
     }
 
     .sortable-item {
@@ -29,7 +35,7 @@ eos-desktop {
             right: 15px;
             height: 1.42857143em;
             width: 60px;
-            background: linear-gradient(to right, transparent 0%, $modal-background 50%);
+            // background: linear-gradient(to right, transparent 0%, $modal-background 50%);
         }
 
         .title-input {
@@ -49,7 +55,7 @@ eos-desktop {
     .recent {
         height: 4 * ($desktop-link-size + $desktop-link-margin);
         width: 2 * $desktop-link-size;
-        background-color: $modal-background;
+        // background-color: $modal-background;
         margin: $desktop-link-margin;
         padding: 0;
         grid-column: 2;
@@ -67,9 +73,10 @@ eos-desktop {
         .recent-list {
             list-style: none;
             padding: 0;
+            border-top: 1px solid #d3d2d1;
 
             .recent-item {
-                background: white;
+                // background: white;
                 border-bottom: 1px solid #d3d2d1;
                 line-height: 3;
                 overflow: hidden;
