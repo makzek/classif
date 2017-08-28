@@ -38,16 +38,14 @@ export class Metadata {
     }
 
     public merge(types: any) {
-        if (types.length) {
-            for (const t in types) {
-                const old = this[t];
-                if (!old) {
-                    this[t] = types[t];
-                } else {
-                    old.relations = (old.relations || []).concat(types[t].relations || []);
-                }
+        Object.keys(types).forEach((t) => {
+            const old = this[t];
+            if (!old) {
+                this[t] = types[t];
+            } else {
+                old.relations = (old.relations || []).concat(types[t].relations || []);
             }
-        }
+        });
     }
 
     etn(item: any) {

@@ -49,8 +49,10 @@ export class Utils {
         item._more_json = JSON.parse(item._more_json);
         const exp = item._more_json.expand;
         if (exp) {
-            for (const ln in exp ) {
-                item[ln] = exp[ln];
+            for (const ln in exp) {
+                if (exp.hasOwnProperty(ln)) {
+                    item[ln] = exp[ln];
+                }
             }
 
             delete item._more_json.expand;
@@ -264,7 +266,9 @@ export class Utils {
     static clone<T>(o: T): T {
         const r = <T>{};
         for (const pn in <any>o) {
-            r[pn] = o[pn];
+            if (o.hasOwnProperty(pn)) {
+                r[pn] = o[pn];
+            }
         }
         return r;
     }
