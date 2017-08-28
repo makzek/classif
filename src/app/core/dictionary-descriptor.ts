@@ -48,7 +48,7 @@ export class DictionaryDescriptor {
     /* search fields */
     searchFields: FieldDescriptor[];
 
-    /* fill search filed set */
+    /* full search filed set */
     fullSearchFields: FieldDescriptor[];
 
     /* set of fields for edit form */
@@ -113,10 +113,14 @@ export class DictionaryDescriptor {
     }
 
     private _initFieldGroups(data: IDictionaryDescriptor) {
+        this['fieldGroups'] = [];
         if (data.fieldGroups) {
             data.fieldGroups.forEach((fg) => {
                 const fldGroup = new FieldGroup(fg.title);
-                fg.fields.forEach((fld) => this.record.addFieldToSet(fld, fldGroup.fields));
+                fg.fields.forEach((fld) => {
+                    this.record.addFieldToSet(fld, fldGroup.fields);
+                });
+                this['fieldGroups'].push(fldGroup);
             });
         }
     }

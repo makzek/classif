@@ -1,14 +1,14 @@
 eos-desktop {
     .btn-sq-lg {
-        height: 150px;
-        margin: 5px;
-        width: 150px;
+        height: $desktop-link-size;
+        margin: $desktop-link-margin;
+        width: $desktop-link-size;
         background-color: $modal-background;
         white-space: normal;
         overflow: hidden;
     }
 
-    .btn-wrapper {
+    .sortable-item {
         display: inline-block;
         position: relative;
 
@@ -16,6 +16,10 @@ eos-desktop {
             position: absolute;
             top: 10px;
             right: 10px;
+
+            &.lefter {
+                right: 30px;
+            }
         }
 
         .end-hidder {
@@ -27,5 +31,63 @@ eos-desktop {
             width: 60px;
             background: linear-gradient(to right, transparent 0%, $modal-background 50%);
         }
+
+        .title-input {
+            color: black;
+            width: 100%;
+            height: 100px;
+        }
     }
+
+    .right {
+        grid-row: 1;
+        grid-column: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+
+    .recent {
+        height: 4 * ($desktop-link-size + $desktop-link-margin);
+        width: 2 * $desktop-link-size;
+        background-color: $modal-background;
+        margin: $desktop-link-margin;
+        padding: 0;
+        grid-column: 2;
+        grid-row: 1;
+
+        &.left {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .recent-title {
+            line-height: 3;
+        }
+
+        .recent-list {
+            list-style: none;
+            padding: 0;
+
+            .recent-item {
+                background: white;
+                border-bottom: 1px solid #d3d2d1;
+                line-height: 3;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    .desktop-wrapper {
+        display: -ms-grid;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 1fr 2 * ($desktop-link-size + $desktop-link-margin);
+        grid-template-columns: 1fr 2 * ($desktop-link-size + $desktop-link-margin);
+
+        &.reverse {
+            -ms-grid-columns: 2 * ($desktop-link-size + $desktop-link-margin) 1fr;
+            grid-template-columns: 2 * ($desktop-link-size + $desktop-link-margin) 1fr;
+        }
+    }
+
 }

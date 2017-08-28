@@ -3,7 +3,9 @@ export enum E_FIELD_TYPE {
     number,
     photo,
     text,
-    date
+    date,
+    icon,
+    boolean
 };
 
 export interface IFieldDesriptor {
@@ -12,6 +14,8 @@ export interface IFieldDesriptor {
     type: string;
     length?: number;
     format?: string;
+    column?: number;
+    subcolumn?: number;
 }
 
 export interface IFieldGroup {
@@ -37,6 +41,8 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly type: E_FIELD_TYPE;
     readonly length?: number;
     readonly format?: string;
+    readonly column?: number;
+    readonly subcolumn?: number;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -51,6 +57,14 @@ export class FieldDescriptor implements IFieldDesriptorBase {
 
         if (data.format) {
             this.format = data.format
+        }
+
+        if (data.column) {
+            this.column = data.column
+        }
+
+        if (data.subcolumn) {
+            this.subcolumn = data.subcolumn
         }
     }
 }

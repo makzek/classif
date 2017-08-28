@@ -1,47 +1,58 @@
-    <div class="nodes-header first-line">
-        <span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
-        <div class="input-group search pull-right">
-            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-            <input type="text" [(ngModel)]="searchString" class="form-control" (change)="search()" placeholder="Search" aria-describedby="basic-addon1">
-            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре"></span>
-        </div>
+<div class="nodes-header first-line">
+    <span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
+    <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
+    <div class="input-group search pull-right">
+        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
+        <input type="text" [(ngModel)]="searchString" class="form-control" (change)="search()" placeholder="Search" aria-describedby="basic-addon1">
+        <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body"></span>
     </div>
-    <div class="nodes-header second-line">
-        <span class="table-title">
+</div>
+<div class="nodes-header second-line">
+    <span class="table-title">
             <span *ngIf="showCheckbox" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
             </span>
         <span *ngFor="let field of viewFields" class="code"><b>{{field.title}}</b></span>
-        </span>
+    </span>
 
-        <span class="controller pull-right">
-            <span *ngIf="showAdd" class="circle" (click)="openModal(creatingModal)">
-                <span class="glyphicon glyphicon-plus control-implemented"></span>
-            </span>
-            <span *ngIf="showDelete" class="circle" (click)="deleteSelectedItems()">
-                    <span class="glyphicon glyphicon-minus control-implemented"></span>
-            </span>
-            <span *ngIf="showEdit" class="circle" (click)="editNode()">
-                    <span class="glyphicon glyphicon-pencil control-implemented"></span>
-            </span>
-            <span class="circle" (click)="nextItem(true)">
-                    <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
-            </span>
-            <span class="circle" (click)="nextItem(false)">
-                    <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
-            </span>
-            <div class="circle btn-group" dropdown>
-                <span dropdownToggle><span class="dots control-implemented">...</span>
-                </span>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
-                    <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
-                </ul>
-            </div>
+    <span class="controller pull-right">
+        <span *ngIf="showAdd && !smallScreen" class="circle" (click)="openModal(creatingModal)">
+            <span class="glyphicon glyphicon-plus control-implemented"></span>
         </span>
-        <div class="clear-all"></div>
-    </div>
+        <span *ngIf="showDelete && !smallScreen" class="circle" (click)="deleteSelectedItems()">
+            <span class="glyphicon glyphicon-minus control-implemented"></span>
+        </span>
+        <span *ngIf="showEdit && !smallScreen" class="circle" (click)="editNode()">
+            <span class="glyphicon glyphicon-pencil control-implemented"></span>
+        </span>
+        <span *ngIf="!smallScreen" class="circle" (click)="nextItem(true)">
+            <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
+        </span>
+        <span *ngIf="!smallScreen" class="circle" (click)="nextItem(false)">
+            <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
+        </span>
+        <div class="circle btn-group" dropdown>
+            <span dropdownToggle><span class="dots control-implemented">...</span>
+            </span>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
+                <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
+                <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
+                    <span *ngIf="!userSort">Включить пользователькую сортировку</span>
+                    <span *ngIf="userSort">Отключить пользователькую сортировку</span>
+                </a></li>
+                <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
+                <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
+                <li *ngIf="showAdd && smallScreen" role="menuitem"><a class="dropdown-item" (click)="openModal(creatingModal)">Добавить элемент</a></li>
+                <li *ngIf="showDelete && smallScreen" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
+                <li *ngIf="showEdit && smallScreen" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
+                <li *ngIf="smallScreen" role="menuitem"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
+                <li *ngIf="smallScreen" role="menuitem"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
+            </ul>
+        </div>
+    </span>
+    <div class="clear-all"></div>
+</div>
 
 <template #creatingModal>
     <div class="modal-header">
@@ -50,7 +61,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
     </div>
-    <div  *ngIf="newNode" class="create-new-node modal-body">
+    <div *ngIf="newNode" class="create-new-node modal-body">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Код</span>
             <input type="text" class="form-control" placeholder="Code" [(ngModel)]="newNode.code" aria-describedby="basic-addon1">
@@ -68,25 +79,34 @@
 </template>
 
 <template #searchModal>
-  <div class="search-modal modal-header">
-    <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <div class="search-modal modal-header">
+        <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="search-modal modal-body">
-    <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
-    <div class="checkbox">
-      <label><input type="checkbox" [(ngModel)]="searchInDeleted">Учитывать логически удаленные</label>
     </div>
-    <div *ngIf="fields">
-      <div *ngFor="let field of fields" class="input-group">
-        <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-        <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-      </div>
+    <div class="search-modal modal-body">
+        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
+        <div class="checkbox">
+            <label><input type="checkbox" [(ngModel)]="searchInDeleted">Учитывать логически удаленные</label>
+        </div>
+        <div *ngIf="fields">
+            <div *ngFor="let field of fields">
+                <div class="input-group" *ngIf="field.type === 3">
+                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
+                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group" *ngIf="field.type === 0">
+                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
+                    <input type="number" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                </div>
+                <div class="checkbox" *ngIf="field.type === 6">
+                    <label><input type="checkbox" [(ngModel)]="field.value">{{field.title}}</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
+        </div>
     </div>
-    <div>
-      <button (click)="fullSearch()" class="btn btn-primary">Искать</button>
-    </div>
-  </div>
 </template>

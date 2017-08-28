@@ -1,78 +1,96 @@
 <div *ngIf="node" class="edit-container">
-    <header class="edit-header row">
-        <div class="col-sm-2 col-md-2 col-lg-1">
+    <header class="edit-header">
+        <div class="check-wrapper">
             <span class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="node.selected" (click)="check()">Выбрать</label>
             </span>
         </div>
-        <div class="col-sm-4 col-md-5 col-lg-6">
-            <span class="edit-title">{{node.title}}</span>
+        <div class="name-wrapper">
+            <span class="edit-title">{{ nodeName }}</span>
         </div>
-        <div class="edit-buttons col-sm-4 col-md-3 col-lg-3">
+        <div class="buttons-wrapper" *ngIf="editMode">
             <button class="btn btn-primary" (click)="save()">Сохранить</button>
             <button class="btn btn-primary" (click)="cancel()">Отменить</button>
         </div>
-        <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="action-wrapper">
             <span class="pull-right">
                 <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-dark" aria-hidden="true"></button></a>
-                <!--<span class="glyphicon glyphicon-arrow-left" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-                node.parent.children[(i-1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>
-                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-                node.parent.children[(i+1 + node.parent.children.length) % node.parent.children.length].id + '/edit')"></span>-->
                 <button [disabled]="i < 1" class="glyphicon glyphicon-arrow-left btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
                 node.parent.children[i-1].id + '/edit')"></button>
                 <button [disabled]="i >= (node.parent.children.length - 1)" class="glyphicon glyphicon-arrow-right btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
                 node.parent.children[i+1].id + '/edit')"></button>
-                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(selfLink)"></button>
+                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(closeRedirect)"></button>
             </span>
         </div>
     </header>
-    <aside class="edit-aside">
+    <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
+            <button type="button" class="btn btn-default" (click)="closeEditMode()">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="openEditMode()">Редактирование</button>
         </div>
     </aside>
-    <article class="edit-content">
-        <div class="input-line row">
-            <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                <label for="code">Код:</label>
-                <input [hidden]="!editMode" class="" id="code" (change)="wasEdit = true" [(ngModel)]="node.code"/>
-                <span [hidden]="editMode" class="">{{node.code}}</span>
-            </div>
-            <div class="form-group col-sm-8 col-md-8 col-lg-8">
-                <label for="shortName">Краткое наименование:</label>
-                <input [hidden]="!editMode" class="" id="shortName" (change)="wasEdit = true" [(ngModel)]="node.title"/>
-                <span [hidden]="editMode" class="">{{node.title}}</span>
-            </div>
-        </div>
-        <div class="input-line row ">
-            <div class="form-group" [ngClass]="{'col-sm-6 col-md-6 col-lg-6': node.data, 'col-sm-12 col-md-12 col-lg-12': !node.data}">
-                <label for="fullName">Полное наименование:</label>
-                <br>
-                <textarea [hidden]="!editMode" class="" id="fullName" (change)="wasEdit = true" [(ngModel)]="node.description"></textarea>
-                <span [hidden]="editMode" class="">{{node.description}}</span>
-            </div>
-            <div *ngIf="node.data" class="form-group col-sm-4 col-md-4 col-lg-4">
-                <label for="note">Примечание:</label>
-                <input [hidden]="!editMode" class="" id="note" (change)="wasEdit = true" [(ngModel)]="node.data.note"/>
-                <span [hidden]="editMode" class="">{{node.data.note}}</span>
-            </div>
-            <div *ngIf="node.data" class="form-group col-sm-2 col-md-2 col-lg-2">
-                <label for="indexSEV">Индекс СЭВ:</label>
-                <input [hidden]="!editMode" class="" id="indexSEV" (change)="wasEdit = true" [(ngModel)]="node.data.indexSEV"/>
-                <span [hidden]="editMode" class="">{{node.data.indexSEV}}</span>
+    <article *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-content">
+        <div class="form form-horizontal" *ngIf="viewFields">
+            <div class="form-group" *ngFor="let field of viewFields">
+                <label *ngIf="field.value || editMode" class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
+                <div class="col-sm-2" *ngIf="field.type !== 3">
+                    <input *ngIf="field.type == 0 || field.type == 1" type="text" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <input *ngIf="field.type == 2" type="file" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <input *ngIf="field.type == 4" type="date" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
+                    <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
+                </div>                
+                <div class="col-sm-6" *ngIf="field.type === 3">
+                     <textarea [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"></textarea>
+                     <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
+                </div>
             </div>
         </div>
     </article>
-    <div class="warning-wrapper" [ngClass]="{'hidden': hideWarning}">
-        <div class="warning">
-            Имеются не сохранённые изменения! Выберете действие:
-            <br>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" (click)="saveAndClose()">Сохранить и закрыть</button>
-                <button type="button" class="btn btn-default" (click)="resetAndClose()">Закрыть без сохранения</button>
+    <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
+
+    <div bsModal #unsavedEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Предупреждение</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalUnsaveRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    Имеются не сохранённые изменения! Выберете действие:
+                    <br>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" (click)="saveAndClose()">Сохранить и закрыть</button>
+                        <button type="button" class="btn btn-default" (click)="resetAndClose()">Закрыть без сохранения</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Предупреждение:</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalOnlyRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                </div>
+                <div class="modal-body">
+                    <div class="warning-wrapper" *ngIf="lastEditedCard">
+                        <div class="warning">
+                            <!--<button type="button" class="close pull-right" aria-label="Close" (click)="hideCardWarning()">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                    <br>-->
+                            В настоящее время в режиме редактирования находится карточка<br>
+                            <!--<p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>-->
+                            <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="modalOnlyRef.hide()">{{ lastEditedCard.title }}</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -31,6 +31,7 @@ export class EosDeskService {
             references: [{
                 link: '/spravochniki/rubricator',
                 title: 'Рубрикатор',
+                edited: false,
             }],
             edited: false,
         }, {
@@ -46,6 +47,7 @@ export class EosDeskService {
                     return {
                         link: '/spravochniki/' + dictionary.id,
                         title: dictionary.title,
+                        edited: false,
                     };
                 });
 
@@ -56,13 +58,12 @@ export class EosDeskService {
                 };
             });
 
+        this._recentItems = [];
+
         this._desksList$ = new BehaviorSubject(this._desksList);
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
-        this._recentItems$ = new BehaviorSubject([{
-            link: '/spravochniki/rubricator',
-            title: 'Рубрикатор',
-        }]);
+        this._recentItems$ = new BehaviorSubject(this._recentItems);
 
     }
 

@@ -8,6 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { E_RECORD_ACTIONS } from '../core/record-action';
+import { FieldDescriptor } from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-selected-node',
@@ -18,6 +19,7 @@ export class SelectedNodeComponent {
     dictionary: EosDictionary;
     selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
+    viewFields: FieldDescriptor[];
 
     showDeleted = false;
 
@@ -31,6 +33,7 @@ export class SelectedNodeComponent {
                 this.dictionary = dictionary;
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
+                    this.viewFields = dictionary.descriptor.listFields;
                 }
             },
             (error) => alert(error)

@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
-import { ModalDirective } from 'ngx-bootstrap';
+// import { ModalDirective } from 'ngx-bootstrap';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
@@ -18,6 +18,7 @@ export class DesktopSwitcherComponent {
     public modalRef: BsModalRef;
     deskName: string;
     creating = false;
+    editing = false;
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
@@ -40,6 +41,7 @@ export class DesktopSwitcherComponent {
         evt.stopPropagation();
         desk.edited = true;
         this.deskName = desk.name;
+        this.editing = true;
     }
 
     openCreateForm() {

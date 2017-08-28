@@ -1,6 +1,12 @@
 # Eos
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
+## Installation
+For building application you need [NodeJs](https://nodejs.org/en/download/) installed. Minor version is v6.
+
+For compile styles from sass you need to install [Compass](http://compass-style.org/install/)
+
+- install angular-cli `npm install -g @angular/cli`
+- run `npm i`
 
 ## Development server
 

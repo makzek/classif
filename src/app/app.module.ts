@@ -32,6 +32,9 @@ import { TitleComponent } from './title/title.component';
 import { InfoComponent } from './info/info.component';
 import { NodeListComponent } from './selected-node/node-list.component';
 import { NodeActionsComponent } from './selected-node/node-actions.component';
+import { PushpinComponent } from './pushpin/pushpin.component';
+
+import { DepartmentsCardEditComponent } from './card-views-and-edits/departments-card-edit.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -41,8 +44,11 @@ import { EosUserSettingsService } from './services/eos-user-settings.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
 import { NodeListActionsService } from './selected-node/node-list-action.service';
+import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
+import { EditCardActionService } from './edit-card/action.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 @NgModule({
     declarations: [
@@ -67,6 +73,9 @@ import { TestPageComponent } from './test-page/test-page.component';
         InfoComponent,
         NodeListComponent,
         NodeActionsComponent,
+        PushpinComponent,
+
+        DepartmentsCardEditComponent,
     ],
     imports: [
         BrowserModule,
@@ -87,6 +96,9 @@ import { TestPageComponent } from './test-page/test-page.component';
         EosNoticeService,
         EosMessageService,
         NodeListActionsService,
+        CanDeactivateGuard,
+        EosBreadcrumbsService,
+        EditCardActionService,
     ],
     bootstrap: [AppComponent],
 })

@@ -1,21 +1,22 @@
-eos-notice {
-    margin-left: 16px;
-
+.eos-notice {
     .btn {
+        padding-left: 5px;
+        padding-right: 5px;
         .badge {
-            font-size: 10px;
+            font-size: 9px;
             line-height: 2px;
-            border-radius: 50%;
+            border-radius: 100px;
             width: 12px;
             height: 12px;
             padding: 4px;
-            top: -10px;
-            left: -4px;
+            top: -4px;
+            left: -2px;
         }
     }
-
+    /*
     .glyphicon-bell {
         font-size: 20px;
         line-height: 36px;
     }
+    */
 }

@@ -35,6 +35,8 @@ export class NodeListComponent {
     hasParent = true;
     showCheckbox: boolean;
 
+    userSorting = false;
+
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
@@ -106,6 +108,9 @@ export class NodeListComponent {
                         this.checkAllItems(false);
                         break;
                     }
+                    case E_RECORD_ACTIONS.userOrder: {
+                        this.toggleUserSort();
+                    }
                 }
             });
     }
@@ -139,11 +144,15 @@ export class NodeListComponent {
         }
     }
 
-    sortItems(): void {
+    userSortItems(): void {
         let i = 1;
         for (const item of this.nodes) {
             item.sorting = i++;
         }
+    }
+
+    toggleUserSort(): void {
+        this.userSorting = !this.userSorting;
     }
 
     editNode(node: EosDictionaryNode) {
@@ -239,6 +248,7 @@ export class NodeListComponent {
         this.pageAtList++;
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
             * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
+            this.currentPage++;
     }
 
     setItemCount(value: string) {

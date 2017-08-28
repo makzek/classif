@@ -1,0 +1,134 @@
+eos-departments-card-edit {
+    .tabs {
+        display: inline-block;
+        position: relative;
+        top: -34px;
+
+        .tab-item {
+            display: inline-block;
+            border: 1px solid #d3d2d1;
+            border-top-color: transparent;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding: 5px;
+            position: relative;
+
+            &.active {
+                background-color: #337ab7;
+                color: white;
+            }
+        }
+    }
+
+    .wrapper {
+        margin-left: 35px;
+        display: -ms-grid;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 7fr 3fr;
+        grid-template-columns: 7fr 3fr;
+    }
+
+    .col-1,
+    .col-2 {
+        min-height: 450px;
+        padding: 10px;
+    }
+
+    .col-1 {
+        margin-right: 10px;
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .col-2 {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .input-group {
+        margin-bottom: 10px;
+    }
+
+    .block-title {
+        font-weight: bold;
+    }
+
+    .subcol-3-wrapper,
+    .subcol-4-wrapper {
+        display: -ms-grid;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        .dbl-subcol {
+            grid-row: 1;
+            grid-column: 1;
+            -ms-grid-column-span: 2; // sass-lint:disable-line no-misspelled-properties
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        .subcol-1 {
+            grid-row: 1;
+            grid-column: 1;
+        }
+
+        .subcol-2 {
+            grid-row: 1;
+            grid-column: 2;
+        }
+
+        .subcol-3 {
+            grid-row: 1;
+            grid-column: 3;
+        }
+    }
+
+    .subcol-4-wrapper {
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        .dbl-subcol {
+            grid-row: 1;
+            grid-column: 2;
+            -ms-grid-column-span: 2; // sass-lint:disable-line no-misspelled-properties
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+
+        .subcol-1 {
+            grid-row: 1;
+            grid-column: 1;
+        }
+
+        .subcol-2 {
+            grid-row: 1;
+            grid-column: 2;
+        }
+
+        .subcol-3 {
+            grid-row: 1;
+            grid-column: 3;
+        }
+
+        .subcol-4 {
+            grid-row: 1;
+            grid-column: 4;
+        }
+    }
+
+    .photo {
+        display: block;
+        border: 1px dashed #d3d2d1;
+        height: 150px;
+        width: 150px;
+        margin: 0 auto;
+    }
+
+    .edit-aside {
+        .vertical-buttons {
+            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
+        }
+    }
+}
+

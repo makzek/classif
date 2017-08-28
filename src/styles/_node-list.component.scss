@@ -18,25 +18,20 @@ eos-node-list {
             display: flex;
             justify-content: space-around;
 
-            .show-more,
-            .item-count {
+            .show-more {
                 line-height: 75px;
                 cursor: pointer;
-            }
-
-            .item-count-select {
-                margin: 20px 5px 25px -15px;
             }
         }
 
         .elements {
             list-style: none;
-            max-height: calc(100vh - 150px - 95px - 136px);
+            max-height: calc(100vh - 150px - 95px - 150px);
             overflow-y: auto;
             padding-left: 20px;
 
             &.has-parent {
-                max-height: calc(100vh - 150px - 95px - 201px);
+                max-height: calc(100vh - 150px - 95px - 215px);
             }
 
             li,

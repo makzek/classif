@@ -9,7 +9,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { IFieldView} from '../core/field-descriptor';
+import { IFieldView } from '../core/field-descriptor';
 
 @Component({
     selector: 'eos-node-actions',
@@ -34,26 +34,40 @@ export class NodeActionsComponent {
     showEdit: boolean;
     showDeleteHard: boolean;
 
+    showUserSort: boolean;
+    userSort = false;
+
     fields: IFieldView[];
     searchInDeleted = false;
+
+    get noSearchData(): boolean {
+        /* tslint:disable:no-bitwise */
+        return !~this.fields.findIndex((f) =>  f.value);
+        /* tslint:enable:no-bitwise */
+    }
+
+    get smallScreen(): boolean {
+        return window.matchMedia('(max-width: 1180px)').matches;
+    }
 
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
         private _actionService: NodeListActionsService) {
         this._userSettingsService.settings.subscribe((res) => {
-                this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-            });
+            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
                 this.viewFields = _d.descriptor.listFields;
                 /* tslint:disable:no-bitwise */
-                    this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
-                    this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
-                    this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
-                    this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
-                    this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
+                this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
+                this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
+                this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
+                this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
+                this.showUserSort = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.userOrder);
                 /* tslint:enable:no-bitwise */
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
                 this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
@@ -110,7 +124,7 @@ export class NodeActionsComponent {
         this._actionService.emitAction(E_RECORD_ACTIONS.edit);
     }
 
-    nextItem (value: boolean) {
+    nextItem(value: boolean) {
         if (value) {
             this._actionService.emitAction(E_RECORD_ACTIONS.navigateUp);
         } else {
@@ -124,6 +138,19 @@ export class NodeActionsComponent {
 
     restoringLogicallyDeletedItem() {
         this._actionService.emitAction(E_RECORD_ACTIONS.restore);
+    }
+
+    userSorting() {
+        this.userSort = !this.userSort;
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
+    userSortingUp() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+    }
+
+    userSortingDown() {
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
     checkAllItems() {
