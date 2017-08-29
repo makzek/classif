@@ -92,10 +92,13 @@ export class EditCardComponent implements CanDeactivateGuard {
 
         this.actionService.mode$.subscribe((mode) => {
             if (mode === 'edit') {
-                this.editMode = true;
+                this.openEditMode();
             }
             if (mode === 'view') {
-                this.editMode = false;
+                this.closeEditMode();
+            }
+            if (mode === 'unsavedChanges') {
+                this.setUnsavedChanges();
             }
         });
     }
@@ -170,7 +173,7 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     openEditMode(): void {
         this.lastEditedCard = this.getLastEditedCard();
-        console.log(this.lastEditedCard);
+        // console.log(this.lastEditedCard);
         if (this.lastEditedCard) {
             if (this.wasEdit) { /* if we just switched from view-mode to edit-mode */
                 this.editMode = true;

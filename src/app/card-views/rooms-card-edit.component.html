@@ -9,13 +9,13 @@
     <div class="card-wrapper">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Краткое наименование кабинета:</span>
-            <input *ngIf="editMode" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
+            <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="tmpObj['title']">
             <p *ngIf="!editMode" class="form-control">{{node.data['title']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Полное наименование кабинета:</span>
-            <input *ngIf="editMode" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
+            <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="tmpObj['description']">
             <p *ngIf="!editMode" class="form-control">{{node.data['description']}}</p>
         </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="panel-heading actions">
                 <span class="checkbox">
-                    <input type="checkbox">
+                    <input (change)="setUnsavedChanges()" type="checkbox">
                 </span>
                 <span class="action-icons">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -45,7 +45,7 @@
                     <li *ngFor="let item of owner">
                         <span class="checkbox">
                             <label>
-                                <input type="checkbox">
+                                <input (change)="setUnsavedChanges()" type="checkbox">
                                 <span *ngIf="editMode" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 {{node.data['owner'].fio}} - {{node.data['owner'].shortPosition}}
                             </label>
@@ -78,17 +78,17 @@
                 <div *ngIf="node.data['roomUsers']">
                     <div *ngFor="let user of node.data['roomUsers']" class="twenty-col-wrapper">
                         <div class="col-1">{{user.fio}}</div>
-                        <div class="col-2"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-3"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-4"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-5"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-6"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-7"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-8"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-9"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-10"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-11"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
-                        <div class="col-12"><span class="checkbox"><input [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-2"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-3"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-4"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-5"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-6"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-7"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-8"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-9"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-10"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-11"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-12"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
                     </div>
                 </div>
             </div>
@@ -104,40 +104,40 @@
                 <div class="three-col-wrapper">
                     <div class="col-1">
                         <span class="checkbox">
-                            <label><input type="checkbox">Поступившие</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">Поступившие</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">На исполнении</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На исполнении</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">На контроле</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На контроле</label>
                         </span>
                     </div>
                     <div class="col-2">
                         <span class="checkbox">
-                            <label><input type="checkbox">У руководства</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">У руководства</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">На рассмотрении</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На рассмотрении</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">В дело</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">В дело</label>
                         </span>
                     </div>
                     <div class="col-3">
                         <span class="checkbox">
-                            <label><input type="checkbox">Управление проектами</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">Управление проектами</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">На визировании</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На визировании</label>
                         </span>
                         <span class="checkbox">
-                            <label><input type="checkbox">На подписи</label>
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На подписи</label>
                         </span>
                     </div>
                 </div>
-                <button class="btn btn-light">Открыть все</button>
-                <button class="btn btn-light">Закрыть все</button>
+                <button class="btn btn-light" [disabled]="!editMode">Открыть все</button>
+                <button class="btn btn-light" [disabled]="!editMode">Закрыть все</button>
             </div>
         </div>
     </div>

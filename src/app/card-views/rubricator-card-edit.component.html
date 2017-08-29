@@ -10,27 +10,27 @@
         <div class="form form-horizontal">
             <div *ngIf="node.data['code']" class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Код:</span>
-                <input *ngIf="editMode" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
                 <p *ngIf="!editMode" class="form-control">{{node.data['code']}}</p>
             </div>
             <div *ngIf="node.data['title']" class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Краткое наименование:</span>
-                <input *ngIf="editMode" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['title']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['title']">
                 <p *ngIf="!editMode" class="form-control">{{node.data['title']}}</p>
             </div>
             <div *ngIf="node.data['description']" class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Полное наименование:</span>
-                <input *ngIf="editMode" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['description']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['description']">
                 <p *ngIf="!editMode" class="form-control">{{node.data['description']}}</p>
             </div>
             <div *ngIf="node.data['note']" class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
                 <p *ngIf="!editMode" class="form-control">{{node.data['note']}}</p>
             </div>
             <div *ngIf="node.data['SEV']" class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
                 <p *ngIf="!editMode" class="form-control">{{node.data['SEV']}}</p>
             </div>
         </div>

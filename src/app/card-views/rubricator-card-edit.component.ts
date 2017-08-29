@@ -48,4 +48,8 @@ export class RubricatorCardEditComponent {
             this._actonService.emitMode('view');
         }
     }
+
+    setUnsavedChanges() {
+        this._actonService.emitMode('unsavedChanges');
+    }
 }
