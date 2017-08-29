@@ -7,7 +7,8 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { BASIC_DICT } from '../core/consts';
-// import { DEPARTMENTS_DICT } from '../core/consts';
+import { DEPARTMENTS_DICT } from '../core/consts';
+import { ROOMS_DICT } from '../core/consts';
 import { DictionaryDescriptor } from '../core/dictionary-descriptor';
 import { IFieldView} from '../core/field-descriptor';
 
@@ -93,6 +94,7 @@ export class EosDictService {
                         .then((data: any) => {
                             _dictionary = new EosDictionary(new DictionaryDescriptor(BASIC_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(DEPARTMENTS_DICT), data);
+                            // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
                             console.log('_dictionary', _dictionary);
                             this._dictionary = _dictionary;
                             return this._api.getDictionaryNodesMocked(dictionaryId);

@@ -4,7 +4,7 @@ export const SEARCH_KEYS = ['code', 'title', 'description'];
 export const BASIC_DICT: IDictionaryDescriptor = {
     id: 'rubricator',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
     itemActions: ['edit', 'view'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
@@ -36,8 +36,8 @@ export const BASIC_DICT: IDictionaryDescriptor = {
 export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     id: 'departments',
     title: 'Подразделения',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'quickSearch', 'fullSearch',
-        'import', 'export', 'importPhotos', 'createRepresentative'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
+        'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],
     groupActions: ['remove', 'removeHard'],
 
@@ -90,67 +90,50 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'note',
         title: 'Примечание',
         type: 'text',
-        column: 1,
     }, {
         key: 'startDate',
         title: 'Дата начала действия',
         type: 'date',
-        column: 1,
-        subcolumn: 1,
     }, {
         key: 'endDate',
         title: 'Дата окончания действия',
         type: 'date',
-        column: 1,
-        subcolumn: 2,
     }, {
         key: 'shortPosition',
         title: 'Наименование должности',
         type: 'text',
-        column: 1,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
-        column: 1,
     }, {
         key: 'fio',
         title: 'Фамилия И.О.',
         type: 'text',
-        column: 1,
     }, {
         key: 'gender',
         title: 'Пол',
         type: 'text',
-        column: 1,
     }, {
         key: 'lastName',
         title: 'Фамилия',
         type: 'text',
-        column: 1,
-        subcolumn: 1,
     }, {
         key: 'firstName',
         title: 'Имя',
         type: 'text',
-        column: 1,
-        subcolumn: 2,
     }, {
         key: 'fathersName',
         title: 'Отчество',
         type: 'text',
-        column: 1,
-        subcolumn: 3,
     }, {
         key: 'indexOfficial',
         title: 'Индекс должностного лица',
         type: 'text',
-        column: 2,
     }, {
         key: 'boss',
         title: 'Начальник',
         type: 'boolean',
-        column: 2,
     }, {
         key: 'localPhone',
         title: '№ местного телефона',
@@ -179,12 +162,10 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         key: 'photo',
         title: 'Фотография',
         type: 'photo',
-        column: 2,
     }, {
         key: 'alternate',
         title: 'Заместитель',
         type: 'text',
-        column: 1,
     }, {
         key: 'extraData',
         title: 'Дополнительные сведения',
@@ -299,4 +280,88 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
             'lastNameDP', 'firstNameDP', 'fathresNameDP', 'lastNameVP', 'firstNameVP', 'fathresNameVP', 'lastNameTP', 'firstNameTP',
             'fathresNameTP', 'lastNamePP', 'firstNamePP', 'fathresNamePP', 'shortPosition', 'department'],
     }],
+};
+
+export const ROOMS_DICT: IDictionaryDescriptor = {
+    id: 'rooms',
+    title: 'Кабинеты',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
+    itemActions: ['edit', 'view'],
+    groupActions: ['remove', 'removeHard', 'userOrder'],
+    keyField: 'id',
+    fields: [{
+        key: 'id',
+        type: 'string',
+        title: 'ID'
+    }, {
+        key: 'title',
+        title: 'Краткое наименование кабинета',
+        type: 'text'
+    }, {
+        key: 'description',
+        title: 'Полное наименование кабинета',
+        type: 'text'
+    }, {
+        key: 'department',
+        title: 'Подразделение',
+        type: 'text'
+    }, {
+        key: 'owner',
+        title: 'Владелец кабинета',
+        type: 'text' // ??? множественное поле, выбор значений из справочника Подразделения
+    }, {
+        key: 'accessToFoldersInput',
+        title: 'Поступившие',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersInProgress',
+        title: 'На исполнении',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersAtControl',
+        title: 'На контроле',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersLeadership',
+        title: 'У руководства',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersUnderConsideration',
+        title: 'На рассмотрении',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersInCase',
+        title: 'В дело',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersProjectManagement',
+        title: 'Управление проектам',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersOnSight',
+        title: 'На визировании',
+        type: 'boolean'
+    }, {
+        key: 'accessToFoldersSignature',
+        title: 'На подписи',
+        type: 'boolean'
+    }, {
+        key: 'roomUsers',
+        title: 'Пользователи кабинета',
+        type: 'text' // ?? format
+    }, {
+        key: 'AccessRestrictionRK',
+        title: 'Ограничение доступа к РК',
+        type: 'boolean'
+    }, {
+        key: 'AccessRestrictionRKPD',
+        title: 'Ограничение доступа к РКПД',
+        type: 'boolean'
+    }],
+    editFields: [],
+    searchFields: [],
+    fullSearchFields: ['code', 'title', 'description'],
+    quickViewFields: ['department', 'owner', 'roomUsers'],
+    shortQuickViewFields: ['description'],
+    listFields: ['title']
 };

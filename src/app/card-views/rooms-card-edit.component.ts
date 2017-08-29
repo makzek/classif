@@ -6,16 +6,17 @@ import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
-    selector: 'eos-departments-card-edit',
-    templateUrl: 'departments-card-edit.component.html',
+    selector: 'eos-rooms-card-edit',
+    templateUrl: 'rooms-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent {
+export class RoomsCardEditComponent {
     node: EosDictionaryNode;
-    fieldGroups: FieldGroup[];
-    currTab = 0;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
     editMode = false;
+    showOwners = true;
+    showUsers = true;
+    showAccess = true;
 
     constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
@@ -24,16 +25,13 @@ export class DepartmentsCardEditComponent {
                 Object.assign(this.tmpObj, this.node.data);
             }
         });
-        this._dictionaryService.dictionary$.subscribe((dict) => {
-            this.fieldGroups = dict.descriptor.fieldGroups;
-        });
         this._actonService.action$.subscribe(
             (act) => {
                 if (act === 'save') {
                     this.result.emit(this.tmpObj);
                 }
                 if (act === 'cancel') {
-                    // console.log('node.data', this.node.data);
+                    console.log('node.data', this.node.data);
                     this.result.emit(this.node.data);
                     Object.assign(this.tmpObj, this.node.data);
                 }
@@ -41,7 +39,4 @@ export class DepartmentsCardEditComponent {
         );
     }
 
-    setTab(i: number) {
-        this.currTab = i;
-    }
 }
