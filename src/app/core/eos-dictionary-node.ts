@@ -24,7 +24,7 @@ export class EosDictionaryNode {
     constructor(descriptor: RecordDescriptor, data: any) {
         if (data) {
             Object.assign(this, data);
-            console.warn('store data in EosDictionaryNode properties is deprecated')
+            console.warn('store data in EosDictionaryNode properties is deprecated');
             this.selected = !!this.selected;
             this.isDeleted = !!this.isDeleted;
             this._descriptor = descriptor;

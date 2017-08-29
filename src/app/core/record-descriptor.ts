@@ -1,15 +1,5 @@
 import { FieldDescriptor, IFieldDesriptor } from './field-descriptor';
-import {
-    DictionaryDescriptor,
-    RubricatorDictionaryDescriptor,
-    DepartmentDictionaryDescriptor,
-} from './dictionary-descriptor';
-
-export enum E_RECORD_TYPE {
-    simpleNode,
-    person,
-    department,
-}
+import { IDictionaryDescriptor, DictionaryDescriptor } from './dictionary-descriptor';
 
 export abstract class RecordDescriptor {
     abstract parent;
@@ -17,7 +7,7 @@ export abstract class RecordDescriptor {
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor(fields: IFieldDesriptor[]) {
+    constructor(keyFieldName: string, fields: IFieldDesriptor[]) {
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
         fields.forEach((f) => {
@@ -25,6 +15,13 @@ export abstract class RecordDescriptor {
             this.fields.push(_field);
             this.fieldsMap.set(_field.key, _field);
         });
+        if (keyFieldName) {
+            this.keyField = this.fieldsMap.get(keyFieldName);
+        }
+
+        if (!this.keyField) {
+            throw new Error('No field decribed for "' + keyFieldName + '"');
+        }
     }
 
     addFieldToSet(name: string, fieldSet: FieldDescriptor[]) {
@@ -37,24 +34,3 @@ export abstract class RecordDescriptor {
     }
 }
 
-export class RubricatorRecordDescriptor extends RecordDescriptor {
-    parent: RubricatorDictionaryDescriptor;
-    constructor(dictionary: RubricatorDictionaryDescriptor, fields: IFieldDesriptor[]) {
-        super(fields);
-        this.parent = dictionary;
-    }
-}
-
-export class DepartmentRecordDecsriptor extends RecordDescriptor {
-    parent: DepartmentDictionaryDescriptor
-    typeField: FieldDescriptor;
-
-    constructor(dictionary: DepartmentDictionaryDescriptor, fields: IFieldDesriptor[], typeFieldName: string) {
-        super(fields);
-        this.parent = dictionary;
-        this.typeField = this.fieldsMap.get(typeFieldName);
-        if (!this.typeField) {
-            throw new Error('No field decribed for "' + typeFieldName + '"');
-        }
-    }
-}

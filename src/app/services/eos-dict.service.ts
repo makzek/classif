@@ -8,10 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { RUBRICATOR_DICT } from '../core/consts';
 
-import {
-    DictionaryDescriptor,
-    RubricatorDictionaryDescriptor
-} from '../core/dictionary-descriptor';
+import { RubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
 
 import { IFieldView } from '../core/field-descriptor';
 
