@@ -1,6 +1,7 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/pairwise';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -35,6 +36,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     lastEditedCard: EditedCard;
     dictIdFromDescriptor: string;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
+    nextState: any;
+    nextRoute: string;
 
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
@@ -59,6 +62,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.dictionaryId = params.dictionaryId;
                 this.nodeId = params.nodeId;
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
+                this.nextRoute = this.selfLink;
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
@@ -68,15 +72,15 @@ export class EditCardComponent implements CanDeactivateGuard {
             if (dict) {
                 this.dictIdFromDescriptor = dict.descriptor.id;
                 this.eosDictService.openedNode$.subscribe(
-                (node) => {
-                    if (node) {
-                        this.viewFields = node.getValues(dict.descriptor.quickViewFields);
-                        this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
-                        this.nodeName = this.shortViewFields[0].value;
-                    }
-                },
-                (error) => alert(error));
-                }
+                    (node) => {
+                        if (node) {
+                            this.viewFields = node.getValues(dict.descriptor.quickViewFields);
+                            this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
+                            this.nodeName = this.shortViewFields[0].value;
+                        }
+                    },
+                    (error) => alert(error));
+            }
         });
         /* To identify the current desktop ID */
         this.closeRedirect = this.selfLink;
@@ -132,7 +136,13 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.cancel();
         this.clearStorage();
         this.wasEdit = false;
-        this.router.navigate([this.selfLink]);
+        // this.router.navigate([this.selfLink]);
+        // this._location.back();
+        if (this.nextState) {
+            this.router.navigate([this.nextState.url]);
+        } else {
+            this.router.navigate([this.nextRoute]);
+        }
     }
 
     saveAndClose(): void {
@@ -140,13 +150,26 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.save();
         this.clearStorage();
         this.wasEdit = false;
-        this.router.navigate([this.selfLink]);
+        // this.router.navigate([this.selfLink]);
+        // this._location.back();
+        if (this.nextState) {
+            this.router.navigate([this.nextState.url]);
+        } else {
+            this.router.navigate([this.nextRoute]);
+        }
     }
 
     goTo(route: string): void {
         if (!this.wasEdit) {
-            this.router.navigate([route]);
+            if (route) {
+                this.router.navigate([route]);
+            } else {
+                this.router.navigate([this.nextRoute]);
+            }
         } else {
+            if (route.length) {
+                this.nextRoute = route;
+            }
             this.modalUnsaveRef.show();
         }
     }
@@ -161,7 +184,8 @@ export class EditCardComponent implements CanDeactivateGuard {
         }
     }
 
-    canDeactivate() {
+    canDeactivate(nextState?: any) {
+        this.nextState =  nextState;
         if (this.wasEdit) {
             /* if there are any unsaved changes, an action required */
             // this.hideWarning = false;
@@ -178,11 +202,11 @@ export class EditCardComponent implements CanDeactivateGuard {
             if (this.wasEdit) { /* if we just switched from view-mode to edit-mode */
                 this.editMode = true;
             } else {
-                 /* try to edit a different card */
+                /* try to edit a different card */
                 if (this.nodeId !== this.lastEditedCard.id) {
                     // this.hideWarningEditing = false;
                     this.modalOnlyRef.show();
-                /* forbid the edit-mode on other browser tabs */
+                    /* forbid the edit-mode on other browser tabs */
                 } else {
                     this.editMode = false;
                 }
@@ -199,8 +223,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     /* we record the card with unsaved changes into the LocalStorage */
     setUnsavedChanges(): void {
         this.lastEditedCard = this.getLastEditedCard();
-        if (! this.lastEditedCard) {
-            localStorage.setItem('lastEditedCard', JSON.stringify({'id': this.nodeId, 'title': this.nodeName, 'link': this.selfLink}));
+        if (!this.lastEditedCard) {
+            localStorage.setItem('lastEditedCard', JSON.stringify({ 'id': this.nodeId, 'title': this.nodeName, 'link': this.selfLink }));
         }
         this.wasEdit = true;
     }

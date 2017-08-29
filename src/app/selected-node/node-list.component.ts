@@ -127,11 +127,13 @@ export class NodeListComponent {
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
         this.nodes = nodes;
         this.hasParent = hasParent;
-        this.totalItems = nodes.length;
-        if (nodes.length) {
-            this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
-            if (!this.hasParent) {
-                this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
+        if (nodes) {
+            this.totalItems = nodes.length;
+            if (nodes.length) {
+                this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
+                if (!this.hasParent) {
+                    this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
+                }
             }
         }
 
