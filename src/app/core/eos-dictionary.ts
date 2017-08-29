@@ -4,13 +4,13 @@ import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
     readonly id: string;
-    descriptor: DictionaryDescriptor;
+    descriptor: any;
     public title: string;
     root: EosDictionaryNode;
     private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<string, EosDictionaryNode>;
 
-    constructor(descriptor: DictionaryDescriptor, data: any) {
+    constructor(descriptor: any, data: any) {
         this.descriptor = descriptor;
         this.id = data.id;
         this.root = new EosDictionaryNode(this.descriptor.record, {
@@ -141,7 +141,7 @@ export class EosDictionary {
         return searchResult;
     }
 
-    fullSearch(queries: IFieldView[], searchInDeleted: boolean): EosDictionaryNode[]  {
+    fullSearch(queries: IFieldView[], searchInDeleted: boolean): EosDictionaryNode[] {
         const searchResult = [];
 
         this._nodes.forEach((node) => {

@@ -1,10 +1,23 @@
 import { IFieldDesriptor, IFieldGroup, FieldDescriptor, FieldGroup } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
-import {
-    RecordDescriptor,
-    RubricatorRecordDescriptor,
-    DepartmentRecordDecsriptor
-} from './record-descriptor';
+import { RecordDescriptor } from './record-descriptor';
+
+export enum E_FIELD_SET {
+    list,
+    quickView,
+    shortQuickView,
+    search,
+    fullSearch,
+    edit
+}
+/* mode for department-like ditionary */
+export interface IRecordMode {
+    [mode: string]: string[];
+}
+
+export class ModeFieldSet {
+    [mode: string]: FieldDescriptor[];
+}
 
 export interface IDictionaryDescriptor {
     id: string;
@@ -16,26 +29,13 @@ export interface IDictionaryDescriptor {
     fields: IFieldDesriptor[];
     keyField: string;
     listFields: string[];
-    quickViewFields: any;
-    shortQuickViewFields: any;
     searchFields: string[];
     fullSearchFields: string[];
-    editFields: string[];
-    fieldGroups?: IFieldGroup[];
-}
 
-export interface IRecordView {
-    [mode: string]: string[];
-}
-
-export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
-    quickViewFields: string[];
-    shortQuickViewFields: string[];
-}
-
-export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
-    quickViewFields: IRecordView;
-    shortQuickViewFields: IRecordView;
+    /* abstract field sets, depend on dictionary type */
+    quickViewFields: any;
+    shortQuickViewFields: any;
+    editFields: any;
 }
 
 export abstract class DictionaryDescriptor {
@@ -59,10 +59,10 @@ export abstract class DictionaryDescriptor {
     listFields: FieldDescriptor[];
 
     /* set of visible fields in quick view mode */
-    quickViewFields: FieldDescriptor[];
+    abstract quickViewFields: any;
 
     /* set of visible fields in quick view (short) mode */
-    shortQuickViewFields: FieldDescriptor[];
+    abstract shortQuickViewFields: any;
 
     /* search fields */
     searchFields: FieldDescriptor[];
@@ -71,10 +71,7 @@ export abstract class DictionaryDescriptor {
     fullSearchFields: FieldDescriptor[];
 
     /* set of fields for edit form */
-    editFields: FieldDescriptor[];
-
-    /* groups for tabbed view / edit */
-    fieldGroups?: FieldGroup[];
+    abstract editFields: any;
 
     constructor(data: IDictionaryDescriptor) {
         if (data) {
@@ -83,8 +80,8 @@ export abstract class DictionaryDescriptor {
             this._init(data);
 
             this._initActions(data);
-            this._initFieldSets(data);
-            this._initFieldGroups(data);
+            this._initFieldSets(['listFields', 'searchFields', 'fullSearchFields'], data);
+            /* this._initFieldGroups(data); */
         } else {
             return undefined;
         }
@@ -111,28 +108,41 @@ export abstract class DictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
-    getFieldSet(goal: string): FieldDescriptor[] {
-        return [];
+    getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+        switch (aSet) {
+            case E_FIELD_SET.list:
+                return this._getListFields();
+            case E_FIELD_SET.search:
+                return this._getSearchFields();
+            case E_FIELD_SET.fullSearch:
+                return this._getFullSearchFields();
+            case E_FIELD_SET.quickView:
+                return this._getQuickViewFields();
+            case E_FIELD_SET.shortQuickView:
+                return this._getShortQuickViewFields();
+            case E_FIELD_SET.edit:
+                return this._getEditFields();
+            default:
+                throw new Error('Unknown field set');
+        }
     }
 
     abstract _init(data: IDictionaryDescriptor);
 
     abstract _getQuickViewFields(): FieldDescriptor[];
+    abstract _getShortQuickViewFields(): FieldDescriptor[];
+    abstract _getEditFields(): FieldDescriptor[];
 
     private _getListFields(): FieldDescriptor[] {
         return this.listFields;
     }
 
-    private _getSearchField(): FieldDescriptor[] {
+    private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
     }
 
     private _getFullSearchFields(): FieldDescriptor[] {
         return this.fullSearchFields;
-    }
-
-    private _getEditFields(): FieldDescriptor[] {
-        return this.editFields;
     }
 
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {
@@ -144,7 +154,7 @@ export abstract class DictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     };
 
-    protected _initActions(data: IDictionaryDescriptor) {
+    private _initActions(data: IDictionaryDescriptor) {
         const actKeys = ['actions', 'itemActions', 'groupActions'];
 
         actKeys.forEach((key) => {
@@ -155,13 +165,7 @@ export abstract class DictionaryDescriptor {
         })
     }
 
-    protected _initFieldSets(data: IDictionaryDescriptor) {
-        const fsKeys = [
-            'listFields',
-            'searchFields',
-            'fullSearchFields',
-        ];
-
+    protected _initFieldSets(fsKeys: string[], data: IDictionaryDescriptor) {
         fsKeys.forEach((key) => {
             this[key] = [];
             if (data[key]) {
@@ -170,6 +174,7 @@ export abstract class DictionaryDescriptor {
         });
     }
 
+    /*
     protected _initFieldGroups(data: IDictionaryDescriptor) {
         this['fieldGroups'] = [];
         if (data.fieldGroups) {
@@ -182,53 +187,5 @@ export abstract class DictionaryDescriptor {
             });
         }
     }
-}
-
-export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
-    record: RubricatorRecordDescriptor;
-
-    constructor(data: IRubricatorDictionaryDescriptor) {
-        super(data);
-        this._initViews(data);
-    }
-
-    _getQuickViewFields(): FieldDescriptor[] {
-        return this.quickViewFields;
-    };
-
-    _init(data: IRubricatorDictionaryDescriptor) {
-        if (data.fields) {
-            this.record = new RubricatorRecordDescriptor(this, data.fields);
-        }
-    }
-
-    private _initViews(data: IDictionaryDescriptor) {
-        const fsKeys = [
-            'quickViewFields',
-            'shortQuickViewFields',
-            'editFields',
-        ];
-
-        fsKeys.forEach((key) => {
-            this[key] = [];
-            if (data[key]) {
-                data[key].forEach((fldName) => this.record.addFieldToSet(fldName, this[key]));
-            }
-        });
-    }
-}
-export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
-    record: DepartmentRecordDecsriptor;
-
-    constructor(data: IDepartmentDictionaryDescriptor) {
-        super(data);
-    }
-
-    _init(data: IDepartmentDictionaryDescriptor) {
-
-    }
-
-    _getQuickViewFields(): FieldDescriptor[] {
-        return this.quickViewFields;
-    };
+    */
 }
