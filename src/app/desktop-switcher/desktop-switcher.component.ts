@@ -7,6 +7,7 @@ import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
+import { EosMessageService } from '../services/eos-message.service';
 
 @Component({
     selector: 'eos-desktop-switcher',
@@ -22,7 +23,10 @@ export class DesktopSwitcherComponent {
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
-    constructor(private eosDeskService: EosDeskService, private modalService: BsModalService, private router: Router) {
+    constructor(private eosDeskService: EosDeskService,
+        private modalService: BsModalService,
+        private router: Router,
+        private messageService: EosMessageService) {
         this.eosDeskService.desksList.subscribe(
             (res) => {
                 this.deskList = res;
@@ -36,12 +40,22 @@ export class DesktopSwitcherComponent {
         );
     }
 
+
     openEditForm(evt: Event, desk: EosDesk) {
         evt.preventDefault();
         evt.stopPropagation();
-        desk.edited = true;
-        this.deskName = desk.name;
-        this.editing = true;
+        console.log('more', this._moreThenOneEdited());
+        if (this._moreThenOneEdited()) {
+            this.messageService.addNewMessage({
+                type: 'warning',
+                title: 'Ошибка редактирования рабочего стола:',
+                msg: 'одноверенное редактирование нескольких рабочих столов запрещено'
+            });
+        } else {
+            desk.edited = true;
+            this.deskName = desk.name;
+            this.editing = true;
+        }
     }
 
     openCreateForm() {
@@ -96,5 +110,15 @@ export class DesktopSwitcherComponent {
         this.creating = false;
         this.deskName = '';
         this._dropDown.toggle(false);
+    }
+
+    private _moreThenOneEdited(): boolean {
+        let edited = 0;
+        this.deskList.forEach((desk) => {
+            if (desk.edited) {
+                edited++;
+            }
+        });
+        return edited > 0;
     }
 }
