@@ -8,7 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
-import { E_RECORD_ACTIONS } from '../core/record-action';
+import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 
 @Component({
@@ -35,6 +35,8 @@ export class NodeActionsComponent {
     showDeleteHard: boolean;
 
     showUserSort: boolean;
+    showUserSortUp: boolean;
+    showUserSortDown: boolean;
     userSort = false;
 
     fields: IFieldView[];
@@ -42,7 +44,7 @@ export class NodeActionsComponent {
 
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
-        return !~this.fields.findIndex((f) =>  f.value);
+        return !~this.fields.findIndex((f) => f.value);
         /* tslint:enable:no-bitwise */
     }
 
@@ -57,14 +59,15 @@ export class NodeActionsComponent {
             this.dictionary = _d;
             if (_d) {
                 this.viewFields = _d.descriptor.listFields;
-                /* tslint:disable:no-bitwise */
-                this.showCheckbox = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.markRecords);
-                this.showAdd = !!~_d.descriptor.actions.findIndex((item) => item === E_RECORD_ACTIONS.add);
-                this.showEdit = !!~_d.descriptor.itemActions.findIndex((item) => item === E_RECORD_ACTIONS.edit);
-                this.showDelete = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.remove);
-                this.showDeleteHard = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.removeHard);
-                this.showUserSort = !!~_d.descriptor.groupActions.findIndex((item) => item === E_RECORD_ACTIONS.userOrder);
-                /* tslint:enable:no-bitwise */
+                this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                this.showAdd = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.add);
+                this.showEdit = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.edit);
+                this.showDelete = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.remove);
+                this.showDeleteHard = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.removeHard);
+                this.showUserSort = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.userOrder);
+                this.showUserSortUp = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveUp);
+                this.showUserSortDown = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveDown);
+
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
                 this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
                     id: null,
@@ -142,11 +145,11 @@ export class NodeActionsComponent {
     }
 
     userSortingUp() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+        this._actionService.emitAction(E_RECORD_ACTIONS.moveUp);
     }
 
     userSortingDown() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+        this._actionService.emitAction(E_RECORD_ACTIONS.moveDown);
     }
 
     checkAllItems() {

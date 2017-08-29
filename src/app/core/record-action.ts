@@ -6,6 +6,8 @@ export enum E_RECORD_ACTIONS {
     removeHard,
     order,
     userOrder,
+    moveUp,
+    moveDown,
     quickSearch,
     fullSearch,
     import,
@@ -19,4 +21,10 @@ export enum E_RECORD_ACTIONS {
     createRepresentative,
     slantForForms,
     /* to be extended */
+};
+
+export enum E_ACTION_GROUPS {
+    common,
+    item,
+    group
 };

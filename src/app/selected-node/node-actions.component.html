@@ -42,8 +42,8 @@
                         <span *ngIf="!userSort">Включить пользователькую сортировку</span>
                         <span *ngIf="userSort">Отключить пользователькую сортировку</span>
                     </a></li>
-                    <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
-                    <li *ngIf="userSort" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
+                    <li *ngIf="userSort && showUserSortUp" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
+                    <li *ngIf="userSort && showUserSortDown" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
                     <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="openModal(creatingModal)">Добавить элемент</a></li>
                     <li *ngIf="showDelete" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
                     <li *ngIf="showEdit" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>

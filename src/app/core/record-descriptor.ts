@@ -1,11 +1,23 @@
 import { FieldDescriptor, IFieldDesriptor } from './field-descriptor';
+import {
+    DictionaryDescriptor,
+    RubricatorDictionaryDescriptor,
+    DepartmentDictionaryDescriptor,
+} from './dictionary-descriptor';
 
-export class RecordDescriptor {
+export enum E_RECORD_TYPE {
+    simpleNode,
+    person,
+    department,
+}
+
+export abstract class RecordDescriptor {
+    abstract parent;
     keyField: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor (keyFieldName: string, fields: IFieldDesriptor[]) {
+    constructor(fields: IFieldDesriptor[]) {
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
         fields.forEach((f) => {
@@ -22,5 +34,27 @@ export class RecordDescriptor {
             fieldSet.push(fld);
         }
         /* tslint:enable:no-bitwise */
+    }
+}
+
+export class RubricatorRecordDescriptor extends RecordDescriptor {
+    parent: RubricatorDictionaryDescriptor;
+    constructor(dictionary: RubricatorDictionaryDescriptor, fields: IFieldDesriptor[]) {
+        super(fields);
+        this.parent = dictionary;
+    }
+}
+
+export class DepartmentRecordDecsriptor extends RecordDescriptor {
+    parent: DepartmentDictionaryDescriptor
+    typeField: FieldDescriptor;
+
+    constructor(dictionary: DepartmentDictionaryDescriptor, fields: IFieldDesriptor[], typeFieldName: string) {
+        super(fields);
+        this.parent = dictionary;
+        this.typeField = this.fieldsMap.get(typeFieldName);
+        if (!this.typeField) {
+            throw new Error('No field decribed for "' + typeFieldName + '"');
+        }
     }
 }

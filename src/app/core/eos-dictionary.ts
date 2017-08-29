@@ -1,6 +1,5 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { SEARCH_KEYS } from '../core/consts';
 import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
@@ -127,13 +126,15 @@ export class EosDictionary {
 
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
+        const _searchFields = this.descriptor.getFieldSet('search');
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
-            if (!!~SEARCH_KEYS.findIndex((key) => !!~node[key].search(searchString))) {
+            if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(searchString))) {
                 searchResult.push(node);
             }
         });
         /* tslint:enable:no-bitwise */
+
         if (!globalSearch) {
             searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
         }

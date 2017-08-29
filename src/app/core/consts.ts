@@ -1,11 +1,16 @@
-import { IDictionaryDescriptor } from './dictionary-descriptor';
-export const SEARCH_KEYS = ['code', 'title', 'description'];
+import {
+    IDictionaryDescriptor,
+    IRubricatorDictionaryDescriptor,
+    IDepartmentDictionaryDescriptor,
+} from './dictionary-descriptor';
 
-export const BASIC_DICT: IDictionaryDescriptor = {
+/* tslint:disable:max-line-length */
+export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     id: 'rubricator',
+    apiInstance: 'RUBRIC_CL',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
-    itemActions: ['edit', 'view'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'moveUp', 'moveDown'],
+    itemActions: ['edit', 'view', 'moveUp', 'moveDown'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     fields: [{
@@ -35,6 +40,7 @@ export const BASIC_DICT: IDictionaryDescriptor = {
 
 export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
     id: 'departments',
+    apiInstance: 'DEPARTMENT',
     title: 'Подразделения',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative'],
@@ -260,11 +266,10 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
         type: 'text'
     }],
 
-    fullSearchFields: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone',
-        'email', 'note'],
+    fullSearchFields: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
     editFields: ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers'],
-    quickViewFields: ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo'],
     listFields: ['type', 'shortPosition'],
+    quickViewFields: ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo'],
     shortQuickViewFields: ['lastName', 'firstName', 'fathersName'],
     searchFields: [],
     fieldGroups: [{
@@ -284,6 +289,7 @@ export const DEPARTMENTS_DICT: IDictionaryDescriptor = {
 
 export const ROOMS_DICT: IDictionaryDescriptor = {
     id: 'rooms',
+    apiInstance: 'ROOMS',
     title: 'Кабинеты',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
     itemActions: ['edit', 'view'],
@@ -365,3 +371,4 @@ export const ROOMS_DICT: IDictionaryDescriptor = {
     shortQuickViewFields: ['description'],
     listFields: ['title']
 };
+/* tslint:enable:max-line-length */

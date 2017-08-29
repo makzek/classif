@@ -1,4 +1,5 @@
 export interface IApiCfg {
+    authSrv: string;
     dataSrv: string;
     metadataJs: string[];
 };

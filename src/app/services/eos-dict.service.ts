@@ -6,11 +6,14 @@ import { EosApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
-import { BASIC_DICT } from '../core/consts';
-import { DEPARTMENTS_DICT } from '../core/consts';
-import { ROOMS_DICT } from '../core/consts';
-import { DictionaryDescriptor } from '../core/dictionary-descriptor';
-import { IFieldView} from '../core/field-descriptor';
+import { RUBRICATOR_DICT } from '../core/consts';
+
+import {
+    DictionaryDescriptor,
+    RubricatorDictionaryDescriptor
+} from '../core/dictionary-descriptor';
+
+import { IFieldView } from '../core/field-descriptor';
 
 @Injectable()
 export class EosDictService {
@@ -92,7 +95,7 @@ export class EosDictService {
                 } else {
                     this._api.getDictionaryMocked(dictionaryId)
                         .then((data: any) => {
-                            _dictionary = new EosDictionary(new DictionaryDescriptor(BASIC_DICT), data);
+                            _dictionary = new EosDictionary(new RubricatorDictionaryDescriptor(RUBRICATOR_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(DEPARTMENTS_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
                             console.log('_dictionary', _dictionary);
@@ -217,6 +220,18 @@ export class EosDictService {
         }
     }
 
+    private userOrderMove(nodes: EosDictionaryNode[], num: number) {
+        nodes.forEach((node, i) => {
+            const newIndex = i + num;
+            if (node.selected && newIndex >= 0 && newIndex < nodes.length) {
+                console.log(newIndex, node);
+                nodes.splice(i, 1);
+                nodes.splice(newIndex, 0, node);
+                this.userOrder(nodes);
+            }
+        });
+    }
+
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
@@ -228,7 +243,7 @@ export class EosDictService {
 
     public addChild(node: EosDictionaryNode) {
         if (this._selectedNode) {
-           this._dictionary.addNode(node, this._selectedNode.id);
+            this._dictionary.addNode(node, this._selectedNode.id);
         } else {
             this._dictionary.addNode(node);
         }
@@ -253,10 +268,26 @@ export class EosDictService {
     }
 
     public restoreItem(node: EosDictionaryNode) {
-        Object.assign(node, { ...node,  isDeleted: false });
-        Object.assign(node, { ...node,  selected: false });
+        Object.assign(node, { ...node, isDeleted: false });
+        Object.assign(node, { ...node, selected: false });
         if (node.children) {
             node.children.forEach((subNode) => this.restoreItem(subNode));
         }
+    }
+
+    public userOrder(nodes: EosDictionaryNode[]) {
+        nodes.forEach((node, i) => {
+            node.sorting = i;
+        });
+    }
+
+    public userOrderMoveUp(nodes: EosDictionaryNode[]) {
+        this.userOrderMove(nodes, -1);
+        this._selectedNode$.next(this._selectedNode);
+    }
+
+    public userOrderMoveDown(nodes: EosDictionaryNode[]) {
+        this.userOrderMove(nodes, 1);
+        this._selectedNode$.next(this._selectedNode);
     }
 }
