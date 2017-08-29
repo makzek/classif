@@ -3,6 +3,6 @@
     <span class="glyphicon glyphicon-bell" aria-hidden="true"><span class="badge">{{noticesCount}}</span></span>
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li *ngFor="let notice of notices" role="menuitem"><a class="dropdown-item">{{notice}}</a></li>
+    <li *ngFor="let notice of notices" class="menuitem" role="menuitem"><a class="dropdown-item">{{notice}}</a></li>
   </ul>
 </div>

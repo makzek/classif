@@ -12,6 +12,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     keyField: 'id',
     modeField: 'IS_NODE',
     fields: [{
+        key: 'IS_NODE',
+        type: 'boolean',
+        title: 'IS_NODE'
+    }, {
         key: 'id',
         type: 'string',
         title: 'ID'

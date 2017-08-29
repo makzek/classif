@@ -5,12 +5,12 @@
         <span class="caret"></span>
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Option1</a></li>
-    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li>
-    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки</a></li>
-    <li role="menuitem" *ngIf="!fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option1</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="!fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
     <li class="divider dropdown-divider" *ngIf="fullname"></li>
-    <li role="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Выйти</a>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Выйти</a>
     </li>
   </ul>
 </div>
