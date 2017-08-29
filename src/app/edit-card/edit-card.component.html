@@ -23,30 +23,7 @@
             </span>
         </div>
     </header>
-    <aside *ngIf="dictIdFromDescriptor === 'rubricator' " class="edit-aside">
-        <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="closeEditMode()">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="openEditMode()">Редактирование</button>
-        </div>
-    </aside>
-    <article *ngIf="dictIdFromDescriptor === 'rubricator'" class="edit-content">
-        <div class="form form-horizontal" *ngIf="viewFields">
-            <div class="form-group" *ngFor="let field of viewFields">
-                <label *ngIf="field.value || editMode" class="col-sm-2" [ngClass]="{'control-label': editMode}" for="{{field.id}}">{{field.title}}:</label>
-                <div class="col-sm-2" *ngIf="field.type !== 3">
-                    <input *ngIf="field.type == 0 || field.type == 1" type="text" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
-                    <input *ngIf="field.type == 2" type="file" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
-                    <input *ngIf="field.type == 4" type="date" [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"/>
-                    <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
-                </div>                
-                <div class="col-sm-6" *ngIf="field.type === 3">
-                     <textarea [hidden]="!editMode" class="" id="{{field.id}}" (change)="setUnsavedChanges()" [(ngModel)]="field.value"></textarea>
-                     <span [hidden]="editMode" class="" *ngIf="field.value">{{field.value}}</span>
-                </div>
-            </div>
-        </div>
-    </article>
+    <eos-rubricator-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
     <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
 

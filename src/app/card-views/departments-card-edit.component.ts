@@ -30,10 +30,12 @@ export class DepartmentsCardEditComponent {
         this._actonService.action$.subscribe(
             (act) => {
                 if (act === 'save') {
+                    this.editMode = false;
                     this.result.emit(this.tmpObj);
                 }
                 if (act === 'cancel') {
                     // console.log('node.data', this.node.data);
+                    this.editMode = false;
                     this.result.emit(this.node.data);
                     Object.assign(this.tmpObj, this.node.data);
                 }
@@ -43,5 +45,14 @@ export class DepartmentsCardEditComponent {
 
     setTab(i: number) {
         this.currTab = i;
+    }
+
+    changeEditMode(value: boolean) {
+        this.editMode = value;
+        if (value) {
+            this._actonService.emitMode('edit');
+        } else {
+            this._actonService.emitMode('view');
+        }
     }
 }

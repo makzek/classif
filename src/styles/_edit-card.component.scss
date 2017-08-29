@@ -32,32 +32,4 @@
             grid-row: 1;
         }
     }
-
-    .edit-aside {
-        .vertical-buttons {
-            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
-        }
-    }
-
-    .edit-content {
-        margin-left: 45px;
-
-        .row {
-            margin-right: 0;
-        }
-
-        .form-group {
-            display: flex;
-
-            input,
-            textarea {
-                width: 100%;
-            }
-
-            label {
-                margin-right: 7px;
-                white-space: nowrap;
-            }
-        }
-    }
 }

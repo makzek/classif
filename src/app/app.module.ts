@@ -37,6 +37,7 @@ import { PushpinComponent } from './pushpin/pushpin.component';
 
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
+import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -79,6 +80,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
         DepartmentsCardEditComponent,
         RoomsCardEditComponent,
+        RubricatorCardEditComponent,
     ],
     imports: [
         BrowserModule,

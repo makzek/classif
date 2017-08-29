@@ -89,6 +89,15 @@ export class EditCardComponent implements CanDeactivateGuard {
                 }
             }
         );
+
+        this.actionService.mode$.subscribe((mode) => {
+            if (mode === 'edit') {
+                this.editMode = true;
+            }
+            if (mode === 'view') {
+                this.editMode = false;
+            }
+        });
     }
 
     private _update(node: EosDictionaryNode) {

@@ -1,0 +1,16 @@
+.rubricator-card-edit {
+    .edit-aside {
+        .vertical-buttons {
+            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
+        }
+    }
+
+    .edit-content {
+        margin-left: 45px;
+        margin-right: 20px;
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+    }
+}

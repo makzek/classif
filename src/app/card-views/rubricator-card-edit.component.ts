@@ -6,10 +6,10 @@ import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
-    selector: 'eos-rooms-card-edit',
-    templateUrl: 'rooms-card-edit.component.html',
+    selector: 'eos-rubricator-card-edit',
+    templateUrl: 'rubricator-card-edit.component.html',
 })
-export class RoomsCardEditComponent {
+export class RubricatorCardEditComponent {
     node: EosDictionaryNode;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
