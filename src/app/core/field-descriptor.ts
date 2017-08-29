@@ -17,12 +17,12 @@ export interface IFieldDesriptor {
     column?: number;
     subcolumn?: number;
 }
-
+/*
 export interface IFieldGroup {
     title: string;
     fields: string[];
 }
-
+*/
 export interface IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;

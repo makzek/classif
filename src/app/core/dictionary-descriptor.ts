@@ -1,4 +1,4 @@
-import { IFieldDesriptor, IFieldGroup, FieldDescriptor, FieldGroup } from './field-descriptor';
+import { IFieldDesriptor, /*IFieldGroup,*/ FieldDescriptor, FieldGroup } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 
@@ -17,6 +17,13 @@ export interface IRecordMode {
 
 export class ModeFieldSet {
     [mode: string]: FieldDescriptor[];
+
+    constructor(record: RecordDescriptor, data: IRecordMode) {
+        Object.keys(data).forEach((mode) => {
+            this[mode] = [];
+            data[mode].forEach((fldName) => record.addFieldToSet(fldName, this[mode]));
+        });
+    }
 }
 
 export interface IDictionaryDescriptor {
@@ -108,7 +115,7 @@ export abstract class DictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
-    getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+    getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
             case E_FIELD_SET.list:
                 return this._getListFields();
@@ -117,21 +124,25 @@ export abstract class DictionaryDescriptor {
             case E_FIELD_SET.fullSearch:
                 return this._getFullSearchFields();
             case E_FIELD_SET.quickView:
-                return this._getQuickViewFields();
+                return this._getQuickViewFields(values);
             case E_FIELD_SET.shortQuickView:
-                return this._getShortQuickViewFields();
+                return this._getShortQuickViewFields(values);
             case E_FIELD_SET.edit:
-                return this._getEditFields();
+                return this._getEditFields(values);
             default:
                 throw new Error('Unknown field set');
         }
     }
 
+    getFieldView(aSet: E_FIELD_SET, mode?: string) {
+
+    }
+
     abstract _init(data: IDictionaryDescriptor);
 
-    abstract _getQuickViewFields(): FieldDescriptor[];
-    abstract _getShortQuickViewFields(): FieldDescriptor[];
-    abstract _getEditFields(): FieldDescriptor[];
+    abstract _getQuickViewFields(values?: any): FieldDescriptor[];
+    abstract _getShortQuickViewFields(values?: any): FieldDescriptor[];
+    abstract _getEditFields(values?: any): FieldDescriptor[];
 
     private _getListFields(): FieldDescriptor[] {
         return this.listFields;

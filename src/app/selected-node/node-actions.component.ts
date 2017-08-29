@@ -10,6 +10,7 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
 
 @Component({
     selector: 'eos-node-actions',
@@ -58,7 +59,8 @@ export class NodeActionsComponent {
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
-                this.viewFields = _d.descriptor.listFields;
+                this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
+
                 this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 this.showAdd = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.add);
                 this.showEdit = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.edit);
@@ -69,7 +71,8 @@ export class NodeActionsComponent {
                 this.showUserSortDown = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveDown);
 
                 this.fields = _d.descriptor.fullSearchFields.map((fld) => Object.assign({}, fld, { value: null }));
-                this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
+
+                this.newNode = new EosDictionaryNode(_d.descriptor.record, {
                     id: null,
                     code: null,
                     title: null,

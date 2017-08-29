@@ -19,15 +19,15 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
         this._initFieldSets(['quickViewFields', 'shortQuickViewFields', 'editFields'], data);
     }
 
-    _getShortQuickViewFields(): FieldDescriptor[] {
+    _getShortQuickViewFields(values?: any): FieldDescriptor[] {
         return this.shortQuickViewFields;
     }
 
-    _getQuickViewFields(): FieldDescriptor[] {
+    _getQuickViewFields(values?: any): FieldDescriptor[] {
         return this.quickViewFields;
     };
 
-    _getEditFields(): FieldDescriptor[] {
+    _getEditFields(values?: any): FieldDescriptor[] {
         return this.editFields;
     }
 

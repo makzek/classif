@@ -1,16 +1,16 @@
-import { DictionaryDescriptor } from './dictionary-descriptor';
+import { DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
     readonly id: string;
-    descriptor: any;
+    descriptor: DictionaryDescriptor;
     public title: string;
     root: EosDictionaryNode;
     private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<string, EosDictionaryNode>;
 
-    constructor(descriptor: any, data: any) {
+    constructor(descriptor: DictionaryDescriptor, data: any) {
         this.descriptor = descriptor;
         this.id = data.id;
         this.root = new EosDictionaryNode(this.descriptor.record, {
@@ -126,7 +126,7 @@ export class EosDictionary {
 
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
-        const _searchFields = this.descriptor.getFieldSet('search');
+        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
             if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(searchString))) {
