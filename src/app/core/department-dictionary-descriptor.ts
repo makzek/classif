@@ -1,5 +1,5 @@
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode } from './dictionary-descriptor';
+import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet } from './dictionary-descriptor';
 import { DepartmentRecordDescriptor } from './department-record-descriptor';
 
 export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
@@ -11,12 +11,13 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
 
 export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
     record: DepartmentRecordDescriptor;
-    quickViewFields: IRecordMode;
-    shortQuickViewFields: FieldDescriptor[];
-    editFields: FieldDescriptor[];
+    quickViewFields: ModeFieldSet;
+    shortQuickViewFields: ModeFieldSet;
+    editFields: ModeFieldSet;
 
     constructor(data: IDepartmentDictionaryDescriptor) {
         super(data);
+        this._initModeSets(['quickViewFields', 'shortQuickViewFields', 'editFields'], data);
     }
 
     _init(data: IDepartmentDictionaryDescriptor) {
@@ -25,18 +26,34 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
         }
     }
 
-    _getQuickViewFields(): FieldDescriptor[] {
-        console.warn('not implemented');
-        return [];
+    _getQuickViewFields(values: any): FieldDescriptor[] {
+        return this._getModeSet(this.quickViewFields, values);
     };
 
-    _getShortQuickViewFields(): FieldDescriptor[] {
-        console.warn('not implemented');
-        return [];
+    _getShortQuickViewFields(values: any): FieldDescriptor[] {
+        return this._getModeSet(this.shortQuickViewFields, values);
     }
 
-    _getEditFields(): FieldDescriptor[] {
-        console.warn('not implemented');
-        return [];
+    _getEditFields(values: any): FieldDescriptor[] {
+        return this._getModeSet(this.editFields, values);
+    }
+
+    private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
+        /* todo: fix hardcode to data, need better solution */
+        const _mode: string = values[this.record.modeField.key] ? 'person' : 'department';
+
+        if (_set[_mode]) {
+            return _set[_mode];
+        } else {
+            return [];
+        }
+    }
+
+    private _initModeSets(setNames: string[], data: IDepartmentDictionaryDescriptor) {
+        setNames.forEach((setName) => {
+            if (!this[setName]) {
+                this[setName] = new ModeFieldSet(this.record, data[setName]);
+            }
+        })
     }
 }

@@ -2,7 +2,6 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { EditCardActionService } from '../edit-card/action.service';
 })
 export class DepartmentsCardEditComponent {
     node: EosDictionaryNode;
-    fieldGroups: FieldGroup[];
+    fieldGroups: string[];
     currTab = 0;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
@@ -24,9 +23,12 @@ export class DepartmentsCardEditComponent {
                 Object.assign(this.tmpObj, this.node.data);
             }
         });
+        this.fieldGroups = ['A', 'B', 'C'];
+        /*
         this._dictionaryService.dictionary$.subscribe((dict) => {
             this.fieldGroups = dict.descriptor.fieldGroups;
         });
+        */
         this._actonService.action$.subscribe(
             (act) => {
                 if (act === 'save') {
