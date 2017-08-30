@@ -13,7 +13,7 @@ export class RubricatorCardEditComponent {
     node: EosDictionaryNode;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
-    editMode = false;
+    editMode = true;
     showOwners = true;
     showUsers = true;
     showAccess = true;

@@ -14,7 +14,7 @@ export class DepartmentsCardEditComponent {
     currTab = 0;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
-    editMode = false;
+    editMode = true;
 
     constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
         this._dictionaryService.openedNode$.subscribe((node) => {

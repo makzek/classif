@@ -44,7 +44,6 @@ export class DesktopSwitcherComponent {
     openEditForm(evt: Event, desk: EosDesk) {
         evt.preventDefault();
         evt.stopPropagation();
-        console.log('more', this._moreThenOneEdited());
         if (this._moreThenOneEdited()) {
             this.messageService.addNewMessage({
                 type: 'warning',

@@ -23,7 +23,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     nodeId: string;
     nodeName: string;
     selfLink: string;
-    editMode = false;
+    editMode = true;
     wasEdit = false;
     // hideWarning = true;
     // hideWarningEditing = true;

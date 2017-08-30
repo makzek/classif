@@ -2,8 +2,8 @@
     <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="editMode = false">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="editMode = true">Редактирование</button>
+            <button type="button" class="btn btn-default" (click)="editMode = false" [ngClass]="{'active': !editMode}">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="editMode = true" [ngClass]="{'active': editMode}">Редактирование</button>
         </div>
     </aside>
     <div *ngIf="1 !== 1"> <!--TODO: replace with isPerson check -->
