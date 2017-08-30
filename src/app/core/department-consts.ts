@@ -233,7 +233,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text'
     }],
 
-    listFields: ['type', 'shortPosition'],
+    listFields: {
+        person: ['type', 'shortPosition'],
+        department: ['type', 'title']
+    },
     searchFields: [],
     fullSearchFields: {
         person: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],

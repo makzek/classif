@@ -20,7 +20,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 })
 export class EditCardComponent implements CanDeactivateGuard {
 
-    node: EosDictionaryNode;
+    node: EosDictionaryNode; // TODO: remove it
     dictionaryId: string;
     nodeId: string;
     nodeName: string;
@@ -40,6 +40,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
     nextState: any;
     nextRoute: string;
+    parent: EosDictionaryNode;
 
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
@@ -59,6 +60,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         private actionService: EditCardActionService,
         private _deskService: EosDeskService,
     ) {
+        console.log('sdf');
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
@@ -67,10 +69,19 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.nextRoute = this.selfLink;
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
-            .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
+            .subscribe((node) => {
+                this._update(node);
+                this.eosDictService.dictionary$.subscribe((dict) => {
+                    this.dictIdFromDescriptor = dict.descriptor.id;
+                    this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
+                    this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
+                    this.nodeName = this.shortViewFields[0].value;
+                    this.parent = node.parent;
+                });
+            }, (error) => alert('error: ' + error));
         this.nodeListActionService.emitAction(null);
 
-        this.eosDictService.dictionary$.subscribe((dict) => {
+        /* this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
                 this.dictIdFromDescriptor = dict.descriptor.id;
                 this.eosDictService.openedNode$.subscribe(
@@ -83,7 +94,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                     },
                     (error) => alert(error));
             }
-        });
+        }); */
         /* To identify the current desktop ID */
         this.closeRedirect = this.selfLink;
         this._deskService.selectedDesk.subscribe(
@@ -162,6 +173,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     goTo(route: string): void {
+        console.log(route);
         if (!this.wasEdit) {
             if (route) {
                 this.router.navigate([route]);

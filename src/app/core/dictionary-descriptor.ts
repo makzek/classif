@@ -35,7 +35,7 @@ export interface IDictionaryDescriptor {
     groupActions: string[];
     fields: IFieldDesriptor[];
     keyField: string;
-    listFields: string[];
+    // listFields: string[];
     searchFields: string[];
 
     /* abstract field sets, depend on dictionary type */
@@ -43,6 +43,7 @@ export interface IDictionaryDescriptor {
     quickViewFields: any;
     shortQuickViewFields: any;
     editFields: any;
+    listFields: any;
 }
 
 export abstract class DictionaryDescriptor {
@@ -63,7 +64,8 @@ export abstract class DictionaryDescriptor {
     abstract record: RecordDescriptor;
 
     /* set of visible fields in list mode */
-    protected listFields: FieldDescriptor[];
+    // protected listFields: FieldDescriptor[];
+    protected abstract listFields: any;
 
     /* set of visible fields in quick view mode */
     protected abstract quickViewFields: any;
@@ -86,7 +88,7 @@ export abstract class DictionaryDescriptor {
             this.title = data.title;
             this._init(data);
             this._initActions(data);
-            this._initFieldSets(['listFields', 'searchFields', 'fullSearchFields'], data);
+            this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/], data);
             /* this._initFieldGroups(data); */
         } else {
             return undefined;

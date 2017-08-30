@@ -65,7 +65,7 @@ export class EosBreadcrumbsService {
                     if (routeSnaphot.params.nodeId && subpath !== 'edit') {
                         this._dictionaryService.getNode(routeSnaphot.params.dictionaryId, routeSnaphot.params.nodeId)
                             .then((node) => {
-                                bc.title = node.title;
+                                bc.title = node.getShortQuickView()[0].value;
                             });
                     }
                     if (routeSnaphot.params.desktopId && routeSnaphot.data.showInBreadcrumb) {

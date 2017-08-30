@@ -13,6 +13,7 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     quickViewFields: IRecordMode;
     shortQuickViewFields: IRecordMode;
     editFields: IRecordMode;
+    listFields: IRecordMode;
 }
 
 export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
@@ -21,10 +22,11 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
     quickViewFields: ModeFieldSet;
     shortQuickViewFields: ModeFieldSet;
     editFields: ModeFieldSet;
+    listFields: ModeFieldSet;
 
     constructor(data: IDepartmentDictionaryDescriptor) {
         super(data);
-        this._initModeSets(['quickViewFields', 'shortQuickViewFields', 'editFields'], data);
+        this._initModeSets(['quickViewFields', 'shortQuickViewFields', 'editFields', 'listFields', 'fullSearchFields', 'listFields'], data);
     }
 
     _init(data: IDepartmentDictionaryDescriptor) {
@@ -51,6 +53,10 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
                 return this._getModeSet(this.shortQuickViewFields, values);
             case E_FIELD_SET.edit:
                 return this._getModeSet(this.editFields, values);
+            case E_FIELD_SET.list:
+                return this._getModeSet(this.listFields, values);
+            case E_FIELD_SET.fullSearch:
+                return this._getModeSet(this.fullSearchFields, values);
             default:
                 throw new Error('Unknown field set');
         }
