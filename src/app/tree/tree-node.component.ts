@@ -5,6 +5,8 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 
+import { IFieldView } from '../core/field-descriptor';
+
 @Component({
     selector: 'eos-tree-node',
     templateUrl: 'tree-node.component.html',
@@ -17,6 +19,7 @@ export class TreeNodeComponent implements OnInit {
     isActive = false;
     selectedNode: EosDictionaryNode;
     showDeleted = false;
+    viewFields: IFieldView[];
 
     constructor(private _router: Router, private _dictSrv: EosDictService, private _settingService: EosUserSettingsService) {
         _dictSrv.dictionary$.subscribe((dict) => this._dictionaryId = dict.id);
@@ -34,6 +37,7 @@ export class TreeNodeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.viewFields = this.node.getListView();
         if (this.selectedNode) {
             this._update(this.selectedNode);
         }

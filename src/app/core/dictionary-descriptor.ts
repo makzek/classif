@@ -37,9 +37,9 @@ export interface IDictionaryDescriptor {
     keyField: string;
     listFields: string[];
     searchFields: string[];
-    fullSearchFields: string[];
 
     /* abstract field sets, depend on dictionary type */
+    fullSearchFields: any;
     quickViewFields: any;
     shortQuickViewFields: any;
     editFields: any;
@@ -63,29 +63,28 @@ export abstract class DictionaryDescriptor {
     abstract record: RecordDescriptor;
 
     /* set of visible fields in list mode */
-    listFields: FieldDescriptor[];
+    protected listFields: FieldDescriptor[];
 
     /* set of visible fields in quick view mode */
-    abstract quickViewFields: any;
+    protected abstract quickViewFields: any;
 
     /* set of visible fields in quick view (short) mode */
-    abstract shortQuickViewFields: any;
+    protected abstract shortQuickViewFields: any;
 
     /* search fields */
-    searchFields: FieldDescriptor[];
+    protected searchFields: FieldDescriptor[];
 
     /* full search filed set */
-    fullSearchFields: FieldDescriptor[];
+    protected abstract fullSearchFields: any;
 
     /* set of fields for edit form */
-    abstract editFields: any;
+    protected abstract editFields: any;
 
     constructor(data: IDictionaryDescriptor) {
         if (data) {
             this.id = data.id;
             this.title = data.title;
             this._init(data);
-
             this._initActions(data);
             this._initFieldSets(['listFields', 'searchFields', 'fullSearchFields'], data);
             /* this._initFieldGroups(data); */
@@ -116,21 +115,17 @@ export abstract class DictionaryDescriptor {
     }
 
     getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+        return this._getFieldSet(aSet, values);
+    }
+
+    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
             case E_FIELD_SET.list:
                 return this._getListFields();
             case E_FIELD_SET.search:
                 return this._getSearchFields();
-            case E_FIELD_SET.fullSearch:
-                return this._getFullSearchFields();
-            case E_FIELD_SET.quickView:
-                return this._getQuickViewFields(values);
-            case E_FIELD_SET.shortQuickView:
-                return this._getShortQuickViewFields(values);
-            case E_FIELD_SET.edit:
-                return this._getEditFields(values);
             default:
-                throw new Error('Unknown field set');
+                return null;
         }
     }
 
@@ -140,20 +135,12 @@ export abstract class DictionaryDescriptor {
 
     abstract _init(data: IDictionaryDescriptor);
 
-    abstract _getQuickViewFields(values?: any): FieldDescriptor[];
-    abstract _getShortQuickViewFields(values?: any): FieldDescriptor[];
-    abstract _getEditFields(values?: any): FieldDescriptor[];
-
     private _getListFields(): FieldDescriptor[] {
         return this.listFields;
     }
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
-    }
-
-    private _getFullSearchFields(): FieldDescriptor[] {
-        return this.fullSearchFields;
     }
 
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {

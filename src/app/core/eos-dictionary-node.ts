@@ -23,8 +23,10 @@ export class EosDictionaryNode {
 
     constructor(descriptor: RecordDescriptor, data: any) {
         if (data) {
+            /*
             Object.assign(this, data);
             console.warn('store data in EosDictionaryNode properties is deprecated');
+            */
             this.selected = !!this.selected;
             this.isDeleted = !!this.isDeleted;
             this._descriptor = descriptor;
@@ -32,8 +34,14 @@ export class EosDictionaryNode {
             this._descriptor.fields.forEach((fld) => {
                 this.data[fld.key] = data[fld.key];
             });
+
+            if (data.parentId) { /* todo: describe field in descriptor */
+                this.parentId = data.parentId;
+            }
+
             if (this.id === undefined) {
                 this.id = this.data[this._descriptor.keyField.key];
+                console.log('node id', this.id);
             }
         }
     }
@@ -88,8 +96,27 @@ export class EosDictionaryNode {
         this.hasSubnodes = (this.children.length > 0);
     }
 
+    /* deprecated */
     getValues(fields: FieldDescriptor[]): IFieldView[] {
         return fields.map((fld) => Object.assign({}, fld, { value: this.data[fld.key] }));
+    }
+    /* deprecated */
+
+    getListView(): IFieldView[] {
+        return this._descriptor.getListView(this.data);
+    }
+
+    getQuickView(): IFieldView[] {
+        return this._descriptor.getQuickView(this.data);
+    }
+
+    getShortQuickView(): IFieldView[] {
+        return this._descriptor.getShortQuickView(this.data);
+    }
+
+    getEditView(): IFieldView[] {
+        console.warn('need to be implemented');
+        return [];
     }
 }
 

@@ -12,6 +12,8 @@ import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
 import { EosDeskService } from '../services/eos-desk.service';
 
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
+
 @Component({
     selector: 'eos-edit-card',
     templateUrl: 'edit-card.component.html',
@@ -74,8 +76,8 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.eosDictService.openedNode$.subscribe(
                     (node) => {
                         if (node) {
-                            this.viewFields = node.getValues(dict.descriptor.quickViewFields);
-                            this.shortViewFields = node.getValues(dict.descriptor.shortQuickViewFields);
+                            this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
+                            this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
                             this.nodeName = this.shortViewFields[0].value;
                         }
                     },
@@ -185,7 +187,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     canDeactivate(nextState?: any) {
-        this.nextState =  nextState;
+        this.nextState = nextState;
         if (this.wasEdit) {
             /* if there are any unsaved changes, an action required */
             // this.hideWarning = false;

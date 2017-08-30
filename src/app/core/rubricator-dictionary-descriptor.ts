@@ -1,5 +1,5 @@
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor } from './dictionary-descriptor';
+import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 import { RubricatorRecordDescriptor } from './rubricator-record-descriptor';
 
 export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
@@ -10,25 +10,33 @@ export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
 
 export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
     record: RubricatorRecordDescriptor;
-    quickViewFields: FieldDescriptor[];
-    shortQuickViewFields: FieldDescriptor[];
-    editFields: FieldDescriptor[];
+    protected fullSearchFields: FieldDescriptor[];
+    protected quickViewFields: FieldDescriptor[];
+    protected shortQuickViewFields: FieldDescriptor[];
+    protected editFields: FieldDescriptor[];
 
     constructor(data: IRubricatorDictionaryDescriptor) {
         super(data);
         this._initFieldSets(['quickViewFields', 'shortQuickViewFields', 'editFields'], data);
     }
 
-    _getShortQuickViewFields(values?: any): FieldDescriptor[] {
-        return this.shortQuickViewFields;
-    }
-
-    _getQuickViewFields(values?: any): FieldDescriptor[] {
-        return this.quickViewFields;
-    };
-
-    _getEditFields(values?: any): FieldDescriptor[] {
-        return this.editFields;
+    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+        const _res = super._getFieldSet(aSet, values);
+        if (_res) {
+            return _res;
+        }
+        switch (aSet) {
+            case E_FIELD_SET.fullSearch:
+                return this.fullSearchFields;
+            case E_FIELD_SET.quickView:
+                return this.quickViewFields;
+            case E_FIELD_SET.shortQuickView:
+                return this.shortQuickViewFields;
+            case E_FIELD_SET.edit:
+                return this.editFields;
+            default:
+                throw new Error('Unknown field set');
+        }
     }
 
     _init(data: IRubricatorDictionaryDescriptor) {

@@ -18,14 +18,14 @@ export class OpenedNodeComponent {
         this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
                 this.eosDictService.openedNode$.subscribe(
-                (node) => {
-                    if (node) {
-                        this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView));
-                        this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView));
-                    }
-                },
-                (error) => alert(error));
-                }
+                    (node) => {
+                        if (node) {
+                            this.viewFields = node.getQuickView();
+                            this.shortViewFields = node.getShortQuickView();
+                        }
+                    },
+                    (error) => alert(error));
+            }
         });
     }
 
