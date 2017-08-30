@@ -76,10 +76,8 @@ export class SelectedNodeComponent {
                     this.delete();
                     break;
                 }
-                case E_RECORD_ACTIONS.edit: {
-                    if (this.selectedNode.id === this.openedNode.id) {
-                        this.editNode();
-                    }
+                case E_RECORD_ACTIONS.editSelected: {
+                    this.editNode();
                     break;
                 }
                 case E_RECORD_ACTIONS.removeHard: {

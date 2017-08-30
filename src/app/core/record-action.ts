@@ -20,6 +20,7 @@ export enum E_RECORD_ACTIONS {
     importPhotos,
     createRepresentative,
     slantForForms,
+    editSelected,
     /* to be extended */
 };
 

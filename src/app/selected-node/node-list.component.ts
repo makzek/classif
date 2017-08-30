@@ -77,6 +77,8 @@ export class NodeListComponent {
                 case E_RECORD_ACTIONS.edit: {
                     if (this.openedNode) {
                         this.editNode(this.openedNode);
+                    } else {
+                        this._actionService.emitAction(E_RECORD_ACTIONS.editSelected)
                     }
                     break;
                 }
@@ -180,6 +182,12 @@ export class NodeListComponent {
                     node.id,
                     'edit',
                 ]);
+            } else {
+                this._messageService.addNewMessage({
+                    type: 'danger',
+                    title: 'Ошибка редактирования элемента: ',
+                    msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактирвать',
+                });
             }
         } else {
             this._messageService.addNewMessage({
