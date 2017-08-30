@@ -10,6 +10,7 @@ import { EosMessageService } from '../services/eos-message.service';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
 
 @Component({
     selector: 'eos-node-list',
@@ -51,7 +52,7 @@ export class NodeListComponent {
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.viewFields = dictionary.descriptor.listFields;
+                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list)
                     this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
             },

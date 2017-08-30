@@ -9,6 +9,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { NodeListActionsService } from '../selected-node/node-list-action.service';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
 
 @Component({
     selector: 'eos-selected-node',
@@ -33,7 +34,7 @@ export class SelectedNodeComponent {
                 this.dictionary = dictionary;
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.viewFields = dictionary.descriptor.listFields;
+                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list);
                 }
             },
             (error) => alert(error)
@@ -156,8 +157,8 @@ export class SelectedNodeComponent {
     }
 
     restoringLogicallyDeletedItem() {
-         if (this.selectedNode.selected && this.selectedNode.isDeleted) {
+        if (this.selectedNode.selected && this.selectedNode.isDeleted) {
             this._eosDictService.physicallyDelete(this.selectedNode.id);
-         }
+        }
     }
 }

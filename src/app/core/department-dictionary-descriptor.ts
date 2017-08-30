@@ -1,9 +1,15 @@
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet } from './dictionary-descriptor';
+import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
 import { DepartmentRecordDescriptor } from './department-record-descriptor';
+
+export enum E_DEPT_MODE {
+    person,
+    department
+}
 
 export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     modeField: string;
+    fullSearchFields: IRecordMode;
     quickViewFields: IRecordMode;
     shortQuickViewFields: IRecordMode;
     editFields: IRecordMode;
@@ -11,6 +17,7 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
 
 export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
     record: DepartmentRecordDescriptor;
+    fullSearchFields: ModeFieldSet;
     quickViewFields: ModeFieldSet;
     shortQuickViewFields: ModeFieldSet;
     editFields: ModeFieldSet;
@@ -26,21 +33,33 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
         }
     }
 
-    _getQuickViewFields(values: any): FieldDescriptor[] {
-        return this._getModeSet(this.quickViewFields, values);
-    };
-
-    _getShortQuickViewFields(values: any): FieldDescriptor[] {
-        return this._getModeSet(this.shortQuickViewFields, values);
+    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+        const _res = super._getFieldSet(aSet, values);
+        if (_res) {
+            return _res;
+        }
+        switch (aSet) {
+            case E_FIELD_SET.fullSearch:
+                let __res = [];
+                Object.keys(this.fullSearchFields).forEach((mode) => {
+                    __res = __res.concat(__res, this.fullSearchFields[mode]);
+                })
+                return __res;
+            case E_FIELD_SET.quickView:
+                return this._getModeSet(this.quickViewFields, values);
+            case E_FIELD_SET.shortQuickView:
+                return this._getModeSet(this.shortQuickViewFields, values);
+            case E_FIELD_SET.edit:
+                return this._getModeSet(this.editFields, values);
+            default:
+                throw new Error('Unknown field set');
+        }
     }
 
-    _getEditFields(values: any): FieldDescriptor[] {
-        return this._getModeSet(this.editFields, values);
-    }
 
     private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
         /* todo: fix hardcode to data, need better solution */
-        const _mode: string = values[this.record.modeField.key] ? 'person' : 'department';
+        const _mode: string = E_DEPT_MODE[this.record.getMode(values)];
 
         if (_set[_mode]) {
             return _set[_mode];
