@@ -11,7 +11,7 @@
     "saas-lint": "./node_modules/sass-lint/bin/sass-lint.js -c ./.sass-lint.yml -v -q",
     "lint": "ng lint --type-check",
     "e2e": "ng e2e",
-    "build-stage": "node ./build-version.js && ng build"
+    "build-stage": "node ./build-version.js && ng build -pr=false"
   },
   "pre-commit": [
     "lint"
