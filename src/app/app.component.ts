@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef, NgZone } from '@angular/core';
 
 import { EosDeskService } from '../app/services/eos-desk.service';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'eos-root',
@@ -10,6 +11,8 @@ export class AppComponent {
     private _containerRef: ViewContainerRef;
 
     currentDesk: string;
+    version: string;
+
     constructor(
         viewContainerRef: ViewContainerRef,
         private _deskService: EosDeskService,
@@ -30,5 +33,9 @@ export class AppComponent {
                 }
             }
         );
+
+        if (!environment.production) {
+            this.version = environment.version;
+        }
     }
 }

@@ -71,3 +71,9 @@
     }
 }
 
+.version-number {
+    position: fixed;
+    bottom: $grid-gutter-width / 2;
+    right: $grid-gutter-width / 2;
+}
+

@@ -41,7 +41,6 @@ export class EosDictionaryNode {
 
             if (this.id === undefined) {
                 this.id = this.data[this._descriptor.keyField.key];
-                console.log('node id', this.id);
             }
         }
     }
