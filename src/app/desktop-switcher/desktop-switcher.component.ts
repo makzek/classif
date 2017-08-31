@@ -20,7 +20,7 @@ export class DesktopSwitcherComponent {
     deskName: string;
     creating = false;
     editing = false;
-    maxLength = 20;
+    maxLength = 80;
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
