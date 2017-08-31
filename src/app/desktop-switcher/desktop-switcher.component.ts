@@ -20,6 +20,7 @@ export class DesktopSwitcherComponent {
     deskName: string;
     creating = false;
     editing = false;
+    maxLength = 20;
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
@@ -64,12 +65,26 @@ export class DesktopSwitcherComponent {
 
     saveDesk(desk: EosDesk): void {
         desk.edited = false;
-        if (desk.id) {
-            desk.name = this.deskName;
-            this.eosDeskService.editDesk(desk);
+        const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
+        if (_tempDeskName === '') {
+            const errPartTitle = desk.id ? 'редактирования' : 'создания';
+            this.messageService.addNewMessage({
+                type: 'warning',
+                title: 'Ошибка ' + errPartTitle + ' рабочего стола:',
+                msg: 'нельзя ввести пустое имя рабочего стола'
+            });
+            if (desk.id) {
+                this.cancelEdit(desk);
+            } else {
+                this.cancelCreating();
+            }
         } else {
-            desk.name = this.deskName;
-            this.eosDeskService.createDesk(desk);
+            desk.name = _tempDeskName;
+            if (desk.id) {
+                this.eosDeskService.editDesk(desk);
+            } else {
+                this.eosDeskService.createDesk(desk);
+            }
         }
         this.deskName = '';
     }
