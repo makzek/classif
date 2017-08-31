@@ -1,6 +1,6 @@
 import { FieldDescriptor } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
-import { DepartmentRecordDescriptor } from './department-record-descriptor';
+import { RecordDescriptor } from './record-descriptor';
 
 export enum E_DEPT_MODE {
     person,
@@ -14,6 +14,34 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     shortQuickViewFields: IRecordMode;
     editFields: IRecordMode;
     listFields: IRecordMode;
+}
+
+export class DepartmentRecordDescriptor extends RecordDescriptor {
+    parent: DepartmentDictionaryDescriptor;
+    modeField: FieldDescriptor;
+
+    constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
+        /* fields: IFieldDesriptor[], typeFieldName: string */
+        super(data.keyField, data.fields);
+        this.parent = dictionary;
+        this.modeField = this.fieldsMap.get(data.modeField);
+        if (!this.modeField) {
+            throw new Error('No field decribed for "' + data.modeField + '"');
+        }
+    }
+
+    getMode(values: any): E_DEPT_MODE {
+        /* if IS_NODE or another boolean field */
+        if (values) {
+            if (values[this.modeField.key]) {
+                return E_DEPT_MODE.department;
+            } else {
+                return E_DEPT_MODE.person;
+            }
+        } else {
+            return undefined;
+        }
+    }
 }
 
 export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
@@ -67,7 +95,7 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
         /* todo: fix hardcode to data, need better solution */
         const _mode: string = E_DEPT_MODE[this.record.getMode(values)];
 
-        if (_set[_mode]) {
+        if (_mode && _set[_mode]) {
             return _set[_mode];
         } else {
             return [];

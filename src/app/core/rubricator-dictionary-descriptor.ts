@@ -1,12 +1,21 @@
-import { FieldDescriptor } from './field-descriptor';
+import { FieldDescriptor, IFieldDesriptor } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
-import { RubricatorRecordDescriptor } from './rubricator-record-descriptor';
+import { RecordDescriptor } from './record-descriptor';
 
 export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
     quickViewFields: string[];
     shortQuickViewFields: string[];
     editFields: string[];
     listFields: string[];
+}
+
+export class RubricatorRecordDescriptor extends RecordDescriptor {
+    parent: RubricatorDictionaryDescriptor;
+
+    constructor(dictionary: RubricatorDictionaryDescriptor, fields: IFieldDesriptor[], keyFieldName: string) {
+        super(keyFieldName, fields);
+        this.parent = dictionary;
+    }
 }
 
 export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
