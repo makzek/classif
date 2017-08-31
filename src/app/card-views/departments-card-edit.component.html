@@ -1,16 +1,16 @@
-<div class="eos-departments-card-edit">
-    <aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
+<div class="eos-departments-card-edit" *ngIf="node">
+    <!--<aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
             <button type="button" class="btn btn-default" (click)="editMode = false" [ngClass]="{'active': !editMode}">Просмотр</button>
             <button type="button" class="btn btn-default" (click)="editMode = true" [ngClass]="{'active': editMode}">Редактирование</button>
         </div>
-    </aside>
-    <div *ngIf="1 !== 1"> <!--TODO: replace with isPerson check -->
+    </aside>-->
+    <div *ngIf="1 === 1"> <!--TODO: replace with isPerson check -->
         <ul class="tabs">
             <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
                 (click)="setTab(i)">
-                <span>{{tab.title}}</span>
+                <span>{{tab}}</span>
             </li>
         </ul>
         <div class="wrapper" *ngIf="currTab === 0">
@@ -247,7 +247,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="1 === 1" class="wrapper"><!--TODO: replace with isDepartment check -->
+    <div *ngIf="1 !== 1" class="wrapper"><!--TODO: replace with isDepartment check -->
         <div class="col-1">
             <span class="subcol-3-wrapper">
                 <div class="input-group subcol-1">

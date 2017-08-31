@@ -60,7 +60,6 @@ export class EditCardComponent implements CanDeactivateGuard {
         private actionService: EditCardActionService,
         private _deskService: EosDeskService,
     ) {
-        console.log('sdf');
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
@@ -108,12 +107,12 @@ export class EditCardComponent implements CanDeactivateGuard {
         );
 
         this.actionService.mode$.subscribe((mode) => {
-            if (mode === 'edit') {
+            /* if (mode === 'edit') {
                 this.openEditMode();
             }
             if (mode === 'view') {
                 this.closeEditMode();
-            }
+            } */
             if (mode === 'unsavedChanges') {
                 this.setUnsavedChanges();
             }
@@ -135,13 +134,22 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.actionService.emitAction('cancel');
     }
 
+    changeEditMode(value: boolean) {
+        this.editMode = value;
+        if (value) {
+            this.actionService.emitMode('edit');
+        } else {
+            this.actionService.emitMode('view');
+        }
+    }
+
     recordResult(evt: any) {
         this.wasEdit = false;
         this.editMode = false;
         this.node.data = evt;
         this.eosDictService
-            .updateNode(this.dictionaryId, this.nodeId, this.node)
-            .catch((err) => alert('err: ' + err));
+            .updateNode(this.dictionaryId, this.nodeId, this.node._descriptor, evt)
+            // .catch((err) => alert('err: ' + err));
     }
 
     resetAndClose(): void {
@@ -189,13 +197,14 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     check() {
+        /* TODO: rewrite checking with checkbox
         this.node.selected = !this.node.selected;
         if (!this.wasEdit) {
-            this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node).then(
+            this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this.node._descriptor, this.data).then(
                 () => { },
                 (err) => alert('err: ' + err)
             );
-        }
+        }*/
     }
 
     canDeactivate(nextState?: any) {

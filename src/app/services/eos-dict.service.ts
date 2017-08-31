@@ -9,6 +9,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { RUBRICATOR_DICT } from '../core/consts';
 import { DEPARTMENTS_DICT } from '../core/department-consts';
 
+import { RecordDescriptor } from '../core/record-descriptor';
 import { RubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
 
@@ -195,7 +196,8 @@ export class EosDictService {
         });
     }
 
-    public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
+    /* public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any>
+    { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             this.getNode(dictionaryId, nodeId)
                 .then((node) => {
@@ -207,6 +209,10 @@ export class EosDictService {
                 );
             // rej('not implemented');
         });
+    }*/
+
+    public updateNode(dictionaryId: string, nodeId: string, descriptor: RecordDescriptor, data: any) {
+        console.log('updateNode not implemented');
     }
 
     private _deleteNode(node: EosDictionaryNode): void {

@@ -25,7 +25,14 @@
             </span>
         </div>
     </header>
-    <eos-rubricator-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
+    <aside class="edit-aside">
+        <div class="btn-group vertical-buttons" role="group">
+            <button type="button" class="btn btn-default">Что-то ещё</button>
+            <button type="button" class="btn btn-default" (click)="changeEditMode(false)" [ngClass]="{'active': !editMode}">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
+        </div>
+    </aside>
+    <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
     <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
 

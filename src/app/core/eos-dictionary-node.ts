@@ -113,9 +113,8 @@ export class EosDictionaryNode {
         return this._descriptor.getShortQuickView(this.data);
     }
 
-    getEditView(): IFieldView[] {
-        console.warn('need to be implemented');
-        return [];
+    getEditView(): any {
+       return this._descriptor.getEditView(this.data);
     }
 }
 

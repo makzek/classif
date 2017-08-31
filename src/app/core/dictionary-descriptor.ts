@@ -132,7 +132,10 @@ export abstract class DictionaryDescriptor {
     }
 
     getFieldView(aSet: E_FIELD_SET, mode?: string) {
+        return this._getFieldView(aSet, mode);
+    }
 
+    protected _getFieldView(aSet: E_FIELD_SET, mode?: string): any {
     }
 
     abstract _init(data: IDictionaryDescriptor);

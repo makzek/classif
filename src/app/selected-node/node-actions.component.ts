@@ -1,6 +1,7 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
@@ -11,6 +12,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { EditCardActionService } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -20,7 +22,7 @@ export class NodeActionsComponent {
     showDeleted = false;
     modalRef: BsModalRef;
     checkAll = false;
-    newNode: EosDictionaryNode;
+    // newNode: EosDictionaryNode;
 
     searchResults: EosDictionaryNode[];
     searchString: string;
@@ -43,6 +45,10 @@ export class NodeActionsComponent {
     fields: IFieldView[];
     searchInDeleted = false;
 
+    dictIdFromDescriptor: string;
+
+    @ViewChild('creatingModal') public creatingModal: ModalDirective;
+
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
         return !~this.fields.findIndex((f) => f.value);
@@ -52,13 +58,15 @@ export class NodeActionsComponent {
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
-        private _actionService: NodeListActionsService) {
+        private _actionService: NodeListActionsService,
+        private _editCardActionService: EditCardActionService) {
         this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
+                this.dictIdFromDescriptor = _d.descriptor.id;
                 this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
 
                 this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
@@ -72,7 +80,7 @@ export class NodeActionsComponent {
 
                 this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
 
-                this.newNode = new EosDictionaryNode(_d.descriptor.record, {
+                /* this.newNode = new EosDictionaryNode(_d.descriptor.record, {
                     id: null,
                     code: null,
                     title: null,
@@ -86,7 +94,7 @@ export class NodeActionsComponent {
                     isDeleted: false,
                     selected: false,
                     data: null,
-                });
+                });*/
             }
         });
     }
@@ -98,7 +106,7 @@ export class NodeActionsComponent {
         this.modalRef = this.modalService.show(template);
     }
 
-    createItem() {
+    /*createItem() {
         this.modalRef.hide();
         this._dictionaryService.addChild(this.newNode);
         this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
@@ -116,7 +124,7 @@ export class NodeActionsComponent {
             selected: false,
             data: null,
         });
-    }
+    }*/
 
     deleteSelectedItems() {
         this._actionService.emitAction(E_RECORD_ACTIONS.remove);
@@ -172,5 +180,15 @@ export class NodeActionsComponent {
     fullSearch() {
         this.modalRef.hide();
         this._dictionaryService.fullSearch(this.fields, this.searchInDeleted);
+    }
+
+    create() {
+        this._editCardActionService.emitAction('create');
+        this.creatingModal.hide();
+    }
+
+    saveNewNode(data: any) {
+        console.log('Saving new node not implemented, data recived:', data);
+        // this.dictionary.descriptor.getFieldView();
     }
 }

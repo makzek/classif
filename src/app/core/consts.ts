@@ -27,7 +27,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         title: 'Описание',
         type: 'text'
     }],
-    editFields: ['code', 'title', 'description'],
+    editFields: ['code', 'title', 'description', 'note', 'SEV'],
     searchFields: ['code', 'title', 'description'],
     fullSearchFields: ['code', 'title', 'description'],
     quickViewFields: ['code', 'title', 'description'],

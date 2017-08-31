@@ -19,11 +19,13 @@ export class DepartmentsCardEditComponent {
     constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
             this.node = node;
-            if (this.node.data) {
-                Object.assign(this.tmpObj, this.node.data);
+            if (this.node) {
+                if (this.node.data) {
+                    Object.assign(this.tmpObj, this.node.data);
+                }
             }
         });
-        this.fieldGroups = ['A', 'B', 'C'];
+        this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
         /*
         this._dictionaryService.dictionary$.subscribe((dict) => {
             this.fieldGroups = dict.descriptor.fieldGroups;

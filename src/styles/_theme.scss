@@ -146,6 +146,12 @@
                 color: $primary-font-color-main-theme;
             }
         }
+
+        .edit-content {
+            label {
+                color: $unimportant-info-color-main-theme;
+            }
+        }
     }
 
     .eos-node-actions {
