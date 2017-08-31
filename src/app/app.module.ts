@@ -53,6 +53,9 @@ import { EditCardActionService } from './edit-card/action.service';
 import { TestPageComponent } from './test-page/test-page.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
+import { LoginComponent } from './login/login.component';
+import { ConfirmWindowComponent } from './confirm-window/confirm-window.component'
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -77,7 +80,8 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         NodeListComponent,
         NodeActionsComponent,
         PushpinComponent,
-
+        LoginComponent,
+        ConfirmWindowComponent,
         DepartmentsCardEditComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,

@@ -15,6 +15,8 @@ export class DepartmentsCardEditComponent {
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
     editMode = true;
+    /* todo: define it or remove*/
+    dictIdFromDescriptor: string;
 
     constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
