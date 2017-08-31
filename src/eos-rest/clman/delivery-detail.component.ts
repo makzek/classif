@@ -9,7 +9,7 @@ import { Utils } from '../core/utils';
     templateUrl: './delivery-detail.component.html'
 })
 export class DeliveryDetailComponent {
-    private item: IDeliveryCl;
+    item: IDeliveryCl;
 
     @Input()
     set it(it: IDeliveryCl) {

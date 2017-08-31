@@ -15,7 +15,7 @@
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group"  style="padding-left: 20px !important; width:95% !important; text-align: center !important;">
-                    <input type="text" class="form-control" [(ngModel)]="deskName"/>
+                    <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <div class="input-group-btn">
                         <button type="button" (click)="closeAndSave(desk)" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
                         <button type="button" (click)="cancelEdit(desk)" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
@@ -27,7 +27,7 @@
         <li *ngIf="deskList.length < 6">
             <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName"/>
+                    <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create()" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
                         <button class="btn btn-default" (click)="cancelCreating()" type="button"><span class="glyphicon glyphicon-remove" (click)="cancelCreating()" aria-hidden="true" ></span></button>
