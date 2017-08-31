@@ -29,4 +29,8 @@
     <span *ngIf="!item.value.edited" class="glyphicon glyphicon-pencil" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="item.value.edited" class="glyphicon glyphicon-ok" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="deskId !== 'system'" class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(item.value)"></span>
+    <eos-confirm-window title="'Удалить?'"
+                        body="'Вы десйтвительно хотите удалить рабочий стол ' + item.value.title + '?'"
+                        result="removeConfirm($event)">
+    </eos-confirm-window>
 </ng-template>

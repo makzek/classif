@@ -4,6 +4,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
+import { ConfirmWindowComponent } from '../confirm-window/confirm-window.component';
 
 import { IDeskItem } from '../core/desk-item.interface';
 
@@ -66,5 +67,9 @@ export class DesktopComponent {
     stopDefault(evt: Event) {
         evt.preventDefault();
         evt.stopPropagation();
+    }
+
+    removeConfirm(evt: Event) {
+        console.log(1);
     }
 }
