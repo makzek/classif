@@ -1,5 +1,5 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!creating && !editing">
-    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">{{selectedDesk.name}}<span class="caret"></span></button>
+    <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">{{selectedDesk.name}}<span class="glyphicon glyphicon-menu-down btn-icon"></span></button>
     <ul class="dropdown-menu" role="menu">
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem">
             <span [hidden]="desk.edited">

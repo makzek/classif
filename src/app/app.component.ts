@@ -13,6 +13,14 @@ export class AppComponent {
     currentDesk: string;
     version: string;
 
+    modules = [{
+        title: 'Cправочники',
+        url: '/spravochniki'
+    }, {
+        title: 'Тестовая страница',
+        url: '/test'
+    }];
+
     constructor(
         viewContainerRef: ViewContainerRef,
         private _deskService: EosDeskService,

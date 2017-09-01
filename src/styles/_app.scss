@@ -1,20 +1,12 @@
 .main-container {
-    -ms-grid-columns: auto 1fr 0;
-    -ms-grid-rows: 100px 1fr 0;
-    display: -ms-grid;
-    display: grid; // sass-lint:disable-line no-duplicate-properties
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    grid-template-columns: auto 1fr 0;
-    grid-template-rows: auto 1fr 0;
 }
 
 .content-wrapper {
-    grid-column: 2;
-    grid-row: 2;
     width: 100%;
 }
 
@@ -23,25 +15,72 @@
 }
 
 .sidebar-wrapper {
-    grid-column: 1;
-    grid-row: 2;
     border-right: 1px solid transparent;
 }
 
 .header-wrapper {
-    grid-column: 1;
-    -ms-grid-column-span: 4;  // sass-lint:disable-line no-misspelled-properties
-
-    grid-row: 1;
     border-bottom: 1px solid transparent;
-    padding: $grid-gutter-width / 2;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    .title {
-        margin: auto;
-        font-size: 16px;
+    height: 60px;
+
+    .round-img-wrapper {
         display: inline-block;
-        vertical-align: middle;
+        width: 60px;
+        height: 60px;
+
+        .round-img {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 9px;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            background: darkblue;
+        }
+    }
+
+    .header-content {
+        list-style: none;
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+
+        .header-item {
+            display: inline-block;
+            height: 100%;
+            margin: auto;
+
+            .link-text {
+                position: relative;
+                top: -24px;
+                padding-left: 20px;
+                padding-right: 40px;
+                font-size: 18px;
+                line-height: 24px;
+                cursor: pointer;
+
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    .header-wrapper {
+        .header-content {
+            .header-item {
+                .link-text {
+                    padding-left: 10px;
+                    padding-right: 15px;
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+            }
+        }
     }
 }
 
@@ -55,6 +94,7 @@
     z-index: 9999;
 }
 
+/*
 .header-wrapper-right {
     ul.header-right-items {
         list-style: none;
@@ -70,7 +110,7 @@
             }
         }
     }
-}
+}*/
 
 .version-number {
     position: fixed;

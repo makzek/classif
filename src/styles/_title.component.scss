@@ -1,0 +1,27 @@
+.title-wrapper {
+    width: 220px;
+
+    .title-text-wrapper {
+        display: inline-block;
+        padding-right: 20px;
+        width: 150px;
+        position: relative;
+        top: -10px;
+
+        .title-text {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    .title-wrapper {
+        .title-text-wrapper {
+            .title-text {
+                font-size: 12px;
+                line-height: 18px;
+            }
+        }
+    }
+}

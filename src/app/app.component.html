@@ -1,24 +1,34 @@
 <div class="main-container main-theme">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper">
-        <eos-title></eos-title>
-        <eos-desktop-switcher></eos-desktop-switcher>
-        <div class="pull-right header-wrapper-right">
-            <ul class="header-right-items">
-                <li>
-                    <eos-search></eos-search>
-                </li>
-                <li>
-                    <eos-notice></eos-notice>
-                </li>
-                <li>
-                    <eos-user></eos-user>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="sidebar-wrapper">
-        <eos-sidebar></eos-sidebar>
+        <ul class="header-content">
+            <li class="header-item">
+                <eos-title></eos-title>
+            </li>
+            <li class="header-item">
+                <eos-desktop-switcher></eos-desktop-switcher>
+            </li>
+            <li *ngFor="let item of modules" class="header-item">
+                <a class="link-text" [routerLink]="item.url" routerLinkActive="active">
+                    <span [hidden]="hideMenu">{{item.title}}</span>
+                </a>
+            </li>
+            <li class="header-item">
+                <eos-user-settings class="link-text"></eos-user-settings>
+            </li>
+        </ul>
+        <ul class="header-content pull-right">
+            <li class="header-item">
+                <eos-search></eos-search>
+            </li>
+            <li class="header-item">
+                <eos-notice></eos-notice>
+            </li>
+            <li class="header-item">
+                <eos-user></eos-user>
+            </li>
+        </ul>
+
     </div>
     <div class="content-wrapper">
         <eos-breadcrumb></eos-breadcrumb>

@@ -1,11 +1,17 @@
 .eos-user {
-    .avatar {
-        display: inline-block;
-        height: 30px;
-        width: 30px;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        margin: -9px 5px;
+    height: 100%;
+    cursor: pointer;
+
+    .text {
+        position: relative;
+        top: -24px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    /*.dropdown-button {
+        height: 100%;
+        background-color: white;
     }
 
     .hidden {
@@ -14,5 +20,21 @@
 
     .menuitem {
         cursor: pointer;
+    }*/
+}
+
+.login-modal {
+    .input-group {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1280px) {
+    .eos-user {
+        .text {
+            font-size: 12px;
+            line-height: 18px;
+        }
     }
 }

@@ -26,6 +26,7 @@ import { OpenedNodeComponent } from './opened-node/opened-node.component';
 import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
@@ -72,6 +73,7 @@ import { ConfirmWindowComponent } from './confirm-window/confirm-window.componen
         DesktopSwitcherComponent,
         SearchComponent,
         UserComponent,
+        UserSettingsComponent,
         TestPageComponent,
         NoticeComponent,
         DesktopComponent,
