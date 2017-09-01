@@ -1,4 +1,56 @@
 .main-theme {
+    // general
+    .btn-primary-light {
+        background: transparent;
+        color: $button-color-main-theme;
+        border-color: transparent;
+    }
+
+    input[type="checkbox"] {
+        opacity: 0;
+
+        & + span {
+            // -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid $button-color-main-theme;
+            border-radius: 4px;
+            outline: none;
+            box-sizing: border-box;
+            display: inline-block;
+            margin-left: -22px;
+            margin-bottom: -2px;
+        }
+
+        &:checked + span {
+            background: $button-color-main-theme;
+
+            &::before {
+                content: "";
+                display: block;
+                width: 7px;
+                height: 11px;
+                border: 0 solid white;
+                border-width: 0 2px 2px 0;
+                transform: rotateZ(45deg);
+                margin: -2px 3px;
+            }
+        }
+    }
+
+    .btn-primary {
+        border: 2px solid $button-color-main-theme;
+        color: $button-color-main-theme;
+        background: white;
+        padding: 0 4px;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: white;
+            background: $button-color-main-theme;
+        }
+    }
 
     // main-layout
 
@@ -137,19 +189,23 @@
     .eos-edit-card {
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
+        border-color: $border-color-main-theme;
 
         .edit-header {
-            background: $primary-color-main-theme;
-            color: $primary-font-color-main-theme;
-
-            .glyphicon {
-                color: $primary-font-color-main-theme;
-            }
+            background: $block-color-main-theme;
+            color: $secondary-font-color-main-theme;
+            border-color: $border-color-main-theme;
         }
 
         .edit-content {
             label {
                 color: $unimportant-info-color-main-theme;
+            }
+
+            .form-control {
+                color: $secondary-font-color-main-theme;
+                background-color: $secondary-color-main-theme;
+                border-color: $border-color-main-theme;
             }
         }
     }
@@ -167,7 +223,6 @@
             color: $button-color-main-theme;
         }
     }
-
 
     // spacial templates
 
