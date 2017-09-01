@@ -171,8 +171,8 @@ export class NodeActionsComponent {
         }
     }
 
-    search() {
-        if (this.searchString) {
+    search(event) {
+        if (event.keyCode === 13 && this.searchString) {
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
         }
     }
