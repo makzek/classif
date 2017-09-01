@@ -39,6 +39,7 @@
                 display: inline-block;
                 height: 25px;
                 width: 25px;
+                cursor: pointer;
 
                 &:last-child {
                     position: relative;
@@ -82,5 +83,16 @@
 
     .search {
         width: 220px;
+
+        .input-group-addon {
+            cursor: pointer;
+        }
+    }
+}
+
+.creating-modal {
+    .form {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }

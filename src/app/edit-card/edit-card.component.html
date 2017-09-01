@@ -1,8 +1,20 @@
 <div class="eos-edit-card">
-    <header class="edit-header">
+    <header class="edit-header" [ngClass]="{'edited': editMode}">
+        <div class="move-wrapper">
+            <button *ngIf="parent" [disabled]="i < 1" class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"
+                (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+            parent.children[i-1].id + '/edit')"></button>
+            <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"></button>
+            <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="glyphicon glyphicon-menu-right btn btn-primary-light"
+                aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
+            parent.children[i+1].id + '/edit')"></button>
+            <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-right btn btn-primary-light" aria-hidden="true"></button>
+        </div>
         <div class="check-wrapper">
             <span class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="node.selected" (click)="check()">Выбрать</label>
+                <label><input type="checkbox" [(ngModel)]="node.selected" (click)="check()">
+                    <span></span>
+                </label>
             </span>
         </div>
         <div class="name-wrapper">
@@ -12,26 +24,21 @@
             <button class="btn btn-primary" (click)="save()">Сохранить</button>
             <button class="btn btn-primary" (click)="cancel()">Отменить</button>
         </div>
-        <div class="action-wrapper">
+        <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-dark" aria-hidden="true"></button></a>
-                <button *ngIf="parent" [disabled]="i < 1" class="glyphicon glyphicon-arrow-left btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-                parent.children[i-1].id + '/edit')"></button>
-                <button *ngIf="!parent" disabled class="glyphicon glyphicon-arrow-left btn btn-dark" aria-hidden="true"></button>
-                <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="glyphicon glyphicon-arrow-right btn btn-dark" aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-                parent.children[i+1].id + '/edit')"></button>
-                <button *ngIf="!parent" disabled class="glyphicon glyphicon-arrow-right btn btn-dark" aria-hidden="true"></button>
-                <button class="glyphicon glyphicon-remove btn btn-dark" aria-hidden="true" (click)="goTo(closeRedirect)"></button>
+                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="changeEditMode(!editMode)"></button>
+                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-primary-light" aria-hidden="true"></button></a>
+                <button class="glyphicon glyphicon-remove btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)"></button>
             </span>
         </div>
     </header>
-    <aside class="edit-aside">
+    <!--<aside class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
             <button type="button" class="btn btn-default" (click)="changeEditMode(false)" [ngClass]="{'active': !editMode}">Просмотр</button>
             <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
         </div>
-    </aside>
+    </aside>-->
     <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
     <eos-departments-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
