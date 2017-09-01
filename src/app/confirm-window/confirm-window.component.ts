@@ -1,4 +1,4 @@
-import { Component, Input, Output, TemplateRef } from '@angular/core';
+import { Component, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
@@ -13,7 +13,7 @@ export class ConfirmWindowComponent {
 
     @Input() title: string;
     @Input() body: string;
-    @Output() isConfirm: boolean;
+    @Output() result: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private modalService: BsModalService) {}
 
@@ -22,12 +22,12 @@ export class ConfirmWindowComponent {
     }
 
     public confirm() {
-        this.isConfirm = true;
+        this.result.emit(true);
         this.modalRef.hide();
     }
 
     public cancel() {
-        this.isConfirm = false;
+        this.result.emit(false);
         this.modalRef.hide();
     }
 }

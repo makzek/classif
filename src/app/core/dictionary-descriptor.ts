@@ -122,8 +122,10 @@ export abstract class DictionaryDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
+            /*
             case E_FIELD_SET.list:
                 return this._getListFields();
+            */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
             default:

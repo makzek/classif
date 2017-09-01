@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIE_LIST, DICTIONARIES } from './eos-api.mock';
+import { DICTIONARIE_LIST } from './eos-api.mock';
 import { MOCK_RUBRICS as NODES } from './rubric.mock';
+
 @Injectable()
 export class EosApiService {
     private _mockedNodesMap: Map<string, any>;
+    private _dictionaries: any;
 
     constructor() {
         this._mockedNodesMap = new Map<string, any>();
         NODES.forEach((_n) => this._mockedNodesMap.set(_n.id, _n));
+        this._dictionaries = {};
+        DICTIONARIE_LIST.forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
     getDictionaryListMocked(): Promise<any> {
@@ -19,8 +23,8 @@ export class EosApiService {
 
     getDictionaryMocked(dictionaryId: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (DICTIONARIES[dictionaryId]) {
-                resolve(DICTIONARIES[dictionaryId]);
+            if (this._dictionaries[dictionaryId]) {
+                resolve(this._dictionaries[dictionaryId]);
             } else {
                 reject('Dictionary "' + dictionaryId + '" not found');
             }
@@ -29,7 +33,7 @@ export class EosApiService {
 
     getDictionaryNodesMocked(dictionaryId: string): Promise<any> {
         return new Promise((res, rej) => {
-            if (DICTIONARIES[dictionaryId]) {
+            if (this._dictionaries[dictionaryId]) {
                 res(NODES);
             } else {
                 rej('Dictionary "' + dictionaryId + '" not found');
@@ -39,7 +43,7 @@ export class EosApiService {
 
     getNodeMocked(dictionaryId: string, nodeId: string): Promise<any> {
         return new Promise((res, rej) => {
-            if (DICTIONARIES[dictionaryId]) {
+            if (this._dictionaries[dictionaryId]) {
                 const _node = this._mockedNodesMap.get(nodeId);
                 if (_node) {
                     res(_node);
