@@ -4,7 +4,7 @@
         <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
         <div class="input-group search pull-right">
             <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-            <input type="text" [(ngModel)]="searchString" class="form-control" (change)="search()" placeholder="Search" aria-describedby="basic-addon1">
+            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1" (keydown)="search($event)">
             <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body"></span>
         </div>
     </div>
