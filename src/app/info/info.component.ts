@@ -9,28 +9,33 @@ export class InfoComponent {
     @Input() info: string;
     @ViewChild('pop') private _tooltip: TooltipDirective;
 
-    clicked = false;
+    private _pinned = false;
+    private _innerClick: boolean;
 
-    @HostListener('window:click', ['$event'])
-    clickout = (event) => {
-        const x = event.target.parentElement.parentElement.parentElement;
+    @HostListener('window:click', [])
+    clickout() {
+        if (this._tooltip && !this._innerClick) {
+            this._tooltip.hide();
+        }
+        this._innerClick = false;
+    }
 
-        if (x.tagName !== 'EOS-INFO') {
+    check() {
+        if (this._tooltip && !this._pinned) {
             this._tooltip.hide();
         }
     }
 
-    check() {
-        if (!this.clicked) { this._tooltip.hide(); }
-    }
-
     hide() {
-        this.clicked = false;
-        this._tooltip.hide();
+        this._pinned = false;
+        if (this._tooltip) {
+            this._tooltip.hide();
+        }
     }
 
     reverse() {
-        this.clicked = !this.clicked;
+        this._innerClick = true;
+        this._pinned = !this._pinned;
         this.check();
     }
 }
