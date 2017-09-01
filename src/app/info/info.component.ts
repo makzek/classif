@@ -9,12 +9,13 @@ export class InfoComponent {
     @Input() info: string;
     @ViewChild('pop') private _tooltip: TooltipDirective;
 
-    private _pinned = false;
+    private _pinned: boolean;
     private _innerClick: boolean;
 
     @HostListener('window:click', [])
     clickout() {
         if (this._tooltip && !this._innerClick) {
+            this._pinned = false;
             this._tooltip.hide();
         }
         this._innerClick = false;
