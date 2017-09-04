@@ -39,7 +39,6 @@ export class ConfirmWindowComponent implements OnChanges {
             this.isConfirm.emit(true);
             this.modalRef.hide();
         }
-
     }
 
     public cancel() {
