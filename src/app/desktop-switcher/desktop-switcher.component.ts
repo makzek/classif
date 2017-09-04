@@ -25,6 +25,7 @@ export class DesktopSwitcherComponent {
     confirmWindowOpen: boolean;
     confirmWindowTitle: string;
     confirmWindowBody: string;
+    confirmWindowModel: EosDesk;
 
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
@@ -122,14 +123,17 @@ export class DesktopSwitcherComponent {
 
     removeDesk(desk: EosDesk): void {
         this.confirmWindowOpen = true;
-        this.confirmWindowTitle = 'test1';
-        this.confirmWindowBody = 'test2';
-        /*this._dropDown.toggle(false);
-        this.eosDeskService.removeDesk(desk);*/
+        this.confirmWindowTitle = 'Удалить?';
+        this.confirmWindowBody = 'Вы действительно хотите удалить рабочий стол ' + desk.name + '?';
+        this.confirmWindowModel = desk;
     }
 
-    removeConfirm() {
-        console.log(123);
+    removeConfirm(isConfirm: boolean): void {
+        this.confirmWindowOpen = false;
+        if (isConfirm) {
+            this._dropDown.toggle(false);
+            this.eosDeskService.removeDesk(this.confirmWindowModel);
+        }
     }
 
 

@@ -22,19 +22,19 @@ export class ConfirmWindowComponent implements OnChanges {
     constructor(private modalService: BsModalService) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes.isOpen, this.template);
         if (this.template && changes.isOpen.currentValue) {
-            this.modalService.show(this.template);
+            this.modalRef = this.modalService.show(this.template);
         }
     }
 
     public confirm() {
+        this.isOpen = false;
         this.isConfirm.emit(true);
         this.modalRef.hide();
     }
 
-
     public cancel() {
+        this.isOpen = false;
         this.isConfirm.emit(false);
         this.modalRef.hide();
     }

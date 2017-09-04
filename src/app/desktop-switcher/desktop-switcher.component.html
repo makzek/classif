@@ -22,9 +22,8 @@
                     </div>
                 </div>
             </span>
-            {{confirmWindowOpen}}
-            <eos-confirm-window [isOpen]="confirmWindowOpen" [title]="confirmWindowTitle" [body]="confirmWindowBody" (result)="removeConfirm($event)"></eos-confirm-window>
         </li>
+        <eos-confirm-window [title]="confirmWindowTitle" [body]="confirmWindowBody" [(isOpen)]="confirmWindowOpen" (isConfirm)="removeConfirm($event)"></eos-confirm-window>
         <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
         <li *ngIf="deskList.length < 6">
             <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
