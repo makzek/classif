@@ -129,7 +129,7 @@ export class EosDictionary {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
-            if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(searchString))) {
+            if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(RegExp(searchString, 'i')))) {
                 searchResult.push(node);
             }
         });
