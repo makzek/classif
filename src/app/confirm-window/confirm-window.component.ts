@@ -1,4 +1,4 @@
-import { Component, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
@@ -7,27 +7,33 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
     templateUrl: 'confirm-window.component.html',
 })
 
-export class ConfirmWindowComponent {
+export class ConfirmWindowComponent implements OnChanges {
 
     public modalRef: BsModalRef;
 
     @Input() title: string;
     @Input() body: string;
-    @Output() result: EventEmitter<any> = new EventEmitter<any>();
+    @Input() isOpen: boolean;
+    @Output() isConfirm: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private modalService: BsModalService) {}
+    constructor(private modalService: BsModalService) {
+       /* this.modalRef = this.modalService.show("#confirmWindow");
+        this.modalRef.content.title = this.title;
+        this.modalRef.content.body = this.body;*/
+    }
 
-    public openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+    ngOnChanges(changes) {
+        console.log(changes.isOpen);
     }
 
     public confirm() {
-        this.result.emit(true);
+        this.isConfirm.emit(true);
         this.modalRef.hide();
     }
 
+
     public cancel() {
-        this.result.emit(false);
+        this.isConfirm.emit(false);
         this.modalRef.hide();
     }
 }

@@ -68,8 +68,4 @@ export class DesktopComponent {
         evt.preventDefault();
         evt.stopPropagation();
     }
-
-    removeConfirm(evt: Event) {
-        console.log(1);
-    }
 }

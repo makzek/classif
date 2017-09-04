@@ -22,6 +22,8 @@
                     </div>
                 </div>
             </span>
+            {{confirmWindowOpen}}
+            <eos-confirm-window isOpen="confirmWindowOpen" title="confirmWindowTitle" body="confirmWindowBody" result="removeConfirm($event)"></eos-confirm-window>
         </li>
         <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
         <li *ngIf="deskList.length < 6">
