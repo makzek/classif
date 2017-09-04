@@ -32,6 +32,7 @@ export class EosDictService {
 
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
+    public notFound = false;
 
     constructor(private _api: EosApiService) {
         this._dictionaries = new Map<string, EosDictionary>();
@@ -265,6 +266,7 @@ export class EosDictService {
 
     public search(searchString: string, globalSearch: boolean) {
         this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+        this.notFound = !this._searchResults.length;
         this._searchResults$.next(this._searchResults);
     }
 
