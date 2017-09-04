@@ -19,7 +19,13 @@ export class ConfirmWindowComponent implements OnChanges {
     @ViewChild('confirmWindow')
     private template: TemplateRef<any>;
 
-    constructor(private modalService: BsModalService) {}
+    constructor(private modalService: BsModalService) {
+        this.modalService.onHidden.subscribe((reason: string) => {
+            if (reason === 'backdrop-click' || reason === 'esc') {
+                this.cancel();
+            }
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.template && changes.isOpen.currentValue) {
@@ -29,13 +35,18 @@ export class ConfirmWindowComponent implements OnChanges {
 
     public confirm() {
         this.isOpen = false;
-        this.isConfirm.emit(true);
-        this.modalRef.hide();
+        if (this.modalRef) {
+            this.isConfirm.emit(true);
+            this.modalRef.hide();
+        }
+
     }
 
     public cancel() {
         this.isOpen = false;
-        this.isConfirm.emit(false);
-        this.modalRef.hide();
+        if (this.modalRef) {
+            this.isConfirm.emit(false);
+            this.modalRef.hide();
+        }
     }
 }
