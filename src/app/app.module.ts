@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
@@ -64,7 +63,6 @@ import { ConfirmWindowComponent } from './confirm-window/confirm-window.componen
         BreadcrumbsComponent,
         DictionaryComponent,
         DictionariesComponent,
-        SidebarComponent,
         EditCardComponent,
         TreeComponent,
         TreeNodeComponent,

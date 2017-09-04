@@ -53,6 +53,12 @@
         .dropdown-button {
             font-size: 12px;
             line-height: 18px;
+            padding-left: 5px;
+            padding-right: 0;
+
+            .btn-icon {
+                width: 30px;
+            }
         }
     }
 }

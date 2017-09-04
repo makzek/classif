@@ -18,22 +18,22 @@
 
         <span class="controller pull-right">
             <span *ngIf="showAdd" class="circle visible-lg-inline-block" (click)="creatingModal.show()">
-                <span class="glyphicon glyphicon-plus control-implemented"></span>
+                <span class="icon glyphicon glyphicon-plus control-implemented"></span>
         </span>
         <span *ngIf="showDelete" class="circle visible-lg-inline-block" (click)="deleteSelectedItems()">
-                <span class="glyphicon glyphicon-minus control-implemented"></span>
+                <span class="icon glyphicon glyphicon-minus control-implemented"></span>
         </span>
         <span *ngIf="showEdit" class="circle visible-lg-inline-block" (click)="editNode()">
-                <span class="glyphicon glyphicon-pencil control-implemented"></span>
+                <span class="icon glyphicon glyphicon-pencil control-implemented"></span>
         </span>
         <span class="circle visible-lg-inline-block" (click)="nextItem(true)">
-                <span class="glyphicon glyphicon-chevron-up control-implemented"></span>
+                <span class="icon glyphicon glyphicon-chevron-up control-implemented"></span>
         </span>
         <span class="circle visible-lg-inline-block" (click)="nextItem(false)">
-                <span class="glyphicon glyphicon-chevron-down control-implemented"></span>
+                <span class="icon glyphicon glyphicon-chevron-down control-implemented"></span>
         </span>
         <div class="circle btn-group" dropdown>
-            <span dropdownToggle><span class="dots control-implemented">...</span>
+            <span dropdownToggle><span class="icon dots control-implemented">...</span>
             </span>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>

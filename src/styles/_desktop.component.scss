@@ -15,7 +15,7 @@
         flex-wrap: wrap;
         // justify-content: space-around;
 
-        .glyphicon {
+        .icon-btn {
             cursor: pointer;
         }
     }
@@ -24,7 +24,7 @@
         display: inline-block;
         position: relative;
 
-        .glyphicon {
+        .icon-btn {
             position: absolute;
             top: 10px;
             right: 10px;
