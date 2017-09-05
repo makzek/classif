@@ -41,34 +41,39 @@
         </span>
         <span class="pull-right">
             <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
-            <span class="icon glyphicon glyphicon-calendar"></span>
-            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
-                <span dropdownToggle type="button">
+        <span class="icon glyphicon glyphicon-calendar"></span>
+        <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
+            <span dropdownToggle type="button">
                     <span class="icon glyphicon glyphicon-search"></span>
-                </span>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li>
-                        <div class="input-group search pull-right">
-                            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                            <span class="input-group-addon" id="basic-addon1">
+            </span>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li>
+                    <div class="input-group search pull-right">
+                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
+                        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                        <span class="input-group-addon" id="basic-addon1">
                                 <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body">
                                     <span></span>
-                                </label>
-                                </span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        </label>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
         </span>
     </div>
     <div class="second-line block special-text">
         <span class="table-title">
-                <span *ngIf="showCheckbox" class="group-checkbox checkbox">
+                <span *ngIf="showCheckbox" class="checkbox">
                     <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
                         <span></span>
                     </label>
                 </span>
+        <!--<span *ngIf="showCheckbox" class="group-checkbox">
+            <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
+                <span></span>
+            </label>
+        </span>--> 
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
         </span>
 

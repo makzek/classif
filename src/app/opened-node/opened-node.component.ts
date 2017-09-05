@@ -4,6 +4,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
 
 @Component({
     selector: 'eos-opened-node',
@@ -13,7 +14,7 @@ export class OpenedNodeComponent {
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
 
-    constructor(private eosDictService: EosDictService) {
+    constructor(private eosDictService: EosDictService, private _actionService: DictionaryActionService) {
 
         this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
@@ -25,6 +26,15 @@ export class OpenedNodeComponent {
                         }
                     },
                     (error) => alert(error));
+            }
+        });
+
+        this._actionService.action$.subscribe((action) => {
+            switch (action) {
+                case DICTIONARY_ACTIONS.closeInfo:
+                break;
+                case DICTIONARY_ACTIONS.openInfo:
+                break;
             }
         });
     }

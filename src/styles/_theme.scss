@@ -173,10 +173,13 @@
             color: $disabled-color-main-theme;
         }
 
-        span {
-            &.active {
-                background-color: $highlight-color-main-theme;
-            }
+        .active {
+            color: $secondary-font-color-main-theme;
+            background-color: $highlight-color-main-theme;
+        }
+
+        .node-title {
+            color: $primary-font-color-main-theme;
         }
     }
 
@@ -221,6 +224,12 @@
         .btn-sq-lg {
             background: $block-color-main-theme;
             color: $secondary-font-color-main-theme;
+        }
+    }
+
+    .eos-dictionary {
+        .tree-wrapper {
+            border-color: $border-color-main-theme;
         }
     }
 

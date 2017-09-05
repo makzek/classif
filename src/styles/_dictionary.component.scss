@@ -1,65 +1,72 @@
+.eos-dictionary {
+    display: -ms-grid;
+    display: grid; // sass-lint:disable-line no-duplicate-properties
+    overflow: hidden;
 
-eos-dictionary {
-    .dictionary-wrapper {
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        overflow: hidden;
+    &.tree-hidden {
+        grid-template-columns: 0 1fr 400px;
+        -ms-grid-columns: 0 1fr 400px;
+    }
 
-        & > div:not(:last-child) {
-            margin-right: 10px;
-        }
+    &.info-hidden {
+        grid-template-columns: 400px 1fr 0;
+        -ms-grid-columns: 400px 1fr 0;
+    }
 
-        &.tree-hidden {
-            grid-template-columns: 50px 1fr 400px;
-            -ms-grid-columns: 50px 1fr 400px;
-        }
+    &.only-selected {
+        grid-template-columns: 0 1fr 0;
+        -ms-grid-columns: 0 1fr 0;
+    }
 
-        &.info-hidden {
-            grid-template-columns: 400px 1fr 50px;
-            -ms-grid-columns: 400px 1fr 50px;
-        }
-
-        &.only-selected {
-            grid-template-columns: 35px 1fr 50px;
-            -ms-grid-columns: 35px 1fr 50px;
-        }
-
-        &.full {
-            grid-template-columns: 400px 1fr 400px;
-            -ms-grid-columns: 400px 1fr 400px;
-        }
+    &.full {
+        grid-template-columns: 400px 1fr 400px;
+        -ms-grid-columns: 400px 1fr 400px;
     }
 
     .tree-wrapper {
         grid-row: 1;
         grid-column: 1;
+        width: 0;
+        height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
+        max-height: calc(100vh - 121px);
+        overflow-y: auto;
+        border-right: 1px solid transparent;
+        transform: translateX(-24px);
 
-        & > eos-tree > .eos-tree {
-            max-height: calc(100vh - 210px);
-            overflow-y: auto;
-        }
+        /* & > eos-tree > .eos-tree {
+            
+        }*/ 
 
-        &.vertical {
+        /* &.vertical {
             width: 50px;
             float: left;
             position: relative;
             min-height: 1px;
             padding-left: 15px;
             padding-right: 15px;
+        }*/ 
+
+        &.open-tree {
+            width: 400px;
         }
     }
 
     .selected-wrapper {
         grid-row: 1;
         grid-column: 2;
+
+        &.open-tree {
+            margin-left: -14px;
+        }
     }
 
     .opened-wrapper {
+        width: 400px;
         grid-row: 1;
         grid-column: 3;
     }
 
-    .aside {
+    /*.aside {
         overflow-x: hidden;
         display: inline-block;
 
@@ -75,5 +82,46 @@ eos-dictionary {
         transform-origin: top left;
         width: 120px;
         text-overflow: ellipsis;
+    }*/
+}
+
+@media (max-width: 1500px) {
+    .eos-dictionary {
+        display: block;
+
+        .selected-wrapper {
+            width: 100%;
+
+            &.open-tree {
+                margin-left: 0;
+            }
+        }
+
+        .tree-wrapper,
+        .opened-wrapper {
+            position: fixed;
+            transition: 300ms ease-in-out;
+            top: $top-menu-height;
+        }
+
+        .tree-wrapper {
+            left: -424px;
+            background-color: white;
+            z-index: 100;
+
+            &.open-tree {
+                transform: translateX(400px);
+            }
+        }
+
+        .opened-wrapper {
+            right: -400px;
+            background-color: white;
+            z-index: 100;
+
+            &.open-info {
+                transform: translateX(-400px);
+            }
+        }
     }
 }

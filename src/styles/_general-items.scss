@@ -29,6 +29,12 @@ input[type="checkbox"] {
     }
 }
 
+.group-checkbox {
+    input[type="checkbox"] + span {
+        border-color: red;
+    }
+}
+
 .modal-body {
     label {
         text-transform: uppercase;
