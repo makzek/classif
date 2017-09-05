@@ -11,6 +11,7 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { IMessage } from '../core/message.interface';
 
 @Component({
     selector: 'eos-node-list',
@@ -38,7 +39,14 @@ export class NodeListComponent {
 
     userSorting = false;
 
-    initialNodes: EosDictionaryNode[];
+    notFoundMsg: IMessage = {
+        type: 'warning',
+        title: 'Ничего не найдено: ',
+        msg: 'попробуйте изменить поисковую фразу',
+    };
+
+    notFoundMsgGiven = false;
+    initialNode: EosDictionaryNode;
 
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
@@ -48,6 +56,9 @@ export class NodeListComponent {
         private _actionService: NodeListActionsService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
             this.openedNode = node;
+            if (! this.initialNode) {
+                this.initialNode = this.openedNode;
+            }
         });
 
         this._dictionaryService.dictionary$.subscribe(
@@ -66,18 +77,16 @@ export class NodeListComponent {
             }
         });
         this._dictionaryService.searchResults$.subscribe((nodes) => {
-            if (this._messageService.messages.length) {
-                this.removeErrMessages();
+            if (this.notFoundMsgGiven) {
+                this._messageService.removeMessage(this.notFoundMsg);
             }
             if (nodes.length) {
                 this._update(nodes, false);
-            } else if (this._dictionaryService.notFound) {
-                // this._update(this.initialNodes, true);
-                this._messageService.addNewMessage({
-                    type: 'warning',
-                    title: 'Ничего не найдено: ',
-                    msg: 'попробуйте изменить поисковую фразу',
-                });
+                this.notFoundMsgGiven = false;
+            } else if (this._dictionaryService.notFound && !this.notFoundMsgGiven) {
+                this._update(this.initialNode.children, true);
+                this._messageService.addNewMessage(this.notFoundMsg);
+                this.notFoundMsgGiven = true;
             }
         });
 
@@ -291,11 +300,5 @@ export class NodeListComponent {
     setItemCount(value: string) {
         this.itemsPerPage = +value;
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1) * +value, this.currentPage * +value);
-    }
-
-    removeErrMessages(): void {
-        for (const i of this._messageService.messages) {
-            this._messageService.removeMessage(i);
-        }
     }
 }
