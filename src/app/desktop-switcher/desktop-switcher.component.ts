@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
@@ -21,14 +21,22 @@ export class DesktopSwitcherComponent {
     creating = false;
     editing = false;
     maxLength = 80;
+    innerClick: boolean;
 
     confirmWindowOpen: boolean;
     confirmWindowTitle: string;
     confirmWindowBody: string;
     confirmWindowModel: EosDesk;
 
-
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
+
+    @HostListener('window:click', [])
+    clickout() {
+        if (! this.innerClick) {
+            this._dropDown.toggle(false);
+        }
+        this.innerClick = false;
+    }
 
     constructor(private eosDeskService: EosDeskService,
         private modalService: BsModalService,
@@ -107,18 +115,17 @@ export class DesktopSwitcherComponent {
     }
 
     closeAndSave(desk: EosDesk) {
-        this._dropDown.toggle(false);
         this.saveDesk(desk);
     }
 
     cancelEdit(desk: EosDesk) {
-        this._dropDown.toggle(false);
         desk.edited = false;
         this.deskName = desk.name;
     }
 
     hideDropDown() {
         this._dropDown.toggle(false);
+        this.innerClick = false;
     }
 
     removeDesk(desk: EosDesk): void {
@@ -131,16 +138,18 @@ export class DesktopSwitcherComponent {
     removeConfirm(isConfirm: boolean): void {
         this.confirmWindowOpen = false;
         if (isConfirm) {
-            this._dropDown.toggle(false);
             this.eosDeskService.removeDesk(this.confirmWindowModel);
         }
+        this.setInnerClick();
     }
-
 
     cancelCreating() {
         this.creating = false;
         this.deskName = '';
-        this._dropDown.toggle(false);
+    }
+
+    setInnerClick() {
+        this.innerClick = true;
     }
 
     private _moreThenOneEdited(): boolean {
