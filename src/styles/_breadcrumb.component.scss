@@ -1,9 +1,10 @@
 .breadcrumb-wrapper {
-    /* height: $breadcrumbs-height;*/
+    // height: $breadcrumbs-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    padding: $grid-gutter-width /2;
-    /* margin-bottom: 20px; */
+    padding: $grid-gutter-width / 2;
+    // margin-bottom: 20px;
+
     .breadcrumb {
         background-color: inherit;
         display: inline-block;
@@ -17,6 +18,20 @@
             white-space: nowrap;
             display: inline-block;
             line-height: 14px;
+        }
+    }
+
+    .icon {
+        top: 0;
+        margin: 8px;
+        transition: 300ms ease-in-out;
+
+        &.rotate-right {
+            transform: rotate(90deg);
+        }
+
+        &.rotate-left {
+            transform: rotate(-90deg);
         }
     }
 }

@@ -89,11 +89,11 @@ export class SelectedNodeComponent {
                     this.restoringLogicallyDeletedItem();
                     break;
                 }
-                case E_RECORD_ACTIONS.markRecords: {
+                case E_RECORD_ACTIONS.markRoot: {
                     this.selectedNode.selected = true;
                     break;
                 }
-                case E_RECORD_ACTIONS.unmarkRecords: {
+                case E_RECORD_ACTIONS.unmarkRoot: {
                     this.selectedNode.selected = false;
                     break;
                 }
@@ -159,6 +159,14 @@ export class SelectedNodeComponent {
     restoringLogicallyDeletedItem() {
         if (this.selectedNode.selected && this.selectedNode.isDeleted) {
             this._eosDictService.physicallyDelete(this.selectedNode.id);
+        }
+    }
+
+    mark() {
+        if (this.selectedNode.selected) {
+            this._actionService.emitAction(E_RECORD_ACTIONS.markRoot);
+        } else {
+            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
 }

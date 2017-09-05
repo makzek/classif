@@ -1,38 +1,22 @@
-.opened-wrapper {
-    .sandwich-wrapper {
-        position: relative;
-        left: -20px;
-        height: 40px;
+.eos-opened-node {
+    .short-info {
+        display: inline-block;
+        padding: 20px;
+        padding-bottom: 12px;
     }
 
-    .opened-node-wrapper {
-        .short-info {
+    .full-info {
+        border-top: 1px solid transparent;
+        padding: 20px;
+
+        .field-title {
+            text-transform: uppercase;
+        }
+
+        .field {
             display: inline-block;
-            padding: 10px;
-        }
-
-        .full-info {
-            border-top: 5px solid transparent;
-            padding: 10px;
+            margin: 12px 0;
+            line-height: 32px;
         }
     }
-
-    &.vertical {
-        .opened-node-wrapper {
-            height: 300px;
-            width: 38px;
-        }
-
-        .short-info {
-            transform: rotate(-90deg) translateX(-260px);
-            transform-origin: top left;
-            width: 260px;
-            text-overflow: ellipsis;
-        }
-
-        .full-info {
-            display: none;
-        }
-    }
-
 }

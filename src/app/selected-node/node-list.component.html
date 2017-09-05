@@ -16,7 +16,7 @@
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap">
                         <span *ngIf="showCheckbox" class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="item.selected">
+                        <label><input type="checkbox" [(ngModel)]="item.selected" (change)="checkItem(item)">
                             <span></span>
                         </label>
                         </span>

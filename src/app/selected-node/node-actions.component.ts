@@ -22,6 +22,7 @@ export class NodeActionsComponent {
     showDeleted = false;
     modalRef: BsModalRef;
     checkAll = false;
+    itemIsChecked = false;
     // newNode: EosDictionaryNode;
 
     searchResults: EosDictionaryNode[];
@@ -41,6 +42,7 @@ export class NodeActionsComponent {
     showUserSortUp: boolean;
     showUserSortDown: boolean;
     userSort = false;
+    // rootSelected = false;
 
     dropdownIsOpen = false;
     date = new Date();
@@ -82,24 +84,40 @@ export class NodeActionsComponent {
                 this.showUserSortDown = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveDown);
 
                 this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
-
-                /* this.newNode = new EosDictionaryNode(_d.descriptor.record, {
-                    id: null,
-                    code: null,
-                    title: null,
-                    parentId: null,
-                    parent: null,
-                    children: [],
-                    description: null,
-                    isNode: null,
-                    hasSubnodes: null,
-                    isExpanded: null,
-                    isDeleted: false,
-                    selected: false,
-                    data: null,
-                });*/
             }
         });
+
+        /* this._actionService.action$.subscribe((act) => {
+            switch (act) {
+                case E_RECORD_ACTIONS.markOne:
+                console.log('markOne');
+                    this.itemIsChecked = true;
+                    break;
+                case E_RECORD_ACTIONS.unmarkRecords:
+                console.log('unmarkRecords');
+                    this.itemIsChecked = false;
+                    this.checkAll = false;
+                    break;
+                case E_RECORD_ACTIONS.markRecords:
+                console.log('markRecords');
+                    if (this.rootSelected) {
+                        this.checkAll = true;
+                        this.itemIsChecked = false;
+                    } else {
+                        this.itemIsChecked = true;
+                    }
+                    break;
+                case E_RECORD_ACTIONS.markRoot:
+                console.log('markRoot');
+                    this.rootSelected = true;
+                    this.itemIsChecked = true;
+                    break;
+                case E_RECORD_ACTIONS.unmarkRoot:
+                console.log('unmarkRoot');
+                    this.rootSelected = false;
+                    break;
+            }
+        });*/
     }
     switchShowDeleted(value: boolean) {
         this._userSettingsService.saveShowDeleted(value);
@@ -112,26 +130,6 @@ export class NodeActionsComponent {
     public change(value: boolean): void {
         this.dropdownIsOpen = value;
       }
-
-    /*createItem() {
-        this.modalRef.hide();
-        this._dictionaryService.addChild(this.newNode);
-        this.newNode = new EosDictionaryNode(this.dictionary.descriptor.record, {
-            id: null,
-            code: null,
-            title: null,
-            parentId: null,
-            parent: null,
-            children: [],
-            description: null,
-            isNode: null,
-            hasSubnodes: null,
-            isExpanded: null,
-            isDeleted: false,
-            selected: false,
-            data: null,
-        });
-    }*/
 
     deleteSelectedItems() {
         this._actionService.emitAction(E_RECORD_ACTIONS.remove);
@@ -171,12 +169,26 @@ export class NodeActionsComponent {
     }
 
     checkAllItems() {
-        if (this.checkAll) {
-            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-        } else {
+        // console.log('checkAllItems');
+        if (!this.checkAll/* && !this.itemIsChecked*/) {
+            //  this.checkAll = true;
             this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+            this._actionService.emitAction(E_RECORD_ACTIONS.markRoot);
+        } else {
+            // this.checkAll = false;
+            this.itemIsChecked = false;
+            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
+
+    /* uncheckAllItems() {
+        console.log('uncheckAllItems');
+        this.checkAll = false;
+        this.itemIsChecked = false;
+        this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+        this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+    } */
 
     search(event) {
         if (event.keyCode === 13 && this.searchString) {

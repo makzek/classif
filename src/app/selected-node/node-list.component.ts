@@ -171,6 +171,22 @@ export class NodeListComponent {
         }
     }
 
+    checkItem(node: EosDictionaryNode) {
+        /* tslint:disable:no-bitwise */
+        if (node.selected) {
+            if (!~this.nodes.findIndex((_n) => !_n.selected)) {
+                this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+            } else {
+                this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
+            }
+        } else {
+            if (!~this.nodes.findIndex((_n) => _n.selected)) {
+                this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+            }
+        }
+        /* tslint:enable:no-bitwise */
+    }
+
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted) {
             if (node.id !== '') {
