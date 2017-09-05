@@ -78,4 +78,9 @@ export class DesktopComponent {
         evt.preventDefault();
         evt.stopPropagation();
     }
+
+    setCursor(event) {
+        /* set the cursor position at the end of textarea - special trick for IE and Edge */
+        event.target.selectionStart = event.target.value.length;
+    }
 }
