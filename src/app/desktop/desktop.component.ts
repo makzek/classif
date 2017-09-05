@@ -17,6 +17,11 @@ export class DesktopComponent {
     recentItems: IDeskItem[];
     deskId: string;
 
+    confirmWindowOpen: boolean;
+    confirmWindowTitle: string;
+    confirmWindowBody: string;
+    confirmWindowModel: IDeskItem;
+
     historyToLeft = false;
 
     constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService, private router: Router,
@@ -51,8 +56,18 @@ export class DesktopComponent {
         this.referencesList = dictionariesList;
     }
 
-    removeLink(link: IDeskItem) {
-        this._deskService.unpinRef(link);
+    removeLink(link: IDeskItem): void {
+        this.confirmWindowOpen = true;
+        this.confirmWindowTitle = 'Удалить?';
+        this.confirmWindowBody = 'Вы действительно хотите удалить элемент ' + link.title + '?';
+        this.confirmWindowModel = link;
+    }
+
+    removeConfirm(isConfirm: boolean): void {
+        this.confirmWindowOpen = false;
+        if (isConfirm) {
+            this._deskService.unpinRef(this.confirmWindowModel);
+        }
     }
 
     changeName(evt: Event, ref: IDeskItem) {
@@ -67,9 +82,5 @@ export class DesktopComponent {
     stopDefault(evt: Event) {
         evt.preventDefault();
         evt.stopPropagation();
-    }
-
-    removeConfirm(evt: Event) {
-        console.log(1);
     }
 }

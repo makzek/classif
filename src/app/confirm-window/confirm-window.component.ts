@@ -1,4 +1,4 @@
-import { Component, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnChanges, EventEmitter, SimpleChanges, ViewChild, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
@@ -7,27 +7,45 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
     templateUrl: 'confirm-window.component.html',
 })
 
-export class ConfirmWindowComponent {
+export class ConfirmWindowComponent implements OnChanges {
 
     public modalRef: BsModalRef;
 
     @Input() title: string;
     @Input() body: string;
-    @Output() result: EventEmitter<any> = new EventEmitter<any>();
+    @Input() isOpen: boolean;
+    @Output() isConfirm: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private modalService: BsModalService) {}
+    @ViewChild('confirmWindow')
+    private template: TemplateRef<any>;
 
-    public openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+    constructor(private modalService: BsModalService) {
+        this.modalService.onHidden.subscribe((reason: string) => {
+            if (reason === 'backdrop-click' || reason === 'esc') {
+                this.cancel();
+            }
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.template && changes.isOpen.currentValue) {
+            this.modalRef = this.modalService.show(this.template);
+        }
     }
 
     public confirm() {
-        this.result.emit(true);
-        this.modalRef.hide();
+        this.isOpen = false;
+        if (this.modalRef) {
+            this.isConfirm.emit(true);
+            this.modalRef.hide();
+        }
     }
 
     public cancel() {
-        this.result.emit(false);
-        this.modalRef.hide();
+        this.isOpen = false;
+        if (this.modalRef) {
+            this.isConfirm.emit(false);
+            this.modalRef.hide();
+        }
     }
 }

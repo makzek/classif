@@ -3,11 +3,11 @@
         <div class="move-wrapper">
             <button *ngIf="parent" [disabled]="i < 1" class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"
                 (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-            parent.children[i-1].id + '/edit')"></button>
+            parent.children[i-1].id + '/edit')" tooltip="Предыдущая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"></button>
             <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="glyphicon glyphicon-menu-right btn btn-primary-light"
                 aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-            parent.children[i+1].id + '/edit')"></button>
+            parent.children[i+1].id + '/edit')" tooltip="Следующая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-right btn btn-primary-light" aria-hidden="true"></button>
         </div>
         <div class="check-wrapper">
@@ -26,9 +26,9 @@
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="changeEditMode(!editMode)"></button>
-                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-primary-light" aria-hidden="true"></button></a>
-                <button class="glyphicon glyphicon-remove btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)"></button>
+                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="changeEditMode(!editMode)" tooltip="Редактировать" placement="bottom"></button>
+                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom"></button></a>
+                <button class="glyphicon glyphicon-remove btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)" tooltip="Закрыть" placement="bottom"></button>
             </span>
         </div>
     </header>
@@ -77,7 +77,7 @@
                         <div class="warning">
                             <!--<button type="button" class="close pull-right" aria-label="Close" (click)="hideCardWarning()">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </button>
                     <br>-->
                             В настоящее время в режиме редактирования находится карточка<br>
                             <!--<p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>-->

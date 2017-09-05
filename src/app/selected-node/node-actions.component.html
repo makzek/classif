@@ -50,8 +50,12 @@
                     <li>
                         <div class="input-group search pull-right">
                             <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1" (keydown)="search($event)">
-                            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body"></span>
+                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                            <span class="input-group-addon" id="basic-addon1">
+                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body">
+                                    <span></span>
+                                </label>
+                                </span>
                         </div>
                     </li>
                 </ul>

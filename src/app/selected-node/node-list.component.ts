@@ -38,6 +38,8 @@ export class NodeListComponent {
 
     userSorting = false;
 
+    initialNodes: EosDictionaryNode[];
+
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
@@ -64,8 +66,18 @@ export class NodeListComponent {
             }
         });
         this._dictionaryService.searchResults$.subscribe((nodes) => {
+            if (this._messageService.messages.length) {
+                this.removeErrMessages();
+            }
             if (nodes.length) {
                 this._update(nodes, false);
+            } else if (this._dictionaryService.notFound) {
+                // this._update(this.initialNodes, true);
+                this._messageService.addNewMessage({
+                    type: 'warning',
+                    title: 'Ничего не найдено: ',
+                    msg: 'попробуйте изменить поисковую фразу',
+                });
             }
         });
 
@@ -279,5 +291,11 @@ export class NodeListComponent {
     setItemCount(value: string) {
         this.itemsPerPage = +value;
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1) * +value, this.currentPage * +value);
+    }
+
+    removeErrMessages(): void {
+        for (const i of this._messageService.messages) {
+            this._messageService.removeMessage(i);
+        }
     }
 }
