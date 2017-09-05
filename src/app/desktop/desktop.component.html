@@ -30,5 +30,3 @@
     <span *ngIf="item.value.edited" class="icon-btn glyphicon glyphicon-ok" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="deskId !== 'system'" class="icon-btn glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(item.value)"></span>
 </ng-template>
-
-<eos-confirm-window [title]="confirmWindowTitle" [body]="confirmWindowBody" [(isOpen)]="confirmWindowOpen" (isConfirm)="removeConfirm($event)"></eos-confirm-window>
