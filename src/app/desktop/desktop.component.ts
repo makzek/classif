@@ -4,9 +4,9 @@ import 'rxjs/add/operator/switchMap';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
-import { ConfirmWindowComponent } from '../confirm-window/confirm-window.component';
 
 import { IDeskItem } from '../core/desk-item.interface';
+import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 
 @Component({
     selector: 'eos-desktop',
@@ -17,15 +17,15 @@ export class DesktopComponent {
     recentItems: IDeskItem[];
     deskId: string;
 
-    confirmWindowOpen: boolean;
-    confirmWindowTitle: string;
-    confirmWindowBody: string;
-    confirmWindowModel: IDeskItem;
-
     historyToLeft = false;
 
-    constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService, private router: Router,
-        private route: ActivatedRoute) {
+    constructor(
+        private _dictionaryService: EosDictService,
+        private _deskService: EosDeskService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private _confirmSrv: ConfirmWindowService
+    ) {
         this.referencesList = [];
         this.router.events
             .filter((evt) => evt instanceof NavigationEnd)
@@ -57,17 +57,12 @@ export class DesktopComponent {
     }
 
     removeLink(link: IDeskItem): void {
-        this.confirmWindowOpen = true;
-        this.confirmWindowTitle = 'Удалить?';
-        this.confirmWindowBody = 'Вы действительно хотите удалить элемент ' + link.title + '?';
-        this.confirmWindowModel = link;
-    }
-
-    removeConfirm(isConfirm: boolean): void {
-        this.confirmWindowOpen = false;
-        if (isConfirm) {
-            this._deskService.unpinRef(this.confirmWindowModel);
-        }
+        this._confirmSrv.confirm('Удалить?', 'Вы действительно хотите удалить рабочий стол ' + link.title + '?')
+        .then((confirmed: boolean) => {
+            if (confirmed) {
+                this._deskService.unpinRef(link);
+            }
+        });
     }
 
     changeName(evt: Event, ref: IDeskItem) {
