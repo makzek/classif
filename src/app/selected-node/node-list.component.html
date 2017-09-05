@@ -3,8 +3,8 @@
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div class="block list">
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngIf="userSorting">
-                <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.id}"
+            <li *ngIf="userSorting" class="child">
+                <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
                     itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"
                     (onChange)="userSortItems()">
                 </bs-sortable>
@@ -50,10 +50,12 @@
     </div>
 </div>
 <ng-template #childTemplate let-item="item" let-index="index">
-    <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.value.id}">
+    <div *ngIf="openedNode">
         <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'deleted': item.value.isDeleted && showDeleted}" class="is-deleted-wrap">
             <span *ngIf="showCheckbox" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="item.value.selected"></label>
+                <label><input type="checkbox" [(ngModel)]="item.value.selected">
+                    <span></span>
+                </label>
             </span>
             <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="editNode(item.value)">
                 <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span>
