@@ -33,19 +33,6 @@
         border-right: 1px solid transparent;
         transform: translateX(-24px);
 
-        /* & > eos-tree > .eos-tree {
-            
-        }*/ 
-
-        /* &.vertical {
-            width: 50px;
-            float: left;
-            position: relative;
-            min-height: 1px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }*/ 
-
         &.open-tree {
             width: 400px;
         }
@@ -64,25 +51,10 @@
         width: 400px;
         grid-row: 1;
         grid-column: 3;
+        height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
+        max-height: calc(100vh - 121px);
+        border-left: 1px solid transparent; 
     }
-
-    /*.aside {
-        overflow-x: hidden;
-        display: inline-block;
-
-        .sandwich-wrapper {
-            position: relative;
-            height: 40px;
-            margin-left: 10px;
-        }
-    }
-
-    .root-title {
-        transform: rotate(-90deg) translateX(-120px) translateY(9px);
-        transform-origin: top left;
-        width: 120px;
-        text-overflow: ellipsis;
-    }*/
 }
 
 @media (max-width: 1500px) {

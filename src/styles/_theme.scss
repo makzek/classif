@@ -78,7 +78,6 @@
         }
     }
 
-
     // main-layout
 
     &.main-container {
@@ -122,12 +121,6 @@
     .opened-wrapper {
         background-color: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
-
-        .opened-node-wrapper {
-            .full-info {
-                border-color: $secondary-color-main-theme;
-            }
-        }
     }
 
     .tree-wrapper {
@@ -147,6 +140,16 @@
     }
 
     // components
+
+    .eos-opened-node {
+        .full-info {
+            border-color: $border-color-main-theme;
+
+            .field-title {
+                color: $unimportant-info-color-main-theme;
+            }
+        }
+    }
 
     .eos-node-list {
         // background-color: $block-color-main-theme;
@@ -228,7 +231,8 @@
     }
 
     .eos-dictionary {
-        .tree-wrapper {
+        .tree-wrapper,
+        .opened-wrapper {
             border-color: $border-color-main-theme;
         }
     }
@@ -236,7 +240,7 @@
     .eos-user {
         /* .avatar {
             background: $block-color-main-theme;
-        }*/ 
+        }*/
         .text {
             color: $secondary-font-color-main-theme;
         }
