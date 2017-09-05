@@ -26,16 +26,11 @@
     .tree-wrapper {
         grid-row: 1;
         grid-column: 1;
-        width: 0;
         height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
         max-height: calc(100vh - 121px);
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
-
-        &.open-tree {
-            width: 400px;
-        }
     }
 
     .selected-wrapper {
@@ -53,7 +48,7 @@
         grid-column: 3;
         height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
         max-height: calc(100vh - 121px);
-        border-left: 1px solid transparent; 
+        border-left: 1px solid transparent;
     }
 }
 
@@ -77,6 +72,7 @@
         }
 
         .tree-wrapper {
+            width: 424px;
             left: -424px;
             background-color: white;
             z-index: 100;
