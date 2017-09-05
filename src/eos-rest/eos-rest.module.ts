@@ -11,7 +11,11 @@ import { DeliveryDetailComponent } from './clman/delivery-detail.component';
 
 import { IApiCfg } from './interfaces/interfaces';
 import { ApiCfg } from './core/api-cfg';
+
+/* services */
 import { PipRX } from './services/pipRX.service';
+import { AuthService } from './services/auth.service';
+import { DepartmentService } from './services/department.service';
 
 
 @NgModule({
@@ -28,7 +32,9 @@ import { PipRX } from './services/pipRX.service';
         DeliveryComponent,
     ],
     providers: [
-        PipRX
+        PipRX,
+        AuthService,
+        DepartmentService,
     ]
 })
 export class EosRestModule {

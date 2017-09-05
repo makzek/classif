@@ -3,7 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { IAsk, IApiCfg, IEnt, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
-import { ALL_ROWS, BATCH_BOUNDARY, _ES } from '../core/consts';
+import { ALL_ROWS, BATCH_BOUNDARY, _ES, HTTP_OPTIONS } from '../core/consts';
 import { SequenceMap } from '../core/sequence-map';
 import { Metadata } from '../core/metadata';
 import { ApiCfg } from '../core/api-cfg';
@@ -13,10 +13,7 @@ import { Utils } from '../core/utils';
 export class PipRX {
     private _metadata: Metadata;
     private _cfg: ApiCfg;
-    private _options: any = {
-        withCredentials: true,
-
-    };
+    private _options = HTTP_OPTIONS;
 
     public sequenceMap: SequenceMap = new SequenceMap();
 
@@ -26,9 +23,8 @@ export class PipRX {
         this._metadata.init();
     }
 
-    public login(user: string, passwd: string) {
-        const _url = this._cfg.authSrv + '?' + 'login=' + user + '&pass=' + passwd;
-        return this.http.get(_url, this._options); // TODO move to authorize service
+    getConfig(): ApiCfg {
+        return this._cfg;
     }
 
     private getData(url: string) {
