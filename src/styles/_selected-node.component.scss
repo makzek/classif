@@ -1,16 +1,20 @@
-eos-selected-node {
+.eos-selected-node {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    padding: 10px 0;
+
     .link {
         cursor: pointer;
-    }
-    
-    .selected-node-info {
-        align-self: center;
-        cursor: pointer;
         margin-left: 10px;
+    }
+
+    .selected-node-info {
         display: flex;
 
         .node-info {
             margin-left: 10px;
+            align-self: center;
+            cursor: pointer;
         }
 
         .code {

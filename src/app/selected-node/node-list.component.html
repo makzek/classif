@@ -1,53 +1,51 @@
 <div class="eos-node-list">
     <eos-node-actions></eos-node-actions>
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
-    <div>
+    <div class="block list">
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li *ngIf="userSorting">
-                <bs-sortable
-                    [(ngModel)]="nodeListPerPage"
-                    [itemTemplate]="childTemplate"
-                    itemClass="{'highlight': openedNode && openedNode.id === item.id}"
-                    itemActiveClass="sortable-item-active"
-                    placeholderItem="Drag here"
-                    placeholderClass="placeholderStyle"
-                    wrapperClass="sortable-wrapper"
+                <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.id}"
+                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"
                     (onChange)="userSortItems()">
                 </bs-sortable>
             </li>
         </ul>
-        
+
         <ul *ngIf="nodes && !userSorting && openedNode" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngFor="let item of nodeListPerPage" [ngClass]="{'highlight': openedNode.id === item.id}">
+            <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id}">
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap">
-                    <span *ngIf="showCheckbox" class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="item.selected"></label>
-                    </span>
+                        <span *ngIf="showCheckbox" class="checkbox">
+                        <label><input type="checkbox" [(ngModel)]="item.selected">
+                            <span></span>
+                        </label>
+                        </span>
                         <span class="node-info" (click)="openFullInfo(item)" (dblclick)="editNode(item)">
                         <span *ngFor="let field of viewFields" class="code">{{item.data[field.key]}}</span>
-                    </span>
+                        </span>
                     </div>
                 </div>
             </li>
         </ul>
-        <div class="pagination-wrapper">
-        <pagination [boundaryLinks]="true" (pageChanged)="pageChanged($event)" [totalItems]="totalItems" itemsPerPage="{{itemsPerPage}}" [maxSize]="8" [rotate]="true"
-            [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
-        </div>
-        <div class="options-bottom">
-            <button class="btn btn-light show-more" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
+    </div>
 
-            <form class="form-inline pull-right">
-                    <div class="form-group">
-                      <label for="ItemCount">Показывать по</label>
-                      <select id="ItemCount" class="form-control" (change)="setItemCount($event.target.value)">
-                            <option selected value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="40">40</option>
-                        </select>
-                    </div>
-            </form>
+
+    <div class="pagination-option block">
+        <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
+            itemsPerPage="{{itemsPerPage}}" [maxSize]="3" [rotate]="true" [(ngModel)]="currentPage" class="pagination-lg" previousText="&lsaquo;"
+            nextText="&rsaquo;"></pagination>
+
+        <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
+
+        <div class="btn-group count-select pull-right" dropdown container="body">
+            <span dropdownToggle type="button" class="dropdown-toggle special-text">
+                  <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}<span class="icon-btn glyphicon glyphicon-menu-down"></span></span>
+            </span>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(10)">10</a></li>
+                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(20)">20</a></li>
+                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(40)">40</a></li>
+            </ul>
         </div>
     </div>
 </div>

@@ -2,29 +2,23 @@
     padding: 10px;
 
     .checkbox {
-        margin-left: 5px;
-        margin-right: -5px;
+        margin-left: 12px;
+        margin-right: -6px;
         vertical-align: middle;
-    }
-
-    .pagination-wrapper {
-        display: flex;
-        justify-content: space-around;
-
-        .show-more {
-            line-height: 75px;
-            cursor: pointer;
-        }
     }
 
     .elements {
         list-style: none;
         max-height: calc(100vh - 150px - 95px - 150px);
         overflow-y: auto;
-        padding-left: 20px;
+        padding-left: 0;
 
         &.has-parent {
             max-height: calc(100vh - 150px - 95px - 215px);
+        }
+
+        .child {
+            padding: 5px 0 5px 20px;
         }
 
         li,
@@ -36,9 +30,92 @@
             align-self: center;
             cursor: pointer;
             margin-left: 10px;
+            margin-right: 20px;
+        }
 
-            .code {
-                margin-right: 10px;
+        .code {
+            margin-right: 10px;
+        }
+    }
+
+    .list {
+        border: 1px solid transparent;
+        border-top: 0;
+    }
+
+    .pagination-option {
+        margin-top: 20px;
+        height: 48px;
+        font-size: 16px;
+        line-height: 24px;
+        border: 1px solid transparent;
+
+        .pagination,
+        .count-select {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .count-select {
+            height: 48px;
+            border-left: 1px solid transparent;
+
+            .icon-btn {
+                width: 48px;
+                text-align: center;
+                top: 3px;
+            }
+
+            .dropdown-toggle {
+                height: 48px;
+                display: inline-block;
+                cursor: pointer;
+
+                .dropdown-toggle-text {
+                    position: relative;
+                    top: 11px;
+                    margin-left: 8px;
+                }
+            }
+        }
+
+        .page-link {
+            height: 48px;
+            width: 48px;
+            text-align: center;
+            padding: 12px 16px;
+            font-size: 16px;
+        }
+
+        .show-more {
+            top: -21px;
+            margin: 0 30px;
+            position: relative;
+            left: -5px;
+            height: 48px;
+            padding: 0 10px;
+            background: transparent;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .pagination-lg > li {
+            &:last-child,
+            &:first-child {
+                & > a,
+                & > span {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1530px) {
+    .eos-node-list {
+        .pagination-option {
+            .show-more {
+                margin: 0 10px;
             }
         }
     }

@@ -1,49 +1,15 @@
-input[type="checkbox"] {
-    opacity: 0.2;
-
-    & + span {
-        // -webkit-appearance: none;
-        width: 16px;
-        height: 16px;
-        border: 2px solid $button-color-main-theme;
-        border-radius: 4px;
-        outline: none;
-        box-sizing: border-box;
-        display: inline-block;
-        margin-left: -22px;
-        margin-bottom: -2px;
-        margin-right: 5px;
-    }
-
-    &:checked + span {
-        background: $button-color-main-theme;
-
-        &::before {
-            content: "";
-            display: block;
-            width: 7px;
-            height: 11px;
-            border: 0 solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotateZ(45deg);
-            margin: -2px 3px;
-        }
-    }
-}
-
-.modal-body {
-    label {
-        text-transform: uppercase;
-        font-size: 12px;
-        line-height: 16px;
-        color: $primary-font-color-main-theme;
-        font-weight: normal;
-    }
-}
-
 .main-theme {
-
     // general
+    .block {
+        background-color: $primary-color-main-theme;
+        color: $primary-font-color-main-theme;
+        border-color: $border-color-main-theme;
+    }
+
+    .special-text {
+        color: $button-color-main-theme;
+    }
+
     .btn-primary-light {
         background: transparent;
         color: $button-color-main-theme;
@@ -69,6 +35,49 @@ input[type="checkbox"] {
             background: $button-color-main-theme;
         }
     }
+
+    input[type="checkbox"] {
+        & + span {
+            border-color: $button-color-main-theme;
+        }
+
+        &:checked + span {
+            background-color: $button-color-main-theme;
+
+            &::before {
+                border-color: white;
+            }
+        }
+    }
+
+    .modal-body {
+        label {
+            color: $primary-font-color-main-theme;
+        }
+    }
+
+    .pagination {
+        & > li {
+            & > a,
+            & > span {
+                color: $button-color-main-theme;
+            }
+        }
+
+        & > .active {
+            & > a,
+            & > span {
+                &,
+                &:hover,
+                &:focus {
+                    background-color: $button-color-main-theme;
+                    border-color: $button-color-main-theme;
+                    color: white;
+                }
+            }
+        }
+    }
+
 
     // main-layout
 
@@ -140,8 +149,11 @@ input[type="checkbox"] {
     // components
 
     .eos-node-list {
-        background-color: $block-color-main-theme;
-        color: $secondary-font-color-main-theme;
+        // background-color: $block-color-main-theme;
+        .elements,
+        .selected-node {
+            color: $secondary-font-color-main-theme;
+        }
 
         .deleted {
             color: $disabled-color-main-theme;
@@ -149,6 +161,10 @@ input[type="checkbox"] {
 
         .highlight {
             background: $highlight-color-main-theme;
+        }
+
+        .count-select {
+            border-color: $border-color-main-theme;
         }
     }
 
@@ -265,15 +281,7 @@ input[type="checkbox"] {
     }
 
     .eos-node-actions {
-        .first-line,
-        .second-line {
-            &,
-            .circle {
-                border-color: $deviders-color-main-theme;
-            }
-        }
-
-        .control-implemented {
+        .icon {
             color: $button-color-main-theme;
         }
     }

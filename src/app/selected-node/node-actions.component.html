@@ -1,47 +1,34 @@
 <div class="eos-node-actions">
-    <div class="nodes-header first-line">
-        <span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>
-        <div class="input-group search pull-right">
-            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1" (keydown)="search($event)">
-            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body"></span>
-        </div>
-    </div>
-    <div class="nodes-header second-line">
-        <span class="table-title">
-                <span *ngIf="showCheckbox" class="checkbox">
-                    <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()"></label>
-                </span>
-        <span *ngFor="let field of viewFields" class="code"><b>{{field.title}}</b></span>
-        </span>
+    <div class="first-line block">
+        <!--<span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
+        <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>-->
 
-        <span class="controller pull-right">
-            <span *ngIf="showAdd" class="circle visible-lg-inline-block" (click)="creatingModal.show()">
-                <span class="icon glyphicon glyphicon-plus control-implemented"></span>
+        <span class="controller">
+                <span *ngIf="showAdd" class="visible-lg-inline-block" (click)="creatingModal.show()">
+                    <span class="icon glyphicon glyphicon-plus"></span>
         </span>
-        <span *ngIf="showDelete" class="circle visible-lg-inline-block" (click)="deleteSelectedItems()">
-                <span class="icon glyphicon glyphicon-minus control-implemented"></span>
+        <span *ngIf="showEdit" class="visible-lg-inline-block" (click)="editNode()">
+                    <span class="icon glyphicon glyphicon-pencil"></span>
         </span>
-        <span *ngIf="showEdit" class="circle visible-lg-inline-block" (click)="editNode()">
-                <span class="icon glyphicon glyphicon-pencil control-implemented"></span>
+        <span *ngIf="showDelete" class="visible-lg-inline-block" (click)="deleteSelectedItems()">
+                    <span class="icon glyphicon glyphicon-remove"></span>
         </span>
-        <span class="circle visible-lg-inline-block" (click)="nextItem(true)">
-                <span class="icon glyphicon glyphicon-chevron-up control-implemented"></span>
+        <span class="visible-lg-inline-block" (click)="nextItem(true)">
+                    <span class="icon glyphicon glyphicon-chevron-up"></span>
         </span>
-        <span class="circle visible-lg-inline-block" (click)="nextItem(false)">
-                <span class="icon glyphicon glyphicon-chevron-down control-implemented"></span>
+        <span class="visible-lg-inline-block" (click)="nextItem(false)">
+                    <span class="icon glyphicon glyphicon-chevron-down"></span>
         </span>
-        <div class="circle btn-group" dropdown>
-            <span dropdownToggle><span class="icon dots control-implemented">...</span>
+        <div class="btn-group" dropdown>
+            <span dropdownToggle><span class="icon glyphicon glyphicon-option-vertical"></span>
             </span>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
                 <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
                 <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
-                        <span *ngIf="!userSort">Включить пользователькую сортировку</span>
-                        <span *ngIf="userSort">Отключить пользователькую сортировку</span>
-                    </a></li>
+                            <span *ngIf="!userSort">Включить пользователькую сортировку</span>
+                            <span *ngIf="userSort">Отключить пользователькую сортировку</span>
+                        </a></li>
                 <li *ngIf="userSort && showUserSortUp" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
                 <li *ngIf="userSort && showUserSortDown" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
                 <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="creatingModal.show()">Добавить элемент</a></li>
@@ -52,6 +39,36 @@
             </ul>
         </div>
         </span>
+        <span class="pull-right">
+            <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
+            <span class="icon glyphicon glyphicon-calendar"></span>
+            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
+                <span dropdownToggle type="button">
+                    <span class="icon glyphicon glyphicon-search"></span>
+                </span>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li>
+                        <div class="input-group search pull-right">
+                            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
+                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search" aria-describedby="basic-addon1" (keydown)="search($event)">
+                            <span class="input-group-addon" id="basic-addon1"><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </span>
+    </div>
+    <div class="second-line block special-text">
+        <span class="table-title">
+                <span *ngIf="showCheckbox" class="group-checkbox checkbox">
+                    <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
+                        <span></span>
+                    </label>
+                </span>
+        <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
+        </span>
+
+
         <div class="clear-all"></div>
     </div>
 </div>

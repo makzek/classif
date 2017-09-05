@@ -42,6 +42,9 @@ export class NodeActionsComponent {
     showUserSortDown: boolean;
     userSort = false;
 
+    dropdownIsOpen = false;
+    date = new Date();
+
     fields: IFieldView[];
     searchInDeleted = false;
 
@@ -105,6 +108,10 @@ export class NodeActionsComponent {
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
     }
+
+    public change(value: boolean): void {
+        this.dropdownIsOpen = value;
+      }
 
     /*createItem() {
         this.modalRef.hide();
@@ -173,6 +180,7 @@ export class NodeActionsComponent {
 
     search(event) {
         if (event.keyCode === 13 && this.searchString) {
+            this.dropdownIsOpen = false;
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
         }
     }

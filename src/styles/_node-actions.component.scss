@@ -1,74 +1,16 @@
 .eos-node-actions {
     .first-line {
-        height: 50px;
-        border-bottom: 1px solid transparent;
+        height: 48px;
+        border: 1px solid transparent;
+        margin-bottom: 20px;
 
-        .deleted-toggle {
-            cursor: pointer;
-            position: relative;
-            top: 4px;
-        }
-    }
-
-    @media (max-width: 1180px) {
-        .first-line {
-            height: 100px;
-
-            .deleted-toggle {
-                top: 0;
-                line-height: 3;
-            }
-
-            .search {
-                float: none !important;
-                width: 100%;
-            }
+        .dropdown-menu {
+            padding: 0;
         }
     }
 
     .second-line {
-        border-bottom: 1px solid transparent;
-        margin-bottom: 10px;
-
-        .controller {
-            margin-top: 10px;
-
-            .circle {
-                border: 1px solid transparent;
-                border-radius: 50%;
-                display: inline-block;
-                height: 25px;
-                width: 25px;
-                cursor: pointer;
-
-                &:last-child {
-                    position: relative;
-                    top: -2px;
-                }
-            }
-
-            .icon {
-                display: inline-block;
-                margin-left: 5px;
-                margin-top: 3px;
-
-                &.glyphicon-minus {
-                    margin-left: 4px;
-                }
-            }
-
-            .dots {
-                display: inline-block;
-                font-size: 20px;
-                line-height: -35px;
-                margin-left: 3px;
-                margin-top: -4px;
-            }
-        }
-
-        .clear-all {
-            clear: both;
-        }
+        border: 1px solid transparent;
     }
 
     .table-title {
@@ -81,11 +23,54 @@
         }
     }
 
+    .icon {
+        width: 48px;
+        text-align: center;
+        font-size: large;
+        top: 12px;
+
+        &.glyphicon-option-vertical,
+        &.glyphicon-search {
+            top: 8px;
+        }
+    }
+
+    .date {
+        position: relative;
+        top: 9px;
+    }
+
     .search {
         width: 220px;
 
         .input-group-addon {
             cursor: pointer;
+        }
+    }
+}
+
+@media (max-width: 1430px) {
+    .eos-node-actions {
+        .first-line {
+            padding: 0 7px;
+        }
+
+        .icon {
+            width: 30px;
+        }
+
+        .date-comment {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 1199px) {
+    .eos-node-actions {
+        .icon {
+            &.glyphicon-option-vertical {
+                top: 12px;
+            }
         }
     }
 }

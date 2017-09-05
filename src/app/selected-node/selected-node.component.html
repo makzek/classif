@@ -1,10 +1,11 @@
-<div *ngIf="selectedNode">
-    <a class="link" *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
+<div *ngIf="selectedNode" class="block eos-selected-node">
+    <a class="link special-text" *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
     <div class="selected-node">
             <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}">
                 <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">
                     <label>
                         <input type="checkbox" [(ngModel)]="selectedNode.selected">
+                        <span></span>
                     </label>
                 </span>
                 <span class="node-info" (click)="openFullInfo(selectedNode)" (dblclick)="editNode(selectedNode)">
