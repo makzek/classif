@@ -49,6 +49,7 @@ import { EosMessageService } from './services/eos-message.service';
 import { NodeListActionsService } from './selected-node/node-list-action.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 import { EditCardActionService } from './edit-card/action.service';
+import { DictionaryActionService } from './dictionary/dictionary-action.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
@@ -113,6 +114,7 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         CanDeactivateGuard,
         EosBreadcrumbsService,
         EditCardActionService,
+        DictionaryActionService,
     ],
     bootstrap: [AppComponent],
 })
