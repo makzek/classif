@@ -3,27 +3,29 @@
     padding-left: 24px;
     position: relative;
 
-    &>div {
+    & > div {
         display: inline-block;
         width: 15px;
     }
 
-    i {
-        position: absolute;
-        line-height: 48px;
-        cursor: pointer;
-    }
-
-    .icon {
-        width: 48px;
+    .node-title-wrapper {
         display: inline-block;
-        text-align: center;
-    }
+        width: 100%;
 
-    .node-title {
-        cursor: pointer;
-        display: inline-block;
-        margin-left: 48px;
-        padding: 17px 7px;
+        .icon {
+            width: 48px;
+            display: inline-block;
+            text-align: center;
+            position: absolute;
+            line-height: 48px;
+            cursor: pointer;
+        }
+
+        .node-title {
+            cursor: pointer;
+            display: inline-block;
+            margin-left: 48px;
+            padding: 17px 7px;
+        }
     }
 }

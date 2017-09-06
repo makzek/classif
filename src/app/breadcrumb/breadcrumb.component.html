@@ -1,13 +1,13 @@
 <div class="breadcrumb-wrapper">
-    <span class="icon glyphicon glyphicon-menu-hamburger special-text" [ngClass]="{'rotate-left': treeOpened}" (click)="openTree()"
-        aria-hidden="true"></span>
+    <i class="icon fa fa-bars special-text" [ngClass]="{'rotate-left': treeOpened}" (click)="openTree()"
+        aria-hidden="true"></i>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
             <a class="breadcrumb-item" [routerLink]="[route.url, route.params]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}</a>
             <span class="breadcrumb-item" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
         </li>
     </ol>
-    <span class="icon glyphicon glyphicon-menu-hamburger special-text pull-right" [ngClass]="{'rotate-right': infoOpened}" (click)="openInfo()"
-        aria-hidden="true"></span>
+    <i class="icon fa fa-bars special-text pull-right" [ngClass]="{'rotate-right': infoOpened}" (click)="openInfo()"
+        aria-hidden="true"></i>
     <eos-pushpin></eos-pushpin>
 </div>
