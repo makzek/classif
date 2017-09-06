@@ -2,7 +2,7 @@
     <div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
         <div class="links-container" [ngClass]="{'right': historyToLeft}">
         <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
-            placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
+            placeholderItem="На этом рабочем столе нет ссылок" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
         </div>
 
         <div [ngClass]="{'left': historyToLeft}" class="block recent">
