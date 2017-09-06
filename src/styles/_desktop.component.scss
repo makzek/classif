@@ -82,25 +82,31 @@
         grid-row: 1;
         border: 1px solid transparent;
         text-align: center;
+        font-size: 18px;
+        line-height: 26px;
 
         &.left {
             grid-column: 1;
             grid-row: 1;
         }
 
-        .recent-title {
+        .recent-title-wrapper {
             padding: 10px;
             display: inline-block;
+            border-bottom: 1px solid transparent;
+            width: 100%;
+
+            .icon {
+                top: 3px;
+            }
         }
 
         .recent-list {
             list-style: none;
             padding: 0;
-            border-top: 1px solid transparent;
 
             .recent-item {
                 border-bottom: 1px solid transparent;
-                line-height: 3;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 10px;

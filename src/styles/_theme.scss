@@ -198,14 +198,9 @@
 
     .eos-desktop {
         .recent {
-            background: $block-color-main-theme;
-            color: $secondary-font-color-main-theme;
-
-            .recent-list {
-                &,
-                .recent-item {
-                    border-color: $border-color-main-theme;
-                }
+            .recent-title-wrapper,
+            .recent-item {
+                border-color: $border-color-main-theme;
             }
         }
 
