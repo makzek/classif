@@ -64,16 +64,16 @@
     </div>
     <div class="second-line block special-text">
         <span class="table-title">
-                <span *ngIf="showCheckbox" class="checkbox">
-                    <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
-                        <span></span>
-                    </label>
-                </span>
-        <!--<span *ngIf="showCheckbox" class="group-checkbox">
-            <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
-                <span></span>
-            </label>
-        </span>--> 
+            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
+                    <span></span>
+                </label>
+            </span>
+            <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
+                    <span></span>
+                </label>
+            </span>
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
         </span>
 

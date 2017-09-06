@@ -17,6 +17,8 @@ export enum E_RECORD_ACTIONS {
     markOne,
     markRoot,
     unmarkRoot,
+    markAllChildren,
+    unmarkAllChildren,
     navigateUp,
     navigateDown,
     restore,

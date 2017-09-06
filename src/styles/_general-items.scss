@@ -1,5 +1,6 @@
 input[type="checkbox"] {
-    opacity: 0.2;
+    opacity: 0;
+    cursor: pointer;
 
     & + span {
         // -webkit-appearance: none;
@@ -30,8 +31,14 @@ input[type="checkbox"] {
 }
 
 .group-checkbox {
-    input[type="checkbox"] + span {
-        border-color: red;
+    input[type="checkbox"] {
+        &:checked + span {
+            &::before {
+                height: 0;
+                width: 10px;
+                transform: rotateZ(0deg) translateY(7px) translateX(-2px);
+            }
+        }
     }
 }
 

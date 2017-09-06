@@ -175,13 +175,13 @@ export class NodeListComponent {
         /* tslint:disable:no-bitwise */
         if (node.selected) {
             if (!~this.nodes.findIndex((_n) => !_n.selected)) {
-                this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+                this._actionService.emitAction(E_RECORD_ACTIONS.markAllChildren);
             } else {
                 this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
             }
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
-                this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+                this._actionService.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
             }
         }
         /* tslint:enable:no-bitwise */
