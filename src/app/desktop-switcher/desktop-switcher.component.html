@@ -1,8 +1,10 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick" (click)="setInnerClick()">
-    <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">{{selectedDesk.name}}<span class="glyphicon glyphicon-menu-down btn-icon"></span></button>
+    <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
+        <span class="selected-desktop">{{selectedDesk.name}}</span>
+        <span class="glyphicon glyphicon-menu-down btn-icon"></span></button>
     <ul class="dropdown-menu" role="menu">
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem">
-            <span [hidden]="desk.edited">
+            <span [hidden]="desk.edited" class="desktop-wrapper">
                 <a class="dropdown-item" [routerLink]="['/home', desk.id]">
                     <span (click)="hideDropDown()">{{desk.name}}</span>
                 </a>
@@ -17,7 +19,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <div class="input-group-btn">
-                        <button type="button" (click)="closeAndSave(desk)" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
+                        <button type="button" (click)="save(desk)" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
                         <button type="button" (click)="cancelEdit(desk)" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                     </div>
                 </div>
