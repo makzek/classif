@@ -5,6 +5,7 @@ import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 import { Utils } from '../core/utils';
 
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'eos-delivery',
@@ -15,29 +16,28 @@ export class DeliveryComponent implements OnInit {
     currentItem: IDeliveryCl;
 
     errorMessage: string;
-    constructor(private pip: PipRX) { }
+    constructor(private pip: PipRX, private _auth: AuthService) { }
 
     ngOnInit() {
+    }
 
-        this.pip.login('tver', 'tver').subscribe((res) => {
-            this.pip.read<IDeliveryCl>({
-                // - Загрузка всех строк
-                // DELIVERY_CL: ALL_ROWS
+    getData() {
+        this.pip.read<IDeliveryCl>({
+            // - Загрузка всех строк
+            // DELIVERY_CL: ALL_ROWS
 
-                // - Загрузка по известным первичным ключам
-                // DELIVERY_CL: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
-                // 1032930, 1032965, 1032932, 1033581, 1033582, 1037443, 1037634,
-                //     1037681, 1037682, 1037683, 1037684, 1037685]
+            // - Загрузка по известным первичным ключам
+            // DELIVERY_CL: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
+            // 1032930, 1032965, 1032932, 1033581, 1033582, 1037443, 1037634,
+            //     1037681, 1037682, 1037683, 1037684, 1037685]
 
-                // - поиск по критериям
-                DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
-            }).subscribe(r => {
-                console.log('----->>>>>>>');
-                console.log(r);
-                this.items = r;
-            });
+            // - поиск по критериям
+            DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
+        }).subscribe(r => {
+            console.log('----->>>>>>>');
+            console.log(r);
+            this.items = r;
         });
-
     }
 
     onSelect(cur: IDeliveryCl): void {
@@ -51,6 +51,15 @@ export class DeliveryComponent implements OnInit {
         }, 'DELIVERY_CL');
 
         this.currentItem = tmp;
+    }
+
+    login() {
+        this._auth.login('tver', 'tver')
+            .then((resp) => {
+                console.log('login resp', resp);
+            }).catch((err) => {
+                console.error('login error', err);
+            });
     }
 }
 
