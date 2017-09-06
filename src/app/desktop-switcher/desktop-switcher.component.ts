@@ -66,8 +66,27 @@ export class DesktopSwitcherComponent {
     }
 
     openCreateForm() {
-        this.creating = true;
-        this.deskName = 'Мой рабочий стол ' + this.deskList.length;
+        if (this._moreThenOneEdited()) {
+            this.messageService.addNewMessage({
+                type: 'warning',
+                title: 'Ошибка создания рабочего стола:',
+                msg: 'создавать рабочий стол, пока не закончено редактирование рабочего стола запрещено'
+            });
+        } else {
+            this.creating = true;
+            this.deskName = this. _generateNewDeskName();
+        }
+    }
+
+    private _desktopExisted(name: string) {
+        /* tslint:disable:no-bitwise */
+        return !!~this.deskList.findIndex((_d) => _d.name === name);
+        /* tslint:enable:no-bitwise */
+    }
+
+    private _generateNewDeskName(): string {
+        const _posibleNumbers = [0, 1, 2, 3, 4];
+        return 'Мой рабочий стол ' + _posibleNumbers.findIndex((_n) => !this._desktopExisted('Мой рабочий стол ' + _n));
     }
 
     saveDesk(desk: EosDesk): void {
@@ -97,18 +116,23 @@ export class DesktopSwitcherComponent {
     }
 
     create() {
-        const _desk: EosDesk = {
-            id: null,
-            name: this.deskName,
-            references: [],
-            edited: false,
-        };
-        this.closeAndSave(_desk);
-        this.creating = false;
-    }
-
-    closeAndSave(desk: EosDesk) {
-        this.saveDesk(desk);
+        if (this._desktopExisted(this.deskName)) {
+            this.deskName = this. _generateNewDeskName();
+            this.messageService.addNewMessage({
+                type: 'danger',
+                title: 'Ошибка создания рабочего стола:',
+                msg: 'нельзя создавать рабочие столы с одинаковым именем'
+            });
+        } else {
+            const _desk: EosDesk = {
+                id: null,
+                name: this.deskName,
+                references: [],
+                edited: false,
+            };
+            this.saveDesk(_desk);
+            this.creating = false;
+        }
     }
 
     cancelEdit(desk: EosDesk) {
@@ -141,12 +165,16 @@ export class DesktopSwitcherComponent {
     }
 
     private _moreThenOneEdited(): boolean {
-        let edited = 0;
-        this.deskList.forEach((desk) => {
-            if (desk.edited) {
-                edited++;
-            }
-        });
-        return edited > 0;
+        if (this.creating) {
+            return true;
+        } else {
+            let edited = 0;
+            this.deskList.forEach((desk) => {
+                if (desk.edited) {
+                    edited++;
+                }
+            });
+            return edited > 0;
+        }
     }
 }
