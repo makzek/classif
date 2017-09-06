@@ -15,7 +15,12 @@ export class AuthService {
     }
 
     public login(user: string, passwd: string): Promise<any> {
-        const _url = this._cfg.authSrv + '?' + 'login=' + user + '&pass=' + passwd;
+        const _url = this._cfg.authSrv + 'Login?app=api&' + 'username=' + user + '&pass=' + passwd;
+        return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
+    }
+
+    public logout() {
+        const _url = this._cfg.authSrv + 'Logoff';
         return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
     }
 
