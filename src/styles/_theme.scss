@@ -197,35 +197,19 @@
     }
 
     .eos-desktop {
-        .btn-sq-lg,
         .recent {
             background: $block-color-main-theme;
             color: $secondary-font-color-main-theme;
-        }
 
-        .btn-sq-lg {
-            .end-hidder {
-                background: linear-gradient(to right, transparent 0%, $block-color-main-theme 50%);
-            }
-        }
-
-        .recent {
             .recent-list {
                 &,
                 .recent-item {
-                    border-color: $deviders-color-main-theme;
+                    border-color: $border-color-main-theme;
                 }
             }
         }
 
         .icon-btn {
-            color: $secondary-font-color-main-theme;
-        }
-    }
-
-    .eos-dictionaries {
-        .btn-sq-lg {
-            background: $block-color-main-theme;
             color: $secondary-font-color-main-theme;
         }
     }

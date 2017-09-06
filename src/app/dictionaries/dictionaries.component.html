@@ -1,7 +1,6 @@
 <div class="eos-dictionaries">
-    <div class="row">
-        <div class="col-lg-12">
-            <button *ngFor="let dictionary of dictionariesList" class="btn btn-sq-lg" [routerLink]="['/spravochniki', dictionary.id]">{{dictionary.title}}</button>
-        </div>
-    </div>
+    <button *ngFor="let dictionary of dictionariesList" class="dictionary btn block" [routerLink]="['/spravochniki', dictionary.id]">
+        <span class="icon special-text glyphicon glyphicon-trash" aria-hidden="true"></span>
+        <span class="text">{{dictionary.title}}</span>
+    </button>
 </div>

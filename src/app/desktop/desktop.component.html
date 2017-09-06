@@ -1,14 +1,14 @@
 <div class="eos-desktop">
     <div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
-        <div [ngClass]="{'right': historyToLeft}">
+        <div class="links-container" [ngClass]="{'right': historyToLeft}">
         <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
             placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
         </div>
 
-        <div [ngClass]="{'left': historyToLeft}" class="btn recent">
-            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
+        <div [ngClass]="{'left': historyToLeft}" class="block recent">
+            <span class="icon special-text glyphicon glyphicon-menu-left" aria-hidden="true" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
             <span class="recent-title">История:</span>
-            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
+            <span class="icon special-text glyphicon glyphicon-menu-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             <ul *ngIf="recentItems" class="recent-list">
                 <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="top">
                     <a [routerLink]="[link.link]">{{link.title}}</a>
@@ -19,12 +19,12 @@
 </div>
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
-    <div class="btn btn-sq-lg" *ngIf="item.value.edited">
+    <div class="btn item-content block edited" *ngIf="item.value.edited">
         <textarea class="title-input" [hidden]="!item.value.edited" [(ngModel)]="item.value.title" onclick="this.focus(); this.selectionStart = this.value.length;"></textarea>
     </div>
-    <button *ngIf="!item.value.edited" class="btn btn-sq-lg" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
-            <span [hidden]="item.value.edited" class="button-title">{{item.value.title}}</span>
-            <span class="end-hidder"></span>
+    <button *ngIf="!item.value.edited" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
+        <span class="icon special-text glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <span [hidden]="item.value.edited" tooltip="{{item.value.title}}" container="body" placement="left" class="text">{{item.value.title}}</span>
     </button>
     <span *ngIf="!item.value.edited" class="icon-btn glyphicon glyphicon-pencil" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="item.value.edited" class="icon-btn glyphicon glyphicon-ok" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>

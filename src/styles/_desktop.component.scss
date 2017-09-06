@@ -1,19 +1,7 @@
 .eos-desktop {
-    .btn-sq-lg {
-        height: $desktop-link-size;
-        margin: $desktop-link-margin;
-        width: $desktop-link-size;
-        white-space: normal;
-        overflow: hidden;
-    }
-    div.btn-sq-lg {
-        padding-top: 20px;
-    }
-
     .sortable-wrapper {
         display: flex;
         flex-wrap: wrap;
-        // justify-content: space-around;
 
         .icon-btn {
             cursor: pointer;
@@ -23,6 +11,35 @@
     .sortable-item {
         display: inline-block;
         position: relative;
+        height: 100px;
+        flex-basis: 24%;
+        margin-right: 1%;
+        margin-bottom: 10px;
+        border-radius: 0;
+        font-size: 18px;
+        line-height: 26px;
+        text-align: left;
+        overflow: hidden;
+
+        .item-content {
+            width: 100%;
+            height: 100%;
+            font-size: 18px;
+            line-height: 26px;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &.edited {
+                padding: 5px 53px 5px 5px;
+            }
+
+            .icon {
+                font-size: large;
+                width: 50px;
+                text-align: center;
+            }
+        }
 
         .icon-btn {
             position: absolute;
@@ -45,7 +62,7 @@
 
         .title-input {
             width: 100%;
-            height: 100px;
+            height: 100%;
         }
     }
 
@@ -63,6 +80,8 @@
         padding: 0;
         grid-column: 2;
         grid-row: 1;
+        border: 1px solid transparent;
+        text-align: center;
 
         &.left {
             grid-column: 1;
@@ -70,7 +89,8 @@
         }
 
         .recent-title {
-            line-height: 3;
+            padding: 10px;
+            display: inline-block;
         }
 
         .recent-list {
@@ -83,20 +103,24 @@
                 line-height: 3;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                padding: 10px;
             }
         }
     }
 
     .desktop-wrapper {
         display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 1fr 2 * ($desktop-link-size + $desktop-link-margin);
-        grid-template-columns: 1fr 2 * ($desktop-link-size + $desktop-link-margin);
+        display: grid;// sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 1fr (2 * ($desktop-link-size + $desktop-link-margin));
+        grid-template-columns: 1fr (2 * ($desktop-link-size + $desktop-link-margin));
 
         &.reverse {
-            -ms-grid-columns: 2 * ($desktop-link-size + $desktop-link-margin) 1fr;
-            grid-template-columns: 2 * ($desktop-link-size + $desktop-link-margin) 1fr;
+            -ms-grid-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
+            grid-template-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
+        }
+
+        .links-container {
+            padding: 10px;
         }
     }
-
 }
