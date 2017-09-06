@@ -7,6 +7,7 @@ import { NgModule, Optional, ModuleWithProviders, SkipSelf } from '@angular/core
 import { HttpModule } from '@angular/http';
 
 import { DeliveryComponent } from './clman/delivery.component';
+import { RubricComponent } from './clman/rubric.component';
 import { DeliveryDetailComponent } from './clman/delivery-detail.component';
 
 import { IApiCfg } from './interfaces/interfaces';
@@ -25,11 +26,13 @@ import { DepartmentService } from './services/department.service';
         HttpModule,
     ],
     declarations: [
-        DeliveryComponent,
+        DeliveryComponent,,
+        RubricComponent,
         DeliveryDetailComponent,
     ],
     exports: [
         DeliveryComponent,
+        RubricComponent
     ],
     providers: [
         PipRX,
