@@ -1,4 +1,4 @@
-.breadcrumb-wrapper {
+.eos-breadcrumb {
     // height: $breadcrumbs-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
@@ -11,18 +11,34 @@
         margin: 0;
         padding: 0;
 
+        & > li:not(:first-child)::before {
+            font-family: "Glyphicons Halflings";
+            content: "\E258";
+        }
+
         .breadcrumb-item {
             max-width: 200px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             display: inline-block;
-            line-height: 14px;
+            font-size: 16px;
+            line-height: 24px;
+            position: relative;
+            top: 5px;
+        }
+
+        .link {
+            &:hover,
+            &:active,
+            &:focus {
+                text-decoration: none;
+            }
         }
     }
 
     .icon {
-        top: 0;
+        font-size: 20px;
         margin: 8px;
         transition: 300ms ease-in-out;
 

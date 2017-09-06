@@ -89,11 +89,11 @@ export class SelectedNodeComponent {
                     this.restoringLogicallyDeletedItem();
                     break;
                 }
-                case E_RECORD_ACTIONS.markRoot: {
+                case E_RECORD_ACTIONS.markRecords: {
                     this.selectedNode.selected = true;
                     break;
                 }
-                case E_RECORD_ACTIONS.unmarkRoot: {
+                case E_RECORD_ACTIONS.unmarkRecords: {
                     this.selectedNode.selected = false;
                     break;
                 }

@@ -1,24 +1,23 @@
-<!--<div class="btn-group eos-user" dropdown>
-  <button dropdownToggle type="button" class="btn dropdown-button dropdown-toggle">
+<div class="eos-user" dropdown container="body" placement="left bottom">
+  <span dropdownToggle>
         <span class="text">{{'Пользователь' || fullname}}</span>
         <span class="round-img-wrapper"><span class="round-img"></span></span>
         <span class="caret"></span>
-  </button>
+  </span>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
     <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option1</a></li>
     <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки</a></li>
-    <li role="menuitem" class="menuitem" *ngIf="!fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
     <li class="divider dropdown-divider" *ngIf="fullname"></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" href="#">Выйти</a>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Выйти</a>
     </li>
   </ul>
-</div>--> 
+</div>
 
-<span class="eos-user" (click)="openModal(loginWindow)">
+<!--<span class="eos-user" (click)="openModal(loginWindow)">
     <span class="text">{{'Пользователь' || fullname}}</span>
     <span class="round-img-wrapper"><span class="round-img"></span></span>
-</span>
+</span>-->
 
 <template #loginWindow>
   <div class="modal-header">

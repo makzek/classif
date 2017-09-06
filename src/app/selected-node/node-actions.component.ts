@@ -42,7 +42,10 @@ export class NodeActionsComponent {
     showUserSortUp: boolean;
     showUserSortDown: boolean;
     userSort = false;
-    // rootSelected = false;
+
+    rootSelected = false;
+    allChildrenSelected = false;
+    someChildrenSelected = false;
 
     dropdownIsOpen = false;
     date = new Date();
@@ -87,37 +90,56 @@ export class NodeActionsComponent {
             }
         });
 
-        /* this._actionService.action$.subscribe((act) => {
+        this._actionService.action$.subscribe((act) => {
             switch (act) {
                 case E_RECORD_ACTIONS.markOne:
-                console.log('markOne');
                     this.itemIsChecked = true;
-                    break;
-                case E_RECORD_ACTIONS.unmarkRecords:
-                console.log('unmarkRecords');
-                    this.itemIsChecked = false;
                     this.checkAll = false;
+                    this.someChildrenSelected = true;
                     break;
-                case E_RECORD_ACTIONS.markRecords:
-                console.log('markRecords');
+                case E_RECORD_ACTIONS.unmarkAllChildren:
+                    this.allChildrenSelected = false;
+                    this.someChildrenSelected = false;
+                    if (this.rootSelected) {
+                        this.itemIsChecked = true;
+                        this.checkAll = false;
+                    } else {
+                        this.itemIsChecked = false;
+                        this.checkAll = false;
+                    }
+                    break;
+                case E_RECORD_ACTIONS.markAllChildren:
+                    this.allChildrenSelected = true;
                     if (this.rootSelected) {
                         this.checkAll = true;
                         this.itemIsChecked = false;
                     } else {
                         this.itemIsChecked = true;
+                        this.checkAll = false;
                     }
                     break;
                 case E_RECORD_ACTIONS.markRoot:
-                console.log('markRoot');
                     this.rootSelected = true;
-                    this.itemIsChecked = true;
+                    if (this.allChildrenSelected) {
+                        this.checkAll = true;
+                        this.itemIsChecked = false;
+                    } else {
+                        this.checkAll = false;
+                        this.itemIsChecked = true;
+                    }
                     break;
                 case E_RECORD_ACTIONS.unmarkRoot:
-                console.log('unmarkRoot');
                     this.rootSelected = false;
+                    if (this.allChildrenSelected || this.someChildrenSelected) {
+                        this.itemIsChecked = true;
+                        this.checkAll = false;
+                    } else {
+                        this.itemIsChecked = false;
+                        this.checkAll = false;
+                    }
                     break;
             }
-        });*/
+        });
     }
     switchShowDeleted(value: boolean) {
         this._userSettingsService.saveShowDeleted(value);
@@ -169,26 +191,26 @@ export class NodeActionsComponent {
     }
 
     checkAllItems() {
-        // console.log('checkAllItems');
-        if (!this.checkAll/* && !this.itemIsChecked*/) {
-            //  this.checkAll = true;
-            this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
-            this._actionService.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else {
-            // this.checkAll = false;
+        if (!this.checkAll) {
+            this.checkAll = true;
             this.itemIsChecked = false;
+            this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+        } else {
+            this.checkAll = false;
+            this.itemIsChecked = false;
+            this.allChildrenSelected = false;
+            this.someChildrenSelected = false;
             this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
 
-    /* uncheckAllItems() {
-        console.log('uncheckAllItems');
+    uncheckAllItems() {
         this.checkAll = false;
         this.itemIsChecked = false;
+        this.allChildrenSelected = false;
+        this.someChildrenSelected = false;
         this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-        this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-    } */
+    }
 
     search(event) {
         if (event.keyCode === 13 && this.searchString) {

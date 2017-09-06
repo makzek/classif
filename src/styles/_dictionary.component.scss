@@ -26,8 +26,8 @@
     .tree-wrapper {
         grid-row: 1;
         grid-column: 1;
-        height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
-        max-height: calc(100vh - 121px);
+        height: calc(100vh - 127px); // $top-menu-height = 127px. We can't use variables here
+        max-height: calc(100vh - 127px);
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
@@ -46,8 +46,8 @@
         width: 400px;
         grid-row: 1;
         grid-column: 3;
-        height: calc(100vh - 121px); // $top-menu-height = 121px. We can't use variables here
-        max-height: calc(100vh - 121px);
+        height: calc(100vh - 127px); // $top-menu-height = 127px. We can't use variables here
+        max-height: calc(100vh - 127px);
         border-left: 1px solid transparent;
     }
 }
