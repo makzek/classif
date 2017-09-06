@@ -137,7 +137,7 @@
                 </div>
                 <div class="input-group" *ngIf="field.type === 0">
                     <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="number" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
                 </div>
                 <div class="checkbox" *ngIf="field.type === 6">
                     <label><input type="checkbox" [(ngModel)]="field.value">{{field.title}}</label>
