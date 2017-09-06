@@ -107,8 +107,14 @@
         background: $secondary-color-main-theme;
     }
 
-    .breadcrumb-wrapper {
-        background: $primary-color-main-theme;
+    .eos-breadcrumb {
+        .link {
+            color: $primary-font-color-main-theme;
+        }
+
+        .breadcrumb > li::before {
+            color: $button-color-main-theme;
+        }
     }
 
     .sidebar-wrapper,
