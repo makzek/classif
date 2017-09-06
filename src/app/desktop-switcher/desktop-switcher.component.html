@@ -14,7 +14,7 @@
                 </span>
             </span>
             <span [hidden]="!desk.edited">
-                <div class="input-group"  style="padding-left: 20px !important; width:95% !important; text-align: center !important;">
+                <div class="input-group">
                     <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <div class="input-group-btn">
                         <button type="button" (click)="closeAndSave(desk)" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
