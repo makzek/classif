@@ -122,12 +122,12 @@ export class DesktopSwitcherComponent {
     }
 
     removeDesk(desk: EosDesk): void {
-        this.setInnerClick();
         this._confirmSrv.confirm('Удалить?', 'Вы действительно хотите удалить рабочий стол ' + desk.name + '?')
             .then((confirmed: boolean) => {
                 if (confirmed) {
                     this.eosDeskService.removeDesk(desk);
                 }
+                this.setInnerClick();
             });
     }
 
