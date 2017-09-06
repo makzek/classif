@@ -28,6 +28,7 @@
         text-align: center;
         font-size: large;
         top: 12px;
+        cursor: pointer;
 
         &.glyphicon-option-vertical,
         &.glyphicon-search {
@@ -41,11 +42,21 @@
     }
 
     .search {
-        width: 220px;
+        width: 320px;
 
         .input-group-addon {
             cursor: pointer;
         }
+
+        .checkbox {
+            margin: 0 -9px -4px 0;
+        }
+    }
+
+    .search-wrapper {
+        left: auto;
+        right: 0;
+        top: 35px;
     }
 }
 

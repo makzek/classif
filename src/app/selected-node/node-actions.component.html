@@ -46,15 +46,17 @@
             <span dropdownToggle type="button">
                     <span class="icon glyphicon glyphicon-search"></span>
             </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
                 <li>
-                    <div class="input-group search pull-right">
+                    <div class="input-group search">
                         <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
                         <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
                         <span class="input-group-addon" id="basic-addon1">
-                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" container="body">
+                            <span class="checkbox">
+                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
                                     <span></span>
-                        </label>
+                                </label>
+                            </span>
                         </span>
                     </div>
                 </li>

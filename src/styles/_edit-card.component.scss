@@ -61,10 +61,10 @@
         }
     }
 
-    .active {
+    /* .active {
         background-color: #e6e5e5;
         border-color: #adadad;
-    }
+    }*/
 
     .edit-content {
         label {
@@ -75,8 +75,7 @@
         }
 
         .form {
-            margin-left: 20px;
-            margin-right: 20px;
+            margin: 20px;
 
             .form-group {
                 margin: 0;
