@@ -79,6 +79,7 @@ export class NodeListComponent {
         this._dictionaryService.searchResults$.subscribe((nodes) => {
             if (this.notFoundMsgGiven) {
                 this._messageService.removeMessage(this.notFoundMsg);
+                this.notFoundMsgGiven = false;
             }
             if (nodes.length) {
                 this._update(nodes, false);
