@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
 
-const INSTANCE_NAME = 'RUBRIC';
+const INSTANCE_NAME = 'RUBRIC_CL';
 
 @Injectable()
 export class RubricService {

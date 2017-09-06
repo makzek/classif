@@ -1,27 +1,11 @@
-﻿<h1>TEST</h1>
-
-<!--<button (click)="login()">Login</button>-->
-<!--<button (click)="getData()">Get data</button>-->
-<!--&lt;!&ndash;<div>&ndash;&gt;-->
-    <!--ВИды доставки <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>-->
-    <!--<ul>-->
-        <!--<li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>-->
-    <!--</ul>-->
-<!--</div>-->
-<!--<eos-delivery-detail *ngIf="currentItem" [it]="currentItem"></eos-delivery-detail>-->
-<!--
+﻿
+<button (click)="login()">Login</button>
+<button (click)="getData()">Get data</button>
 <div>
-    ВИды доставки
-
+    Рубрики <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>
     <ul>
-        <li *ngFor="let item of items" (click)="onSelect(item)">{{item.CLASSIF_NAME}}</li>
+        <li *ngFor="let item of items" >{{item.CLASSIF_NAME}}</li>
     </ul>
-
 </div>
+<!--<eos-delivery-detail *ngIf="currentItem" [it]="currentItem"></eos-delivery-detail>-->
 
-<div *ngIf="currentItem">
-    текуйщий элемент {{currentItem.CLASSIF_NAME}}
-
-    <eos-delivery-detail [item]="currentItem"></eos-delivery-detail>
-</div>
--->

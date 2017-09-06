@@ -16,6 +16,22 @@ export interface IDeliveryCl extends IEnt {
     CLASSIF_NAME: any;
 };
 
+export interface IRubricCl extends IEnt {
+    DUE: any;
+    RUBRIC_CODE: any;
+    CODE: any;
+    ISN_LCLASSIF: any;
+    PARENT_DUE: any;
+    ISN_NODE: any;
+    IS_NODE: any;
+    ISN_HIGH_NODE: any;
+    WEIGHT: any;
+    CLASSIF_NAME: any;
+    PROTECTED: any;
+    DELETED: any;
+    NOTE: any;
+};
+
 export interface ITypeDef {
     pk: string;
     properties: any;

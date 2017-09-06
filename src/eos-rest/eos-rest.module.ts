@@ -15,6 +15,7 @@ import { ApiCfg } from './core/api-cfg';
 
 /* services */
 import { PipRX } from './services/pipRX.service';
+import { RubricService } from './services/rubric.service';
 import { AuthService } from './services/auth.service';
 import { DepartmentService } from './services/department.service';
 
@@ -26,7 +27,7 @@ import { DepartmentService } from './services/department.service';
         HttpModule,
     ],
     declarations: [
-        DeliveryComponent,,
+        DeliveryComponent,
         RubricComponent,
         DeliveryDetailComponent,
     ],
@@ -37,6 +38,7 @@ import { DepartmentService } from './services/department.service';
     providers: [
         PipRX,
         AuthService,
+        RubricService,
         DepartmentService,
     ]
 })
