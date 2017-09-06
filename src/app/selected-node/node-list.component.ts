@@ -43,6 +43,7 @@ export class NodeListComponent {
         type: 'warning',
         title: 'Ничего не найдено: ',
         msg: 'попробуйте изменить поисковую фразу',
+        dismissOnTimeout: 700
     };
 
     notFoundMsgGiven = false;
