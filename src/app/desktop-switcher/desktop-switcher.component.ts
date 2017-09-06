@@ -1,13 +1,11 @@
 import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
-// import { ModalDirective } from 'ngx-bootstrap';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
 import { EosMessageService } from '../services/eos-message.service';
+import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 
 @Component({
     selector: 'eos-desktop-switcher',
@@ -16,32 +14,27 @@ import { EosMessageService } from '../services/eos-message.service';
 export class DesktopSwitcherComponent {
     deskList: EosDesk[];
     selectedDesk: EosDesk;
-    public modalRef: BsModalRef;
     deskName: string;
     creating = false;
     editing = false;
     maxLength = 80;
     innerClick: boolean;
 
-    confirmWindowOpen: boolean;
-    confirmWindowTitle: string;
-    confirmWindowBody: string;
-    confirmWindowModel: EosDesk;
-
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
     @HostListener('window:click', [])
     clickout() {
-        if (! this.innerClick) {
+        if (!this.innerClick) {
             this._dropDown.toggle(false);
         }
         this.innerClick = false;
     }
 
     constructor(private eosDeskService: EosDeskService,
-        private modalService: BsModalService,
         private router: Router,
-        private messageService: EosMessageService) {
+        private messageService: EosMessageService,
+        private _confirmSrv: ConfirmWindowService
+    ) {
         this.eosDeskService.desksList.subscribe(
             (res) => {
                 this.deskList = res;
@@ -129,18 +122,13 @@ export class DesktopSwitcherComponent {
     }
 
     removeDesk(desk: EosDesk): void {
-        this.confirmWindowOpen = true;
-        this.confirmWindowTitle = 'Удалить?';
-        this.confirmWindowBody = 'Вы действительно хотите удалить рабочий стол ' + desk.name + '?';
-        this.confirmWindowModel = desk;
-    }
-
-    removeConfirm(isConfirm: boolean): void {
-        this.confirmWindowOpen = false;
-        if (isConfirm) {
-            this.eosDeskService.removeDesk(this.confirmWindowModel);
-        }
         this.setInnerClick();
+        this._confirmSrv.confirm('Удалить?', 'Вы действительно хотите удалить рабочий стол ' + desk.name + '?')
+            .then((confirmed: boolean) => {
+                if (confirmed) {
+                    this.eosDeskService.removeDesk(desk);
+                }
+            });
     }
 
     cancelCreating() {

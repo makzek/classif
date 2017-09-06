@@ -55,7 +55,8 @@ import { TestPageComponent } from './test-page/test-page.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 import { LoginComponent } from './login/login.component';
-import { ConfirmWindowComponent } from './confirm-window/confirm-window.component'
+import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
+import { ConfirmWindowService } from './confirm-window/confirm-window.service';
 
 @NgModule({
     declarations: [
@@ -96,8 +97,12 @@ import { ConfirmWindowComponent } from './confirm-window/confirm-window.componen
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
     ],
+    entryComponents: [
+        ConfirmWindowComponent,
+    ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        ConfirmWindowService,
         EosApiService,
         EosDictService,
         EosDeskService,

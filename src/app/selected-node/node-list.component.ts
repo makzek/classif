@@ -196,6 +196,9 @@ export class NodeListComponent {
     }
 
     userSortItems(): void {
+        this.nodeListPerPage.forEach((node, i) => {
+            this.nodes.splice(i, 1, node);
+        });
         this._dictionaryService.userOrder(this.nodes);
     }
 

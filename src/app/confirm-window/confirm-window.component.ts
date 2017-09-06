@@ -1,50 +1,33 @@
-import { Component, Input, Output, OnChanges, EventEmitter, SimpleChanges, ViewChild, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { Component, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+
+export interface IConfirmWindow {
+    title: string;
+    body: string;
+    confirmEvt: EventEmitter<boolean>;
+}
 
 @Component({
     selector: 'eos-confirm-window',
     templateUrl: 'confirm-window.component.html',
 })
+export class ConfirmWindowComponent implements IConfirmWindow {
+    title: string;
+    body: string;
+    confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-export class ConfirmWindowComponent implements OnChanges {
+    constructor(public modalRef: BsModalRef) { }
 
-    public modalRef: BsModalRef;
-
-    @Input() title: string;
-    @Input() body: string;
-    @Input() isOpen: boolean;
-    @Output() isConfirm: EventEmitter<any> = new EventEmitter<any>();
-
-    @ViewChild('confirmWindow')
-    private template: TemplateRef<any>;
-
-    constructor(private modalService: BsModalService) {
-        this.modalService.onHidden.subscribe((reason: string) => {
-            if (reason === 'backdrop-click' || reason === 'esc') {
-                this.cancel();
-            }
-        });
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (this.template && changes.isOpen.currentValue) {
-            this.modalRef = this.modalService.show(this.template);
-        }
-    }
-
-    public confirm() {
-        this.isOpen = false;
+    confirm() {
         if (this.modalRef) {
-            this.isConfirm.emit(true);
+            this.confirmEvt.emit(true);
             this.modalRef.hide();
         }
     }
 
-    public cancel() {
-        this.isOpen = false;
+    cancel() {
         if (this.modalRef) {
-            this.isConfirm.emit(false);
+            this.confirmEvt.emit(false);
             this.modalRef.hide();
         }
     }
