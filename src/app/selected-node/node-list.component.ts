@@ -17,7 +17,7 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ERROR,
     DANGER_DELETE_ELEMENT
-} from '../core/messages.const';
+} from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-node-list',
