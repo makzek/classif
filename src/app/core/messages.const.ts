@@ -5,7 +5,7 @@ export const DEFAULT_DISMISS_TIMEOUT = 500;
 export const WARN_DESK_EDITING: IMessage = {
     type: 'warning',
     title: 'Ошибка редактирования рабочего стола:',
-    msg: 'одноверенное редактирование нескольких рабочих столов запрещено',
+    msg: 'одновременное редактирование нескольких рабочих столов запрещено',
     dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
 };
 
