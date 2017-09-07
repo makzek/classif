@@ -6,8 +6,11 @@ import { EosApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
-import { RUBRICATOR_DICT } from '../core/consts';
-import { DEPARTMENTS_DICT } from '../core/department-consts';
+import {
+    DICTIONARIES,
+    DEPARTMENTS_DICT,
+    RUBRICATOR_DICT,
+} from '../consts/dictionaries.consts';
 
 import { RecordDescriptor } from '../core/record-descriptor';
 import { RubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';

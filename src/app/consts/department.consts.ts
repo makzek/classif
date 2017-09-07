@@ -1,4 +1,4 @@
-import { IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
+import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
 /* tslint:disable:max-line-length */
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
