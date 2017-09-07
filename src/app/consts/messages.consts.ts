@@ -1,7 +1,7 @@
-import { IMessage } from './message.interface';
+import { IMessage } from '../core/message.interface';
 
-export const DEFAULT_DISMISS_TIMEOUT = 500;
-export const LONG_DISMISS_TIMEOUT = 1000;
+export const DEFAULT_DISMISS_TIMEOUT = 1000;
+export const LONG_DISMISS_TIMEOUT = 2000;
 
 export const WARN_DESK_EDITING: IMessage = {
     type: 'warning',

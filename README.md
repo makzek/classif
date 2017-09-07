@@ -7,6 +7,7 @@ For compile styles from sass you need to install [Compass](http://compass-style.
 
 - install angular-cli `npm install -g @angular/cli`
 - run `npm i`
+- run `npm run update-build`
 
 ## Development server
 

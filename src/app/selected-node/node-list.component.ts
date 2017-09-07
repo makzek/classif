@@ -17,7 +17,7 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ERROR,
     DANGER_DELETE_ELEMENT
-} from '../core/messages.const';
+} from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-node-list',
@@ -303,6 +303,7 @@ export class NodeListComponent {
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
             * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
         this.currentPage++;
+        // console.log('currentPage', this.currentPage);
     }
 
     setItemCount(value: string) {

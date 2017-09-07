@@ -10,7 +10,7 @@ import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 import {
     WARN_DESK_CREATING,
     WARN_DESK_EDITING,
-} from '../core/messages.const';
+} from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-desktop-switcher',

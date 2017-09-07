@@ -32,8 +32,12 @@
 
     <div class="pagination-option block">
         <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-            itemsPerPage="{{itemsPerPage}}" [maxSize]="3" [rotate]="true" [(ngModel)]="currentPage" class="pagination-lg" previousText="&lsaquo;"
+            itemsPerPage="{{itemsPerPage*pageAtList}}" [maxSize]="3" [rotate]="true" [(ngModel)]="currentPage" class="pagination-lg" previousText="&lsaquo;"
             nextText="&rsaquo;"></pagination>
+        
+           <!-- currentPage {{currentPage}}
+            itemsPerPage {{itemsPerPage}}
+            pageAtList {{pageAtList}}-->
 
         <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
 
