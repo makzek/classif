@@ -14,11 +14,15 @@ import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
+import { RECORD_ACTIONS } from '../consts/record-actions.consts';
+
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent {
+    recordActions = RECORD_ACTIONS;
+
     showDeleted = false;
     modalRef: BsModalRef;
     checkAll = false;
@@ -33,9 +37,6 @@ export class NodeActionsComponent {
     viewFields: FieldDescriptor[];
 
     showCheckbox: boolean;
-    showAdd: boolean;
-    showDelete: boolean;
-    showEdit: boolean;
     showDeleteHard: boolean;
 
     showUserSort: boolean;
@@ -74,13 +75,14 @@ export class NodeActionsComponent {
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
+                this.recordActions.forEach((action) => {
+                    action.enabled = _d.descriptor.canDo(action.group, action.type);
+                });
+
                 this.dictIdFromDescriptor = _d.descriptor.id;
                 this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
 
                 this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                this.showAdd = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.add);
-                this.showEdit = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.edit);
-                this.showDelete = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.remove);
                 this.showDeleteHard = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.removeHard);
                 this.showUserSort = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.userOrder);
                 this.showUserSortUp = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveUp);
@@ -141,6 +143,18 @@ export class NodeActionsComponent {
             }
         });
     }
+
+    actionHandler (type: E_RECORD_ACTIONS) {
+        switch (type) {
+            case E_RECORD_ACTIONS.add:
+                this.creatingModal.show();
+                break;
+            default:
+                this._actionService.emitAction(type);
+                break;
+        }
+    }
+
     switchShowDeleted(value: boolean) {
         this._userSettingsService.saveShowDeleted(value);
     }
@@ -152,22 +166,6 @@ export class NodeActionsComponent {
     public change(value: boolean): void {
         this.dropdownIsOpen = value;
       }
-
-    deleteSelectedItems() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.remove);
-    }
-
-    editNode() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.edit);
-    }
-
-    nextItem(value: boolean) {
-        if (value) {
-            this._actionService.emitAction(E_RECORD_ACTIONS.navigateUp);
-        } else {
-            this._actionService.emitAction(E_RECORD_ACTIONS.navigateDown);
-        }
-    }
 
     physicallyDelete() {
         this._actionService.emitAction(E_RECORD_ACTIONS.removeHard);
