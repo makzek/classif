@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIE_LIST } from './eos-api.mock';
-import { MOCK_RUBRICS as NODES } from './rubric.mock';
+import { DICTIONARIES } from '../consts/dictionaries.consts';
+import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
 @Injectable()
 export class EosApiService {
@@ -12,12 +12,12 @@ export class EosApiService {
         this._mockedNodesMap = new Map<string, any>();
         NODES.forEach((_n) => this._mockedNodesMap.set(_n.id, _n));
         this._dictionaries = {};
-        DICTIONARIE_LIST.forEach((dict) => this._dictionaries[dict.id] = dict);
+        DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
     getDictionaryListMocked(): Promise<any> {
         return new Promise((res) => {
-            res(DICTIONARIE_LIST);
+            res(DICTIONARIES);
         });
     }
 

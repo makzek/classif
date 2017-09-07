@@ -1,17 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-import { EosRestModule } from '../eos-rest/eos-rest.module';
-
-import { AppRoutingModule } from './app-routing.module';
-
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
+import { EosErrorHandler } from './core/error-handler';
+
 import { APP_CONFIG } from './app.config';
+
+import { EosRestModule } from '../eos-rest/eos-rest.module';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
@@ -101,7 +103,9 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         ConfirmWindowComponent,
     ],
     providers: [
+        { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        EosErrorHandler,
         ConfirmWindowService,
         EosApiService,
         EosDictService,

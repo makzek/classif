@@ -12,6 +12,12 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { IMessage } from '../core/message.interface';
+import {
+    WARN_SEARCH_NOTFOUND,
+    WARN_EDIT_ERROR,
+    DANGER_EDIT_ERROR,
+    DANGER_DELETE_ELEMENT
+} from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-node-list',
@@ -38,13 +44,6 @@ export class NodeListComponent {
     showCheckbox: boolean;
 
     userSorting = false;
-
-    notFoundMsg: IMessage = {
-        type: 'warning',
-        title: 'Ничего не найдено: ',
-        msg: 'попробуйте изменить поисковую фразу',
-        dismissOnTimeout: 700
-    };
 
     notFoundMsgGiven = false;
     initialNode: EosDictionaryNode;
@@ -79,7 +78,7 @@ export class NodeListComponent {
         });
         this._dictionaryService.searchResults$.subscribe((nodes) => {
             if (this.notFoundMsgGiven) {
-                this._messageService.removeMessage(this.notFoundMsg);
+                this._messageService.removeMessage(WARN_SEARCH_NOTFOUND);
                 this.notFoundMsgGiven = false;
             }
             if (nodes.length) {
@@ -87,7 +86,7 @@ export class NodeListComponent {
                 this.notFoundMsgGiven = false;
             } else if (this._dictionaryService.notFound && !this.notFoundMsgGiven) {
                 this._update(this.initialNode.children, true);
-                this._messageService.addNewMessage(this.notFoundMsg);
+                this._messageService.addNewMessage(WARN_SEARCH_NOTFOUND);
                 this.notFoundMsgGiven = true;
             }
         });
@@ -226,18 +225,10 @@ export class NodeListComponent {
                     'edit',
                 ]);
             } else {
-                this._messageService.addNewMessage({
-                    type: 'danger',
-                    title: 'Ошибка редактирования элемента: ',
-                    msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактирвать',
-                });
+                this._messageService.addNewMessage(DANGER_EDIT_ERROR);
             }
         } else {
-            this._messageService.addNewMessage({
-                type: 'warning',
-                title: 'Ошибка редактирования: ',
-                msg: 'не выбран элемент для редактирования'
-            });
+            this._messageService.addNewMessage(WARN_EDIT_ERROR);
         }
     }
 
@@ -282,11 +273,7 @@ export class NodeListComponent {
             this.nodes.forEach(node => {
                 if (node.selected) {
                     if (node.title.length % 3) { // here must be API request for check if possible to delete
-                        this._messageService.addNewMessage({
-                            type: 'danger',
-                            title: 'Ошибка удаления элемента: ',
-                            msg: 'на этот объект ссылаются другие объекты системы',
-                        });
+                        this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
                     } else {
                         this._dictionaryService.physicallyDelete(node.id);
                     }

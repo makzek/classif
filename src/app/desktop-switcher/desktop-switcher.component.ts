@@ -7,6 +7,11 @@ import { EosDesk } from '../core/eos-desk';
 import { EosMessageService } from '../services/eos-message.service';
 import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 
+import {
+    WARN_DESK_CREATING,
+    WARN_DESK_EDITING,
+} from '../consts/messages.consts';
+
 @Component({
     selector: 'eos-desktop-switcher',
     templateUrl: 'desktop-switcher.component.html',
@@ -53,11 +58,7 @@ export class DesktopSwitcherComponent {
         evt.preventDefault();
         evt.stopPropagation();
         if (this._moreThenOneEdited()) {
-            this.messageService.addNewMessage({
-                type: 'warning',
-                title: 'Ошибка редактирования рабочего стола:',
-                msg: 'одноверенное редактирование нескольких рабочих столов запрещено'
-            });
+            this.messageService.addNewMessage(WARN_DESK_EDITING);
         } else {
             desk.edited = true;
             this.deskName = desk.name;
@@ -67,14 +68,10 @@ export class DesktopSwitcherComponent {
 
     openCreateForm() {
         if (this._moreThenOneEdited()) {
-            this.messageService.addNewMessage({
-                type: 'warning',
-                title: 'Ошибка создания рабочего стола:',
-                msg: 'создавать рабочий стол, пока не закончено редактирование рабочего стола запрещено'
-            });
+            this.messageService.addNewMessage(WARN_DESK_CREATING);
         } else {
             this.creating = true;
-            this.deskName = this. _generateNewDeskName();
+            this.deskName = this._generateNewDeskName();
         }
     }
 
@@ -91,6 +88,7 @@ export class DesktopSwitcherComponent {
 
     saveDesk(desk: EosDesk): void {
         desk.edited = false;
+        /* todo: re-factor it to inline validation messages */
         const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
         if (_tempDeskName === '') {
             const errPartTitle = desk.id ? 'редактирования' : 'создания';
@@ -116,8 +114,9 @@ export class DesktopSwitcherComponent {
     }
 
     create() {
+        /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
-            this.deskName = this. _generateNewDeskName();
+            this.deskName = this._generateNewDeskName();
             this.messageService.addNewMessage({
                 type: 'danger',
                 title: 'Ошибка создания рабочего стола:',
