@@ -26,7 +26,7 @@
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="changeEditMode(!editMode)" tooltip="Редактировать" placement="bottom"></button>
+                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="goToEditMode()" tooltip="Редактировать" placement="bottom"></button>
                 <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom"></button></a>
                 <button class="glyphicon glyphicon-remove btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)" tooltip="Закрыть" placement="bottom"></button>
             </span>

@@ -309,4 +309,17 @@ export class NodeListComponent {
         this.itemsPerPage = +value;
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1) * +value, this.currentPage * +value);
     }
+
+    viewNode(node: EosDictionaryNode) {
+        if (node) {
+            if (node.id.length && !node.isDeleted) {
+                this.router.navigate([
+                    'spravochniki',
+                    this._dictionaryId,
+                    node.id,
+                    'view',
+                ]);
+            }
+        }
+    }
 }

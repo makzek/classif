@@ -62,7 +62,7 @@ export class EosBreadcrumbsService {
                                 }
                             });
                     }
-                    if (routeSnaphot.params.nodeId && subpath !== 'edit') {
+                    if (routeSnaphot.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
                         this._dictionaryService.getNode(routeSnaphot.params.dictionaryId, routeSnaphot.params.nodeId)
                             .then((node) => {
                                 bc.title = node.getShortQuickView()[0].value;
