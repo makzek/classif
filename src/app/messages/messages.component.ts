@@ -5,7 +5,7 @@ import { IMessage } from '../core/message.interface';
 
 @Component({
     selector: 'eos-messages',
-    templateUrl: 'messages.template.html',
+    templateUrl: 'messages.component.html',
 })
 export class MessagesComponent {
     messages: IMessage[];
