@@ -42,3 +42,9 @@ export const DANGER_DELETE_ELEMENT: IMessage = {
     title: 'Ошибка удаления элемента: ',
     msg: 'на этот объект ссылаются другие объекты системы'
 };
+
+export const SESSION_CLOSED: IMessage = {
+    type: 'success',
+    title: 'Сессия завершена',
+    msg: ''
+};

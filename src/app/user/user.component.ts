@@ -4,6 +4,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { EosUserService } from '../services/eos-user.service';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
+import { EosMessageService } from '../services/eos-message.service';
+import { SESSION_CLOSED } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-user',
@@ -11,8 +13,8 @@ import { EosUserSettingsService } from '../services/eos-user-settings.service';
 })
 export class UserComponent {
     fullname: string;
-    inputName: string = null;
-    inputPassword: string = null;
+    inputName = 'tver';
+    inputPassword = 'tver';
 
     settings: any;
     public modalRef: BsModalRef;
@@ -20,7 +22,9 @@ export class UserComponent {
     constructor(
         private eosUserService: EosUserService,
         private eosUserSettingsService: EosUserSettingsService,
-        private modalService: BsModalService) {
+        private modalService: BsModalService,
+        private _msgSrv: EosMessageService
+    ) {
         this.fullname = this.eosUserService.userName();
         this.eosUserSettingsService.settings.subscribe(
             (res) => this.settings = res,
@@ -33,9 +37,18 @@ export class UserComponent {
     }
 
     login(): void {
-        this.eosUserService.login(this.inputName, this.inputPassword);
+        this.eosUserService.login(this.inputName, this.inputPassword).then((resp) => {
+            console.log('login', resp);
+            this.modalRef.hide();
+        });
     }
 
+    logout() {
+        this.eosUserService.logout().then((resp) => {
+            console.log('logout', resp);
+            this._msgSrv.addNewMessage(SESSION_CLOSED);
+        });
+    }
     saveSettings(): void {
         this.modalRef.hide();
         this.eosUserSettingsService.saveSettings(this.settings);
