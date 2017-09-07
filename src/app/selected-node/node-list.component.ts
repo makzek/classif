@@ -316,6 +316,7 @@ export class NodeListComponent {
         this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
             * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
         this.currentPage++;
+        // console.log('currentPage', this.currentPage);
     }
 
     setItemCount(value: string) {

@@ -2,27 +2,19 @@
     display: inline-block;
     width: 48px;
     position: relative;
-    top: -20px;
-
-    .icon-btn {
-        font-size: 20px;
-    }
+    top: -15px;
 }
 
-.search-modal {
+/* .search-modal {
     .input-group,
     .intro-text {
         margin-bottom: 20px;
     }
-}
+}*/
 
-@media (max-width: 1280px) {
+@media (max-width: 1200px) {
     .eos-search {
-        top: -24px;
+        top: -19px;
         width: 30px;
-
-        .icon-btn {
-            font-size: 16px;
-        }
     }
 }
