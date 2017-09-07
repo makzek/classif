@@ -10,6 +10,10 @@ import { NodeListActionsService } from '../selected-node/node-list-action.servic
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import {
+    DANGER_EDIT_ERROR,
+    DANGER_DELETE_ELEMENT
+} from '../core/messages.const';
 
 @Component({
     selector: 'eos-selected-node',
@@ -118,11 +122,7 @@ export class SelectedNodeComponent {
                 'edit',
             ]);
         } else {
-            this._eosMessageService.addNewMessage({
-                type: 'danger',
-                title: 'Ошибка редактирования элемента: ',
-                msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактирвать',
-            });
+            this._eosMessageService.addNewMessage(DANGER_EDIT_ERROR);
         }
     }
 
@@ -145,11 +145,7 @@ export class SelectedNodeComponent {
     physicallyDelete() {
         if (this.selectedNode.selected) {
             if (this.selectedNode.title.length % 3) { // here must be API request for check if possible to delete
-                this._eosMessageService.addNewMessage({
-                    type: 'danger',
-                    title: 'Ошибка удаления элемента: ',
-                    msg: 'на этот объект (' + this.selectedNode.title + ') ссылаются другие объекты системы',
-                });
+                this._eosMessageService.addNewMessage(DANGER_DELETE_ELEMENT);
             } else {
                 this._eosDictService.physicallyDelete(this.selectedNode.id);
             }
@@ -167,6 +163,17 @@ export class SelectedNodeComponent {
             this._actionService.emitAction(E_RECORD_ACTIONS.markRoot);
         } else {
             this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+        }
+    }
+
+    viewNode() {
+        if (this.selectedNode.id.length) {
+            this.router.navigate([
+                'spravochniki',
+                this._dictionaryId,
+                this.selectedNode.id,
+                'view',
+            ]);
         }
     }
 }

@@ -31,6 +31,11 @@ const routes: Routes = [{
                 data: { title: 'Редактирование', showInBreadcrumb: true },
                 canDeactivate: [CanDeactivateGuard]
             }, {
+                path: 'view',
+                pathMatch: 'full',
+                component: EditCardComponent,
+                data: { title: 'Просмотр', showInBreadcrumb: true },
+            }, {
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',

@@ -41,6 +41,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     nextState: any;
     nextRoute: string;
     parent: EosDictionaryNode;
+    mode: string;
 
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
@@ -66,6 +67,9 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.nodeId = params.nodeId;
                 this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
                 this.nextRoute = this.selfLink;
+                this.mode = this.router.url.substring(this.router.url.lastIndexOf('/') + 1);
+                this.editMode = this.mode === 'edit' ? true : false;
+                this.actionService.emitMode(this.mode);
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => {
@@ -128,10 +132,12 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     save(): void {
         this.actionService.emitAction('save');
+        this.goToViewMode();
     }
 
     cancel(): void {
         this.actionService.emitAction('cancel');
+        this.goToViewMode();
     }
 
     changeEditMode(value: boolean) {
@@ -264,6 +270,23 @@ export class EditCardComponent implements CanDeactivateGuard {
         // this.hideWarningEditing = true;
         this.modalUnsaveRef.hide();
         this.router.navigate([this.selfLink]);
+    }
+
+    goToEditMode() {
+        this.router.navigate([
+            'spravochniki',
+            this.dictionaryId,
+            this.nodeId,
+            'edit',
+        ]);
+    }
+    goToViewMode() {
+        this.router.navigate([
+            'spravochniki',
+            this.dictionaryId,
+            this.nodeId,
+            'view',
+        ]);
     }
 }
 

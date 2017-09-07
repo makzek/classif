@@ -20,7 +20,7 @@
                             <span></span>
                         </label>
                         </span>
-                        <span class="node-info" (click)="openFullInfo(item)" (dblclick)="editNode(item)">
+                        <span class="node-info" (click)="openFullInfo(item)" (dblclick)="viewNode(item)">
                         <span *ngFor="let field of viewFields" class="code">{{item.data[field.key]}}</span>
                         </span>
                     </div>
@@ -61,7 +61,7 @@
                     <span></span>
                 </label>
             </span>
-            <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="editNode(item.value)">
+            <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
                 <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span>
             </span>
         </div>
