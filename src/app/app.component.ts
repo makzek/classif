@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, NgZone } from '@angular/core';
+import { Component, ViewContainerRef, NgZone, ErrorHandler } from '@angular/core';
 
 import { EosDeskService } from '../app/services/eos-desk.service';
 import { environment } from '../environments/environment';
@@ -29,7 +29,7 @@ export class AppComponent {
         this._containerRef = viewContainerRef;
 
         _zone.onError.subscribe((err) => {
-            console.error(err)
+            console.error('shit happens', err);
         });
 
         this._deskService.selectedDesk.subscribe(
