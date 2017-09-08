@@ -374,6 +374,30 @@
         background-image: url("../assets/icons/Edit-White.svg");
     }
 
+    &.eos-icon-external-link-black {
+        background-image: url("../assets/icons/Arrow-Black.svg");
+        transition: 0ms;
+        transform: rotate(135deg);
+    }
+
+    &.eos-icon-external-link-blue {
+        background-image: url("../assets/icons/Arrow-Blue.svg");
+        transition: 0ms;
+        transform: rotate(135deg);
+    }
+
+    &.eos-icon-external-link-blue-grey {
+        background-image: url("../assets/icons/Arrow-Grey.svg");
+        transition: 0ms;
+        transform: rotate(135deg);
+    }
+
+    &.eos-icon-external-link-white {
+        background-image: url("../assets/icons/Arrow-White.svg");
+        transition: 0ms;
+        transform: rotate(135deg);
+    }
+
     &.eos-icon-fab-blue {
         background-image: url("../assets/icons/FAB-Blue.svg");
     }

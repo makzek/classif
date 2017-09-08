@@ -70,8 +70,10 @@ export class EditCardComponent implements CanDeactivateGuard {
     ) {
 
         this.eosDictService.dictionary$.subscribe((dict) => {
-            this.dictIdFromDescriptor = dict.descriptor.id;
             this._dict = dict;
+            if (dict) {
+                this.dictIdFromDescriptor = dict.descriptor.id;
+            }
         });
 
         this.route.params

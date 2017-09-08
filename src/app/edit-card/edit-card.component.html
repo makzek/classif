@@ -1,11 +1,11 @@
 <div class="eos-edit-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
-            <button *ngIf="parent" [disabled]="i < 1" class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"
+            <button *ngIf="parent" [disabled]="i < 1" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
                 (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
             parent.children[i-1].id + '/edit')" tooltip="Предыдущая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-left btn btn-primary-light" aria-hidden="true"></button>
-            <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="glyphicon glyphicon-menu-right btn btn-primary-light"
+            <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
                 aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
             parent.children[i+1].id + '/edit')" tooltip="Следующая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="glyphicon glyphicon-menu-right btn btn-primary-light" aria-hidden="true"></button>
@@ -26,9 +26,17 @@
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <button class="glyphicon glyphicon-pencil btn btn-primary-light" aria-hidden="true" (click)="goToEditMode()" tooltip="Редактировать" placement="bottom"></button>
-                <a routerLink="{{selfLink}}/edit" target="_blank"><button class="glyphicon glyphicon-new-window btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom"></button></a>
-                <button class="glyphicon glyphicon-remove btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)" tooltip="Закрыть" placement="bottom"></button>
+                <button class="btn btn-primary-light" aria-hidden="true" (click)="goToEditMode()" tooltip="Редактировать" placement="bottom">
+                    <span class="eos-icon eos-icon-edit-blue small"></span>
+                </button>
+                <a routerLink="{{selfLink}}/edit" target="_blank">
+                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom">
+                            <span class="eos-icon eos-icon-external-link-blue small"></span>
+                    </button>
+                </a>
+                <button class="btn btn-primary-light" aria-hidden="true" (click)="goTo(closeRedirect)" tooltip="Закрыть" placement="bottom">
+                    <span class="eos-icon eos-icon-close-blue small"></span>
+                </button>
             </span>
         </div>
     </header>
