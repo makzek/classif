@@ -6,7 +6,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
@@ -55,7 +55,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
     constructor(
         private eosDictService: EosDictService,
-        private nodeListActionService: NodeListActionsService,
+        private nodeListActionService: NodeActionsService,
         private route: ActivatedRoute,
         private router: Router,
         private actionService: EditCardActionService,

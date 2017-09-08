@@ -7,7 +7,7 @@ import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { NodeActionsService } from './node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
@@ -67,7 +67,7 @@ export class NodeActionsComponent {
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
-        private _actionService: NodeListActionsService,
+        private _actionService: NodeActionsService,
         private _editCardActionService: EditCardActionService) {
         this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
