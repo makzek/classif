@@ -10,6 +10,7 @@ import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 import {
     WARN_DESK_CREATING,
     WARN_DESK_EDITING,
+    DANGER_DESK_CREATING
 } from '../consts/messages.consts';
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
@@ -119,11 +120,7 @@ export class DesktopSwitcherComponent {
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
-            this.messageService.addNewMessage({
-                type: 'danger',
-                title: 'Ошибка создания рабочего стола:',
-                msg: 'нельзя создавать рабочие столы с одинаковым именем'
-            });
+            this.messageService.addNewMessage(DANGER_DESK_CREATING);
         } else {
             const _desk: EosDesk = {
                 id: null,
