@@ -5,6 +5,7 @@ import 'rxjs/add/operator/pairwise';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeActionsService } from '../node-actions/node-actions.service';
 import { IFieldView, FieldGroup } from '../core/field-descriptor';
@@ -20,6 +21,8 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 })
 export class EditCardComponent implements CanDeactivateGuard {
 
+    private _dict: EosDictionary;
+
     node: EosDictionaryNode; // TODO: remove it
     dictionaryId: string;
     nodeId: string;
@@ -29,7 +32,7 @@ export class EditCardComponent implements CanDeactivateGuard {
     wasEdit = false;
     // hideWarning = true;
     // hideWarningEditing = true;
-    i: number = -1;
+    nodeIndex: number = -1;
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
     fieldGroups: FieldGroup[];
@@ -46,13 +49,17 @@ export class EditCardComponent implements CanDeactivateGuard {
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
-    @HostListener('window:beforeunload') canDeactivate2(): boolean {
-        this.clearStorage();
+    @HostListener('window:beforeunload')
+    private _canWndUnload(): boolean {
+        this.clearStorage(); /* why? */
         return this.canDeactivate();
     }
-    @HostListener('window:blur') canDeactivate3(): boolean {
+
+    @HostListener('window:blur')
+    private _blur(): boolean {
         return this.canDeactivate();
     }
+
     constructor(
         private eosDictService: EosDictService,
         private nodeListActionService: NodeActionsService,
@@ -61,6 +68,12 @@ export class EditCardComponent implements CanDeactivateGuard {
         private actionService: EditCardActionService,
         private _deskService: EosDeskService,
     ) {
+
+        this.eosDictService.dictionary$.subscribe((dict) => {
+            this.dictIdFromDescriptor = dict.descriptor.id;
+            this._dict = dict;
+        });
+
         this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
@@ -72,32 +85,10 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.actionService.emitMode(this.mode);
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
-            .subscribe((node) => {
-                this._update(node);
-                this.eosDictService.dictionary$.subscribe((dict) => {
-                    this.dictIdFromDescriptor = dict.descriptor.id;
-                    this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
-                    this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
-                    this.nodeName = this.shortViewFields[0].value;
-                    this.parent = node.parent;
-                });
-            }, (error) => alert('error: ' + error));
+            .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
+
         this.nodeListActionService.emitAction(null);
 
-        /* this.eosDictService.dictionary$.subscribe((dict) => {
-            if (dict) {
-                this.dictIdFromDescriptor = dict.descriptor.id;
-                this.eosDictService.openedNode$.subscribe(
-                    (node) => {
-                        if (node) {
-                            this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
-                            this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
-                            this.nodeName = this.shortViewFields[0].value;
-                        }
-                    },
-                    (error) => alert(error));
-            }
-        }); */
         /* To identify the current desktop ID */
         this.closeRedirect = this.selfLink;
         this._deskService.selectedDesk.subscribe(
@@ -125,8 +116,15 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     private _update(node: EosDictionaryNode) {
         if (node) {
-            this.node = new EosDictionaryNode(node._descriptor, node);
-            this.i = node.parent.children.findIndex((chld) => chld.id === node.id);
+            if (this._dict) {
+                const dict = this._dict;
+                this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
+                this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
+                this.nodeName = this.shortViewFields[0].value;
+                this.parent = node.parent;
+                this.nodeIndex = node.parent.children.findIndex((chld) => chld.id === node.id);
+            }
+            this.node = new EosDictionaryNode(node._descriptor, node); /* WTF???? */
         }
     }
 
@@ -155,7 +153,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.node.data = evt;
         this.eosDictService
             .updateNode(this.dictionaryId, this.nodeId, this.node._descriptor, evt)
-            // .catch((err) => alert('err: ' + err));
+        // .catch((err) => alert('err: ' + err));
     }
 
     resetAndClose(): void {
@@ -166,7 +164,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigate([this.nextState.url]);
+            this.router.navigateByUrl(this.nextState.url);
         } else {
             this.router.navigate([this.nextRoute]);
         }
@@ -180,7 +178,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigate([this.nextState.url]);
+            this.router.navigateByUrl(this.nextState.url);
         } else {
             this.router.navigate([this.nextRoute]);
         }

@@ -4,17 +4,25 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 export interface IConfirmWindow {
     title: string;
     body: string;
-    confirmEvt: EventEmitter<boolean>;
+    okTitle: string;
+    cancelTitle: string;
+}
+
+export interface IConfirmWindowContent extends IConfirmWindow {
+    readonly confirmEvt: EventEmitter<boolean>;
 }
 
 @Component({
     selector: 'eos-confirm-window',
     templateUrl: 'confirm-window.component.html',
 })
-export class ConfirmWindowComponent implements IConfirmWindow {
+export class ConfirmWindowComponent implements IConfirmWindowContent {
     title: string;
     body: string;
-    confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
+    okTitle: string;
+    cancelTitle: string;
+
+    readonly confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(public modalRef: BsModalRef) { }
 

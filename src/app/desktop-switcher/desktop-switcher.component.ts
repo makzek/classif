@@ -12,6 +12,8 @@ import {
     WARN_DESK_EDITING,
 } from '../consts/messages.consts';
 
+import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
+
 @Component({
     selector: 'eos-desktop-switcher',
     templateUrl: 'desktop-switcher.component.html',
@@ -145,7 +147,11 @@ export class DesktopSwitcherComponent {
     }
 
     removeDesk(desk: EosDesk): void {
-        this._confirmSrv.confirm('Удалить?', 'Вы действительно хотите удалить рабочий стол ' + desk.name + '?')
+        const _confrm = Object.assign({}, CONFIRM_DESK_DELETE);
+        _confrm.body = _confrm.body.replace('{{name}}', desk.name);
+
+        this._confirmSrv
+            .confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
                     this.eosDeskService.removeDesk(desk);
