@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Injectable()
-export class NodeListActionsService {
+export class NodeActionsService {
     private _action$: BehaviorSubject<E_RECORD_ACTIONS>;
 
     constructor() {

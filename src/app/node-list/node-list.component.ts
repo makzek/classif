@@ -7,7 +7,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
-import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
@@ -53,7 +53,7 @@ export class NodeListComponent {
         private _messageService: EosMessageService,
         private modalService: BsModalService,
         private router: Router,
-        private _actionService: NodeListActionsService) {
+        private _actionService: NodeActionsService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
             this.openedNode = node;
             if (! this.initialNode) {

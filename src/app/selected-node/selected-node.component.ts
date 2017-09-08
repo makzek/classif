@@ -6,7 +6,7 @@ import { EosMessageService } from '../services/eos-message.service';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeListActionsService } from '../selected-node/node-list-action.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
@@ -32,7 +32,7 @@ export class SelectedNodeComponent {
         private _eosMessageService: EosMessageService,
         private router: Router,
         private _eosUserSettingsService: EosUserSettingsService,
-        private _actionService: NodeListActionsService) {
+        private _actionService: NodeActionsService) {
         this._eosDictService.dictionary$.subscribe(
             (dictionary) => {
                 this.dictionary = dictionary;

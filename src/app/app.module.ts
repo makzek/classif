@@ -33,8 +33,8 @@ import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
 import { InfoComponent } from './info/info.component';
-import { NodeListComponent } from './selected-node/node-list.component';
-import { NodeActionsComponent } from './selected-node/node-actions.component';
+import { NodeListComponent } from './node-list/node-list.component';
+import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
 
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
@@ -48,7 +48,7 @@ import { EosUserService } from './services/eos-user.service';
 import { EosUserSettingsService } from './services/eos-user-settings.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosMessageService } from './services/eos-message.service';
-import { NodeListActionsService } from './selected-node/node-list-action.service';
+import { NodeActionsService } from './node-actions/node-actions.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 import { EditCardActionService } from './edit-card/action.service';
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
@@ -114,7 +114,7 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         EosUserSettingsService,
         EosNoticeService,
         EosMessageService,
-        NodeListActionsService,
+        NodeActionsService,
         CanDeactivateGuard,
         EosBreadcrumbsService,
         EditCardActionService,

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { AuthService } from '../../eos-rest/services/auth.service';
+
 @Injectable()
 export class EosUserService {
     user: User = {
@@ -7,16 +9,23 @@ export class EosUserService {
         smth: null,
     };
 
+    constructor(private _authSrv: AuthService) { }
+
     userName(): string {
         // return this.user.name;
         return 'Иванов И. И.';
     }
-/* tslint:disable:no-unused-variable */
-    login(name: string, password: string): void {
 
+    login(name: string, password: string): Promise<any> {
+        return this._authSrv.login(name, password);
     }
-/* tslint:enable:no-unused-variable */
 
+    logout(): Promise<any> {
+        return this._authSrv.logout().then((resp) => {
+            console.log(resp);
+            return resp;
+        });
+    }
 }
 /* tslint:disable:max-classes-per-file */
 class User {

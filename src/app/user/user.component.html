@@ -5,11 +5,11 @@
         <span class="caret"></span>
   </span>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option1</a></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li>
+    <!-- li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option1</a></li>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li -->
     <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
     <li class="divider dropdown-divider" *ngIf="fullname"></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Выйти</a>
+    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="logout()">Выйти</a>
     </li>
   </ul>
 </div>

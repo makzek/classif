@@ -4,40 +4,30 @@
         <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>-->
 
         <span class="controller">
-                <span *ngIf="showAdd" class="visible-lg-inline-block" (click)="creatingModal.show()">
-                    <span class="icon glyphicon glyphicon-plus"></span>
-        </span>
-        <span *ngIf="showEdit" class="visible-lg-inline-block" (click)="editNode()">
-                    <span class="icon glyphicon glyphicon-pencil"></span>
-        </span>
-        <span *ngIf="showDelete" class="visible-lg-inline-block" (click)="deleteSelectedItems()">
-                    <span class="icon glyphicon glyphicon-remove"></span>
-        </span>
-        <span class="visible-lg-inline-block" (click)="nextItem(true)">
-                    <span class="icon glyphicon glyphicon-chevron-up"></span>
-        </span>
-        <span class="visible-lg-inline-block" (click)="nextItem(false)">
-                    <span class="icon glyphicon glyphicon-chevron-down"></span>
-        </span>
-        <div class="btn-group" dropdown>
-            <span dropdownToggle><span class="icon glyphicon glyphicon-option-vertical"></span>
+            <span *ngFor="let action of recordActions" class="visible-lg-inline-block">
+                <span *ngIf="action.enabled" (click)="actionHandler(action.type)" tooltip="{{action.hint}}">
+                    <span class="icon {{action.iconClass}}"></span>
+                </span>
             </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
-                <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
-                <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
-                            <span *ngIf="!userSort">Включить пользователькую сортировку</span>
-                            <span *ngIf="userSort">Отключить пользователькую сортировку</span>
-                        </a></li>
-                <li *ngIf="userSort && showUserSortUp" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
-                <li *ngIf="userSort && showUserSortDown" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
-                <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="creatingModal.show()">Добавить элемент</a></li>
-                <li *ngIf="showDelete" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
-                <li *ngIf="showEdit" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
-                <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
-                <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
-            </ul>
-        </div>
+            <div class="btn-group" dropdown>
+                <span dropdownToggle><span class="icon glyphicon glyphicon-option-vertical"></span>
+                </span>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
+                    <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
+                    <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
+                                <span *ngIf="!userSort">Включить пользователькую сортировку</span>
+                                <span *ngIf="userSort">Отключить пользователькую сортировку</span>
+                            </a></li>
+                    <li *ngIf="userSort && showUserSortUp" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
+                    <li *ngIf="userSort && showUserSortDown" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
+                    <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="creatingModal.show()">Добавить элемент</a></li>
+                    <li *ngIf="showDelete" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
+                    <li *ngIf="showEdit" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
+                    <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
+                    <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
+                </ul>
+            </div>
         </span>
         <span class="pull-right">
             <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
