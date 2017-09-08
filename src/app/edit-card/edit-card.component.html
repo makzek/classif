@@ -1,13 +1,11 @@
 <div class="eos-edit-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
-            <button *ngIf="parent" [disabled]="i < 1" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
-                (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-            parent.children[i-1].id + '/edit')" tooltip="Предыдущая" placement="bottom"></button>
+            <button *ngIf="parent" [disabled]="isFirst" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
+                (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="eos-icon eos-icon-arrow-v-grey-left btn btn-primary-light" aria-hidden="true"></button>
-            <button *ngIf="parent" [disabled]="i >= (parent.children.length - 1)" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
-                aria-hidden="true" (click)="goTo('/spravochniki/' + this.dictionaryId + '/' +
-            parent.children[i+1].id + '/edit')" tooltip="Следующая" placement="bottom"></button>
+            <button *ngIf="parent" [disabled]="isLast" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
+                aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
             <button *ngIf="!parent" disabled class="eos-icon eos-icon-arrow-v-grey-right btn btn-primary-light" aria-hidden="true"></button>
         </div>
         <div class="check-wrapper">

@@ -33,6 +33,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     // hideWarning = true;
     // hideWarningEditing = true;
     nodeIndex: number = -1;
+    isFirst: boolean;
+    isLast: boolean;
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
     fieldGroups: FieldGroup[];
@@ -125,6 +127,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.nodeName = this.shortViewFields[0].value;
                 this.parent = node.parent;
                 this.nodeIndex = node.parent.children.findIndex((chld) => chld.id === node.id);
+                this._updateBorders();
             }
             this.node = new EosDictionaryNode(node._descriptor, node); /* WTF???? */
         }
@@ -186,17 +189,32 @@ export class EditCardComponent implements CanDeactivateGuard {
         }
     }
 
-    goTo(route: string): void {
-        console.log(route);
+    private _updateBorders() {
+        this.isFirst = this.nodeIndex < 1;
+        this.isLast = this.nodeIndex >= this.parent.children.length;
+    }
+
+    next() {
+        const _url = '/spravochniki/' + this.dictionaryId + '/' + this.parent.children[this.nodeIndex + 1].id + '/edit';
+        this.goTo(_url);
+    }
+
+    prev() {
+        const _url = '/spravochniki/' + this.dictionaryId + '/' + this.parent.children[this.nodeIndex - 1].id + '/edit';
+        this.goTo(_url);
+    }
+
+    goTo(url: string): void {
+        console.log(url);
         if (!this.wasEdit) {
-            if (route) {
-                this.router.navigate([route]);
+            if (url) {
+                this.router.navigate([url]);
             } else {
                 this.router.navigate([this.nextRoute]);
             }
         } else {
-            if (route.length) {
-                this.nextRoute = route;
+            if (url.length) {
+                this.nextRoute = url;
             }
             this.modalUnsaveRef.show();
         }

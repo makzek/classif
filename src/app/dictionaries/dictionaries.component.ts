@@ -1,29 +1,20 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import 'rxjs/add/operator/filter';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDeskService } from '../services/eos-desk.service';
 
 @Component({
     selector: 'eos-dictionaries',
     templateUrl: 'dictionaries.component.html',
 })
 export class DictionariesComponent {
-    dictionariesList: Array<{ id: string, title: string }>;
-    lastEditItems: Array<{ id: string, title: string }>;
+    dictionariesList: { id: string, title: string }[];
 
-    constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService, _router: Router) {
+    constructor(private _dictionaryService: EosDictService) {
         this.dictionariesList = [];
-        _router.events
-            .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe(() => this._dictionaryService.getDictionariesList());
-
-        _dictionaryService.dictionariesList$
-            .subscribe((dictionariesList) => this._update(dictionariesList));
-    }
-
-    _update(dictionariesList: Array<{ id: string, title: string }>) {
-        this.dictionariesList = dictionariesList;
+        this._dictionaryService
+            .getDictionariesList()
+            .then((list) => {
+                this.dictionariesList = list;
+            });
     }
 }

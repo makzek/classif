@@ -65,18 +65,15 @@ const routes: Routes = [{
     path: 'test',
     component: TestPageComponent,
     data: { title: 'Test page for UI components', showInBreadcrumb: true }
-},
-{
+}, {
     path: 'delivery',
     component: DeliveryComponent,
     data: { title: 'delivery page', showInBreadcrumb: true }
-},
-{
+}, {
     path: 'rubric',
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
-},
-{
+}, {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
