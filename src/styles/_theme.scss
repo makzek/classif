@@ -1,17 +1,3 @@
-input[type="checkbox"] {
-    & + span {
-        border-color: $button-color-main-theme;
-    }
-
-    &:checked + span {
-        background-color: $button-color-main-theme;
-
-        &::before {
-            border-color: white;
-        }
-    }
-}
-
 .modal-body {
     label {
         color: $primary-font-color-main-theme;

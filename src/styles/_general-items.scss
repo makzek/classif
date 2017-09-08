@@ -1,43 +1,23 @@
-input[type="checkbox"] {
-    opacity: 0;
-    cursor: pointer;
+.checkbox {
+    input[type="checkbox"] {
+        opacity: 0;
+        cursor: pointer;
+        margin-left: 0;
 
-    & + span {
-        // -webkit-appearance: none;
-        width: 16px;
-        height: 16px;
-        border: 2px solid transparent;
-        border-radius: 4px;
-        outline: none;
-        box-sizing: border-box;
-        display: inline-block;
-        margin-left: -22px;
-        margin-bottom: -2px;
-        margin-right: 5px;
+        &:checked + span {
+            background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
+        }
     }
 
-    &:checked + span {
-        &::before {
-            content: "";
-            display: block;
-            width: 7px;
-            height: 11px;
-            border: 1px solid transparent;
-            border-width: 0 2px 2px 0;
-            transform: rotateZ(45deg);
-            margin: -2px 3px;
-        }
+    label {
+        padding-left: 0;
     }
 }
 
 .group-checkbox {
     input[type="checkbox"] {
         &:checked + span {
-            &::before {
-                height: 0;
-                width: 10px;
-                transform: rotateZ(0deg) translateY(7px) translateX(-2px);
-            }
+            background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
     }
 }

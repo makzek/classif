@@ -44,7 +44,7 @@
                         <span class="input-group-addon" id="basic-addon1">
                             <span class="checkbox">
                                 <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
-                                    <span></span>
+                                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                                 </label>
                             </span>
                         </span>
@@ -58,12 +58,12 @@
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
-                    <span></span>
+                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
             <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
                 <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
-                    <span></span>
+                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
@@ -117,7 +117,9 @@
     <div class="search-modal modal-body">
         <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
         <div class="checkbox">
-            <label><input type="checkbox" [(ngModel)]="searchInDeleted">Учитывать логически удаленные</label>
+            <label><input type="checkbox" [(ngModel)]="searchInDeleted">
+                <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                Учитывать логически удаленные</label>
         </div>
         <div *ngIf="fields">
             <div *ngFor="let field of fields">
@@ -130,7 +132,9 @@
                     <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
                 </div>
                 <div class="checkbox" *ngIf="field.type === 6">
-                    <label><input type="checkbox" [(ngModel)]="field.value">{{field.title}}</label>
+                    <label><input type="checkbox" [(ngModel)]="field.value">
+                        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                        {{field.title}}</label>
                 </div>
             </div>
         </div>

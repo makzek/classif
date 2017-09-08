@@ -7,6 +7,7 @@ import { EosDeskService } from '../services/eos-desk.service';
 
 import { IDeskItem } from '../core/desk-item.interface';
 import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
+import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
 
 @Component({
     selector: 'eos-desktop',
@@ -57,12 +58,16 @@ export class DesktopComponent {
     }
 
     removeLink(link: IDeskItem): void {
-        this._confirmSrv.confirm('Удалить?', 'Вы действительно хотите удалить рабочий стол ' + link.title + '?')
-        .then((confirmed: boolean) => {
-            if (confirmed) {
-                this._deskService.unpinRef(link);
-            }
-        });
+        const _confrm = Object.assign({}, CONFIRM_LINK_DELETE);
+        _confrm.body = _confrm.body.replace('{{link}}', link.title);
+
+        this._confirmSrv
+            .confirm(_confrm)
+            .then((confirmed: boolean) => {
+                if (confirmed) {
+                    this._deskService.unpinRef(link);
+                }
+            });
     }
 
     changeName(evt: Event, ref: IDeskItem) {
