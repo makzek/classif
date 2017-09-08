@@ -73,7 +73,12 @@ export class NodeListComponent {
         );
         this._dictionaryService.selectedNode$.subscribe((node) => {
             if (node) {
-                this._update(node.children, true);
+                if (node.children) {
+                    this._update(node.children, true);
+                } else {
+                    this._update([], true);
+                }
+
             }
         });
         this._dictionaryService.searchResults$.subscribe((nodes) => {
@@ -159,6 +164,8 @@ export class NodeListComponent {
                 if (!this.hasParent) {
                     this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
                 }
+            } else {
+                this.nodeListPerPage = [];
             }
         }
 
