@@ -75,10 +75,6 @@
         .first-line {
             padding: 0 7px;
         }
-
-        .date-comment {
-            display: none;
-        }
     }
 }
 
@@ -87,7 +83,7 @@
         .icon {
             &.eos-icon-fab-blue {
                 position: relative;
-                top: 10px;
+                top: 15px;
             }
         }
     }

@@ -11,11 +11,19 @@
         margin: 0;
         padding: 0;
         position: relative;
-        top: -12px;
+        top: -7px;
 
         & > li:not(:first-child)::before {
-            font-family: "Glyphicons Halflings";
-            content: "\E258";
+            // font-family: "Glyphicons Halflings";
+            // content: "\E258";
+            content: "";
+            background-image: url("../assets/icons/Arrow-V-Blue.svg");
+            transition: 0ms;
+            transform: rotate(180deg);
+            display: inline-block;
+            height: 24px;
+            width: 24px;
+            background-size: cover;
         }
 
         .breadcrumb-item {
@@ -26,8 +34,6 @@
             display: inline-block;
             font-size: 16px;
             line-height: 24px;
-            position: relative;
-            top: 5px;
         }
 
         .link {
