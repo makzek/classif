@@ -1,12 +1,10 @@
 <div class="eos-edit-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
-            <button *ngIf="parent" [disabled]="isFirst" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
-                (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
-            <button *ngIf="!parent" disabled class="eos-icon eos-icon-arrow-v-grey-left btn btn-primary-light" aria-hidden="true"></button>
-            <button *ngIf="parent" [disabled]="isLast" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
+            <button [disabled]="isFirst || !parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
+                aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
+            <button [disabled]="isLast || !parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
                 aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
-            <button *ngIf="!parent" disabled class="eos-icon eos-icon-arrow-v-grey-right btn btn-primary-light" aria-hidden="true"></button>
         </div>
         <div class="check-wrapper">
             <span class="checkbox">
@@ -27,7 +25,7 @@
                 <button class="btn btn-primary-light" aria-hidden="true" (click)="changeMode()" tooltip="Редактировать" placement="bottom">
                     <span class="eos-icon eos-icon-edit-blue small"></span>
                 </button>
-                <a routerLink="{{selfLink}}/edit" target="_blank">
+                <a routerLink="{{selfLink}}" target="_blank">
                     <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom">
                             <span class="eos-icon eos-icon-external-link-blue small"></span>
                     </button>
@@ -81,12 +79,7 @@
                 <div class="modal-body">
                     <div class="warning-wrapper" *ngIf="lastEditedCard">
                         <div class="warning">
-                            <!--<button type="button" class="close pull-right" aria-label="Close" (click)="hideCardWarning()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <br>-->
                             В настоящее время в режиме редактирования находится карточка<br>
-                            <!--<p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="hideWarningEditing = true">{{ lastEditedCard.title }}</a></p>-->
                             <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="modalOnlyRef.hide()">{{ lastEditedCard.title }}</a></p>
                         </div>
                     </div>
