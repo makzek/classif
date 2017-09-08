@@ -166,7 +166,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigate([this.nextState.url]);
+            this.router.navigateByUrl(this.nextState.url);
         } else {
             this.router.navigate([this.nextRoute]);
         }
@@ -180,7 +180,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigate([this.nextState.url]);
+            this.router.navigateByUrl(this.nextState.url);
         } else {
             this.router.navigate([this.nextRoute]);
         }
