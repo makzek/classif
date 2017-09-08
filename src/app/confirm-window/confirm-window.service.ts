@@ -2,19 +2,18 @@ import { Injectable } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { ConfirmWindowComponent, IConfirmWindow } from './confirm-window.component';
+import { ConfirmWindowComponent, IConfirmWindow, IConfirmWindowContent } from './confirm-window.component';
 
 @Injectable()
 export class ConfirmWindowService {
 
     constructor(private _bsModalSrv: BsModalService) { }
 
-    confirm(title: string, body: string): Promise<boolean> {
+    confirm(content: IConfirmWindow): Promise<boolean> {
         const bsModalRef: BsModalRef = this._bsModalSrv.show(ConfirmWindowComponent);
-        const _wnd: IConfirmWindow = bsModalRef.content;
+        const _wnd: IConfirmWindowContent = bsModalRef.content;
 
-        _wnd.title = title;
-        _wnd.body = body;
+        Object.assign(_wnd, content);
 
         return new Promise((res) => {
             this._bsModalSrv.onHidden.subscribe((reason: string) => {
