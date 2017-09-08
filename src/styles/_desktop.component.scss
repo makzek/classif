@@ -8,6 +8,10 @@
         }
     }
 
+    .icon {
+        cursor: pointer;
+    }
+
     .sortable-item {
         display: inline-block;
         position: relative;
@@ -34,10 +38,9 @@
                 padding: 5px 53px 5px 5px;
             }
 
-            .icon {
-                font-size: large;
-                width: 50px;
-                text-align: center;
+            .text {
+                position: relative;
+                top: -6px;
             }
         }
 
@@ -76,6 +79,7 @@
     .recent {
         height: 4 * ($desktop-link-size + $desktop-link-margin);
         width: 2 * $desktop-link-size;
+        overflow: auto;
         padding: 0;
         grid-column: 2;
         grid-row: 1;
@@ -95,8 +99,9 @@
             border-bottom: 1px solid transparent;
             width: 100%;
 
-            .icon {
-                top: 3px;
+            .recent-title {
+                position: relative;
+                top: -10px;
             }
         }
 

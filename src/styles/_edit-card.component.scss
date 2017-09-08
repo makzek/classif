@@ -13,8 +13,16 @@
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 100px 20px 1fr 165px;
-            grid-template-columns: 100px 20px 1fr 165px;
+            -ms-grid-columns: 100px 20px 1fr 170px;
+            grid-template-columns: 100px 20px 1fr 170px;
+        }
+
+        .btn {
+            padding: 1px 6px;
+        }
+
+        a:hover {
+            text-decoration: none;
         }
 
         div {
@@ -24,7 +32,7 @@
         .check-wrapper {
             grid-column: 2;
             grid-row: 1;
-            margin: auto;
+            margin: 8px 0 0 -10px;
 
             .checkbox {
                 margin: 0;

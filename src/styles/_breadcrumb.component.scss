@@ -49,6 +49,7 @@
         font-size: 20px;
         margin: 8px;
         transition: 300ms ease-in-out;
+        cursor: pointer;
 
         &.rotate-right {
             transform: rotate(90deg);

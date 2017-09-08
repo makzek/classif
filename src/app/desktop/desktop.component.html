@@ -7,9 +7,9 @@
 
         <div [ngClass]="{'left': historyToLeft}" class="block recent">
             <span class="recent-title-wrapper">
-                <span class="icon special-text glyphicon glyphicon-menu-left" aria-hidden="true" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
+                <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
                 <span class="recent-title">История:</span>
-                <span class="icon special-text glyphicon glyphicon-menu-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
+                <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
                 <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="top">
@@ -25,10 +25,10 @@
         <textarea class="title-input" [(ngModel)]="item.value.title" (focus)="setCursor($event)"></textarea>
     </div>
     <button *ngIf="!item.value.edited" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
-        <span class="icon special-text glyphicon glyphicon-trash" aria-hidden="true"></span>
+        <span class="icon eos-icon eos-icon-bin-blue"></span>
             <span [hidden]="item.value.edited" tooltip="{{item.value.title}}" container="body" placement="left" class="text">{{item.value.title}}</span>
     </button>
-    <span *ngIf="!item.value.edited" class="icon-btn glyphicon glyphicon-pencil" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
-    <span *ngIf="item.value.edited" class="icon-btn glyphicon glyphicon-ok" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>
-    <span *ngIf="deskId !== 'system'" class="icon-btn glyphicon glyphicon-remove" aria-hidden="true" (click)="removeLink(item.value)"></span>
+    <span *ngIf="!item.value.edited" class="icon-btn eos-icon eos-icon-edit-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
+    <span *ngIf="item.value.edited" class="icon-btn eos-icon eos-icon-checkbox-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>
+    <span *ngIf="deskId !== 'system'" class="icon-btn eos-icon eos-icon-close-black small" aria-hidden="true" (click)="removeLink(item.value)"></span>
 </ng-template>

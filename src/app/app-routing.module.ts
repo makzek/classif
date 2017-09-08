@@ -23,7 +23,7 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
+            data: { title: 'node', showInBreadcrumb: true },
             children: [{
                 path: 'edit',
                 pathMatch: 'full',
@@ -39,6 +39,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
+                data: { showSandwichInBreadcrumb: true },
             }],
         }, {
             path: '',
