@@ -109,6 +109,11 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 10px;
+
+
+                a.special-text {
+                    white-space: nowrap;
+                }
             }
         }
     }
