@@ -191,6 +191,8 @@ export class NodeActionsComponent {
     checkAllItems() {
         if (!this.checkAll) {
             this.checkAll = true;
+            this.rootSelected = true;
+            this.allChildrenSelected = true;
             this.itemIsChecked = false;
             this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
         } else {
