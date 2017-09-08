@@ -1,8 +1,8 @@
 .eos-breadcrumb {
-    // height: $breadcrumbs-height;
+    height: $item-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    padding: $grid-gutter-width / 2;
+    padding: 3px $grid-gutter-width / 2 0 $grid-gutter-width / 2;
     // margin-bottom: 20px;
 
     .breadcrumb {
@@ -10,6 +10,8 @@
         display: inline-block;
         margin: 0;
         padding: 0;
+        position: relative;
+        top: -12px;
 
         & > li:not(:first-child)::before {
             font-family: "Glyphicons Halflings";

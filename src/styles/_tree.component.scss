@@ -13,18 +13,18 @@
         width: 100%;
 
         .icon {
-            width: 48px;
+            width: $item-width;
             display: inline-block;
             text-align: center;
             position: absolute;
-            line-height: 48px;
+            line-height: $item-height;
             cursor: pointer;
         }
 
         .node-title {
             cursor: pointer;
             display: inline-block;
-            margin-left: 48px;
+            margin-left: $item-width;
             padding: 17px 7px;
         }
     }
