@@ -15,6 +15,8 @@ import {
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
 
+const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
+
 @Component({
     selector: 'eos-desktop-switcher',
     templateUrl: 'desktop-switcher.component.html',
@@ -85,8 +87,13 @@ export class DesktopSwitcherComponent {
     }
 
     private _generateNewDeskName(): string {
-        const _posibleNumbers = [0, 1, 2, 3, 4];
-        return 'Мой рабочий стол ' + _posibleNumbers.findIndex((_n) => !this._desktopExisted('Мой рабочий стол ' + _n));
+        let _newName = DEFAULT_DESKTOP_NAME;
+        let _n = 2;
+        while (this._desktopExisted(_newName)) {
+            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
+            _n++;
+        }
+        return _newName;
     }
 
     saveDesk(desk: EosDesk): void {
