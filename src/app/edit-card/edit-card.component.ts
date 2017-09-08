@@ -132,12 +132,12 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     save(): void {
         this.actionService.emitAction('save');
-        this.goToViewMode();
+        this.changeMode();
     }
 
     cancel(): void {
         this.actionService.emitAction('cancel');
-        this.goToViewMode();
+        this.changeMode();
     }
 
     changeEditMode(value: boolean) {
@@ -272,20 +272,12 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.router.navigate([this.selfLink]);
     }
 
-    goToEditMode() {
+    changeMode() {
         this.router.navigate([
             'spravochniki',
             this.dictionaryId,
             this.nodeId,
-            'edit',
-        ]);
-    }
-    goToViewMode() {
-        this.router.navigate([
-            'spravochniki',
-            this.dictionaryId,
-            this.nodeId,
-            'view',
+            (this.mode === 'view' ? 'edit' : 'view')
         ]);
     }
 }
