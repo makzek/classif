@@ -15,6 +15,13 @@ import { EosDeskService } from '../services/eos-desk.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 
+/* Object that stores info about the last edited card in the LocalStorage */
+class EditedCard {
+    id: string;
+    title: string;
+    link: string;
+}
+
 @Component({
     selector: 'eos-edit-card',
     templateUrl: 'edit-card.component.html',
@@ -23,28 +30,29 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     private _dict: EosDictionary;
 
+    parent: EosDictionaryNode;
     node: EosDictionaryNode; // TODO: remove it
     dictionaryId: string;
+    dictIdFromDescriptor: string;
     nodeId: string;
     nodeName: string;
     selfLink: string;
     editMode = true;
-    wasEdit = false;
+    private wasEdit = false;
     // hideWarning = true;
     // hideWarningEditing = true;
-    nodeIndex: number = -1;
-    viewFields: IFieldView[];
-    shortViewFields: IFieldView[];
-    fieldGroups: FieldGroup[];
-    currIndex = 0;
-    colCount: number;
+    private nodeIndex: number = -1;
+    isFirst: boolean;
+    isLast: boolean;
+    /* viewFields: IFieldView[]; */
+    /* shortViewFields: IFieldView[]; */
     lastEditedCard: EditedCard;
-    dictIdFromDescriptor: string;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
-    nextState: any;
-    nextRoute: string;
-    parent: EosDictionaryNode;
+    private nextState: any;
+    private nextRoute: string;
     mode: string;
+
+    private _urlSegments: string[];
 
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
@@ -80,11 +88,12 @@ export class EditCardComponent implements CanDeactivateGuard {
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
                 this.nodeId = params.nodeId;
-                this.selfLink = '/spravochniki/' + this.dictionaryId + '/' + this.nodeId;
+                this.selfLink = this.router.url;
                 this.nextRoute = this.selfLink;
-                this.mode = this.router.url.substring(this.router.url.lastIndexOf('/') + 1);
-                this.editMode = this.mode === 'edit' ? true : false;
                 this.actionService.emitMode(this.mode);
+                this._urlSegments = this.router.url.split('/');
+                this.mode = this._urlSegments[this._urlSegments.length - 1];
+                this.editMode = this.mode === 'edit' ? true : false;
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
@@ -120,11 +129,13 @@ export class EditCardComponent implements CanDeactivateGuard {
         if (node) {
             if (this._dict) {
                 const dict = this._dict;
-                this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data));
-                this.shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
-                this.nodeName = this.shortViewFields[0].value;
+                /* this.viewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.quickView, node.data)); */
+                /* this.shortViewFields =  */
+                const shortViewFields = node.getValues(dict.descriptor.getFieldSet(E_FIELD_SET.shortQuickView, node.data));
+                this.nodeName = shortViewFields[0].value;
                 this.parent = node.parent;
                 this.nodeIndex = node.parent.children.findIndex((chld) => chld.id === node.id);
+                this._updateBorders();
             }
             this.node = new EosDictionaryNode(node._descriptor, node); /* WTF???? */
         }
@@ -186,17 +197,37 @@ export class EditCardComponent implements CanDeactivateGuard {
         }
     }
 
-    goTo(route: string): void {
-        console.log(route);
+    private _updateBorders() {
+        this.isFirst = this.nodeIndex < 1;
+        this.isLast = this.nodeIndex >= this.parent.children.length - 1;
+    }
+
+    private _makeUrl(nodeId: string): string {
+        const _url = [].concat([], this._urlSegments);
+        _url[_url.length - 2] = nodeId;
+
+        return _url.join('/');
+    }
+
+    next() {
+        this.goTo(this._makeUrl(this.parent.children[this.nodeIndex + 1].id));
+    }
+
+    prev() {
+        this.goTo(this._makeUrl(this.parent.children[this.nodeIndex - 1].id));
+    }
+
+    goTo(url: string): void {
+        console.log(url);
         if (!this.wasEdit) {
-            if (route) {
-                this.router.navigate([route]);
+            if (url) {
+                this.router.navigate([url]);
             } else {
                 this.router.navigate([this.nextRoute]);
             }
         } else {
-            if (route.length) {
-                this.nextRoute = route;
+            if (url.length) {
+                this.nextRoute = url;
             }
             this.modalUnsaveRef.show();
         }
@@ -280,11 +311,4 @@ export class EditCardComponent implements CanDeactivateGuard {
             (this.mode === 'view' ? 'edit' : 'view')
         ]);
     }
-}
-
-/* Object that stores info about the last edited card in the LocalStorage */
-class EditedCard {
-    id: string;
-    title: string;
-    link: string;
 }

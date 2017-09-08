@@ -21,13 +21,13 @@ import { IFieldView } from '../core/field-descriptor';
 @Injectable()
 export class EosDictService {
     private _dictionaries: Map<string, EosDictionary>;
-    private _dictionariesList: Array<{ id: string, title: string }>;
+    private _dictionariesList = DICTIONARIES;
     private _dictionary: EosDictionary;
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
     private _searchResults: EosDictionaryNode[];
 
-    private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>;
+    /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -39,7 +39,7 @@ export class EosDictService {
 
     constructor(private _api: EosApiService) {
         this._dictionaries = new Map<string, EosDictionary>();
-        this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]);
+        /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
@@ -48,9 +48,11 @@ export class EosDictService {
     }
 
     /* Observable dictionary for subscribing on updates in components */
+    /*
     get dictionariesList$(): Observable<Array<{ id: string, title: string }>> {
         return this._dictionariesList$.asObservable();
     }
+    */
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -73,17 +75,7 @@ export class EosDictService {
 
     public getDictionariesList(): Promise<any> {
         return new Promise((res) => {
-            if (this._dictionariesList) {
-                res(this._dictionariesList);
-            } else {
-                res(this._api.getDictionaryListMocked()
-                    .then((data: any) => {
-                        this._dictionariesList = data;
-                        this._dictionariesList$.next(data);
-                        return data;
-                    })
-                );
-            }
+            res(DICTIONARIES);
         });
     }
 

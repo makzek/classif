@@ -14,7 +14,7 @@ import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
-import { RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 
 @Component({
     selector: 'eos-node-actions',
@@ -22,6 +22,7 @@ import { RECORD_ACTIONS } from '../consts/record-actions.consts';
 })
 export class NodeActionsComponent {
     recordActions = RECORD_ACTIONS;
+    dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
 
     showDeleted = false;
     modalRef: BsModalRef;
@@ -37,11 +38,6 @@ export class NodeActionsComponent {
     viewFields: FieldDescriptor[];
 
     showCheckbox: boolean;
-    showDeleteHard: boolean;
-
-    showUserSort: boolean;
-    showUserSortUp: boolean;
-    showUserSortDown: boolean;
     userSort = false;
 
     rootSelected = false;
@@ -75,19 +71,10 @@ export class NodeActionsComponent {
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
-                this.recordActions.forEach((action) => {
-                    action.enabled = _d.descriptor.canDo(action.group, action.type);
-                });
-
                 this.dictIdFromDescriptor = _d.descriptor.id;
                 this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
 
                 this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                this.showDeleteHard = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.removeHard);
-                this.showUserSort = _d.descriptor.canDo(E_ACTION_GROUPS.group, E_RECORD_ACTIONS.userOrder);
-                this.showUserSortUp = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveUp);
-                this.showUserSortDown = _d.descriptor.canDo(E_ACTION_GROUPS.item, E_RECORD_ACTIONS.moveDown);
-
                 this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
             }
         });
@@ -149,14 +136,34 @@ export class NodeActionsComponent {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
                 break;
+            case E_RECORD_ACTIONS.userOrder:
+                this.switchUserSort();
+                break;
             default:
                 this._actionService.emitAction(type);
                 break;
         }
     }
 
-    switchShowDeleted(value: boolean) {
-        this._userSettingsService.saveShowDeleted(value);
+    isEnabled (group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
+        if (this.dictionary) {
+            switch (type) {
+                case E_RECORD_ACTIONS.moveUp:
+                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
+                case E_RECORD_ACTIONS.moveDown:
+                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
+                case E_RECORD_ACTIONS.showDeleted:
+                    return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
+                default:
+                    return this.dictionary.descriptor.canDo(group, type);
+            }
+        }
+        return false;
+    }
+
+    switchUserSort() {
+        this.userSort = !this.userSort;
+        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
     openModal(template: TemplateRef<any>) {
@@ -165,27 +172,6 @@ export class NodeActionsComponent {
 
     public change(value: boolean): void {
         this.dropdownIsOpen = value;
-      }
-
-    physicallyDelete() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.removeHard);
-    }
-
-    restoringLogicallyDeletedItem() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.restore);
-    }
-
-    userSorting() {
-        this.userSort = !this.userSort;
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
-    }
-
-    userSortingUp() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.moveUp);
-    }
-
-    userSortingDown() {
-        this._actionService.emitAction(E_RECORD_ACTIONS.moveDown);
     }
 
     checkAllItems() {
