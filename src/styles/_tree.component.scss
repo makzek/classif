@@ -11,14 +11,13 @@
     .node-title-wrapper {
         display: inline-block;
         width: 100%;
+        position: relative;
 
         .icon {
-            width: $item-width;
-            display: inline-block;
-            text-align: center;
-            position: absolute;
-            line-height: $item-height;
             cursor: pointer;
+            position: absolute;
+            top: 19px;
+            left: 19px;
         }
 
         .node-title {
