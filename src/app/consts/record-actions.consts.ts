@@ -6,34 +6,34 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.common,
     title: '',
     hint: 'Создать новый',
-    iconClass: 'glyphicon glyphicon-plus',
+    iconClass: 'eos-icon eos-icon-plus-blue',
     enabled: true
 }, {
     type: E_RECORD_ACTIONS.edit,
     group: E_ACTION_GROUPS.item,
     title: '',
     hint: 'Редактировать',
-    iconClass: 'glyphicon glyphicon-pencil',
+    iconClass: 'eos-icon eos-icon-edit-blue',
     enabled: true
 }, {
     type: E_RECORD_ACTIONS.remove,
     group: E_ACTION_GROUPS.group,
     title: '',
     hint: 'Удалить',
-    iconClass: 'glyphicon glyphicon-remove',
+    iconClass: 'eos-icon eos-icon-close-blue',
     enabled: true
 }, {
     type: E_RECORD_ACTIONS.navigateUp,
     group: E_ACTION_GROUPS.item,
     title: '',
     hint: 'Следующая',
-    iconClass: 'glyphicon glyphicon-chevron-up',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-top',
     enabled: true
 }, {
     type: E_RECORD_ACTIONS.navigateDown,
     group: E_ACTION_GROUPS.item,
     title: '',
     hint: 'Предыдущая',
-    iconClass: 'glyphicon glyphicon-chevron-down',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom',
     enabled: true
 }];
