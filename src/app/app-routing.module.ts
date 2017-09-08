@@ -23,7 +23,7 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
+            data: { title: 'node', showInBreadcrumb: true },
             children: [{
                 path: 'edit',
                 pathMatch: 'full',
@@ -39,6 +39,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
+                data: { showSandwichInBreadcrumb: true },
             }],
         }, {
             path: '',
@@ -64,18 +65,15 @@ const routes: Routes = [{
     path: 'test',
     component: TestPageComponent,
     data: { title: 'Test page for UI components', showInBreadcrumb: true }
-},
-{
+}, {
     path: 'delivery',
     component: DeliveryComponent,
     data: { title: 'delivery page', showInBreadcrumb: true }
-},
-{
+}, {
     path: 'rubric',
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
-},
-{
+}, {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',

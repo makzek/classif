@@ -41,8 +41,8 @@ export class EosDeskService {
             edited: false,
         }];
 
-        eosDictionaryService.dictionariesList$
-            .subscribe((dictionariesList) => {
+        eosDictionaryService.getDictionariesList()
+            .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
                     return {
                         link: '/spravochniki/' + dictionary.id,

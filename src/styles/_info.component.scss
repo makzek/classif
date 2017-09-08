@@ -3,7 +3,11 @@ span {
         &,
         span {
             margin: 0;
-            width: 14px;
+        }
+
+        .info-icon {
+            position: relative;
+            top: 3px;
         }
     }
 }
