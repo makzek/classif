@@ -3,7 +3,7 @@
         <span class="controller">
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
                 <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="actionHandler(action.type)">
-                    <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right"></span>
+                    <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right" container="body"></span>
                 </button>
             </span>
             <div class="btn-group" dropdown>
