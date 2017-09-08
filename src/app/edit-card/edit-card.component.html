@@ -26,7 +26,7 @@
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <button class="btn btn-primary-light" aria-hidden="true" (click)="goToEditMode()" tooltip="Редактировать" placement="bottom">
+                <button class="btn btn-primary-light" aria-hidden="true" (click)="changeMode()" tooltip="Редактировать" placement="bottom">
                     <span class="eos-icon eos-icon-edit-blue small"></span>
                 </button>
                 <a routerLink="{{selfLink}}/edit" target="_blank">

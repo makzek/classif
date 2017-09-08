@@ -10,9 +10,12 @@ import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
 import {
     WARN_DESK_CREATING,
     WARN_DESK_EDITING,
+    DANGER_DESK_CREATING
 } from '../consts/messages.consts';
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
+
+const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
 
 @Component({
     selector: 'eos-desktop-switcher',
@@ -84,8 +87,13 @@ export class DesktopSwitcherComponent {
     }
 
     private _generateNewDeskName(): string {
-        const _posibleNumbers = [0, 1, 2, 3, 4];
-        return 'Мой рабочий стол ' + _posibleNumbers.findIndex((_n) => !this._desktopExisted('Мой рабочий стол ' + _n));
+        let _newName = DEFAULT_DESKTOP_NAME;
+        let _n = 2;
+        while (this._desktopExisted(_newName)) {
+            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
+            _n++;
+        }
+        return _newName;
     }
 
     saveDesk(desk: EosDesk): void {
@@ -119,11 +127,7 @@ export class DesktopSwitcherComponent {
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
-            this.messageService.addNewMessage({
-                type: 'danger',
-                title: 'Ошибка создания рабочего стола:',
-                msg: 'нельзя создавать рабочие столы с одинаковым именем'
-            });
+            this.messageService.addNewMessage(DANGER_DESK_CREATING);
         } else {
             const _desk: EosDesk = {
                 id: null,

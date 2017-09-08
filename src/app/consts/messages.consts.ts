@@ -13,8 +13,14 @@ export const WARN_DESK_EDITING: IMessage = {
 export const WARN_DESK_CREATING: IMessage = {
     type: 'warning',
     title: 'Ошибка создания рабочего стола:',
-    msg: 'Закончените редактирование рабочего стола',
+    msg: 'Закончите редактирование рабочего стола',
     dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+};
+
+export const DANGER_DESK_CREATING: IMessage = {
+    type: 'danger',
+    title: 'Ошибка создания рабочего стола:',
+    msg: 'нельзя создавать рабочие столы с одинаковым именем'
 };
 
 export const WARN_SEARCH_NOTFOUND: IMessage = {
