@@ -1,20 +1,28 @@
 import { Component } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
+import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
 
+enum CURRENT_PAGE {
+    dictionary
+};
+
 @Component({
     selector: 'eos-breadcrumb',
     templateUrl: 'breadcrumb.component.html',
 })
+
 export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
     treeOpened = false;
     infoOpened = false;
 
+    isDictionaryPage = false;
+
     constructor(private _router: Router,
+        private route: ActivatedRoute,
         private _breadcrumbsService: EosBreadcrumbsService,
         private _actionService: DictionaryActionService) {
         _router.events
@@ -26,6 +34,14 @@ export class BreadcrumbsComponent {
         this._breadcrumbsService.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
+                /* console.log('sandwich', bc.findIndex((_item) => {
+                    if (_item['data']) {
+                        console.log(_item.title);
+                        return _item['data'].showSandwichInBreadcrumb;
+                    } else {
+                        return false;
+                    }
+                }));*/
             }
         });
     }

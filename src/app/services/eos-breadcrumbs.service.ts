@@ -52,6 +52,10 @@ export class EosBreadcrumbsService {
                     params: routeSnaphot.params,
                 };
 
+                /* if (routeSnaphot.data.showSandwichInBreadcrumb && !(subpath === 'edit' || subpath === 'view')) {
+                    bc['data'] = {showSandwichInBreadcrumb: true};
+                }*/
+
                 if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
                     if (routeSnaphot.params.dictionaryId && !routeSnaphot.params.nodeId) {
                         this._dictionaryService.getDictionariesList()

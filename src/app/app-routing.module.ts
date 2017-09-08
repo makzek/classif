@@ -23,7 +23,7 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true },
+            data: { title: 'node', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
             children: [{
                 path: 'edit',
                 pathMatch: 'full',

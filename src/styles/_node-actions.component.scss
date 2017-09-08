@@ -1,6 +1,6 @@
 .eos-node-actions {
     .first-line {
-        height: 48px;
+        height: $item-height;
         border: 1px solid transparent;
         margin-bottom: 20px;
 
@@ -23,22 +23,9 @@
         }
     }
 
-    .icon {
-        width: 48px;
-        text-align: center;
-        font-size: large;
-        top: 12px;
-        cursor: pointer;
-
-        &.glyphicon-option-vertical,
-        &.glyphicon-search {
-            top: 8px;
-        }
-    }
-
     .date {
         position: relative;
-        top: 9px;
+        top: -6px;
     }
 
     .search {
@@ -58,6 +45,29 @@
         right: 0;
         top: 35px;
     }
+
+    .actions {
+        position: relative;
+        top: 5px;
+    }
+
+    .icon {
+        margin: 5px 10px;
+
+        &.eos-icon-fab-blue {
+            margin-top: -5px;
+        }
+
+        &.eos-icon-calendar-blue {
+            position: relative;
+            top: 5px;
+        }
+
+        &.eos-icon-search-blue {
+            position: relative;
+            top: -7px;
+        }
+    }
 }
 
 @media (max-width: 1430px) {
@@ -65,22 +75,15 @@
         .first-line {
             padding: 0 7px;
         }
-
-        .icon {
-            width: 30px;
-        }
-
-        .date-comment {
-            display: none;
-        }
     }
 }
 
 @media (max-width: 1199px) {
     .eos-node-actions {
         .icon {
-            &.glyphicon-option-vertical {
-                top: 12px;
+            &.eos-icon-fab-blue {
+                position: relative;
+                top: 15px;
             }
         }
     }

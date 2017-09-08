@@ -9,36 +9,185 @@
         width: 24px;
     }
 
-    &.eos-icon-arrow-black {
+    &.x-small {
+        height: 16px;
+        width: 16px;
+    }
+
+    &.eos-icon-arrow-black-left {
         background-image: url("../assets/icons/Arrow-Black.svg");
     }
 
-    &.eos-icon-arrow-blue {
+    &.eos-icon-arrow-blue-left {
         background-image: url("../assets/icons/Arrow-Blue.svg");
     }
 
-    &.eos-icon-arrow-grey {
+    &.eos-icon-arrow-grey-left {
         background-image: url("../assets/icons/Arrow-Grey.svg");
     }
 
-    &.eos-icon-arrow-white {
+    &.eos-icon-arrow-white-left {
         background-image: url("../assets/icons/Arrow-White.svg");
     }
 
-    &.eos-icon-arrow-v-black {
+    &.eos-icon-arrow-black-right {
+        background-image: url("../assets/icons/Arrow-Black.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-blue-right {
+        background-image: url("../assets/icons/Arrow-Blue.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-grey-right {
+        background-image: url("../assets/icons/Arrow-Grey.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-white-right {
+        background-image: url("../assets/icons/Arrow-White.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-black-top {
+        background-image: url("../assets/icons/Arrow-Black.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-blue-top {
+        background-image: url("../assets/icons/Arrow-Blue.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-grey-top {
+        background-image: url("../assets/icons/Arrow-Grey.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-white-top {
+        background-image: url("../assets/icons/Arrow-White.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-black-bottom {
+        background-image: url("../assets/icons/Arrow-Black.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-blue-bottom {
+        background-image: url("../assets/icons/Arrow-Blue.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-grey-bottom {
+        background-image: url("../assets/icons/Arrow-Grey.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-white-bottom {
+        background-image: url("../assets/icons/Arrow-White.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-v-black-left {
         background-image: url("../assets/icons/Arrow-V-Black.svg");
     }
 
-    &.eos-icon-arrow-v-blue {
+    &.eos-icon-arrow-v-blue-left {
         background-image: url("../assets/icons/Arrow-V-Blue.svg");
     }
 
-    &.eos-icon-arrow-v-grey {
+    &.eos-icon-arrow-v-grey-left {
         background-image: url("../assets/icons/Arrow-V-Grey.svg");
     }
 
-    &.eos-icon-arrow-v-white {
+    &.eos-icon-arrow-v-white-left {
         background-image: url("../assets/icons/Arrow-V-White.svg");
+    }
+
+    &.eos-icon-arrow-v-black-right {
+        background-image: url("../assets/icons/Arrow-V-Black.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-v-blue-right {
+        background-image: url("../assets/icons/Arrow-V-Blue.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-v-grey-right {
+        background-image: url("../assets/icons/Arrow-V-Grey.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-v-white-right {
+        background-image: url("../assets/icons/Arrow-V-White.svg");
+        transition: 0ms;
+        transform: rotate(180deg);
+    }
+
+    &.eos-icon-arrow-v-black-top {
+        background-image: url("../assets/icons/Arrow-V-Black.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-v-blue-top {
+        background-image: url("../assets/icons/Arrow-V-Blue.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-v-grey-top {
+        background-image: url("../assets/icons/Arrow-V-Grey.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-v-white-top {
+        background-image: url("../assets/icons/Arrow-V-White.svg");
+        transition: 0ms;
+        transform: rotate(90deg);
+    }
+
+    &.eos-icon-arrow-v-black-bottom {
+        background-image: url("../assets/icons/Arrow-V-Black.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-v-blue-bottom {
+        background-image: url("../assets/icons/Arrow-V-Blue.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-v-grey-bottom {
+        background-image: url("../assets/icons/Arrow-V-Grey.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
+    }
+
+    &.eos-icon-arrow-v-white-bottom {
+        background-image: url("../assets/icons/Arrow-V-White.svg");
+        transition: 0ms;
+        transform: rotate(-90deg);
     }
 
     &.eos-icon-bell-black {

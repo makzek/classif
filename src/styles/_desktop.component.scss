@@ -76,7 +76,6 @@
     .recent {
         height: 4 * ($desktop-link-size + $desktop-link-margin);
         width: 2 * $desktop-link-size;
-        margin: $desktop-link-margin;
         padding: 0;
         grid-column: 2;
         grid-row: 1;
@@ -123,10 +122,6 @@
         &.reverse {
             -ms-grid-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
             grid-template-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
-        }
-
-        .links-container {
-            padding: 10px;
         }
     }
 }
