@@ -25,8 +25,10 @@
         <textarea class="title-input" [(ngModel)]="item.value.title" (focus)="setCursor($event)"></textarea>
     </div>
     <button *ngIf="!item.value.edited" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
-        <span class="icon eos-icon eos-icon-bin-blue"></span>
-            <span [hidden]="item.value.edited" tooltip="{{item.value.title}}" container="body" placement="left" class="text">{{item.value.title}}</span>
+        <span class="icon-wrapper">
+            <span class="icon eos-icon eos-icon-bin-blue"></span>
+        </span>
+        <span [hidden]="item.value.edited" tooltip="{{item.value.title}}" container="body" placement="left" class="text">{{item.value.title}}</span>
     </button>
     <span *ngIf="!item.value.edited" class="icon-btn eos-icon eos-icon-edit-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true"></span>
     <span *ngIf="item.value.edited" class="icon-btn eos-icon eos-icon-checkbox-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true"></span>

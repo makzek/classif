@@ -3,14 +3,16 @@
 
     .title-text-wrapper {
         display: inline-block;
-        padding-right: 20px;
-        width: 150px;
+        // padding-right: 20px;
+        width: 156px;
         position: relative;
         top: -10px;
 
         .title-text {
             font-size: 14px;
             line-height: 20px;
+            display: inline-block;
+            width: 140px;
         }
     }
 }

@@ -102,7 +102,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.nodeListActionService.emitAction(null);
 
         /* To identify the current desktop ID */
-        this.closeRedirect = this.selfLink;
+        /*
         this._deskService.selectedDesk.subscribe(
             (link) => {
                 if (link && link.id !== 'system') {
@@ -112,6 +112,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                 }
             }
         );
+        */
 
         this.actionService.mode$.subscribe((mode) => {
             /* if (mode === 'edit') {
@@ -124,6 +125,12 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.setUnsavedChanges();
             }
         });
+
+        this.closeRedirect = ([
+            'spravochniki',
+            this.dictionaryId,
+            this.nodeId,
+        ]).join('/');
     }
 
     private _update(node: EosDictionaryNode) {
