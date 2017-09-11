@@ -1,9 +1,12 @@
 .pushpin {
     position: relative;
     top: 7px;
+    margin: auto 12px;
 
     a {
         color: inherit;
         cursor: pointer;
+        height: 100%;
+        display: inline-block;
     }
 }

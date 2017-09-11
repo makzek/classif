@@ -29,20 +29,20 @@ export class BreadcrumbsComponent {
             .filter((e) => e instanceof RoutesRecognized)
             .subscribe((e) => {
                 this._breadcrumbsService.makeBreadCrumbs(e);
-                console.log('rs', route.snapshot, e);
+                // console.log('rs', route.snapshot, e);
             });
 
         this._breadcrumbsService.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
-                /* console.log('sandwich', bc.findIndex((_item) => {
+                console.log('sandwich', bc.findIndex((_item) => {
                     if (_item['data']) {
-                        console.log(_item.title);
+                        // console.log(_item.title);
                         return _item['data'].showSandwichInBreadcrumb;
                     } else {
                         return false;
                     }
-                }));*/
+                }));
             }
         });
     }

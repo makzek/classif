@@ -2,7 +2,9 @@
     (click)="setInnerClick()">
     <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
         <span class="selected-desktop">{{selectedDesk.name}}</span>
-        <span class="eos-icon eos-icon-arrow-v-blue-bottom small btn-icon"></span>
+        <span class="btn-icon">
+            <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
+        </span>
     </button>
     <ul class="dropdown-menu" role="menu">
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem">
