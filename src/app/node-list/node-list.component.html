@@ -34,7 +34,6 @@
         <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
             [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"
             nextText="&rsaquo;"></pagination>
-            <span>{{currentPage}}/{{itemsPerPage}}/{{pageAtList}}</span>
         <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
 
         <div class="btn-group count-select pull-right" dropdown container="body">
