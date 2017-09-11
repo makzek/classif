@@ -94,6 +94,7 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this._urlSegments = this.router.url.split('/');
                 this.mode = this._urlSegments[this._urlSegments.length - 1];
                 this.editMode = this.mode === 'edit' ? true : false;
+                this.actionService.emitMode(this.mode);
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
             .subscribe((node) => this._update(node), (error) => alert('error: ' + error));
