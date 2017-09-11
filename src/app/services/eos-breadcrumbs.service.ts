@@ -53,7 +53,7 @@ export class EosBreadcrumbsService {
                 };
 
                 if (routeSnaphot.data) {
-                    console.log('data', routeSnaphot.data);
+                    // console.log('data', routeSnaphot.data);
                     bc['data'] = {showSandwichInBreadcrumb: routeSnaphot.data.showSandwichInBreadcrumb};
                 }
 

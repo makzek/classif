@@ -2,8 +2,49 @@
     height: $item-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    padding: 2px 0;
+    // padding: 2px 0;
     // margin-bottom: 20px;
+
+    .opened-node-actions {
+        width: $item-width;
+        border: 0;
+        position: relative;
+
+        &.full {
+            width: 400px;
+            border-left: 1px solid transparent;
+        }
+
+        .icon-btn {
+            position: absolute;
+
+            &.left {
+                left: 0;
+            }
+
+            &.right {
+                left: $item-width;
+            }
+
+            &.edit {
+                right: $item-width;
+            }
+        }
+    }
+
+    .btn {
+        padding: 0;
+        height: $item-height;
+        width: $item-width;
+        // margin-top: -3px;
+        background-color: transparent;
+        border-radius: 0;
+        border-color: transparent;
+
+        &:focus {
+            outline: 0;
+        }
+    }
 
     .breadcrumb {
         background-color: inherit;
@@ -11,7 +52,7 @@
         margin: 0;
         padding: 0;
         position: relative;
-        top: -7px;
+        top: 6px;
 
         & > li:not(:first-child)::before {
             // font-family: "Glyphicons Halflings";
@@ -65,6 +106,14 @@
 
         &.rotate-left {
             transform: rotate(-90deg);
+        }
+    }
+}
+
+@media (max-width: 1500px) {
+    .eos-breadcrumb {
+        .opened-node-actions.full {
+            transition: 300ms ease-in-out;
         }
     }
 }

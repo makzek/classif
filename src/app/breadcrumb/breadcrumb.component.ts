@@ -4,6 +4,9 @@ import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
+import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
+import { E_RECORD_ACTIONS } from '../core/record-action';
 
 enum CURRENT_PAGE {
     dictionary
@@ -21,10 +24,15 @@ export class BreadcrumbsComponent {
 
     isDictionaryPage = false;
 
+    actionEdit = RECORD_ACTIONS_EDIT;
+    actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
+    actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
+
     constructor(private _router: Router,
         private route: ActivatedRoute,
         private _breadcrumbsService: EosBreadcrumbsService,
-        private _actionService: DictionaryActionService) {
+        private _actionService: DictionaryActionService,
+        private _nodeActionService: NodeActionsService) {
         _router.events
             .filter((e) => e instanceof RoutesRecognized)
             .subscribe((e) => {
@@ -34,14 +42,14 @@ export class BreadcrumbsComponent {
         this._breadcrumbsService.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
-                console.log('sandwich', bc.findIndex((_item) => {
+                /* console.log('sandwich', bc.findIndex((_item) => {
                     if (_item['data']) {
                         // console.log(_item.title);
                         return _item['data'].showSandwichInBreadcrumb;
                     } else {
                         return false;
                     }
-                }));
+                })); */
             }
         });
     }
@@ -64,5 +72,12 @@ export class BreadcrumbsComponent {
             this.infoOpened = true;
             this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
         }
+    }
+
+    actionHandler (type: E_RECORD_ACTIONS) {
+        if (type === E_RECORD_ACTIONS.edit) {
+            this.infoOpened = false;
+        }
+        this._nodeActionService.emitAction(type);
     }
 }
