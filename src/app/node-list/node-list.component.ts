@@ -190,6 +190,10 @@ export class NodeListComponent {
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
                 this._actionService.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+            } else {
+                if (!!~this.nodes.findIndex((_n) => _n.selected)) {
+                    this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
+                }
             }
         }
         /* tslint:enable:no-bitwise */

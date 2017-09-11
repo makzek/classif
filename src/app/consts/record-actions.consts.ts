@@ -1,6 +1,33 @@
 import { IAction } from '../core/action.interface';
 import { E_RECORD_ACTIONS, E_ACTION_GROUPS } from '../core/record-action';
 
+export const RECORD_ACTIONS_EDIT = {
+    type: E_RECORD_ACTIONS.edit,
+    group: E_ACTION_GROUPS.item,
+    title: null,
+    hint: 'Редактировать',
+    iconClass: 'eos-icon eos-icon-edit-blue',
+    buttonClass: null
+};
+
+export const RECORD_ACTIONS_NAVIGATION_UP = {
+    type: E_RECORD_ACTIONS.navigateUp,
+    group: E_ACTION_GROUPS.item,
+    title: null,
+    hint: 'Следующая',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-top',
+    buttonClass: null
+};
+
+export const RECORD_ACTIONS_NAVIGATION_DOWN = {
+    type: E_RECORD_ACTIONS.navigateDown,
+    group: E_ACTION_GROUPS.item,
+    title: null,
+    hint: 'Предыдущая',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom',
+    buttonClass: null
+};
+
 export const RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
@@ -8,35 +35,18 @@ export const RECORD_ACTIONS: IAction[] = [{
     hint: 'Создать новый',
     iconClass: 'eos-icon eos-icon-plus-blue',
     buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.edit,
-    group: E_ACTION_GROUPS.item,
-    title: null,
-    hint: 'Редактировать',
-    iconClass: 'eos-icon eos-icon-edit-blue',
-    buttonClass: null
-}, {
+},
+    RECORD_ACTIONS_EDIT,
+{
     type: E_RECORD_ACTIONS.remove,
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Удалить',
     iconClass: 'eos-icon eos-icon-close-blue',
     buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.navigateUp,
-    group: E_ACTION_GROUPS.item,
-    title: null,
-    hint: 'Следующая',
-    iconClass: 'eos-icon eos-icon-arrow-v-blue-top',
-    buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.navigateDown,
-    group: E_ACTION_GROUPS.item,
-    title: null,
-    hint: 'Предыдущая',
-    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom',
-    buttonClass: null
-}];
+},
+    RECORD_ACTIONS_NAVIGATION_UP,
+    RECORD_ACTIONS_NAVIGATION_DOWN];
 
 export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.removeHard,

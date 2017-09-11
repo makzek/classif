@@ -20,6 +20,7 @@
         background-color: transparent;
         color: $button-color-main-theme;
         border-color: transparent;
+        padding: 1px 6px;
     }
 
     /* .btn-icon {
@@ -100,6 +101,10 @@
 
         .breadcrumb > li::before {
             color: $button-color-main-theme;
+        }
+
+        .opened-node-actions {
+            border-color: $border-color-main-theme;
         }
     }
 
