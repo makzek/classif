@@ -48,6 +48,8 @@ export class NodeListComponent {
     notFoundMsgGiven = false;
     initialNode: EosDictionaryNode;
 
+    private _dropPageAtList = true;
+
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
@@ -56,7 +58,7 @@ export class NodeListComponent {
         private _actionService: NodeActionsService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
             this.openedNode = node;
-            if (! this.initialNode) {
+            if (!this.initialNode) {
                 this.initialNode = this.openedNode;
             }
         });
@@ -160,13 +162,11 @@ export class NodeListComponent {
         if (nodes) {
             this.totalItems = nodes.length;
             if (nodes.length) {
-                this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
                 if (!this.hasParent) {
                     this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
                 }
-            } else {
-                this.nodeListPerPage = [];
             }
+            this._getListData(this.currentPage);
         }
 
     }
@@ -303,23 +303,38 @@ export class NodeListComponent {
         }
     }
 
+    private _getListData(page: number) {
+        if (this.nodes && this.nodes.length) {
+            this.nodeListPerPage = this.nodes.slice(
+                (this.currentPage - 1) * this.itemsPerPage,
+                this.currentPage * this.pageAtList * this.itemsPerPage
+            );
+        } else {
+            this.nodeListPerPage = [];
+        }
+    }
+
     pageChanged(event: any): void {
-        this.pageAtList = 1;
-        this.nodeListPerPage = this.nodes.slice((event.page - 1)
-            * event.itemsPerPage, event.page * event.itemsPerPage);
+        if (this._dropPageAtList) {
+            this.pageAtList = 1;
+            this.currentPage = event.page;
+            this._getListData(event.page);
+        }
+        this._dropPageAtList = true;
     }
 
     showMore() {
+        this._dropPageAtList = false;
         this.pageAtList++;
-        this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
-            * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
+        this._getListData(this.currentPage);
         this.currentPage++;
+        console.log('show more');
         // console.log('currentPage', this.currentPage);
     }
 
     setItemCount(value: string) {
         this.itemsPerPage = +value;
-        this.nodeListPerPage = this.nodes.slice((this.currentPage - 1) * +value, this.currentPage * +value);
+        this._getListData(this.currentPage);
     }
 
     viewNode(node: EosDictionaryNode) {
