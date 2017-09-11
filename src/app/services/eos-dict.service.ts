@@ -93,11 +93,12 @@ export class EosDictService {
                         .then((data: any) => {
                             /* todo: remove hardcode */
                             _dictionary = new EosDictionary(new RubricatorDictionaryDescriptor(RUBRICATOR_DICT), data);
+                            this._dictionary = _dictionary;
+                            return this._api.getRubricatorNodes();
+
                             // _dictionary = new EosDictionary(new DepartmentDictionaryDescriptor(DEPARTMENTS_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
                             // console.log('_dictionary', _dictionary);
-                            this._dictionary = _dictionary;
-                            return this._api.getDictionaryNodesMocked(dictionaryId);
                         })
                         .then((data) => {
                             this._dictionary.init(data);

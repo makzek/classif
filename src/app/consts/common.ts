@@ -10,6 +10,7 @@ export const ROOMS_DICT: IDictionaryDescriptor = {
     itemActions: ['edit', 'view'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
+    parentField: 'parent',
     fields: [{
         key: 'id',
         type: 'string',

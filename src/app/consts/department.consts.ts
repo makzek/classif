@@ -10,6 +10,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     groupActions: ['remove', 'removeHard'],
 
     keyField: 'id',
+    parentField: 'parent',
     modeField: 'IS_NODE',
     fields: [{
         key: 'IS_NODE',

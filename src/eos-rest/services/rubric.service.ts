@@ -9,7 +9,7 @@ export class RubricService {
 
     constructor(private _pipe: PipRX) { }
 
-    getAll(params: any): Promise<any> {
+    getAll(params?: any): Promise<any> {
         return this._pipe.read({ [INSTANCE_NAME]: ALL_ROWS }).toPromise<any>();
     }
 
