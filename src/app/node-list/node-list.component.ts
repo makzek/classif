@@ -31,6 +31,7 @@ export class NodeListComponent {
 
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
+    nodeSortedList: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
 
     totalItems: number;
@@ -220,6 +221,11 @@ export class NodeListComponent {
 
     toggleUserSort(): void {
         this.userSorting = !this.userSorting;
+        if (this.userSorting) {
+
+        } else {
+            this._dictionaryService.openDictionary(this._dictionaryId);
+        }
     }
 
     editNode(node: EosDictionaryNode) {

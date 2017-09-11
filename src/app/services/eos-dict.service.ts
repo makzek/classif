@@ -95,7 +95,7 @@ export class EosDictService {
                             _dictionary = new EosDictionary(new RubricatorDictionaryDescriptor(RUBRICATOR_DICT), data);
                             // _dictionary = new EosDictionary(new DepartmentDictionaryDescriptor(DEPARTMENTS_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
-                            /* console.log('_dictionary', _dictionary); */
+                            // console.log('_dictionary', _dictionary);
                             this._dictionary = _dictionary;
                             return this._api.getDictionaryNodesMocked(dictionaryId);
                         })
@@ -226,12 +226,11 @@ export class EosDictService {
         nodes.forEach((node, i) => {
             const newIndex = i + num;
             if (node.selected && newIndex >= 0 && newIndex < nodes.length) {
-                console.log(newIndex, node);
                 nodes.splice(i, 1);
                 nodes.splice(newIndex, 0, node);
-                this.userOrder(nodes);
             }
         });
+        this.userOrder(nodes);
     }
 
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
@@ -279,9 +278,12 @@ export class EosDictService {
     }
 
     public userOrder(nodes: EosDictionaryNode[]) {
+        const sortStorage = [];
         nodes.forEach((node, i) => {
+            sortStorage.push(node.id);
             node.sorting = i;
         });
+        localStorage.setItem('userSort', JSON.stringify(sortStorage));
     }
 
     public userOrderMoveUp(nodes: EosDictionaryNode[]) {
@@ -293,4 +295,17 @@ export class EosDictService {
         this.userOrderMove(nodes, 1);
         this._selectedNode$.next(this._selectedNode);
     }
+
+    /*public userOrderSwitch(nodes: EosDictionaryNode[]) {
+        let sortStorage = JSON.parse(localStorage.getItem('userSort'));
+        console.log("userSort", sortStorage);
+        nodes.forEach((node, i) => {
+            sortStorage.forEach((id, sort) => {
+                if (node.id === id){
+                    console.log("userSort", "Splice", id);
+                    nodes.splice(sort, 1, node);
+                }
+            });
+        });
+    }*/
 }
