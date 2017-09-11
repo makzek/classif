@@ -1,4 +1,5 @@
 import { IApiCfg, ITypeDef } from '../interfaces/interfaces';
+import {TypeExt} from '../clman/typeExt';
 
 declare let System: any;
 export let _metadata: Metadata; /* why we need global variable? */
@@ -34,7 +35,9 @@ export class Metadata {
         this._cfg.metadataJs.forEach((s) => {
             promises.push(this._loadScript(s))
         });
-        return Promise.all(promises);
+        const r = Promise.all(promises);
+        r.then(() => {TypeExt.mergeMetadata(this); });
+        return r;
     }
 
     public merge(types: any) {

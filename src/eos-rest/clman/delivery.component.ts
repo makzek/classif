@@ -24,7 +24,7 @@ export class DeliveryComponent implements OnInit {
     getData() {
         this.pip.read<IDeliveryCl>({
             // - Загрузка всех строк
-            // DELIVERY_CL: ALL_ROWS
+            DELIVERY_CL: ALL_ROWS
 
             // - Загрузка по известным первичным ключам
             // DELIVERY_CL: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
@@ -32,7 +32,7 @@ export class DeliveryComponent implements OnInit {
             //     1037681, 1037682, 1037683, 1037684, 1037685]
 
             // - поиск по критериям
-            DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
+            // DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
         }).subscribe(r => {
             console.log('----->>>>>>>');
             console.log(r);
@@ -54,7 +54,7 @@ export class DeliveryComponent implements OnInit {
     }
 
     login() {
-        this._auth.login('tver', 'tver')
+             this._auth.login('tver', 'tver')
             .then((resp) => {
                 console.log('login resp', resp);
             }).catch((err) => {
