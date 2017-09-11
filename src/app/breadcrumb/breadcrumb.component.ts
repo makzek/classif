@@ -29,7 +29,6 @@ export class BreadcrumbsComponent {
             .filter((e) => e instanceof RoutesRecognized)
             .subscribe((e) => {
                 this._breadcrumbsService.makeBreadCrumbs(e);
-                // console.log('rs', route.snapshot, e);
             });
 
         this._breadcrumbsService.breadcrumbs.subscribe((bc) => {

@@ -55,36 +55,4 @@ export class EosApiService {
             }
         });
     }
-
-    /*
-    getDictionaryNode(dictionaryId: string, id: number): Promise<EosDictionaryNode> {
-        return new Promise<EosDictionaryNode>((resolve, reject) => {
-            if (dictionaryId === 'rubricator') {
-                return resolve(mockRubricsMap.get(id));
-            } else {
-                reject(`Dictionary '${dictionaryId}' doesn't exist`);
-            }
-        });
-    }
-
-    getDictionaryNodeChildren(
-        dictionaryId: string,
-        parentId: number = null,
-        onlyNodes: boolean = false
-    ): Promise<any[]> {
-        return new Promise<any[]>((resolve, reject) => {
-            if (dictionaryId === 'rubricator') {
-                const children: any[] = [];
-                mockRubrics.forEach((node) => {
-                    if (node.parentId === parentId && (!onlyNodes || node.isNode)) {
-                        children.push(node);
-                    }
-                });
-                resolve(children);
-            } else {
-                reject(`Dictionary '${dictionaryId}' doesn't exist`);
-            }
-        });
-    }
-    */
 }

@@ -6,5 +6,5 @@ export interface IAction {
     title: string
     hint: string
     iconClass: string
-    enabled: boolean
+    buttonClass: string
 };

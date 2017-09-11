@@ -2,7 +2,7 @@
     <span [hidden]="isDictionaryPage" class="icon icon-left eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': treeOpened}" (click)="openTree()"></span>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
-            <a class="breadcrumb-item link" [routerLink]="[route.url, route.params]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}
+            <a class="breadcrumb-item link" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}
             </a>
             <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
         </li>

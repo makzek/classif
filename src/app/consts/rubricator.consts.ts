@@ -4,9 +4,10 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     id: 'rubricator',
     apiInstance: 'RUBRIC_CL',
     title: 'Рубрикатор',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder'],
+    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'id',
     fields: [{
         key: 'id',
