@@ -219,7 +219,6 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     goTo(url: string): void {
-        console.log(url);
         if (!this.wasEdit) {
             if (url) {
                 this.router.navigate([url]);
