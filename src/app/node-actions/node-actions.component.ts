@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -52,12 +52,22 @@ export class NodeActionsComponent {
 
     dictIdFromDescriptor: string;
 
+    innerClick = false;
+
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
         return !~this.fields.findIndex((f) => f.value);
         /* tslint:enable:no-bitwise */
+    }
+
+    @HostListener('window:click', [])
+    private _closeSearchModal(): void {
+        if ( ! this.innerClick) {
+            this.dropdownIsOpen = false;
+        }
+        this.innerClick = false;
     }
 
     constructor(private _userSettingsService: EosUserSettingsService,
@@ -168,6 +178,7 @@ export class NodeActionsComponent {
 
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
+        this.dropdownIsOpen = true;
     }
 
     public change(value: boolean): void {

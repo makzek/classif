@@ -102,10 +102,6 @@
         .breadcrumb > li::before {
             color: $button-color-main-theme;
         }
-
-        .opened-node-actions {
-            border-color: $border-color-main-theme;
-        }
     }
 
     .sidebar-wrapper,
@@ -145,6 +141,10 @@
             .field-title {
                 color: $unimportant-info-color-main-theme;
             }
+        }
+
+        .opened-node-actions {
+            border-color: $border-color-main-theme;
         }
     }
 

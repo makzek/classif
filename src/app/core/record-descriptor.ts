@@ -4,10 +4,13 @@ import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dict
 export abstract class RecordDescriptor {
     protected parent: DictionaryDescriptor;
     keyField: FieldDescriptor;
+    parentField: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor(keyFieldName: string, fields: IFieldDesriptor[]) {
+    constructor(data: IDictionaryDescriptor) {
+        const fields = data.fields;
+
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
         fields.forEach((f) => {
@@ -15,12 +18,18 @@ export abstract class RecordDescriptor {
             this.fields.push(_field);
             this.fieldsMap.set(_field.key, _field);
         });
-        if (keyFieldName) {
-            this.keyField = this.fieldsMap.get(keyFieldName);
+
+        this._setCustomField('keyField', data);
+        this._setCustomField('parentField', data);
+    }
+
+    private _setCustomField(fldName: string, data: IDictionaryDescriptor) {
+        if (fldName) {
+            this[fldName] = this.fieldsMap.get(data[fldName]);
         }
 
-        if (!this.keyField) {
-            throw new Error('No field decribed for "' + keyFieldName + '"');
+        if (!this[fldName]) {
+            throw new Error('No field decribed for "' + fldName + '"');
         }
     }
 

@@ -5,8 +5,8 @@ import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
 import { NodeActionsService } from '../node-actions/node-actions.service';
-import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
-import { E_RECORD_ACTIONS } from '../core/record-action';
+/*import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
+import { E_RECORD_ACTIONS } from '../core/record-action';*/
 
 enum CURRENT_PAGE {
     dictionary
@@ -24,9 +24,9 @@ export class BreadcrumbsComponent {
 
     isDictionaryPage = false;
 
-    actionEdit = RECORD_ACTIONS_EDIT;
+    /*actionEdit = RECORD_ACTIONS_EDIT;
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
-    actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
+    actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;*/
 
     constructor(private _router: Router,
         private route: ActivatedRoute,
@@ -52,6 +52,12 @@ export class BreadcrumbsComponent {
                 })); */
             }
         });
+
+        this._actionService.action$.subscribe((action) => {
+            if (action === DICTIONARY_ACTIONS.closeInfo) {
+                this.infoOpened = false;
+            }
+        });
     }
 
     openTree() {
@@ -65,19 +71,8 @@ export class BreadcrumbsComponent {
     }
 
     openInfo() {
-        if (this.infoOpened) {
-            this.infoOpened = false;
-            this._actionService.emitAction(DICTIONARY_ACTIONS.closeInfo);
-        } else {
-            this.infoOpened = true;
-            this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
-        }
+        this.infoOpened = true;
+        this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
     }
 
-    actionHandler (type: E_RECORD_ACTIONS) {
-        if (type === E_RECORD_ACTIONS.edit) {
-            this.infoOpened = false;
-        }
-        this._nodeActionService.emitAction(type);
-    }
 }

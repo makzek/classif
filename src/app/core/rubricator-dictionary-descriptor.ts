@@ -12,8 +12,8 @@ export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
 export class RubricatorRecordDescriptor extends RecordDescriptor {
     parent: RubricatorDictionaryDescriptor;
 
-    constructor(dictionary: RubricatorDictionaryDescriptor, fields: IFieldDesriptor[], keyFieldName: string) {
-        super(keyFieldName, fields);
+    constructor(dictionary: RubricatorDictionaryDescriptor, data: IRubricatorDictionaryDescriptor) {
+        super(data);
         this.parent = dictionary;
     }
 }
@@ -54,7 +54,7 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
 
     _init(data: IRubricatorDictionaryDescriptor) {
         if (data.fields) {
-            this.record = new RubricatorRecordDescriptor(this, data.fields, data.keyField);
+            this.record = new RubricatorRecordDescriptor(this, data);
         }
     }
 }

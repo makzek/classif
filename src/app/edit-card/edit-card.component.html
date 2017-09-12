@@ -1,4 +1,4 @@
-<div class="eos-edit-card">
+<div class="eos-edit-card" *ngIf="node">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <button [disabled]="isFirst || !parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"

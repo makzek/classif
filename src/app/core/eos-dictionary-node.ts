@@ -32,11 +32,13 @@ export class EosDictionaryNode {
             this._descriptor = descriptor;
             this.data = {};
             this._descriptor.fields.forEach((fld) => {
-                this.data[fld.key] = data[fld.key];
+                if (fld) {
+                    this.data[fld.key] = data[fld.key];
+                }
             });
 
-            if (data.parentId) { /* todo: describe field in descriptor */
-                this.parentId = data.parentId;
+            if (this.parentId === undefined) { /* todo: describe field in descriptor */
+                this.parentId = data[this._descriptor.parentField.key];
             }
 
             if (this.id === undefined) {
@@ -114,7 +116,7 @@ export class EosDictionaryNode {
     }
 
     getEditView(): any {
-       return this._descriptor.getEditView(this.data);
+        return this._descriptor.getEditView(this.data);
     }
 }
 

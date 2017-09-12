@@ -1,5 +1,6 @@
 import { IRubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
-
+/*
+*/
 export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     id: 'rubricator',
     apiInstance: 'RUBRIC_CL',
@@ -8,28 +9,65 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
-    keyField: 'id',
+    keyField: 'DUE',
+    parentField: 'PARENT_DUE',
     fields: [{
-        key: 'id',
+        key: 'DUE',
         type: 'string',
         title: 'ID'
     }, {
-        key: 'code',
+        key: 'RUBRIC_CODE',
         title: 'Код',
         type: 'string'
     }, {
-        key: 'title',
+        key: 'CLASSIF_NAME',
         title: 'Заголовок',
         type: 'text'
     }, {
-        key: 'description',
+        key: 'NOTE',
         title: 'Описание',
         type: 'text'
+    }, {
+        key: 'CODE',
+        title: 'Code',
+        type: 'string'
+    }, {
+        key: 'DELETED',
+        title: 'DELETED',
+        type: 'number'
+    }, {
+        key: 'ISN_HIGH_NODE',
+        title: 'ISN_HIGH_NODE',
+        type: 'number'
+    }, {
+        key: 'ISN_LCLASSIF',
+        title: 'ISN_CLASSIF',
+        type: 'number'
+    }, {
+        key: 'ISN_NODE',
+        title: 'ISN_NODE',
+        type: 'number'
+    }, {
+        key: 'IS_NODE',
+        title: 'IS_NODE',
+        type: 'number'
+    }, {
+        key: 'PARENT_DUE',
+        title: 'PARENT_DUE',
+        type: 'string'
+    }, {
+        key: 'PROTECTED',
+        title: 'PROTECTED',
+        type: 'number'
+    }, {
+        key: 'WEIGHT',
+        title: 'WEIGHT',
+        type: 'number'
     }],
-    editFields: ['code', 'title', 'description', 'note', 'SEV'],
-    searchFields: ['code', 'title', 'description'],
-    fullSearchFields: ['code', 'title', 'description'],
-    quickViewFields: ['code', 'title', 'description'],
-    shortQuickViewFields: ['title'],
-    listFields: ['code', 'title']
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    shortQuickViewFields: ['CLASSIF_NAME'],
+    listFields: ['RUBRIC_CODE', 'CLASSIF_NAME']
 };
