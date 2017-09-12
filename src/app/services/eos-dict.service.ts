@@ -26,6 +26,7 @@ export class EosDictService {
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
     private _searchResults: EosDictionaryNode[];
+    public _searchString: string;
 
     /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
@@ -261,7 +262,12 @@ export class EosDictService {
     }
 
     public search(searchString: string, globalSearch: boolean) {
-        this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+        this._searchString = searchString;
+        if (searchString.length) {
+            this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+        } else {
+            this._searchResults = [];
+        }
         this.notFound = !this._searchResults.length;
         this._searchResults$.next(this._searchResults);
     }

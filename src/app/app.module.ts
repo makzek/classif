@@ -43,6 +43,7 @@ import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.c
 
 import { EosApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
+import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDeskService } from './services/eos-desk.service';
 import { EosUserService } from './services/eos-user.service';
 import { EosUserSettingsService } from './services/eos-user-settings.service';
@@ -109,6 +110,7 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         ConfirmWindowService,
         EosApiService,
         EosDictService,
+        EosDictOrderService,
         EosDeskService,
         EosUserService,
         EosUserSettingsService,
