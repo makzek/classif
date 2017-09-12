@@ -54,7 +54,6 @@ export class BreadcrumbsComponent {
         });
 
         this._actionService.action$.subscribe((action) => {
-            console.log('dict act', DICTIONARY_ACTIONS[action]);
             if (action === DICTIONARY_ACTIONS.closeInfo) {
                 this.infoOpened = false;
             }
@@ -72,20 +71,8 @@ export class BreadcrumbsComponent {
     }
 
     openInfo() {
-       // if (this.infoOpened) {
-       //    this.infoOpened = false;
-       //    this._actionService.emitAction(DICTIONARY_ACTIONS.closeInfo);
-       // } else {
-            this.infoOpened = true;
-            this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
-       // }
+        this.infoOpened = true;
+        this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
     }
 
-    /*actionHandler (type: E_RECORD_ACTIONS) {
-        console.log('actionHandler', E_RECORD_ACTIONS[type]);
-        if (type === E_RECORD_ACTIONS.edit) {
-            this.infoOpened = false; // надо выполнять это действие по уходу с компоненты,т.к. уходить можно многими способами
-        }
-        this._nodeActionService.emitAction(type);
-    }*/
 }
