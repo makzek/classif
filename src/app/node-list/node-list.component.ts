@@ -93,7 +93,9 @@ export class NodeListComponent {
                 this.notFoundMsgGiven = false;
             } else if (this._dictionaryService.notFound && !this.notFoundMsgGiven) {
                 this._update(this.initialNode.children, true);
-                this._messageService.addNewMessage(WARN_SEARCH_NOTFOUND);
+                if (this._dictionaryService._searchString.length) {
+                    this._messageService.addNewMessage(WARN_SEARCH_NOTFOUND);
+                }
                 this.notFoundMsgGiven = true;
             }
         });
