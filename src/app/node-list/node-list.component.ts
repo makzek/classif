@@ -30,6 +30,7 @@ export class NodeListComponent {
     modalRef: BsModalRef;
     private _dictionaryId: string;
 
+    private _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
@@ -46,9 +47,6 @@ export class NodeListComponent {
 
     userSorting = false;
 
-    notFoundMsgGiven = false;
-    initialNode: EosDictionaryNode;
-
     private _dropPageAtList = true;
 
     constructor(private _dictionaryService: EosDictService,
@@ -58,12 +56,7 @@ export class NodeListComponent {
         private modalService: BsModalService,
         private router: Router,
         private _actionService: NodeActionsService) {
-        this._dictionaryService.openedNode$.subscribe((node) => {
-            this.openedNode = node;
-            if (!this.initialNode) {
-                this.initialNode = this.openedNode;
-            }
-        });
+        this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
 
         this._dictionaryService.dictionary$.subscribe(
             (dictionary) => {
@@ -75,30 +68,25 @@ export class NodeListComponent {
             },
             (error) => alert(error)
         );
+
         this._dictionaryService.selectedNode$.subscribe((node) => {
+            this._selectedNode = node;
             if (node) {
                 if (node.children) {
                     this._update(node.children, true);
                 } else {
                     this._update([], true);
                 }
-
             }
         });
+
         this._dictionaryService.searchResults$.subscribe((nodes) => {
-            if (this.notFoundMsgGiven) {
-                this._messageService.removeMessage(WARN_SEARCH_NOTFOUND);
-                this.notFoundMsgGiven = false;
-            }
             if (nodes.length) {
                 this._update(nodes, false);
-                this.notFoundMsgGiven = false;
-            } else if (this._dictionaryService.notFound && !this.notFoundMsgGiven) {
-                this._update(this.initialNode.children, true);
-                if (this._dictionaryService._searchString.length) {
-                    this._messageService.addNewMessage(WARN_SEARCH_NOTFOUND);
-                }
-                this.notFoundMsgGiven = true;
+            } else if (this._selectedNode) {
+                this._update(this._selectedNode.children, true);
+            } else {
+                this._update([], true);
             }
         });
 

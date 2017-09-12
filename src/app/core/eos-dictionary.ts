@@ -127,9 +127,11 @@ export class EosDictionary {
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
+        const _expr = new RegExp(searchString, 'i');
+
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
-            if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(RegExp(searchString, 'i')))) {
+            if (!!~_searchFields.findIndex((fld) => _expr.test(node.data[fld.key]))) {
                 searchResult.push(node);
             }
         });

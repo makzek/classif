@@ -12,9 +12,15 @@ import {
     RUBRICATOR_DICT,
 } from '../consts/dictionaries.consts';
 
+import {
+    WARN_SEARCH_NOTFOUND,
+} from '../consts/messages.consts';
+
+
 import { RecordDescriptor } from '../core/record-descriptor';
 import { RubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
+import { EosMessageService} from './eos-message.service';
 
 import { IFieldView } from '../core/field-descriptor';
 
@@ -26,7 +32,7 @@ export class EosDictService {
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
     private _searchResults: EosDictionaryNode[];
-    public _searchString: string;
+    private _searchString: string;
 
     /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
@@ -38,7 +44,10 @@ export class EosDictService {
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     public notFound = false;
 
-    constructor(private _api: EosApiService) {
+    constructor(
+        private _api: EosApiService,
+        private _msgSrv: EosMessageService
+    ) {
         this._dictionaries = new Map<string, EosDictionary>();
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
@@ -265,10 +274,12 @@ export class EosDictService {
         this._searchString = searchString;
         if (searchString.length) {
             this._searchResults = this._dictionary.search(searchString, globalSearch, this._selectedNode);
+            if (!this._searchResults.length) {
+                this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
+            }
         } else {
             this._searchResults = [];
         }
-        this.notFound = !this._searchResults.length;
         this._searchResults$.next(this._searchResults);
     }
 
