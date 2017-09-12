@@ -1,95 +1,118 @@
 .eos-dictionary {
-    display: -ms-grid;
-    display: grid; // sass-lint:disable-line no-duplicate-properties
     overflow: hidden;
     margin: -1 * $grid-gutter-width / 2;
 
-    &.tree-hidden {
-        grid-template-columns: 0 1fr 400px;
-        -ms-grid-columns: 0 1fr 400px;
-    }
-
-    &.info-hidden {
-        grid-template-columns: 400px 1fr 0;
-        -ms-grid-columns: 400px 1fr 0;
-    }
-
-    &.only-selected {
-        grid-template-columns: 0 1fr 0;
-        -ms-grid-columns: 0 1fr 0;
-    }
-
-    &.full {
-        grid-template-columns: 400px 1fr 400px;
-        -ms-grid-columns: 400px 1fr 400px;
+    .tree-wrapper,
+    .opened-wrapper,
+    .selected-wrapper {
+        position: absolute;
+        transition: 300ms ease-in-out;
     }
 
     .tree-wrapper {
-        grid-row: 1;
-        grid-column: 1;
-        height: calc(100vh - 108px); // $top-menu-height = 108px. We can't use variables here
-        // max-height: calc(100vh - 108px);
+        height: calc(100vh - 108px);
+        width: $dictionary-block-width + $item-width / 2;
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
     }
 
-    .selected-wrapper {
-        grid-row: 1;
-        grid-column: 2;
+    .opened-wrapper {
+        height: calc(100vh - 60px);
+        width: $dictionary-block-width;
+        border-left: 1px solid transparent;
+    }
 
-        &.open-tree {
-            margin-left: -14px;
+    &.tree-hidden {
+        .tree-wrapper {
+            left: -1 * $dictionary-block-width;
+        }
+
+        .opened-wrapper {
+            right: 0;
+            top: $top-menu-height - $breadcrumbs-height;
+        }
+
+        .selected-wrapper {
+            top: $grid-gutter-width / 2 + $top-menu-height;
+            left: $grid-gutter-width / 2;
+            right: 420px;
         }
     }
 
-    .opened-wrapper {
-        width: 400px;
-        grid-row: 1;
-        grid-column: 3;
-        height: calc(100vh - 108px); // $top-menu-height = 108px. We can't use variables here
-        // max-height: calc(100vh - 108px);
-        border-left: 1px solid transparent;
+    &.info-hidden {
+        .tree-wrapper {
+            left: 0;
+        }
+
+        .opened-wrapper {
+            right: -1 * $dictionary-block-width;
+            top: $top-menu-height - $breadcrumbs-height;
+        }
+
+        .selected-wrapper {
+            top: $grid-gutter-width / 2 + $top-menu-height;
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2;
+        }
     }
+
+    &.only-selected {
+        .tree-wrapper {
+            left: -1 * $dictionary-block-width;
+        }
+
+        .opened-wrapper {
+            right: -1 * $dictionary-block-width;
+            top: $top-menu-height - $breadcrumbs-height;
+        }
+
+        .selected-wrapper {
+            top: $grid-gutter-width / 2 + $top-menu-height;
+            left: $grid-gutter-width / 2;
+            right: $grid-gutter-width / 2;
+        }
+    }
+
+    &.full {
+        .tree-wrapper {
+            left: 0;
+        }
+
+        .opened-wrapper {
+            right: 0;
+            top: $top-menu-height - $breadcrumbs-height;
+        }
+
+        .selected-wrapper {
+            top: $grid-gutter-width / 2 + $top-menu-height;
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
+        }
+    }
+
+
 }
 
 @media (max-width: 1500px) {
     .eos-dictionary {
-        display: block;
-
-        .selected-wrapper {
-            width: 100%;
-
-            &.open-tree {
-                margin-left: 0;
-            }
-        }
-
-        .tree-wrapper,
-        .opened-wrapper {
-            position: fixed;
-            transition: 300ms ease-in-out;
-            top: $top-menu-height;
-        }
-
         .tree-wrapper {
-            width: 424px;
-            left: -424px;
-            background-color: white;
-            z-index: 100;
+            z-index: 10;
+        }
 
-            &.open-tree {
-                transform: translateX(400px);
+        &.tree-hidden,
+        &.info-hidden,
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
             }
         }
 
-        .opened-wrapper {
-            right: -400px;
-            background-color: white;
-            z-index: 100;
-
-            &.open-info {
-                transform: translateX(-400px);
+        &.tree-hidden {
+            .selected-wrapper {
+                left: $grid-gutter-width / 2;
             }
         }
     }

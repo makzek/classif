@@ -23,5 +23,7 @@ export enum DICTIONARY_ACTIONS {
     closeTree,
     openTree,
     closeInfo,
-    openInfo
+    openInfo,
+    openInfoActions,
+    closeInfoActions
 }

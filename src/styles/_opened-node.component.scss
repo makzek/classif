@@ -18,4 +18,46 @@
             line-height: 32px;
         }
     }
+
+    .opened-node-actions {
+        position: relative;
+        height: $breadcrumbs-height;
+        width: 400px;
+        border-bottom: 1px solid transparent;
+
+        .icon-btn {
+            position: absolute;
+
+            &.left {
+                left: 0;
+            }
+
+            &.right {
+                left: $item-width;
+            }
+
+            &.edit {
+                right: $item-width;
+            }
+        }
+
+        .rotate {
+            transform: rotate(90deg);
+            transition: 300ms ease-in-out;
+        }
+    }
+
+    .btn {
+        padding: 0;
+        height: $item-height;
+        width: $item-width;
+        // margin-top: -3px;
+        background-color: transparent;
+        border-radius: 0;
+        border-color: transparent;
+
+        &:focus {
+            outline: 0;
+        }
+    }
 }
