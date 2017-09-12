@@ -28,7 +28,7 @@
         grid-row: 1;
         grid-column: 1;
         height: calc(100vh - 108px); // $top-menu-height = 108px. We can't use variables here
-        max-height: calc(100vh - 108px);
+        // max-height: calc(100vh - 108px);
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
@@ -48,7 +48,7 @@
         grid-row: 1;
         grid-column: 3;
         height: calc(100vh - 108px); // $top-menu-height = 108px. We can't use variables here
-        max-height: calc(100vh - 108px);
+        // max-height: calc(100vh - 108px);
         border-left: 1px solid transparent;
     }
 }

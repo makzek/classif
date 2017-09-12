@@ -5,23 +5,37 @@
 
     .dictionary {
         height: 100px;
-        flex-basis: 24%;
-        margin-right: 1%;
+        flex-basis: calc((100% - 4*10px) / 4);
+        margin-right: 10px;
         margin-bottom: 10px;
         border-radius: 0;
         font-size: 18px;
         line-height: 26px;
         text-align: left;
 
-        .icon {
-            font-size: xx-large;
-            width: 60px;
-            text-align: center;
+        &.btn {
+            padding: 0;
         }
 
         .text {
             position: relative;
             top: -8px;
+            width: calc(100% - 120px);
+            overflow: hidden;
+            display: inline-block;
+            text-overflow: ellipsis;
+        }
+
+        .icon {
+            height: 48px;
+            width: 48px;
+        }
+
+        .icon-wrapper {
+            display: inline-block;
+            height: 99px;
+            width: 100px;
+            padding: 26px;
         }
     }
 }

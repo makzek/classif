@@ -31,7 +31,7 @@ export class Metadata {
 
     public init(): Promise<any> {
         const promises: Promise<any>[] = [];
-        console.log('init', this._cfg.metadataJs);
+        /* console.log('init', this._cfg.metadataJs); */
         this._cfg.metadataJs.forEach((s) => {
             promises.push(this._loadScript(s))
         });

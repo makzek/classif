@@ -3,14 +3,18 @@ import { Injectable } from '@angular/core';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
+import { RubricService } from '../../eos-rest/services/rubric.service';
+
 @Injectable()
 export class EosApiService {
-    private _mockedNodesMap: Map<string, any>;
+    private _nodesMap: Map<string, any>;
     private _dictionaries: any;
 
-    constructor() {
-        this._mockedNodesMap = new Map<string, any>();
-        NODES.forEach((_n) => this._mockedNodesMap.set(_n.id, _n));
+    constructor(
+        private _rubricSrv: RubricService
+    ) {
+        this._nodesMap = new Map<string, any>();
+        NODES.forEach((_n) => this._nodesMap.set(_n.id, _n));
         this._dictionaries = {};
         DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
     }
@@ -31,6 +35,19 @@ export class EosApiService {
         });
     }
 
+    getRubricatorNodes(): Promise<any> {
+        return this._rubricSrv.getAll()
+            .then((data) => {
+                this._nodesMap.clear();
+                data.forEach((e) => {
+                    if (e.DUE) {
+                        this._nodesMap.set(e.DUE, e);
+                    }
+                })
+                return data;
+            });
+    }
+
     getDictionaryNodesMocked(dictionaryId: string): Promise<any> {
         return new Promise((res, rej) => {
             if (this._dictionaries[dictionaryId]) {
@@ -44,7 +61,7 @@ export class EosApiService {
     getNodeMocked(dictionaryId: string, nodeId: string): Promise<any> {
         return new Promise((res, rej) => {
             if (this._dictionaries[dictionaryId]) {
-                const _node = this._mockedNodesMap.get(nodeId);
+                const _node = this._nodesMap.get(nodeId);
                 if (_node) {
                     res(_node);
                 } else {
@@ -55,36 +72,4 @@ export class EosApiService {
             }
         });
     }
-
-    /*
-    getDictionaryNode(dictionaryId: string, id: number): Promise<EosDictionaryNode> {
-        return new Promise<EosDictionaryNode>((resolve, reject) => {
-            if (dictionaryId === 'rubricator') {
-                return resolve(mockRubricsMap.get(id));
-            } else {
-                reject(`Dictionary '${dictionaryId}' doesn't exist`);
-            }
-        });
-    }
-
-    getDictionaryNodeChildren(
-        dictionaryId: string,
-        parentId: number = null,
-        onlyNodes: boolean = false
-    ): Promise<any[]> {
-        return new Promise<any[]>((resolve, reject) => {
-            if (dictionaryId === 'rubricator') {
-                const children: any[] = [];
-                mockRubrics.forEach((node) => {
-                    if (node.parentId === parentId && (!onlyNodes || node.isNode)) {
-                        children.push(node);
-                    }
-                });
-                resolve(children);
-            } else {
-                reject(`Dictionary '${dictionaryId}' doesn't exist`);
-            }
-        });
-    }
-    */
 }

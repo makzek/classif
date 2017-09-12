@@ -33,6 +33,14 @@
 
         .input-group-addon {
             cursor: pointer;
+
+            &.search-icon-wrapper {
+                padding: 0 6px;
+            }
+
+            &.checkbox-icon-wrapper {
+                padding-left: 8px;
+            }
         }
 
         .checkbox {
@@ -48,11 +56,12 @@
 
     .actions {
         position: relative;
-        top: 5px;
+        top: 8px;
     }
 
     .icon {
         margin: 5px 10px;
+        cursor: pointer;
 
         &.eos-icon-fab-blue {
             margin-top: -5px;

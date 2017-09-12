@@ -1,57 +1,49 @@
 <div class="eos-node-actions">
     <div class="first-line block">
-        <!--<span class="deleted-toggle" *ngIf="!showDeleted && showDelete" (click)="switchShowDeleted(true)">Показывать логически удалённые</span>
-        <span class="deleted-toggle" *ngIf="showDeleted && showDelete" (click)="switchShowDeleted(false)">Скрывать логически удалённые</span>-->
-
         <span class="controller">
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
-                <span *ngIf="action.enabled" (click)="actionHandler(action.type)" tooltip="{{action.hint}}">
-                    <span class="icon {{action.iconClass}} small"></span>
-                </span>
+                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="actionHandler(action.type)">
+                    <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right" container="body"></span>
+                </button>
             </span>
             <div class="btn-group" dropdown>
-                <span dropdownToggle><span class="icon eos-icon eos-icon-fab-blue small"></span>
+                <span class="actions">
+                    <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right">
+                        <span class="eos-icon eos-icon-fab-blue small"></span>
+                    </button>
                 </span>
                 <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <li *ngIf="showDeleteHard" role="menuitem"><a class="dropdown-item" (click)="physicallyDelete()">Удалить (физически)</a></li>
-                    <li *ngIf="showDelete" role="menuitem"><a class="dropdown-item" (click)="restoringLogicallyDeletedItem()">Восстановить логически удаленные элементы</a></li>
-                    <li *ngIf="showUserSort" role="menuitem"><a class="dropdown-item" (click)="userSorting()">
-                                <span *ngIf="!userSort">Включить пользователькую сортировку</span>
-                                <span *ngIf="userSort">Отключить пользователькую сортировку</span>
-                            </a></li>
-                    <li *ngIf="userSort && showUserSortUp" role="menuitem"><a class="dropdown-item" (click)="userSortingUp()">Вверх</a></li>
-                    <li *ngIf="userSort && showUserSortDown" role="menuitem"><a class="dropdown-item" (click)="userSortingDown()">Вниз</a></li>
-                    <li *ngIf="showAdd" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="creatingModal.show()">Добавить элемент</a></li>
-                    <li *ngIf="showDelete" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="deleteSelectedItems()">Удалить элемент</a></li>
-                    <li *ngIf="showEdit" class="hidden-lg" role="menuitem"><a class="dropdown-item" (click)="editNode()">Редактировать элемент</a></li>
-                    <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(true)">Выбрать предыдущий</a></li>
-                    <li role="menuitem" class="hidden-lg"><a class="dropdown-item" (click)="nextItem(false)">Выбрать следующий</a></li>
+                    <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
+                        <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right">
+                            <a class="dropdown-item" (click)="actionHandler(item.type)">{{item.title}}</a>
+                        </li>
+                    </ng-template>
                 </ul>
             </div>
         </span>
         <span class="pull-right">
             <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
-        <span class="icon eos-icon eos-icon-calendar-blue small"></span>
-        <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
-            <span dropdownToggle type="button">
-                    <span class="icon eos-icon eos-icon-search-blue small"></span>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
-                <li>
-                    <div class="input-group search">
-                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
-                        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                        <span class="input-group-addon" id="basic-addon1">
-                            <span class="checkbox">
-                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
-                                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                                </label>
+            <span class="icon eos-icon eos-icon-calendar-blue small"></span>
+            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
+                <span dropdownToggle type="button">
+                        <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body"></span>
+                </span>
+                <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
+                    <li>
+                        <div class="input-group search">
+                            <span class="input-group-addon search-icon-wrapper" id="basic-addon1"><span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
+                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                            <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
+                                <span class="checkbox">
+                                    <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
+                                        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                                    </label>
+                                </span>
                             </span>
-                        </span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </span>
     </div>
     <div class="second-line block special-text">

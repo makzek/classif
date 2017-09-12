@@ -26,3 +26,4 @@ debug.log
 !system.config.js
 !wallaby.js
 !gulpfile.js
+remote-profile/*

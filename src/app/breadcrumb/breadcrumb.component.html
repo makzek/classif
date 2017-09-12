@@ -1,12 +1,28 @@
 <div class="eos-breadcrumb block">
-    <span [hidden]="isDictionaryPage" class="icon eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': treeOpened}" (click)="openTree()"></span>
+    <button [hidden]="isDictionaryPage" class="btn" (click)="openTree()">
+        <span class="icon icon-left eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': treeOpened}"></span>
+    </button>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
-            <a class="breadcrumb-item link" [routerLink]="[route.url, route.params]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}
+            <a class="breadcrumb-item link" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}
             </a>
             <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
         </li>
     </ol>
-    <span [hidden]="isDictionaryPage" class="icon eos-icon eos-icon-menu-blue small pull-right" [ngClass]="{'rotate-right': infoOpened}" (click)="openInfo()"></span>
+    
+    <span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
+        <button *ngIf="infoOpened" class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}">
+            <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
+        </button>
+        <button *ngIf="infoOpened" class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}">
+            <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
+        </button>
+        <button *ngIf="infoOpened" class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}">
+            <span class="icon {{actionEdit.iconClass}} small"></span>
+        </button>
+        <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
+            <span class="icon icon-right eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-right': infoOpened}"></span>
+        </button>
+    </span>
     <eos-pushpin></eos-pushpin>
 </div>

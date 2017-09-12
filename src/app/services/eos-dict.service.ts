@@ -21,13 +21,13 @@ import { IFieldView } from '../core/field-descriptor';
 @Injectable()
 export class EosDictService {
     private _dictionaries: Map<string, EosDictionary>;
-    private _dictionariesList: Array<{ id: string, title: string }>;
+    private _dictionariesList = DICTIONARIES;
     private _dictionary: EosDictionary;
     private _selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of _selectedNode children
     private _searchResults: EosDictionaryNode[];
 
-    private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>;
+    /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -39,7 +39,7 @@ export class EosDictService {
 
     constructor(private _api: EosApiService) {
         this._dictionaries = new Map<string, EosDictionary>();
-        this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]);
+        /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
@@ -48,9 +48,11 @@ export class EosDictService {
     }
 
     /* Observable dictionary for subscribing on updates in components */
+    /*
     get dictionariesList$(): Observable<Array<{ id: string, title: string }>> {
         return this._dictionariesList$.asObservable();
     }
+    */
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -73,17 +75,7 @@ export class EosDictService {
 
     public getDictionariesList(): Promise<any> {
         return new Promise((res) => {
-            if (this._dictionariesList) {
-                res(this._dictionariesList);
-            } else {
-                res(this._api.getDictionaryListMocked()
-                    .then((data: any) => {
-                        this._dictionariesList = data;
-                        this._dictionariesList$.next(data);
-                        return data;
-                    })
-                );
-            }
+            res(DICTIONARIES);
         });
     }
 
@@ -101,11 +93,12 @@ export class EosDictService {
                         .then((data: any) => {
                             /* todo: remove hardcode */
                             _dictionary = new EosDictionary(new RubricatorDictionaryDescriptor(RUBRICATOR_DICT), data);
+                            this._dictionary = _dictionary;
+                            return this._api.getRubricatorNodes();
+
                             // _dictionary = new EosDictionary(new DepartmentDictionaryDescriptor(DEPARTMENTS_DICT), data);
                             // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
-                            console.log('_dictionary', _dictionary);
-                            this._dictionary = _dictionary;
-                            return this._api.getDictionaryNodesMocked(dictionaryId);
+                            // console.log('_dictionary', _dictionary);
                         })
                         .then((data) => {
                             this._dictionary.init(data);
@@ -234,12 +227,11 @@ export class EosDictService {
         nodes.forEach((node, i) => {
             const newIndex = i + num;
             if (node.selected && newIndex >= 0 && newIndex < nodes.length) {
-                console.log(newIndex, node);
                 nodes.splice(i, 1);
                 nodes.splice(newIndex, 0, node);
-                this.userOrder(nodes);
             }
         });
+        this.userOrder(nodes);
     }
 
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
@@ -287,9 +279,12 @@ export class EosDictService {
     }
 
     public userOrder(nodes: EosDictionaryNode[]) {
+        const sortStorage = [];
         nodes.forEach((node, i) => {
+            sortStorage.push(node.id);
             node.sorting = i;
         });
+        localStorage.setItem('userSort', JSON.stringify(sortStorage));
     }
 
     public userOrderMoveUp(nodes: EosDictionaryNode[]) {
@@ -301,4 +296,17 @@ export class EosDictService {
         this.userOrderMove(nodes, 1);
         this._selectedNode$.next(this._selectedNode);
     }
+
+    /*public userOrderSwitch(nodes: EosDictionaryNode[]) {
+        let sortStorage = JSON.parse(localStorage.getItem('userSort'));
+        console.log("userSort", sortStorage);
+        nodes.forEach((node, i) => {
+            sortStorage.forEach((id, sort) => {
+                if (node.id === id){
+                    console.log("userSort", "Splice", id);
+                    nodes.splice(sort, 1, node);
+                }
+            });
+        });
+    }*/
 }

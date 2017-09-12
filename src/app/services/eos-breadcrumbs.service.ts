@@ -52,9 +52,10 @@ export class EosBreadcrumbsService {
                     params: routeSnaphot.params,
                 };
 
-                /* if (routeSnaphot.data.showSandwichInBreadcrumb && !(subpath === 'edit' || subpath === 'view')) {
-                    bc['data'] = {showSandwichInBreadcrumb: true};
-                }*/
+                if (routeSnaphot.data) {
+                    // console.log('data', routeSnaphot.data);
+                    bc['data'] = {showSandwichInBreadcrumb: routeSnaphot.data.showSandwichInBreadcrumb};
+                }
 
                 if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
                     if (routeSnaphot.params.dictionaryId && !routeSnaphot.params.nodeId) {
@@ -72,6 +73,7 @@ export class EosBreadcrumbsService {
                                 bc.title = node.getShortQuickView()[0].value;
                             });
                     }
+
                     if (routeSnaphot.params.desktopId && routeSnaphot.data.showInBreadcrumb) {
                         this._deskService.desksList.subscribe(
                             (list) => {

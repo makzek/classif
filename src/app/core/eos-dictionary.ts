@@ -12,9 +12,10 @@ export class EosDictionary {
 
     constructor(descriptor: DictionaryDescriptor, data: any) {
         this.descriptor = descriptor;
+        console.log('new dictionary', data);
         this.id = data.id;
         this.root = new EosDictionaryNode(this.descriptor.record, {
-            id: '',
+            [this.descriptor.record.keyField.key]: '',
             title: data.title,
         })
         this._nodes = new Map<string, EosDictionaryNode>();

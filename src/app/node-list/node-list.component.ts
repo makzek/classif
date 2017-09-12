@@ -31,6 +31,7 @@ export class NodeListComponent {
 
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
+    nodeSortedList: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
 
     totalItems: number;
@@ -48,6 +49,8 @@ export class NodeListComponent {
     notFoundMsgGiven = false;
     initialNode: EosDictionaryNode;
 
+    private _dropPageAtList = true;
+
     constructor(private _dictionaryService: EosDictService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
@@ -56,7 +59,7 @@ export class NodeListComponent {
         private _actionService: NodeActionsService) {
         this._dictionaryService.openedNode$.subscribe((node) => {
             this.openedNode = node;
-            if (! this.initialNode) {
+            if (!this.initialNode) {
                 this.initialNode = this.openedNode;
             }
         });
@@ -73,7 +76,12 @@ export class NodeListComponent {
         );
         this._dictionaryService.selectedNode$.subscribe((node) => {
             if (node) {
-                this._update(node.children, true);
+                if (node.children) {
+                    this._update(node.children, true);
+                } else {
+                    this._update([], true);
+                }
+
             }
         });
         this._dictionaryService.searchResults$.subscribe((nodes) => {
@@ -155,11 +163,11 @@ export class NodeListComponent {
         if (nodes) {
             this.totalItems = nodes.length;
             if (nodes.length) {
-                this.nodeListPerPage = this.nodes.slice(0, this.itemsPerPage);
                 if (!this.hasParent) {
                     this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
                 }
             }
+            this._getListData(this.currentPage);
         }
 
     }
@@ -183,6 +191,10 @@ export class NodeListComponent {
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
                 this._actionService.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+            } else {
+                if (!!~this.nodes.findIndex((_n) => _n.selected)) {
+                    this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
+                }
             }
         }
         /* tslint:enable:no-bitwise */
@@ -213,6 +225,11 @@ export class NodeListComponent {
 
     toggleUserSort(): void {
         this.userSorting = !this.userSorting;
+        if (this.userSorting) {
+
+        } else {
+            this._dictionaryService.openDictionary(this._dictionaryId);
+        }
     }
 
     editNode(node: EosDictionaryNode) {
@@ -292,23 +309,38 @@ export class NodeListComponent {
         }
     }
 
+    private _getListData(page: number) {
+        if (this.nodes && this.nodes.length) {
+            this.nodeListPerPage = this.nodes.slice(
+                (this.currentPage - 1) * this.itemsPerPage,
+                this.currentPage * this.pageAtList * this.itemsPerPage
+            );
+        } else {
+            this.nodeListPerPage = [];
+        }
+    }
+
     pageChanged(event: any): void {
-        this.pageAtList = 1;
-        this.nodeListPerPage = this.nodes.slice((event.page - 1)
-            * event.itemsPerPage, event.page * event.itemsPerPage);
+        if (this._dropPageAtList) {
+            this.pageAtList = 1;
+            this.currentPage = event.page;
+            this._getListData(event.page);
+        }
+        this._dropPageAtList = true;
     }
 
     showMore() {
+        this._dropPageAtList = false;
         this.pageAtList++;
-        this.nodeListPerPage = this.nodes.slice((this.currentPage - 1)
-            * this.itemsPerPage, this.currentPage * this.itemsPerPage * this.pageAtList);
+        this._getListData(this.currentPage);
         this.currentPage++;
+        console.log('show more');
         // console.log('currentPage', this.currentPage);
     }
 
     setItemCount(value: string) {
         this.itemsPerPage = +value;
-        this.nodeListPerPage = this.nodes.slice((this.currentPage - 1) * +value, this.currentPage * +value);
+        this._getListData(this.currentPage);
     }
 
     viewNode(node: EosDictionaryNode) {

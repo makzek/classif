@@ -35,6 +35,7 @@ export interface IDictionaryDescriptor {
     groupActions: string[];
     fields: IFieldDesriptor[];
     keyField: string;
+    parentField: string;
     // listFields: string[];
     searchFields: string[];
 

@@ -8,12 +8,16 @@
         }
     }
 
+    .icon {
+        cursor: pointer;
+    }
+
     .sortable-item {
         display: inline-block;
         position: relative;
         height: 100px;
-        flex-basis: 24%;
-        margin-right: 1%;
+        flex-basis: calc((100% - 4*10px) / 4);
+        margin-right: 10px;
         margin-bottom: 10px;
         border-radius: 0;
         font-size: 18px;
@@ -21,23 +25,40 @@
         text-align: left;
         overflow: hidden;
 
+        .btn {
+            padding: 0;
+        }
+
         .item-content {
             width: 100%;
             height: 100%;
             font-size: 18px;
             line-height: 26px;
             text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
 
             &.edited {
                 padding: 5px 53px 5px 5px;
             }
 
+            .text {
+                position: relative;
+                top: -6px;
+                display: inline-block;
+                width: calc(100% - 170px);
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
             .icon {
-                font-size: large;
-                width: 50px;
-                text-align: center;
+                height: 48px;
+                width: 48px;
+            }
+
+            .icon-wrapper {
+                display: inline-block;
+                height: 99px;
+                width: 100px;
+                padding: 26px;
             }
         }
 
@@ -76,6 +97,7 @@
     .recent {
         height: 4 * ($desktop-link-size + $desktop-link-margin);
         width: 2 * $desktop-link-size;
+        overflow: auto;
         padding: 0;
         grid-column: 2;
         grid-row: 1;
@@ -95,8 +117,9 @@
             border-bottom: 1px solid transparent;
             width: 100%;
 
-            .icon {
-                top: 3px;
+            .recent-title {
+                position: relative;
+                top: -10px;
             }
         }
 
@@ -109,6 +132,11 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 10px;
+
+
+                a.special-text {
+                    white-space: nowrap;
+                }
             }
         }
     }

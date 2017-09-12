@@ -139,7 +139,7 @@ export class SelectedNodeComponent {
                 this._dictionaryId,
                 this.selectedNode.parent.id,
             ]);
-        };
+        }
     }
 
     physicallyDelete() {
