@@ -4,6 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -31,7 +32,6 @@ export class NodeListComponent {
 
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
-    nodeSortedList: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
 
     totalItems: number;
@@ -52,6 +52,7 @@ export class NodeListComponent {
     private _dropPageAtList = true;
 
     constructor(private _dictionaryService: EosDictService,
+        private _orderService: EosDictOrderService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
         private modalService: BsModalService,
@@ -68,7 +69,7 @@ export class NodeListComponent {
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list)
+                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list);
                     this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
             },
