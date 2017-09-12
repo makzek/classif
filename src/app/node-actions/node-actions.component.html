@@ -49,12 +49,12 @@
     <div class="second-line block special-text">
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
+                <label><input type="checkbox" (change)="checkAllItems()">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
             <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
@@ -107,7 +107,7 @@
     </button>
     </div>
     <div class="search-modal modal-body">
-        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
+        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
         <div class="checkbox">
             <label><input type="checkbox" [(ngModel)]="searchInDeleted">
                 <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>

@@ -290,10 +290,19 @@ export class NodeListComponent {
         if (this.nodes) {
             this.nodes.forEach(node => {
                 if (node.selected) {
-                    if (node.title.length % 3) { // here must be API request for check if possible to delete
+                    if (1 !== 1) { // here must be API request for check if possible to delete
                         this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
                     } else {
-                        this._dictionaryService.physicallyDelete(node.id);
+                        const _deleteResult = this._dictionaryService.physicallyDelete(node.id);
+                        if (_deleteResult) {
+                            this.router.navigate([
+                                'spravochniki',
+                                this._dictionaryId,
+                                node.parent.id,
+                            ]);
+                        } else {
+                            this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                        }
                     }
                 }
             });

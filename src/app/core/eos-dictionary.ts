@@ -109,7 +109,6 @@ export class EosDictionary {
     deleteNode(nodeId: string, hard = false): boolean {
         let _result = false;
         const _node: EosDictionaryNode = this._nodes.get(nodeId);
-
         if (_node) {
             _node.delete(hard);
             if (hard) {
