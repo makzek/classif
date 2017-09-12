@@ -8,30 +8,30 @@
     </aside>-->
     <article class="edit-content">
         <div class="form form-horizontal">
-            <div class="form-group" *ngIf="editMode || data['code']">
+            <div class="form-group">
                 <label for="code">Код:</label>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="code" type="text" class="form-control" placeholder="Код" [(ngModel)]="tmpObj['code']">
-                <p *ngIf="!editMode">{{data['code']}}</p>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="code" type="text" class="form-control" placeholder="Код" [(ngModel)]="tmpObj['RUBRIC_CODE']">
+                <p *ngIf="!editMode && data['RUBRIC_CODE']">{{data['RUBRIC_CODE']}}</p>
             </div>
-            <div class="form-group" *ngIf="editMode || data['title']">
+            <div class="form-group">
                 <label for="title">Краткое наименование:</label>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="title" type="text" class="form-control" placeholder="Краткое наименование" [(ngModel)]="tmpObj['title']">
-                <p *ngIf="!editMode">{{data['title']}}</p>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="title" type="text" class="form-control" placeholder="Краткое наименование" [(ngModel)]="tmpObj['CLASSIF_NAME']">
+                <p *ngIf="!editMode && data['CLASSIF_NAME']">{{data['CLASSIF_NAME']}}</p>
             </div>
-            <div class="form-group" *ngIf="editMode || data['description']">
+            <div class="form-group">
                 <label for="description">Полное наименование:</label>
                 <input *ngIf="editMode" (change)="setUnsavedChanges()" id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="tmpObj['description']">
-                <p *ngIf="!editMode">{{data['description']}}</p>
+                <p *ngIf="!editMode && data['description']">{{data['description']}}</p>
             </div>
-            <div class="form-group" *ngIf="editMode || data['note']">
+            <div class="form-group">
                 <label for="note">Примичание:</label>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="note" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="tmpObj['note']">
-                <p *ngIf="!editMode">{{data['note']}}</p>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="note" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="tmpObj['NOTE']">
+                <p *ngIf="!editMode && data['NOTE']">{{data['NOTE']}}</p>
             </div>
-            <div class="form-group" *ngIf="editMode || data['SEV']">
+            <div class="form-group">
                 <label for="SEV">Индекс СЭВ:</label>
-                <input (change)="setUnsavedChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="tmpObj['SEV']">
-                <p *ngIf="!editMode">{{data['SEV']}}</p>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="tmpObj['SEV']">
+                <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
             </div>
         </div>
     </article>

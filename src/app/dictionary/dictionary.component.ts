@@ -60,4 +60,10 @@ export class DictionaryComponent {
             }
         });
     }
+
+    /* ngOnInit() {
+        if (!this.hideFullInfo) {
+            this._actionService.emitAction(DICTIONARY_ACTIONS.openInfoActions);
+        }
+    }*/
 }

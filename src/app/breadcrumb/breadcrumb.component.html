@@ -10,7 +10,7 @@
         </li>
     </ol>
     
-    <span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
+    <!--<span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
         <button *ngIf="infoOpened" class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}">
             <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
         </button>
@@ -23,6 +23,9 @@
         <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
             <span class="icon icon-right eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-right': infoOpened}"></span>
         </button>
-    </span>
-    <eos-pushpin></eos-pushpin>
+    </span>-->
+    <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
+            <span class="icon icon-right eos-icon eos-icon-menu-blue small"></span>
+        </button>
+    <eos-pushpin [ngClass]="{'lefter': infoOpened}"></eos-pushpin>
 </div>

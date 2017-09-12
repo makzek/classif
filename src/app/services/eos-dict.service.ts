@@ -253,10 +253,11 @@ export class EosDictService {
         this._dictionary$.next(this._dictionary);
     }
 
-    public physicallyDelete(nodeId: string) {
-        this._dictionary.deleteNode(nodeId, true);
+    public physicallyDelete(nodeId: string): boolean {
+        const _result = this._dictionary.deleteNode(nodeId, true);
         this._dictionary$.next(this._dictionary);
         this._selectedNode$.next(this._selectedNode);
+        return _result;
     }
 
     public search(searchString: string, globalSearch: boolean) {
