@@ -52,14 +52,4 @@ export class DeliveryComponent implements OnInit {
 
         this.currentItem = tmp;
     }
-
-    login() {
-             this._auth.login('tver', 'tver')
-            .then((resp) => {
-                console.log('login resp', resp);
-            }).catch((err) => {
-                console.error('login error', err);
-            });
-    }
 }
-

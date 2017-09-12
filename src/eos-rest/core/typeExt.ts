@@ -1,4 +1,4 @@
-import { _T } from '../core/consts';
+import { _T } from './consts';
 
 export class TypeExt {
     static mergeMetadata(_metadata: any) {
@@ -28,4 +28,3 @@ export class TypeExt {
         }
     }
 }
-

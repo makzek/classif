@@ -1,5 +1,4 @@
 ﻿
-<button (click)="login()">Login</button>
 <button (click)="getData()">Get data</button>
 <div>
     Рубрики <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>
@@ -7,7 +6,6 @@
         <li *ngFor="let item of items" (click)="onSelect(item)" ><span *ngFor="let s of item.DUE.split('.')">&nbsp;&nbsp;</span><span>{{item.CLASSIF_NAME}}</span></li>
     </ul>
 </div>
-
 
 <div *ngIf="currentItem" style="float: right;border:1px gray;">
     <hr/>
@@ -23,6 +21,3 @@
     </div>
     <div style="border:1px rised gray" (click)="onSave()">Сохранить</div>
 </div>
-
-<!--<eos-delivery-detail *ngIf="currentItem" [it]="currentItem"></eos-delivery-detail>-->
-
