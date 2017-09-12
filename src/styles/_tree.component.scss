@@ -12,19 +12,21 @@
         display: inline-block;
         width: 100%;
         position: relative;
+        min-height: $item-height;
 
         .icon {
             cursor: pointer;
             position: absolute;
-            top: 19px;
-            left: 19px;
+            top: 16px;
+            left: 16px;
         }
 
         .node-title {
             cursor: pointer;
             display: inline-block;
             margin-left: $item-width;
-            padding: 17px 7px;
+            padding: 13px 7px 13px 0;
+            min-height: $item-height;
         }
     }
 }
