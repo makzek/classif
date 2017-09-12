@@ -8,7 +8,7 @@ export class EosUserSettingsService {
         {
             name: 'Показывать логически удалённые элементы',
             id: 'showDeleted',
-            value: true,
+            value: false,
         },
         {
             name: 'Тёмная тема',
