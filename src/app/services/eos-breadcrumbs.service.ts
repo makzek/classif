@@ -7,11 +7,13 @@ import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
+import { EosDesk } from '../core/eos-desk';
 
 @Injectable()
 export class EosBreadcrumbsService {
     _breadcrumbs: IBreadcrumb[];
     _currentLink: IDeskItem;
+    private _selectedDesk: EosDesk;
 
     _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
     _currentLink$: BehaviorSubject<IDeskItem>;
@@ -19,6 +21,14 @@ export class EosBreadcrumbsService {
     constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
+
+
+        this._deskService.selectedDesk.subscribe((desc) => {
+            this._selectedDesk = desc;
+            console.log('selected -->>', this._selectedDesk.id);
+            // this.makeBreadCrumbs({});
+        });
+
     }
 
     get breadcrumbs(): Observable<IBreadcrumb[]> {
@@ -33,16 +43,19 @@ export class EosBreadcrumbsService {
         let currentUrlPart = evt.state._root;
         let currUrl = '';
 
-        this._breadcrumbs = [{
-            url: '/home',
-            title: 'Home',
+        this._breadcrumbs = [ {
+            url: '/home/' + this._selectedDesk.id,
+            title: this._selectedDesk.name,
             params: new Object(),
         }];
+
+        console.log('selected', this._selectedDesk.id);
 
         while (currentUrlPart.children.length > 0) {
             currentUrlPart = currentUrlPart.children[0];
             const routeSnaphot = currentUrlPart.value as ActivatedRouteSnapshot;
             const subpath = routeSnaphot.url.map((item) => item.path).join('/');
+            console.log(subpath);
 
             if (subpath && subpath !== 'home' && routeSnaphot.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
