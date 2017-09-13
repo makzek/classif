@@ -10,7 +10,7 @@
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
-                    <a class="dropdown-item" [routerLink]="['/home', desk.id]">
+                    <a class="dropdown-item" [routerLink]="['/desk', desk.id]">
                         <span (click)="hideDropDown()" tooltip="{{desk.name}}" placement="left" container="body">{{desk.name}}</span>
                     </a>
                 </span>

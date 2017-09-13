@@ -48,19 +48,17 @@ const routes: Routes = [{
         }],
     }],
 }, {
-    path: 'home',
-    data: { title: 'Системный рабочий стол', showInBreadcrumb: true },
+    path: 'desk',
+    data: { title: 'Рабочий стол', showInBreadcrumb: true },
     children: [{
         path: '',
         pathMatch: 'full',
         component: DesktopComponent,
-    },
-    {
+    }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Рабочий стол', showInBreadcrumb: true }
-    }
-    ]
+        data: { title: 'Рабочий стол', showInBreadcrumb: false }
+    }]
 }, {
     path: 'test',
     component: TestPageComponent,
@@ -75,11 +73,11 @@ const routes: Routes = [{
     data: { title: 'rubric page', showInBreadcrumb: true }
 }, {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/desk',
     pathMatch: 'full',
 }, {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: '/desk',
     pathMatch: 'full',
 }];
 
