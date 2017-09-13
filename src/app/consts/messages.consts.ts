@@ -54,3 +54,9 @@ export const SESSION_CLOSED: IMessage = {
     title: 'Сессия завершена',
     msg: ''
 };
+
+export const AUTH_REQUIRED: IMessage = {
+    type: 'danger',
+    title: 'Ошибка авторизации',
+    msg: ''
+};

@@ -142,7 +142,7 @@ export class EosDictService {
                                 _dict.addNode(_node, _node.parent.id);
                                 res(_node);
                             })
-                            .catch((err) => rej(err));
+                            .catch((err) => console.log(err));
                     }
                 })
                 .catch((err) => rej(err));
