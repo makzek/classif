@@ -3,6 +3,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EditCardActionService } from '../edit-card/action.service';
+import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-departments-card-edit',
@@ -35,15 +36,16 @@ export class DepartmentsCardEditComponent {
         */
         this._actonService.action$.subscribe(
             (act) => {
-                if (act === 'save') {
+                switch (act) {
+                    case EDIT_CARD_ACTIONS.save:
                     this.editMode = false;
                     this.result.emit(this.tmpObj);
-                }
-                if (act === 'cancel') {
-                    // console.log('node.data', this.node.data);
+                    break;
+                    case EDIT_CARD_ACTIONS.cancel:
                     this.editMode = false;
                     this.result.emit(this.node.data);
                     Object.assign(this.tmpObj, this.node.data);
+                    break;
                 }
             }
         );
@@ -56,13 +58,13 @@ export class DepartmentsCardEditComponent {
     changeEditMode(value: boolean) {
         this.editMode = value;
         if (value) {
-            this._actonService.emitMode('edit');
+            this._actonService.emitMode(EDIT_CARD_MODES.edit);
         } else {
-            this._actonService.emitMode('view');
+            this._actonService.emitMode(EDIT_CARD_MODES.view);
         }
     }
 
     setUnsavedChanges() {
-        this._actonService.emitMode('unsavedChanges');
+        this._actonService.emitMode(EDIT_CARD_MODES.unsavedChanges);
     }
 }

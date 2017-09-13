@@ -15,6 +15,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { EDIT_CARD_ACTIONS } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -140,6 +141,7 @@ export class NodeActionsComponent {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
+                this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
@@ -215,7 +217,7 @@ export class NodeActionsComponent {
     }
 
     create() {
-        this._editCardActionService.emitAction('create');
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 

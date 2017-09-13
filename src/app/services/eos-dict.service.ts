@@ -203,6 +203,10 @@ export class EosDictService {
         });
     }
 
+    public getEmptyNode() {
+        return new EosDictionaryNode(this._dictionary.descriptor.record, {});
+    }
+
     /* public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any>
     { // tslint:disable-line:no-unused-variable max-line-length
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable

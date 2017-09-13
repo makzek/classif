@@ -6,6 +6,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-rubricator-card-edit',
@@ -38,33 +39,40 @@ export class RubricatorCardEditComponent implements OnChanges {
 
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
+            console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
         });
-        this._actonService.action$.subscribe(
-            (act) => {
-                if (act === 'save') {
+        this._actonService.action$.subscribe((act) => {
+            switch (act) {
+                case EDIT_CARD_ACTIONS.save:
                     this.editMode = false;
                     this.result.emit(this.tmpObj);
-                }
-                if (act === 'cancel') {
+                    break;
+                case EDIT_CARD_ACTIONS.cancel:
                     this.editMode = false;
                     this.result.emit(this.data);
                     Object.assign(this.tmpObj, this.data);
-                }
-
-                if (act === 'create') {
+                    break;
+                case EDIT_CARD_ACTIONS.create:
                     this.result.emit(this.tmpObj);
-                }
+                    break;
+                case EDIT_CARD_ACTIONS.makeEmptyObject:
+                    this.editMode = true;
+                    console.log('newNode', this._dictionaryService.getEmptyNode());
+                    break;
             }
+        }
         );
 
         this._actonService.mode$.subscribe((mode) => {
-            if (mode === 'edit') {
-                this.editMode = true;
-            }
-            if (mode === 'view') {
-                this.editMode = false;
-            }
-        });
+            switch (mode) {
+                case EDIT_CARD_MODES.edit:
+                    this.editMode = true;
+                    break;
+                case EDIT_CARD_MODES.view:
+                    this.editMode = false;
+                    break;
+                }
+            });
     }
 
     ngOnChanges() {
@@ -97,6 +105,6 @@ export class RubricatorCardEditComponent implements OnChanges {
     }*/
 
     setUnsavedChanges() {
-        this._actonService.emitMode('unsavedChanges');
+        this._actonService.emitMode(EDIT_CARD_MODES.unsavedChanges);
     }
 }

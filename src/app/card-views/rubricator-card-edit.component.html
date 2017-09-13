@@ -5,7 +5,8 @@
             <button type="button" class="btn btn-default" (click)="changeEditMode(false)" [ngClass]="{'active': !editMode}">Просмотр</button>
             <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
         </div>
-    </aside>-->
+    </aside>
+    editMode {{editMode}}-->
     <article class="edit-content">
         <div class="form form-horizontal">
             <div class="form-group">
@@ -20,19 +21,19 @@
             </div>
             <div class="form-group">
                 <label for="description">Полное наименование:</label>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="tmpObj['description']">
-                <p *ngIf="!editMode && data['description']">{{data['description']}}</p>
-            </div>
-            <div class="form-group">
-                <label for="note">Примичание:</label>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="note" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="tmpObj['NOTE']">
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="tmpObj['NOTE']">
                 <p *ngIf="!editMode && data['NOTE']">{{data['NOTE']}}</p>
+            </div>
+            <!--<div class="form-group">
+                <label for="note">Примичание:</label>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" id="note" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="tmpObj['note']">
+                <p *ngIf="!editMode && data['note']">{{data['note']}}</p>
             </div>
             <div class="form-group">
                 <label for="SEV">Индекс СЭВ:</label>
                 <input *ngIf="editMode" (change)="setUnsavedChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="tmpObj['SEV']">
                 <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
-            </div>
+            </div>-->
         </div>
     </article>
 </div>
