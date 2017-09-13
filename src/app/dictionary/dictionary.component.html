@@ -4,7 +4,6 @@
         <eos-tree [nodes]="nodes"></eos-tree>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': !hideTree}">
-            hideTree {{hideTree}}, hideFullInfo {{hideFullInfo}}
         <eos-node-list></eos-node-list>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': !hideFullInfo}">
