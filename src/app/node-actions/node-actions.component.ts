@@ -55,6 +55,8 @@ export class NodeActionsComponent {
 
     innerClick = false;
 
+    newNode: EosDictionaryNode;
+
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
     get noSearchData(): boolean {
@@ -224,12 +226,24 @@ export class NodeActionsComponent {
     }
 
     create() {
+        this.newNode = this._dictionaryService.getEmptyNode();
         this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 
     saveNewNode(data: any) {
-        console.log('Saving new node not implemented, data recived:', data);
         // this.dictionary.descriptor.getFieldView();
+        this._dictionaryService.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
+    }
+
+    createOneMore() {
+        this.newNode = this._dictionaryService.getEmptyNode();
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+    }
+
+    cancelCreate() {
+        this.creatingModal.hide();
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject); // I'm not sure. We generate extra objects
     }
 }

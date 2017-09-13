@@ -88,18 +88,24 @@ export class EosDictionary {
     }
 
     addNode(node: EosDictionaryNode, parentId?: string): boolean {
-        console.log('createNewNode does nothing yet because newNode.id === undefined ');
+        // console.log('createNewNode does nothing yet because newNode.id === undefined ');
         let _result = false;
 
         // check that node with specified id does not exist in this instance
         if (!this._nodes.has(node.id)) {
             this._nodes.set(node.id, node);
             if (!parentId) {
-                const _parent: EosDictionaryNode = this._nodes.get(parentId);
+                const _parent: EosDictionaryNode = this._nodes.get(parentId); // ??
 
-                if (_parent) {
+                 if (_parent) {
                     _parent.addChild(node);
                     _result = true;
+                }
+            } else {
+                if (node.parent) {
+                    node.parent.addChild(node);
+                } else {
+                    this.getNode(parentId).addChild(node);
                 }
             }
         }

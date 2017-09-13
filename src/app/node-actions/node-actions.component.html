@@ -93,7 +93,9 @@
                 <eos-departments-card-edit *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
                 <eos-rubricator-card-edit (result)="saveNewNode($event)" [dictionaryId]="''" [nodeId]="''" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
                 <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
-                <button class="btn btn-default" (click)="create()">Создать</button>
+                <button class="btn btn-default" (click)="create()">Добавить</button>
+                <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
+                <button class="btn btn-default" (click)="createOneMore()">Добавить ещё</button>
             </div>
         </div>
     </div>

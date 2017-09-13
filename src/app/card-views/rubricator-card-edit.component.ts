@@ -39,7 +39,7 @@ export class RubricatorCardEditComponent implements OnChanges {
 
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
-            console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
+            // console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
         });
         this._actonService.action$.subscribe((act) => {
             switch (act) {
@@ -57,7 +57,8 @@ export class RubricatorCardEditComponent implements OnChanges {
                     break;
                 case EDIT_CARD_ACTIONS.makeEmptyObject:
                     this.editMode = true;
-                    console.log('newNode', this._dictionaryService.getEmptyNode());
+                    // console.log('newNode', this._dictionaryService.getEmptyNode());
+                    this.tmpObj = {};
                     break;
             }
         }

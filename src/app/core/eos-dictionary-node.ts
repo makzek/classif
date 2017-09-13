@@ -21,7 +21,7 @@ export class EosDictionaryNode {
     /* made public for a while */
     public _descriptor: RecordDescriptor;
 
-    constructor(descriptor: RecordDescriptor, data: any) {
+    constructor(descriptor: RecordDescriptor, data: any, id?: any) {
         if (data) {
             /*
             Object.assign(this, data);
@@ -44,6 +44,10 @@ export class EosDictionaryNode {
             if (this.id === undefined) {
                 this.id = this.data[this._descriptor.keyField.key];
             }
+        }
+
+        if (id) {
+            this.id = id;
         }
     }
 
