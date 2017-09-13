@@ -49,7 +49,7 @@
     <div class="second-line block special-text">
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" (change)="checkAllItems()">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
