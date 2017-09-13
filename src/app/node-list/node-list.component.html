@@ -3,7 +3,7 @@
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div class="block list">
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngIf="userSorting" class="child">
+            <li class="child">
                 <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
                     itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"
                     (onChange)="userSortItems()">
@@ -12,7 +12,7 @@
         </ul>
 
         <ul *ngIf="nodes && !userSorting && openedNode" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id}">
+            <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}">
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap">
                         <span *ngIf="showCheckbox" class="checkbox">
