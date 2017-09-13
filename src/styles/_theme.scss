@@ -174,8 +174,11 @@
         }
 
         .active {
-            color: $secondary-font-color-main-theme;
             background-color: $highlight-color-main-theme;
+
+            .node-title {
+                color: $secondary-font-color-main-theme;
+            }
         }
 
         .node-title {

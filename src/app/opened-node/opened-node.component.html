@@ -24,7 +24,7 @@
         <div [hidden]="hideFull" class="full-info">
             <div *ngFor="let field of viewFields" class="field">
                 <span class="field-title">{{field.title}}</span> 
-                <br>{{field.value}}
+                <br><span class="field-value">{{field.value}}</span> 
             </div>
         </div>
     </div>
