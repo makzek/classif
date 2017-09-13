@@ -99,13 +99,8 @@ export class NodeActionsComponent {
                 case E_RECORD_ACTIONS.unmarkAllChildren:
                     this.allChildrenSelected = false;
                     this.someChildrenSelected = false;
-                    if (this.rootSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
+                    this.itemIsChecked = false;
+                    this.checkAll = false;
                     break;
                 case E_RECORD_ACTIONS.markAllChildren:
                     this.allChildrenSelected = true;
@@ -186,14 +181,12 @@ export class NodeActionsComponent {
     }
 
     checkAllItems() {
-        if (!this.checkAll) {
-            this.checkAll = true;
+        if (this.checkAll) {
             this.rootSelected = true;
             this.allChildrenSelected = true;
             this.itemIsChecked = false;
             this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
         } else {
-            this.checkAll = false;
             this.itemIsChecked = false;
             this.allChildrenSelected = false;
             this.someChildrenSelected = false;
