@@ -11,7 +11,7 @@
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item" [routerLink]="['/home', desk.id]">
-                        <span (click)="hideDropDown()" tooltip="{{desk.name}}">{{desk.name}}</span>
+                        <span (click)="hideDropDown()" tooltip="{{desk.name}}" placement="left" container="body">{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
