@@ -177,6 +177,11 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.eosDictService
             .updateNode(this.dictionaryId, this.nodeId, this.node._descriptor, evt)
         // .catch((err) => alert('err: ' + err));
+        this._deskService.addRecentItem({
+            link: this.selfLink.slice(0, this.selfLink.length - 5),
+            title: this.nodeName,
+            edited: false,
+        });
     }
 
     resetAndClose(): void {

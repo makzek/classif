@@ -5,6 +5,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDeskService } from '../services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeActionsService } from './node-actions.service';
@@ -76,6 +77,7 @@ export class NodeActionsComponent {
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
+        private _deskService: EosDeskService,
         private _actionService: NodeActionsService,
         private _editCardActionService: EditCardActionService) {
         this._userSettingsService.settings.subscribe((res) => {
@@ -227,6 +229,15 @@ export class NodeActionsComponent {
     saveNewNode(data: any) {
         // this.dictionary.descriptor.getFieldView();
         this._dictionaryService.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
+        let title = '';
+        this.newNode.getShortQuickView().forEach((_f) => {
+            title += data[_f.key];
+        });
+        this._deskService.addRecentItem({
+            link: '/spravochniki/' + this.dictionary.id + '/' + this.newNode.id,
+            title: title,
+            edited: false,
+        });
     }
 
     createOneMore() {
