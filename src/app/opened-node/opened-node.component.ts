@@ -44,6 +44,7 @@ export class OpenedNodeComponent {
     }
 
     openInfo() {
+        console.log('dictionary open info');
         this._dictionaryActionService.emitAction(DICTIONARY_ACTIONS.closeInfo);
      }
 }

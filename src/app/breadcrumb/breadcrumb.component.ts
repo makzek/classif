@@ -61,6 +61,7 @@ export class BreadcrumbsComponent {
     }
 
     openTree() {
+        console.log('bc openTree');
         if (this.treeOpened) {
             this.treeOpened = false;
             this._actionService.emitAction(DICTIONARY_ACTIONS.closeTree);
@@ -71,6 +72,7 @@ export class BreadcrumbsComponent {
     }
 
     openInfo() {
+        console.log('bc openInfo');
         this.infoOpened = true;
         this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
     }
