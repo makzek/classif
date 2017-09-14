@@ -128,11 +128,7 @@ export class EditCardComponent implements CanDeactivateGuard {
             }
         });
 
-        this.closeRedirect = ([
-            'spravochniki',
-            this.dictionaryId,
-            this.nodeId,
-        ]).join('/');
+        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
     private _update(node: EosDictionaryNode) {

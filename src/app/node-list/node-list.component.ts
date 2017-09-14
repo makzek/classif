@@ -225,6 +225,7 @@ export class NodeListComponent {
 
     editNode(node: EosDictionaryNode) {
         if (node) {
+            this.rememberCurrentURL();
             if (node.id.length && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -345,6 +346,7 @@ export class NodeListComponent {
 
     viewNode(node: EosDictionaryNode) {
         if (node) {
+            this.rememberCurrentURL();
             if (node.id.length && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -354,5 +356,9 @@ export class NodeListComponent {
                 ]);
             }
         }
+    }
+
+    private rememberCurrentURL(): void {
+        localStorage.setItem('viewCardUrlRedirect', this.router.url);
     }
 }
