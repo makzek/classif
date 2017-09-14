@@ -3,23 +3,23 @@ import { FieldDescriptor, IFieldView } from './field-descriptor';
 
 export class EosDictionaryNode {
     readonly id: any;
-    code: string;
-    title: string;
+    /* made public for a while */
+    public _descriptor: RecordDescriptor;
     parentId?: string;
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
     description: string;
-    /* ??? */
-    isNode: boolean;
-    /* ??? */
     hasSubnodes: boolean;
     isExpanded?: boolean;
     isDeleted: boolean;
     selected: boolean;
     data: any;
     sorting: number;
-    /* made public for a while */
-    public _descriptor: RecordDescriptor;
+
+    set title(title: string) {
+        const _rec = this.getListView();
+        this.data[_rec[0].key] = title;
+    }
 
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {
         if (data) {
