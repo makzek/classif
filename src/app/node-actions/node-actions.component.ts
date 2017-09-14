@@ -212,6 +212,7 @@ export class NodeActionsComponent {
         if (event.keyCode === 13) {
             this.dropdownIsOpen = false;
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
+            event.target.blur();
         }
     }
 
