@@ -115,6 +115,7 @@ export class SelectedNodeComponent {
 
     editNode() {
         if (this.selectedNode.id.length) {
+            localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
                 this._dictionaryId,
@@ -178,6 +179,7 @@ export class SelectedNodeComponent {
 
     viewNode() {
         if (this.selectedNode.id.length) {
+            localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
                 this._dictionaryId,

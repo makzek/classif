@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
@@ -24,32 +23,14 @@ export class BreadcrumbsComponent {
 
     isDictionaryPage = false;
 
-    /*actionEdit = RECORD_ACTIONS_EDIT;
-    actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
-    actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;*/
-
-    constructor(private _router: Router,
-        private route: ActivatedRoute,
+    constructor(
         private _breadcrumbsService: EosBreadcrumbsService,
         private _actionService: DictionaryActionService,
-        private _nodeActionService: NodeActionsService) {
-        _router.events
-            .filter((e) => e instanceof RoutesRecognized)
-            .subscribe((e) => {
-                this._breadcrumbsService.makeBreadCrumbs(e);
-            });
-
+        private _nodeActionService: NodeActionsService
+    ) {
         this._breadcrumbsService.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
-                /* console.log('sandwich', bc.findIndex((_item) => {
-                    if (_item['data']) {
-                        // console.log(_item.title);
-                        return _item['data'].showSandwichInBreadcrumb;
-                    } else {
-                        return false;
-                    }
-                })); */
             }
         });
 

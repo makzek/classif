@@ -10,6 +10,27 @@ import { EosMessageService } from '../services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
 
+const DEFAULT_DESKS: EosDesk[] = [{
+    id: 'system',
+    name: 'System desk',
+    references: [],
+    edited: false,
+}, {
+    id: '2',
+    name: 'Desk2',
+    references: [{
+        link: '/spravochniki/rubricator',
+        title: 'Рубрикатор',
+        edited: false,
+    }],
+    edited: false,
+}, {
+    id: '100',
+    name: 'Desk100',
+    references: [],
+    edited: false,
+}];
+
 @Injectable()
 export class EosDeskService {
     private _desksList: EosDesk[];
@@ -20,27 +41,29 @@ export class EosDeskService {
     private _selectedDesk$: BehaviorSubject<EosDesk>;
     private _recentItems$: BehaviorSubject<IDeskItem[]>;
 
-    constructor(private eosDictionaryService: EosDictService, private eosMessageService: EosMessageService, private router: Router) {
-        this._desksList = [{
-            id: 'system',
-            name: 'System desk',
-            references: [],
-            edited: false,
-        }, {
-            id: '2',
-            name: 'Desk2',
-            references: [{
-                link: '/spravochniki/rubricator',
-                title: 'Рубрикатор',
-                edited: false,
-            }],
-            edited: false,
-        }, {
-            id: '100',
-            name: 'Desk100',
-            references: [],
-            edited: false,
-        }];
+    get desksList(): Observable<EosDesk[]> {
+        return this._desksList$.asObservable();
+    }
+
+    get selectedDesk(): Observable<EosDesk> {
+        return this._selectedDesk$.asObservable();
+    }
+
+    get recentItems(): Observable<IDeskItem[]> {
+        return this._recentItems$.asObservable();
+    }
+
+    constructor(
+        private eosDictionaryService: EosDictService,
+        private eosMessageService: EosMessageService,
+        private router: Router
+    ) {
+        this._desksList = DEFAULT_DESKS;
+
+        this._desksList$ = new BehaviorSubject(this._desksList);
+        this._selectedDesk = this._desksList[0];
+        this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
+        this._recentItems$ = new BehaviorSubject(this._recentItems);
 
         eosDictionaryService.getDictionariesList()
             .then((dictionariesList) => {
@@ -60,25 +83,6 @@ export class EosDeskService {
             });
 
         this._recentItems = [];
-
-        this._desksList$ = new BehaviorSubject(this._desksList);
-        this._selectedDesk = this._desksList[0];
-        this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
-        this._recentItems$ = new BehaviorSubject(this._recentItems);
-
-    }
-
-
-    get desksList(): Observable<EosDesk[]> {
-        return this._desksList$.asObservable();
-    }
-
-    get selectedDesk(): Observable<EosDesk> {
-        return this._selectedDesk$.asObservable();
-    }
-
-    get recentItems(): Observable<IDeskItem[]> {
-        return this._recentItems$.asObservable();
     }
 
     /* getDesk(id: string): Promise<EosDesk> {

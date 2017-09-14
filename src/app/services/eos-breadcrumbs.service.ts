@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/router';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../services/eos-dict.service';
@@ -13,17 +13,32 @@ import { EosDesk } from '../core/eos-desk';
 export class EosBreadcrumbsService {
     _breadcrumbs: IBreadcrumb[];
     _currentLink: IDeskItem;
+
     private _selectedDesk: EosDesk;
+    private _routes: RoutesRecognized;
 
     _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
     _currentLink$: BehaviorSubject<IDeskItem>;
 
-    constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService) {
+    constructor(
+        private _router: Router,
+        private _dictionaryService: EosDictService,
+        private _deskService: EosDeskService
+    ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
-        this._deskService.selectedDesk.subscribe((desc) => {
+
+        _router.events
+            .filter((e) => e instanceof RoutesRecognized)
+            .subscribe((e: RoutesRecognized) => {
+                this._routes = e;
+                this.makeBreadCrumbs();
+            });
+
+        _deskService.selectedDesk.subscribe((desc) => {
             this._selectedDesk = desc;
-            console.log('selected -->>', this._selectedDesk.id);
+            this.makeBreadCrumbs();
+            /* console.log('selected -->>', this._selectedDesk.id); */
             // this.makeBreadCrumbs({});
         });
 
@@ -37,67 +52,85 @@ export class EosBreadcrumbsService {
         return this._currentLink$.asObservable();
     }
 
-    makeBreadCrumbs(evt: any) {
-        let currentUrlPart = evt.state._root;
-        let currUrl = '';
+    makeBreadCrumbs() {
+        if (this._selectedDesk && this._routes) {
+            this._breadcrumbs = [{
+                url: '/desk/' + this._selectedDesk.id,
+                title: this._selectedDesk.name,
+                params: new Object(),
+            }];
 
-        this._breadcrumbs = [ {
-            url: '/home/' + this._selectedDesk.id,
-            title: this._selectedDesk.name,
-            params: new Object(),
-        }];
+            this._parseState(this._routes.state.root);
 
-        console.log('selected', this._selectedDesk.id);
+            this._breadcrumbs$.next(this._breadcrumbs);
 
-        while (currentUrlPart.children.length > 0) {
-            currentUrlPart = currentUrlPart.children[0];
-            const routeSnaphot = currentUrlPart.value as ActivatedRouteSnapshot;
-            const subpath = routeSnaphot.url.map((item) => item.path).join('/');
-            console.log(subpath);
-
-            if (subpath && subpath !== 'home' && routeSnaphot.data.showInBreadcrumb) {
-                currUrl += '/' + subpath;
-                const bc: IBreadcrumb = {
-                    title: routeSnaphot.data.title,
-                    url: currUrl,
-                    params: routeSnaphot.params,
-                };
-
-                if (routeSnaphot.data) {
-                    // console.log('data', routeSnaphot.data);
-                    bc['data'] = {showSandwichInBreadcrumb: routeSnaphot.data.showSandwichInBreadcrumb};
+            setTimeout(() => {
+                let title = '';
+                this._breadcrumbs.forEach(element => {
+                    title += element.title + '/';
+                });
+                title = title.slice(0, title.length - 1);
+                this._currentLink = {
+                    link: this._routes.state.url,
+                    title: title,
+                    edited: false,
                 }
 
-                if (routeSnaphot.params && routeSnaphot.data.showInBreadcrumb) {
-                    if (routeSnaphot.params.dictionaryId && !routeSnaphot.params.nodeId) {
+                this._currentLink$.next(this._currentLink);
+            }, 0);
+        }
+    }
+
+    private _parseState(route: ActivatedRouteSnapshot) {
+        let currUrl = '';
+
+        while (route.firstChild) {
+            route = route.firstChild;
+            /* const routeSnaphot = route.value as ActivatedRouteSnapshot; */
+            const subpath = route.url.map((item) => item.path).join('/');
+
+            /* console.log(subpath); */
+
+            if (subpath && subpath !== 'desk' && route.data.showInBreadcrumb) {
+                currUrl += '/' + subpath;
+                const bc: IBreadcrumb = {
+                    title: route.data.title,
+                    url: currUrl,
+                    params: route.params,
+                };
+
+                if (route.data) {
+                    // console.log('data', routeSnaphot.data);
+                    bc['data'] = { showSandwichInBreadcrumb: route.data.showSandwichInBreadcrumb };
+                }
+
+                if (route.params && route.data.showInBreadcrumb) {
+                    if (route.params.dictionaryId && !route.params.nodeId) {
                         this._dictionaryService.getDictionariesList()
                             .then((list) => {
-                                const _d = list.find((e: any) => e.id === routeSnaphot.params.dictionaryId);
+                                const _d = list.find((e: any) => e.id === route.params.dictionaryId);
                                 if (_d) {
                                     bc.title = _d.title;
                                 }
                             });
                     }
-                    if (routeSnaphot.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
-                        this._dictionaryService.getNode(routeSnaphot.params.dictionaryId, routeSnaphot.params.nodeId)
+                    if (route.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
+                        this._dictionaryService.getNode(route.params.dictionaryId, route.params.nodeId)
                             .then((node) => {
                                 bc.title = node.getShortQuickView()[0].value;
                             });
                     }
 
-                    if (routeSnaphot.params.desktopId && routeSnaphot.data.showInBreadcrumb) {
-                        const _subscriber = this._deskService.desksList.subscribe(
+                    if (route.params.desktopId && route.data.showInBreadcrumb) {
+                        this._deskService.desksList.toPromise().then(
                             (list) => {
-                                const _d = list.find((e: any) => e.id === routeSnaphot.params.desktopId);
+                                const _d = list.find((e: any) => e.id === route.params.desktopId);
                                 if (_d) {
                                    bc.title = _d.name;
                                    /*this._deskService.getName(_d.id).subscribe((_n) => {
                                         console.log('name from bc', _n);
                                        bc.title = _n;
                                     });*/
-                                }
-                                if (_subscriber) {
-                                    _subscriber.unsubscribe();
                                 }
                             }
                         );
@@ -109,23 +142,5 @@ export class EosBreadcrumbsService {
                 }
             }
         }
-
-        this._breadcrumbs$.next(this._breadcrumbs);
-
-        setTimeout(() => {
-            let title = '';
-            this._breadcrumbs.forEach(element => {
-                title += element.title + '/';
-            });
-            title = title.slice(0, title.length - 1);
-            this._currentLink = {
-                link: evt.url,
-                title: title,
-                edited: false,
-            }
-
-            this._currentLink$.next(this._currentLink);
-        }, 0);
     }
-
 }

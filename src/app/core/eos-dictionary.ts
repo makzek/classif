@@ -12,18 +12,12 @@ export class EosDictionary {
 
     constructor(descriptor: DictionaryDescriptor, data: any) {
         this.descriptor = descriptor;
-        console.log('new dictionary', data);
         this.id = data.id;
-        this.root = new EosDictionaryNode(this.descriptor.record, {
-            [this.descriptor.record.keyField.key]: '',
-            title: data.title,
-        })
         this._nodes = new Map<string, EosDictionaryNode>();
     }
 
     init(data: any[]) {
         this._nodes.clear();
-        this.root.children = [];
 
         /* add nodes */
         data.forEach((nodeData) => {
@@ -42,24 +36,31 @@ export class EosDictionary {
         });
 
         /* build roots */
-        this._nodes.forEach((_node) => {
-            if (!_node.parent) {
-                this.root.addChild(_node);
+        this._nodes.forEach((_n) => {
+            if (!this.root && _n.parentId === null) {
+                this.root = _n;
+                this.root.title = this.descriptor.title;
             }
         });
 
-        /* console.log('init dictionary', this._nodes); */
-        /* console.log('roots', this._rootNodes); */
-    }
+        /* fallback if root undefined */
+        if (!this.root) {
+            this.root = new EosDictionaryNode(this.descriptor.record, { title: this.descriptor.title });
+            this.root.children = [];
+        }
 
-    /* return dictionary root nodes */
-    get rootNodes(): EosDictionaryNode[] {
-        return this._rootNodes;
+        this._nodes.forEach((_node) => {
+            if (!_node.parent && _node !== this.root) {
+                this.root.addChild(_node);
+            }
+        });
     }
 
     get nodes(): Map<string, EosDictionaryNode> {
         return this._nodes;
     }
+
+
     /*
     setChildren(parentId: string, children: EosDictionaryNode[]) {
         const parent = this._nodes.get(parentId);
@@ -97,7 +98,7 @@ export class EosDictionary {
             if (!parentId) {
                 const _parent: EosDictionaryNode = this._nodes.get(parentId); // ??
 
-                 if (_parent) {
+                if (_parent) {
                     _parent.addChild(node);
                     _result = true;
                 }
