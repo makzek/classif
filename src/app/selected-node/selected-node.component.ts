@@ -1,5 +1,6 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -19,7 +20,7 @@ import {
     selector: 'eos-selected-node',
     templateUrl: 'selected-node.component.html',
 })
-export class SelectedNodeComponent {
+export class SelectedNodeComponent implements OnDestroy {
     private _dictionaryId: string;
     dictionary: EosDictionary;
     selectedNode: EosDictionaryNode;
@@ -28,12 +29,18 @@ export class SelectedNodeComponent {
 
     showDeleted = false;
 
+    private _dictionarySubscription: Subscription;
+    private _selectedNodeSubscription: Subscription;
+    private _openedNodeSubscription: Subscription;
+    private _userSettingsSubscription: Subscription;
+    private _actionSubscription: Subscription;
+
     constructor(private _eosDictService: EosDictService,
         private _eosMessageService: EosMessageService,
         private router: Router,
         private _eosUserSettingsService: EosUserSettingsService,
         private _actionService: NodeActionsService) {
-        this._eosDictService.dictionary$.subscribe(
+        this._dictionarySubscription = this._eosDictService.dictionary$.subscribe(
             (dictionary) => {
                 this.dictionary = dictionary;
                 if (dictionary) {
@@ -43,7 +50,8 @@ export class SelectedNodeComponent {
             },
             (error) => alert(error)
         );
-        this._eosDictService.selectedNode$.subscribe((node) => {
+
+      this._selectedNodeSubscription = this._eosDictService.selectedNode$.subscribe((node) => {
                 this.selectedNode = node;
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
@@ -60,7 +68,8 @@ export class SelectedNodeComponent {
             },
             (error) => alert(error)
         );
-        this._eosDictService.openedNode$.subscribe(
+
+        this._openedNodeSubscription = this._eosDictService.openedNode$.subscribe(
             (node) => {
                 this.openedNode = node;
                 if (!this.openedNode && this.dictionary) {
@@ -70,18 +79,17 @@ export class SelectedNodeComponent {
             (error) => alert(error)
         );
 
-        this._eosUserSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._eosUserSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actionService.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.remove: {
                     this.delete();
                     break;
                 }
                 case E_RECORD_ACTIONS.editSelected: {
-                    console.log('recive editSelected');
                     this.editNode();
                     break;
                 }
@@ -103,6 +111,14 @@ export class SelectedNodeComponent {
                 }
             }
         });
+    }
+
+    ngOnDestroy() {
+        this._dictionarySubscription.unsubscribe();
+        this._selectedNodeSubscription.unsubscribe();
+        this._openedNodeSubscription.unsubscribe();
+        this._userSettingsSubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
     }
 
     openFullInfo(node: EosDictionaryNode): void {

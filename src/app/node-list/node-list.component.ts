@@ -52,6 +52,11 @@ export class NodeListComponent implements OnDestroy {
     private _dropPageAtList = true;
 
     private _actionSubscription: Subscription;
+    private _openedNodeSubscription: Subscription;
+    private _dictionarySubscription: Subscription;
+    private _selectedNodeSubscription: Subscription;
+    private _searchResultSubscription: Subscription;
+    private _userSettingsSubscription: Subscription;
 
     constructor(private _dictionaryService: EosDictService,
         private _orderService: EosDictOrderService,
@@ -60,8 +65,8 @@ export class NodeListComponent implements OnDestroy {
         private modalService: BsModalService,
         private router: Router,
         private _actionService: NodeActionsService) {
-        this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
-        this._dictionaryService.dictionary$.subscribe(
+        this._openedNodeSubscription = this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
+        this._dictionarySubscription = this._dictionaryService.dictionary$.subscribe(
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
@@ -72,7 +77,7 @@ export class NodeListComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-        this._dictionaryService.selectedNode$.subscribe((node) => {
+        this._selectedNodeSubscription = this._dictionaryService.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
                 if (node.children) {
@@ -83,7 +88,7 @@ export class NodeListComponent implements OnDestroy {
             }
         });
 
-        this._dictionaryService.searchResults$.subscribe((nodes) => {
+        this._searchResultSubscription = this._dictionaryService.searchResults$.subscribe((nodes) => {
             if (nodes.length) {
                 this._update(nodes, false);
             } else if (this._selectedNode) {
@@ -93,7 +98,7 @@ export class NodeListComponent implements OnDestroy {
             }
         });
 
-        this._userSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
@@ -152,6 +157,11 @@ export class NodeListComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        this._openedNodeSubscription.unsubscribe();
+        this._dictionarySubscription.unsubscribe();
+        this._selectedNodeSubscription.unsubscribe();
+        this._searchResultSubscription.unsubscribe();
+        this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
     }
 

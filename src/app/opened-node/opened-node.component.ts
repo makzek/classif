@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -13,13 +14,15 @@ import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dicti
     selector: 'eos-opened-node',
     templateUrl: 'opened-node.component.html',
 })
-export class OpenedNodeComponent {
+export class OpenedNodeComponent implements OnDestroy {
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
 
     actionEdit = RECORD_ACTIONS_EDIT;
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
+
+    private _openedNodeSubscription: Subscription;
 
     constructor(private eosDictService: EosDictService,
         private _nodeActionService: NodeActionsService,
@@ -36,7 +39,7 @@ export class OpenedNodeComponent {
                     (error) => alert(error));
             }
         });*/
-        this.eosDictService.openedNode$.subscribe(
+        this._openedNodeSubscription  = this.eosDictService.openedNode$.subscribe(
             (node) => {
                 if (node) {
                     this.viewFields = node.getQuickView();
@@ -46,9 +49,11 @@ export class OpenedNodeComponent {
             (error) => alert(error));
     }
 
+    ngOnDestroy() {
+        this._openedNodeSubscription.unsubscribe();
+    }
+
     actionHandler (type: E_RECORD_ACTIONS) {
-        // console.log('actionHandler', E_RECORD_ACTIONS[type]);
-        console.log('opened-node emit', E_RECORD_ACTIONS[type]);
         this._nodeActionService.emitAction(type);
     }
 

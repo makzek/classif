@@ -1,8 +1,9 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/pairwise';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
@@ -28,7 +29,7 @@ class EditedCard {
     selector: 'eos-edit-card',
     templateUrl: 'edit-card.component.html',
 })
-export class EditCardComponent implements CanDeactivateGuard {
+export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     private _dict: EosDictionary;
 
@@ -57,6 +58,10 @@ export class EditCardComponent implements CanDeactivateGuard {
 
     private _urlSegments: string[];
 
+    private _dictionarySubscription: Subscription;
+    private _routerSubscription: Subscription;
+    private _actionSubscription: Subscription;
+
     @ViewChild('unsavedEdit') public modalUnsaveRef: ModalDirective;
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
@@ -71,24 +76,21 @@ export class EditCardComponent implements CanDeactivateGuard {
         return this.canDeactivate();
     }
 
-    constructor(
-        private eosDictService: EosDictService,
+    constructor( private eosDictService: EosDictService,
         private nodeListActionService: NodeActionsService,
         private actionService: EditCardActionService,
         private messageService: EosMessageService,
         private route: ActivatedRoute,
         private router: Router,
-        private _deskService: EosDeskService,
-    ) {
-
-        this.eosDictService.dictionary$.subscribe((dict) => {
+        private _deskService: EosDeskService ) {
+        this._dictionarySubscription = this.eosDictService.dictionary$.subscribe((dict) => {
             this._dict = dict;
             if (dict) {
                 this.dictIdFromDescriptor = dict.descriptor.id;
             }
         });
 
-        this.route.params
+        this._routerSubscription = this.route.params
             .switchMap((params: Params): Promise<EosDictionaryNode> => {
                 this.dictionaryId = params.dictionaryId;
                 this.nodeId = params.nodeId;
@@ -118,7 +120,7 @@ export class EditCardComponent implements CanDeactivateGuard {
         );
         */
 
-        this.actionService.mode$.subscribe((mode) => {
+        this._actionSubscription = this.actionService.mode$.subscribe((mode) => {
             /* if (mode === 'edit') {
                 this.openEditMode();
             }
@@ -131,6 +133,12 @@ export class EditCardComponent implements CanDeactivateGuard {
         });
 
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
+    }
+
+    ngOnDestroy() {
+        this._dictionarySubscription.unsubscribe();
+        this._routerSubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
     }
 
     private _update(node: EosDictionaryNode) {
