@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -83,6 +84,18 @@ export class EosDeskService {
 
         this._recentItems = [];
     }
+
+    /* getDesk(id: string): Promise<EosDesk> {
+        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
+            res(this._desksList.find((_desk) => id === _desk.id));
+        });
+    }
+
+    getName(id: string): Observable<string> {
+        const _name = new Subject<string>();
+        _name.next(this._desksList.find((_desk) => id === _desk.id).name);
+        return _name;
+    }*/
 
     setSelectedDesk(deskId: string) {
         this._selectedDesk = this._desksList.find((d) => d.id === deskId);

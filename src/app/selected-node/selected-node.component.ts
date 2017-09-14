@@ -1,5 +1,6 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -11,7 +12,7 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import {
-    DANGER_EDIT_ERROR,
+    DANGER_EDIT_ROOT_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -19,7 +20,7 @@ import {
     selector: 'eos-selected-node',
     templateUrl: 'selected-node.component.html',
 })
-export class SelectedNodeComponent {
+export class SelectedNodeComponent implements OnDestroy {
     private _dictionaryId: string;
     dictionary: EosDictionary;
     selectedNode: EosDictionaryNode;
@@ -28,12 +29,18 @@ export class SelectedNodeComponent {
 
     showDeleted = false;
 
+    private _dictionarySubscription: Subscription;
+    private _selectedNodeSubscription: Subscription;
+    private _openedNodeSubscription: Subscription;
+    private _userSettingsSubscription: Subscription;
+    private _actionSubscription: Subscription;
+
     constructor(private _eosDictService: EosDictService,
         private _eosMessageService: EosMessageService,
         private router: Router,
         private _eosUserSettingsService: EosUserSettingsService,
         private _actionService: NodeActionsService) {
-        this._eosDictService.dictionary$.subscribe(
+        this._dictionarySubscription = this._eosDictService.dictionary$.subscribe(
             (dictionary) => {
                 this.dictionary = dictionary;
                 if (dictionary) {
@@ -43,7 +50,8 @@ export class SelectedNodeComponent {
             },
             (error) => alert(error)
         );
-        this._eosDictService.selectedNode$.subscribe((node) => {
+
+      this._selectedNodeSubscription = this._eosDictService.selectedNode$.subscribe((node) => {
                 this.selectedNode = node;
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
@@ -60,7 +68,8 @@ export class SelectedNodeComponent {
             },
             (error) => alert(error)
         );
-        this._eosDictService.openedNode$.subscribe(
+
+        this._openedNodeSubscription = this._eosDictService.openedNode$.subscribe(
             (node) => {
                 this.openedNode = node;
                 if (!this.openedNode && this.dictionary) {
@@ -70,11 +79,11 @@ export class SelectedNodeComponent {
             (error) => alert(error)
         );
 
-        this._eosUserSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._eosUserSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actionService.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.remove: {
                     this.delete();
@@ -104,6 +113,14 @@ export class SelectedNodeComponent {
         });
     }
 
+    ngOnDestroy() {
+        this._dictionarySubscription.unsubscribe();
+        this._selectedNodeSubscription.unsubscribe();
+        this._openedNodeSubscription.unsubscribe();
+        this._userSettingsSubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
+    }
+
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted) {
             if (node.id !== '') {
@@ -114,6 +131,7 @@ export class SelectedNodeComponent {
 
     editNode() {
         if (this.selectedNode.id.length) {
+            localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
                 this._dictionaryId,
@@ -121,7 +139,8 @@ export class SelectedNodeComponent {
                 'edit',
             ]);
         } else {
-            this._eosMessageService.addNewMessage(DANGER_EDIT_ERROR);
+            console.log('selected-node make error');
+            this._eosMessageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
         }
     }
 
@@ -176,6 +195,7 @@ export class SelectedNodeComponent {
 
     viewNode() {
         if (this.selectedNode.id.length) {
+            localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
                 this._dictionaryId,

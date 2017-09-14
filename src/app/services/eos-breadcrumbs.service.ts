@@ -126,7 +126,11 @@ export class EosBreadcrumbsService {
                             (list) => {
                                 const _d = list.find((e: any) => e.id === route.params.desktopId);
                                 if (_d) {
-                                    bc.title = _d.name;
+                                   bc.title = _d.name;
+                                   /*this._deskService.getName(_d.id).subscribe((_n) => {
+                                        console.log('name from bc', _n);
+                                       bc.title = _n;
+                                    });*/
                                 }
                             }
                         );

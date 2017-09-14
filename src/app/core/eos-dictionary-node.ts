@@ -18,7 +18,9 @@ export class EosDictionaryNode {
 
     set title(title: string) {
         const _rec = this.getListView();
-        this.data[_rec[0].key] = title;
+        if (_rec && _rec.length) {
+            this.data[_rec[0].key] = title;
+        }
     }
 
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {

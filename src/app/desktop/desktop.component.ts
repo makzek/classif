@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
@@ -13,12 +14,17 @@ import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
     selector: 'eos-desktop',
     templateUrl: 'desktop.component.html',
 })
-export class DesktopComponent {
+export class DesktopComponent implements OnDestroy {
     referencesList: IDeskItem[];
     recentItems: IDeskItem[];
     deskId: string;
 
     historyToLeft = false;
+
+    private _routerSubscription: Subscription;
+    private _selectedDeskSubscription: Subscription;
+    private _recentItemsSubscription: Subscription;
+    private _routeSubscription: Subscription;
 
     constructor(
         private _dictionaryService: EosDictService,
@@ -28,11 +34,11 @@ export class DesktopComponent {
         private _confirmSrv: ConfirmWindowService
     ) {
         this.referencesList = [];
-        this.router.events
+        this._routerSubscription = this.router.events
             .filter((evt) => evt instanceof NavigationEnd)
             .subscribe(() => this._dictionaryService.getDictionariesList());
 
-        _deskService.selectedDesk.subscribe(
+        this._selectedDeskSubscription = _deskService.selectedDesk.subscribe(
             (desk) => {
                 if (desk) {
                     this._update(desk.references);
@@ -41,16 +47,23 @@ export class DesktopComponent {
             }
         );
 
-        _deskService.recentItems.subscribe(
+        this._recentItemsSubscription = _deskService.recentItems.subscribe(
             (items) => this.recentItems = items
         );
 
-        route.url.subscribe(
+        this._routeSubscription = route.url.subscribe(
             (res) => {
                 const link = res[0] || { path: 'system' };
                 _deskService.setSelectedDesk(link.path);
             }
         );
+    }
+
+    ngOnDestroy() {
+        this._routerSubscription.unsubscribe();
+        this._selectedDeskSubscription.unsubscribe();
+        this._recentItemsSubscription.unsubscribe();
+        this._routeSubscription.unsubscribe();
     }
 
     _update(dictionariesList: IDeskItem[]) {

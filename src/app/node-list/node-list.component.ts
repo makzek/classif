@@ -1,7 +1,8 @@
-import { Component, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, TemplateRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
@@ -16,7 +17,8 @@ import { IMessage } from '../core/message.interface';
 import {
     WARN_SEARCH_NOTFOUND,
     WARN_EDIT_ERROR,
-    DANGER_EDIT_ERROR,
+    DANGER_EDIT_ROOT_ERROR,
+    DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -24,7 +26,7 @@ import {
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
-export class NodeListComponent {
+export class NodeListComponent implements OnDestroy {
     @Input() nodes: EosDictionaryNode[];
 
     modalRef: BsModalRef;
@@ -49,6 +51,13 @@ export class NodeListComponent {
 
     private _dropPageAtList = true;
 
+    private _actionSubscription: Subscription;
+    private _openedNodeSubscription: Subscription;
+    private _dictionarySubscription: Subscription;
+    private _selectedNodeSubscription: Subscription;
+    private _searchResultSubscription: Subscription;
+    private _userSettingsSubscription: Subscription;
+
     constructor(private _dictionaryService: EosDictService,
         private _orderService: EosDictOrderService,
         private _userSettingsService: EosUserSettingsService,
@@ -56,9 +65,8 @@ export class NodeListComponent {
         private modalService: BsModalService,
         private router: Router,
         private _actionService: NodeActionsService) {
-        this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
-
-        this._dictionaryService.dictionary$.subscribe(
+        this._openedNodeSubscription = this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
+        this._dictionarySubscription = this._dictionaryService.dictionary$.subscribe(
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
@@ -69,7 +77,7 @@ export class NodeListComponent {
             (error) => alert(error)
         );
 
-        this._dictionaryService.selectedNode$.subscribe((node) => {
+        this._selectedNodeSubscription = this._dictionaryService.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
                 if (node.children) {
@@ -80,7 +88,7 @@ export class NodeListComponent {
             }
         });
 
-        this._dictionaryService.searchResults$.subscribe((nodes) => {
+        this._searchResultSubscription = this._dictionaryService.searchResults$.subscribe((nodes) => {
             if (nodes.length) {
                 this._update(nodes, false);
             } else if (this._selectedNode) {
@@ -90,11 +98,11 @@ export class NodeListComponent {
             }
         });
 
-        this._userSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actionService.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.edit: {
                     if (this.openedNode) {
@@ -146,6 +154,15 @@ export class NodeListComponent {
                 }
             }
         });
+    }
+
+    ngOnDestroy() {
+        this._openedNodeSubscription.unsubscribe();
+        this._dictionarySubscription.unsubscribe();
+        this._selectedNodeSubscription.unsubscribe();
+        this._searchResultSubscription.unsubscribe();
+        this._userSettingsSubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
@@ -225,6 +242,7 @@ export class NodeListComponent {
 
     editNode(node: EosDictionaryNode) {
         if (node) {
+            this.rememberCurrentURL();
             if (node.id.length && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -233,7 +251,12 @@ export class NodeListComponent {
                     'edit',
                 ]);
             } else {
-                this._messageService.addNewMessage(DANGER_EDIT_ERROR);
+                if (!node.id.length) {
+                    this._messageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+                }
+                if (node.isDeleted) {
+                    this._messageService.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+                }
             }
         } else {
             this._messageService.addNewMessage(WARN_EDIT_ERROR);
@@ -334,7 +357,6 @@ export class NodeListComponent {
         this.pageAtList++;
         this._getListData(this.currentPage);
         this.currentPage++;
-        console.log('show more');
         // console.log('currentPage', this.currentPage);
     }
 
@@ -345,6 +367,7 @@ export class NodeListComponent {
 
     viewNode(node: EosDictionaryNode) {
         if (node) {
+            this.rememberCurrentURL();
             if (node.id.length && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -354,5 +377,9 @@ export class NodeListComponent {
                 ]);
             }
         }
+    }
+
+    private rememberCurrentURL(): void {
+        localStorage.setItem('viewCardUrlRedirect', this.router.url);
     }
 }

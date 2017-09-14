@@ -93,7 +93,11 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
 
     private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
         /* todo: fix hardcode to data, need better solution */
-        const _mode: string = E_DEPT_MODE[this.record.getMode(values)];
+        let _mode: string = E_DEPT_MODE[this.record.getMode(values)];
+
+        if (!_mode) {
+            _mode = E_DEPT_MODE[E_DEPT_MODE.department];
+        }
 
         if (_mode && _set[_mode]) {
             return _set[_mode];

@@ -1,7 +1,8 @@
-import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
@@ -22,7 +23,7 @@ import { EDIT_CARD_ACTIONS } from '../edit-card/action.service';
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent {
+export class NodeActionsComponent implements OnDestroy {
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
 
@@ -58,6 +59,10 @@ export class NodeActionsComponent {
 
     newNode: EosDictionaryNode;
 
+    private _userSettingsSubscription: Subscription;
+    private _dictionarySubscription: Subscription;
+    private _actionSubscription: Subscription
+
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
     get noSearchData(): boolean {
@@ -80,10 +85,11 @@ export class NodeActionsComponent {
         private _deskService: EosDeskService,
         private _actionService: NodeActionsService,
         private _editCardActionService: EditCardActionService) {
-        this._userSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
-        this._dictionaryService.dictionary$.subscribe((_d) => {
+
+        this._dictionarySubscription = this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
                 this.dictIdFromDescriptor = _d.descriptor.id;
@@ -94,7 +100,7 @@ export class NodeActionsComponent {
             }
         });
 
-        this._actionService.action$.subscribe((act) => {
+        this._actionSubscription = this._actionService.action$.subscribe((act) => {
             switch (act) {
                 case E_RECORD_ACTIONS.markOne:
                     this.itemIsChecked = true;
@@ -139,6 +145,12 @@ export class NodeActionsComponent {
                     break;
             }
         });
+    }
+
+    ngOnDestroy() {
+        this._userSettingsSubscription.unsubscribe();
+        this._dictionarySubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
     }
 
     actionHandler (type: E_RECORD_ACTIONS) {
@@ -212,6 +224,7 @@ export class NodeActionsComponent {
         if (event.keyCode === 13) {
             this.dropdownIsOpen = false;
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
+            event.target.blur();
         }
     }
 

@@ -6,21 +6,13 @@ import { EosApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
-import {
-    DICTIONARIES,
-    DEPARTMENTS_DICT,
-    RUBRICATOR_DICT,
-} from '../consts/dictionaries.consts';
+import { DICTIONARIES } from '../consts/dictionaries.consts';
 
-import {
-    WARN_SEARCH_NOTFOUND,
-} from '../consts/messages.consts';
+import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
 
 
 import { RecordDescriptor } from '../core/record-descriptor';
-import { RubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
-import { DepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
-import { EosMessageService} from './eos-message.service';
+import { EosMessageService } from './eos-message.service';
 
 import { IFieldView } from '../core/field-descriptor';
 
@@ -93,27 +85,21 @@ export class EosDictService {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
             _p = new Promise<EosDictionary>((res, rej) => {
-                let _dictionary = this._dictionaries.get(dictionaryId);
+                const _dictionary = this._dictionaries.get(dictionaryId);
 
                 if (_dictionary) {
                     this._mDictionaryPromise.delete(dictionaryId);
                     res(_dictionary);
                 } else {
-                    this._api.getDictionaryMocked(dictionaryId)
-                        .then((data: any) => {
-                            /* todo: remove hardcode */
-                            _dictionary = new EosDictionary(new RubricatorDictionaryDescriptor(RUBRICATOR_DICT), data);
-                            this._dictionary = _dictionary;
-                            return this._api.getRubricatorNodes();
-
-                            // _dictionary = new EosDictionary(new DepartmentDictionaryDescriptor(DEPARTMENTS_DICT), data);
-                            // _dictionary = new EosDictionary(new DictionaryDescriptor(ROOMS_DICT), data);
-                            // console.log('_dictionary', _dictionary);
+                    this._api.getDictionaryDescriptorData(dictionaryId)
+                        .then((descData: any) => {
+                            this._dictionary = new EosDictionary(descData);
+                            this._dictionaries.set(dictionaryId, this._dictionary);
+                            return this._api.getNodes(this._dictionary.descriptor);
                         })
                         .then((data) => {
                             this._dictionary.init(data);
-                            this._dictionaries.set(dictionaryId, _dictionary);
-                            this._dictionary$.next(_dictionary);
+                            this._dictionary$.next(this._dictionary);
                             this._mDictionaryPromise.delete(dictionaryId);
                             res(_dictionary);
                         })
@@ -136,7 +122,7 @@ export class EosDictService {
                     if (_node) {
                         res(_node);
                     } else {
-                        this._api.getNodeMocked(dictionaryId, nodeId)
+                        this._api.getNode(dictionaryId, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                 _dict.addNode(_node, _node.parent.id);

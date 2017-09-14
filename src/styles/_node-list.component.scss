@@ -1,5 +1,4 @@
 .eos-node-list {
-
     .checkbox {
         margin-left: 12px;
         margin-bottom: 7px;
@@ -16,16 +15,16 @@
             max-height: calc(100vh - 150px - 95px - 215px);
         }
 
-        .child {
+        .node-list-item {
             padding: 5px 0 5px 20px;
         }
-        
+
         .flat-child {
             padding: 0;
         }
 
         li,
-        .is-deleted-wrap {
+        .node-list-item {
             display: flex;
         }
 

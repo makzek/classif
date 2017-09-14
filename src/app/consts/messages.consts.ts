@@ -37,10 +37,16 @@ export const WARN_EDIT_ERROR: IMessage = {
     dismissOnTimeout: LONG_DISMISS_TIMEOUT
 };
 
-export const DANGER_EDIT_ERROR: IMessage = {
+export const DANGER_EDIT_ROOT_ERROR: IMessage = {
     type: 'danger',
     title: 'Ошибка редактирования элемента: ',
     msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактировать'
+};
+
+export const DANGER_EDIT_DELETED_ERROR: IMessage = {
+    type: 'danger',
+    title: 'Ошибка редактирования элемента: ',
+    msg: 'удалённые элементы нельзя редактировать'
 };
 
 export const DANGER_DELETE_ELEMENT: IMessage = {
