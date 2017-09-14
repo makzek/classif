@@ -51,6 +51,7 @@ export abstract class DictionaryDescriptor {
     /* route subpath === id */
     readonly id: string;
     readonly title: string;
+    readonly apiInstance: string;
 
     /* set of actions available for dictionary */
     private actions: E_RECORD_ACTIONS[];
@@ -87,6 +88,7 @@ export abstract class DictionaryDescriptor {
         if (data) {
             this.id = data.id;
             this.title = data.title;
+            this.apiInstance = data.apiInstance;
             this._init(data);
             this._initActions(data);
             this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/], data);
