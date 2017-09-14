@@ -14,6 +14,7 @@ import { EditCardActionService } from '../edit-card/action.service';
 import { EosDeskService } from '../services/eos-desk.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';
 
 /* Object that stores info about the last edited card in the LocalStorage */
 class EditedCard {
@@ -50,7 +51,8 @@ export class EditCardComponent implements CanDeactivateGuard {
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
     private nextState: any;
     private nextRoute: string;
-    mode: string;
+    // mode: string;
+    mode: EDIT_CARD_MODES;
 
     private _urlSegments: string[];
 
@@ -92,8 +94,8 @@ export class EditCardComponent implements CanDeactivateGuard {
                 this.nextRoute = this.selfLink;
                 this.actionService.emitMode(this.mode);
                 this._urlSegments = this.router.url.split('/');
-                this.mode = this._urlSegments[this._urlSegments.length - 1];
-                this.editMode = this.mode === 'edit' ? true : false;
+                this.mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+                this.editMode = this.mode === EDIT_CARD_MODES.edit ? true : false;
                 this.actionService.emitMode(this.mode);
                 return this.eosDictService.openNode(this.dictionaryId, this.nodeId);
             })
@@ -121,7 +123,7 @@ export class EditCardComponent implements CanDeactivateGuard {
             if (mode === 'view') {
                 this.closeEditMode();
             } */
-            if (mode === 'unsavedChanges') {
+            if (mode === EDIT_CARD_MODES.unsavedChanges) {
                 this.setUnsavedChanges();
             }
         });
@@ -150,21 +152,21 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     save(): void {
-        this.actionService.emitAction('save');
+        this.actionService.emitAction(EDIT_CARD_ACTIONS.save);
         this.changeMode();
     }
 
     cancel(): void {
-        this.actionService.emitAction('cancel');
+        this.actionService.emitAction(EDIT_CARD_ACTIONS.cancel);
         this.changeMode();
     }
 
     changeEditMode(value: boolean) {
         this.editMode = value;
         if (value) {
-            this.actionService.emitMode('edit');
+            this.actionService.emitMode(EDIT_CARD_MODES.edit);
         } else {
-            this.actionService.emitMode('view');
+            this.actionService.emitMode(EDIT_CARD_MODES.view);
         }
     }
 
@@ -175,6 +177,11 @@ export class EditCardComponent implements CanDeactivateGuard {
         this.eosDictService
             .updateNode(this.dictionaryId, this.nodeId, this.node._descriptor, evt)
         // .catch((err) => alert('err: ' + err));
+        this._deskService.addRecentItem({
+            link: this.selfLink.slice(0, this.selfLink.length - 5),
+            title: this.nodeName,
+            edited: false,
+        });
     }
 
     resetAndClose(): void {
@@ -315,7 +322,7 @@ export class EditCardComponent implements CanDeactivateGuard {
             'spravochniki',
             this.dictionaryId,
             this.nodeId,
-            (this.mode === 'view' ? 'edit' : 'view')
+            (this.mode === EDIT_CARD_MODES.view ? 'edit' : 'view')
         ]);
     }
 }

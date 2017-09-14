@@ -24,7 +24,7 @@
         <span class="pull-right">
             <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
             <span class="icon eos-icon eos-icon-calendar-blue small"></span>
-            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="false">
+            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
                 <span dropdownToggle type="button">
                         <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body"></span>
                 </span>
@@ -49,12 +49,12 @@
     <div class="second-line block special-text">
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (click)="checkAllItems()">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
             <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (click)="uncheckAllItems()">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
@@ -93,7 +93,9 @@
                 <eos-departments-card-edit *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
                 <eos-rubricator-card-edit (result)="saveNewNode($event)" [dictionaryId]="''" [nodeId]="''" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
                 <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
-                <button class="btn btn-default" (click)="create()">Создать</button>
+                <button class="btn btn-default" (click)="create()">Добавить</button>
+                <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
+                <button class="btn btn-default" (click)="createOneMore()">Добавить ещё</button>
             </div>
         </div>
     </div>
@@ -107,7 +109,7 @@
     </button>
     </div>
     <div class="search-modal modal-body">
-        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразяться только те элементы, которые отвечают всем заданным критериям.</div>
+        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
         <div class="checkbox">
             <label><input type="checkbox" [(ngModel)]="searchInDeleted">
                 <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>

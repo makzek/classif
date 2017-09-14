@@ -102,10 +102,6 @@
         .breadcrumb > li::before {
             color: $button-color-main-theme;
         }
-
-        .opened-node-actions {
-            border-color: $border-color-main-theme;
-        }
     }
 
     .sidebar-wrapper,
@@ -146,6 +142,10 @@
                 color: $unimportant-info-color-main-theme;
             }
         }
+
+        .opened-node-actions {
+            border-color: $border-color-main-theme;
+        }
     }
 
     .eos-node-list {
@@ -174,8 +174,11 @@
         }
 
         .active {
-            color: $secondary-font-color-main-theme;
             background-color: $highlight-color-main-theme;
+
+            .node-title {
+                color: $secondary-font-color-main-theme;
+            }
         }
 
         .node-title {

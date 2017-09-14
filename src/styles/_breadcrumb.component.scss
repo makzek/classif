@@ -1,34 +1,12 @@
 .eos-breadcrumb {
-    height: $item-height;
+    height: $breadcrumbs-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    // padding: 2px 0;
-    // margin-bottom: 20px;
 
-    .opened-node-actions {
-        width: $item-width;
-        border: 0;
-        position: relative;
-
-        &.full {
-            width: 400px;
-            border-left: 1px solid transparent;
-        }
-
-        .icon-btn {
-            position: absolute;
-
-            &.left {
-                left: 0;
-            }
-
-            &.right {
-                left: $item-width;
-            }
-
-            &.edit {
-                right: $item-width;
-            }
+    .lefter {
+        .pushpin {
+            margin-right: 364px;
+            transition: 300ms ease-in-out;
         }
     }
 
@@ -98,10 +76,6 @@
 
         &.icon-right {
             margin: 8px 12px;
-        }
-
-        &.rotate-right {
-            transform: rotate(90deg);
         }
 
         &.rotate-left {

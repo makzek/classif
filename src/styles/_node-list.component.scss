@@ -1,5 +1,4 @@
 .eos-node-list {
-    padding: 10px;
 
     .checkbox {
         margin-left: 12px;
@@ -19,6 +18,10 @@
 
         .child {
             padding: 5px 0 5px 20px;
+        }
+        
+        .flat-child {
+            padding: 0;
         }
 
         li,

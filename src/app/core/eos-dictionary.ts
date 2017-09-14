@@ -12,18 +12,12 @@ export class EosDictionary {
 
     constructor(descriptor: DictionaryDescriptor, data: any) {
         this.descriptor = descriptor;
-        console.log('new dictionary', data);
         this.id = data.id;
-        this.root = new EosDictionaryNode(this.descriptor.record, {
-            [this.descriptor.record.keyField.key]: '',
-            title: data.title,
-        })
         this._nodes = new Map<string, EosDictionaryNode>();
     }
 
     init(data: any[]) {
         this._nodes.clear();
-        this.root.children = [];
 
         /* add nodes */
         data.forEach((nodeData) => {
@@ -42,24 +36,31 @@ export class EosDictionary {
         });
 
         /* build roots */
-        this._nodes.forEach((_node) => {
-            if (!_node.parent) {
-                this.root.addChild(_node);
+        this._nodes.forEach((_n) => {
+            if (!this.root && _n.parentId === null) {
+                this.root = _n;
+                this.root.title = this.descriptor.title;
             }
         });
 
-        /* console.log('init dictionary', this._nodes); */
-        /* console.log('roots', this._rootNodes); */
-    }
+        /* fallback if root undefined */
+        if (!this.root) {
+            this.root = new EosDictionaryNode(this.descriptor.record, { title: this.descriptor.title });
+            this.root.children = [];
+        }
 
-    /* return dictionary root nodes */
-    get rootNodes(): EosDictionaryNode[] {
-        return this._rootNodes;
+        this._nodes.forEach((_node) => {
+            if (!_node.parent && _node !== this.root) {
+                this.root.addChild(_node);
+            }
+        });
     }
 
     get nodes(): Map<string, EosDictionaryNode> {
         return this._nodes;
     }
+
+
     /*
     setChildren(parentId: string, children: EosDictionaryNode[]) {
         const parent = this._nodes.get(parentId);
@@ -88,18 +89,24 @@ export class EosDictionary {
     }
 
     addNode(node: EosDictionaryNode, parentId?: string): boolean {
-        console.log('createNewNode does nothing yet because newNode.id === undefined ');
+        // console.log('createNewNode does nothing yet because newNode.id === undefined ');
         let _result = false;
 
         // check that node with specified id does not exist in this instance
         if (!this._nodes.has(node.id)) {
             this._nodes.set(node.id, node);
             if (!parentId) {
-                const _parent: EosDictionaryNode = this._nodes.get(parentId);
+                const _parent: EosDictionaryNode = this._nodes.get(parentId); // ??
 
                 if (_parent) {
                     _parent.addChild(node);
                     _result = true;
+                }
+            } else {
+                if (node.parent) {
+                    node.parent.addChild(node);
+                } else {
+                    this.getNode(parentId).addChild(node);
                 }
             }
         }
@@ -109,7 +116,6 @@ export class EosDictionary {
     deleteNode(nodeId: string, hard = false): boolean {
         let _result = false;
         const _node: EosDictionaryNode = this._nodes.get(nodeId);
-
         if (_node) {
             _node.delete(hard);
             if (hard) {
@@ -128,9 +134,12 @@ export class EosDictionary {
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
+        searchString = searchString.replace(/[*+?^${}()|[\]\\]/g, '\\$&').replace('.', '/\./');
+        const _expr = new RegExp(searchString, 'i');
+
         /* tslint:disable:no-bitwise */
         this._nodes.forEach((node) => {
-            if (!!~_searchFields.findIndex((fld) => !!~node.data[fld.key].search(RegExp(searchString, 'i')))) {
+            if (!!~_searchFields.findIndex((fld) => _expr.test(node.data[fld.key]))) {
                 searchResult.push(node);
             }
         });

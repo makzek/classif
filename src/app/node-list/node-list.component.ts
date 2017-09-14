@@ -4,6 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -29,9 +30,9 @@ export class NodeListComponent {
     modalRef: BsModalRef;
     private _dictionaryId: string;
 
+    private _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
-    nodeSortedList: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
 
     totalItems: number;
@@ -46,56 +47,46 @@ export class NodeListComponent {
 
     userSorting = false;
 
-    notFoundMsgGiven = false;
-    initialNode: EosDictionaryNode;
-
     private _dropPageAtList = true;
 
     constructor(private _dictionaryService: EosDictService,
+        private _orderService: EosDictOrderService,
         private _userSettingsService: EosUserSettingsService,
         private _messageService: EosMessageService,
         private modalService: BsModalService,
         private router: Router,
         private _actionService: NodeActionsService) {
-        this._dictionaryService.openedNode$.subscribe((node) => {
-            this.openedNode = node;
-            if (!this.initialNode) {
-                this.initialNode = this.openedNode;
-            }
-        });
+        this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
 
         this._dictionaryService.dictionary$.subscribe(
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list)
+                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list);
                     this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
             },
             (error) => alert(error)
         );
+
         this._dictionaryService.selectedNode$.subscribe((node) => {
+            this._selectedNode = node;
             if (node) {
                 if (node.children) {
                     this._update(node.children, true);
                 } else {
                     this._update([], true);
                 }
-
             }
         });
+
         this._dictionaryService.searchResults$.subscribe((nodes) => {
-            if (this.notFoundMsgGiven) {
-                this._messageService.removeMessage(WARN_SEARCH_NOTFOUND);
-                this.notFoundMsgGiven = false;
-            }
             if (nodes.length) {
                 this._update(nodes, false);
-                this.notFoundMsgGiven = false;
-            } else if (this._dictionaryService.notFound && !this.notFoundMsgGiven) {
-                this._update(this.initialNode.children, true);
-                this._messageService.addNewMessage(WARN_SEARCH_NOTFOUND);
-                this.notFoundMsgGiven = true;
+            } else if (this._selectedNode) {
+                this._update(this._selectedNode.children, true);
+            } else {
+                this._update([], true);
             }
         });
 
@@ -289,10 +280,19 @@ export class NodeListComponent {
         if (this.nodes) {
             this.nodes.forEach(node => {
                 if (node.selected) {
-                    if (node.title.length % 3) { // here must be API request for check if possible to delete
+                    if (1 !== 1) { // here must be API request for check if possible to delete
                         this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
                     } else {
-                        this._dictionaryService.physicallyDelete(node.id);
+                        const _deleteResult = this._dictionaryService.physicallyDelete(node.id);
+                        if (_deleteResult) {
+                            this.router.navigate([
+                                'spravochniki',
+                                this._dictionaryId,
+                                node.parent.id,
+                            ]);
+                        } else {
+                            this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                        }
                     }
                 }
             });

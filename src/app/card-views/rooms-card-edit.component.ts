@@ -4,6 +4,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
+import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-rooms-card-edit',
@@ -29,14 +30,16 @@ export class RoomsCardEditComponent {
         });
         this._actonService.action$.subscribe(
             (act) => {
-                if (act === 'save') {
+                switch (act) {
+                    case EDIT_CARD_ACTIONS.save:
                     this.editMode = false;
                     this.result.emit(this.tmpObj);
-                }
-                if (act === 'cancel') {
+                    break;
+                    case EDIT_CARD_ACTIONS.cancel:
                     this.editMode = false;
                     this.result.emit(this.node.data);
                     Object.assign(this.tmpObj, this.node.data);
+                    break;
                 }
             }
         );
@@ -45,13 +48,13 @@ export class RoomsCardEditComponent {
     changeEditMode(value: boolean) {
         this.editMode = value;
         if (value) {
-            this._actonService.emitMode('edit');
+            this._actonService.emitMode(EDIT_CARD_MODES.edit);
         } else {
-            this._actonService.emitMode('view');
+            this._actonService.emitMode(EDIT_CARD_MODES.view);
         }
     }
 
     setUnsavedChanges() {
-        this._actonService.emitMode('unsavedChanges');
+        this._actonService.emitMode(EDIT_CARD_MODES.unsavedChanges);
     }
 }

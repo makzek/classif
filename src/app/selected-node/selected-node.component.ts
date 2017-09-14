@@ -43,8 +43,7 @@ export class SelectedNodeComponent {
             },
             (error) => alert(error)
         );
-        this._eosDictService.selectedNode$.subscribe(
-            (node) => {
+        this._eosDictService.selectedNode$.subscribe((node) => {
                 this.selectedNode = node;
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
@@ -144,10 +143,19 @@ export class SelectedNodeComponent {
 
     physicallyDelete() {
         if (this.selectedNode.selected) {
-            if (this.selectedNode.title.length % 3) { // here must be API request for check if possible to delete
+            if (1 !== 1) { // here must be API request for check if possible to delete
                 this._eosMessageService.addNewMessage(DANGER_DELETE_ELEMENT);
             } else {
-                this._eosDictService.physicallyDelete(this.selectedNode.id);
+                const _deleteResult = this._eosDictService.physicallyDelete(this.selectedNode.id);
+                if (_deleteResult) {
+                    this.router.navigate([
+                        'spravochniki',
+                        this._dictionaryId,
+                        this.selectedNode.parent.id,
+                    ]);
+                } else {
+                    this._eosMessageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                }
             }
         }
     }

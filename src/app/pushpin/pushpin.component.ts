@@ -20,7 +20,7 @@ export class PushpinComponent {
         this._breadcrumbsService.currentLink.subscribe((link) => {
             if (link) {
                 this._link = link;
-                this._deskService.addRecentItem(this._link);
+                // this._deskService.addRecentItem(this._link);
             }
         });
     }

@@ -1,7 +1,7 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
     <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
-        <span class="selected-desktop">{{selectedDesk.name}}</span>
+        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" container="body">{{selectedDesk.name}}</span>
         <span class="btn-icon">
             <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </span>
@@ -10,8 +10,8 @@
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
-                    <a class="dropdown-item" [routerLink]="['/home', desk.id]">
-                        <span (click)="hideDropDown()">{{desk.name}}</span>
+                    <a class="dropdown-item" [routerLink]="['/desk', desk.id]">
+                        <span (click)="hideDropDown()" tooltip="{{desk.name}}" placement="left" container="body">{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">

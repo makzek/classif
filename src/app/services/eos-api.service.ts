@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
-import { RubricService } from '../../eos-rest/services/rubric.service';
+import { RubricService } from '../../eos-rest';
+
+import { AUTH_REQUIRED } from '../consts/messages.consts';
+import { EosMessageService } from './eos-message.service'
 
 @Injectable()
 export class EosApiService {
@@ -11,6 +14,7 @@ export class EosApiService {
     private _dictionaries: any;
 
     constructor(
+        private _msgSrv: EosMessageService,
         private _rubricSrv: RubricService
     ) {
         this._nodesMap = new Map<string, any>();
@@ -36,15 +40,19 @@ export class EosApiService {
     }
 
     getRubricatorNodes(): Promise<any> {
+        this._nodesMap.clear();
         return this._rubricSrv.getAll()
             .then((data) => {
-                this._nodesMap.clear();
                 data.forEach((e) => {
                     if (e.DUE) {
                         this._nodesMap.set(e.DUE, e);
                     }
                 })
                 return data;
+            })
+            .catch((err: Response) => {
+                this._msgSrv.addNewMessage(AUTH_REQUIRED);
+                return [];
             });
     }
 

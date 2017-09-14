@@ -31,6 +31,7 @@ export class PipRX {
         return this.http
             .get(this._cfg.dataSrv + url, this._options)
             .map((r) => {
+                console.log('r', r);
                 return r.json().value;
             });
     }
@@ -130,17 +131,15 @@ export class PipRX {
         const rl = Observable.of(...urls).flatMap(url => {
             return this.http
                 .get(url, _options)
-                .map(r => {
+                .map((r: Response) => {
                     try {
                         return Utils.nativeParser(r.json());
                     } catch (e) {
-                        return Observable.throw(new Error(e));
-                        // return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
+                        return Observable.throw(r);
                     }
                 })
                 .catch((err: Response) => {
-                    const details = err.json();
-                    return Observable.throw(new Error(details));
+                    return Observable.throw(err);
                 });
         });
         return rl.reduce((acc: T[], v: T[]) => {

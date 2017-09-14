@@ -3,19 +3,73 @@
         display: inline-block;
         padding: 20px;
         padding-bottom: 12px;
+        font-size: 16px;
+        line-height: 24px;
     }
 
     .full-info {
         border-top: 1px solid transparent;
         padding: 20px;
+        padding-top: 0;
 
         .field-title {
             text-transform: uppercase;
+            line-height: 16px;
+            font-size: 12px;
+        }
+
+        .field-value {
+            line-height: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 12px;
         }
 
         .field {
-            margin: 12px 0;
-            line-height: 32px;
+            margin: 0;
+            margin-top: 24px;
+        }
+    }
+
+    .opened-node-actions {
+        position: relative;
+        height: $breadcrumbs-height;
+        width: 400px;
+        border-bottom: 1px solid transparent;
+
+        .icon-btn {
+            position: absolute;
+
+            &.left {
+                left: 0;
+            }
+
+            &.right {
+                left: $item-width;
+            }
+
+            &.edit {
+                right: $item-width;
+            }
+        }
+
+        .rotate {
+            transform: rotate(90deg);
+            transition: 300ms ease-in-out;
+        }
+    }
+
+    .btn {
+        padding: 0;
+        height: $item-height;
+        width: $item-width;
+        // margin-top: -3px;
+        background-color: transparent;
+        border-radius: 0;
+        border-color: transparent;
+
+        &:focus {
+            outline: 0;
         }
     }
 }

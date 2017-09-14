@@ -1,4 +1,18 @@
 <div class="eos-opened-node">
+    <span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
+                <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}">
+                    <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
+                </button>
+                <button class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}">
+                    <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
+                </button>
+                <button class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}">
+                    <span class="icon {{actionEdit.iconClass}} small"></span>
+                </button>
+                <button class="btn pull-right" (click)="openInfo()">
+                    <span class="icon rotate eos-icon eos-icon-menu-blue small"></span>
+                </button>
+            </span>
     <div *ngIf="!viewFields">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
     <div *ngIf="viewFields" class="opened-node-wrapper">
         <div class="short-info">
@@ -10,7 +24,7 @@
         <div [hidden]="hideFull" class="full-info">
             <div *ngFor="let field of viewFields" class="field">
                 <span class="field-title">{{field.title}}</span> 
-                <br>{{field.value}}
+                <br><span class="field-value">{{field.value}}</span> 
             </div>
         </div>
     </div>

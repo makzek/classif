@@ -1,10 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDeskService } from '../services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeActionsService } from './node-actions.service';
@@ -15,6 +16,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { EDIT_CARD_ACTIONS } from '../edit-card/action.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -52,6 +54,10 @@ export class NodeActionsComponent {
 
     dictIdFromDescriptor: string;
 
+    innerClick = false;
+
+    newNode: EosDictionaryNode;
+
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
     get noSearchData(): boolean {
@@ -60,9 +66,18 @@ export class NodeActionsComponent {
         /* tslint:enable:no-bitwise */
     }
 
+    @HostListener('window:click', [])
+    private _closeSearchModal(): void {
+        if ( ! this.innerClick) {
+            this.dropdownIsOpen = false;
+        }
+        this.innerClick = false;
+    }
+
     constructor(private _userSettingsService: EosUserSettingsService,
         private modalService: BsModalService,
         private _dictionaryService: EosDictService,
+        private _deskService: EosDeskService,
         private _actionService: NodeActionsService,
         private _editCardActionService: EditCardActionService) {
         this._userSettingsService.settings.subscribe((res) => {
@@ -89,13 +104,8 @@ export class NodeActionsComponent {
                 case E_RECORD_ACTIONS.unmarkAllChildren:
                     this.allChildrenSelected = false;
                     this.someChildrenSelected = false;
-                    if (this.rootSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
+                    this.itemIsChecked = false;
+                    this.checkAll = false;
                     break;
                 case E_RECORD_ACTIONS.markAllChildren:
                     this.allChildrenSelected = true;
@@ -135,6 +145,7 @@ export class NodeActionsComponent {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
+                this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
@@ -168,6 +179,7 @@ export class NodeActionsComponent {
 
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
+        this.dropdownIsOpen = true;
     }
 
     public change(value: boolean): void {
@@ -175,14 +187,12 @@ export class NodeActionsComponent {
     }
 
     checkAllItems() {
-        if (!this.checkAll) {
-            this.checkAll = true;
+        if (this.checkAll) {
             this.rootSelected = true;
             this.allChildrenSelected = true;
             this.itemIsChecked = false;
             this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
         } else {
-            this.checkAll = false;
             this.itemIsChecked = false;
             this.allChildrenSelected = false;
             this.someChildrenSelected = false;
@@ -199,7 +209,7 @@ export class NodeActionsComponent {
     }
 
     search(event) {
-        if (event.keyCode === 13 && this.searchString) {
+        if (event.keyCode === 13) {
             this.dropdownIsOpen = false;
             this._dictionaryService.search(this.searchString, this.searchInAllDict);
         }
@@ -211,12 +221,33 @@ export class NodeActionsComponent {
     }
 
     create() {
-        this._editCardActionService.emitAction('create');
+        this.newNode = this._dictionaryService.getEmptyNode();
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 
     saveNewNode(data: any) {
-        console.log('Saving new node not implemented, data recived:', data);
         // this.dictionary.descriptor.getFieldView();
+        this._dictionaryService.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
+        let title = '';
+        this.newNode.getShortQuickView().forEach((_f) => {
+            title += data[_f.key];
+        });
+        this._deskService.addRecentItem({
+            link: '/spravochniki/' + this.dictionary.id + '/' + this.newNode.id,
+            title: title,
+            edited: false,
+        });
+    }
+
+    createOneMore() {
+        this.newNode = this._dictionaryService.getEmptyNode();
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+    }
+
+    cancelCreate() {
+        this.creatingModal.hide();
+        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject); // I'm not sure. We generate extra objects
     }
 }
