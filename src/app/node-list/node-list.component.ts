@@ -1,7 +1,8 @@
-import { Component, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, TemplateRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
@@ -16,7 +17,8 @@ import { IMessage } from '../core/message.interface';
 import {
     WARN_SEARCH_NOTFOUND,
     WARN_EDIT_ERROR,
-    DANGER_EDIT_ERROR,
+    DANGER_EDIT_ROOT_ERROR,
+    DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -24,7 +26,7 @@ import {
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
-export class NodeListComponent {
+export class NodeListComponent implements OnDestroy {
     @Input() nodes: EosDictionaryNode[];
 
     modalRef: BsModalRef;
@@ -49,6 +51,8 @@ export class NodeListComponent {
 
     private _dropPageAtList = true;
 
+    private _actionSubscription: Subscription;
+
     constructor(private _dictionaryService: EosDictService,
         private _orderService: EosDictOrderService,
         private _userSettingsService: EosUserSettingsService,
@@ -57,7 +61,6 @@ export class NodeListComponent {
         private router: Router,
         private _actionService: NodeActionsService) {
         this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
-
         this._dictionaryService.dictionary$.subscribe(
             (dictionary) => {
                 if (dictionary) {
@@ -94,7 +97,7 @@ export class NodeListComponent {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actionService.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.edit: {
                     if (this.openedNode) {
@@ -146,6 +149,10 @@ export class NodeListComponent {
                 }
             }
         });
+    }
+
+    ngOnDestroy() {
+        this._actionSubscription.unsubscribe();
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
@@ -233,7 +240,12 @@ export class NodeListComponent {
                     'edit',
                 ]);
             } else {
-                this._messageService.addNewMessage(DANGER_EDIT_ERROR);
+                if (!node.id.length) {
+                    this._messageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+                }
+                if (node.isDeleted) {
+                    this._messageService.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+                }
             }
         } else {
             this._messageService.addNewMessage(WARN_EDIT_ERROR);
@@ -334,7 +346,6 @@ export class NodeListComponent {
         this.pageAtList++;
         this._getListData(this.currentPage);
         this.currentPage++;
-        console.log('show more');
         // console.log('currentPage', this.currentPage);
     }
 

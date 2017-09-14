@@ -83,6 +83,7 @@ export class NodeActionsComponent {
         this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
+
         this._dictionaryService.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
@@ -140,6 +141,10 @@ export class NodeActionsComponent {
             }
         });
     }
+
+    /* ngOnDestroy() {
+        this._actionService.emitAction(null);
+    }*/
 
     actionHandler (type: E_RECORD_ACTIONS) {
         switch (type) {

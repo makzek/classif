@@ -14,7 +14,7 @@
         <ul *ngIf="nodes && !userSorting && openedNode" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}">
                 <div *ngIf="openedNode">
-                    <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="is-deleted-wrap node-list-item">
+                    <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="node-list-item">
                         <span *ngIf="showCheckbox" class="checkbox">
                         <label><input type="checkbox" [(ngModel)]="item.selected" (change)="checkItem(item)">
                             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
@@ -50,7 +50,7 @@
 </div>
 <ng-template #childTemplate let-item="item" let-index="index">
     <div *ngIf="openedNode">
-        <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'deleted': item.value.isDeleted && showDeleted}" class="is-deleted-wrap node-list-item">
+        <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'deleted': item.value.isDeleted && showDeleted}" class="node-list-item">
             <span *ngIf="showCheckbox" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="item.value.selected">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>

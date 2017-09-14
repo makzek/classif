@@ -24,7 +24,7 @@ export class OpenedNodeComponent {
     constructor(private eosDictService: EosDictService,
         private _nodeActionService: NodeActionsService,
         private _dictionaryActionService: DictionaryActionService) {
-        this.eosDictService.dictionary$.subscribe((dict) => {
+        /* this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
                 this.eosDictService.openedNode$.subscribe(
                     (node) => {
@@ -35,11 +35,20 @@ export class OpenedNodeComponent {
                     },
                     (error) => alert(error));
             }
-        });
+        });*/
+        this.eosDictService.openedNode$.subscribe(
+            (node) => {
+                if (node) {
+                    this.viewFields = node.getQuickView();
+                    this.shortViewFields = node.getShortQuickView();
+                }
+            },
+            (error) => alert(error));
     }
 
     actionHandler (type: E_RECORD_ACTIONS) {
         // console.log('actionHandler', E_RECORD_ACTIONS[type]);
+        console.log('opened-node emit', E_RECORD_ACTIONS[type]);
         this._nodeActionService.emitAction(type);
     }
 

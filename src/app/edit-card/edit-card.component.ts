@@ -12,6 +12,7 @@ import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
 import { EosDeskService } from '../services/eos-desk.service';
+import { EosMessageService } from '../services/eos-message.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';
@@ -73,9 +74,10 @@ export class EditCardComponent implements CanDeactivateGuard {
     constructor(
         private eosDictService: EosDictService,
         private nodeListActionService: NodeActionsService,
+        private actionService: EditCardActionService,
+        private messageService: EosMessageService,
         private route: ActivatedRoute,
         private router: Router,
-        private actionService: EditCardActionService,
         private _deskService: EosDeskService,
     ) {
 
@@ -225,7 +227,11 @@ export class EditCardComponent implements CanDeactivateGuard {
     }
 
     next() {
-        this.goTo(this._makeUrl(this.parent.children[this.nodeIndex + 1].id));
+        // if (this.parent.children[this.nodeIndex + 1].isDeleted) {
+        //     this.messageService.addNewMessage();
+        // } else {
+            this.goTo(this._makeUrl(this.parent.children[this.nodeIndex + 1].id));
+        // }
     }
 
     prev() {

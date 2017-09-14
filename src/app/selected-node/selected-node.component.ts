@@ -11,7 +11,7 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import {
-    DANGER_EDIT_ERROR,
+    DANGER_EDIT_ROOT_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -81,6 +81,7 @@ export class SelectedNodeComponent {
                     break;
                 }
                 case E_RECORD_ACTIONS.editSelected: {
+                    console.log('recive editSelected');
                     this.editNode();
                     break;
                 }
@@ -121,7 +122,8 @@ export class SelectedNodeComponent {
                 'edit',
             ]);
         } else {
-            this._eosMessageService.addNewMessage(DANGER_EDIT_ERROR);
+            console.log('selected-node make error');
+            this._eosMessageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
         }
     }
 

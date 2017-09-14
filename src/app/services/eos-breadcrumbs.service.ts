@@ -21,8 +21,6 @@ export class EosBreadcrumbsService {
     constructor(private _dictionaryService: EosDictService, private _deskService: EosDeskService) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
-
-
         this._deskService.selectedDesk.subscribe((desc) => {
             this._selectedDesk = desc;
             console.log('selected -->>', this._selectedDesk.id);
@@ -88,11 +86,18 @@ export class EosBreadcrumbsService {
                     }
 
                     if (routeSnaphot.params.desktopId && routeSnaphot.data.showInBreadcrumb) {
-                        this._deskService.desksList.subscribe(
+                        const _subscriber = this._deskService.desksList.subscribe(
                             (list) => {
                                 const _d = list.find((e: any) => e.id === routeSnaphot.params.desktopId);
                                 if (_d) {
-                                    bc.title = _d.name;
+                                   bc.title = _d.name;
+                                   /*this._deskService.getName(_d.id).subscribe((_n) => {
+                                        console.log('name from bc', _n);
+                                       bc.title = _n;
+                                    });*/
+                                }
+                                if (_subscriber) {
+                                    _subscriber.unsubscribe();
                                 }
                             }
                         );
