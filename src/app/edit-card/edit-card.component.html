@@ -1,4 +1,4 @@
-<div class="eos-edit-card" *ngIf="node">
+<div class="eos-edit-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <button [disabled]="isFirst || !parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
@@ -8,7 +8,7 @@
         </div>
         <div class="check-wrapper">
             <span class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="node.selected" (click)="check()">
+                <label *ngIf="node"><input type="checkbox" [(ngModel)]="node.selected">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>

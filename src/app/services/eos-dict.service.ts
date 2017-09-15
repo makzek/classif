@@ -115,25 +115,22 @@ export class EosDictService {
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return new Promise<EosDictionaryNode>((res, rej) => {
-            this.openDictionary(dictionaryId)
+            return <Promise<EosDictionaryNode>> this.openDictionary(dictionaryId)
                 .then((_dict) => {
                     if (_dict) {
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
-                        res(_node);
+                        return _node;
                     } else {
-                        this._api.getNode(dictionaryId, nodeId)
+                        return this._api.getNode(dictionaryId, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                 _dict.addNode(_node, _node.parent.id);
-                                res(_node);
+                                return _node;
                             })
                             .catch((err) => console.log(err));
                     }
-                }})
-                .catch((err) => rej(err));
-        });
+                }});
     }
 
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
