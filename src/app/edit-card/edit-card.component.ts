@@ -1,5 +1,5 @@
 import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/pairwise';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -13,7 +13,6 @@ import { IFieldView, FieldGroup } from '../core/field-descriptor';
 import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
 import { EosDeskService } from '../services/eos-desk.service';
-import { EosMessageService } from '../services/eos-message.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';
@@ -72,44 +71,45 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         return this.canDeactivate();
     }
 
-    constructor(private eosDictService: EosDictService,
-        private nodeListActionService: NodeActionsService,
-        private actionService: EditCardActionService,
-        private messageService: EosMessageService,
-        private route: ActivatedRoute,
-        private router: Router,
+    constructor(private _dictSrv: EosDictService,
+        private _nodeActSrv: NodeActionsService,
+        private _actSrv: EditCardActionService,
+        private _route: ActivatedRoute,
+        private _router: Router,
         private _deskService: EosDeskService) {
 
-        this._dictionarySubscription = this.eosDictService.dictionary$.subscribe((dict) => {
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             this._dict = dict;
             if (dict) {
                 this.dictIdFromDescriptor = dict.descriptor.id;
             }
         });
 
-        this.route.params.subscribe((params) => {
+        this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
         });
 
-        this.selfLink = this.router.url;
+        this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
-        this._urlSegments = this.router.url.split('/');
+        this._urlSegments = this._router.url.split('/');
         this.mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
         this.editMode = this.mode === EDIT_CARD_MODES.edit ? true : false;
-        this.actionService.emitMode(this.mode);
-        this.eosDictService.getNode(this.dictionaryId, this.nodeId)
+        this._actSrv.emitMode(this.mode);
+        this._dictSrv.getNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 this.node = node;
                 if (node) {
-                    this.nodeIndex = node.parent.children.findIndex((chld) => chld.id === node.id);
+                    this.nodeIndex = node.parent.children.findIndex((chld) => {
+                        return chld.id === node.id;
+                    });
                     this._updateBorders();
                 }
             }).catch((err) => console.log('getNode error', err));
 
-        this.nodeListActionService.emitAction(null);
+        this._nodeActSrv.emitAction(null);
 
-        this._actionSubscription = this.actionService.mode$.subscribe((mode) => {
+        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
             if (mode === EDIT_CARD_MODES.unsavedChanges) {
                 this.setUnsavedChanges();
             }
@@ -135,12 +135,12 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     save(): void {
-        this.actionService.emitAction(EDIT_CARD_ACTIONS.save);
+        this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
         this.changeMode();
     }
 
     cancel(): void {
-        this.actionService.emitAction(EDIT_CARD_ACTIONS.cancel);
+        this._actSrv.emitAction(EDIT_CARD_ACTIONS.cancel);
         this.changeMode();
     }
 
@@ -156,7 +156,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     recordResult(evt: any) {
         this.wasEdit = false;
         this.editMode = false;
-        this.eosDictService.updateNode(this.dictionaryId, this.nodeId, this._dict.descriptor.record, evt);
+        this._dictSrv.updateNode(this.dictionaryId, this.nodeId, this._dict.descriptor.record, evt);
         this._deskService.addRecentItem({
             link: this.selfLink.slice(0, this.selfLink.length - 5),
             title: this.nodeName,
@@ -172,9 +172,9 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigateByUrl(this.nextState.url);
+            this._router.navigateByUrl(this.nextState.url);
         } else {
-            this.router.navigate([this.nextRoute]);
+            this._router.navigate([this.nextRoute]);
         }
     }
 
@@ -186,9 +186,9 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         // this.router.navigate([this.selfLink]);
         // this._location.back();
         if (this.nextState) {
-            this.router.navigateByUrl(this.nextState.url);
+            this._router.navigateByUrl(this.nextState.url);
         } else {
-            this.router.navigate([this.nextRoute]);
+            this._router.navigate([this.nextRoute]);
         }
     }
 
@@ -205,19 +205,21 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     next() {
+        console.log('this.nodeIndex', this.nodeIndex);
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
     }
 
     prev() {
+        console.log('this.nodeIndex', this.nodeIndex);
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
     }
 
     goTo(url: string): void {
         if (!this.wasEdit) {
             if (url) {
-                this.router.navigate([url]);
+                this._router.navigate([url]);
             } else {
-                this.router.navigate([this.nextRoute]);
+                this._router.navigate([this.nextRoute]);
             }
         } else {
             if (url.length) {
@@ -283,7 +285,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }*/
 
     changeMode() {
-        this.router.navigate([
+        this._router.navigate([
             'spravochniki',
             this.dictionaryId,
             this.nodeId,
