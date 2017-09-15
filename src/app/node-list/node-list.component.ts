@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-// import { EosDictOrderService } from '../services/eos-dict-order.service';
+import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -57,9 +57,10 @@ export class NodeListComponent implements OnDestroy {
     private _selectedNodeSubscription: Subscription;
     private _searchResultSubscription: Subscription;
     private _userSettingsSubscription: Subscription;
+    private _orderSubscription: Subscription;
 
     constructor(private _dictSrv: EosDictService,
-        // private _orderSrv: EosDictOrderService,
+        private _orderSrv: EosDictOrderService,
         private _userSettingsSrv: EosUserSettingsService,
         private _msgSrv: EosMessageService,
         // private _modalSrv: BsModalService,
@@ -100,6 +101,12 @@ export class NodeListComponent implements OnDestroy {
 
         this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
+
+        this._orderSubscription = this._orderSrv.order$.subscribe((nodes) => {
+            if (nodes) {
+                this.nodes = nodes;
+            }
         });
 
         this._actionSubscription = this._actSrv.action$.subscribe((action) => {
@@ -163,6 +170,7 @@ export class NodeListComponent implements OnDestroy {
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
+        this._orderSubscription.unsubscribe();
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
@@ -220,6 +228,7 @@ export class NodeListComponent implements OnDestroy {
         this.nodeListPerPage.forEach((node, i) => {
             this.nodes.splice(i, 1, node);
         });
+<<<<<<< HEAD
         this._dictSrv.userOrder(this.nodes);
     }
 
@@ -238,6 +247,21 @@ export class NodeListComponent implements OnDestroy {
         } else {
             this._dictSrv.openDictionary(this._dictionaryId);
         }
+=======
+        this._orderService.complete(this.nodes);
+    }
+
+    userSortMoveUp(): void {
+        this._orderService.moveUp();
+    }
+
+    userSortMoveDown(): void {
+        this._orderService.moveDown();
+    }
+
+    toggleUserSort(): void {
+        this._orderService.order(this.nodes);
+>>>>>>> 9ea2fa9e9c5f94aadd6d01dab1dc3b658df8e935
     }
 
     editNode(node: EosDictionaryNode) {

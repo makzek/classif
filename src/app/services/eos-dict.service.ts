@@ -245,17 +245,6 @@ export class EosDictService {
         }
     }
 
-    private userOrderMove(nodes: EosDictionaryNode[], num: number) {
-        nodes.forEach((node, i) => {
-            const newIndex = i + num;
-            if (node.selected && newIndex >= 0 && newIndex < nodes.length) {
-                nodes.splice(i, 1);
-                nodes.splice(newIndex, 0, node);
-            }
-        });
-        this.userOrder(nodes);
-    }
-
     public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
@@ -307,36 +296,4 @@ export class EosDictService {
             node.children.forEach((subNode) => this.restoreItem(subNode));
         }
     }
-
-    public userOrder(nodes: EosDictionaryNode[]) {
-        const sortStorage = [];
-        nodes.forEach((node, i) => {
-            sortStorage.push(node.id);
-            node.sorting = i;
-        });
-        localStorage.setItem('userSort', JSON.stringify(sortStorage));
-    }
-
-    public userOrderMoveUp(nodes: EosDictionaryNode[]) {
-        this.userOrderMove(nodes, -1);
-        this._selectedNode$.next(this._selectedNode);
-    }
-
-    public userOrderMoveDown(nodes: EosDictionaryNode[]) {
-        this.userOrderMove(nodes, 1);
-        this._selectedNode$.next(this._selectedNode);
-    }
-
-    /*public userOrderSwitch(nodes: EosDictionaryNode[]) {
-        let sortStorage = JSON.parse(localStorage.getItem('userSort'));
-        console.log("userSort", sortStorage);
-        nodes.forEach((node, i) => {
-            sortStorage.forEach((id, sort) => {
-                if (node.id === id){
-                    console.log("userSort", "Splice", id);
-                    nodes.splice(sort, 1, node);
-                }
-            });
-        });
-    }*/
 }
