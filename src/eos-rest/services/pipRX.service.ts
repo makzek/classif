@@ -152,12 +152,14 @@ export class PipRX {
                 });
         });
 
+        /* duplicate requests - wery bad
         rl.subscribe(
             data => {},
             err => { // to do throw error
                 this._needAuth$.next(true);
             }
         );
+        */
 
         return rl.reduce((acc: T[], v: T[]) => {
             acc.push(...v);

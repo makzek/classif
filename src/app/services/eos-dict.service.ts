@@ -96,7 +96,6 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            console.log('openDictionary fired');
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     this._dictionary = new EosDictionary(descData);
@@ -119,7 +118,6 @@ export class EosDictService {
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        console.log('getNode fired', dictionaryId, nodeId);
         return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
             .then((_dict) => {
                 if (_dict) {
