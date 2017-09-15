@@ -10,11 +10,11 @@ import { IMessage } from '../core/message.interface';
 export class MessagesComponent {
     messages: IMessage[];
 
-    constructor(private _messageService: EosMessageService) {
-        _messageService.messages$.subscribe((messages) => this.messages = messages);
+    constructor(private _msgSrv: EosMessageService) {
+        _msgSrv.messages$.subscribe((messages) => this.messages = messages);
     }
 
     onClose(message: IMessage) {
-        this._messageService.removeMessage(message);
+        this._msgSrv.removeMessage(message);
     }
 }

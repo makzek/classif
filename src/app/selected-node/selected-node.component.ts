@@ -35,12 +35,12 @@ export class SelectedNodeComponent implements OnDestroy {
     private _userSettingsSubscription: Subscription;
     private _actionSubscription: Subscription;
 
-    constructor(private _eosDictService: EosDictService,
-        private _eosMessageService: EosMessageService,
-        private router: Router,
-        private _eosUserSettingsService: EosUserSettingsService,
-        private _actionService: NodeActionsService) {
-        this._dictionarySubscription = this._eosDictService.dictionary$.subscribe(
+    constructor(private _dictSrv: EosDictService,
+        private _msgSrv: EosMessageService,
+        private _router: Router,
+        private _userSettingsSrv: EosUserSettingsService,
+        private _actSrv: NodeActionsService) {
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
             (dictionary) => {
                 this.dictionary = dictionary;
                 if (dictionary) {
@@ -51,7 +51,7 @@ export class SelectedNodeComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-      this._selectedNodeSubscription = this._eosDictService.selectedNode$.subscribe((node) => {
+      this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
                 this.selectedNode = node;
                 if (node) {
                     // Uncheck all checboxes before changing selectedNode
@@ -69,7 +69,7 @@ export class SelectedNodeComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-        this._openedNodeSubscription = this._eosDictService.openedNode$.subscribe(
+        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe(
             (node) => {
                 this.openedNode = node;
                 if (!this.openedNode && this.dictionary) {
@@ -79,11 +79,11 @@ export class SelectedNodeComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-        this._userSettingsSubscription = this._eosUserSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionSubscription = this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.remove: {
                     this.delete();
@@ -124,35 +124,34 @@ export class SelectedNodeComponent implements OnDestroy {
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted) {
             if (node.id !== '') {
-                this._eosDictService.openNode(this._dictionaryId, node.id);
+                this._dictSrv.openNode(this._dictionaryId, node.id);
             }
         }
     }
 
     editNode() {
-        if (!this._eosDictService.isRoot(this.selectedNode.id)) {
-            localStorage.setItem('viewCardUrlRedirect', this.router.url);
-            this.router.navigate([
+        if (!this._dictSrv.isRoot(this.selectedNode.id)) {
+            localStorage.setItem('viewCardUrlRedirect', this._router.url);
+            this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,
                 this.selectedNode.id,
                 'edit',
             ]);
         } else {
-            console.log('selected-node make error');
-            this._eosMessageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+            this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
         }
     }
 
     selectNode(nodeId: string) {
-        this._eosDictService.selectNode(this._dictionaryId, nodeId);
+        this._dictSrv.selectNode(this._dictionaryId, nodeId);
     }
 
     delete() {
         if (this.selectedNode.selected) {
             this.selectedNode.selected = false;
-            this._eosDictService.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id]);
-            this.router.navigate([
+            this._dictSrv.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id]);
+            this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,
                 this.selectedNode.parent.id,
@@ -163,17 +162,17 @@ export class SelectedNodeComponent implements OnDestroy {
     physicallyDelete() {
         if (this.selectedNode.selected) {
             if (1 !== 1) { // here must be API request for check if possible to delete
-                this._eosMessageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
             } else {
-                const _deleteResult = this._eosDictService.physicallyDelete(this.selectedNode.id);
+                const _deleteResult = this._dictSrv.physicallyDelete(this.selectedNode.id);
                 if (_deleteResult) {
-                    this.router.navigate([
+                    this._router.navigate([
                         'spravochniki',
                         this._dictionaryId,
                         this.selectedNode.parent.id,
                     ]);
                 } else {
-                    this._eosMessageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                    this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                 }
             }
         }
@@ -181,22 +180,22 @@ export class SelectedNodeComponent implements OnDestroy {
 
     restoringLogicallyDeletedItem() {
         if (this.selectedNode.selected && this.selectedNode.isDeleted) {
-            this._eosDictService.physicallyDelete(this.selectedNode.id);
+            this._dictSrv.physicallyDelete(this.selectedNode.id);
         }
     }
 
     mark() {
         if (this.selectedNode.selected) {
-            this._actionService.emitAction(E_RECORD_ACTIONS.markRoot);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
         } else {
-            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
 
     viewNode() {
-        if (!this._eosDictService.isRoot(this.selectedNode.id)) {
-            localStorage.setItem('viewCardUrlRedirect', this.router.url);
-            this.router.navigate([
+        if (!this._dictSrv.isRoot(this.selectedNode.id)) {
+            localStorage.setItem('viewCardUrlRedirect', this._router.url);
+            this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,
                 this.selectedNode.id,

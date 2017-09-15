@@ -10,8 +10,8 @@ export class NoticeComponent {
     noticesCount = 0;
     notices: string[];
 
-    constructor(private eosNoticeService: EosNoticeService) {
-        this.noticesCount = this.eosNoticeService.noticesCount;
-        this.notices = this.eosNoticeService.notices;
+    constructor(private _noticeSrv: EosNoticeService) {
+        this.noticesCount = this._noticeSrv.noticesCount;
+        this.notices = this._noticeSrv.notices;
     }
 }

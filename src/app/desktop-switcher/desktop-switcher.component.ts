@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
@@ -40,18 +40,18 @@ export class DesktopSwitcherComponent {
         this.innerClick = false;
     }
 
-    constructor(private eosDeskService: EosDeskService,
-        private router: Router,
-        private messageService: EosMessageService,
+    constructor(private _deskSrv: EosDeskService,
+        // private _router: Router,
+        private _msgSrv: EosMessageService,
         private _confirmSrv: ConfirmWindowService
     ) {
-        this.eosDeskService.desksList.subscribe(
+        this._deskSrv.desksList.subscribe(
             (res) => {
                 this.deskList = res;
             }, (err) => alert('err' + err)
         );
 
-        this.eosDeskService.selectedDesk.subscribe(
+        this._deskSrv.selectedDesk.subscribe(
             (res) => {
                 if (res) { this.selectedDesk = res; }
             }, (err) => alert('err' + err)
@@ -63,7 +63,7 @@ export class DesktopSwitcherComponent {
         evt.preventDefault();
         evt.stopPropagation();
         if (this._moreThenOneEdited()) {
-            this.messageService.addNewMessage(WARN_DESK_EDITING);
+            this._msgSrv.addNewMessage(WARN_DESK_EDITING);
         } else {
             desk.edited = true;
             this.deskName = desk.name;
@@ -73,7 +73,7 @@ export class DesktopSwitcherComponent {
 
     openCreateForm() {
         if (this._moreThenOneEdited()) {
-            this.messageService.addNewMessage(WARN_DESK_CREATING);
+            this._msgSrv.addNewMessage(WARN_DESK_CREATING);
         } else {
             this.creating = true;
             this.deskName = this._generateNewDeskName();
@@ -102,7 +102,7 @@ export class DesktopSwitcherComponent {
         const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
         if (_tempDeskName === '') {
             const errPartTitle = desk.id ? 'редактирования' : 'создания';
-            this.messageService.addNewMessage({
+            this._msgSrv.addNewMessage({
                 type: 'warning',
                 title: 'Ошибка ' + errPartTitle + ' рабочего стола:',
                 msg: 'нельзя ввести пустое имя рабочего стола'
@@ -115,9 +115,9 @@ export class DesktopSwitcherComponent {
         } else {
             desk.name = _tempDeskName;
             if (desk.id) {
-                this.eosDeskService.editDesk(desk);
+                this._deskSrv.editDesk(desk);
             } else {
-                this.eosDeskService.createDesk(desk);
+                this._deskSrv.createDesk(desk);
             }
         }
         this.deskName = '';
@@ -127,7 +127,7 @@ export class DesktopSwitcherComponent {
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
-            this.messageService.addNewMessage(DANGER_DESK_CREATING);
+            this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             const _desk: EosDesk = {
                 id: null,
@@ -158,7 +158,7 @@ export class DesktopSwitcherComponent {
             .confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this.eosDeskService.removeDesk(desk);
+                    this._deskSrv.removeDesk(desk);
                 }
                 this.setInnerClick();
             });

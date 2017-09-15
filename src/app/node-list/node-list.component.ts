@@ -1,11 +1,11 @@
 import { Component, Input, TemplateRef, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
+// import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictOrderService } from '../services/eos-dict-order.service';
+// import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 import { EosMessageService } from '../services/eos-message.service';
@@ -58,15 +58,15 @@ export class NodeListComponent implements OnDestroy {
     private _searchResultSubscription: Subscription;
     private _userSettingsSubscription: Subscription;
 
-    constructor(private _dictionaryService: EosDictService,
-        private _orderService: EosDictOrderService,
-        private _userSettingsService: EosUserSettingsService,
-        private _messageService: EosMessageService,
-        private modalService: BsModalService,
-        private router: Router,
-        private _actionService: NodeActionsService) {
-        this._openedNodeSubscription = this._dictionaryService.openedNode$.subscribe((node) => this.openedNode = node);
-        this._dictionarySubscription = this._dictionaryService.dictionary$.subscribe(
+    constructor(private _dictSrv: EosDictService,
+        // private _orderSrv: EosDictOrderService,
+        private _userSettingsSrv: EosUserSettingsService,
+        private _msgSrv: EosMessageService,
+        // private _modalSrv: BsModalService,
+        private _router: Router,
+        private _actSrv: NodeActionsService) {
+        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
@@ -77,7 +77,7 @@ export class NodeListComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-        this._selectedNodeSubscription = this._dictionaryService.selectedNode$.subscribe((node) => {
+        this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
                 if (node.children) {
@@ -88,7 +88,7 @@ export class NodeListComponent implements OnDestroy {
             }
         });
 
-        this._searchResultSubscription = this._dictionaryService.searchResults$.subscribe((nodes) => {
+        this._searchResultSubscription = this._dictSrv.searchResults$.subscribe((nodes) => {
             if (nodes.length) {
                 this._update(nodes, false);
             } else if (this._selectedNode) {
@@ -98,17 +98,17 @@ export class NodeListComponent implements OnDestroy {
             }
         });
 
-        this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._actionSubscription = this._actionService.action$.subscribe((action) => {
+        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
             switch (action) {
                 case E_RECORD_ACTIONS.edit: {
                     if (this.openedNode) {
                         this.editNode(this.openedNode);
                     } else {
-                        this._actionService.emitAction(E_RECORD_ACTIONS.editSelected)
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
                     }
                     break;
                 }
@@ -172,7 +172,7 @@ export class NodeListComponent implements OnDestroy {
             this.totalItems = nodes.length;
             if (nodes.length) {
                 if (!this.hasParent) {
-                    this._dictionaryService.openNode(this._dictionaryId, this.nodes[0].id);
+                    this._dictSrv.openNode(this._dictionaryId, this.nodes[0].id);
                 }
             }
             this._getListData(this.currentPage);
@@ -192,16 +192,16 @@ export class NodeListComponent implements OnDestroy {
         /* tslint:disable:no-bitwise */
         if (node.selected) {
             if (!~this.nodes.findIndex((_n) => !_n.selected)) {
-                this._actionService.emitAction(E_RECORD_ACTIONS.markAllChildren);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
             } else {
-                this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
             }
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
-                this._actionService.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
             } else {
                 if (!!~this.nodes.findIndex((_n) => _n.selected)) {
-                    this._actionService.emitAction(E_RECORD_ACTIONS.markOne);
+                    this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
                 }
             }
         }
@@ -211,7 +211,7 @@ export class NodeListComponent implements OnDestroy {
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted) {
             if (node.id !== '') {
-                this._dictionaryService.openNode(this._dictionaryId, node.id);
+                this._dictSrv.openNode(this._dictionaryId, node.id);
             }
         }
     }
@@ -220,15 +220,15 @@ export class NodeListComponent implements OnDestroy {
         this.nodeListPerPage.forEach((node, i) => {
             this.nodes.splice(i, 1, node);
         });
-        this._dictionaryService.userOrder(this.nodes);
+        this._dictSrv.userOrder(this.nodes);
     }
 
     userSortMoveUp(): void {
-        this._dictionaryService.userOrderMoveUp(this.nodes);
+        this._dictSrv.userOrderMoveUp(this.nodes);
     }
 
     userSortMoveDown(): void {
-        this._dictionaryService.userOrderMoveDown(this.nodes);
+        this._dictSrv.userOrderMoveDown(this.nodes);
     }
 
     toggleUserSort(): void {
@@ -236,30 +236,30 @@ export class NodeListComponent implements OnDestroy {
         if (this.userSorting) {
 
         } else {
-            this._dictionaryService.openDictionary(this._dictionaryId);
+            this._dictSrv.openDictionary(this._dictionaryId);
         }
     }
 
     editNode(node: EosDictionaryNode) {
         if (node) {
             this._rememberCurrentURL();
-            if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
-                this.router.navigate([
+            if (!this._dictSrv.isRoot(node.id) && !node.isDeleted) {
+                this._router.navigate([
                     'spravochniki',
                     this._dictionaryId,
                     node.id,
                     'edit',
                 ]);
             } else {
-                if (this._dictionaryService.isRoot(node.id)) {
-                    this._messageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+                if (this._dictSrv.isRoot(node.id)) {
+                    this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
                 }
                 if (node.isDeleted) {
-                    this._messageService.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+                    this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
                 }
             }
         } else {
-            this._messageService.addNewMessage(WARN_EDIT_ERROR);
+            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
         }
     }
 
@@ -273,7 +273,7 @@ export class NodeListComponent implements OnDestroy {
                 }
             });
         }
-        this._dictionaryService.deleteSelectedNodes(this._dictionaryId, selectedNodes);
+        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
     }
 
     nextItem(goBack: boolean): void {
@@ -286,12 +286,12 @@ export class NodeListComponent implements OnDestroy {
         }
         if (i < this.nodes.length) {
             if (goBack) {
-                this._dictionaryService.openNode(this._dictionaryId, this.nodes[(i - 1 +
+                this._dictSrv.openNode(this._dictionaryId, this.nodes[(i - 1 +
                     this.nodes.length) % this.nodes.length].id);
                 this.currentPage = Math.floor(((i - 1 + this.nodes.length)
                     % this.nodes.length) / (this.itemsPerPage)) + 1;
             } else {
-                this._dictionaryService.openNode(this._dictionaryId, this.nodes[(i + 1 +
+                this._dictSrv.openNode(this._dictionaryId, this.nodes[(i + 1 +
                     this.nodes.length) % this.nodes.length].id);
                 this.currentPage = Math.floor(((i + 1 + this.nodes.length)
                     % this.nodes.length) / (this.itemsPerPage)) + 1;
@@ -304,17 +304,17 @@ export class NodeListComponent implements OnDestroy {
             this.nodes.forEach(node => {
                 if (node.selected) {
                     if (1 !== 1) { // here must be API request for check if possible to delete
-                        this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                     } else {
-                        const _deleteResult = this._dictionaryService.physicallyDelete(node.id);
+                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
                         if (_deleteResult) {
-                            this.router.navigate([
+                            this._router.navigate([
                                 'spravochniki',
                                 this._dictionaryId,
                                 node.parent.id,
                             ]);
                         } else {
-                            this._messageService.addNewMessage(DANGER_DELETE_ELEMENT);
+                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                         }
                     }
                 }
@@ -326,7 +326,7 @@ export class NodeListComponent implements OnDestroy {
         if (this.nodes) {
             this.nodes.forEach(child => {
                 if (child.selected && child.isDeleted) {
-                    this._dictionaryService.restoreItem(child);
+                    this._dictSrv.restoreItem(child);
                 }
             });
         }
@@ -368,8 +368,8 @@ export class NodeListComponent implements OnDestroy {
     viewNode(node: EosDictionaryNode) {
         if (node) {
             this._rememberCurrentURL();
-            if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
-                this.router.navigate([
+            if (!this._dictSrv.isRoot(node.id) && !node.isDeleted) {
+                this._router.navigate([
                     'spravochniki',
                     this._dictionaryId,
                     node.id,
@@ -380,6 +380,6 @@ export class NodeListComponent implements OnDestroy {
     }
 
     private _rememberCurrentURL(): void {
-        localStorage.setItem('viewCardUrlRedirect', this.router.url);
+        localStorage.setItem('viewCardUrlRedirect', this._router.url);
     }
 }

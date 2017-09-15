@@ -11,8 +11,8 @@ export class TitleComponent {
     /* todo: define it or remove. Mocked now*/
     title = 'Администрирование системы';
 
-    constructor( private _deskService: EosDeskService) {
-        this._deskService.selectedDesk.subscribe(
+    constructor( private _deskSrv: EosDeskService) {
+        this._deskSrv.selectedDesk.subscribe(
             (link) => {
                 if (link) {
                     this.currentDesk = '/home/' + link.id;

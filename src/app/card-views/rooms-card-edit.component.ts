@@ -19,8 +19,8 @@ export class RoomsCardEditComponent {
     showUsers = true;
     showAccess = true;
 
-    constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
-        this._dictionaryService.openedNode$.subscribe((node) => {
+    constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
+        this._dictSrv.openedNode$.subscribe((node) => {
             this.node = node;
             if (this.node) {
                 if (this.node.data) {
@@ -28,7 +28,7 @@ export class RoomsCardEditComponent {
                 }
             }
         });
-        this._actonService.action$.subscribe(
+        this._actSrv.action$.subscribe(
             (act) => {
                 switch (act) {
                     case EDIT_CARD_ACTIONS.save:
@@ -48,13 +48,13 @@ export class RoomsCardEditComponent {
     changeEditMode(value: boolean) {
         this.editMode = value;
         if (value) {
-            this._actonService.emitMode(EDIT_CARD_MODES.edit);
+            this._actSrv.emitMode(EDIT_CARD_MODES.edit);
         } else {
-            this._actonService.emitMode(EDIT_CARD_MODES.view);
+            this._actSrv.emitMode(EDIT_CARD_MODES.view);
         }
     }
 
     setUnsavedChanges() {
-        this._actonService.emitMode(EDIT_CARD_MODES.unsavedChanges);
+        this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
     }
 }

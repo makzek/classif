@@ -9,9 +9,9 @@ import { EosDictService } from '../services/eos-dict.service';
 export class DictionariesComponent {
     dictionariesList: { id: string, title: string }[];
 
-    constructor(private _dictionaryService: EosDictService) {
+    constructor(private _dictSrv: EosDictService) {
         this.dictionariesList = [];
-        this._dictionaryService
+        this._dictSrv
             .getDictionariesList()
             .then((list) => {
                 this.dictionariesList = list;

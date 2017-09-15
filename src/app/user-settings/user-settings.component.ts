@@ -2,7 +2,7 @@ import { Component, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
-import { EosUserService } from '../services/eos-user.service';
+// import { EosUserService } from '../services/eos-user.service';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
 
 @Component({
@@ -18,21 +18,21 @@ export class UserSettingsComponent {
     public modalRef: BsModalRef;
 
     constructor(
-        private eosUserService: EosUserService,
-        private eosUserSettingsService: EosUserSettingsService,
-        private modalService: BsModalService) {
-        this.eosUserSettingsService.settings.subscribe(
+        // private _usrSrv: EosUserService,
+        private _userSettingsSrv: EosUserSettingsService,
+        private _modalSrv: BsModalService) {
+        this._userSettingsSrv.settings.subscribe(
             (res) => this.settings = res,
             (err) => alert('err: ' + err)
         );
     }
 
     public openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+        this.modalRef = this._modalSrv.show(template);
     }
 
     saveSettings(): void {
         this.modalRef.hide();
-        this.eosUserSettingsService.saveSettings(this.settings);
+        this._userSettingsSrv.saveSettings(this.settings);
     }
 }

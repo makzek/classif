@@ -27,7 +27,7 @@ export class RubricatorCardEditComponent implements OnChanges {
     @Input() dictionaryId: string;
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private _dictionaryService: EosDictService, private _actonService: EditCardActionService) {
+    constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
         /*this._dictionaryService.openedNode$.subscribe((node) => {
             this.node = node;
             if (this.node) {
@@ -37,11 +37,11 @@ export class RubricatorCardEditComponent implements OnChanges {
             }
         });*/
 
-        this._dictionaryService.dictionary$.subscribe((_d) => {
+        this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             // console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
         });
-        this._actonService.action$.subscribe((act) => {
+        this._actSrv.action$.subscribe((act) => {
             switch (act) {
                 case EDIT_CARD_ACTIONS.save:
                     this.editMode = false;
@@ -64,7 +64,7 @@ export class RubricatorCardEditComponent implements OnChanges {
         }
         );
 
-        this._actonService.mode$.subscribe((mode) => {
+        this._actSrv.mode$.subscribe((mode) => {
             switch (mode) {
                 case EDIT_CARD_MODES.edit:
                     this.editMode = true;
@@ -78,7 +78,7 @@ export class RubricatorCardEditComponent implements OnChanges {
 
     ngOnChanges() {
         if (this.dictionaryId.length && this.nodeId.length) {
-            this._dictionaryService.openNode(this.dictionaryId, this.nodeId).then((node) => {
+            this._dictSrv.openNode(this.dictionaryId, this.nodeId).then((node) => {
                 node.getEditView().forEach(fld => {
                     this.data[fld.key] = fld.value;
                 });
@@ -106,6 +106,6 @@ export class RubricatorCardEditComponent implements OnChanges {
     }*/
 
     setUnsavedChanges() {
-        this._actonService.emitMode(EDIT_CARD_MODES.unsavedChanges);
+        this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
     }
 }

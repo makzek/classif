@@ -79,17 +79,17 @@ export class NodeActionsComponent implements OnDestroy {
         this.innerClick = false;
     }
 
-    constructor(private _userSettingsService: EosUserSettingsService,
-        private modalService: BsModalService,
-        private _dictionaryService: EosDictService,
-        private _deskService: EosDeskService,
-        private _actionService: NodeActionsService,
-        private _editCardActionService: EditCardActionService) {
-        this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
+    constructor(private _userSettingsSrv: EosUserSettingsService,
+        private _modalSrv: BsModalService,
+        private _dictSrv: EosDictService,
+        private _deskSrv: EosDeskService,
+        private _actSrv: NodeActionsService,
+        private _editActSrv: EditCardActionService) {
+        this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
-        this._dictionarySubscription = this._dictionaryService.dictionary$.subscribe((_d) => {
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
                 this.dictIdFromDescriptor = _d.descriptor.id;
@@ -100,7 +100,7 @@ export class NodeActionsComponent implements OnDestroy {
             }
         });
 
-        this._actionSubscription = this._actionService.action$.subscribe((act) => {
+        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
             switch (act) {
                 case E_RECORD_ACTIONS.markOne:
                     this.itemIsChecked = true;
@@ -157,13 +157,13 @@ export class NodeActionsComponent implements OnDestroy {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
-                this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+                this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
                 break;
             default:
-                this._actionService.emitAction(type);
+                this._actSrv.emitAction(type);
                 break;
         }
     }
@@ -186,11 +186,11 @@ export class NodeActionsComponent implements OnDestroy {
 
     switchUserSort() {
         this.userSort = !this.userSort;
-        this._actionService.emitAction(E_RECORD_ACTIONS.userOrder);
+        this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
     openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+        this.modalRef = this._modalSrv.show(template);
         this.dropdownIsOpen = true;
     }
 
@@ -203,12 +203,12 @@ export class NodeActionsComponent implements OnDestroy {
             this.rootSelected = true;
             this.allChildrenSelected = true;
             this.itemIsChecked = false;
-            this._actionService.emitAction(E_RECORD_ACTIONS.markRecords);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markRecords);
         } else {
             this.itemIsChecked = false;
             this.allChildrenSelected = false;
             this.someChildrenSelected = false;
-            this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
         }
     }
 
@@ -217,36 +217,36 @@ export class NodeActionsComponent implements OnDestroy {
         this.itemIsChecked = false;
         this.allChildrenSelected = false;
         this.someChildrenSelected = false;
-        this._actionService.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
     }
 
     search(event) {
         if (event.keyCode === 13) {
             this.dropdownIsOpen = false;
-            this._dictionaryService.search(this.searchString, this.searchInAllDict);
+            this._dictSrv.search(this.searchString, this.searchInAllDict);
             event.target.blur();
         }
     }
 
     fullSearch() {
         this.modalRef.hide();
-        this._dictionaryService.fullSearch(this.fields, this.searchInDeleted);
+        this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
     }
 
     create() {
-        this.newNode = this._dictionaryService.getEmptyNode();
-        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
+        this.newNode = this._dictSrv.getEmptyNode();
+        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 
     saveNewNode(data: any) {
         // this.dictionary.descriptor.getFieldView();
-        this._dictionaryService.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
+        this._dictSrv.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
         let title = '';
         this.newNode.getShortQuickView().forEach((_f) => {
             title += data[_f.key];
         });
-        this._deskService.addRecentItem({
+        this._deskSrv.addRecentItem({
             link: '/spravochniki/' + this.dictionary.id + '/' + this.newNode.id,
             title: title,
             edited: false,
@@ -254,13 +254,13 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     createOneMore() {
-        this.newNode = this._dictionaryService.getEmptyNode();
-        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.create);
-        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+        this.newNode = this._dictSrv.getEmptyNode();
+        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
+        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 
     cancelCreate() {
         this.creatingModal.hide();
-        this._editCardActionService.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject); // I'm not sure. We generate extra objects
+        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject); // I'm not sure. We generate extra objects
     }
 }

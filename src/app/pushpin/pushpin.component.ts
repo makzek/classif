@@ -15,13 +15,13 @@ export class PushpinComponent {
     deskList: EosDesk[];
     _link: IDeskItem;
 
-    constructor(private _deskService: EosDeskService,
-        private _breadcrumbsService: EosBreadcrumbsService,
-        private _messageService: EosMessageService) {
-        this._deskService.desksList.subscribe((res) => {
+    constructor(private _deskSrv: EosDeskService,
+        private _bcSrv: EosBreadcrumbsService,
+        private _msgSrv: EosMessageService) {
+        this._deskSrv.desksList.subscribe((res) => {
             this.deskList = res.filter((d) => d.id !== 'system');
         });
-        this._breadcrumbsService.currentLink.subscribe((link) => {
+        this._bcSrv.currentLink.subscribe((link) => {
             if (link) {
                 this._link = link;
                 // this._deskService.addRecentItem(this._link);
@@ -33,9 +33,9 @@ export class PushpinComponent {
         /* tslint:disable:no-bitwise */
         if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
             desk.references.push(this._link);
-            this._deskService.editDesk(desk);
+            this._deskSrv.editDesk(desk);
         } else {
-            this._messageService.addNewMessage(WARN_LINK_PIN);
+            this._msgSrv.addNewMessage(WARN_LINK_PIN);
         }
         /* tslint:enable:no-bitwise */
     }

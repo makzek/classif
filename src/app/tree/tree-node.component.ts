@@ -21,10 +21,10 @@ export class TreeNodeComponent implements OnInit {
     showDeleted = false;
     viewFields: IFieldView[];
 
-    constructor(private _router: Router, private _dictSrv: EosDictService, private _settingService: EosUserSettingsService) {
+    constructor(private _router: Router, private _dictSrv: EosDictService, private _settingSrv: EosUserSettingsService) {
         _dictSrv.dictionary$.subscribe((dict) => this._dictionaryId = dict.id);
         _dictSrv.selectedNode$.subscribe((node) => this._update(node));
-        _settingService.settings.subscribe((res) => {
+        _settingSrv.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
     }

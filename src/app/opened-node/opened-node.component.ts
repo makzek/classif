@@ -24,9 +24,9 @@ export class OpenedNodeComponent implements OnDestroy {
 
     private _openedNodeSubscription: Subscription;
 
-    constructor(private eosDictService: EosDictService,
-        private _nodeActionService: NodeActionsService,
-        private _dictionaryActionService: DictionaryActionService) {
+    constructor(private _dictSrv: EosDictService,
+        private _nodeActSrv: NodeActionsService,
+        private _dictActSrv: DictionaryActionService) {
         /* this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
                 this.eosDictService.openedNode$.subscribe(
@@ -39,7 +39,7 @@ export class OpenedNodeComponent implements OnDestroy {
                     (error) => alert(error));
             }
         });*/
-        this._openedNodeSubscription  = this.eosDictService.openedNode$.subscribe(
+        this._openedNodeSubscription  = this._dictSrv.openedNode$.subscribe(
             (node) => {
                 if (node) {
                     this.viewFields = node.getQuickView();
@@ -54,11 +54,11 @@ export class OpenedNodeComponent implements OnDestroy {
     }
 
     actionHandler (type: E_RECORD_ACTIONS) {
-        this._nodeActionService.emitAction(type);
+        this._nodeActSrv.emitAction(type);
     }
 
     openInfo() {
         console.log('dictionary open info');
-        this._dictionaryActionService.emitAction(DICTIONARY_ACTIONS.closeInfo);
+        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
      }
 }

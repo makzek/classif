@@ -18,17 +18,17 @@ export class DictionaryComponent implements OnDestroy {
     hideFullInfo = true;
     dictionaryName: string;
 
-    constructor(private _dictionaryService: EosDictService,
-        private route: ActivatedRoute,
-        private _actionService: DictionaryActionService) {
+    constructor(private _dictSrv: EosDictService,
+        private _route: ActivatedRoute,
+        private _actSrv: DictionaryActionService) {
 
-        this.route.params.subscribe((params) => {
+        this._route.params.subscribe((params) => {
             if (params) {
                 if (params.dictionaryId) {
-                    _dictionaryService.openDictionary(params.dictionaryId)
+                    _dictSrv.openDictionary(params.dictionaryId)
                         .then(() => {
                             if (params.nodeId) {
-                                _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
+                                _dictSrv.selectNode(params.dictionaryId, params.nodeId);
                             }
                         });
                 }
@@ -37,7 +37,7 @@ export class DictionaryComponent implements OnDestroy {
 
         this.nodes = [];
 
-        this._dictionaryService.dictionary$.subscribe((dictionary) => {
+        this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 this.dictionaryName = dictionary.root.title;
@@ -45,7 +45,7 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
-        this._actionService.state$.subscribe((state) => {
+        this._actSrv.state$.subscribe((state) => {
             if (state !== null) {
                 switch (state) {
                     case DICTIONARY_STATES.full:
@@ -68,7 +68,7 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
-        this._actionService.action$.subscribe((action) => {
+        this._actSrv.action$.subscribe((action) => {
             switch (action) {
                 case DICTIONARY_ACTIONS.closeTree:
                     this.hideTree = true;
@@ -88,21 +88,21 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._actionService.emitState(null);
+        this._actSrv.emitState(null);
         if (this.hideFullInfo && this.hideTree) {
-            this._actionService.emitState(DICTIONARY_STATES.selected);
+            this._actSrv.emitState(DICTIONARY_STATES.selected);
         }
 
         if (!this.hideFullInfo && this.hideTree) {
-            this._actionService.emitState(DICTIONARY_STATES.info);
+            this._actSrv.emitState(DICTIONARY_STATES.info);
         }
 
         if (this.hideFullInfo && !this.hideTree) {
-            this._actionService.emitState(DICTIONARY_STATES.tree);
+            this._actSrv.emitState(DICTIONARY_STATES.tree);
         }
 
         if (!this.hideFullInfo && !this.hideTree) {
-            this._actionService.emitState(DICTIONARY_STATES.full);
+            this._actSrv.emitState(DICTIONARY_STATES.full);
         }
     }
 

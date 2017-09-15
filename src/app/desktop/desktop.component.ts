@@ -27,18 +27,18 @@ export class DesktopComponent implements OnDestroy {
     private _routeSubscription: Subscription;
 
     constructor(
-        private _dictionaryService: EosDictService,
-        private _deskService: EosDeskService,
-        private router: Router,
-        private route: ActivatedRoute,
+        private _dictSrv: EosDictService,
+        private _deskSrv: EosDeskService,
+        private _router: Router,
+        private _route: ActivatedRoute,
         private _confirmSrv: ConfirmWindowService
     ) {
         this.referencesList = [];
-        this._routerSubscription = this.router.events
+        this._routerSubscription = this._router.events
             .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe(() => this._dictionaryService.getDictionariesList());
+            .subscribe(() => this._dictSrv.getDictionariesList());
 
-        this._selectedDeskSubscription = _deskService.selectedDesk.subscribe(
+        this._selectedDeskSubscription = _deskSrv.selectedDesk.subscribe(
             (desk) => {
                 if (desk) {
                     this._update(desk.references);
@@ -47,14 +47,14 @@ export class DesktopComponent implements OnDestroy {
             }
         );
 
-        this._recentItemsSubscription = _deskService.recentItems.subscribe(
+        this._recentItemsSubscription = _deskSrv.recentItems.subscribe(
             (items) => this.recentItems = items
         );
 
-        this._routeSubscription = route.url.subscribe(
+        this._routeSubscription = _route.url.subscribe(
             (res) => {
                 const link = res[0] || { path: 'system' };
-                _deskService.setSelectedDesk(link.path);
+                _deskSrv.setSelectedDesk(link.path);
             }
         );
     }
@@ -78,7 +78,7 @@ export class DesktopComponent implements OnDestroy {
             .confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._deskService.unpinRef(link);
+                    this._deskSrv.unpinRef(link);
                 }
             });
     }
