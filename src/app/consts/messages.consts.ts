@@ -23,6 +23,12 @@ export const DANGER_DESK_CREATING: IMessage = {
     msg: 'нельзя создавать рабочие столы с одинаковым именем'
 };
 
+export const WARN_LINK_PIN: IMessage = {
+    type: 'warning',
+    title: 'Ошибка добавления ссылки:',
+    msg: 'ссылка была прикреплена к этому рабочему столу ранее'
+};
+
 export const WARN_SEARCH_NOTFOUND: IMessage = {
     type: 'warning',
     title: 'Ничего не найдено: ',

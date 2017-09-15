@@ -4,6 +4,8 @@ import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IDeskItem } from '../core/desk-item.interface';
+import { EosMessageService } from '../services/eos-message.service';
+import { WARN_LINK_PIN } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-pushpin',
@@ -13,7 +15,9 @@ export class PushpinComponent {
     deskList: EosDesk[];
     _link: IDeskItem;
 
-    constructor(private _deskService: EosDeskService, private _breadcrumbsService: EosBreadcrumbsService) {
+    constructor(private _deskService: EosDeskService,
+        private _breadcrumbsService: EosBreadcrumbsService,
+        private _messageService: EosMessageService) {
         this._deskService.desksList.subscribe((res) => {
             this.deskList = res.filter((d) => d.id !== 'system');
         });
@@ -26,8 +30,14 @@ export class PushpinComponent {
     }
 
     pin(desk: EosDesk) {
-        desk.references.push(this._link);
-        this._deskService.editDesk(desk);
+        /* tslint:disable:no-bitwise */
+        if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
+            desk.references.push(this._link);
+            this._deskService.editDesk(desk);
+        } else {
+            this._messageService.addNewMessage(WARN_LINK_PIN);
+        }
+        /* tslint:enable:no-bitwise */
     }
 
 }
