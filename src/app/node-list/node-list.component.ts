@@ -242,7 +242,7 @@ export class NodeListComponent implements OnDestroy {
 
     editNode(node: EosDictionaryNode) {
         if (node) {
-            this.rememberCurrentURL();
+            this._rememberCurrentURL();
             if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -367,7 +367,7 @@ export class NodeListComponent implements OnDestroy {
 
     viewNode(node: EosDictionaryNode) {
         if (node) {
-            this.rememberCurrentURL();
+            this._rememberCurrentURL();
             if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
@@ -379,7 +379,7 @@ export class NodeListComponent implements OnDestroy {
         }
     }
 
-    private rememberCurrentURL(): void {
+    private _rememberCurrentURL(): void {
         localStorage.setItem('viewCardUrlRedirect', this.router.url);
     }
 }
