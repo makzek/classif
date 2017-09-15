@@ -117,7 +117,9 @@ export class EosBreadcrumbsService {
                     if (route.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
                         this._dictionaryService.getNode(route.params.dictionaryId, route.params.nodeId)
                             .then((node) => {
-                                bc.title = node.getShortQuickView()[0].value;
+                                if (node) {
+                                    bc.title = node.getShortQuickView()[0].value;
+                                }
                             });
                     }
 
