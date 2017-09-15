@@ -57,6 +57,7 @@ export class NodeListComponent implements OnDestroy {
     private _selectedNodeSubscription: Subscription;
     private _searchResultSubscription: Subscription;
     private _userSettingsSubscription: Subscription;
+    private _orderSubscription: Subscription;
 
     constructor(private _dictionaryService: EosDictService,
         private _orderService: EosDictOrderService,
@@ -100,6 +101,12 @@ export class NodeListComponent implements OnDestroy {
 
         this._userSettingsSubscription = this._userSettingsService.settings.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        });
+
+        this._orderSubscription = this._orderService.order$.subscribe((nodes) => {
+            if (nodes) {
+                this.nodes = nodes;
+            }
         });
 
         this._actionSubscription = this._actionService.action$.subscribe((action) => {
@@ -163,6 +170,7 @@ export class NodeListComponent implements OnDestroy {
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
+        this._orderSubscription.unsubscribe();
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
@@ -220,24 +228,19 @@ export class NodeListComponent implements OnDestroy {
         this.nodeListPerPage.forEach((node, i) => {
             this.nodes.splice(i, 1, node);
         });
-        this._dictionaryService.userOrder(this.nodes);
+        this._orderService.complete(this.nodes);
     }
 
     userSortMoveUp(): void {
-        this._dictionaryService.userOrderMoveUp(this.nodes);
+        this._orderService.moveUp();
     }
 
     userSortMoveDown(): void {
-        this._dictionaryService.userOrderMoveDown(this.nodes);
+        this._orderService.moveDown();
     }
 
     toggleUserSort(): void {
-        this.userSorting = !this.userSorting;
-        if (this.userSorting) {
-
-        } else {
-            this._dictionaryService.openDictionary(this._dictionaryId);
-        }
+        this._orderService.order(this.nodes);
     }
 
     editNode(node: EosDictionaryNode) {
