@@ -41,7 +41,6 @@ export class EosApiService {
     }
 
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
-        console.warn('get Nodes');
         let _promise: Promise<any[]>;
         const _params = {
             DUE: (nodeId ? nodeId : '0.') + '%',
@@ -92,7 +91,6 @@ export class EosApiService {
             _promise = _service.getAll(_params)
                 .then((data) => this._cacheData(descriptor, data))
                 .then((data: any[]) => {
-                    console.log('get node data', data);
                     if (data && data.length) {
                         return data[0];
                     } else {

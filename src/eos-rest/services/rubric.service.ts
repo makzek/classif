@@ -15,8 +15,7 @@ export class RubricService {
         } else {
             params = ALL_ROWS;
         }
-        console.log(params);
-        return this._pipe.read({ [INSTANCE_NAME]: params || ALL_ROWS }).toPromise<any>();
+        return this._pipe.read({ [INSTANCE_NAME]: params }).toPromise<any>();
     }
 
     create(data: any, params?: any): Promise<any> {

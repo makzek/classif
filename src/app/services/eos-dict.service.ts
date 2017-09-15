@@ -154,7 +154,7 @@ export class EosDictService {
                             parent.isExpanded = true;
                             parent = parent.parent;
                         }
-                        console.log('selectNode', node);
+                        /* console.log('selectNode', node); */
                         this._selectedNode = node;
                         this._selectedNode$.next(node);
                         this._openedNode = null;
