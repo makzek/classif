@@ -63,7 +63,7 @@ export class EosApiService {
                     return data;
                 })
                 .catch((err: Response) => {
-                    //this._msgSrv.addNewMessage(AUTH_REQUIRED);
+                    // this._msgSrv.addNewMessage(AUTH_REQUIRED);
                     return [];
                 });
         } else {
@@ -86,7 +86,7 @@ export class EosApiService {
                 return data;
             })
             .catch((err: Response) => {
-                //this._msgSrv.addNewMessage(AUTH_REQUIRED);
+                // this._msgSrv.addNewMessage(AUTH_REQUIRED);
                 return [];
             });
     }

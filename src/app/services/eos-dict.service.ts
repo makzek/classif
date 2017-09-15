@@ -118,6 +118,7 @@ export class EosDictService {
         return new Promise<EosDictionaryNode>((res, rej) => {
             this.openDictionary(dictionaryId)
                 .then((_dict) => {
+                    if (_dict) {
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
                         res(_node);
@@ -130,7 +131,7 @@ export class EosDictService {
                             })
                             .catch((err) => console.log(err));
                     }
-                })
+                }})
                 .catch((err) => rej(err));
         });
     }
@@ -163,6 +164,10 @@ export class EosDictService {
                 })
                 .catch((err) => rej(err));
         });
+    }
+
+    public isRoot(nodeId: string): boolean {
+        return this._dictionary.root.id === nodeId;
     }
 
     public openNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {

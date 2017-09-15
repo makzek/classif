@@ -243,7 +243,7 @@ export class NodeListComponent implements OnDestroy {
     editNode(node: EosDictionaryNode) {
         if (node) {
             this.rememberCurrentURL();
-            if (node.id.length && !node.isDeleted) {
+            if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
                     this._dictionaryId,
@@ -251,7 +251,7 @@ export class NodeListComponent implements OnDestroy {
                     'edit',
                 ]);
             } else {
-                if (!node.id.length) {
+                if (this._dictionaryService.isRoot(node.id)) {
                     this._messageService.addNewMessage(DANGER_EDIT_ROOT_ERROR);
                 }
                 if (node.isDeleted) {
@@ -368,7 +368,7 @@ export class NodeListComponent implements OnDestroy {
     viewNode(node: EosDictionaryNode) {
         if (node) {
             this.rememberCurrentURL();
-            if (node.id.length && !node.isDeleted) {
+            if (!this._dictionaryService.isRoot(node.id) && !node.isDeleted) {
                 this.router.navigate([
                     'spravochniki',
                     this._dictionaryId,

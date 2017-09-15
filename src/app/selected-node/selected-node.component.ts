@@ -130,7 +130,7 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     editNode() {
-        if (this.selectedNode.id.length) {
+        if (!this._eosDictService.isRoot(this.selectedNode.id)) {
             localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
@@ -194,7 +194,7 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     viewNode() {
-        if (this.selectedNode.id.length) {
+        if (!this._eosDictService.isRoot(this.selectedNode.id)) {
             localStorage.setItem('viewCardUrlRedirect', this.router.url);
             this.router.navigate([
                 'spravochniki',
