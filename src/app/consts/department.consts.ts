@@ -8,14 +8,61 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],
     groupActions: ['remove', 'removeHard'],
-
-    keyField: 'id',
-    parentField: 'parent',
+    keyField: 'DUE',
+    parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
     fields: [{
+        key: 'DUE',
+        type: 'string',
+        title: 'ID'
+    }, {
+        key: 'RUBRIC_CODE',
+        title: 'Код',
+        type: 'string'
+    }, {
+        key: 'CLASSIF_NAME',
+        title: 'Заголовок',
+        type: 'text'
+    }, {
+        key: 'NOTE',
+        title: 'Описание',
+        type: 'text'
+    }, {
+        key: 'CODE',
+        title: 'Code',
+        type: 'string'
+    }, {
+        key: 'DELETED',
+        title: 'DELETED',
+        type: 'number'
+    }, {
+        key: 'ISN_HIGH_NODE',
+        title: 'ISN_HIGH_NODE',
+        type: 'number'
+    }, {
+        key: 'ISN_LCLASSIF',
+        title: 'ISN_CLASSIF',
+        type: 'number'
+    }, {
+        key: 'ISN_NODE',
+        title: 'ISN_NODE',
+        type: 'number'
+    }, {
         key: 'IS_NODE',
-        type: 'boolean',
-        title: 'IS_NODE'
+        title: 'IS_NODE',
+        type: 'boolean'
+    }, {
+        key: 'PARENT_DUE',
+        title: 'PARENT_DUE',
+        type: 'string'
+    }, {
+        key: 'PROTECTED',
+        title: 'PROTECTED',
+        type: 'number'
+    }, {
+        key: 'WEIGHT',
+        title: 'WEIGHT',
+        type: 'number'
     }, {
         key: 'id',
         type: 'string',
@@ -233,24 +280,27 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Отчество, предложный падеж',
         type: 'text'
     }],
-
+    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     listFields: {
-        person: ['type', 'shortPosition'],
-        department: ['type', 'title']
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME'],
+        department: ['RUBRIC_CODE', 'CLASSIF_NAME']
     },
-    searchFields: [],
     fullSearchFields: {
-        person: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
-        department: ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+        // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
+        department: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
+        // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
     },
     quickViewFields: {
-        person: ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
+        // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
-        person: ['lastName', 'firstName', 'fathersName']
+        person: ['CLASSIF_NAME']
     },
     editFields: {
-        person: ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+        // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*
     fieldGroups: [{

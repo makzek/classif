@@ -27,7 +27,9 @@ export class DictionaryComponent implements OnDestroy {
                 if (params.dictionaryId) {
                     _dictionaryService.openDictionary(params.dictionaryId)
                         .then(() => {
-                            _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
+                            if (params.nodeId) {
+                                _dictionaryService.selectNode(params.dictionaryId, params.nodeId);
+                            }
                         });
                 }
             }

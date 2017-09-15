@@ -1,18 +1,39 @@
-import { DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
+import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor } from './dictionary-descriptor';
+import { RubricatorDictionaryDescriptor, IRubricatorDictionaryDescriptor } from './rubricator-dictionary-descriptor';
+import { DepartmentDictionaryDescriptor, IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
+import { DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
-    readonly id: string;
     descriptor: DictionaryDescriptor;
-    public title: string;
     root: EosDictionaryNode;
-    private _rootNodes: EosDictionaryNode[];
     private _nodes: Map<string, EosDictionaryNode>;
 
-    constructor(descriptor: DictionaryDescriptor, data: any) {
-        this.descriptor = descriptor;
-        this.id = data.id;
+    get id(): string {
+        return this.descriptor.id;
+    }
+
+    get title(): string {
+        return this.descriptor.title;
+    }
+
+    get nodes(): Map<string, EosDictionaryNode> {
+        return this._nodes;
+    }
+
+    constructor(descData: IDictionaryDescriptor) {
+        switch (descData.apiInstance) {
+            case DICT_API_INSTANCES.rubricator:
+                this.descriptor = new RubricatorDictionaryDescriptor(descData);
+                break;
+            case DICT_API_INSTANCES.department:
+                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData);
+                break;
+            default:
+                throw new Error('No API instance');
+        }
+
         this._nodes = new Map<string, EosDictionaryNode>();
     }
 
@@ -54,32 +75,6 @@ export class EosDictionary {
                 this.root.addChild(_node);
             }
         });
-    }
-
-    get nodes(): Map<string, EosDictionaryNode> {
-        return this._nodes;
-    }
-
-
-    /*
-    setChildren(parentId: string, children: EosDictionaryNode[]) {
-        const parent = this._nodes.get(parentId);
-        parent.children = children;
-        children.forEach((node) => {
-            node.parent = parent;
-            this._nodes.set(node.id, node);
-        });
-    }
-    */
-    /* get children nodes or first level nodes if parentNodeId is not specified */
-    getChildrenNodes(parentNodeId?: string): EosDictionaryNode[] {
-        if (typeof parentNodeId === 'undefined') {
-            return this._rootNodes;
-        }
-        // TODO: load children and return them
-        return [];
-        // const node = this._rootNodes.get(parentNodeId);
-        // return node && node.children;
     }
 
     getNode(nodeId: string): EosDictionaryNode {

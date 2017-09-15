@@ -8,6 +8,7 @@ import { SequenceMap } from '../core/sequence-map';
 import { Metadata } from '../core/metadata';
 import { ApiCfg } from '../core/api-cfg';
 import { Utils } from '../core/utils';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class PipRX {
@@ -15,10 +16,17 @@ export class PipRX {
     private _cfg: ApiCfg;
     private _options = HTTP_OPTIONS;
 
+    private _needAuth$: BehaviorSubject<boolean>;
+
+    get needAuth(): Observable<boolean> {
+        return this._needAuth$.asObservable();
+    }
+
     public sequenceMap: SequenceMap = new SequenceMap();
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
+        this._needAuth$ = new BehaviorSubject(false);
         this._metadata = new Metadata(cfg);
         this._metadata.init();
     }
@@ -31,8 +39,11 @@ export class PipRX {
         return this.http
             .get(this._cfg.dataSrv + url, this._options)
             .map((r) => {
-                console.log('r', r);
-                return r.json().value;
+                try {
+                    return r.json().value;
+                } catch (e) {
+                    Observable.throw(r);
+                }
             });
     }
 
@@ -135,13 +146,19 @@ export class PipRX {
                     try {
                         return Utils.nativeParser(r.json());
                     } catch (e) {
+                        this._needAuth$.next(true);
                         return Observable.throw(r);
                     }
-                })
-                .catch((err: Response) => {
-                    return Observable.throw(err);
                 });
         });
+
+        rl.subscribe(
+            data => {},
+            err => { // to do throw error
+                this._needAuth$.next(true);
+            }
+        );
+
         return rl.reduce((acc: T[], v: T[]) => {
             acc.push(...v);
             return acc;
