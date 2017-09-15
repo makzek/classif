@@ -40,30 +40,22 @@ export class EosApiService {
         });
     }
 
-    getNodes(descriptor: DictionaryDescriptor): Promise<any> {
-        let _promise: Promise<any>;
-        switch (descriptor.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                _promise = this._rubricSrv.getAll();
-                break;
-            case DICT_API_INSTANCES.department:
-                _promise = this._deptSrv.getAll();
-                break;
-            default:
-        }
+    getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
+        console.warn('get Nodes');
+        let _promise: Promise<any[]>;
+        const _params = {
+            DUE: (nodeId ? nodeId : '0.') + '%',
+            IS_NODE: '0',
+            // LAYER: '0:' + (level + 2) /* not supported */
+        };
 
-        if (_promise) {
-            _promise
-                .then((data) => {         /* for backward compatibility keep nodes in map*/
-                    data.forEach((e) => {
-                        if (e[descriptor.record.keyField.key]) {
-                            this._nodesMap.set(e[descriptor.record.keyField.key], e);
-                        }
-                    })
-                    return data;
-                })
+        const _service = this._apiService(descriptor);
+
+        if (_service) {
+            _promise = _service.getAll(_params)
+                .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
                 .catch((err: Response) => {
-                    // this._msgSrv.addNewMessage(AUTH_REQUIRED);
+                    console.log(err);
                     return [];
                 });
         } else {
@@ -74,35 +66,64 @@ export class EosApiService {
         return _promise;
     }
 
-    getRubricatorNodes(): Promise<any> {
-        this._nodesMap.clear();
-        return this._rubricSrv.getAll()
-            .then((data) => {
-                data.forEach((e) => {
-                    if (e.DUE) {
-                        this._nodesMap.set(e.DUE, e);
-                    }
-                })
-                return data;
+    getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
+        let _promise: Promise<any>;
+
+        const _node = this._nodesMap.get(nodeId);
+        if (_node) {
+            _promise = new Promise((res) => {
+                res(_node);
             })
-            .catch((err: Response) => {
-                // this._msgSrv.addNewMessage(AUTH_REQUIRED);
-                return [];
-            });
+        } else {
+            _promise = this._getNode(descriptor, nodeId);
+        }
+        return _promise;
     }
 
-    getNode(dictionaryId: string, nodeId: string): Promise<any> {
-        return new Promise((res, rej) => {
-            if (this._dictionaries[dictionaryId]) {
-                const _node = this._nodesMap.get(nodeId);
-                if (_node) {
-                    res(_node);
-                } else {
-                    rej('Node "' + nodeId + '" not found');
-                }
-            } else {
-                rej('Dictionary "' + dictionaryId + '" not found');
+    private _getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
+        let _promise: Promise<any>;
+
+        const _params = {
+            DUE: nodeId || ''
+        };
+        const _service = this._apiService(descriptor);
+
+        if (_service) {
+            _promise = _service.getAll(_params)
+                .then((data) => this._cacheData(descriptor, data))
+                .then((data: any[]) => {
+                    console.log('get node data', data);
+                    if (data && data.length) {
+                        return data[0];
+                    } else {
+                        return null;
+                    }
+                });
+        } else {
+            _promise = new Promise((res, rej) => {
+                res(null);
+            });
+        }
+        return _promise;
+    }
+
+    private _apiService(descriptor: DictionaryDescriptor): any {
+        switch (descriptor.apiInstance) {
+            case DICT_API_INSTANCES.rubricator:
+                return this._rubricSrv;
+            case DICT_API_INSTANCES.department:
+                return this._deptSrv;
+            default:
+                return null;
+        }
+    }
+
+    private _cacheData(descriptor: DictionaryDescriptor, data: any[]): any[] {
+        data.forEach((e) => {
+            if (e[descriptor.record.keyField.key]) {
+                this._nodesMap.set(e[descriptor.record.keyField.key], e);
             }
-        });
+        })
+        return data;
     }
 }
