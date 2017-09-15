@@ -228,40 +228,19 @@ export class NodeListComponent implements OnDestroy {
         this.nodeListPerPage.forEach((node, i) => {
             this.nodes.splice(i, 1, node);
         });
-<<<<<<< HEAD
-        this._dictSrv.userOrder(this.nodes);
+        this._orderSrv.complete(this.nodes);
     }
 
     userSortMoveUp(): void {
-        this._dictSrv.userOrderMoveUp(this.nodes);
+        this._orderSrv.moveUp();
     }
 
     userSortMoveDown(): void {
-        this._dictSrv.userOrderMoveDown(this.nodes);
+        this._orderSrv.moveDown();
     }
 
     toggleUserSort(): void {
-        this.userSorting = !this.userSorting;
-        if (this.userSorting) {
-
-        } else {
-            this._dictSrv.openDictionary(this._dictionaryId);
-        }
-=======
-        this._orderService.complete(this.nodes);
-    }
-
-    userSortMoveUp(): void {
-        this._orderService.moveUp();
-    }
-
-    userSortMoveDown(): void {
-        this._orderService.moveDown();
-    }
-
-    toggleUserSort(): void {
-        this._orderService.order(this.nodes);
->>>>>>> 9ea2fa9e9c5f94aadd6d01dab1dc3b658df8e935
+        this._orderSrv.order(this.nodes);
     }
 
     editNode(node: EosDictionaryNode) {
