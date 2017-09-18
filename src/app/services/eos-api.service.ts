@@ -8,6 +8,7 @@ import { RubricService, DepartmentService } from '../../eos-rest';
 
 import { AUTH_REQUIRED } from '../consts/messages.consts';
 import { EosMessageService } from './eos-message.service'
+import { EosUserService } from './eos-user.service';
 
 @Injectable()
 export class EosApiService {
@@ -17,7 +18,8 @@ export class EosApiService {
     constructor(
         private _msgSrv: EosMessageService,
         private _rubricSrv: RubricService,
-        private _deptSrv: DepartmentService
+        private _deptSrv: DepartmentService,
+        private _profileSrv: EosUserService
     ) {
         this._nodesMap = new Map<string, any>();
         this._dictionaries = {};
@@ -51,11 +53,18 @@ export class EosApiService {
         const _service = this._apiService(descriptor);
 
         if (_service) {
-            _promise = _service.getAll(_params)
-                .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
-                .catch((err: Response) => {
-                    console.log(err);
-                    return [];
+            _promise = this._profileSrv.checkAuth()
+                .then((authorized) => {
+                    if (authorized) {
+                        return _service.getAll(_params)
+                            .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
+                            .catch((err: Response) => {
+                                console.log(err);
+                                return [];
+                            });
+                    } else {
+                        return [];
+                    }
                 });
         } else {
             _promise = new Promise((res, rej) => {
@@ -83,16 +92,26 @@ export class EosApiService {
         let _promise: Promise<any>;
 
         const _params = {
-            DUE: nodeId || ''
+            DUE: nodeId || '',
+            IS_NODE: '0'
         };
+
         const _service = this._apiService(descriptor);
 
         if (_service) {
-            _promise = _service.getAll(_params)
-                .then((data) => this._cacheData(descriptor, data))
-                .then((data: any[]) => {
-                    if (data && data.length) {
-                        return data[0];
+            _promise = this._profileSrv.checkAuth()
+                .then((authorized) => {
+                    if (authorized) {
+                        return _service.getAll(_params)
+                            .then((data) => this._cacheData(descriptor, data))
+                            .then((data: any[]) => {
+                                if (data && data.length) {
+                                    return data[0];
+                                } else {
+                                    return null;
+                                }
+
+                            });
                     } else {
                         return null;
                     }
