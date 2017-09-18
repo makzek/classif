@@ -218,19 +218,14 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     next() {
-        console.log('this.nodeIndex', this.nodeIndex);
-        // this.nodeIndex++;
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
     }
 
     prev() {
-        console.log('this.nodeIndex', this.nodeIndex);
-        // this.nodeIndex--;
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
     }
 
     goTo(url: string): void {
-        console.log('goTo', url);
         if (!this.wasEdit) {
             if (url) {
                 this._router.navigate([url]);
