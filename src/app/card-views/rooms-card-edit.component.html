@@ -1,4 +1,4 @@
-<div class="rooms-card-edit" *ngIf="node">
+<div class="rooms-card-edit" >
     <aside class="edit-aside">
         <div class="btn-group vertical-buttons" role="group">
             <button type="button" class="btn btn-default">Что-то ещё</button>
@@ -11,17 +11,17 @@
             <span class="input-group-addon" id="basic-addon1">Краткое наименование кабинета:</span>
             <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="tmpObj['title']">
-            <p *ngIf="!editMode" class="form-control">{{node.data['title']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Полное наименование кабинета:</span>
             <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="tmpObj['description']">
-            <p *ngIf="!editMode" class="form-control">{{node.data['description']}}</p>
+            <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
-            <p class="form-control">{{node.data['department']}}</p>
+            <p class="form-control">{{data['department']}}</p>
         </div>
 
         <div class="panel panel-default">
@@ -42,13 +42,13 @@
                 </span>
             </div>
             <div class="panel-body">
-                <ul *ngIf="node.data['owner']">
+                <ul *ngIf="data['owner']">
                     <li *ngFor="let item of owner">
                         <span class="checkbox">
                             <label>
                                 <input (change)="setUnsavedChanges()" type="checkbox">
                                 <span *ngIf="editMode" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                {{node.data['owner'].fio}} - {{node.data['owner'].shortPosition}}
+                                {{data['owner'].fio}} - {{data['owner'].shortPosition}}
                             </label>
                         </span>
                     </li>
@@ -76,8 +76,8 @@
                     <div class="col-11">На визировании</div>
                     <div class="col-12">На подписи</div>
                 </div>
-                <div *ngIf="node.data['roomUsers']">
-                    <div *ngFor="let user of node.data['roomUsers']" class="twenty-col-wrapper">
+                <div *ngIf="data['roomUsers']">
+                    <div *ngFor="let user of data['roomUsers']" class="twenty-col-wrapper">
                         <div class="col-1">{{user.fio}}</div>
                         <div class="col-2"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
                         <div class="col-3"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>

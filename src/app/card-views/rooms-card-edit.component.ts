@@ -5,13 +5,19 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { FieldGroup } from '../core/field-descriptor';
 import { EditCardActionService } from '../edit-card/action.service';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
+import { CardEdit } from './card-edit';
 
 @Component({
     selector: 'eos-rooms-card-edit',
     templateUrl: 'rooms-card-edit.component.html',
 })
-export class RoomsCardEditComponent {
-    node: EosDictionaryNode;
+export class RoomsCardEditComponent extends CardEdit {
+
+    constructor(private _d: EosDictService, private _a: EditCardActionService) {
+        super(_d, _a);
+    }
+
+ /*   node: EosDictionaryNode;
     tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
     editMode = true;
@@ -56,5 +62,5 @@ export class RoomsCardEditComponent {
 
     setUnsavedChanges() {
         this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
-    }
+    }*/
 }

@@ -1,21 +1,12 @@
-import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
+import { Output, Input, EventEmitter, OnChanges } from '@angular/core';
 
-import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { FieldGroup } from '../core/field-descriptor';
+import { EosDictService } from '../services/eos-dict.service';
 import { EditCardActionService } from '../edit-card/action.service';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
-import { CardEdit } from './card-edit';
 
-@Component({
-    selector: 'eos-rubricator-card-edit',
-    templateUrl: 'rubricator-card-edit.component.html',
-})
-export class RubricatorCardEditComponent extends CardEdit /* implements OnChanges*/ {
-    // node: EosDictionaryNode;
-    /*tmpObj: any = {};
+export class CardEdit implements OnChanges {
+    tmpObj: any = {};
     data: any = {};
     editMode = true;
     showOwners = true;
@@ -26,13 +17,9 @@ export class RubricatorCardEditComponent extends CardEdit /* implements OnChange
 
     @Input() nodeId: string;
     @Input() dictionaryId: string;
-    @Output() result: EventEmitter<any> = new EventEmitter<any>();*/
+    @Output() result: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private _d: EosDictService, private _e: EditCardActionService) {
-        super(_d,  _e);
-    }
-
-   /* constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
+    constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
         this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             // console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
@@ -75,6 +62,7 @@ export class RubricatorCardEditComponent extends CardEdit /* implements OnChange
     ngOnChanges() {
         if (this.dictionaryId.length && this.nodeId.length) {
             this._dictSrv.openNode(this.dictionaryId, this.nodeId).then((node) => {
+                // console.log('node.getEditView()', node.getEditView());
                 node.getEditView().forEach(fld => {
                     this.data[fld.key] = fld.value;
                 });
@@ -89,5 +77,5 @@ export class RubricatorCardEditComponent extends CardEdit /* implements OnChange
 
     setUnsavedChanges() {
         this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
-    }*/
+    }
 }

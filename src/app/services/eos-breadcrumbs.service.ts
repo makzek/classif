@@ -118,7 +118,10 @@ export class EosBreadcrumbsService {
                         this._dictionaryService.getNode(route.params.dictionaryId, route.params.nodeId)
                             .then((node) => {
                                 if (node) {
-                                    bc.title = node.getShortQuickView()[0].value;
+                                    const _titleView = node.getShortQuickView()[0];
+                                    if (_titleView) {
+                                        bc.title = _titleView.value;
+                                    }
                                 }
                             });
                     }

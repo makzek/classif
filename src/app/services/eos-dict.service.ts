@@ -128,7 +128,9 @@ export class EosDictService {
                         return this._api.getNode(this._dictionary.descriptor, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(_dict.descriptor.record, data);
-                                _dict.addNode(_node, _node.parent.id);
+                                if (_node.parent) { // temp solution. It does not work with department but I need to test somw other things
+                                    _dict.addNode(_node, _node.parent.id);
+                                }
                                 return _node;
                             });
                     }

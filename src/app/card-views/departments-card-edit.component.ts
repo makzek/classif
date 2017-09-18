@@ -4,23 +4,28 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EditCardActionService } from '../edit-card/action.service';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
+import { CardEdit } from './card-edit';
 
 @Component({
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent {
-    node: EosDictionaryNode;
+export class DepartmentsCardEditComponent extends CardEdit {
+   // node: EosDictionaryNode;
     fieldGroups: string[];
     currTab = 0;
-    tmpObj: any = {};
+    /*tmpObj: any = {};
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
-    editMode = true;
+    editMode = true;*/
     /* todo: define it or remove*/
-    dictIdFromDescriptor: string;
+   /* dictIdFromDescriptor: string;*/
 
-    constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
-        this._dictSrv.openedNode$.subscribe((node) => {
+    constructor(private _d: EosDictService, private _a: EditCardActionService) {
+        super(_d, _a);
+
+        this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
+    }
+       /* this._dictSrv.openedNode$.subscribe((node) => {
             this.node = node;
             if (this.node) {
                 if (this.node.data) {
@@ -28,13 +33,9 @@ export class DepartmentsCardEditComponent {
                 }
             }
         });
-        this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
-        /*
-        this._dictionaryService.dictionary$.subscribe((dict) => {
-            this.fieldGroups = dict.descriptor.fieldGroups;
-        });
-        */
-        this._actSrv.action$.subscribe(
+        this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];*/
+
+  /*      this._actSrv.action$.subscribe(
             (act) => {
                 switch (act) {
                     case EDIT_CARD_ACTIONS.save:
@@ -49,12 +50,12 @@ export class DepartmentsCardEditComponent {
                 }
             }
         );
-    }
+    }*/
 
     setTab(i: number) {
         this.currTab = i;
     }
-
+/*
     changeEditMode(value: boolean) {
         this.editMode = value;
         if (value) {
@@ -66,5 +67,5 @@ export class DepartmentsCardEditComponent {
 
     setUnsavedChanges() {
         this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
-    }
+    }*/
 }

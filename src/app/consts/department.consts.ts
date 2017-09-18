@@ -127,8 +127,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
-    }, {
+    }, /*{
         key: 'fio',
+        title: 'Фамилия И.О.',
+        type: 'text',
+    }*/, {
+        key: 'SURNAME',
         title: 'Фамилия И.О.',
         type: 'text',
     }, {
@@ -299,7 +303,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         person: ['CLASSIF_NAME']
     },
     editFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*
