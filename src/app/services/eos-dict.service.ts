@@ -82,55 +82,58 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
+        const _dictionary = this._dictionaries.get(dictionaryId);
+
+        if (_dictionary) {
+            this._mDictionaryPromise.delete(dictionaryId);
+            return new Promise<EosDictionary>((res) => res(_dictionary));
+        } else {
+            return this._openDictionary(dictionaryId);
+        }
+
+    }
+
+    private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            _p = new Promise<EosDictionary>((res, rej) => {
-                const _dictionary = this._dictionaries.get(dictionaryId);
-
-                if (_dictionary) {
+            _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
+                .then((descData: any) => {
+                    this._dictionary = new EosDictionary(descData);
+                    this._dictionaries.set(dictionaryId, this._dictionary);
+                    return this._api.getNodes(this._dictionary.descriptor);
+                })
+                .then((data: any[]) => {
+                    this._dictionary.init(data);
+                    this._dictionary$.next(this._dictionary);
                     this._mDictionaryPromise.delete(dictionaryId);
-                    res(_dictionary);
-                } else {
-                    this._api.getDictionaryDescriptorData(dictionaryId)
-                        .then((descData: any) => {
-                            this._dictionary = new EosDictionary(descData);
-                            this._dictionaries.set(dictionaryId, this._dictionary);
-                            return this._api.getNodes(this._dictionary.descriptor);
-                        })
-                        .then((data) => {
-                            this._dictionary.init(data);
-                            this._dictionary$.next(this._dictionary);
-                            this._mDictionaryPromise.delete(dictionaryId);
-                            res(_dictionary);
-                        })
-                        .catch((err) => {
-                            this._mDictionaryPromise.delete(dictionaryId);
-                            rej(err);
-                        });
-                }
-            });
+                    return this._dictionary;
+                })
+                .catch((err) => {
+                    this._mDictionaryPromise.delete(dictionaryId);
+                    Promise.reject(err);
+                });
             this._mDictionaryPromise.set(dictionaryId, _p);
         }
         return _p;
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-            return <Promise<EosDictionaryNode>> this.openDictionary(dictionaryId)
-                .then((_dict) => {
-                    if (_dict) {
+        return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
+            .then((_dict) => {
+                if (_dict) {
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
                         return _node;
                     } else {
-                        return this._api.getNode(dictionaryId, nodeId)
+                        return this._api.getNode(this._dictionary.descriptor, nodeId)
                             .then((data: any) => {
                                 _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                 _dict.addNode(_node, _node.parent.id);
                                 return _node;
-                            })
-                            .catch((err) => console.log(err));
+                            });
                     }
-                }});
+                }
+            });
     }
 
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -151,7 +154,7 @@ export class EosDictService {
                             parent.isExpanded = true;
                             parent = parent.parent;
                         }
-                        console.log('selectNode', node);
+                        /* console.log('selectNode', node); */
                         this._selectedNode = node;
                         this._selectedNode$.next(node);
                         this._openedNode = null;
