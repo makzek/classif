@@ -17,6 +17,7 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
+    DANGER_EDIT_NO_SELECTED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -252,11 +253,24 @@ export class NodeListComponent implements OnDestroy {
                     'edit',
                 ]);
             } else {
-                if (this._dictSrv.isRoot(node.id)) {
+                if (!node.selected) {
+                    let childrenSelected = false;
+                    if (node.children) {
+                        for (let i in node.children) {
+                            if (node.children[i].selected) {
+                                childrenSelected = true;
+                            }
+                        }
+                    }
+                    if (!childrenSelected) {
+                        this._msgSrv.addNewMessage(DANGER_EDIT_NO_SELECTED_ERROR);
+                    }
+
+                } else if (this._dictSrv.isRoot(node.id)) {
                     this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
-                }
-                if (node.isDeleted) {
-                    this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+                    if (node.isDeleted) {
+                        this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+                    }
                 }
             }
         } else {
