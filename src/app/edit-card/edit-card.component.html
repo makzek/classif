@@ -80,7 +80,7 @@
                     <div class="warning-wrapper" *ngIf="lastEditedCard">
                         <div class="warning">
                             В настоящее время в режиме редактирования находится карточка<br>
-                            <p class="text-center"><a href="/#/{{ lastEditedCard.link }}/edit" (click)="modalOnlyRef.hide()">{{ lastEditedCard.title }}</a></p>
+                            <p class="text-center"><a href="/#/{{ lastEditedCard.link }}" (click)="modalOnlyRef.hide()">{{ lastEditedCard.title }}</a></p>
                         </div>
                     </div>
                 </div>

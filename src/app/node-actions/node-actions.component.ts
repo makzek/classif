@@ -18,6 +18,7 @@ import { EditCardActionService } from '../edit-card/action.service';
 
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EDIT_CARD_ACTIONS } from '../edit-card/action.service';
+import { EditedCard } from '../edit-card/edit-card.component';
 
 @Component({
     selector: 'eos-node-actions',
@@ -57,11 +58,15 @@ export class NodeActionsComponent implements OnDestroy {
 
     innerClick = false;
 
+    lastEditedCard: EditedCard;
+
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
     private _actionSubscription: Subscription
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
+
+    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
@@ -159,6 +164,9 @@ export class NodeActionsComponent implements OnDestroy {
                 break;
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
+                break;
+            case E_RECORD_ACTIONS.edit:
+                this.editNode();
                 break;
             default:
                 this._actSrv.emitAction(type);
@@ -258,5 +266,15 @@ export class NodeActionsComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
         this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+    }
+
+    editNode() {
+        /* forbid to open a card in the edit mode if there is another card opened */
+        this.lastEditedCard = JSON.parse(localStorage.getItem('lastEditedCard'));
+        if (this.lastEditedCard) {
+            this.modalOnlyRef.show();
+        } else {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.edit);
+        }
     }
 }

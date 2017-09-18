@@ -101,6 +101,27 @@
     </div>
 </div>
 
+<div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Предупреждение:</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalOnlyRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <div class="warning-wrapper" *ngIf="lastEditedCard">
+                    <div class="warning">
+                        В настоящее время в режиме редактирования находится карточка<br>
+                        <p class="text-center"><a href="/#/{{ lastEditedCard.link }}" (click)="modalOnlyRef.hide()">{{ lastEditedCard.title }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <template #searchModal>
     <div class="search-modal modal-header">
         <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
