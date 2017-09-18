@@ -57,8 +57,6 @@ export class NodeActionsComponent implements OnDestroy {
 
     innerClick = false;
 
-    newNode: EosDictionaryNode;
-
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
     private _actionSubscription: Subscription
@@ -234,33 +232,31 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     create() {
-        this.newNode = this._dictSrv.getEmptyNode();
         this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 
     saveNewNode(data: any) {
-        // this.dictionary.descriptor.getFieldView();
-        this._dictSrv.updateNode(this.dictionary.id, this.newNode.id, this.dictionary.descriptor.record, data);
+        const newNode = this._dictSrv.getEmptyNode();
+        this._dictSrv.updateNode(this.dictionary.id, newNode.id, this.dictionary.descriptor.record, data);
         let title = '';
-        this.newNode.getShortQuickView().forEach((_f) => {
+        newNode.getShortQuickView().forEach((_f) => {
             title += data[_f.key];
         });
         this._deskSrv.addRecentItem({
-            link: '/spravochniki/' + this.dictionary.id + '/' + this.newNode.id,
+            link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
             title: title,
             edited: false,
         });
     }
 
     createOneMore() {
-        this.newNode = this._dictSrv.getEmptyNode();
         this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 
     cancelCreate() {
         this.creatingModal.hide();
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject); // I'm not sure. We generate extra objects
+        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 }
