@@ -19,7 +19,14 @@ export class EosDictOrderService {
     }
 
     public order(nodes: EosDictionaryNode[]) {
-        // localStorage.getItem('userOrder');
+        const sortStorage = localStorage.getItem('userOrder');
+        if (sortStorage) {
+            nodes.forEach((node, i) => {
+                sortStorage.forEach((id) => {
+
+                });
+            });
+        }
         this._order$.next(nodes);
     }
 
