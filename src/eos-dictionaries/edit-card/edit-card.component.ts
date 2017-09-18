@@ -1,5 +1,5 @@
 import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, ActivatedRouteSnapshot } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/pairwise';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -77,6 +77,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         private _router: Router,
         private _deskService: EosDeskService) {
 
+        // Needs for fire constructor every time when we navigate with < and >
+        this._router.routeReuseStrategy.shouldReuseRoute = function () {
+            return false;
+        }
+
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             this._dict = dict;
             if (dict) {
@@ -131,10 +136,18 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
+
+
+        // return shouldReuseRoute to default
+        this._router.routeReuseStrategy.shouldReuseRoute =
+            function (future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+                return future.routeConfig === curr.routeConfig;
+            }
     }
 
     save(): void {
         this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
+        this.clearStorage();
         this.changeMode();
     }
 
@@ -204,12 +217,10 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     next() {
-        console.log('this.nodeIndex', this.nodeIndex);
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
     }
 
     prev() {
-        console.log('this.nodeIndex', this.nodeIndex);
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
     }
 
@@ -273,7 +284,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this.lastEditedCard = this.getLastEditedCard();
         if (this.mode === EDIT_CARD_MODES.view) {
             if (this.lastEditedCard) {
-                if ( ! this.wasEdit) {
+                if (!this.wasEdit) {
                     navigate = false;
                     /* if we try to edit an other card */
                     if (this.nodeId !== this.lastEditedCard.id) {

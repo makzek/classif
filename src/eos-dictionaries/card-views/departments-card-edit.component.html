@@ -68,13 +68,13 @@
                 <span class="subcol-3-wrapper">
                     <div class="input-group subcol-1">
                         <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                        <input *ngIf="editMode" (change)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['startDate']">
-                        <p *ngIf="!editMode" class="form-control">{{data['startDate']}}</p>
+                        <input *ngIf="editMode" (change)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['START_DATE']">
+                        <p *ngIf="!editMode" class="form-control">{{data['START_DATE']}}</p>
                     </div>
                     <div class="input-group subcol-2">
                         <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                        <input *ngIf="editMode" (change)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['endDate']">
-                        <p *ngIf="!editMode" class="form-control">{{data['endDate']}}</p>
+                        <input *ngIf="editMode" (change)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['END_DATE']">
+                        <p *ngIf="!editMode" class="form-control">{{data['END_DATE']}}</p>
                     </div>
                 </span>
             </div>
@@ -84,7 +84,7 @@
                 <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>
             </span>
             <span class="checkbox">
-                <label><input type="checkbox" (change)="setUnsavedChanges()" [disabled]="!editMode" [(ngModel)]="data['boss']">
+                <label><input type="checkbox" (change)="setUnsavedChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                     Начальник
                 </label>
@@ -96,8 +96,8 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
-                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['indexOfficial']">
-                <p *ngIf="!editMode" class="form-control">{{data['indexOfficial']}}</p>
+                <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['DEPARTMENT_INDEX']">
+                <p *ngIf="!editMode" class="form-control">{{data['DEPARTMENT_INDEX']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
@@ -110,18 +110,18 @@
             <div class="col-1">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Номер телефона:</span>
-                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['phone']">
-                    <p *ngIf="!editMode" class="form-control">{{data['phone']}}</p>
+                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['PHONE']">
+                    <p *ngIf="!editMode" class="form-control">{{data['PHONE']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Номер местного телефона:</span>
-                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['localPhone']">
-                    <p *ngIf="!editMode" class="form-control">{{data['localPhone']}}</p>
+                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['PHONE_LOCAL']">
+                    <p *ngIf="!editMode" class="form-control">{{data['PHONE_LOCAL']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">E-mail:</span>
-                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['email']">
-                    <p *ngIf="!editMode" class="form-control">{{data['email']}}</p>
+                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['E_MAIL']">
+                    <p *ngIf="!editMode" class="form-control">{{data['E_MAIL']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Skype:</span>
@@ -130,13 +130,13 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Факс:</span>
-                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fax']">
-                    <p *ngIf="!editMode" class="form-control">{{data['fax']}}</p>
+                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['FAX']">
+                    <p *ngIf="!editMode" class="form-control">{{data['FAX']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Кабинет:</span>
-                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['room']">
-                    <p *ngIf="!editMode" class="form-control">{{data['room']}}</p>
+                    <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['NUM_CAB']">
+                    <p *ngIf="!editMode" class="form-control">{{data['NUM_CAB']}}</p>
                 </div>
             </div>
         </div>
