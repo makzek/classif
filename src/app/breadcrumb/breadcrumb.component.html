@@ -9,21 +9,6 @@
             <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
         </li>
     </ol>
-    
-    <!--<span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
-        <button *ngIf="infoOpened" class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}">
-            <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
-        </button>
-        <button *ngIf="infoOpened" class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}">
-            <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
-        </button>
-        <button *ngIf="infoOpened" class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}">
-            <span class="icon {{actionEdit.iconClass}} small"></span>
-        </button>
-        <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
-            <span class="icon icon-right eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-right': infoOpened}"></span>
-        </button>
-    </span>-->
     <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
             <span class="icon icon-right eos-icon eos-icon-menu-blue small"></span>
         </button>

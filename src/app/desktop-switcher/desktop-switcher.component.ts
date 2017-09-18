@@ -4,8 +4,8 @@ import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
-import { EosMessageService } from '../services/eos-message.service';
-import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
 import {
     WARN_DESK_CREATING,

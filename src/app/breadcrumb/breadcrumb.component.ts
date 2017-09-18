@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
-/*import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
-import { E_RECORD_ACTIONS } from '../core/record-action';*/
+import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
 
 enum CURRENT_PAGE {
     dictionary

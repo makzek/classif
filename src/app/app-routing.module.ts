@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { DictionaryComponent } from './dictionary/dictionary.component';
-import { EditCardComponent } from './edit-card/edit-card.component';
+import { DictionariesComponent } from '../eos-dictionaries/dictionaries/dictionaries.component';
+import { DictionaryComponent } from '../eos-dictionaries/dictionary/dictionary.component';
+import { EditCardComponent } from '../eos-dictionaries/edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { DeliveryComponent } from '../eos-rest/clman/delivery.component';

@@ -7,15 +7,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosUserSettingsService } from '../services/eos-user-settings.service';
-import { EosMessageService } from '../services/eos-message.service';
+import { EosUserSettingsService } from '../../app/services/eos-user-settings.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { NodeActionsService } from '../node-actions/node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { IMessage } from '../core/message.interface';
 import {
-    WARN_SEARCH_NOTFOUND,
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,

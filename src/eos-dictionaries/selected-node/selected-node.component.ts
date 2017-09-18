@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosMessageService } from '../services/eos-message.service';
-import { EosUserSettingsService } from '../services/eos-user-settings.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { EosUserSettingsService } from '../../app/services/eos-user-settings.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeActionsService } from '../node-actions/node-actions.service';
@@ -26,7 +26,6 @@ export class SelectedNodeComponent implements OnDestroy {
     selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     viewFields: FieldDescriptor[];
-
     showDeleted = false;
 
     private _dictionarySubscription: Subscription;

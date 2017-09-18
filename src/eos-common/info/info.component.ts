@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, EventEmitter, HostListener } from '@angular/core';
+import { Component, Input, ViewChild, HostListener } from '@angular/core';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 
 @Component({

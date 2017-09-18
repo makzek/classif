@@ -4,9 +4,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosUserSettingsService } from '../services/eos-user-settings.service';
+import { EosUserSettingsService } from '../../app/services/eos-user-settings.service';
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDeskService } from '../services/eos-desk.service';
+import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeActionsService } from './node-actions.service';
@@ -14,10 +14,8 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EditCardActionService } from '../edit-card/action.service';
-
+import { EditCardActionService, EDIT_CARD_ACTIONS } from '../edit-card/action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
-import { EDIT_CARD_ACTIONS } from '../edit-card/action.service';
 import { EditedCard } from '../edit-card/edit-card.component';
 
 @Component({

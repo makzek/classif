@@ -3,11 +3,11 @@ import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosDictService } from '../services/eos-dict.service';
+import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
 
 import { IDeskItem } from '../core/desk-item.interface';
-import { ConfirmWindowService } from '../confirm-window/confirm-window.service';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
 
 @Component({
