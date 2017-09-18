@@ -148,6 +148,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     save(): void {
         this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
+        this.clearStorage();
         this.changeMode();
     }
 
