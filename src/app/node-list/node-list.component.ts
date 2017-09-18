@@ -41,7 +41,6 @@ export class NodeListComponent implements OnDestroy {
     itemsPerPage = 10;
 
     currentPage = 1;
-    pageAtList = 1;
     showDeleted: boolean;
 
     hasParent = true;
@@ -49,7 +48,8 @@ export class NodeListComponent implements OnDestroy {
 
     userSorting = false;
 
-    private _dropPageAtList = true;
+    private _startPage = 1;
+    private _dropStartPage = true;
 
     private _actionSubscription: Subscription;
     private _openedNodeSubscription: Subscription;
@@ -183,7 +183,7 @@ export class NodeListComponent implements OnDestroy {
                     this._dictSrv.openNode(this._dictionaryId, this.nodes[0].id);
                 }
             }
-            this._getListData(this.currentPage);
+            this._getListData();
         }
 
     }
@@ -335,11 +335,11 @@ export class NodeListComponent implements OnDestroy {
         }
     }
 
-    private _getListData(page: number) {
+    private _getListData() {
         if (this.nodes && this.nodes.length) {
             this.nodeListPerPage = this.nodes.slice(
-                (this.currentPage - 1) * this.itemsPerPage,
-                this.currentPage * this.pageAtList * this.itemsPerPage
+                (this._startPage - 1) * this.itemsPerPage,
+                this.currentPage * this.itemsPerPage
             );
         } else {
             this.nodeListPerPage = [];
@@ -347,25 +347,24 @@ export class NodeListComponent implements OnDestroy {
     }
 
     pageChanged(event: any): void {
-        if (this._dropPageAtList) {
-            this.pageAtList = 1;
-            this.currentPage = event.page;
-            this._getListData(event.page);
+        if (this._dropStartPage) {
+            this._startPage = event.page;
         }
-        this._dropPageAtList = true;
+        this.currentPage = event.page;
+        /* console.log('pageChanged fired', this._startPage, event.page); */
+        this._getListData();
+        this._dropStartPage = true;
     }
 
     showMore() {
-        this._dropPageAtList = false;
-        this.pageAtList++;
-        this._getListData(this.currentPage);
+        this._dropStartPage = false;
         this.currentPage++;
-        // console.log('currentPage', this.currentPage);
     }
 
     setItemCount(value: string) {
         this.itemsPerPage = +value;
-        this._getListData(this.currentPage);
+        this._startPage = this.currentPage;
+        this._getListData();
     }
 
     viewNode(node: EosDictionaryNode) {
