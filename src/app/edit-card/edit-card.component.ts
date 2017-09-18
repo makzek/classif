@@ -18,7 +18,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';
 
 /* Object that stores info about the last edited card in the LocalStorage */
-class EditedCard {
+export class EditedCard {
     id: string;
     title: string;
     link: string;
@@ -239,25 +239,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         return true;
     }
 
-    openEditMode(): void { /* Somebody use it? */
-        this.lastEditedCard = this.getLastEditedCard();
-        if (this.lastEditedCard) {
-            if (this.wasEdit) { /* if we just switched from view-mode to edit-mode */
-                this.editMode = true;
-            } else {
-                /* try to edit a different card */
-                if (this.nodeId !== this.lastEditedCard.id) {
-                    this.modalOnlyRef.show();
-                    /* forbid the edit-mode on other browser tabs */
-                } else {
-                    this.editMode = false;
-                }
-            }
-        } else {
-            this.editMode = true;
-        }
-    }
-
     closeEditMode(): void { /* Somebody use it? */
         this.editMode = false;
     }
@@ -266,7 +247,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     setUnsavedChanges(): void {
         this.lastEditedCard = this.getLastEditedCard();
         if (!this.lastEditedCard) {
-            localStorage.setItem('lastEditedCard', JSON.stringify({ 'id': this.nodeId, 'title': this.nodeName, 'link': this.selfLink }));
+            localStorage.setItem('lastEditedCard', JSON.stringify({
+                'id': this.nodeId,
+                'title': this.nodeName,
+                'link': this._makeUrl(this.nodeId).replace('/edit', '/view')
+            }));
         }
         this.wasEdit = true;
     }
@@ -285,11 +270,26 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }*/
 
     changeMode() {
-        this._router.navigate([
-            'spravochniki',
-            this.dictionaryId,
-            this.nodeId,
-            (this.mode === EDIT_CARD_MODES.view ? 'edit' : 'view')
-        ]);
+        let navigate = true;
+        this.lastEditedCard = this.getLastEditedCard();
+        if (this.mode === EDIT_CARD_MODES.view) {
+            if (this.lastEditedCard) {
+                if ( ! this.wasEdit) {
+                    navigate = false;
+                    /* if we try to edit an other card */
+                    if (this.nodeId !== this.lastEditedCard.id) {
+                        this.modalOnlyRef.show();
+                    }
+                }
+            }
+        }
+        if (navigate) {
+            this._router.navigate([
+                'spravochniki',
+                this.dictionaryId,
+                this.nodeId,
+                (this.mode === EDIT_CARD_MODES.view ? 'edit' : 'view')
+            ]);
+        }
     }
 }

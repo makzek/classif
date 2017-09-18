@@ -127,8 +127,9 @@ export class EosDictService {
                     } else {
                         return this._api.getNode(this._dictionary.descriptor, nodeId)
                             .then((data: any) => {
-                                _node = new EosDictionaryNode(_dict.descriptor.record, data);
-                                if (_node.parent) { // temp solution. It does not work with department but I need to test somw other things
+                                _node = null;
+                                if (data) {
+                                    _node = new EosDictionaryNode(_dict.descriptor.record, data);
                                     _dict.addNode(_node, _node.parent.id);
                                 }
                                 return _node;
@@ -147,14 +148,16 @@ export class EosDictService {
                 this._openedNode$.next(this._openedNode);
                 res(null);
             }
-            this.getNode(dictionaryId, nodeId)
+            return this.getNode(dictionaryId, nodeId)
                 .then((node) => {
                     if (this._selectedNode !== node) {
-                        // expand all parents of selected node
-                        let parent = node.parent;
-                        while (parent) {
-                            parent.isExpanded = true;
-                            parent = parent.parent;
+                        if (node) {
+                            // expand all parents of selected node
+                            let parent = node.parent;
+                            while (parent) {
+                                parent.isExpanded = true;
+                                parent = parent.parent;
+                            }
                         }
                         /* console.log('selectNode', node); */
                         this._selectedNode = node;
@@ -162,9 +165,8 @@ export class EosDictService {
                         this._openedNode = null;
                         this._openedNode$.next(null);
                     }
-                    res(node);
-                })
-                .catch((err) => rej(err));
+                    return node;
+                });
         });
     }
 
