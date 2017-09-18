@@ -4,7 +4,7 @@ import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IDeskItem } from '../core/desk-item.interface';
-import { EosMessageService } from '../services/eos-message.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { WARN_LINK_PIN } from '../consts/messages.consts';
 
 @Component({

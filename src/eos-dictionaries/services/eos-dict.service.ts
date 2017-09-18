@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { EosApiService } from './eos-api.service';
+import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
@@ -12,7 +12,7 @@ import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
 
 
 import { RecordDescriptor } from '../core/record-descriptor';
-import { EosMessageService } from './eos-message.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 import { IFieldView } from '../core/field-descriptor';
 
@@ -37,7 +37,7 @@ export class EosDictService {
     public notFound = false;
 
     constructor(
-        private _api: EosApiService,
+        private _api: EosDictApiService,
         private _msgSrv: EosMessageService
     ) {
         this._dictionaries = new Map<string, EosDictionary>();

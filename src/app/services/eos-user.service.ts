@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '../../eos-rest/services/auth.service';
 /* import { PipRX } from '../../eos-rest/services/pipRX.service'; */
 import { AUTH_REQUIRED } from '../consts/messages.consts';
-import { EosMessageService } from './eos-message.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { RubricService } from '../../eos-rest/services/rubric.service';
 
 @Injectable()

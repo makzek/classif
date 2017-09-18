@@ -5,8 +5,8 @@ import {Subject} from 'rxjs/Subject';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { EosDictService } from '../services/eos-dict.service';
-import { EosMessageService } from '../services/eos-message.service';
+import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
 

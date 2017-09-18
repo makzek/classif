@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { EosUserService } from '../services/eos-user.service';
 import { EosUserSettingsService } from '../services/eos-user-settings.service';
-import { EosMessageService } from '../services/eos-message.service';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { SESSION_CLOSED } from '../consts/messages.consts';
 
 @Component({

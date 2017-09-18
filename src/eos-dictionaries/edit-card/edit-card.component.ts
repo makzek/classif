@@ -9,10 +9,9 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeActionsService } from '../node-actions/node-actions.service';
-import { IFieldView, FieldGroup } from '../core/field-descriptor';
-import { CanDeactivateGuard } from '../guards/can-deactivate.guard';
+import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
 import { EditCardActionService } from '../edit-card/action.service';
-import { EosDeskService } from '../services/eos-desk.service';
+import { EosDeskService } from '../../app/services/eos-desk.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';

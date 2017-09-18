@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/router';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { EosDictService } from '../services/eos-dict.service';
+import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';

@@ -6,12 +6,12 @@ import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
 import { RubricService, DepartmentService } from '../../eos-rest';
 
-import { AUTH_REQUIRED } from '../consts/messages.consts';
-import { EosMessageService } from './eos-message.service'
-import { EosUserService } from './eos-user.service';
+import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { EosUserService } from '../../app/services/eos-user.service';
 
 @Injectable()
-export class EosApiService {
+export class EosDictApiService {
     private _nodesMap: Map<string, any>;
     private _dictionaries: any;
 

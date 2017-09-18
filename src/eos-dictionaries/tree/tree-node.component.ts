@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosUserSettingsService } from '../services/eos-user-settings.service';
+import { EosUserSettingsService } from '../..//app/services/eos-user-settings.service';
 
 import { IFieldView } from '../core/field-descriptor';
 
