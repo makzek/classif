@@ -96,11 +96,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Индекс',
         type: 'text',
     }, {
-        key: 'file',
+        // key: 'file',
+        key: 'CARD_FLAG',
         title: 'Картотека',
         type: 'boolean',
     }, {
-        key: 'fileName',
+        // key: 'fileName',
+        key: 'CARD_NAME',
         title: 'Наименование картотеки',
         type: 'text'
     }, {
@@ -108,31 +110,32 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Организация',
         type: 'text',
     }, {
-        key: 'note',
+        // key: 'note',
+        key: 'NOTE',
         title: 'Примечание',
         type: 'text',
     }, {
-        key: 'startDate',
+        // key: 'startDate',
+        key: 'START_DATE',
         title: 'Дата начала действия',
         type: 'date',
     }, {
-        key: 'endDate',
+        // key: 'endDate',
+        key: 'END_DATE',
         title: 'Дата окончания действия',
         type: 'date',
     }, {
-        key: 'shortPosition',
+        // key: 'shortPosition',
+        key: 'DUTY',
         title: 'Наименование должности',
         type: 'text',
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
-    }, /*{
-        key: 'fio',
-        title: 'Фамилия И.О.',
-        type: 'text',
-    }*/, {
-        key: 'SURNAME',
+    }, {
+        // key: 'fio',
+        key: 'CLASSIF_NAME', // not sure
         title: 'Фамилия И.О.',
         type: 'text',
     }, {
@@ -140,7 +143,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Пол',
         type: 'text',
     }, {
-        key: 'lastName',
+        // key: 'lastName',
+        key: 'SURNAME',
         title: 'Фамилия',
         type: 'text',
     }, {
@@ -152,31 +156,38 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Отчество',
         type: 'text',
     }, {
-        key: 'indexOfficial',
-        title: 'Индекс должностного лица',
+        // key: 'indexOfficial',
+        key: 'DEPARTMENT_INDEX',
+        title: 'Индекс ДЛ',
         type: 'text',
     }, {
-        key: 'boss',
+        // key: 'boss',
+        key: 'POST_H',
         title: 'Начальник',
         type: 'boolean',
     }, {
-        key: 'localPhone',
+        // key: 'localPhone',
+        key: 'PHONE_LOCAL',
         title: '№ местного телефона',
         type: 'text'
     }, {
-        key: 'phone',
+        // key: 'phone',
+        key: 'PHONE',
         title: '№ телефона',
         type: 'text'
     }, {
-        key: 'room',
+        // key: 'room',
+        key: 'NUM_CAB',
         title: '№ кабинета',
         type: 'text'
     }, {
-        key: 'fax',
+        // key: 'fax',
+        key: 'FAX',
         title: 'Факс',
         type: 'text'
     }, {
-        key: 'email',
+        // key: 'email',
+        key: 'E_MAIL',
         title: 'E-mail',
         type: 'text'
     }, {
@@ -303,7 +314,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         person: ['CLASSIF_NAME']
     },
     editFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME'],
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*

@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, HostListener, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/pairwise';
@@ -28,7 +28,7 @@ export class EditedCard {
     selector: 'eos-edit-card',
     templateUrl: 'edit-card.component.html',
 })
-export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
+export class EditCardComponent implements CanDeactivateGuard, OnDestroy, OnInit {
     private _dict: EosDictionary;
     dictIdFromDescriptor: string;
 
@@ -77,7 +77,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         private _route: ActivatedRoute,
         private _router: Router,
         private _deskService: EosDeskService) {
-
+        console.log('constructor');
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             this._dict = dict;
             if (dict) {
@@ -127,6 +127,10 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                 });
         }
         return _nodeName;
+    }
+
+    ngOnInit() {
+        console.log('on init');
     }
 
     ngOnDestroy() {
@@ -206,15 +210,18 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     next() {
         console.log('this.nodeIndex', this.nodeIndex);
+        // this.nodeIndex++;
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
     }
 
     prev() {
         console.log('this.nodeIndex', this.nodeIndex);
+        // this.nodeIndex--;
         this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
     }
 
     goTo(url: string): void {
+        console.log('goTo', url);
         if (!this.wasEdit) {
             if (url) {
                 this._router.navigate([url]);
