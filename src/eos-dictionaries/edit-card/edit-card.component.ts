@@ -77,11 +77,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         private _router: Router,
         private _deskService: EosDeskService) {
 
-        // Needs for fire constructor every time when we navigate with < and >
-        this._router.routeReuseStrategy.shouldReuseRoute = function () {
-            return false;
-        }
-
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             this._dict = dict;
             if (dict) {
@@ -92,8 +87,20 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
+            this._init();
         });
 
+
+        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
+            if (mode === EDIT_CARD_MODES.unsavedChanges) {
+                this.setUnsavedChanges();
+            }
+        });
+
+        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
+    }
+
+    private _init() {
         this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
         this._urlSegments = this._router.url.split('/');
@@ -112,14 +119,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             }).catch((err) => console.log('getNode error', err));
 
         this._nodeActSrv.emitAction(null);
-
-        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
-            if (mode === EDIT_CARD_MODES.unsavedChanges) {
-                this.setUnsavedChanges();
-            }
-        });
-
-        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
     get nodeName() {
