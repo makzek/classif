@@ -45,7 +45,7 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
-        this._actSrv.state$.subscribe((state) => {
+      /*  this._actSrv.state$.subscribe((state) => {
             if (state !== null) {
                 switch (state) {
                     case DICTIONARY_STATES.full:
@@ -66,7 +66,7 @@ export class DictionaryComponent implements OnDestroy {
                         break;
                 }
             }
-        });
+        });*/
 
         this._actSrv.action$.subscribe((action) => {
             switch (action) {
@@ -87,8 +87,16 @@ export class DictionaryComponent implements OnDestroy {
 
     }
 
+    openTree() {
+        this.hideTree = !this.hideTree;
+    }
+
+    openInfo() {
+        this.hideFullInfo = !this.hideFullInfo;
+    }
+
     ngOnDestroy() {
-        this._actSrv.emitState(null);
+        /*this._actSrv.emitState(null);
         if (this.hideFullInfo && this.hideTree) {
             this._actSrv.emitState(DICTIONARY_STATES.selected);
         }
@@ -103,7 +111,7 @@ export class DictionaryComponent implements OnDestroy {
 
         if (!this.hideFullInfo && !this.hideTree) {
             this._actSrv.emitState(DICTIONARY_STATES.full);
-        }
+        }*/
     }
 
     /* ngOnInit() {

@@ -1,7 +1,5 @@
 <div class="eos-breadcrumb block">
-    <button [hidden]="isDictionaryPage" class="btn" (click)="openTree()">
-        <span class="icon icon-left eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': treeOpened}"></span>
-    </button>
+    <eos-sandwich (onClick)="openTree($event)" [isLeft]="true" [isWide]="false"></eos-sandwich>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
             <a class="breadcrumb-item link" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" *ngIf="!isLast">{{route.title}}
@@ -9,8 +7,8 @@
             <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" *ngIf="isLast">{{route.title}}</span>
         </li>
     </ol>
-    <button [hidden]="isDictionaryPage" class="btn pull-right" (click)="openInfo()">
-            <span class="icon icon-right eos-icon eos-icon-menu-blue small"></span>
-        </button>
-    <eos-pushpin [ngClass]="{'lefter': infoOpened}"></eos-pushpin>
+    <span class="pull-right">
+        <eos-pushpin></eos-pushpin>
+        <eos-sandwich (onClick)="openInfo($event)" [isLeft]="false" [isWide]="infoOpened"></eos-sandwich>
+    </span>
 </div>

@@ -106,8 +106,7 @@
 
     .sidebar-wrapper,
     .header-wrapper,
-    .breadcrumb-wrapper,
-    .sandwich-wrapper {
+    .breadcrumb-wrapper {
         border-color: $border-color-main-theme;
     }
 
@@ -119,17 +118,6 @@
     .tree-wrapper {
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
-    }
-
-    .sandwich-wrapper {
-        .sandwich {
-            background: $secondary-font-color-main-theme;
-
-            &::before,
-            &::after {
-                background: $secondary-font-color-main-theme;
-            }
-        }
     }
 
     // components

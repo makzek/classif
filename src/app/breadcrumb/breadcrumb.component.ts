@@ -30,26 +30,28 @@ export class BreadcrumbsComponent {
             }
         });
 
-        this._actSrv.action$.subscribe((action) => {
-            if (action === DICTIONARY_ACTIONS.closeInfo) {
-                this.infoOpened = false;
-            }
-        });
+        /* this._actSrv.action$.subscribe((action) => {
+             if (action === DICTIONARY_ACTIONS.closeInfo) {
+                 this.infoOpened = false;
+             }
+         });*/
     }
 
-    openTree() {
-        if (this.treeOpened) {
-            this.treeOpened = false;
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-        } else {
-            this.treeOpened = true;
+    openTree(value: boolean) {
+        if (value) {
             this._actSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        } else {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
         }
     }
 
-    openInfo() {
-        this.infoOpened = true;
-        this._actSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+    openInfo(value: boolean) {
+        this.infoOpened = value;
+        if (value) {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+        } else {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+        }
     }
 
 }
