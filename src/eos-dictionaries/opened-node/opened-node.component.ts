@@ -2,9 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { NodeActionsService } from '../node-actions/node-actions.service';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { E_RECORD_ACTIONS } from '../core/record-action';

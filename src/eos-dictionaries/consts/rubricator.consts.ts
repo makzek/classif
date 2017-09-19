@@ -21,7 +21,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         type: 'string'
     }, {
         key: 'CLASSIF_NAME',
-        title: 'Заголовок',
+        title: 'Краткое наименование',
         type: 'text'
     }, {
         key: 'NOTE',

@@ -45,9 +45,9 @@ export class TreeNodeComponent implements OnInit {
 
     onExpand(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
-        if (!isDeleted) {
+        // if (!isDeleted) {
             this.node.isExpanded = !this.node.isExpanded;
-        }
+        // }
     }
 
     onSelect(evt: Event, isDeleted: boolean) {

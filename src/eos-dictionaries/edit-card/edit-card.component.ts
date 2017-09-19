@@ -1,7 +1,5 @@
 import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, ActivatedRouteSnapshot } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/pairwise';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -75,12 +73,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         private _actSrv: EditCardActionService,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _deskService: EosDeskService) {
-
-        // Needs for fire constructor every time when we navigate with < and >
-        this._router.routeReuseStrategy.shouldReuseRoute = function () {
-            return false;
-        }
+        private _deskSrv: EosDeskService) {
 
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             this._dict = dict;
@@ -92,8 +85,20 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
+            this._init();
         });
 
+
+        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
+            if (mode === EDIT_CARD_MODES.unsavedChanges) {
+                this.setUnsavedChanges();
+            }
+        });
+
+        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
+    }
+
+    private _init() {
         this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
         this._urlSegments = this._router.url.split('/');
@@ -112,14 +117,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             }).catch((err) => console.log('getNode error', err));
 
         this._nodeActSrv.emitAction(null);
-
-        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
-            if (mode === EDIT_CARD_MODES.unsavedChanges) {
-                this.setUnsavedChanges();
-            }
-        });
-
-        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
     get nodeName() {
@@ -136,13 +133,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
-
-
-        // return shouldReuseRoute to default
-        this._router.routeReuseStrategy.shouldReuseRoute =
-            function (future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-                return future.routeConfig === curr.routeConfig;
-            }
     }
 
     save(): void {
@@ -169,7 +159,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this.wasEdit = false;
         this.editMode = false;
         this._dictSrv.updateNode(this.dictionaryId, this.nodeId, this._dict.descriptor.record, evt);
-        this._deskService.addRecentItem({
+        this._deskSrv.addRecentItem({
             link: this.selfLink.slice(0, this.selfLink.length - 5),
             title: this.nodeName,
             edited: false,
