@@ -68,6 +68,17 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         return this.canDeactivate();
     }
 
+    get nodeName() {
+        let _nodeName = '';
+        if (this.node) {
+            this.node.getValues(this._dict.descriptor
+                .getFieldSet(E_FIELD_SET.shortQuickView, this.node.data)).forEach((_f) => {
+                    _nodeName += _f.value;
+                });
+        }
+        return _nodeName;
+    }
+
     constructor(private _dictSrv: EosDictService,
         private _nodeActSrv: NodeActionsService,
         private _actSrv: EditCardActionService,
@@ -117,17 +128,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             }).catch((err) => console.log('getNode error', err));
 
         this._nodeActSrv.emitAction(null);
-    }
-
-    get nodeName() {
-        let _nodeName = '';
-        if (this.node) {
-            this.node.getValues(this._dict.descriptor
-                .getFieldSet(E_FIELD_SET.shortQuickView, this.node.data)).forEach((_f) => {
-                    _nodeName += _f.value;
-                });
-        }
-        return _nodeName;
     }
 
     ngOnDestroy() {

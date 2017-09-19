@@ -8,7 +8,7 @@ import { RubricService, DepartmentService } from '../../eos-rest';
 
 import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserService } from '../../app/services/eos-user.service';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 @Injectable()
 export class EosDictApiService {
@@ -19,7 +19,7 @@ export class EosDictApiService {
         private _msgSrv: EosMessageService,
         private _rubricSrv: RubricService,
         private _deptSrv: DepartmentService,
-        private _profileSrv: EosUserService
+        private _profileSrv: EosUserProfileService
     ) {
         this._nodesMap = new Map<string, any>();
         this._dictionaries = {};

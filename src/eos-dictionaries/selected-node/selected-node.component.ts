@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserSettingsService } from '../../app/services/eos-user-settings.service';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
 import { NodeActionsService } from '../node-actions/node-actions.service';
@@ -37,8 +37,9 @@ export class SelectedNodeComponent implements OnDestroy {
     constructor(private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         private _router: Router,
-        private _userSettingsSrv: EosUserSettingsService,
-        private _actSrv: NodeActionsService) {
+        private _profileSrv: EosUserProfileService,
+        private _actSrv: NodeActionsService
+    ) {
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
             (dictionary) => {
                 this.dictionary = dictionary;
@@ -78,7 +79,7 @@ export class SelectedNodeComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-        this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 

@@ -28,8 +28,7 @@ import { PushpinComponent } from './pushpin/pushpin.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
 
 import { EosDeskService } from './services/eos-desk.service';
-import { EosUserService } from './services/eos-user.service';
-import { EosUserSettingsService } from './services/eos-user-settings.service';
+import { EosUserProfileService } from './services/eos-user-profile.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 
@@ -73,8 +72,7 @@ import { LoginComponent } from './login/login.component';
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosErrorHandler,
         EosDeskService,
-        EosUserService,
-        EosUserSettingsService,
+        EosUserProfileService,
         EosNoticeService,
         CanDeactivateGuard,
         EosBreadcrumbsService,

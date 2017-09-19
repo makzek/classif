@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosUserSettingsService } from '../..//app/services/eos-user-settings.service';
+import { EosUserProfileService } from '../..//app/services/eos-user-profile.service';
 
 import { IFieldView } from '../core/field-descriptor';
 
@@ -21,10 +21,14 @@ export class TreeNodeComponent implements OnInit {
     showDeleted = false;
     viewFields: IFieldView[];
 
-    constructor(private _router: Router, private _dictSrv: EosDictService, private _settingSrv: EosUserSettingsService) {
-        _dictSrv.dictionary$.subscribe((dict) => this._dictionaryId = dict.id);
+    constructor(private _router: Router, private _dictSrv: EosDictService, private _profileSrv: EosUserProfileService) {
+        _dictSrv.dictionary$.subscribe((dict) => {
+            if (dict) {
+            this._dictionaryId = dict.id
+            }
+        });
         _dictSrv.selectedNode$.subscribe((node) => this._update(node));
-        _settingSrv.settings.subscribe((res) => {
+        _profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
     }

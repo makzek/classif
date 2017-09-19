@@ -18,7 +18,7 @@ import { IFieldView } from '../core/field-descriptor';
 
 @Injectable()
 export class EosDictService {
-    private _dictionaries: Map<string, EosDictionary>;
+    /* private _dictionaries: Map<string, EosDictionary>; */
     private _dictionariesList = DICTIONARIES;
     private _dictionary: EosDictionary;
     private _selectedNode: EosDictionaryNode; // selected in tree
@@ -40,7 +40,7 @@ export class EosDictService {
         private _api: EosDictApiService,
         private _msgSrv: EosMessageService
     ) {
-        this._dictionaries = new Map<string, EosDictionary>();
+        /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
@@ -81,12 +81,16 @@ export class EosDictService {
         });
     }
 
-    public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        const _dictionary = this._dictionaries.get(dictionaryId);
+    closeDictionary() {
+        this._dictionary = this._selectedNode = this._openedNode = null;
+        this._openedNode$.next(null);
+        this._selectedNode$.next(null);
+        this._dictionary$.next(null);
+    }
 
-        if (_dictionary) {
-            this._mDictionaryPromise.delete(dictionaryId);
-            return new Promise<EosDictionary>((res) => res(_dictionary));
+    public openDictionary(dictionaryId: string): Promise<EosDictionary> {
+        if (this._dictionary && this._dictionary.id === dictionaryId) {
+            return new Promise<EosDictionary>((res) => res(this._dictionary));
         } else {
             return this._openDictionary(dictionaryId);
         }
@@ -96,20 +100,25 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
+            this._dictionary = null;
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     this._dictionary = new EosDictionary(descData);
-                    this._dictionaries.set(dictionaryId, this._dictionary);
                     return this._api.getNodes(this._dictionary.descriptor);
                 })
                 .then((data: any[]) => {
-                    this._dictionary.init(data);
-                    this._dictionary$.next(this._dictionary);
+                    if (data && data.length) {
+                        this._dictionary.init(data);
+                        this._dictionary$.next(this._dictionary);
+                    } else {
+                        this.closeDictionary();
+                    }
                     this._mDictionaryPromise.delete(dictionaryId);
                     return this._dictionary;
                 })
                 .catch((err) => {
                     this._mDictionaryPromise.delete(dictionaryId);
+                    this._dictionary$.next(this._dictionary);
                     Promise.reject(err);
                 });
             this._mDictionaryPromise.set(dictionaryId, _p);
@@ -130,7 +139,7 @@ export class EosDictService {
                                 _node = null;
                                 if (data) {
                                     _node = new EosDictionaryNode(_dict.descriptor.record, data);
-                                    _dict.addNode(_node, _node.parent.id);
+                                    _dict.addNode(_node, _node.parentId);
                                 }
                                 return _node;
                             });

@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosUserSettingsService } from '../../app/services/eos-user-settings.service';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -80,13 +80,14 @@ export class NodeActionsComponent implements OnDestroy {
         this.innerClick = false;
     }
 
-    constructor(private _userSettingsSrv: EosUserSettingsService,
+    constructor(
+        private _profileSrv: EosUserProfileService,
         private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
         private _editActSrv: EditCardActionService) {
-        this._userSettingsSubscription = this._userSettingsSrv.settings.subscribe((res) => {
+        this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 

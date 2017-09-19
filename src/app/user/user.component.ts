@@ -2,8 +2,7 @@ import { Component, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
-import { EosUserService } from '../services/eos-user.service';
-import { EosUserSettingsService } from '../services/eos-user-settings.service';
+import { EosUserProfileService } from '../services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { SESSION_CLOSED } from '../consts/messages.consts';
 
@@ -20,13 +19,12 @@ export class UserComponent {
     public modalRef: BsModalRef;
 
     constructor(
-        private _usrSrv: EosUserService,
-        private _userSettingsSrv: EosUserSettingsService,
+        private _profileSrv: EosUserProfileService,
         private _modalSrv: BsModalService,
         private _msgSrv: EosMessageService
     ) {
-        this.fullname = this._usrSrv.userName();
-        this._userSettingsSrv.settings.subscribe(
+        this.fullname = this._profileSrv.shortName;
+        this._profileSrv.settings$.subscribe(
             (res) => this.settings = res,
             (err) => alert('err: ' + err)
         );
@@ -37,20 +35,20 @@ export class UserComponent {
     }
 
     login(): void {
-        this._usrSrv.login(this.inputName, this.inputPassword).then((resp) => {
+        this._profileSrv.login(this.inputName, this.inputPassword).then((resp) => {
             console.log('login', resp);
             this.modalRef.hide();
         });
     }
 
     logout() {
-        this._usrSrv.logout().then((resp) => {
+        this._profileSrv.logout().then((resp) => {
             console.log('logout', resp);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
         });
     }
     saveSettings(): void {
         this.modalRef.hide();
-        this._userSettingsSrv.saveSettings(this.settings);
+        this._profileSrv.saveSettings(this.settings);
     }
 }

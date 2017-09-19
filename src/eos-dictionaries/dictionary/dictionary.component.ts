@@ -2,9 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { DictionaryActionService, DICTIONARY_ACTIONS, DICTIONARY_STATES } from '../dictionary/dictionary-action.service';
+import {
+    DictionaryActionService,
+    DICTIONARY_ACTIONS,
+    DICTIONARY_STATES
+} from '../dictionary/dictionary-action.service';
 
 @Component({
     selector: 'eos-dictionary',
@@ -12,26 +17,32 @@ import { DictionaryActionService, DICTIONARY_ACTIONS, DICTIONARY_STATES } from '
 })
 export class DictionaryComponent implements OnDestroy {
     private _dictionaryId: string;
-    public nodes: EosDictionaryNode[];
+    private _nodeId: string;
 
+    nodes: EosDictionaryNode[];
     hideTree = true;
     hideFullInfo = true;
     dictionaryName: string;
 
-    constructor(private _dictSrv: EosDictService,
+    constructor(
+        private _dictSrv: EosDictService,
         private _route: ActivatedRoute,
-        private _actSrv: DictionaryActionService) {
+        private _actSrv: DictionaryActionService,
+        private _profileSrv: EosUserProfileService
+    ) {
+        _profileSrv.authorized$.subscribe((auth) => {
+            if (auth) {
+                this._update();
+            }{
+                _dictSrv.closeDictionary();
+            }
+        });
 
         this._route.params.subscribe((params) => {
             if (params) {
-                if (params.dictionaryId) {
-                    _dictSrv.openDictionary(params.dictionaryId)
-                        .then(() => {
-                            if (params.nodeId) {
-                                _dictSrv.selectNode(params.dictionaryId, params.nodeId);
-                            }
-                        });
-                }
+                this._dictionaryId = params.dictionaryId;
+                this._nodeId = params.nodeId;
+                this._update();
             }
         });
 
@@ -85,6 +96,17 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
+    }
+
+    private _update() {
+        if (this._dictionaryId) {
+            this._dictSrv.openDictionary(this._dictionaryId)
+                .then(() => {
+                    if (this._nodeId) {
+                        this._dictSrv.selectNode(this._dictionaryId, this._nodeId);
+                    }
+                });
+        }
     }
 
     openTree() {
