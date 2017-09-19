@@ -16,12 +16,6 @@ export const DANGER_EDIT_ROOT_ERROR: IMessage = {
     msg: 'вы пытаетесь отредактировать корень (или другой элемент без id). Корень нельзя редактировать'
 };
 
-export const DANGER_EDIT_NO_SELECTED_ERROR: IMessage = {
-    type: 'danger',
-    title: 'Ошибка редактирования элемента: ',
-    msg: 'не выбран элемент'
-};
-
 export const DANGER_EDIT_DELETED_ERROR: IMessage = {
     type: 'danger',
     title: 'Ошибка редактирования элемента: ',

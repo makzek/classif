@@ -129,6 +129,7 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     editNode() {
+        console.log('here');
         if (!this._dictSrv.isRoot(this.selectedNode.id)) {
             localStorage.setItem('viewCardUrlRedirect', this._router.url);
             this._router.navigate([

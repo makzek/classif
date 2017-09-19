@@ -17,7 +17,6 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
-    DANGER_EDIT_NO_SELECTED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
@@ -245,7 +244,7 @@ export class NodeListComponent implements OnDestroy {
     editNode(node: EosDictionaryNode) {
         if (node) {
             this._rememberCurrentURL();
-            if (!this._dictSrv.isRoot(node.id) && !node.isDeleted) {
+            if (!node.data.PROTECTED && !node.isDeleted) {
                 this._router.navigate([
                     'spravochniki',
                     this._dictionaryId,
@@ -253,24 +252,12 @@ export class NodeListComponent implements OnDestroy {
                     'edit',
                 ]);
             } else {
-                if (!node.selected) {
-                    let childrenSelected = false;
-                    if (node.children) {
-                        for (let i in node.children) {
-                            if (node.children[i].selected) {
-                                childrenSelected = true;
-                            }
-                        }
-                    }
-                    if (!childrenSelected) {
-                        this._msgSrv.addNewMessage(DANGER_EDIT_NO_SELECTED_ERROR);
-                    }
-
-                } else if (this._dictSrv.isRoot(node.id)) {
+                if (node.data.PROTECTED) {
                     this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
-                    if (node.isDeleted) {
-                        this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-                    }
+                }
+
+                if (node.isDeleted) {
+                    this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
                 }
             }
         } else {
