@@ -28,6 +28,12 @@ export const DANGER_DELETE_ELEMENT: IMessage = {
     msg: 'на этот объект ссылаются другие объекты системы'
 };
 
+export const DANGER_LOGICALY_RESTORE_ELEMENT: IMessage = {
+    type: 'danger',
+    title: 'Ошибка логического восстановления элемента: ',
+    msg: 'нельзя логически восстановить подэлемент логически удаленного элемента'
+};
+
 export const WARN_SEARCH_NOTFOUND: IMessage = {
     type: 'warning',
     title: 'Ничего не найдено: ',

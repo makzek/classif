@@ -96,7 +96,8 @@ export class SelectedNodeComponent implements OnDestroy {
                     this.physicallyDelete();
                     break;
                 }
-                case E_RECORD_ACTIONS.restore: {
+                // case E_RECORD_ACTIONS.restore: {
+                case E_RECORD_ACTIONS.showDeleted: {
                     this.restoringLogicallyDeletedItem();
                     break;
                 }
@@ -129,7 +130,6 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     editNode() {
-        console.log('here');
         if (!this._dictSrv.isRoot(this.selectedNode.id)) {
             localStorage.setItem('viewCardUrlRedirect', this._router.url);
             this._router.navigate([
@@ -180,7 +180,7 @@ export class SelectedNodeComponent implements OnDestroy {
 
     restoringLogicallyDeletedItem() {
         if (this.selectedNode.selected && this.selectedNode.isDeleted) {
-            this._dictSrv.physicallyDelete(this.selectedNode.id);
+            this._dictSrv.restoreItem(this.selectedNode.id);
         }
     }
 

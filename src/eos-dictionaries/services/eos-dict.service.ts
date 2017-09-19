@@ -8,7 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
-import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
+import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 
 
 import { RecordDescriptor } from '../core/record-descriptor';
@@ -297,6 +297,9 @@ export class EosDictService {
     }
 
     public restoreItem(node: EosDictionaryNode) {
+        if (node.parent && node.parent.isDeleted) {
+            this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
+        }
         Object.assign(node, { ...node, isDeleted: false });
         Object.assign(node, { ...node, selected: false });
         if (node.children) {

@@ -11,10 +11,24 @@ export class EosDictionaryNode {
     description: string;
     hasSubnodes: boolean;
     isExpanded?: boolean;
-    isDeleted: boolean;
+    // isDeleted: boolean;
     selected: boolean;
     data: any;
     sorting: number;
+
+    get isDeleted(): boolean {
+        if (this.data['PROTECTED']) {
+            return false;
+        }
+        return this.data['DELETED'];
+
+    }
+
+    set isDeleted(val: boolean) {
+        if (!this.data['PROTECTED']) {
+            this.data['DELETED'] = val;
+        }
+    }
 
     set title(title: string) {
         const _rec = this.getListView();
@@ -30,7 +44,7 @@ export class EosDictionaryNode {
             console.warn('store data in EosDictionaryNode properties is deprecated');
             */
             this.selected = !!this.selected;
-            this.isDeleted = !!this.isDeleted;
+
             this._descriptor = descriptor;
             this.data = {};
             this._descriptor.fields.forEach((fld) => {
@@ -46,6 +60,8 @@ export class EosDictionaryNode {
             if (this.id === undefined) {
                 this.id = this.data[this._descriptor.keyField.key];
             }
+
+            // this.isDeleted = false;
         }
 
         if (id) {
