@@ -1,0 +1,62 @@
+.eos-sandwich {
+    z-index: 1;
+    position: relative;
+
+    &.wide {
+        display: inline-block;
+        width: $dictionary-block-width;
+
+        .sandwich {
+            left: $dictionary-block-width - $item-width;
+        }
+    }
+
+    &.empty { // Temporary solution for well view of bc on pagws without sandwiches
+        width: 12px;
+        display: inline-block;
+        height: 28px;
+
+        .sandwich {
+            display: none;
+        }
+    }
+
+    .sandwich {
+        position: relative;
+    }
+
+    .btn {
+        padding: 0;
+        height: $item-height;
+        width: $item-width;
+        background-color: transparent;
+        border-radius: 0;
+        border-color: transparent;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    .icon {
+        font-size: 20px;
+        cursor: pointer;
+        transition: 300ms ease-in-out;
+
+        &.icon-left {
+            margin: 8px 0 8px 12px;
+        }
+
+        &.icon-right {
+            margin: 8px 12px;
+        }
+
+        &.rotate-left {
+            transform: rotate(-90deg);
+        }
+
+        &.rotate-right {
+            transform: rotate(90deg);
+        }
+    }
+}

@@ -25,6 +25,7 @@ import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
+import { SandwichComponent } from './sandwich/sandwich.component';
 
 import { EosDeskService } from './services/eos-desk.service';
 import { EosUserService } from './services/eos-user.service';
@@ -51,6 +52,7 @@ import { LoginComponent } from './login/login.component';
         TitleComponent,
         PushpinComponent,
         LoginComponent,
+        SandwichComponent,
     ],
     imports: [
         BrowserModule,

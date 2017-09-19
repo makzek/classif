@@ -90,14 +90,12 @@
             right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
-
-
 }
 
 @media (max-width: 1500px) {
     .eos-dictionary {
         .tree-wrapper {
-            z-index: 10;
+            z-index: 4;
         }
 
         &.tree-hidden,
