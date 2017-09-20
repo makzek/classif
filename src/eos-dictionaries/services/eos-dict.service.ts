@@ -311,6 +311,9 @@ export class EosDictService {
 
     public fullSearch(queries: IFieldView[], searchInDeleted: boolean) {
         this._searchResults = this._dictionary.fullSearch(queries, searchInDeleted);
+        if (!this._searchResults.length) {
+            this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
+        }
         this._searchResults$.next(this._searchResults);
     }
 

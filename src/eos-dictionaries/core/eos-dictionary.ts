@@ -154,8 +154,14 @@ export class EosDictionary {
                 let ok = true;
                 queries.forEach((_q) => {
                     /* tslint:disable:no-bitwise */
-                    if (_q.value && !~node.data[_q.key].search(_q.value) && ok) {
-                        ok = false;
+                    if (_q.value) {
+                        const h = _q.value.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
+                        if (!node.data[_q.key]) {
+                            node.data[_q.key] = '';
+                        }
+                        if (!~node.data[_q.key].search(h) && ok) {
+                            ok = false;
+                        }
                     }
                     /* tslint:enable:no-bitwise */
                 });
