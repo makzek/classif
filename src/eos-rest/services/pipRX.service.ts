@@ -187,7 +187,7 @@ export class PipRX {
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
                 const answer: any[] = [];
-                const e = Utils.parseBatchResponse(r, answer);
+                const e = this.parseBatchResponse(r, answer);
                 if (e) {
                     return Observable.throw(new Error(e.toString()));
                 }
@@ -195,7 +195,36 @@ export class PipRX {
             });
     }
 
-    public prepareAdded<T extends IEnt>(ent: T, typeName: string): T {
+    private parseBatchResponse(response: Response, answer: any[]): any[] {
+        const dd = response.text().split('--changesetresponse');
+        dd.shift();
+        dd.pop();
+        for (let i = 0; i < dd.length; i++) {
+            if (dd[i].indexOf('{') !== -1) {
+                dd[i] = dd[i].substr(dd[i].indexOf('{'));
+            } else {
+                dd[i] = null;
+            }
+        }
+        const allErr = [];
+        for (let i = 0; i < dd.length; i++) {
+            if (dd[i] !== null) {
+                const d = JSON.parse(dd[i]);
+                answer.push(d);
+                const e = d['odata.error'];
+                if (e) { allErr.push(e); }
+                console.log(d);
+                // tslint:disable-next-line:curly
+                if (d.TempID) this.sequenceMap.Fix(d.TempID, d.ID);
+            }
+        }
+        if (allErr.length !== 0) {
+            return allErr;
+        }
+    }
+
+
+    public prepareAdded<T extends IEnt>(ent: any, typeName: string): T {
         ent.__metadata = { __type: typeName };
         ent._State = _ES.Added;
         return ent;

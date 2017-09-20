@@ -35,17 +35,15 @@ export class UserComponent {
     }
 
     login(): void {
-        this._profileSrv.login(this.inputName, this.inputPassword).then((resp) => {
-            console.log('login', resp);
-            this.modalRef.hide();
-        });
+        this._profileSrv
+            .login(this.inputName, this.inputPassword)
+            .then((resp) => {
+                this.modalRef.hide();
+            });
     }
 
     logout() {
-        this._profileSrv.logout().then((resp) => {
-            console.log('logout', resp);
-            this._msgSrv.addNewMessage(SESSION_CLOSED);
-        });
+        this._profileSrv.logout().then((resp) => {});
     }
     saveSettings(): void {
         this.modalRef.hide();

@@ -6,6 +6,10 @@ export class SequenceMap {
         return ++this.nextIsn;
     }
 
+    GetTempDUE = function (parentDue) {
+        return parentDue + (++this.nextIsn).toString() + '.';
+    }
+
     GetFixed(tempID: any) {
         return this.fixed[tempID];
     }

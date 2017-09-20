@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
-import { AUTH_REQUIRED } from '../consts/messages.consts';
+import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
@@ -19,7 +19,7 @@ export class EosUserProfileService implements IUserProfile {
     photoUrl?: string;
     settings: any[];
 
-    public _isAuthorized: boolean;
+    private _isAuthorized: boolean;
 
     private _settings$: BehaviorSubject<any>;
     private _authorized$: BehaviorSubject<boolean>;
@@ -34,6 +34,14 @@ export class EosUserProfileService implements IUserProfile {
 
     get authorized$(): Observable<boolean> {
         return this._authorized$.asObservable();
+    }
+
+    isAuthorized(silent = false): boolean {
+        if (!silent && !this._isAuthorized) {
+            this._msgSrv.addNewMessage(AUTH_REQUIRED);
+            this._authorized$.next(this._isAuthorized);
+        }
+        return this._isAuthorized;
     }
 
     constructor(
@@ -62,11 +70,15 @@ export class EosUserProfileService implements IUserProfile {
             })
             .catch((err: Response) => {
                 if (err.status === 434) {
-                    this._isAuthorized = false;
-                    this._msgSrv.addNewMessage(AUTH_REQUIRED);
+                    this.notAuthorized();
                 }
                 return this._isAuthorized;
             });
+    }
+
+    notAuthorized() {
+        this._isAuthorized = false;
+        this._msgSrv.addNewMessage(AUTH_REQUIRED);
     }
 
     login(name: string, password: string): Promise<any> {
@@ -81,6 +93,7 @@ export class EosUserProfileService implements IUserProfile {
         return this._authSrv.logout().then((resp) => {
             this._isAuthorized = false;
             this._authorized$.next(false);
+            this._msgSrv.addNewMessage(SESSION_CLOSED);
             return resp;
         });
     }

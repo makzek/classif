@@ -130,32 +130,6 @@ export class Utils {
         return batch;
     }
 
-    static parseBatchResponse(response: Response, answer: any[]): any[] {
-        const dd = response.text().split('--changesetresponse');
-        dd.shift();
-        dd.pop();
-        for (let i = 0; i < dd.length; i++) {
-            if (dd[i].indexOf('{') !== -1) {
-                dd[i] = dd[i].substr(dd[i].indexOf('{'));
-            } else {
-                dd[i] = null;
-            }
-        }
-        const allErr = [];
-        for (let i = 0; i < dd.length; i++) {
-            if (dd[i] !== null) {
-                const d = JSON.parse(dd[i]);
-                answer.push(d);
-                const e = d['odata.error'];
-                if (e) { allErr.push(e); }
-                // if (d.TempID) SequenceMap.Fix(d.TempID, d.ID);
-            }
-        }
-        if (allErr.length !== 0) {
-            return allErr;
-        }
-    }
-
     static changeList(entities: IEnt[]) {
         const startTime = new Date().getTime();
 

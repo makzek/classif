@@ -42,6 +42,23 @@ export class EosDictApiService {
         });
     }
 
+    getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
+        let _promise: Promise<any[]>;
+        const _params = {
+            DUE: '0.%',
+            /* IS_NODE: '0', */
+            // LAYER: '0:' + (level + 2) /* not supported */
+        };
+
+        const _service = this._apiService(descriptor);
+        if (_service) {
+            _promise = _service.getAll(_params);
+        } else {
+            _promise = this._noData();
+        }
+        return _promise;
+    }
+
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
         let _promise: Promise<any[]>;
         const _params = {
@@ -53,23 +70,14 @@ export class EosDictApiService {
         const _service = this._apiService(descriptor);
 
         if (_service) {
-            _promise = this._profileSrv.checkAuth()
-                .then((authorized) => {
-                    if (authorized) {
-                        return _service.getAll(_params)
-                            .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
-                            .catch((err: Response) => {
-                                console.log(err);
-                                return [];
-                            });
-                    } else {
-                        return [];
-                    }
+            _promise = _service.getAll(_params)
+                .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
+                .catch((err: Response) => {
+                    console.log(err);
+                    return Promise.reject(err);
                 });
         } else {
-            _promise = new Promise((res, rej) => {
-                res([]);
-            });
+            _promise = this._noData();
         }
         return _promise;
     }
@@ -88,30 +96,25 @@ export class EosDictApiService {
         return _promise;
     }
 
+    private _noData(): Promise<any[]> {
+        return new Promise((res, rej) => res([]));
+    }
+
     private _getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
         let _promise: Promise<any>;
 
         const _params = {
             DUE: nodeId || '',
-            IS_NODE: '0'
         };
 
         const _service = this._apiService(descriptor);
 
         if (_service) {
-            _promise = this._profileSrv.checkAuth()
-                .then((authorized) => {
-                    if (authorized) {
-                        return _service.getAll(_params)
-                            .then((data) => this._cacheData(descriptor, data))
-                            .then((data: any[]) => {
-                                if (data && data.length) {
-                                    return data[0];
-                                } else {
-                                    return null;
-                                }
-
-                            });
+            _promise = _service.getAll(_params)
+                .then((data) => this._cacheData(descriptor, data))
+                .then((data: any[]) => {
+                    if (data && data.length) {
+                        return data[0];
                     } else {
                         return null;
                     }

@@ -10,6 +10,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 import { EosErrorHandler } from './core/error-handler';
 
 import { APP_CONFIG } from './app.config';
+import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 
 import { AppRoutingModule } from './app-routing.module';
 import { EosRestModule } from '../eos-rest/eos-rest.module';
@@ -79,4 +80,8 @@ import { LoginComponent } from './login/login.component';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+    constructor() {
+        Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+    }
+ }

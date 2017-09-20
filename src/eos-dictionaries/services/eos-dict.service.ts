@@ -5,16 +5,16 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { IFieldView } from '../core/field-descriptor';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 
-
 import { RecordDescriptor } from '../core/record-descriptor';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
-import { IFieldView } from '../core/field-descriptor';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 @Injectable()
 export class EosDictService {
@@ -38,7 +38,8 @@ export class EosDictService {
 
     constructor(
         private _api: EosDictApiService,
-        private _msgSrv: EosMessageService
+        private _msgSrv: EosMessageService,
+        private _profileSrv: EosUserProfileService
     ) {
         /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
@@ -89,12 +90,16 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        if (this._dictionary && this._dictionary.id === dictionaryId) {
-            return new Promise<EosDictionary>((res) => res(this._dictionary));
+        if (this._profileSrv.isAuthorized()) {
+            if (this._dictionary && this._dictionary.id === dictionaryId) {
+                return new Promise<EosDictionary>((res) => res(this._dictionary));
+            } else {
+                return this._openDictionary(dictionaryId);
+            }
         } else {
-            return this._openDictionary(dictionaryId);
+            this.closeDictionary();
+            return new Promise<EosDictionary>((res) => res(null));
         }
-
     }
 
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -104,7 +109,7 @@ export class EosDictService {
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     this._dictionary = new EosDictionary(descData);
-                    return this._api.getNodes(this._dictionary.descriptor);
+                    return this._api.getRoot(this._dictionary.descriptor);
                 })
                 .then((data: any[]) => {
                     if (data && data.length) {
@@ -116,7 +121,11 @@ export class EosDictService {
                     this._mDictionaryPromise.delete(dictionaryId);
                     return this._dictionary;
                 })
-                .catch((err) => {
+                .catch((err: Response) => {
+                    if (err.status === 434) { /* API failed */
+
+                    }
+                    console.log(err);
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this._dictionary);
                     Promise.reject(err);
