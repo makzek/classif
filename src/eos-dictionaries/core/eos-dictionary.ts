@@ -129,7 +129,7 @@ export class EosDictionary {
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
-        searchString = searchString.replace(/[*+?^${}()|[\]\\]/g, '\\$&').replace('.', '/\./');
+        searchString = searchString.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
         const _expr = new RegExp(searchString, 'i');
 
         /* tslint:disable:no-bitwise */
