@@ -1,6 +1,6 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { IDeliveryCl } from '../interfaces/interfaces';
+import { DELIVERY_CL } from '../interfaces/structures';
 import { PipRX } from '../services/pipRX.service';
 import { Utils } from '../core/utils';
 
@@ -9,10 +9,10 @@ import { Utils } from '../core/utils';
     templateUrl: './delivery-detail.component.html'
 })
 export class DeliveryDetailComponent {
-    item: IDeliveryCl;
+    item: DELIVERY_CL;
 
     @Input()
-    set it(it: IDeliveryCl) {
+    set it(it: DELIVERY_CL) {
         // this.item = it;
         if (!it) {
             this.item = undefined;
@@ -36,7 +36,7 @@ export class DeliveryDetailComponent {
     */
 
     read(isn: number) {
-        this.pip.read<IDeliveryCl>({ 'DELIVERY_CL': [isn] })
+        this.pip.read<DELIVERY_CL>({ 'DELIVERY_CL': [isn] })
             .subscribe((r) => {
                 Utils.prepareForEdit(r[0]);
                 this.item = r[0];

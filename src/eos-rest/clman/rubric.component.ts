@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
 
-import { IRubricCl } from '../interfaces/interfaces';
+import { RUBRIC_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 import { RubricService } from '../services/rubric.service';
@@ -15,8 +15,8 @@ import { AuthService } from '../services/auth.service';
     templateUrl: './rubric.component.html'
 })
 export class RubricComponent implements OnInit {
-    items: IRubricCl[] = [];
-    currentItem: IRubricCl;
+    items: RUBRIC_CL[] = [];
+    currentItem: RUBRIC_CL;
     // errorMessage: string;
     constructor(private pip: PipRX, private _auth: AuthService) { }
     //
@@ -25,7 +25,7 @@ export class RubricComponent implements OnInit {
     }
 
     getData() {
-        this.pip.read<IRubricCl>({
+        this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
             RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
 
@@ -43,21 +43,13 @@ export class RubricComponent implements OnInit {
         });
 
     }
-    onSelect(cur: IRubricCl): void {
+    onSelect(cur: RUBRIC_CL): void {
         this.currentItem = cur;
-    }
-    login() {
-        this._auth.login('tver', 'tver')
-            .then((resp) => {
-                console.log('login resp', resp);
-            }).catch((err) => {
-                console.error('login error', err);
-            });
     }
 
     onAdd() {
         const tisn = this.pip.sequenceMap.GetTempISN();
-        const tmp = this.pip.prepareAdded<IRubricCl>( {
+        const tmp = this.pip.prepareAdded<RUBRIC_CL>( {
             DUE: this.currentItem.DUE + tisn + '.',
             ISN_NODE: tisn,
             CLASSIF_NAME: 'Добавляем?',
