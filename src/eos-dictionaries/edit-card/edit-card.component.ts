@@ -239,8 +239,13 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         return true;
     }
 
-    /* we record the card with unsaved changes into the LocalStorage */
+    /* record the card with unsaved changes into the LocalStorage */
     setUnsavedChanges(): void {
+        this._setEditingCardValue();
+        this.wasEdit = true;
+    }
+
+    private _setEditingCardValue() {
         this.lastEditedCard = this.getLastEditedCard();
         if (!this.lastEditedCard) {
             localStorage.setItem('lastEditedCard', JSON.stringify({
@@ -249,7 +254,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                 'link': this._makeUrl(this.nodeId).replace('/edit', '/view')
             }));
         }
-        this.wasEdit = true;
     }
 
     clearStorage(): void {

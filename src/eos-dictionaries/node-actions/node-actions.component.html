@@ -31,7 +31,9 @@
                 <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
                     <li>
                         <div class="input-group search">
-                            <span class="input-group-addon search-icon-wrapper" id="basic-addon1"><span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)"></span></span>
+                            <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
+                                <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)" tooltip="Расширенный поиск"></span>
+                            </span>
                             <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
                             <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
                                 <span class="checkbox">
@@ -49,12 +51,12 @@
     <div class="second-line block special-text">
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>
             <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                 </label>
             </span>

@@ -15,8 +15,8 @@
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
-            <span class="eos-icon eos-icon-edit-black x-small" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" (click)="removeDesk(desk)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" (click)="openEditForm($event, desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" (click)="removeDesk(desk)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
@@ -24,10 +24,10 @@
                     <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk)" class="btn btn-default">
-                            <span class="eos-icon eos-icon-checkbox-black x-small"></span>
+                            <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить"></span>
                         </button>
                         <button type="button" (click)="cancelEdit(desk)" class="btn btn-default">
-                            <span class="eos-icon eos-icon-close-black x-small"></span>
+                            <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить"></span>
                         </button>
                     </div>
                 </div>
@@ -40,10 +40,10 @@
                     <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create()" type="button">
-                            <span class="eos-icon eos-icon-checkbox-black x-small"></span>
+                            <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить"></span>
                         </button>
                         <button class="btn btn-default" (click)="cancelCreating()" type="button">
-                            <span class="eos-icon eos-icon-close-black x-small"></span>
+                            <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить"></span>
                         </button>
                     </span>
                 </div>

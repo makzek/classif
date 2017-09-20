@@ -16,7 +16,7 @@
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="node-list-item">
                         <span *ngIf="showCheckbox" class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="item.selected" (change)="checkItem(item)">
+                        <label><input type="checkbox" [(ngModel)]="item.selected" (change)="checkItem(item)" tooltip="{{ item.selected ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
                             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
                         </label>
                         </span>
