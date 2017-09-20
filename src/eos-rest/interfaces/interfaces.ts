@@ -2,6 +2,7 @@ export interface IApiCfg {
     authSrv: string;
     dataSrv: string;
     metadataJs: string[];
+    metaMergeFuncList?: ((meta: any) => void)[];
 };
 
 export interface IEnt {
@@ -10,6 +11,26 @@ export interface IEnt {
     _orig?: any;
     _more_json?: any;
 };
+
+export interface ILinearCL extends IEnt {
+    ISN_LCLASSIF: number;
+    CLASSIF_NAME: string;
+    PROTECTED: number;
+    DELETED: number;
+    NOTE: string;
+}
+
+export interface IHierCL extends IEnt {
+    DUE: string;
+    ISN_NODE: number;
+    ISN_HIGH_NODE: number;
+    PERENT_DUE: string;
+    IS_NODE: number;
+    CLASSIF_NAME: string;
+    PROTECTED: number;
+    DELETED: number;
+    NOTE: string;
+}
 
 export interface IDeliveryCl extends IEnt {
     ISN_LCLASSIF: any;
