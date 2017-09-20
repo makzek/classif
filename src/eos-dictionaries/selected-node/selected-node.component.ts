@@ -146,6 +146,7 @@ export class SelectedNodeComponent implements OnDestroy {
 
     selectNode(nodeId: string) {
         this._dictSrv.selectNode(this._dictionaryId, nodeId);
+        localStorage.setItem('viewCardUrlRedirect', this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
     }
 
     delete() {

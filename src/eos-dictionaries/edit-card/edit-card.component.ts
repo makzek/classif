@@ -239,10 +239,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         return true;
     }
 
-    closeEditMode(): void { /* Somebody use it? */
-        this.editMode = false;
-    }
-
     /* we record the card with unsaved changes into the LocalStorage */
     setUnsavedChanges(): void {
         this.lastEditedCard = this.getLastEditedCard();

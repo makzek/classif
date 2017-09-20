@@ -384,6 +384,8 @@ export class NodeListComponent implements OnDestroy {
     }
 
     private _rememberCurrentURL(): void {
-        localStorage.setItem('viewCardUrlRedirect', this._router.url);
+        // localStorage.setItem('viewCardUrlRedirect', this._router.url);
+        const url = this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + this._selectedNode.id;
+        localStorage.setItem('viewCardUrlRedirect', url);
     }
 }
