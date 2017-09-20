@@ -1,4 +1,4 @@
-import { IConfirmWindow } from '../core/confirm-window.interface';
+import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 export const CONFIRM_DESK_DELETE: IConfirmWindow = {
     title: 'Подтверждение удаления',

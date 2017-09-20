@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
-import { NodeActionsService } from '../node-actions/node-actions.service';
-/*import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
-import { E_RECORD_ACTIONS } from '../core/record-action';*/
+import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
 
 enum CURRENT_PAGE {
     dictionary
@@ -24,36 +21,37 @@ export class BreadcrumbsComponent {
     isDictionaryPage = false;
 
     constructor(
-        private _breadcrumbsService: EosBreadcrumbsService,
-        private _actionService: DictionaryActionService,
-        private _nodeActionService: NodeActionsService
+        private _breadcrumbsSrv: EosBreadcrumbsService,
+        private _actSrv: DictionaryActionService
     ) {
-        this._breadcrumbsService.breadcrumbs.subscribe((bc) => {
+        this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
             }
         });
 
-        this._actionService.action$.subscribe((action) => {
-            if (action === DICTIONARY_ACTIONS.closeInfo) {
-                this.infoOpened = false;
-            }
-        });
+        /* this._actSrv.action$.subscribe((action) => {
+             if (action === DICTIONARY_ACTIONS.closeInfo) {
+                 this.infoOpened = false;
+             }
+         });*/
     }
 
-    openTree() {
-        if (this.treeOpened) {
-            this.treeOpened = false;
-            this._actionService.emitAction(DICTIONARY_ACTIONS.closeTree);
+    openTree(value: boolean) {
+        if (value) {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.openTree);
         } else {
-            this.treeOpened = true;
-            this._actionService.emitAction(DICTIONARY_ACTIONS.openTree);
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
         }
     }
 
-    openInfo() {
-        this.infoOpened = true;
-        this._actionService.emitAction(DICTIONARY_ACTIONS.openInfo);
+    openInfo(value: boolean) {
+        this.infoOpened = value;
+        if (value) {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+        } else {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+        }
     }
 
 }

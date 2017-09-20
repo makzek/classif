@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { EosMessageService } from '../services/eos-message.service'
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 @Injectable()
 export class EosErrorHandler implements ErrorHandler {

@@ -86,7 +86,7 @@ export class Utils {
     }
 
     static nativeParser(data: any) {
-        console.log('nativeParser data', data);
+        /* console.log('nativeParser data', data); */
         const md = data['odata.metadata'];
         const tn = md.split('#')[1].split('/')[0];
         const items = data.value || [data];

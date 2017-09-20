@@ -1,0 +1,5 @@
+<span class="eos-sandwich" [ngClass]="{'wide': isWide, 'empty': !show}">
+    <button class="btn sandwich" (click)="changeState()">
+        <span class="icon eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': isRotated && isLeft, 'rotate-right': isRotated && !isLeft }"></span>
+    </button>
+</span>

@@ -1,4 +1,4 @@
-import { IMessage } from '../core/message.interface';
+import { IMessage } from '../../eos-common/core/message.interface';
 
 export const DEFAULT_DISMISS_TIMEOUT = 1000;
 export const LONG_DISMISS_TIMEOUT = 2000;
@@ -21,6 +21,12 @@ export const DANGER_DESK_CREATING: IMessage = {
     type: 'danger',
     title: 'Ошибка создания рабочего стола:',
     msg: 'нельзя создавать рабочие столы с одинаковым именем'
+};
+
+export const WARN_LINK_PIN: IMessage = {
+    type: 'warning',
+    title: 'Ошибка добавления ссылки:',
+    msg: 'ссылка была прикреплена к этому рабочему столу ранее'
 };
 
 export const WARN_SEARCH_NOTFOUND: IMessage = {

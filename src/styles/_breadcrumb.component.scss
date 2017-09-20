@@ -3,27 +3,6 @@
     border-bottom: 1px solid transparent;
     border-radius: 0;
 
-    .lefter {
-        .pushpin {
-            margin-right: 364px;
-            transition: 300ms ease-in-out;
-        }
-    }
-
-    .btn {
-        padding: 0;
-        height: $item-height;
-        width: $item-width;
-        // margin-top: -3px;
-        background-color: transparent;
-        border-radius: 0;
-        border-color: transparent;
-
-        &:focus {
-            outline: 0;
-        }
-    }
-
     .breadcrumb {
         background-color: inherit;
         display: inline-block;
@@ -31,6 +10,7 @@
         padding: 0;
         position: relative;
         top: 6px;
+        left: -12px;
 
         & > li:not(:first-child)::before {
             // font-family: "Glyphicons Halflings";
@@ -62,32 +42,6 @@
             &:focus {
                 text-decoration: none;
             }
-        }
-    }
-
-    .icon {
-        font-size: 20px;
-        transition: 300ms ease-in-out;
-        cursor: pointer;
-
-        &.icon-left {
-            margin: 8px 0 8px 12px;
-        }
-
-        &.icon-right {
-            margin: 8px 12px;
-        }
-
-        &.rotate-left {
-            transform: rotate(-90deg);
-        }
-    }
-}
-
-@media (max-width: 1500px) {
-    .eos-breadcrumb {
-        .opened-node-actions.full {
-            transition: 300ms ease-in-out;
         }
     }
 }

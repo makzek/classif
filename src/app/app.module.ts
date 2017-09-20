@@ -10,69 +10,38 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 import { EosErrorHandler } from './core/error-handler';
 
 import { APP_CONFIG } from './app.config';
-
-import { EosRestModule } from '../eos-rest/eos-rest.module';
+import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 
 import { AppRoutingModule } from './app-routing.module';
-
+import { EosRestModule } from '../eos-rest/eos-rest.module';
+import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
+import { EosCommonModule } from '../eos-common/eos-common.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
-import { DictionaryComponent } from './dictionary/dictionary.component';
-import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { EditCardComponent } from './edit-card/edit-card.component';
-import { TreeComponent } from './tree/tree.component';
-import { TreeNodeComponent } from './tree/tree-node.component';
-import { SelectedNodeComponent } from './selected-node/selected-node.component';
-import { OpenedNodeComponent } from './opened-node/opened-node.component';
 import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { MessagesComponent } from './messages/messages.component';
 import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
-import { InfoComponent } from './info/info.component';
-import { NodeListComponent } from './node-list/node-list.component';
-import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
+import { SandwichComponent } from './sandwich/sandwich.component';
 
-import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
-import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
-import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
-
-import { EosApiService } from './services/eos-api.service';
-import { EosDictService } from './services/eos-dict.service';
-import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDeskService } from './services/eos-desk.service';
-import { EosUserService } from './services/eos-user.service';
-import { EosUserSettingsService } from './services/eos-user-settings.service';
+import { EosUserProfileService } from './services/eos-user-profile.service';
 import { EosNoticeService } from './services/eos-notice.service';
-import { EosMessageService } from './services/eos-message.service';
-import { NodeActionsService } from './node-actions/node-actions.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
-import { EditCardActionService } from './edit-card/action.service';
-import { DictionaryActionService } from './dictionary/dictionary-action.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 import { LoginComponent } from './login/login.component';
-import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
-import { ConfirmWindowService } from './confirm-window/confirm-window.service';
 
 @NgModule({
     declarations: [
         AppComponent,
-        MessagesComponent,
         BreadcrumbsComponent,
-        DictionaryComponent,
-        DictionariesComponent,
-        EditCardComponent,
-        TreeComponent,
-        TreeNodeComponent,
-        SelectedNodeComponent,
-        OpenedNodeComponent,
         DesktopSwitcherComponent,
         SearchComponent,
         UserComponent,
@@ -81,15 +50,9 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         NoticeComponent,
         DesktopComponent,
         TitleComponent,
-        InfoComponent,
-        NodeListComponent,
-        NodeActionsComponent,
         PushpinComponent,
         LoginComponent,
-        ConfirmWindowComponent,
-        DepartmentsCardEditComponent,
-        RoomsCardEditComponent,
-        RubricatorCardEditComponent,
+        SandwichComponent,
     ],
     imports: [
         BrowserModule,
@@ -99,29 +62,26 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         Ng2BootstrapModule.forRoot(),
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
+        EosCommonModule,
+        EosDictionariesModule,
     ],
-    entryComponents: [
-        ConfirmWindowComponent,
+    exports: [
+        EosRestModule,
     ],
     providers: [
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         EosErrorHandler,
-        ConfirmWindowService,
-        EosApiService,
-        EosDictService,
-        EosDictOrderService,
         EosDeskService,
-        EosUserService,
-        EosUserSettingsService,
+        EosUserProfileService,
         EosNoticeService,
-        EosMessageService,
-        NodeActionsService,
         CanDeactivateGuard,
         EosBreadcrumbsService,
-        EditCardActionService,
-        DictionaryActionService,
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+    constructor() {
+        Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+    }
+ }

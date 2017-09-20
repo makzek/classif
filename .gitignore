@@ -27,3 +27,4 @@ debug.log
 !wallaby.js
 !gulpfile.js
 remote-profile/*
+src/app/app.config.local.ts

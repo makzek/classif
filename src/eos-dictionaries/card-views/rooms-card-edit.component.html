@@ -1,0 +1,145 @@
+<div class="rooms-card-edit" >
+    <aside class="edit-aside">
+        <div class="btn-group vertical-buttons" role="group">
+            <button type="button" class="btn btn-default">Что-то ещё</button>
+            <button type="button" class="btn btn-default" (click)="editMode = false" [ngClass]="{'active': !editMode}">Просмотр</button>
+            <button type="button" class="btn btn-default" (click)="editMode = true" [ngClass]="{'active': editMode}">Редактирование</button>
+        </div>
+    </aside>
+    <div class="card-wrapper">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Краткое наименование кабинета:</span>
+            <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
+                [(ngModel)]="tmpObj['title']">
+            <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Полное наименование кабинета:</span>
+            <input *ngIf="editMode" (change)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
+                [(ngModel)]="tmpObj['description']">
+            <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
+            <p class="form-control">{{data['department']}}</p>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Владельцы кабинета
+                <span *ngIf="showOwners" (click)="showOwners = false" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                <span *ngIf="!showOwners" (click)="showOwners = true" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </div>
+            <div class="panel-heading actions">
+                <span class="checkbox">
+                    <input (change)="setUnsavedChanges()" type="checkbox">
+                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                </span>
+                <span class="action-icons">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                </span>
+            </div>
+            <div class="panel-body">
+                <ul *ngIf="data['owner']">
+                    <li *ngFor="let item of owner">
+                        <span class="checkbox">
+                            <label>
+                                <input (change)="setUnsavedChanges()" type="checkbox">
+                                <span *ngIf="editMode" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                {{data['owner'].fio}} - {{data['owner'].shortPosition}}
+                            </label>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Пользователи кабинета
+                <span *ngIf="showUsers" (click)="showUsers = false" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                <span *ngIf="!showUsers" (click)="showUsers = true" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </div>
+            <div class="panel-body">
+                <div class="twenty-col-wrapper">
+                    <div class="col-1">Фамилия И.О.</div>
+                    <div class="col-2">Ограничения доступа РК</div>
+                    <div class="col-3">Ограничения доступа РКПД</div>
+                    <div class="col-4">Поступившие</div>
+                    <div class="col-5">На исполнении</div>
+                    <div class="col-6">На контроле</div>
+                    <div class="col-7">У руководства</div>
+                    <div class="col-8">На рассмотрении</div>
+                    <div class="col-9">В дело</div>
+                    <div class="col-10">Управление проектами</div>
+                    <div class="col-11">На визировании</div>
+                    <div class="col-12">На подписи</div>
+                </div>
+                <div *ngIf="data['roomUsers']">
+                    <div *ngFor="let user of data['roomUsers']" class="twenty-col-wrapper">
+                        <div class="col-1">{{user.fio}}</div>
+                        <div class="col-2"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-3"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-4"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-5"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-6"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-7"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-8"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-9"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-10"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-11"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                        <div class="col-12"><span class="checkbox"><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Доступ к папкам
+                <span *ngIf="showAccess" (click)="showAccess = false" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                <span *ngIf="!showAccess" (click)="showAccess = true" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </div>
+            <div class="panel-body">
+                Отметьте те папки, поступление документов в которые должно быть открыто (закрыто)
+                <div class="three-col-wrapper">
+                    <div class="col-1">
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">Поступившие</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На исполнении</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На контроле</label>
+                        </span>
+                    </div>
+                    <div class="col-2">
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">У руководства</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На рассмотрении</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">В дело</label>
+                        </span>
+                    </div>
+                    <div class="col-3">
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">Управление проектами</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На визировании</label>
+                        </span>
+                        <span class="checkbox">
+                            <label><input (change)="setUnsavedChanges()" [disabled]="!editMode" type="checkbox">На подписи</label>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-light" [disabled]="!editMode">Открыть все</button>
+                <button class="btn btn-light" [disabled]="!editMode">Закрыть все</button>
+            </div>
+        </div>
+    </div>
+</div>
