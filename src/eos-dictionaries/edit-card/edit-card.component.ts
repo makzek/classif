@@ -125,6 +125,8 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
         this._urlSegments = this._router.url.split('/');
+        this.mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+        this.editMode = this.mode === EDIT_CARD_MODES.edit ? true : false;
         this._dictSrv.getNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 this.node = node;
@@ -133,11 +135,8 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                         return chld.id === node.id;
                     });
                     this._updateBorders();
-                    this.mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-                    this.editMode = this.mode === EDIT_CARD_MODES.edit ? true : false;
-                    if (node.isDeleted) {
-                        this.mode = EDIT_CARD_MODES.view;
-                        this.editMode = false;
+                    if (node.isDeleted && this.mode === EDIT_CARD_MODES.edit) { // for unexpected situation
+                        this.goTo(this._makeUrl(node.id, true));
                     }
                     this._actSrv.emitMode(this.mode);
                 }
@@ -236,9 +235,9 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         if (!this.node.parent.children[this.nodeIndex + 1].isDeleted || this.showDeleted) {
             this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
         } else {
-           // if (this.showDeleted) {
-           //     this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id, true));
-          //  } else {
+           if (this.showDeleted) {
+               this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id, true));
+          } else {
                 const _next = this.node.parent.children.slice(this.nodeIndex + 1).findIndex((_n) => !_n.isDeleted);
                 /* tslint:disable:no-bitwise */
                 if (!!~_next) {
@@ -247,7 +246,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                     this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
                 }
                 /* tslint:enable:no-bitwise */
-          //  }
+            }
         }
     }
 
@@ -255,9 +254,9 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         if (!this.node.parent.children[this.nodeIndex - 1].isDeleted || this.showDeleted) {
             this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
         } else {
-           // if (this.showDeleted) {
-           //     this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id, true));
-           // } else {
+            if (this.showDeleted) {
+                this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id, true));
+            } else {
                 const _prev = this.node.parent.children.slice(0, this.nodeIndex).reverse().findIndex((_n) => !_n.isDeleted);
                 /* tslint:disable:no-bitwise */
                 if (!!~_prev) {
@@ -266,7 +265,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                     this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
                 }
                 /* tslint:enable:no-bitwise */
-          //  }
+            }
         }
     }
 
