@@ -112,10 +112,10 @@ export class EosDictService {
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     _dictionary = new EosDictionary(descData);
-                    return this._api.getRoot(_dictionary.descriptor);
+                    return this._api.getNodes(_dictionary.descriptor);
                 })
                 .then((data: any[]) => {
-                    if (data && data.length && this._dictionary) {
+                    if (data && data.length && _dictionary) {
                         _dictionary.init(data);
                         this._dictionary = _dictionary;
                         this._dictionary$.next(this._dictionary);
