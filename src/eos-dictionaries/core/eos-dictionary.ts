@@ -41,11 +41,10 @@ export class EosDictionary {
         this._nodes.clear();
 
         /* add nodes */
-        data.forEach((nodeData) => {
-            const node: EosDictionaryNode = new EosDictionaryNode(this.descriptor.record, nodeData);
-            this._nodes.set(node.id, node);
-        });
+        this.updateNodes(data);
+    }
 
+    private _updateTree() {
         /* build tree */
         this._nodes.forEach((_node) => {
             if (_node.parentId) {
@@ -75,6 +74,21 @@ export class EosDictionary {
                 this.root.addChild(_node);
             }
         });
+    }
+
+    updateNodes(data: any[]) {
+        data.forEach((nodeData) => {
+            const nodeId = nodeData[this.descriptor.record.keyField.key];
+            let _node = this._nodes.get(nodeId);
+            if (_node) {
+                _node.updateData(nodeData);
+            } else {
+                _node = new EosDictionaryNode(this.descriptor.record, nodeData);
+                this._nodes.set(_node.id, _node);
+            }
+        });
+
+        this._updateTree();
     }
 
     getNode(nodeId: string): EosDictionaryNode {

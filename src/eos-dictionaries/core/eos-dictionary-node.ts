@@ -13,8 +13,11 @@ export class EosDictionaryNode {
     isExpanded?: boolean;
     // isDeleted: boolean;
     selected: boolean;
+    /** record data container */
     data: any;
     sorting: number;
+    /** flag for updating indication */
+    updating: boolean;
 
     get isDeleted(): boolean {
         if (this.data['PROTECTED']) {
@@ -53,7 +56,7 @@ export class EosDictionaryNode {
                 }
             });
 
-            if (this.parentId === undefined) { /* todo: describe field in descriptor */
+            if (this.parentId === undefined) {
                 this.parentId = data[this._descriptor.parentField.key];
             }
 
@@ -67,6 +70,14 @@ export class EosDictionaryNode {
         if (id) {
             this.id = id;
         }
+    }
+
+    updateData(nodeData: any) {
+        this._descriptor.fields.forEach((fld) => {
+            if (fld) {
+                this.data[fld.key] = nodeData[fld.key];
+            }
+        });
     }
 
     hasParent(parent: EosDictionaryNode): boolean {
