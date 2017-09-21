@@ -28,7 +28,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-import { EditCardActionService } from './edit-card/action.service';
+import { EditCardActionService } from './edit-card/edit-card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';

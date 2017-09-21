@@ -1,9 +1,10 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+// import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EditCardActionService } from '../edit-card/action.service';
-import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
+// import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EditCardActionService } from '../edit-card/edit-card-action.service';
+// import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/edit-card-action.service';
 import { CardEdit } from './card-edit';
 
 @Component({

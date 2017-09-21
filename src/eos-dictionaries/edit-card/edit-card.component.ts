@@ -8,11 +8,11 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
-import { EditCardActionService } from '../edit-card/action.service';
+import { EditCardActionService } from './edit-card-action.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './action.service';
+import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './edit-card-action.service';
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {

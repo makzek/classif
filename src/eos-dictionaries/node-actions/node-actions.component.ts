@@ -14,7 +14,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EditCardActionService, EDIT_CARD_ACTIONS } from '../edit-card/action.service';
+import { EditCardActionService, EDIT_CARD_ACTIONS } from '../edit-card/edit-card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../edit-card/edit-card.component';
 

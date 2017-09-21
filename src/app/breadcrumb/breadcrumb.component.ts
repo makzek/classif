@@ -4,9 +4,9 @@ import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
 
-enum CURRENT_PAGE {
+/* enum CURRENT_PAGE {
     dictionary
-};
+};*/
 
 @Component({
     selector: 'eos-breadcrumb',

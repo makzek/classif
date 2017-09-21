@@ -2,8 +2,7 @@ import { Output, Input, EventEmitter, OnChanges } from '@angular/core';
 
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictService } from '../services/eos-dict.service';
-import { EditCardActionService } from '../edit-card/action.service';
-import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/action.service';
+import { EditCardActionService, EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/edit-card-action.service';
 
 export class CardEdit implements OnChanges {
     tmpObj: any = {};
