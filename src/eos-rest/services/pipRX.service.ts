@@ -15,18 +15,11 @@ export class PipRX {
     private _metadata: Metadata;
     private _cfg: ApiCfg;
     private _options = HTTP_OPTIONS;
-    /*
-    private _needAuth$: BehaviorSubject<boolean>;
 
-    get needAuth(): Observable<boolean> {
-        return this._needAuth$.asObservable();
-    }
-    */
     public sequenceMap: SequenceMap = new SequenceMap();
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
-        /* this._needAuth$ = new BehaviorSubject(false); */
         this._metadata = new Metadata(cfg);
         this._metadata.init();
     }
@@ -127,7 +120,7 @@ export class PipRX {
         const ids = (a.criteries === undefined && a.args === undefined && a !== ALL_ROWS) ? a : undefined;
         const urls = this._makeUrls(r, a, ids);
 
-        return this._odataGet(urls, req);
+        return this._odataGet<T>(urls, req);
     }
 
     //
@@ -146,20 +139,10 @@ export class PipRX {
                     try {
                         return Utils.nativeParser(r.json());
                     } catch (e) {
-                        // this._needAuth$.next(true);
                         return Observable.throw(r);
                     }
                 });
         });
-
-        /* duplicate requests - wery bad
-        rl.subscribe(
-            data => {},
-            err => { // to do throw error
-                this._needAuth$.next(true);
-            }
-        );
-        */
 
         return rl.reduce((acc: T[], v: T[]) => {
             acc.push(...v);
