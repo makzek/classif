@@ -51,7 +51,9 @@ export class DictionaryComponent implements OnDestroy {
         this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
-                this.dictionaryName = dictionary.root.title;
+                if (dictionary.root) {
+                    this.dictionaryName = dictionary.root.title;
+                }
                 this.nodes = [dictionary.root];
             }
         });

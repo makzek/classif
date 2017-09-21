@@ -112,7 +112,7 @@ export class EosDictService {
                     return this._api.getRoot(this._dictionary.descriptor);
                 })
                 .then((data: any[]) => {
-                    if (data && data.length) {
+                    if (data && data.length && this._dictionary) {
                         this._dictionary.init(data);
                         this._dictionary$.next(this._dictionary);
                     } else {

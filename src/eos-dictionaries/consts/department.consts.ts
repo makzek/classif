@@ -63,7 +63,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'WEIGHT',
         title: 'WEIGHT',
         type: 'number'
-    }, {
+    }, /*{
         key: 'id',
         type: 'string',
         title: 'ID'
@@ -79,7 +79,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'description',
         title: 'Описание',
         type: 'text'
-    }, {
+    }, */{
         key: 'titleRP',
         title: 'Подразделение в родительном падеже',
         type: 'text',
@@ -106,15 +106,16 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Наименование картотеки',
         type: 'text'
     }, {
-        key: 'organization',
+        // key: 'organization',
+        key: 'DUE_LINK_ORGANIZ',
         title: 'Организация',
         type: 'text',
-    }, {
+    }, /* {
         // key: 'note',
         key: 'NOTE',
         title: 'Примечание',
         type: 'text',
-    }, {
+    },*/ {
         // key: 'startDate',
         key: 'START_DATE',
         title: 'Дата начала действия',

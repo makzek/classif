@@ -31,7 +31,8 @@ export class CardEdit implements OnChanges {
                     break;
                 case EDIT_CARD_ACTIONS.cancel:
                     this.editMode = false;
-                    this.result.emit(this.data);
+                    // this.result.emit(this.data);
+                    this.result.emit(null);
                     Object.assign(this.tmpObj, this.data);
                     break;
                 case EDIT_CARD_ACTIONS.create:

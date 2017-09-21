@@ -103,11 +103,15 @@ export class SelectedNodeComponent implements OnDestroy {
                     break;
                 }
                 case E_RECORD_ACTIONS.markRecords: {
-                    this.selectedNode.selected = true;
+                    if (this.selectedNode) { // maybe we need save this value
+                        this.selectedNode.selected = true;
+                    }
                     break;
                 }
                 case E_RECORD_ACTIONS.unmarkRecords: {
-                    this.selectedNode.selected = false;
+                    if (this.selectedNode) { // maybe we need save this value
+                        this.selectedNode.selected = false;
+                    }
                     break;
                 }
             }

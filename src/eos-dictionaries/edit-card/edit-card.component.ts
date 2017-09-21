@@ -177,14 +177,17 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }*/
 
     recordResult(evt: any) {
+        if (evt) {
+            this._dictSrv.updateNode(this.dictionaryId, this.nodeId, this._dict.descriptor.record, evt);
+            this._deskSrv.addRecentItem({
+                link: this.selfLink.slice(0, this.selfLink.length - 5),
+                title: this.nodeName,
+                edited: false,
+            });
+        }
         this.wasEdit = false;
         this.editMode = false;
-        this._dictSrv.updateNode(this.dictionaryId, this.nodeId, this._dict.descriptor.record, evt);
-        this._deskSrv.addRecentItem({
-            link: this.selfLink.slice(0, this.selfLink.length - 5),
-            title: this.nodeName,
-            edited: false,
-        });
+
     }
 
     resetAndClose(): void {
