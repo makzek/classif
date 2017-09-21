@@ -11,16 +11,6 @@
         }
     }
 
-    &.empty { // Temporary solution for well view of bc on pagws without sandwiches
-        width: 12px;
-        display: inline-block;
-        height: 28px;
-
-        .sandwich {
-            display: none;
-        }
-    }
-
     .sandwich {
         position: relative;
     }
