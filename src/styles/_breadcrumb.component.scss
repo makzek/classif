@@ -9,8 +9,7 @@
         margin: 0;
         padding: 0;
         position: relative;
-        top: 6px;
-        left: -12px;
+        top: 11px;
 
         & > li:not(:first-child)::before {
             // font-family: "Glyphicons Halflings";
@@ -44,4 +43,22 @@
             }
         }
     }
+
+    .pushpin {
+        top: 11px;
+    }
+
+    .left-sandwich {
+        .btn {
+            margin-right: -16px;
+            margin-bottom: -7px;
+        }
+    }
+
+    .right-sandwich {
+        .btn {
+            margin-bottom: -20px;
+        }
+    }
+
 }

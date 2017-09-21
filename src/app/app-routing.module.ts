@@ -10,14 +10,17 @@ import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
 import { RubricComponent } from '../eos-rest/clman/rubric.component';
 
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { AuthGuard } from './guards/eos-auth.guard';
 
 const routes: Routes = [{
     path: 'spravochniki',
     data: { title: 'Справочники', showInBreadcrumb: true },
+    canActivate: [AuthGuard],
     children: [{
         path: '',
         pathMatch: 'full',
         component: DictionariesComponent,
+        canActivate: [AuthGuard],
     }, {
         path: ':dictionaryId',
         data: { title: 'Справочник', showInBreadcrumb: true },
@@ -65,10 +68,12 @@ const routes: Routes = [{
     data: { title: 'Test page for UI components', showInBreadcrumb: true }
 }, {
     path: 'delivery',
+    canActivate: [AuthGuard],
     component: DeliveryComponent,
     data: { title: 'delivery page', showInBreadcrumb: true }
 }, {
     path: 'rubric',
+    canActivate: [AuthGuard],
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
 }, {
