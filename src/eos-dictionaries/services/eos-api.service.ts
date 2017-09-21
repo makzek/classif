@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { DICTIONARIES, DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { DictionaryDescriptor } from '../core/dictionary-descriptor';
-import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
 import { RubricService, DepartmentService } from '../../eos-rest';
 
@@ -26,12 +25,6 @@ export class EosDictApiService {
         DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
-    getDictionaryList(): Promise<any> {
-        return new Promise((res) => {
-            res(DICTIONARIES);
-        });
-    }
-
     getDictionaryDescriptorData(dictionaryId: string): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this._dictionaries[dictionaryId]) {
@@ -43,14 +36,26 @@ export class EosDictApiService {
     }
 
     getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
+        return this.getNode(descriptor, '0.')
+            .then((rootNode) => {
+                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
+                    return this._getChildren(descriptor, rootNode.ISN_NODE)
+                        .then((nodes) => {
+                            return [rootNode].concat(nodes);
+                        });
+                } else {
+                    return [rootNode];
+                }
+            });
+    }
+
+    getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
         let _promise: Promise<any[]>;
         const _params = {
-            DUE: '0.%',
-            /* IS_NODE: '0', */
-            // LAYER: '0:' + (level + 2) /* not supported */
+            DUE: (nodeId ? nodeId : '0.') + '%',
         };
-
         const _service = this._apiService(descriptor);
+
         if (_service) {
             _promise = _service.getAll(_params);
         } else {
@@ -59,48 +64,8 @@ export class EosDictApiService {
         return _promise;
     }
 
-    getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
-        let _promise: Promise<any[]>;
-        const _params = {
-            DUE: (nodeId ? nodeId : '0.') + '%',
-            IS_NODE: '0',
-            // LAYER: '0:' + (level + 2) /* not supported */
-        };
-
-        const _service = this._apiService(descriptor);
-
-        if (_service) {
-            _promise = _service.getAll(_params)
-                .then((data) => this._cacheData(descriptor, data)) /* for backward compatibility keep nodes in map*/
-                .catch((err: Response) => {
-                    console.log(err);
-                    return Promise.reject(err);
-                });
-        } else {
-            _promise = this._noData();
-        }
-        return _promise;
-    }
-
     getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
-        let _promise: Promise<any>;
 
-        const _node = this._nodesMap.get(nodeId);
-        if (_node) {
-            _promise = new Promise((res) => {
-                res(_node);
-            })
-        } else {
-            _promise = this._getNode(descriptor, nodeId);
-        }
-        return _promise;
-    }
-
-    private _noData(): Promise<any[]> {
-        return new Promise((res, rej) => res([]));
-    }
-
-    private _getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
         let _promise: Promise<any>;
 
         const _params = {
@@ -111,7 +76,6 @@ export class EosDictApiService {
 
         if (_service) {
             _promise = _service.getAll(_params)
-                .then((data) => this._cacheData(descriptor, data))
                 .then((data: any[]) => {
                     if (data && data.length) {
                         return data[0];
@@ -120,11 +84,30 @@ export class EosDictApiService {
                     }
                 });
         } else {
-            _promise = new Promise((res, rej) => {
-                res(null);
-            });
+            _promise = this._noData();
         }
         return _promise;
+    }
+
+    private _getChildren(descriptor: DictionaryDescriptor, parentISN: number): Promise<any[]> {
+        let _promise: Promise<any[]>;
+
+        const _children = {
+            'ISN_HIGH_NODE': parentISN + ''
+        };
+
+        const _service = this._apiService(descriptor);
+
+        if (_service) {
+            _promise = _service.getAll(_children)
+        } else {
+            _promise = this._noData()
+        }
+        return _promise;
+    }
+
+    private _noData(): Promise<any[]> {
+        return new Promise((res, rej) => res([]));
     }
 
     private _apiService(descriptor: DictionaryDescriptor): any {
@@ -136,14 +119,5 @@ export class EosDictApiService {
             default:
                 return null;
         }
-    }
-
-    private _cacheData(descriptor: DictionaryDescriptor, data: any[]): any[] {
-        data.forEach((e) => {
-            if (e[descriptor.record.keyField.key]) {
-                this._nodesMap.set(e[descriptor.record.keyField.key], e);
-            }
-        })
-        return data;
     }
 }
