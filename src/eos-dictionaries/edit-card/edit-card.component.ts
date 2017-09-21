@@ -106,6 +106,8 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         });
 
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
+        /* temporarily! */
+        this.clearStorage();
     }
 
     private _init() {
