@@ -1,4 +1,6 @@
-export const USER_SETTINGS = [
+import { ISettingsItem } from '../core/settings-item.interface';
+
+export const USER_SETTINGS: ISettingsItem[] = [
     {
         name: 'Показывать логически удалённые элементы',
         id: 'showDeleted',

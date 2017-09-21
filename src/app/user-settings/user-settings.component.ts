@@ -3,6 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { EosUserProfileService } from '../services/eos-user-profile.service';
+import { ISettingsItem } from '../core/settings-item.interface';
 
 @Component({
     selector: 'eos-user-settings',
@@ -13,7 +14,7 @@ export class UserSettingsComponent {
     inputName: string = null;
     inputPassword: string = null;
 
-    settings: any;
+    settings: ISettingsItem[];
     public modalRef: BsModalRef;
 
     constructor(

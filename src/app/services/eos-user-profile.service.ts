@@ -7,6 +7,7 @@ import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
+import { ISettingsItem } from '../core/settings-item.interface';
 
 /* todo replace with profile API */
 import { RubricService } from '../../eos-rest/services/rubric.service';
@@ -17,18 +18,18 @@ export class EosUserProfileService implements IUserProfile {
     secondName: string;
     family: string;
     photoUrl?: string;
-    settings: any[];
+    settings: ISettingsItem[];
 
     private _isAuthorized: boolean;
 
-    private _settings$: BehaviorSubject<any>;
+    private _settings$: BehaviorSubject<ISettingsItem[]>;
     private _authorized$: BehaviorSubject<boolean>;
 
     get shortName(): string {
         return [this.family, this.name.substr(0, 1), this.secondName.substr(0, 1)].join(' ');
     }
 
-    get settings$(): Observable<any> {
+    get settings$(): Observable<ISettingsItem[]> {
         return this._settings$.asObservable();
     }
 
@@ -53,7 +54,7 @@ export class EosUserProfileService implements IUserProfile {
         Object.assign(this, DEFAURT_USER);
         this.settings = USER_SETTINGS;
         this._isAuthorized = false;
-        this._settings$ = new BehaviorSubject<any>(this.settings);
+        this._settings$ = new BehaviorSubject<ISettingsItem[]>(this.settings);
         this._authorized$ = new BehaviorSubject<boolean>(this._isAuthorized);
     }
 
@@ -115,7 +116,7 @@ export class EosUserProfileService implements IUserProfile {
         if (!_setting) {
             _setting = {
                 id: key,
-                title: key,
+                name: key,
                 value: value
             }
         } else {
