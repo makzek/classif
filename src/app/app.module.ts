@@ -35,7 +35,11 @@ import { EosNoticeService } from './services/eos-notice.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
+
+/* guards */
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { AuthGuard } from './guards/eos-auth.guard';
+/* end guards */
 
 import { LoginComponent } from './login/login.component';
 
@@ -72,6 +76,7 @@ import { LoginComponent } from './login/login.component';
     providers: [
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        AuthGuard,
         EosErrorHandler,
         EosDeskService,
         EosUserProfileService,
