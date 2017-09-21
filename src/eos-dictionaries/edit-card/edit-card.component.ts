@@ -59,7 +59,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     @HostListener('window:beforeunload')
     private _canWndUnload(): boolean {
-        this.clearStorage(); /* why? */
         return this.canDeactivate();
     }
 
@@ -133,6 +132,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
+            // if we went from the same card (from editing to view mode)
+            this.lastEditedCard = this.getLastEditedCard();
+            if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId && this.mode === EDIT_CARD_MODES.edit) {
+                this.clearStorage();
+            }
     }
 
     save(): void {
@@ -241,7 +245,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     /* record the card with unsaved changes into the LocalStorage */
     setUnsavedChanges(): void {
-        this._setEditingCardValue();
         this.wasEdit = true;
     }
 
@@ -274,14 +277,16 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this.lastEditedCard = this.getLastEditedCard();
         if (this.mode === EDIT_CARD_MODES.view) {
             if (this.lastEditedCard) {
-                if (!this.wasEdit) {
-                    navigate = false;
-                    /* if we try to edit an other card */
-                    if (this.nodeId !== this.lastEditedCard.id) {
-                        this.modalOnlyRef.show();
-                    }
+                navigate = false;
+                /* if we try to edit an other card */
+                if (this.nodeId !== this.lastEditedCard.id) {
+                    this.modalOnlyRef.show();
                 }
+            } else {
+                this._setEditingCardValue();
             }
+        } else {
+            this.clearStorage();
         }
         if (navigate) {
             this._router.navigate([
