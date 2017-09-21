@@ -40,3 +40,11 @@ export const WARN_SEARCH_NOTFOUND: IMessage = {
     msg: 'попробуйте изменить поисковую фразу',
     dismissOnTimeout: LONG_DISMISS_TIMEOUT
 };
+
+export const DANGER_NAVIGATE_TO_DELETED_ERROR: IMessage = {
+    type: 'danger',
+    title: 'Ошибка редактирования элемента: ',
+    /* tslint:disable:max-line-length */
+    msg: 'больше нет не удалённых элементов. Включите просмотр логически удалённых элементов, чтобы просмотреть, или востановите удалённых элементы, чтобы отредактировать'
+    /* tslint:enable:max-line-length */
+};

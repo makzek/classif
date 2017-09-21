@@ -14,7 +14,7 @@
             </span>
         </div>
         <div class="name-wrapper">
-            <span class="edit-title">{{ nodeName }}</span>
+            <span *ngIf="node" class="edit-title" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
             <button class="btn btn-primary" (click)="save()">Сохранить</button>

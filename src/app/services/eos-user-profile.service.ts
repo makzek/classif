@@ -100,12 +100,14 @@ export class EosUserProfileService implements IUserProfile {
 
     setSetting(key: string, value: any) {
         this._setSetting(key, value);
-        this._settings$.next(this._settings$);
+        // this._settings$.next(this._settings$);
+        this._settings$.next(this.settings);
     }
 
     saveSettings(settings: any[]) {
         settings.forEach((item) => this._setSetting(item.id, item.value));
-        this._settings$.next(this._settings$);
+        // this._settings$.next(this._settings$);
+        this._settings$.next(this.settings);
     }
 
     private _setSetting(key: string, value: any) {
