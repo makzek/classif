@@ -12,46 +12,48 @@ import { IFieldView } from '../core/field-descriptor';
     templateUrl: 'tree-node.component.html',
 })
 export class TreeNodeComponent implements OnInit {
-    private _dictionaryId: string;
-
     @Input('node') node: EosDictionaryNode;
-
+    private _dictionaryId: string;
+    private selectedNode: EosDictionaryNode;
     isActive = false;
-    selectedNode: EosDictionaryNode;
     showDeleted = false;
     viewFields: IFieldView[];
 
-    constructor(private _router: Router, private _dictSrv: EosDictService, private _profileSrv: EosUserProfileService) {
+    constructor(
+        private _router: Router,
+        private _dictSrv: EosDictService,
+        private _profileSrv: EosUserProfileService
+    ) {
         _dictSrv.dictionary$.subscribe((dict) => {
             if (dict) {
-            this._dictionaryId = dict.id
+                this._dictionaryId = dict.id
             }
         });
-        _dictSrv.selectedNode$.subscribe((node) => this._update(node));
-        _profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+        _dictSrv.selectedNode$.subscribe((node) => {
+            this.selectedNode = node;
+            this._update();
         });
+
+        _profileSrv.settings$
+            .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
+            .subscribe((s) => this.showDeleted = s);
     }
 
-    private _update(selected: EosDictionaryNode) {
-        if (this.node && selected) {
-            this.isActive = (selected.id === this.node.id);
+    private _update() {
+        if (this.node && this.selectedNode) {
+            this.isActive = (this.selectedNode.id === this.node.id);
         }
-        this.selectedNode = selected;
     }
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
-        if (this.selectedNode) {
-            this._update(this.selectedNode);
-        }
+        this._update();
     }
 
     onExpand(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
-        // if (!isDeleted) {
-            this.node.isExpanded = !this.node.isExpanded;
-        // }
+        this._dictSrv.expandNode(this.node.id)
+            .then((node) => node.isExpanded = !node.isExpanded);
     }
 
     onSelect(evt: Event, isDeleted: boolean) {

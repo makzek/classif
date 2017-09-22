@@ -140,6 +140,7 @@ export class EosDictionary {
         return _result;
     }
 
+    /* todo: search with API */
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
         let searchResult = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
@@ -160,6 +161,7 @@ export class EosDictionary {
         return searchResult;
     }
 
+    /* todo: search with API */
     fullSearch(queries: IFieldView[], searchInDeleted: boolean): EosDictionaryNode[] {
         const searchResult = [];
 

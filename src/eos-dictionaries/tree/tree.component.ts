@@ -7,9 +7,4 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 })
 export class TreeComponent {
     @Input() nodes: EosDictionaryNode[];
-    @Input() selectedNode: any;
-
-    onExpand(node: EosDictionaryNode) {
-        node.isExpanded = !node.isExpanded;
-    }
 }
