@@ -27,7 +27,7 @@ export class RubricComponent implements OnInit {
     getData() {
         this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
-            RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
+            // RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
 
             // - Загрузка по известным первичным ключам
             // DELIVERY_CL: [1, 3775, 3776, 3777, 3778, 3779, 1021138, 1021139,
@@ -35,7 +35,8 @@ export class RubricComponent implements OnInit {
             //     1037681, 1037682, 1037683, 1037684, 1037685]
 
             // - поиск по критериям
-            // DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
+            RUBRIC_CL: Utils.criteries({ LAYER: '0:2', IS_NODE: '0' })
+            , orderby: 'DUE', top: 200
         }).subscribe(r => {
             console.log('----->>>>>>>');
             console.log(r);

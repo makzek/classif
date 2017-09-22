@@ -112,7 +112,7 @@ export class EosDictService {
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     _dictionary = new EosDictionary(descData);
-                    return this._api.getNodes(_dictionary.descriptor);
+                    return this._api.getRoot(_dictionary.descriptor);
                 })
                 .then((data: any[]) => {
                     if (data && data.length && _dictionary) {
@@ -139,20 +139,22 @@ export class EosDictService {
         return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
             .then((_dict) => {
                 if (_dict) {
+                     /*
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
                         return _node;
                     } else {
-                        return this._api.getNode(this._dictionary.descriptor, nodeId)
-                            .then((data: any) => {
-                                _node = null;
-                                if (data) {
-                                    _node = new EosDictionaryNode(_dict.descriptor.record, data);
-                                    _dict.addNode(_node, _node.parentId);
+                     */
+                        return this._api.getNodeWithChildren(this._dictionary.descriptor, nodeId) // temp solution
+                            .then((data: any[]) => {
+                                let _node = null;
+                                if (data && data.length) {
+                                    _dict.updateNodes(data)
+                                    _node = _dict.getNode(nodeId);
                                 }
                                 return _node;
                             });
-                    }
+                    /* } */
                 }
             });
     }
