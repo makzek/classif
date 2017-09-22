@@ -36,17 +36,7 @@ export class EosDictApiService {
     }
 
     getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
-        return this.getNode(descriptor, '0.')
-            .then((rootNode) => {
-                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this._getChildren(descriptor, rootNode.ISN_NODE)
-                        .then((nodes) => {
-                            return [rootNode].concat(nodes);
-                        });
-                } else {
-                    return [rootNode];
-                }
-            });
+        return this.getNodeWithChildren(descriptor, '0.');
     }
 
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
