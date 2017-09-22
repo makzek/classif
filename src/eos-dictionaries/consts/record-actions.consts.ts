@@ -41,7 +41,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.remove,
     group: E_ACTION_GROUPS.group,
     title: null,
-    hint: 'Удалить',
+    hint: 'Удалить логически',
     iconClass: 'eos-icon eos-icon-close-blue',
     buttonClass: null
 },

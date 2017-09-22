@@ -39,11 +39,11 @@
                 <div *ngIf="creating" class="input-group">
                     <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="create()" type="button">
-                            <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить"></span>
+                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить">
+                            <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button class="btn btn-default" (click)="cancelCreating()" type="button">
-                            <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить"></span>
+                        <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить">
+                            <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </span>
                 </div>
