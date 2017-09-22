@@ -139,22 +139,21 @@ export class EosDictService {
         return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
             .then((_dict) => {
                 if (_dict) {
-                     /*
                     let _node = _dict.getNode(nodeId);
                     if (_node) {
                         return _node;
                     } else {
-                     */
                         return this._api.getNodeWithChildren(this._dictionary.descriptor, nodeId) // temp solution
                             .then((data: any[]) => {
-                                let _node = null;
+                                /* let */
+                                _node = null;
                                 if (data && data.length) {
                                     _dict.updateNodes(data)
                                     _node = _dict.getNode(nodeId);
                                 }
                                 return _node;
                             });
-                    /* } */
+                    }
                 }
             });
     }

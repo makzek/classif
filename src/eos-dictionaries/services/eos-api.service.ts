@@ -36,7 +36,8 @@ export class EosDictApiService {
     }
 
     getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
-        return this.getNodeWithChildren(descriptor, '0.');
+        return this.getNodes(descriptor, '0.');
+        /* return this.getNodeWithChildren(descriptor, '0.'); */
     }
 
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
