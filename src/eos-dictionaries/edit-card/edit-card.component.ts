@@ -64,6 +64,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     @HostListener('window:beforeunload')
     private _canWndUnload(): boolean {
+        this.clearStorage();
         return this.canDeactivate();
     }
 
@@ -117,8 +118,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         });
 
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
-        /* temporarily! */
-        this.clearStorage();
     }
 
     private _init() {
@@ -149,11 +148,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
         this._profileSubscription.unsubscribe();
-            // if we went from the same card (from editing to view mode)
-            this.lastEditedCard = this.getLastEditedCard();
-            if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId && this.mode === EDIT_CARD_MODES.edit) {
-                this.clearStorage();
-            }
+        // if we went from the same card (from editing to view mode)
+        this.lastEditedCard = this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId && this.mode === EDIT_CARD_MODES.edit) {
+            this.clearStorage();
+        }
     }
 
     save(): void {
@@ -332,7 +331,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         if (this.mode === EDIT_CARD_MODES.view) {
             if (this.lastEditedCard) {
                 navigate = false;
-                /* if we try to edit an other card */
                 if (this.nodeId !== this.lastEditedCard.id) {
                     this.modalOnlyRef.show();
                 }
