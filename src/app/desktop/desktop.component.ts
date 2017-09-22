@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';

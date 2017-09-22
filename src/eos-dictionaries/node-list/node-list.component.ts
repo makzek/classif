@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input,  OnDestroy } from '@angular/core';
 // import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';

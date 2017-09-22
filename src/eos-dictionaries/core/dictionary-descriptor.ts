@@ -1,4 +1,4 @@
-import { IFieldDesriptor, /*IFieldGroup,*/ FieldDescriptor, FieldGroup } from './field-descriptor';
+import { IFieldDesriptor, /*IFieldGroup,*/ FieldDescriptor/*, FieldGroup*/ } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 

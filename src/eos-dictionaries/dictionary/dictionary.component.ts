@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/filter';
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
@@ -8,7 +7,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
     DictionaryActionService,
     DICTIONARY_ACTIONS,
-    DICTIONARY_STATES
+   /* DICTIONARY_STATES*/
 } from '../dictionary/dictionary-action.service';
 
 @Component({

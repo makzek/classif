@@ -1,4 +1,4 @@
-import { FieldDescriptor, IFieldDesriptor, IFieldView } from './field-descriptor';
+import { FieldDescriptor, /*IFieldDesriptor,*/ IFieldView } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 
 export abstract class RecordDescriptor {

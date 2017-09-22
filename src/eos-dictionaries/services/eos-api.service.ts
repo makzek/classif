@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { DICTIONARIES, DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { DictionaryDescriptor } from '../core/dictionary-descriptor';
-import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
+// import { MOCK_RUBRICS as NODES } from '../consts/rubricator.mock';
 
 import { RubricService, DepartmentService } from '../../eos-rest';
 
-import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+// import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
+// import { EosMessageService } from '../../eos-common/services/eos-message.service';
+// import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 @Injectable()
 export class EosDictApiService {
@@ -16,10 +16,10 @@ export class EosDictApiService {
     private _dictionaries: any;
 
     constructor(
-        private _msgSrv: EosMessageService,
+        // private _msgSrv: EosMessageService,
         private _rubricSrv: RubricService,
         private _deptSrv: DepartmentService,
-        private _profileSrv: EosUserProfileService
+        // private _profileSrv: EosUserProfileService
     ) {
         this._nodesMap = new Map<string, any>();
         this._dictionaries = {};

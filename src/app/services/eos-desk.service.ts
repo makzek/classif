@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+// import {Subject} from 'rxjs/Subject';
 
-import { Router, ActivatedRoute } from '@angular/router';
+// import { Router, ActivatedRoute } from '@angular/router';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
@@ -53,10 +53,9 @@ export class EosDeskService {
         return this._recentItems$.asObservable();
     }
 
-    constructor(
-        private eosDictionaryService: EosDictService,
-        private eosMessageService: EosMessageService,
-        private router: Router
+    constructor(private _dictSrv: EosDictService,
+        private _msgSrv: EosMessageService,
+        /*private router: Router*/
     ) {
         this._desksList = DEFAULT_DESKS;
 
@@ -65,7 +64,7 @@ export class EosDeskService {
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._recentItems$ = new BehaviorSubject(this._recentItems);
 
-        eosDictionaryService.getDictionariesList()
+        _dictSrv.getDictionariesList()
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
                     return {
@@ -136,7 +135,7 @@ export class EosDeskService {
             this._desksList.push(desk);
             this._desksList$.next(this._desksList);
         } else {
-            this.eosMessageService.addNewMessage({
+            this._msgSrv.addNewMessage({
                 type: 'warning',
                 title: 'Предупреждение: максимальное колличество рабочих столов!',
                 msg: 'У вас может быть не более 5 рабочих столов',

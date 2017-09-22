@@ -22,8 +22,8 @@ export class EosBreadcrumbsService {
 
     constructor(
         private _router: Router,
-        private _dictionaryService: EosDictService,
-        private _deskService: EosDeskService
+        private _dictSrv: EosDictService,
+        private _deskSrv: EosDeskService
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
@@ -35,7 +35,7 @@ export class EosBreadcrumbsService {
                 this.makeBreadCrumbs();
             });
 
-        _deskService.selectedDesk.subscribe((desc) => {
+            _deskSrv.selectedDesk.subscribe((desc) => {
             this._selectedDesk = desc;
             this.makeBreadCrumbs();
             /* console.log('selected -->>', this._selectedDesk.id); */
@@ -106,7 +106,7 @@ export class EosBreadcrumbsService {
 
                 if (route.params && route.data.showInBreadcrumb) {
                     if (route.params.dictionaryId && !route.params.nodeId) {
-                        this._dictionaryService.getDictionariesList()
+                        this._dictSrv.getDictionariesList()
                             .then((list) => {
                                 const _d = list.find((e: any) => e.id === route.params.dictionaryId);
                                 if (_d) {
@@ -115,7 +115,7 @@ export class EosBreadcrumbsService {
                             });
                     }
                     if (route.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
-                        this._dictionaryService.getNode(route.params.dictionaryId, route.params.nodeId)
+                        this._dictSrv.getNode(route.params.dictionaryId, route.params.nodeId)
                             .then((node) => {
                                 if (node) {
                                     const _titleView = node.getShortQuickView()[0];
@@ -127,7 +127,7 @@ export class EosBreadcrumbsService {
                     }
 
                     if (route.params.desktopId && route.data.showInBreadcrumb) {
-                        this._deskService.desksList.toPromise().then(
+                        this._deskSrv.desksList.toPromise().then(
                             (list) => {
                                 const _d = list.find((e: any) => e.id === route.params.desktopId);
                                 if (_d) {
