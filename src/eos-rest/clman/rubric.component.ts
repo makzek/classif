@@ -62,7 +62,7 @@ export class RubricComponent implements OnInit {
     onSave() {
         const chl = Utils.changeList([this.currentItem]);
         this.pip.batch(chl, '').subscribe((r) => {
-            alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE));
+            alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
 
     }
