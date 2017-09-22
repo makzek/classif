@@ -17,6 +17,7 @@ import { ApiCfg } from './core/api-cfg';
 import { PipRX } from './services/pipRX.service';
 import { RubricService } from './services/rubric.service';
 import { AuthService } from './services/auth.service';
+import { AppContext } from './services/appContext.service';
 import { DepartmentService } from './services/department.service';
 
 
@@ -40,6 +41,7 @@ import { DepartmentService } from './services/department.service';
         AuthService,
         RubricService,
         DepartmentService,
+        AppContext
     ]
 })
 export class EosRestModule {

@@ -6,7 +6,7 @@ import { PipRX } from '../services/pipRX.service';
 import { RubricService } from '../services/rubric.service';
 import { Utils } from '../core/utils';
 //
-import { AuthService } from '../services/auth.service';
+import { AppContext } from '../services/appContext.service';
 
 
 
@@ -17,14 +17,16 @@ import { AuthService } from '../services/auth.service';
 export class RubricComponent implements OnInit {
     items: RUBRIC_CL[] = [];
     currentItem: RUBRIC_CL;
+    username: string;
     // errorMessage: string;
-    constructor(private pip: PipRX, private _auth: AuthService) { }
+    constructor(private pip: PipRX, private _ctx: AppContext) { }
     //
     ngOnInit() {
 
     }
 
     getData() {
+        this.username = this._ctx.CurrentUser.CLASSIF_NAME;
         this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
             // RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
@@ -42,6 +44,7 @@ export class RubricComponent implements OnInit {
             console.log(r);
             this.items = r;
         });
+
 
     }
     onSelect(cur: RUBRIC_CL): void {
