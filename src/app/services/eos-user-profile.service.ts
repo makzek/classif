@@ -24,6 +24,7 @@ export class EosUserProfileService implements IUserProfile {
 
     private _settings$: BehaviorSubject<ISettingsItem[]>;
     private _authorized$: BehaviorSubject<boolean>;
+    private _authPromise: Promise<boolean>;
 
     get shortName(): string {
         return [this.family, this.name.substr(0, 1), this.secondName.substr(0, 1)].join(' ');
@@ -39,6 +40,7 @@ export class EosUserProfileService implements IUserProfile {
 
     isAuthorized(silent = false): boolean {
         if (!silent && !this._isAuthorized) {
+            console.warn('isAuthorized fired');
             this._msgSrv.addNewMessage(AUTH_REQUIRED);
             this._authorized$.next(this._isAuthorized);
         }
@@ -59,22 +61,29 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     checkAuth(): Promise<boolean> {
-        const _params = {
-            DUE: '0.',
-            IS_NODE: '0'
-        };
-
-        return <Promise<boolean>>this._rubricSrv.getAll(_params)
-            .then((resp) => {
-                this._isAuthorized = true;
-                return this._isAuthorized;
-            })
-            .catch((err: Response) => {
-                if (err.status === 434) {
-                    this.notAuthorized();
-                }
-                return this._isAuthorized;
-            });
+        if (this._isAuthorized) {
+            return new Promise((resp) => resp(true));
+        } else {
+            const _params = {
+                DUE: '0.',
+                IS_NODE: '0'
+            };
+            if (!this._authPromise) {
+                this._authPromise = this._rubricSrv.getAll(_params)
+                    .then((resp) => {
+                        this._isAuthorized = true;
+                        return this._isAuthorized;
+                    })
+                    .catch((err: Response) => {
+                        if (err.status === 434) {
+                            console.log('notAuthorized fired');
+                            this.notAuthorized();
+                        }
+                        return this._isAuthorized;
+                    });
+            }
+            return this._authPromise;
+        }
     }
 
     notAuthorized() {
@@ -101,13 +110,13 @@ export class EosUserProfileService implements IUserProfile {
 
     setSetting(key: string, value: any) {
         this._setSetting(key, value);
-        // this._settings$.next(this._settings$);
+        this._settings$.next(this.settings);
         this._settings$.next(this.settings);
     }
 
     saveSettings(settings: any[]) {
         settings.forEach((item) => this._setSetting(item.id, item.value));
-        // this._settings$.next(this._settings$);
+        this._settings$.next(this.settings);
         this._settings$.next(this.settings);
     }
 

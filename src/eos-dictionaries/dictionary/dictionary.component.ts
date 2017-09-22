@@ -32,8 +32,6 @@ export class DictionaryComponent implements OnDestroy {
         _profileSrv.authorized$.subscribe((auth) => {
             if (auth) {
                 this._update();
-            }{
-                _dictSrv.closeDictionary();
             }
         });
 
@@ -57,28 +55,28 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
-      /*  this._actSrv.state$.subscribe((state) => {
-            if (state !== null) {
-                switch (state) {
-                    case DICTIONARY_STATES.full:
-                        this.hideTree = false;
-                        this.hideFullInfo = false;
-                        break;
-                    case DICTIONARY_STATES.info:
-                        this.hideTree = false;
-                        this.hideFullInfo = true;
-                        break;
-                    case DICTIONARY_STATES.tree:
-                        this.hideTree = true;
-                        this.hideFullInfo = false;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.hideTree = true;
-                        this.hideFullInfo = true;
-                        break;
-                }
-            }
-        });*/
+        /*  this._actSrv.state$.subscribe((state) => {
+              if (state !== null) {
+                  switch (state) {
+                      case DICTIONARY_STATES.full:
+                          this.hideTree = false;
+                          this.hideFullInfo = false;
+                          break;
+                      case DICTIONARY_STATES.info:
+                          this.hideTree = false;
+                          this.hideFullInfo = true;
+                          break;
+                      case DICTIONARY_STATES.tree:
+                          this.hideTree = true;
+                          this.hideFullInfo = false;
+                          break;
+                      case DICTIONARY_STATES.selected:
+                          this.hideTree = true;
+                          this.hideFullInfo = true;
+                          break;
+                  }
+              }
+          });*/
 
         this._actSrv.action$.subscribe((action) => {
             switch (action) {

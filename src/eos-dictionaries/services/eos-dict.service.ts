@@ -90,30 +90,34 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        if (this._profileSrv.isAuthorized()) {
-            if (this._dictionary && this._dictionary.id === dictionaryId) {
-                return new Promise<EosDictionary>((res) => res(this._dictionary));
-            } else {
-                return this._openDictionary(dictionaryId);
-            }
-        } else {
-            this.closeDictionary();
-            return new Promise<EosDictionary>((res) => res(null));
-        }
+        return this._profileSrv.checkAuth()
+            .then((authorized) => {
+                if (authorized) {
+                    if (this._dictionary && this._dictionary.id === dictionaryId) {
+                        return this._dictionary;
+                    } else {
+                        return this._openDictionary(dictionaryId);
+                    }
+                } else {
+                    this.closeDictionary();
+                    return null;
+                }
+            });
     }
 
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            this._dictionary = null;
+            let _dictionary = null;
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
-                    this._dictionary = new EosDictionary(descData);
-                    return this._api.getRoot(this._dictionary.descriptor);
+                    _dictionary = new EosDictionary(descData);
+                    return this._api.getNodes(_dictionary.descriptor);
                 })
                 .then((data: any[]) => {
-                    if (data && data.length && this._dictionary) {
-                        this._dictionary.init(data);
+                    if (data && data.length && _dictionary) {
+                        _dictionary.init(data);
+                        this._dictionary = _dictionary;
                         this._dictionary$.next(this._dictionary);
                     } else {
                         this.closeDictionary();
@@ -122,12 +126,8 @@ export class EosDictService {
                     return this._dictionary;
                 })
                 .catch((err: Response) => {
-                    if (err.status === 434) { /* API failed */
-
-                    }
-                    console.log(err);
+                    this.closeDictionary();
                     this._mDictionaryPromise.delete(dictionaryId);
-                    this._dictionary$.next(this._dictionary);
                     Promise.reject(err);
                 });
             this._mDictionaryPromise.set(dictionaryId, _p);

@@ -7,7 +7,7 @@ export class AuthGuard implements CanActivate {
     constructor(private _profileSrv: EosUserProfileService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
-        const _hasAuth = this._profileSrv.isAuthorized();
+        const _hasAuth = this._profileSrv.isAuthorized(true);
         if (!_hasAuth) {
             return this._profileSrv.checkAuth();
         } else {
