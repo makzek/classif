@@ -18,8 +18,9 @@ export class SandwichComponent {
     constructor(private _bcSrv: EosBreadcrumbsService) {
         _bcSrv.breadcrumbs.subscribe((_bc) => {
             /* tslint:disable:no-bitwise */
-            this.show = !!~_bc.findIndex((_bcItem) => _bcItem.params.dictionaryId) &&
-                !~_bc.findIndex((_bcItem) => _bcItem.params.edit || _bcItem.params.view );
+            this.show = !!~_bc.findIndex((_bcItem) => _bcItem.params.dictionaryId)
+                && !~_bc.findIndex((_bcItem) => !!~_bcItem.url.indexOf('edit'))
+                && !~_bc.findIndex((_bcItem) => !!~_bcItem.url.indexOf('view'));
             /* tslint:enable:no-bitwise */
         });
     }
