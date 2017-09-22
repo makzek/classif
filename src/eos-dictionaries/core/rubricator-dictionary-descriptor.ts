@@ -1,4 +1,4 @@
-import { FieldDescriptor, IFieldDesriptor } from './field-descriptor';
+import { FieldDescriptor /*, IFieldDesriptor */ } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 

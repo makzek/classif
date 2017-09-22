@@ -1,5 +1,5 @@
 import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor } from './dictionary-descriptor';
-import { RubricatorDictionaryDescriptor, IRubricatorDictionaryDescriptor } from './rubricator-dictionary-descriptor';
+import { RubricatorDictionaryDescriptor /*, IRubricatorDictionaryDescriptor*/ } from './rubricator-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor, IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { EosDictionaryNode } from './eos-dictionary-node';

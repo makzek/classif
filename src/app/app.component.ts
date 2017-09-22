@@ -23,11 +23,11 @@ export class AppComponent {
 
     constructor(
         viewContainerRef: ViewContainerRef,
-        private _deskService: EosDeskService,
+        private _deskSrv: EosDeskService,
     ) {
         this._containerRef = viewContainerRef;
 
-        this._deskService.selectedDesk.subscribe(
+        this._deskSrv.selectedDesk.subscribe(
             (link) => {
                 if (link) {
                     this.currentDesk = '/home/' + link.id;

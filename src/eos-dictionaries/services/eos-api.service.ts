@@ -5,9 +5,9 @@ import { DictionaryDescriptor } from '../core/dictionary-descriptor';
 
 import { RubricService, DepartmentService } from '../../eos-rest';
 
-import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+// import { AUTH_REQUIRED } from '../../app/consts/messages.consts';
+// import { EosMessageService } from '../../eos-common/services/eos-message.service';
+// import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 @Injectable()
 export class EosDictApiService {
@@ -15,10 +15,10 @@ export class EosDictApiService {
     private _dictionaries: any;
 
     constructor(
-        private _msgSrv: EosMessageService,
+        // private _msgSrv: EosMessageService,
         private _rubricSrv: RubricService,
         private _deptSrv: DepartmentService,
-        private _profileSrv: EosUserProfileService
+        // private _profileSrv: EosUserProfileService
     ) {
         this._nodesMap = new Map<string, any>();
         this._dictionaries = {};
@@ -36,17 +36,7 @@ export class EosDictApiService {
     }
 
     getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
-        return this.getNode(descriptor, '0.')
-            .then((rootNode) => {
-                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this._getChildren(descriptor, rootNode.ISN_NODE)
-                        .then((nodes) => {
-                            return [rootNode].concat(nodes);
-                        });
-                } else {
-                    return [rootNode];
-                }
-            });
+        return this.getNodeWithChildren(descriptor, '0.');
     }
 
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {

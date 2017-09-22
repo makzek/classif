@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, HostListener } from '@angular/core';
+import { Component, ViewChild, HostListener } from '@angular/core';
 // import { Router } from '@angular/router';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 

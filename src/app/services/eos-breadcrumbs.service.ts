@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRouteSnapshot, Router, RoutesRecognized } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RoutesRecognized, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
@@ -14,34 +14,24 @@ export class EosBreadcrumbsService {
     _breadcrumbs: IBreadcrumb[];
     _currentLink: IDeskItem;
 
-    private _selectedDesk: EosDesk;
-    private _routes: RoutesRecognized;
-
     _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
     _currentLink$: BehaviorSubject<IDeskItem>;
 
     constructor(
         private _router: Router,
-        private _dictionaryService: EosDictService,
-        private _deskService: EosDeskService
+        private _route: ActivatedRoute,
+        private _dictSrv: EosDictService,
+        private _deskSrv: EosDeskService
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
 
         _router.events
-            .filter((e) => e instanceof RoutesRecognized)
-            .subscribe((e: RoutesRecognized) => {
-                this._routes = e;
-                this.makeBreadCrumbs();
+            .filter((e) => e instanceof NavigationEnd)
+            .combineLatest(_deskSrv.selectedDesk)
+            .subscribe((val: [NavigationEnd, EosDesk]) => {
+                this.makeBreadCrumbs(val[1]);
             });
-
-        _deskService.selectedDesk.subscribe((desc) => {
-            this._selectedDesk = desc;
-            this.makeBreadCrumbs();
-            /* console.log('selected -->>', this._selectedDesk.id); */
-            // this.makeBreadCrumbs({});
-        });
-
     }
 
     get breadcrumbs(): Observable<IBreadcrumb[]> {
@@ -52,15 +42,15 @@ export class EosBreadcrumbsService {
         return this._currentLink$.asObservable();
     }
 
-    makeBreadCrumbs() {
-        if (this._selectedDesk && this._routes) {
+    makeBreadCrumbs(desk: EosDesk) {
+        if (desk /*&& this._routes*/) {
             this._breadcrumbs = [{
-                url: '/desk/' + this._selectedDesk.id,
-                title: this._selectedDesk.name,
+                url: '/desk/' + desk.id,
+                title: desk.name,
                 params: new Object(),
             }];
 
-            this._parseState(this._routes.state.root);
+            this._parseState(this._route.snapshot);
 
             this._breadcrumbs$.next(this._breadcrumbs);
 
@@ -71,7 +61,7 @@ export class EosBreadcrumbsService {
                 });
                 title = title.slice(0, title.length - 1);
                 this._currentLink = {
-                    link: this._routes.state.url,
+                    link: this._route.snapshot.url.toString(),
                     title: title,
                     edited: false,
                 }
@@ -106,7 +96,7 @@ export class EosBreadcrumbsService {
 
                 if (route.params && route.data.showInBreadcrumb) {
                     if (route.params.dictionaryId && !route.params.nodeId) {
-                        this._dictionaryService.getDictionariesList()
+                        this._dictSrv.getDictionariesList()
                             .then((list) => {
                                 const _d = list.find((e: any) => e.id === route.params.dictionaryId);
                                 if (_d) {
@@ -115,7 +105,7 @@ export class EosBreadcrumbsService {
                             });
                     }
                     if (route.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
-                        this._dictionaryService.getNode(route.params.dictionaryId, route.params.nodeId)
+                        this._dictSrv.getNode(route.params.dictionaryId, route.params.nodeId)
                             .then((node) => {
                                 if (node) {
                                     const _titleView = node.getShortQuickView()[0];
@@ -127,15 +117,15 @@ export class EosBreadcrumbsService {
                     }
 
                     if (route.params.desktopId && route.data.showInBreadcrumb) {
-                        this._deskService.desksList.toPromise().then(
+                        this._deskSrv.desksList.toPromise().then(
                             (list) => {
                                 const _d = list.find((e: any) => e.id === route.params.desktopId);
                                 if (_d) {
-                                   bc.title = _d.name;
-                                   /*this._deskService.getName(_d.id).subscribe((_n) => {
-                                        console.log('name from bc', _n);
-                                       bc.title = _n;
-                                    });*/
+                                    bc.title = _d.name;
+                                    /*this._deskService.getName(_d.id).subscribe((_n) => {
+                                         console.log('name from bc', _n);
+                                        bc.title = _n;
+                                     });*/
                                 }
                             }
                         );
