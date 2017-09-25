@@ -15,7 +15,7 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './edit-card-action.service';
-import { DANGER_NAVIGATE_TO_DELETED_ERROR } from '../consts/messages.consts';
+import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES } from '../consts/messages.consts';
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -109,7 +109,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
         this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
             if (mode === EDIT_CARD_MODES.unsavedChanges) {
-                this.setUnsavedChanges();
+                this.wasEdit = true;
+            }
+            if (mode === EDIT_CARD_MODES.nothingChanges) {
+                this.wasEdit = false;
+                this._msgSrv.addNewMessage(INFO_NOTHING_CHANGES);
             }
         });
 
@@ -297,9 +301,9 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     /* record the card with unsaved changes into the LocalStorage */
-    setUnsavedChanges(): void {
+    /*setUnsavedChanges(): void {
         this.wasEdit = true;
-    }
+    }*/
 
     private _setEditingCardValue() {
         this.lastEditedCard = this.getLastEditedCard();

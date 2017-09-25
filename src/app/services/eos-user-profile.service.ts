@@ -40,7 +40,6 @@ export class EosUserProfileService implements IUserProfile {
 
     isAuthorized(silent = false): boolean {
         if (!silent && !this._isAuthorized) {
-            console.warn('isAuthorized fired');
             this._msgSrv.addNewMessage(AUTH_REQUIRED);
             this._authorized$.next(this._isAuthorized);
         }
@@ -72,13 +71,14 @@ export class EosUserProfileService implements IUserProfile {
                 this._authPromise = this._rubricSrv.getAll(_params)
                     .then((resp) => {
                         this._isAuthorized = true;
+                        this._authPromise = null;
                         return this._isAuthorized;
                     })
                     .catch((err: Response) => {
                         if (err.status === 434) {
-                            console.log('notAuthorized fired');
                             this.notAuthorized();
                         }
+                        this._authPromise = null;
                         return this._isAuthorized;
                     });
             }
@@ -87,6 +87,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     notAuthorized() {
+        /* console.log('notAuthorized fired'); */
         this._isAuthorized = false;
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
     }

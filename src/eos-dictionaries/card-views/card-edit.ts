@@ -76,6 +76,16 @@ export class CardEdit implements OnChanges {
     }
 
     setUnsavedChanges() {
-        this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
+        let hasChanges = false;
+        for (const key in this.tmpObj) {
+            if (this.tmpObj[key] !== this.data[key]) {
+                hasChanges = true;
+            }
+        }
+        if (hasChanges) {
+            this._actSrv.emitMode(EDIT_CARD_MODES.unsavedChanges);
+        } else {
+            this._actSrv.emitMode(EDIT_CARD_MODES.nothingChanges);
+        }
     }
 }

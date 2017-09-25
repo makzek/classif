@@ -11,7 +11,11 @@ export class RubricService {
 
     getAll(params?: any): Promise<any> {
         if (params) {
-            params = Utils.criteries(params);
+            if (params.criteries) {
+                params.criteries = Utils.criteries(params.criteries);
+            } else {
+                params = Utils.criteries(params);
+            }
         } else {
             params = ALL_ROWS;
         }
@@ -24,10 +28,8 @@ export class RubricService {
         })
     }
 
-    update(data: any, params?: any): Promise<any> {
-        return new Promise((res, rej) => {
-            rej('not implemented');
-        });
+    update(data: any[]): Promise<any> {
+        return this._pipe.batch(data, '').toPromise();
     }
 
     delete(data: any, params?: any): Promise<any> {
