@@ -72,6 +72,7 @@ export class EosUserProfileService implements IUserProfile {
                 this._authPromise = this._rubricSrv.getAll(_params)
                     .then((resp) => {
                         this._isAuthorized = true;
+                        this._authPromise = null;
                         return this._isAuthorized;
                     })
                     .catch((err: Response) => {
@@ -79,6 +80,7 @@ export class EosUserProfileService implements IUserProfile {
                             console.log('notAuthorized fired');
                             this.notAuthorized();
                         }
+                        this._authPromise = null;
                         return this._isAuthorized;
                     });
             }
