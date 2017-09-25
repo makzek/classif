@@ -22,7 +22,7 @@ export class AuthService {
             .then( d => {
             // tslint:disable-next-line:no-debugger
             debugger;
-           return this.appCtx.Init();
+           return this.appCtx.init();
         });
 
         return r;
