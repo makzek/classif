@@ -11,7 +11,9 @@ export class RubricService {
 
     getAll(params?: any): Promise<any> {
         if (params) {
-            params = Utils.criteries(params);
+            if (params.criteries) {
+                params.criteries = Utils.criteries(params.criteries);
+            }
         } else {
             params = ALL_ROWS;
         }
