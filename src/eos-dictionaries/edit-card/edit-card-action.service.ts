@@ -13,7 +13,8 @@ export enum EDIT_CARD_ACTIONS {
 export enum EDIT_CARD_MODES {
     edit,
     view,
-    unsavedChanges
+    unsavedChanges,
+    nothingChanges
 };
 
 @Injectable() export class EditCardActionService {
