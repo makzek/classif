@@ -62,9 +62,7 @@ export class EosBreadcrumbsService {
                 title = title.slice(0, title.length - 1);
                 this._currentLink = {
                     link: this._route.snapshot.url.toString(),
-                    title: title,
-                    editTitle: null,
-                    edited: false,
+                    title: title
                 }
 
                 this._currentLink$.next(this._currentLink);

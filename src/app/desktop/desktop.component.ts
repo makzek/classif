@@ -20,6 +20,9 @@ export class DesktopComponent implements OnDestroy {
 
     historyToLeft = false;
 
+    private _editingItem: IDeskItem;
+    private _newTitle: string;
+
     private _routerSubscription: Subscription;
     private _selectedDeskSubscription: Subscription;
     private _recentItemsSubscription: Subscription;
@@ -82,20 +85,31 @@ export class DesktopComponent implements OnDestroy {
             });
     }
 
-    changeName(evt: Event, ref: IDeskItem) {
+    editing(item: IDeskItem) {
+        return this._editingItem === item;
+    }
+
+    changeName(newValue: string) {
+        this._newTitle = newValue;
+    }
+
+    edit(evt: Event, item: IDeskItem) {
         this.stopDefault(evt);
-        ref.edited = true;
-        ref.editTitle = ref.title;
+        this._editingItem = item;
+        this._newTitle = item.title;
     }
 
-    save(evt: Event, ref: IDeskItem) {
-        ref.title = ref.editTitle;
-        ref.edited = false;
+    save(evt: Event) {
+        if (this._newTitle !== this._editingItem.title) {
+            this._editingItem.title = this._newTitle;
+            /* todo: add save service call */
+            /* then */
+        }
+        this.cancel(evt);
     }
 
-    cancel(evt: Event, ref: IDeskItem) {
-        ref.editTitle = null;
-        ref.edited = false;
+    cancel(evt: Event) {
+        this._editingItem = null;
     }
 
     stopDefault(evt: Event) {

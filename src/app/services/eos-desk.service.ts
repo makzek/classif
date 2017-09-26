@@ -21,8 +21,6 @@ const DEFAULT_DESKS: EosDesk[] = [{
     references: [{
         link: '/spravochniki/rubricator',
         title: 'Рубрикатор',
-        editTitle: null,
-        edited: false,
     }],
     edited: false,
 }, {
@@ -71,7 +69,6 @@ export class EosDeskService {
                     return {
                         link: '/spravochniki/' + dictionary.id,
                         title: dictionary.title,
-                        edited: false,
                     };
                 });
 
