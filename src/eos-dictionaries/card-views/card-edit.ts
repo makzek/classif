@@ -88,4 +88,9 @@ export class CardEdit implements OnChanges {
             this._actSrv.emitMode(EDIT_CARD_MODES.nothingChanges);
         }
     }
+
+    clean(field: string, value: string) {
+        this.tmpObj[field] = value;
+        this.setUnsavedChanges();
+    }
 }
