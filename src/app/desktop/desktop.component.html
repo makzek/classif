@@ -21,16 +21,38 @@
 </div>
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
-    <div class="btn item-content block edited" *ngIf="item.value.edited">
-        <textarea class="title-input" [(ngModel)]="item.value.title" (focus)="setCursor($event)"></textarea>
+    <div class="btn item-content block edited" *ngIf="editing(item.value)">
+        <textarea class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"></textarea>
     </div>
-    <button *ngIf="!item.value.edited" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
+    <button *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="item.value.edited" tooltip="{{item.value.title}}" container="body" placement="top" class="text">{{item.value.title}}</span>
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" container="body" placement="top" class="text">{{item.value.title}}</span>
     </button>
-    <span *ngIf="!item.value.edited" class="icon-btn eos-icon eos-icon-edit-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="changeName($event, item.value)" aria-hidden="true" tooltip="Редактировать" placement="left"></span>
-    <span *ngIf="item.value.edited" class="icon-btn eos-icon eos-icon-checkbox-black small" [ngClass]="{'lefter': deskId !== 'system'}" (click)="save($event, item.value)" aria-hidden="true" tooltip="Сохранить" placement="left"></span>
-    <span *ngIf="deskId !== 'system'" class="icon-btn eos-icon eos-icon-close-black small" aria-hidden="true" (click)="removeLink(item.value)" tooltip="Удалить" placement="left"></span>
+    <span *ngIf="editing(item.value)"
+        class="icon-btn eos-icon eos-icon-checkbox-black small lefter"
+        (click)="save($event)"
+        aria-hidden="true"
+        tooltip="Сохранить"
+        placement="left"></span>
+    <span *ngIf="editing(item.value)"
+        class="icon-btn eos-icon eos-icon-close-black small"
+        (click)="cancel($event)"
+        aria-hidden="true"
+        tooltip="Отмена"
+        placement="left"></span>
+    <span *ngIf="!editing(item.value)"
+        class="icon-btn eos-icon eos-icon-edit-black small"
+        [ngClass]="{'lefter': deskId !== 'system'}"
+        (click)="edit($event, item.value)"
+        aria-hidden="true"
+        tooltip="Редактировать"
+        placement="left"></span>
+    <span *ngIf="deskId !== 'system' && !editing(item.value)"
+        class="icon-btn eos-icon eos-icon-close-black small"
+        aria-hidden="true"
+        (click)="removeLink(item.value)"
+        tooltip="Удалить"
+        placement="left"></span>
 </ng-template>

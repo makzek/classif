@@ -253,7 +253,6 @@ export class NodeActionsComponent implements OnDestroy {
         this._deskSrv.addRecentItem({
             link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
             title: title,
-            edited: false,
         });
     }
 
