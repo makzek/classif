@@ -22,6 +22,8 @@ export class OpenedNodeComponent implements OnDestroy {
 
     private _openedNodeSubscription: Subscription;
 
+    updating: boolean;
+
     constructor(private _dictSrv: EosDictService,
         private _nodeActSrv: NodeActionsService,
         private _dictActSrv: DictionaryActionService) {
@@ -42,6 +44,7 @@ export class OpenedNodeComponent implements OnDestroy {
                 if (node) {
                     this.viewFields = node.getQuickView();
                     this.shortViewFields = node.getShortQuickView();
+                    this.updating = node.updating;
                 }
             },
             (error) => alert(error));

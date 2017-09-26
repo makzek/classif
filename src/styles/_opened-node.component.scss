@@ -1,4 +1,10 @@
 .eos-opened-node {
+    height: 100%;
+
+    .opened-node-wrapper {
+        height: 100%;
+    }
+
     .short-info {
         display: inline-block;
         padding: 20px;
@@ -32,8 +38,10 @@
     }
 
     .no-data {
-        padding: 20px;
-        padding-top: 68px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
     }
 
     .opened-node-actions {

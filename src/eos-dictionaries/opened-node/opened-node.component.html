@@ -10,15 +10,18 @@
             <span class="icon {{actionEdit.iconClass}} small"></span>
         </button>
     </span>
-    <div *ngIf="!viewFields" class="no-data">Здесь будет отображена подробная информация (Кликните на элемент из второго столбца)</div>
-    <div *ngIf="viewFields" class="opened-node-wrapper">
-        <div class="short-info">
+    <div class="opened-node-wrapper">
+        <div *ngIf="(!viewFields && !shortViewFields) || updating" class="no-data full-info">
+            <eos-spinner [size]="'lg'"></eos-spinner>
+        </div>
+
+        <div *ngIf="shortViewFields" class="short-info">
             <span *ngFor="let field of shortViewFields">
                 {{field.value}}
             </span>
         </div>
         
-        <div [hidden]="hideFull" class="full-info">
+        <div *ngIf="viewFields" [hidden]="hideFull" class="full-info">
             <div *ngFor="let field of viewFields" class="field">
                 <span class="field-title">{{field.title}}</span> 
                 <br><span class="field-value">{{field.value}}</span> 

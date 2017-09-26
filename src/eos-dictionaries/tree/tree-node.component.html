@@ -6,6 +6,7 @@
         <span class="node-title" (click)="onSelect($event, node.isDeleted);">
             <span *ngFor="let field of viewFields; let i = index">{{field.value}}&nbsp;<eos-info *ngIf="i === viewFields.length-1" [info]="'Some info which I want to show at tooltip'"></eos-info>
             </span>
+            <eos-spinner *ngIf="node.updating" [size]="sm"> </eos-spinner>
         </span>
     </span>
     <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children"></eos-tree>

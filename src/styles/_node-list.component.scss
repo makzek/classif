@@ -38,11 +38,22 @@
         .code {
             margin-right: 10px;
         }
+
+        .spinner {
+            margin-top: 10px;
+        }
     }
 
     .list {
         border: 1px solid transparent;
         border-top: 0;
+
+        &.has-spinner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100px;
+        }
     }
 
     .pagination-option {

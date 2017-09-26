@@ -43,10 +43,11 @@
             <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
         </div>
     </aside>-->
+    <div *ngIf="!node" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div>
+    <div *ngIf="node"><div *ngIf="node.updating" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div></div>
     <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
     <eos-departments-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
-
     <div bsModal #unsavedEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">

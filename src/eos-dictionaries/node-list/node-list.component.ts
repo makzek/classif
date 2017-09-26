@@ -25,7 +25,8 @@ import {
     templateUrl: 'node-list.component.html',
 })
 export class NodeListComponent implements OnDestroy {
-    @Input() nodes: EosDictionaryNode[];
+    // @Input() nodes: EosDictionaryNode[];
+    nodes: EosDictionaryNode[];
 
     modalRef: BsModalRef;
     private _dictionaryId: string;
@@ -80,11 +81,12 @@ export class NodeListComponent implements OnDestroy {
         this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
-                if (node.children) {
+                /*if (node.children) {
                     this._update(node.children, true);
                 } else {
                     this._update([], true);
-                }
+                }*/
+                this._update(node.children, true);
             }
         });
 

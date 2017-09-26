@@ -63,6 +63,12 @@
 
     }
 
+    .spinner-wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
