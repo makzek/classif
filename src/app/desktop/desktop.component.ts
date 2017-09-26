@@ -90,7 +90,7 @@ export class DesktopComponent implements OnDestroy {
     }
 
     changeName(newValue: string) {
-        this._newTitle = newValue;
+        this._newTitle = newValue.trim();
     }
 
     edit(evt: Event, item: IDeskItem) {
