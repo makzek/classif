@@ -18,69 +18,69 @@
                 <span class="subcol-3-wrapper">
                     <div class="input-group subcol-1">
                         <span class="input-group-addon" id="basic-addon1">Фамилия:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastName']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="newData['lastName']">
                         <p *ngIf="!editMode" class="form-control">{{data['lastName']}}</p>
                     </div>
                     <div class="input-group subcol-2">
                         <span class="input-group-addon" id="basic-addon1">Имя:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstName']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="newData['firstName']">
                         <p *ngIf="!editMode" class="form-control">{{data['firstName']}}</p>
                     </div>
                     <div class="input-group subcol-3">
                         <span class="input-group-addon" id="basic-addon1">Отчество:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersName']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersName']">
                         <p *ngIf="!editMode" class="form-control">{{data['fathersName']}}</p>
                     </div>
                 </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Фамилия И.О.:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SURNAME']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="newData['SURNAME']">
                 <p *ngIf="!editMode" class="form-control">{{data['SURNAME']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Краткое наименование должности:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['CLASSIF_NAME']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="newData['CLASSIF_NAME']">
                 <p *ngIf="!editMode" class="form-control">{{data['CLASSIF_NAME']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Полное наименование должности:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fullPosition']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="newData['fullPosition']">
                 <p *ngIf="!editMode" class="form-control">{{data['fullPosition']}}</p>
             </div>
             <span class="subcol-3-wrapper">
                 <div class="input-group subcol-1">
                     <span class="input-group-addon" id="basic-addon1">Пол:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['gender']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="newData['gender']">
                     <p *ngIf="!editMode" class="form-control">{{data['gender']}}</p>
                 </div>
             </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Заместитель:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['alternate']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="newData['alternate']">
                 <p *ngIf="!editMode" class="form-control">{{data['alternate']}}</p>
              </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="newData['note']">
                 <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
             </div>
 
                 <span class="subcol-3-wrapper">
                     <div class="input-group subcol-1">
                         <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['START_DATE']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="newData['START_DATE']">
                         <p *ngIf="!editMode" class="form-control">{{data['START_DATE']}}</p>
                     </div>
                     <div class="input-group subcol-2">
                         <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['END_DATE']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="newData['END_DATE']">
                         <p *ngIf="!editMode" class="form-control">{{data['END_DATE']}}</p>
                     </div>
                 </span>
             </div>
             <div class="col-2">
             <span class="photo">Фотография
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="image" [(ngModel)]="tmpObj['photo']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="image" [(ngModel)]="newData['photo']">
                 <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>
             </span>
             <span class="checkbox">
@@ -91,17 +91,17 @@
             </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Код:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="newData['code']">
                 <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['DEPARTMENT_INDEX']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="newData['DEPARTMENT_INDEX']">
                 <p *ngIf="!editMode" class="form-control">{{data['DEPARTMENT_INDEX']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="newData['SEV']">
                 <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
             </div>
         </div>
@@ -110,32 +110,32 @@
             <div class="col-1">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Номер телефона:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['PHONE']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="newData['PHONE']">
                     <p *ngIf="!editMode" class="form-control">{{data['PHONE']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Номер местного телефона:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['PHONE_LOCAL']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="newData['PHONE_LOCAL']">
                     <p *ngIf="!editMode" class="form-control">{{data['PHONE_LOCAL']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">E-mail:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['E_MAIL']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="newData['E_MAIL']">
                     <p *ngIf="!editMode" class="form-control">{{data['E_MAIL']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Skype:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['skype']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="newData['skype']">
                     <p *ngIf="!editMode" class="form-control">{{data['skype']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Факс:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['FAX']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="newData['FAX']">
                     <p *ngIf="!editMode" class="form-control">{{data['FAX']}}</p>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Кабинет:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['NUM_CAB']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="newData['NUM_CAB']">
                     <p *ngIf="!editMode" class="form-control">{{data['NUM_CAB']}}</p>
                 </div>
             </div>
@@ -147,37 +147,37 @@
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Родительный падеж (кого, чего):</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, чего)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionRP']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, чего)" aria-describedby="basic-addon1" [(ngModel)]="newData['shortPositionRP']">
                         <p *ngIf="!editMode" class="form-control">{{data['shortPositionRP']}}</p>
                     </div>
                 </span>
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Дательный падеж (кому, чему):</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Дательный падеж (кому, чему)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionDP']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Дательный падеж (кому, чему)" aria-describedby="basic-addon1" [(ngModel)]="newData['shortPositionDP']">
                         <p *ngIf="!editMode" class="form-control">{{data['shortPositionDP']}}</p>
                     </div>
                 </span>
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Винительный падеж (кого, что):</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, что)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPositionVP']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, что)" aria-describedby="basic-addon1" [(ngModel)]="newData['shortPositionVP']">
                         <p *ngIf="!editMode" class="form-control">{{data['shortPositionVP']}}</p>
                     </div>
                 </span>
-                
+
                 <span class="block-title">Склонение фамилии, имени, отчества:</span>
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Фамилия И.О., дат. падеж:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия И.О., дат. падеж" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fioDP']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Фамилия И.О., дат. падеж" aria-describedby="basic-addon1" [(ngModel)]="newData['fioDP']">
                         <p *ngIf="!editMode" class="form-control">{{data['fioDP']}}</p>
                     </div>
                 </span>
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">И.О. Фамилия:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="И.О. Фамилия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['iof']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="И.О. Фамилия" aria-describedby="basic-addon1" [(ngModel)]="newData['iof']">
                         <p *ngIf="!editMode" class="form-control">{{data['iof']}}</p>
                     </div>
                 </span>
@@ -189,45 +189,45 @@
                 </span>
                 <span class="subcol-4-wrapper">
                     <span class="subcol-1">Род. падеж (кого)</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameRP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameRP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameRP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['lastNameRP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['firstNameRP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersNameRP']">
                     <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameRP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameRP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameRP']}}</p>
                 </span>
                 <span class="subcol-4-wrapper">
                     <span class="subcol-1">Дат. падеж (кому)</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameDP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameDP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameDP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="newData['lastNameDP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="newData['firstNameDP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersNameDP']">
                     <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameDP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameDP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameDP']}}</p>
                 </span>
                 <span class="subcol-4-wrapper">
                     <span class="subcol-1">Вин. падеж (кого)</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameVP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameVP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameVP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['lastNameVP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['firstNameVP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersNameVP']">
                     <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameVP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameVP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameVP']}}</p>
                 </span>
                 <span class="subcol-4-wrapper">
                     <span class="subcol-1">Твор. падеж (кем)</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNameTP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNameTP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNameTP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="newData['lastNameTP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="newData['firstNameTP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersNameTP']">
                     <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameTP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameTP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameTP']}}</p>
                 </span>
                 <span class="subcol-4-wrapper">
                     <span class="subcol-1">Пр. падеж (о ком)</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['lastNamePP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['firstNamePP']">
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fathersNamePP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-2" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="newData['lastNamePP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-3" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="newData['firstNamePP']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control subcol-4" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="newData['fathersNamePP']">
                     <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNamePP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNamePP']}}</p>
                     <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNamePP']}}</p>
@@ -236,14 +236,14 @@
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Должность:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Должность" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['shortPosition']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Должность" aria-describedby="basic-addon1" [(ngModel)]="newData['shortPosition']">
                         <p *ngIf="!editMode" class="form-control">{{data['shortPosition']}}</p>
                     </div>
                 </span>
                 <span class="subcol-3-wrapper">
                     <div class="input-group dbl-subcol">
                         <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
-                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Подразделение" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['department']">
+                        <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Подразделение" aria-describedby="basic-addon1" [(ngModel)]="newData['department']">
                         <p *ngIf="!editMode" class="form-control">{{data['department']}}</p>
                     </div>
                 </span>
@@ -255,23 +255,23 @@
             <span class="subcol-3-wrapper">
                 <div class="input-group subcol-1">
                     <span class="input-group-addon" id="basic-addon1">Код:</span>
-                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['code']">
+                    <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="newData['code']">
                     <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
                 </div>
             </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Краткое наименование:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['title']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="newData['title']">
                 <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Полное наименование:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['description']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="newData['description']">
                 <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Организация:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Организация" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['organization']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Организация" aria-describedby="basic-addon1" [(ngModel)]="newData['organization']">
                 <p *ngIf="!editMode" class="form-control">{{data['organization']}}</p>
             </div>
             <span class="checkbox">
@@ -281,12 +281,12 @@
             </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Наименование картотеки:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Наименование картотеки" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['fileName']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Наименование картотеки" aria-describedby="basic-addon1" [(ngModel)]="newData['fileName']">
                 <p *ngIf="!editMode" class="form-control">{{data['fileName']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['note']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="newData['note']">
                 <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
             </div>
         </div>
@@ -298,27 +298,27 @@
             </span>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Подразделение в родительном падеже:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Подразделение в родительном падеже" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['titleRP']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Подразделение в родительном падеже" aria-describedby="basic-addon1" [(ngModel)]="newData['titleRP']">
                 <p *ngIf="!editMode" class="form-control">{{data['titleRP']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['index']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс" aria-describedby="basic-addon1" [(ngModel)]="newData['index']">
                 <p *ngIf="!editMode" class="form-control">{{data['index']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['SEV']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="newData['SEV']">
                 <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="date" class="form-control" placeholder="Дата начала действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['startDate']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="date" class="form-control" placeholder="Дата начала действия" aria-describedby="basic-addon1" [(ngModel)]="newData['startDate']">
                 <p *ngIf="!editMode" class="form-control">{{data['startDate']}}</p>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="date" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="tmpObj['endDate']">
+                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="date" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="newData['endDate']">
                 <p *ngIf="!editMode" class="form-control">{{data['endDate']}}</p>
             </div>
         </div>

@@ -246,34 +246,8 @@ export class EosDictService {
         return newNode;
     }
 
-    /* public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any>
-    { // tslint:disable-line:no-unused-variable max-line-length
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    Object.assign(node, value);
-                    this._selectedNode$.next(this._selectedNode);
-                    res(node);
-                }).catch(
-                (err) => rej(err)
-                );
-            // rej('not implemented');
-        });
-    }*/
-
-    public updateNode(dictionaryId: string, nodeId: string, descriptor: RecordDescriptor, data: any): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
-        // console.log('updateNode not implemented');
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    Object.assign(node.data, data);
-                    this._selectedNode$.next(this._selectedNode);
-                    res(node);
-                }).catch(
-                (err) => rej(err)
-                );
-            // rej('not implemented');
-        });
+    public updateNode(data: any[]): Promise<any> {
+        return this._api.update(data);
     }
 
     private _deleteNode(node: EosDictionaryNode): void {

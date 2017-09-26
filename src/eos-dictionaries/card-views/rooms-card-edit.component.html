@@ -10,13 +10,13 @@
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Краткое наименование кабинета:</span>
             <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
-                [(ngModel)]="tmpObj['title']">
+                [(ngModel)]="newData['title']">
             <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Полное наименование кабинета:</span>
             <input *ngIf="editMode" (input)="setUnsavedChanges()" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
-                [(ngModel)]="tmpObj['description']">
+                [(ngModel)]="newData['description']">
             <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
         </div>
         <div class="input-group">

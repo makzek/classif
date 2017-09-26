@@ -79,7 +79,8 @@ export class DesktopComponent implements OnDestroy {
                 if (confirmed) {
                     this._deskSrv.unpinRef(link);
                 }
-            });
+            })
+            .catch();
     }
 
     changeName(evt: Event, ref: IDeskItem) {

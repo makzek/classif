@@ -2,10 +2,10 @@ import { Output, Input, EventEmitter, OnChanges } from '@angular/core';
 
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictService } from '../services/eos-dict.service';
-import { EditCardActionService, EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../edit-card/edit-card-action.service';
+import { CardActionService, EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from '../card/card-action.service';
 
-export class CardEdit implements OnChanges {
-    tmpObj: any = {};
+export class CardEditComponent implements OnChanges {
+    newData: any = {};
     data: any = {};
     editMode = true;
     showOwners = true;
@@ -18,7 +18,7 @@ export class CardEdit implements OnChanges {
     @Input() dictionaryId: string;
     @Output() result: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private _dictSrv: EosDictService, private _actSrv: EditCardActionService) {
+    constructor(private _dictSrv: EosDictService, private _actSrv: CardActionService) {
         this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             // console.log('edit set', _d.descriptor.getFieldSet(E_FIELD_SET.edit, {}));
@@ -27,21 +27,21 @@ export class CardEdit implements OnChanges {
             switch (act) {
                 case EDIT_CARD_ACTIONS.save:
                     this.editMode = false;
-                    this.result.emit(this.tmpObj);
+                    this.result.emit(this.newData);
                     break;
                 case EDIT_CARD_ACTIONS.cancel:
                     this.editMode = false;
                     // this.result.emit(this.data);
                     this.result.emit(null);
-                    Object.assign(this.tmpObj, this.data);
+                    Object.assign(this.newData, this.data);
                     break;
                 case EDIT_CARD_ACTIONS.create:
-                    this.result.emit(this.tmpObj);
+                    this.result.emit(this.newData);
                     break;
                 case EDIT_CARD_ACTIONS.makeEmptyObject:
                     this.editMode = true;
                     // console.log('newNode', this._dictionaryService.getEmptyNode());
-                    this.tmpObj = {};
+                    this.newData = {};
                     break;
             }
         }
@@ -66,7 +66,7 @@ export class CardEdit implements OnChanges {
                 node.getEditView().forEach(fld => {
                     this.data[fld.key] = fld.value;
                 });
-                Object.assign(this.tmpObj, this.data);
+                Object.assign(this.newData, this.data);
             }).catch();
         } else {
             this.dictionary.descriptor.record.getEditView({}).forEach((fld) => {
@@ -77,8 +77,8 @@ export class CardEdit implements OnChanges {
 
     setUnsavedChanges() {
         let hasChanges = false;
-        for (const key in this.tmpObj) {
-            if (this.tmpObj[key] !== this.data[key]) {
+        for (const key in this.newData) {
+            if (this.newData[key] !== this.data[key]) {
                 hasChanges = true;
             }
         }

@@ -14,9 +14,9 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EditCardActionService, EDIT_CARD_ACTIONS } from '../edit-card/edit-card-action.service';
+import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
-import { EditedCard } from '../edit-card/edit-card.component';
+import { EditedCard } from '../card/card.component';
 
 @Component({
     selector: 'eos-node-actions',
@@ -86,7 +86,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        private _editActSrv: EditCardActionService) {
+        private _editActSrv: CardActionService) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
@@ -245,7 +245,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     saveNewNode(data: any) {
         const newNode = this._dictSrv.getEmptyNode();
-        this._dictSrv.updateNode(this.dictionary.id, newNode.id, this.dictionary.descriptor.record, data);
+        this._dictSrv.updateNode(data);
         let title = '';
         newNode.getShortQuickView().forEach((_f) => {
             title += data[_f.key];
