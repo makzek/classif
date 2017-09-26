@@ -65,6 +65,14 @@
         }
     }
 
+    .input-cleaner {
+        color: $button-color-main-theme;
+
+        &:hover {
+            color: $button-color-hover-main-theme;
+        }
+    }
+
     .deleted {
         color: $disabled-color-main-theme;
     }
