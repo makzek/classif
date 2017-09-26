@@ -85,9 +85,16 @@ export class DesktopComponent implements OnDestroy {
     changeName(evt: Event, ref: IDeskItem) {
         this.stopDefault(evt);
         ref.edited = true;
+        ref.editTitle = ref.title;
     }
 
     save(evt: Event, ref: IDeskItem) {
+        ref.title = ref.editTitle;
+        ref.edited = false;
+    }
+
+    cancel(evt: Event, ref: IDeskItem) {
+        ref.editTitle = null;
         ref.edited = false;
     }
 
