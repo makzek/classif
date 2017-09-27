@@ -40,7 +40,8 @@
                 <div *ngIf="creating" class="input-group">
                     <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required />
                     <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить">
+                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить"
+                            [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
                         <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить">
