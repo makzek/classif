@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
-import { NgUploaderModule } from 'ngx-uploader';
 
 import { MessagesComponent } from './messages/messages.component';
 import { EosMessageService } from './services/eos-message.service';
@@ -27,7 +26,6 @@ import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.compone
         BrowserModule,
         FormsModule,
         Ng2BootstrapModule.forRoot(),
-        NgUploaderModule,
     ],
     exports: [
         ConfirmWindowComponent,
