@@ -41,3 +41,7 @@
     background-color: transparent;
     position: relative;
 }
+
+input[type=text]::-ms-clear {
+    display: none;
+}
