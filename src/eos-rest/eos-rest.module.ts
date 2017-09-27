@@ -9,6 +9,8 @@ import { HttpModule } from '@angular/http';
 import { DeliveryComponent } from './clman/delivery.component';
 import { RubricComponent } from './clman/rubric.component';
 import { DeliveryDetailComponent } from './clman/delivery-detail.component';
+import { DepartmentComponent } from './clman/department.component';
+import { UserRestComponent } from './clman/user.component';
 
 import { IApiCfg } from './interfaces/interfaces';
 import { ApiCfg } from './core/api-cfg';
@@ -31,10 +33,14 @@ import { DepartmentService } from './services/department.service';
         DeliveryComponent,
         RubricComponent,
         DeliveryDetailComponent,
+        DepartmentComponent,
+        UserRestComponent,
     ],
     exports: [
         DeliveryComponent,
-        RubricComponent
+        RubricComponent,
+        DepartmentComponent,
+        UserRestComponent,
     ],
     providers: [
         PipRX,

@@ -6,8 +6,11 @@ import { DictionaryComponent } from '../eos-dictionaries/dictionary/dictionary.c
 import { EditCardComponent } from '../eos-dictionaries/edit-card/edit-card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
+
 import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
 import { RubricComponent } from '../eos-rest/clman/rubric.component';
+import { DepartmentComponent } from '../eos-rest/clman/department.component';
+import { UserRestComponent } from '../eos-rest/clman/user.component';
 
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { AuthGuard } from './guards/eos-auth.guard';
@@ -76,6 +79,16 @@ const routes: Routes = [{
     canActivate: [AuthGuard],
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
+}, {
+    path: 'department',
+    canActivate: [AuthGuard],
+    component: DepartmentComponent,
+    data: { title: 'department page', showInBreadcrumb: true }
+}, {
+    path: 'user',
+    canActivate: [AuthGuard],
+    component: UserRestComponent,
+    data: { title: 'user page', showInBreadcrumb: true }
 }, {
     path: '',
     redirectTo: '/desk',
