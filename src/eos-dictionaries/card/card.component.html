@@ -38,9 +38,10 @@
     </header>
     <div *ngIf="!node" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div>
     <div *ngIf="node"><div *ngIf="node.updating" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div></div>
-    <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
-    <eos-departments-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
-    <eos-rooms-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>
+
+    <eos-rubricator-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+    <eos-departments-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
+    <eos-rooms-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>
 
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md">

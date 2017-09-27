@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { EosDictService } from '../services/eos-dict.service';
-import { CardActionService } from '../card/card-action.service';
 import { CardEditComponent } from './card-edit.component';
 
 @Component({
@@ -12,8 +10,8 @@ export class DepartmentsCardEditComponent extends CardEditComponent {
     fieldGroups: string[];
     currTab = 0;
 
-    constructor(private _d: EosDictService, private _a: CardActionService) {
-        super(_d, _a);
+    constructor() {
+        super();
 
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     }

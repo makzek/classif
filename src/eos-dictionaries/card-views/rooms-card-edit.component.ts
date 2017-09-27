@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { EosDictService } from '../services/eos-dict.service';
-import { CardActionService } from '../card/card-action.service';
 import { CardEditComponent } from './card-edit.component';
 
 @Component({
@@ -9,7 +7,11 @@ import { CardEditComponent } from './card-edit.component';
     templateUrl: 'rooms-card-edit.component.html',
 })
 export class RoomsCardEditComponent extends CardEditComponent {
-    constructor(private _d: EosDictService, private _a: CardActionService) {
-        super(_d, _a);
+    showOwners = true;
+    showUsers = true;
+    showAccess = true;
+
+    constructor() {
+        super();
     }
 }

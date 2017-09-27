@@ -30,10 +30,10 @@ export class EditedCard {
     selector: 'eos-card',
     templateUrl: 'card.component.html',
 })
-export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
+export class CardComponent implements CanDeactivateGuard, OnDestroy {
     private _dict: EosDictionary;
-
-    node: EosDictionaryNode;
+    private node: EosDictionaryNode;
+    private nodeData: any;
 
     dictionaryId: string;
     nodeId: string;
@@ -58,14 +58,15 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
     private _actionSubscription: Subscription;
     private _profileSubscription: Subscription;
+    private _dictionarySubscription: Subscription;
 
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
     get nodeName() {
         let _nodeName = '';
         if (this.node) {
-            this.node.getValues(this._dict.descriptor
-                .getFieldSet(E_FIELD_SET.shortQuickView, this.node.data)).forEach((_f) => {
+            this.node.getShortQuickView()
+                .forEach((_f) => {
                     _nodeName += _f.value;
                 });
         }
@@ -88,23 +89,39 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             this.nodeId = params.nodeId;
             this._init();
         });
-
-
+        /*
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
+            this._dict = dict;
+            if (dict) {
+                this.dictIdFromDescriptor = dict.descriptor.id;
+            }
+        });
+        */
+        /*
         this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
             if (mode === EDIT_CARD_MODES.unsavedChanges) {
                 this.wasEdit = true;
             }
             if (mode === EDIT_CARD_MODES.nothingChanges) {
                 this.wasEdit = false;
-                /* this._msgSrv.addNewMessage(INFO_NOTHING_CHANGES);*/
+                this._msgSrv.addNewMessage(INFO_NOTHING_CHANGES);
             }
         });
-
+        */
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
+    }
+
+    private _prepareNodeData() {
+        this.nodeData = {};
+        if (this.node) {
+            this.node.getEditView().forEach(fld => {
+                this.nodeData[fld.key] = fld.value;
+            });
+        }
     }
 
     private _init() {
@@ -118,6 +135,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             .then((node) => {
                 this.node = node;
                 if (node) {
+                    this._prepareNodeData();
                     this.nodeIndex = node.parent.children.findIndex((chld) => {
                         return chld.id === node.id;
                     });
@@ -129,11 +147,11 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                 }
             }).catch((err) => console.log('getNode error', err));
 
-        this._nodeActSrv.emitAction(null);
+        /* this._nodeActSrv.emitAction(null); */
     }
 
     ngOnDestroy() {
-        this._actionSubscription.unsubscribe();
+        // this._actionSubscription.unsubscribe();
         this._profileSubscription.unsubscribe();
         // if we went from the same card (from editing to view mode)
         this.lastEditedCard = this.getLastEditedCard();
@@ -143,13 +161,13 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     save(): void {
-        this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
+        // this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
         this.clearStorage();
         this.changeMode();
     }
 
     cancel(): void {
-        this._actSrv.emitAction(EDIT_CARD_ACTIONS.cancel);
+        // this._actSrv.emitAction(EDIT_CARD_ACTIONS.cancel);
         this.changeMode();
     }
 
@@ -161,6 +179,10 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
             this.actionService.emitMode(EDIT_CARD_MODES.view);
         }
     }*/
+
+    recordChanged(changed: boolean) {
+        this.wasEdit = changed;
+    }
 
     recordResult(data: any) {
         if (data) {
@@ -197,9 +219,21 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
         */
     }
 
+
     private _updateBorders() {
-        this.isFirst = this.nodeIndex < 1;
-        this.isLast = this.nodeIndex >= this.node.parent.children.length - 1;
+        const firstIndex = this.node.neighbors.findIndex((node) => node.isVisible(this.showDeleted));
+        let lastIndex = -1;
+
+        for (let idx = this.node.neighbors.length - 1; idx > lastIndex; idx--) {
+            if (this.node.neighbors[idx].isVisible) {
+                lastIndex = idx;
+            }
+        }
+
+        this.isFirst = this.nodeIndex <= firstIndex || firstIndex < 0;
+        this.isLast = this.nodeIndex >= lastIndex;
+
+        console.log('first last', firstIndex, lastIndex);
     }
 
     private _makeUrl(nodeId: string, onlyView?: boolean): string {
@@ -214,40 +248,20 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     next() {
-        if (!this.node.parent.children[this.nodeIndex + 1].isDeleted || this.showDeleted) {
-            this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id));
+        const _node = this.node.neighbors.find((node, idx) => idx > this.nodeIndex && node.isVisible(this.showDeleted));
+        if (_node) {
+            this.goTo(this._makeUrl(_node.id));
         } else {
-            if (this.showDeleted) {
-                this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1].id, true));
-            } else {
-                const _next = this.node.parent.children.slice(this.nodeIndex + 1).findIndex((_n) => !_n.isDeleted);
-                /* tslint:disable:no-bitwise */
-                if (!!~_next) {
-                    this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex + 1 + _next].id));
-                } else {
-                    this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
-                }
-                /* tslint:enable:no-bitwise */
-            }
+            this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
         }
     }
 
     prev() {
-        if (!this.node.parent.children[this.nodeIndex - 1].isDeleted || this.showDeleted) {
-            this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id));
+        const _node = this.node.neighbors.find((node, idx) => idx < this.nodeIndex && node.isVisible(this.showDeleted));
+        if (_node) {
+            this.goTo(this._makeUrl(_node.id));
         } else {
-            if (this.showDeleted) {
-                this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - 1].id, true));
-            } else {
-                const _prev = this.node.parent.children.slice(0, this.nodeIndex).reverse().findIndex((_n) => !_n.isDeleted);
-                /* tslint:disable:no-bitwise */
-                if (!!~_prev) {
-                    this.goTo(this._makeUrl(this.node.parent.children[this.nodeIndex - _prev - 1].id));
-                } else {
-                    this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
-                }
-                /* tslint:enable:no-bitwise */
-            }
+            this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
         }
     }
 
@@ -283,6 +297,7 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                     return false;
                 });
         } else {
+            console.log('can deactivate');
             return true;
         }
     }

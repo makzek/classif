@@ -60,7 +60,9 @@ export class NodeActionsComponent implements OnDestroy {
 
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription
+    private _actionSubscription: Subscription;
+
+    newNodeData: any;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
@@ -109,12 +111,14 @@ export class NodeActionsComponent implements OnDestroy {
                     this.checkAll = false;
                     this.someChildrenSelected = true;
                     break;
+
                 case E_RECORD_ACTIONS.unmarkAllChildren:
                     this.allChildrenSelected = false;
                     this.someChildrenSelected = false;
                     this.itemIsChecked = false;
                     this.checkAll = false;
                     break;
+
                 case E_RECORD_ACTIONS.markAllChildren:
                     this.allChildrenSelected = true;
                     if (this.rootSelected) {
@@ -125,6 +129,7 @@ export class NodeActionsComponent implements OnDestroy {
                         this.checkAll = false;
                     }
                     break;
+
                 case E_RECORD_ACTIONS.markRoot:
                     this.rootSelected = true;
                     if (this.allChildrenSelected) {
@@ -135,6 +140,7 @@ export class NodeActionsComponent implements OnDestroy {
                         this.itemIsChecked = true;
                     }
                     break;
+
                 case E_RECORD_ACTIONS.unmarkRoot:
                     this.rootSelected = false;
                     if (this.allChildrenSelected || this.someChildrenSelected) {
@@ -161,12 +167,15 @@ export class NodeActionsComponent implements OnDestroy {
                 this.creatingModal.show();
                 this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
+
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
                 break;
+
             case E_RECORD_ACTIONS.edit:
                 this.editNode();
                 break;
+
             default:
                 this._actSrv.emitAction(type);
                 break;
@@ -241,6 +250,10 @@ export class NodeActionsComponent implements OnDestroy {
     create() {
         this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
+    }
+
+    dataChanged(isChanged: boolean) {
+        console.log('new data changed');
     }
 
     saveNewNode(data: any) {
