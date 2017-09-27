@@ -11,27 +11,27 @@
         <div class="form form-horizontal">
             <div class="form-group">
                 <label for="code">Код:</label>
-                <input eosInputCleaner (formCleaned)="clean('RUBRIC_CODE', $event)" *ngIf="editMode" (input)="setUnsavedChanges($event)" id="code" type="text" class="form-control" placeholder="Код" [(ngModel)]="tmpObj['RUBRIC_CODE']">
-                <p *ngIf="!editMode && data['RUBRIC_CODE']">{{data['RUBRIC_CODE']}}</p>
+                <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" id="code"
+                    type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']">
             </div>
             <div class="form-group">
                 <label for="title">Краткое наименование:</label>
-                <input eosInputCleaner (formCleaned)="clean('CLASSIF_NAME', $event)" *ngIf="editMode" (input)="setUnsavedChanges()" id="title" type="text" class="form-control" placeholder="Краткое наименование" [(ngModel)]="tmpObj['CLASSIF_NAME']">
-                <p *ngIf="!editMode && data['CLASSIF_NAME']">{{data['CLASSIF_NAME']}}</p>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" id="title"
+                    type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']">
             </div>
             <div class="form-group">
                 <label for="description">Полное наименование:</label>
-                <input eosInputCleaner (formCleaned)="clean('NOTE', $event)" *ngIf="editMode" (input)="setUnsavedChanges()" id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="tmpObj['NOTE']">
-                <p *ngIf="!editMode && data['NOTE']">{{data['NOTE']}}</p>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" id="description" type="text"
+                    class="form-control" placeholder="Полное наименование" [(ngModel)]="data['NOTE']">
             </div>
             <!--<div class="form-group">
                 <label for="note">Примечание:</label>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" id="note" type="text" class="form-control" placeholder="Примечание" [(ngModel)]="tmpObj['note']">
+                <input *ngIf="editMode" (input)="checkChanges()" id="note" type="text" class="form-control" placeholder="Примечание" [(ngModel)]="data['note']">
                 <p *ngIf="!editMode && data['note']">{{data['note']}}</p>
             </div>
             <div class="form-group">
                 <label for="SEV">Индекс СЭВ:</label>
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="tmpObj['SEV']">
+                <input *ngIf="editMode" (input)="checkChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
                 <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
             </div>-->
         </div>

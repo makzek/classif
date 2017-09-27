@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DictionariesComponent } from '../eos-dictionaries/dictionaries/dictionaries.component';
 import { DictionaryComponent } from '../eos-dictionaries/dictionary/dictionary.component';
-import { EditCardComponent } from '../eos-dictionaries/edit-card/edit-card.component';
+import { CardComponent } from '../eos-dictionaries/card/card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
@@ -28,21 +28,21 @@ const routes: Routes = [{
             path: ':nodeId',
             data: { title: 'node', showInBreadcrumb: true },
             children: [{
+                path: '',
+                component: DictionaryComponent,
+                pathMatch: 'full',
+                data: { showSandwichInBreadcrumb: true },
+            }, {
                 path: 'edit',
                 pathMatch: 'full',
-                component: EditCardComponent,
+                component: CardComponent,
                 data: { title: 'Редактирование', showInBreadcrumb: true },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
-                component: EditCardComponent,
+                component: CardComponent,
                 data: { title: 'Просмотр', showInBreadcrumb: true },
-            }, {
-                path: '',
-                component: DictionaryComponent,
-                pathMatch: 'full',
-                data: { showSandwichInBreadcrumb: true },
             }],
         }, {
             path: '',

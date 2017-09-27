@@ -197,8 +197,12 @@ export class PipRX {
                 const e = d['odata.error'];
                 if (e) { allErr.push(e); }
                 console.log(d);
-                // tslint:disable-next-line:curly
-                if (d.TempID) this.sequenceMap.Fix(d.TempID, d.ID);
+                if (d.TempID) {
+                    this.sequenceMap.Fix(d.TempID, d.ID);
+                }
+                if (d.TempISN) {
+                    this.sequenceMap.Fix(d.TempISN, d.FixedISN);
+                }
             }
         }
         if (allErr.length !== 0) {

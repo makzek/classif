@@ -112,7 +112,8 @@ export class EosDictService {
             _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
                     _dictionary = new EosDictionary(descData);
-                    return this._api.getRoot(_dictionary.descriptor);
+                    this._api.init(_dictionary.descriptor);
+                    return this._api.getRoot();
                 })
                 .then((data: any[]) => {
                     if (data && data.length && _dictionary) {
@@ -139,23 +140,38 @@ export class EosDictService {
         return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
             .then((_dict) => {
                 if (_dict) {
-                    let _node = _dict.getNode(nodeId);
+                    const _node = _dict.getNode(nodeId);
                     if (_node) {
-                        return _node;
+                        if (_node.loaded) {
+                            return _node;
+                        } else {
+                            _node.updating = true;
+                            return this._api.getChildren(_node.data['ISN_NODE'])
+                                .then((data: any[]) => {
+                                    this._updateNodes(_dict, data);
+                                    _node.updating = false;
+                                    return _dict.getNode(nodeId);
+                                });
+                        }
                     } else {
-                        return this._api.getNodeWithChildren(this._dictionary.descriptor, nodeId) // temp solution
+                        return this._api.getNodeWithChildren(nodeId) // temp solution
                             .then((data: any[]) => {
-                                /* let */
-                                _node = null;
-                                if (data && data.length) {
-                                    _dict.updateNodes(data)
-                                    _node = _dict.getNode(nodeId);
-                                }
-                                return _node;
+                                this._updateNodes(_dict, data);
+                                return _dict.getNode(nodeId);
                             });
                     }
                 }
             });
+    }
+
+    public expandNode(nodeId: string): Promise<EosDictionaryNode> {
+        return this.getNode(this._dictionary.id, nodeId);
+    }
+
+    private _updateNodes(dict: EosDictionary, data: any[]) {
+        if (data && data.length) {
+            dict.updateNodes(data);
+        }
     }
 
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -230,34 +246,8 @@ export class EosDictService {
         return newNode;
     }
 
-    /* public updateNode(dictionaryId: string, nodeId: string, value: EosDictionaryNode): Promise<any>
-    { // tslint:disable-line:no-unused-variable max-line-length
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    Object.assign(node, value);
-                    this._selectedNode$.next(this._selectedNode);
-                    res(node);
-                }).catch(
-                (err) => rej(err)
-                );
-            // rej('not implemented');
-        });
-    }*/
-
-    public updateNode(dictionaryId: string, nodeId: string, descriptor: RecordDescriptor, data: any): Promise<any> { // tslint:disable-line:no-unused-variable max-line-length
-        // console.log('updateNode not implemented');
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    Object.assign(node.data, data);
-                    this._selectedNode$.next(this._selectedNode);
-                    res(node);
-                }).catch(
-                (err) => rej(err)
-                );
-            // rej('not implemented');
-        });
+    public updateNode(data: any[]): Promise<any> {
+        return this._api.update(data);
     }
 
     private _deleteNode(node: EosDictionaryNode): void {

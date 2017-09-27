@@ -17,7 +17,7 @@ export enum EDIT_CARD_MODES {
     nothingChanges
 };
 
-@Injectable() export class EditCardActionService {
+@Injectable() export class CardActionService {
     private _action$: BehaviorSubject<EDIT_CARD_ACTIONS>;
     private _mode$: BehaviorSubject<EDIT_CARD_MODES>;
 

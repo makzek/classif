@@ -16,7 +16,7 @@ import { EosCommonModule } from '../eos-common/eos-common.module';
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { EditCardComponent } from './edit-card/edit-card.component';
+import { CardComponent } from './card/card.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { OpenedNodeComponent } from './opened-node/opened-node.component';
@@ -28,7 +28,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-import { EditCardActionService } from './edit-card/edit-card-action.service';
+import { CardActionService } from './card/card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -39,7 +39,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
-        EditCardComponent,
+        CardComponent,
         NodeListComponent,
         NodeActionsComponent,
         OpenedNodeComponent,
@@ -64,7 +64,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
-        EditCardComponent,
+        CardComponent,
         NodeListComponent,
         NodeActionsComponent,
         OpenedNodeComponent,
@@ -79,7 +79,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         EosDictService,
         EosDictOrderService,
         NodeActionsService,
-        EditCardActionService,
+        CardActionService,
         DictionaryActionService,
     ],
 })

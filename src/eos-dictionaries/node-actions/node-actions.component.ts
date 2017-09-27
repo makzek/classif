@@ -14,9 +14,9 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EditCardActionService, EDIT_CARD_ACTIONS } from '../edit-card/edit-card-action.service';
+import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
-import { EditedCard } from '../edit-card/edit-card.component';
+import { EditedCard } from '../card/card.component';
 
 @Component({
     selector: 'eos-node-actions',
@@ -60,7 +60,9 @@ export class NodeActionsComponent implements OnDestroy {
 
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription
+    private _actionSubscription: Subscription;
+
+    newNodeData: any;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
@@ -86,7 +88,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        private _editActSrv: EditCardActionService) {
+        private _editActSrv: CardActionService) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
@@ -109,12 +111,14 @@ export class NodeActionsComponent implements OnDestroy {
                     this.checkAll = false;
                     this.someChildrenSelected = true;
                     break;
+
                 case E_RECORD_ACTIONS.unmarkAllChildren:
                     this.allChildrenSelected = false;
                     this.someChildrenSelected = false;
                     this.itemIsChecked = false;
                     this.checkAll = false;
                     break;
+
                 case E_RECORD_ACTIONS.markAllChildren:
                     this.allChildrenSelected = true;
                     if (this.rootSelected) {
@@ -125,6 +129,7 @@ export class NodeActionsComponent implements OnDestroy {
                         this.checkAll = false;
                     }
                     break;
+
                 case E_RECORD_ACTIONS.markRoot:
                     this.rootSelected = true;
                     if (this.allChildrenSelected) {
@@ -135,6 +140,7 @@ export class NodeActionsComponent implements OnDestroy {
                         this.itemIsChecked = true;
                     }
                     break;
+
                 case E_RECORD_ACTIONS.unmarkRoot:
                     this.rootSelected = false;
                     if (this.allChildrenSelected || this.someChildrenSelected) {
@@ -161,12 +167,15 @@ export class NodeActionsComponent implements OnDestroy {
                 this.creatingModal.show();
                 this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
+
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
                 break;
+
             case E_RECORD_ACTIONS.edit:
                 this.editNode();
                 break;
+
             default:
                 this._actSrv.emitAction(type);
                 break;
@@ -243,9 +252,13 @@ export class NodeActionsComponent implements OnDestroy {
         this.creatingModal.hide();
     }
 
+    dataChanged(isChanged: boolean) {
+        console.log('new data changed');
+    }
+
     saveNewNode(data: any) {
         const newNode = this._dictSrv.getEmptyNode();
-        this._dictSrv.updateNode(this.dictionary.id, newNode.id, this.dictionary.descriptor.record, data);
+        this._dictSrv.updateNode(data);
         let title = '';
         newNode.getShortQuickView().forEach((_f) => {
             title += data[_f.key];

@@ -15,12 +15,15 @@ export class PushpinComponent {
     deskList: EosDesk[];
     _link: IDeskItem;
 
-    constructor(private _deskSrv: EosDeskService,
+    constructor(
+        private _deskSrv: EosDeskService,
         private _bcSrv: EosBreadcrumbsService,
-        private _msgSrv: EosMessageService) {
+        private _msgSrv: EosMessageService
+    ) {
         this._deskSrv.desksList.subscribe((res) => {
             this.deskList = res.filter((d) => d.id !== 'system');
         });
+
         this._bcSrv.currentLink.subscribe((link) => {
             if (link) {
                 this._link = link;

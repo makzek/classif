@@ -161,7 +161,8 @@ export class DesktopSwitcherComponent {
                     this._deskSrv.removeDesk(desk);
                 }
                 this.setInnerClick();
-            });
+            })
+            .catch();
     }
 
     cancelCreating() {

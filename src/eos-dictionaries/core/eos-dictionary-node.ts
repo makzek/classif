@@ -9,7 +9,7 @@ export class EosDictionaryNode {
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
     description: string;
-    hasSubnodes: boolean;
+    /* hasSubnodes: boolean; */
     isExpanded?: boolean;
     // isDeleted: boolean;
     selected: boolean;
@@ -40,12 +40,24 @@ export class EosDictionaryNode {
         }
     }
 
+    get neighbors(): EosDictionaryNode[] {
+        return this.parent.children;
+    }
+
+    get hasSubnodes(): boolean {
+        return (this.data['IS_NODE'] !== undefined && this.data['IS_NODE'] === 0);
+    }
+
+    get loaded(): boolean {
+        return this.hasSubnodes && this.children !== undefined;
+    }
+
+    isVisible(showDeleted: boolean): boolean {
+        return showDeleted || !this.isDeleted;
+    }
+
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {
         if (data) {
-            /*
-            Object.assign(this, data);
-            console.warn('store data in EosDictionaryNode properties is deprecated');
-            */
             this.selected = !!this.selected;
 
             this._descriptor = descriptor;
@@ -63,8 +75,6 @@ export class EosDictionaryNode {
             if (this.id === undefined) {
                 this.id = this.data[this._descriptor.keyField.key];
             }
-
-            // this.isDeleted = false;
         }
 
         if (id) {
@@ -96,7 +106,6 @@ export class EosDictionaryNode {
         if (this.children && this.children.length > 0) {
             this.children = this.children.filter((chld) => chld.id !== node.id);
         }
-        this.hasSubnodes = (this.children.length > 0);
     }
 
     delete(hard = false) {
@@ -111,7 +120,6 @@ export class EosDictionaryNode {
     }
 
     addChild(node: EosDictionaryNode) {
-
         /* remove old parent if exist */
         if (node.parent) {
             node.parent.deleteChild(node);
@@ -127,7 +135,6 @@ export class EosDictionaryNode {
             node.parent = this;
         }
         /* tslint:enable:no-bitwise */
-        this.hasSubnodes = (this.children.length > 0);
     }
 
     /* deprecated */

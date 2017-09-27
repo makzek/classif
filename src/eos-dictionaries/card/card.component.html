@@ -1,4 +1,4 @@
-<div class="eos-edit-card">
+<div class="eos-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <button *ngIf="node" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
@@ -36,37 +36,13 @@
             </span>
         </div>
     </header>
-    <!--<aside class="edit-aside">
-        <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="changeEditMode(false)" [ngClass]="{'active': !editMode}">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
-        </div>
-    </aside>-->
     <div *ngIf="!node" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div>
     <div *ngIf="node"><div *ngIf="node.updating" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div></div>
-    <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
-    <eos-departments-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
-    <eos-rooms-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
-    <div bsModal #unsavedEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title pull-left">Предупреждение</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalUnsaveRef.hide()">
-                <span aria-hidden="true">&times;</span>
-              </button>
-                </div>
-                <div class="modal-body">
-                    <div>Имеются не сохранённые изменения! Выберите действие:</div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default" (click)="saveAndClose()">Сохранить и закрыть</button>
-                        <button type="button" class="btn btn-default" (click)="resetAndClose()">Закрыть без сохранения</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <eos-rubricator-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+    <eos-departments-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
+    <eos-rooms-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>
+
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">

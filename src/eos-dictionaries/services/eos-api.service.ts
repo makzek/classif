@@ -7,16 +7,28 @@ import { RubricService, DepartmentService } from '../../eos-rest';
 
 @Injectable()
 export class EosDictApiService {
-    private _nodesMap: Map<string, any>;
     private _dictionaries: any;
+    private _service: any;
 
     constructor(
         private _rubricSrv: RubricService,
         private _deptSrv: DepartmentService,
     ) {
-        this._nodesMap = new Map<string, any>();
         this._dictionaries = {};
         DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
+    }
+
+    init(descriptor: DictionaryDescriptor) {
+        switch (descriptor.apiInstance) {
+            case DICT_API_INSTANCES.rubricator:
+                this._service = this._rubricSrv;
+                break;
+            case DICT_API_INSTANCES.department:
+                this._service = this._deptSrv;
+                break;
+            default:
+                this._service = null;
+        }
     }
 
     getDictionaryDescriptorData(dictionaryId: string): Promise<any> {
@@ -29,8 +41,8 @@ export class EosDictApiService {
         });
     }
 
-    getRoot(descriptor: DictionaryDescriptor): Promise<any[]> {
-        return this.getNodes(descriptor, '0.');
+    getRoot(): Promise<any[]> {
+        return this.getNodeWithChildren('0.');
     }
 
     getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
@@ -38,17 +50,15 @@ export class EosDictApiService {
         const _params = {
             DUE: (nodeId ? nodeId : '0.') + '%',
         };
-        const _service = this._apiService(descriptor);
-
-        if (_service) {
-            _promise = _service.getAll(_params);
+        if (this._service) {
+            _promise = this._service.getAll(_params);
         } else {
             _promise = this._noData();
         }
         return _promise;
     }
 
-    getNode(descriptor: DictionaryDescriptor, nodeId: string): Promise<any> {
+    getNode(nodeId: string): Promise<any> {
 
         let _promise: Promise<any>;
 
@@ -56,10 +66,8 @@ export class EosDictApiService {
             DUE: nodeId || '',
         };
 
-        const _service = this._apiService(descriptor);
-
-        if (_service) {
-            _promise = _service.getAll(_params)
+        if (this._service) {
+            _promise = this._service.getAll(_params)
                 .then((data: any[]) => {
                     if (data && data.length) {
                         return data[0];
@@ -73,11 +81,11 @@ export class EosDictApiService {
         return _promise;
     }
 
-    getNodeWithChildren(descriptor: DictionaryDescriptor, nodeId: string): Promise<any[]> {
-        return this.getNode(descriptor, nodeId)
+    getNodeWithChildren(nodeId: string): Promise<any[]> {
+        return this.getNode(nodeId)
             .then((rootNode) => {
                 if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this._getChildren(descriptor, rootNode.ISN_NODE)
+                    return this.getChildren(rootNode.ISN_NODE)
                         .then((nodes) => {
                             return [rootNode].concat(nodes);
                         });
@@ -87,17 +95,19 @@ export class EosDictApiService {
             });
     }
 
-    private _getChildren(descriptor: DictionaryDescriptor, parentISN: number): Promise<any[]> {
+    update (data: any[]): Promise<any> {
+        return this._service.update(data);
+    }
+
+    getChildren(parentISN: number): Promise<any[]> {
         let _promise: Promise<any[]>;
 
         const _children = {
             'ISN_HIGH_NODE': parentISN + ''
         };
 
-        const _service = this._apiService(descriptor);
-
-        if (_service) {
-            _promise = _service.getAll(_children)
+        if (this._service) {
+            _promise = this._service.getAll(_children)
         } else {
             _promise = this._noData()
         }
@@ -106,16 +116,5 @@ export class EosDictApiService {
 
     private _noData(): Promise<any[]> {
         return new Promise((res, rej) => res([]));
-    }
-
-    private _apiService(descriptor: DictionaryDescriptor): any {
-        switch (descriptor.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                return this._rubricSrv;
-            case DICT_API_INSTANCES.department:
-                return this._deptSrv;
-            default:
-                return null;
-        }
     }
 }

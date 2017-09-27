@@ -18,3 +18,9 @@ export interface RUBRIC_CL extends IHierCL {
 export interface DEPARTMENT extends IHierCL {
     CARD_FLAG: number;
 }
+
+
+export interface USER_CL {
+    ISN_LCLASSIF: number;
+    CLASSIF_NAME: string;
+}
