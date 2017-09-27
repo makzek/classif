@@ -18,7 +18,7 @@
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
             <button class="btn btn-primary" [disabled]="!wasEdit" (click)="save()">Сохранить</button>
-            <button class="btn btn-primary" [disabled]="!wasEdit" (click)="cancel()">Отменить</button>
+            <button class="btn btn-primary" (click)="cancel()">Отменить</button>
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
@@ -36,7 +36,8 @@
             </span>
         </div>
     </header>
-
+    <div *ngIf="!node" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div>
+    <div *ngIf="node"><div *ngIf="node.updating" class="spinner-wrapper"><eos-spinner [size]="'lg'"></eos-spinner></div></div>
     <eos-rubricator-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
     <eos-departments-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit [nodeId]="nodeId" [dictionaryId]="dictionaryId" (result)="recordResult($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>

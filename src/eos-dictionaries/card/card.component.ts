@@ -169,7 +169,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
                     this._deskSrv.addRecentItem({
                         link: this.selfLink.slice(0, this.selfLink.length - 5),
                         title: this.nodeName,
-                        edited: false,
                     });
                     this.wasEdit = false;
                     this.editMode = false;

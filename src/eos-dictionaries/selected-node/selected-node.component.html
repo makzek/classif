@@ -11,6 +11,7 @@
                 <span class="node-info" (click)="openFullInfo(selectedNode)" (dblclick)="viewNode()">
                         <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.key]}}</span>
                 </span>
+                <eos-spinner *ngIf="selectedNode.updating" class="spinner" [size]="'sm'"></eos-spinner>
             </div>
     </div>
 </div>

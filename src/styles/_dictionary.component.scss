@@ -15,6 +15,12 @@
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
+
+        &.has-spinner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
     }
 
     .opened-wrapper {

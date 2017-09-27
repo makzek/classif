@@ -9,12 +9,16 @@ import { EosMessageService } from './services/eos-message.service';
 import { InfoComponent } from './info/info.component';
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
 import { ConfirmWindowService } from './confirm-window/confirm-window.service';
+import { InputCleanerDirective  } from './input-cleaner/input-cleaner.directive';
+import { SpinnerComponent  } from './spinner/spinner.component';
 
 @NgModule({
     declarations: [
         ConfirmWindowComponent,
         InfoComponent,
         MessagesComponent,
+        InputCleanerDirective,
+        SpinnerComponent,
     ],
     imports: [
         BrowserModule,
@@ -27,6 +31,8 @@ import { ConfirmWindowService } from './confirm-window/confirm-window.service';
         InfoComponent,
         MessagesComponent,
         // EosMessageService,
+        InputCleanerDirective,
+        SpinnerComponent,
     ],
     entryComponents: [
         ConfirmWindowComponent,

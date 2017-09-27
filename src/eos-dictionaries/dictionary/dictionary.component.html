@@ -3,8 +3,9 @@
     <!--<button class="btn sandwich" (click)="openTree()">
         <span class="icon icon-left eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': !hideTree}"></span>
     </button>-->
-    <div class="tree-wrapper" [ngClass]="{'open-tree': !hideTree}">
-        <eos-tree [nodes]="nodes"></eos-tree>
+    <div class="tree-wrapper" [ngClass]="{'open-tree': !hideTree, 'has-spinner': !nodes.length}">
+        <eos-spinner *ngIf="!nodes.length" [size]="'lg'"></eos-spinner>
+        <eos-tree *ngIf="nodes.length" [nodes]="nodes"></eos-tree>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': !hideTree}">
         <eos-node-list></eos-node-list>
