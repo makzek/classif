@@ -100,7 +100,7 @@ export class DesktopSwitcherComponent {
         desk.edited = false;
         /* todo: re-factor it to inline validation messages */
         const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
-        if (_tempDeskName === '') {
+        /*if (_tempDeskName === '') {
             const errPartTitle = desk.id ? 'редактирования' : 'создания';
             this._msgSrv.addNewMessage({
                 type: 'warning',
@@ -112,14 +112,14 @@ export class DesktopSwitcherComponent {
             } else {
                 this.cancelCreating();
             }
-        } else {
+        } else {*/
             desk.name = _tempDeskName;
             if (desk.id) {
                 this._deskSrv.editDesk(desk);
             } else {
                 this._deskSrv.createDesk(desk);
             }
-        }
+        // }
         this.deskName = '';
     }
 
