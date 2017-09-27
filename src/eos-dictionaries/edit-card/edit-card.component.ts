@@ -108,7 +108,6 @@ export class EditCardComponent implements CanDeactivateGuard, OnDestroy {
 
 
         this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
-            console.log(EDIT_CARD_MODES[mode]);
             if (mode === EDIT_CARD_MODES.unsavedChanges) {
                 this.wasEdit = true;
             }

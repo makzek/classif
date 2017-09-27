@@ -43,6 +43,17 @@
         }
     }
 
+
+    .ng-invalid {
+        border-color: $invalid-color-main-theme;
+        outline-color: $invalid-color-main-theme;
+    }
+
+    .ng-valid {
+        border-color: $valid-color-main-theme;
+        outline-color: $valid-color-main-theme;
+    }
+
     .pagination {
         & > li {
             & > a,
