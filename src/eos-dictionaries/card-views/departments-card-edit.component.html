@@ -79,9 +79,10 @@
                 </span>
             </div>
             <div class="col-2">
-            <span class="photo">Фотография
-                <input *ngIf="editMode" (input)="setUnsavedChanges()" type="image" [(ngModel)]="tmpObj['photo']">
-                <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>
+            <span class="photo">
+                <!--<input *ngIf="editMode" (input)="setUnsavedChanges()" type="image" [(ngModel)]="tmpObj['photo']">
+                <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>-->
+                <eos-photo-uploader *ngIf="editMode" (endUploading)="tmpObj['photo'] = $event" [multiple]="true"></eos-photo-uploader>
             </span>
             <span class="checkbox">
                 <label><input type="checkbox" (change)="setUnsavedChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">

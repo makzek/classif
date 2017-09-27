@@ -1,0 +1,9 @@
+<div class="eos-photo-uploader">
+    <input class="input-file" type="file"  #fileInput name="file" id="file" [multiple]="multiple" (change)="refreshFileCount()" placeholder="Upload file" accept=".jpg, .png">
+    <label for="file" class="input-file-label" [ngClass]="{'uploading': uploading}" tooltip="Нажмите, чтобы выбрать фотографию" container="body">
+        <eos-spinner *ngIf="uploading" [size]="'md'"></eos-spinner>
+    </label>
+    <button [disabled]="!fileCount" type="button" class="btn upload-btn special-text" (click)="upload($event)" tooltip="Начать загрузку" container="body">
+        <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
+    </button>
+</div>

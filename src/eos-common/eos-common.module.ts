@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { NgUploaderModule } from 'ngx-uploader';
 
 import { MessagesComponent } from './messages/messages.component';
 import { EosMessageService } from './services/eos-message.service';
@@ -11,6 +12,7 @@ import { ConfirmWindowComponent } from './confirm-window/confirm-window.componen
 import { ConfirmWindowService } from './confirm-window/confirm-window.service';
 import { InputCleanerDirective  } from './input-cleaner/input-cleaner.directive';
 import { SpinnerComponent  } from './spinner/spinner.component';
+import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.component';
 
 @NgModule({
     declarations: [
@@ -19,11 +21,13 @@ import { SpinnerComponent  } from './spinner/spinner.component';
         MessagesComponent,
         InputCleanerDirective,
         SpinnerComponent,
+        PhotoUploaderComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
         Ng2BootstrapModule.forRoot(),
+        NgUploaderModule,
     ],
     exports: [
         ConfirmWindowComponent,
@@ -33,6 +37,7 @@ import { SpinnerComponent  } from './spinner/spinner.component';
         // EosMessageService,
         InputCleanerDirective,
         SpinnerComponent,
+        PhotoUploaderComponent,
     ],
     entryComponents: [
         ConfirmWindowComponent,
