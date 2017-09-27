@@ -6,7 +6,6 @@ import { IFieldView } from '../core/field-descriptor';
 import { NodeActionsService } from '../node-actions/node-actions.service';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../dictionary/dictionary-action.service';
 
 @Component({
     selector: 'eos-opened-node',
@@ -25,8 +24,7 @@ export class OpenedNodeComponent implements OnDestroy {
     updating: boolean;
 
     constructor(private _dictSrv: EosDictService,
-        private _nodeActSrv: NodeActionsService,
-        private _dictActSrv: DictionaryActionService) {
+        private _nodeActSrv: NodeActionsService) {
         /* this.eosDictService.dictionary$.subscribe((dict) => {
             if (dict) {
                 this.eosDictService.openedNode$.subscribe(
@@ -57,9 +55,4 @@ export class OpenedNodeComponent implements OnDestroy {
     actionHandler (type: E_RECORD_ACTIONS) {
         this._nodeActSrv.emitAction(type);
     }
-
-    openInfo() {
-        console.log('dictionary open info');
-        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-     }
 }
