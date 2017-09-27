@@ -11,7 +11,7 @@ import { AppContext } from '../services/appContext.service';
 
 
 @Component({
-    selector: 'eos-department',
+    selector: 'eos-rest-department',
     templateUrl: './department.component.html'
 })
 export class DepartmentComponent implements OnInit {

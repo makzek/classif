@@ -11,7 +11,7 @@ import { AppContext } from '../services/appContext.service';
 
 
 @Component({
-    selector: 'eos-rubric',
+    selector: 'eos-rest-rubric',
     templateUrl: './rubric.component.html'
 })
 export class RubricComponent implements OnInit {
