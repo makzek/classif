@@ -49,7 +49,7 @@ export class EosDictionaryNode {
     }
 
     get loaded(): boolean {
-        return this.hasSubnodes && this.children !== undefined;
+        return !this.hasSubnodes || this.children !== undefined;
     }
 
     isVisible(showDeleted: boolean): boolean {

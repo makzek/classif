@@ -34,7 +34,6 @@ export class EosDictService {
 
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
-    public notFound = false;
 
     constructor(
         private _api: EosDictApiService,
