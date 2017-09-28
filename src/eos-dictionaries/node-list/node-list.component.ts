@@ -111,58 +111,61 @@ export class NodeListComponent implements OnDestroy {
         });
 
         this._actionSubscription = this._actSrv.action$.subscribe((action) => {
-            switch (action) {
-                case E_RECORD_ACTIONS.edit: {
-                    if (this.openedNode) {
-                        this.editNode(this.openedNode);
-                    } else {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
-                    }
-                    break;
-                }
-                case E_RECORD_ACTIONS.remove: {
-                    this.deleteSelectedItems();
-                    break;
-                }
-                case E_RECORD_ACTIONS.navigateDown: {
-                    this.nextItem(false);
-                    break;
-                }
-                case E_RECORD_ACTIONS.navigateUp: {
-                    this.nextItem(true);
-                    break;
-                }
-                case E_RECORD_ACTIONS.removeHard: {
-                    this.physicallyDelete();
-                    break;
-                }
-                // case E_RECORD_ACTIONS.restore: {
-                case E_RECORD_ACTIONS.showDeleted: {
-                    this.restoringLogicallyDeletedItem();
-                    break;
-                }
-                case E_RECORD_ACTIONS.markRecords: {
-                    this.checkAllItems(true);
-                    break;
-                }
-                case E_RECORD_ACTIONS.unmarkRecords: {
-                    this.checkAllItems(false);
-                    break;
-                }
-                case E_RECORD_ACTIONS.userOrder: {
-                    this.toggleUserSort();
-                    break;
-                }
-                case E_RECORD_ACTIONS.moveUp: {
-                    this.userSortMoveUp();
-                    break;
-                }
-                case E_RECORD_ACTIONS.moveDown: {
-                    this.userSortMoveDown();
-                    break;
-                }
-            }
+
         });
+    }
+
+    actionEventHandler(action): void {
+        switch (action) {
+            case E_RECORD_ACTIONS.edit: {
+                if (this.openedNode) {
+                    this.editNode(this.openedNode);
+                } else {
+                    this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
+                }
+                break;
+            }
+            case E_RECORD_ACTIONS.remove: { //
+                this.deleteSelectedItems();
+                break;
+            }
+            case E_RECORD_ACTIONS.navigateDown: {
+                this.nextItem(false);
+                break;
+            }
+            case E_RECORD_ACTIONS.navigateUp: {
+                this.nextItem(true);
+                break;
+            }
+            case E_RECORD_ACTIONS.removeHard: { //
+                this.physicallyDelete();
+                break;
+            }
+            case E_RECORD_ACTIONS.showDeleted: {
+                this.restoringLogicallyDeletedItem();
+                break;
+            }
+            case E_RECORD_ACTIONS.markRecords: { //
+                this.checkAllItems(true);
+                break;
+            }
+            case E_RECORD_ACTIONS.unmarkRecords: { //
+                this.checkAllItems(false);
+                break;
+            }
+            case E_RECORD_ACTIONS.userOrder: {
+                this.toggleUserSort();
+                break;
+            }
+            case E_RECORD_ACTIONS.moveUp: {
+                this.userSortMoveUp();
+                break;
+            }
+            case E_RECORD_ACTIONS.moveDown: {
+                this.userSortMoveDown();
+                break;
+            }
+        }
     }
 
     ngOnDestroy() {

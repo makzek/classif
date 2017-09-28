@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -23,6 +23,7 @@ import { EditedCard } from '../card/card.component';
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
+    @Output('onAction') private onAction = new EventEmitter();
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
 
@@ -177,7 +178,7 @@ export class NodeActionsComponent implements OnDestroy {
                 break;
 
             default:
-                this._actSrv.emitAction(type);
+                this.onAction.emit(type);
                 break;
         }
     }
@@ -217,21 +218,13 @@ export class NodeActionsComponent implements OnDestroy {
             this.rootSelected = true;
             this.allChildrenSelected = true;
             this.itemIsChecked = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRecords);
+            this.onAction.emit(E_RECORD_ACTIONS.markRecords);
         } else {
             this.itemIsChecked = false;
             this.allChildrenSelected = false;
             this.someChildrenSelected = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+            this.onAction.emit(E_RECORD_ACTIONS.unmarkRecords);
         }
-    }
-
-    uncheckAllItems() {
-        this.checkAll = false;
-        this.itemIsChecked = false;
-        this.allChildrenSelected = false;
-        this.someChildrenSelected = false;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
     }
 
     search(event) {
