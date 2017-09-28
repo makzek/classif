@@ -109,10 +109,6 @@ export class NodeListComponent implements OnDestroy {
                 this.nodes = nodes;
             }
         });
-
-        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
-
-        });
     }
 
     actionEventHandler(action): void {
@@ -125,7 +121,7 @@ export class NodeListComponent implements OnDestroy {
                 }
                 break;
             }
-            case E_RECORD_ACTIONS.remove: { //
+            case E_RECORD_ACTIONS.remove: {
                 this.deleteSelectedItems();
                 break;
             }
@@ -137,7 +133,7 @@ export class NodeListComponent implements OnDestroy {
                 this.nextItem(true);
                 break;
             }
-            case E_RECORD_ACTIONS.removeHard: { //
+            case E_RECORD_ACTIONS.removeHard: {
                 this.physicallyDelete();
                 break;
             }
@@ -145,11 +141,11 @@ export class NodeListComponent implements OnDestroy {
                 this.restoringLogicallyDeletedItem();
                 break;
             }
-            case E_RECORD_ACTIONS.markRecords: { //
+            case E_RECORD_ACTIONS.markRecords: {
                 this.checkAllItems(true);
                 break;
             }
-            case E_RECORD_ACTIONS.unmarkRecords: { //
+            case E_RECORD_ACTIONS.unmarkRecords: {
                 this.checkAllItems(false);
                 break;
             }
@@ -178,6 +174,7 @@ export class NodeListComponent implements OnDestroy {
         this._orderSubscription.unsubscribe();
     }
 
+    // On this methon required test check nodes
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
         this.nodes = nodes;
         this.hasParent = hasParent;

@@ -278,7 +278,7 @@ export class NodeActionsComponent implements OnDestroy {
         if (this.lastEditedCard) {
             this.modalOnlyRef.show();
         } else {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.edit);
+            this.onAction.emit(E_RECORD_ACTIONS.edit);
         }
     }
 }
