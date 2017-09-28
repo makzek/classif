@@ -1,12 +1,5 @@
-<div class="eos-departments-card-edit">
-    <!--<aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
-        <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="editMode = false" [ngClass]="{'active': !editMode}">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="editMode = true" [ngClass]="{'active': editMode}">Редактирование</button>
-        </div>
-    </aside>-->
-    <div *ngIf="1 === 1"> <!--TODO: replace with isPerson check -->
+<div class="eos-departments-card-edit edit-content" *ngIf="data">
+    <div *ngIf="data['IS_NODE']">
         <ul class="tabs">
             <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
                 (click)="setTab(i)">
@@ -15,129 +8,123 @@
         </ul>
         <div class="wrapper" *ngIf="currTab === 0">
             <div class="col-1">
-                <span class="subcol-3-wrapper">
-                    <div class="input-group subcol-1">
-                        <span class="input-group-addon" id="basic-addon1">Фамилия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="data['lastName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['lastName']}}</p>
-                    </div>
-                    <div class="input-group subcol-2">
-                        <span class="input-group-addon" id="basic-addon1">Имя:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="data['firstName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['firstName']}}</p>
-                    </div>
-                    <div class="input-group subcol-3">
-                        <span class="input-group-addon" id="basic-addon1">Отчество:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="data['fathersName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['fathersName']}}</p>
-                    </div>
+                <span class="photo">
+                    <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event" [multiple]="true"></eos-photo-uploader>
                 </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Фамилия И.О.:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="data['SURNAME']">
-                <p *ngIf="!editMode" class="form-control">{{data['SURNAME']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Краткое наименование должности:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="data['CLASSIF_NAME']">
-                <p *ngIf="!editMode" class="form-control">{{data['CLASSIF_NAME']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Полное наименование должности:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="data['fullPosition']">
-                <p *ngIf="!editMode" class="form-control">{{data['fullPosition']}}</p>
-            </div>
-            <span class="subcol-3-wrapper">
-                <div class="input-group subcol-1">
-                    <span class="input-group-addon" id="basic-addon1">Пол:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="data['gender']">
-                    <p *ngIf="!editMode" class="form-control">{{data['gender']}}</p>
+                <div class="form-group">
+                    <label for="gender">Пол:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('gender', $event)" [readonly]="!editMode" (ngModelChange)="change('gender', $event)" 
+                        id="gender" type="text" class="form-control" placeholder="Пол" [(ngModel)]="data['gender']">
                 </div>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Заместитель:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="data['alternate']">
-                <p *ngIf="!editMode" class="form-control">{{data['alternate']}}</p>
-             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="data['note']">
-                <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
-            </div>
-
-                <span class="subcol-3-wrapper">
-                    <div class="input-group subcol-1">
-                        <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="data['START_DATE']">
-                        <p *ngIf="!editMode" class="form-control">{{data['START_DATE']}}</p>
-                    </div>
-                    <div class="input-group subcol-2">
-                        <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="data['END_DATE']">
-                        <p *ngIf="!editMode" class="form-control">{{data['END_DATE']}}</p>
-                    </div>
-                </span>
+                <div class="form-group">
+                    <label for="RUBRIC_CODE">Код:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
+                        id="RUBRIC_CODE" type="text" class="form-control" placeholder="Код" [(ngModel)]="data['RUBRIC_CODE']">
+                </div>
+                <div class="form-group">
+                    <label for="DEPARTMENT_INDEX">Индекс ДЛ:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('DEPARTMENT_INDEX', $event)" [readonly]="!editMode" (ngModelChange)="change('DEPARTMENT_INDEX', $event)" 
+                        id="DEPARTMENT_INDEX" type="text" class="form-control" placeholder="Индекс ДЛ" [(ngModel)]="data['DEPARTMENT_INDEX']">
+                </div>
+                <div class="form-group">
+                    <label for="SEV">Индекс СЭВ:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('SEV', $event)" [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
+                        id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
+                </div>
+                <div class="form-group">
+                    <label for="START_DATE">Дата начала действия:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('START_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('START_DATE', $event)" 
+                          id="START_DATE" type="text" class="form-control" placeholder="Дата начала действия" [(ngModel)]="data['START_DATE']">
+                </div>
+                <div class="form-group">
+                    <label for="END_DATE">Дата окончания действия:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('END_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('END_DATE', $event)" 
+                        id="END_DATE" type="text" class="form-control" placeholder="Дата окончания действия" [(ngModel)]="data['END_DATE']">
+                </div>
             </div>
             <div class="col-2">
-            <span class="photo">
-                <!--<input *ngIf="editMode" (input)="checkChanges()" type="image" [(ngModel)]="data['photo']">
-                <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>-->
-                <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event" [multiple]="true"></eos-photo-uploader>
-            </span>
-            <span class="checkbox">
-                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                    Начальник
-                </label>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Код:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="data['code']">
-                <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
+                <div class="form-group">
+                    <label for="lastName">Фамилия:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('lastName', $event)" [readonly]="!editMode" (ngModelChange)="change('lastName', $event)" 
+                        id="lastName" type="text" class="form-control" placeholder="Фамилия" [(ngModel)]="data['lastName']">
+                </div>
+                <div class="form-group first-name">
+                    <label for="firstName">Имя:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('firstName', $event)" [readonly]="!editMode" (ngModelChange)="change('firstName', $event)" 
+                        id="firstName" type="text" class="form-control" placeholder="Имя" [(ngModel)]="data['firstName']">
+                </div>
+                <div class="form-group fathers-name">
+                    <label for="fathersName">Отчество:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('fathersName', $event)" [readonly]="!editMode" (ngModelChange)="change('fathersName', $event)" 
+                        id="fathersName" type="text" class="form-control" placeholder="Отчество" [(ngModel)]="data['fathersName']">
+                </div>
+
+                <div class="form-group">
+                    <label for="SURNAME">Фамилия И.О.:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('SURNAME', $event)" [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
+                            id="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [(ngModel)]="data['SURNAME']"
+                            required tooltip="Обязательное поле" [isDisabled]="!editMode" placement="right">
+                </div>
+                <div class="form-group">
+                    <label for="CLASSIF_NAME">Краткое наименование должности:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
+                            id="CLASSIF_NAME" type="text" class="form-control" placeholder="Краткое наименование должности" [(ngModel)]="data['CLASSIF_NAME']"
+                            required maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                </div>
+                <span class="checkbox">
+                    <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
+                        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
+                    </label>
+                </span>
+                <div class="form-group">
+                    <label for="fullPosition">Полное наименование должности:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
+                            id="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [(ngModel)]="data['fullPosition']"
+                            maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
+                </div>
+                <div class="form-group">
+                    <label for="alternate">Заместитель:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('alternate', $event)" [readonly]="!editMode" (ngModelChange)="change('alternate', $event)" 
+                            id="alternate" type="text" class="form-control" placeholder="Заместитель" [(ngModel)]="data['alternate']">
+                </div>
+                <div class="form-group">
+                    <label for="NOTE">Примичание:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                            id="NOTE" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="data['NOTE']">
+                </div>
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="data['DEPARTMENT_INDEX']">
-                <p *ngIf="!editMode" class="form-control">{{data['DEPARTMENT_INDEX']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="data['SEV']">
-                <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
-            </div>
-        </div>
         </div>
         <div class="wrapper" *ngIf="currTab === 1">
             <div class="col-1">
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Номер телефона:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="data['PHONE']">
-                    <p *ngIf="!editMode" class="form-control">{{data['PHONE']}}</p>
+                <div class="form-group">
+                    <label for="PHONE">Номер телефона:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE', $event)" [readonly]="!editMode" (ngModelChange)="change('PHONE', $event)" 
+                            id="PHONE" type="text" class="form-control" placeholder="Номер телефона" [(ngModel)]="data['PHONE']">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Номер местного телефона:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="data['PHONE_LOCAL']">
-                    <p *ngIf="!editMode" class="form-control">{{data['PHONE_LOCAL']}}</p>
+                <div class="form-group">
+                    <label for="PHONE_LOCAL">Номер местного телефона:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE_LOCAL', $event)" [readonly]="!editMode" (ngModelChange)="change('PHONE_LOCAL', $event)" 
+                            id="PHONE_LOCAL" type="text" class="form-control" placeholder="Номер местного телефона" [(ngModel)]="data['PHONE_LOCAL']">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">E-mail:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="data['E_MAIL']">
-                    <p *ngIf="!editMode" class="form-control">{{data['E_MAIL']}}</p>
+                <div class="form-group">
+                    <label for="E_MAIL">E-mail:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('E_MAIL', $event)" [readonly]="!editMode" (ngModelChange)="change('E_MAIL', $event)" 
+                            id="E_MAIL" type="text" class="form-control" placeholder="E-mail" [(ngModel)]="data['E_MAIL']">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Skype:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="data['skype']">
-                    <p *ngIf="!editMode" class="form-control">{{data['skype']}}</p>
+                <div class="form-group">
+                    <label for="skype">Skype:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('skype', $event)" [readonly]="!editMode" (ngModelChange)="change('skype', $event)" 
+                            id="skype" type="text" class="form-control" placeholder="Skype" [(ngModel)]="data['skype']">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Факс:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="data['FAX']">
-                    <p *ngIf="!editMode" class="form-control">{{data['FAX']}}</p>
+                <div class="form-group">
+                    <label for="FAX">Факс:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('FAX', $event)" [readonly]="!editMode" (ngModelChange)="change('FAX', $event)" 
+                            id="FAX" type="text" class="form-control" placeholder="Факс" [(ngModel)]="data['FAX']">
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Кабинет:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="data['NUM_CAB']">
-                    <p *ngIf="!editMode" class="form-control">{{data['NUM_CAB']}}</p>
+                <div class="form-group">
+                    <label for="NUM_CAB">Кабинет:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('NUM_CAB', $event)" [readonly]="!editMode" (ngModelChange)="change('NUM_CAB', $event)" 
+                            id="NUM_CAB" type="text" class="form-control" placeholder="Кабинет" [(ngModel)]="data['NUM_CAB']">
                 </div>
             </div>
         </div>
@@ -251,76 +238,76 @@
             </div>
         </div>
     </div>
-    <div *ngIf="1 !== 1" class="wrapper"><!--TODO: replace with isDepartment check -->
+    <div *ngIf="!data['IS_NODE']" class="wrapper">
         <div class="col-1">
-            <span class="subcol-3-wrapper">
-                <div class="input-group subcol-1">
-                    <span class="input-group-addon" id="basic-addon1">Код:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="data['code']">
-                    <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
-                </div>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Краткое наименование:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="data['title']">
-                <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
+            <div class="form-group">
+                <label for="RUBRIC_CODE">Код:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
+                    id="RUBRIC_CODE" type="text" class="form-control" placeholder="Код" [(ngModel)]="data['RUBRIC_CODE']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Полное наименование:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="data['description']">
-                <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
+            <div class="form-group">
+                <label for="INDEX">Индекс:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('INDEX', $event)" [readonly]="!editMode" (ngModelChange)="change('INDEX', $event)" 
+                    id="INDEX" type="text" class="form-control" placeholder="Индекс" [(ngModel)]="data['INDEX']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Организация:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Организация" aria-describedby="basic-addon1" [(ngModel)]="data['organization']">
-                <p *ngIf="!editMode" class="form-control">{{data['organization']}}</p>
+            <div class="form-group">
+                <label for="SEV">Индекс СЭВ:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('SEV', $event)" [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
+                    id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
             </div>
-            <span class="checkbox">
-                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['file']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                    Картотека</label>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Наименование картотеки:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Наименование картотеки" aria-describedby="basic-addon1" [(ngModel)]="data['fileName']">
-                <p *ngIf="!editMode" class="form-control">{{data['fileName']}}</p>
+            <div class="form-group">
+                <label for="START_DATE">Дата начала действия:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('START_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('START_DATE', $event)" 
+                        id="START_DATE" type="text" class="form-control" placeholder="Дата начала действия" [(ngModel)]="data['START_DATE']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="data['note']">
-                <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
+            <div class="form-group">
+                <label for="END_DATE">Дата окончания действия:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('END_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('END_DATE', $event)" 
+                    id="END_DATE" type="text" class="form-control" placeholder="Дата окончания действия" [(ngModel)]="data['END_DATE']">
             </div>
         </div>
         <div class="col-2">
+            <div>
+                <label for="CLASSIF_NAME">Краткое наименование должности:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
+                        id="CLASSIF_NAME" type="text" class="form-control" placeholder="Краткое наименование должности" [(ngModel)]="data['CLASSIF_NAME']"
+                        required maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+            </div>
             <span class="checkbox">
                 <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['notInPositionTitle']">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                    Не использовать подразделение в названии должности</label>
+                        Не использовать подразделение в названии должности</label>
             </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Подразделение в родительном падеже:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Подразделение в родительном падеже" aria-describedby="basic-addon1" [(ngModel)]="data['titleRP']">
-                <p *ngIf="!editMode" class="form-control">{{data['titleRP']}}</p>
+            <div class="form-group">
+                    <label for="fullPosition">Полное наименование должности:</label>
+                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
+                            id="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [(ngModel)]="data['fullPosition']"
+                            maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс" aria-describedby="basic-addon1" [(ngModel)]="data['index']">
-                <p *ngIf="!editMode" class="form-control">{{data['index']}}</p>
+            <div class="form-group">
+                <label for="titleRP">Подразделение в родительном падеже:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('titleRP', $event)" [readonly]="!editMode" (ngModelChange)="change('titleRP', $event)" 
+                       id="titleRP" type="text" class="form-control" placeholder="Подразделение в родительном падеже" [(ngModel)]="data['titleRP']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="data['SEV']">
-                <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
+            <div class="form-group">
+                <label for="DUE_LINK_ORGANIZ">Организация:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('DUE_LINK_ORGANIZ', $event)" [readonly]="!editMode" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)" 
+                        id="DUE_LINK_ORGANIZ" type="text" class="form-control" placeholder="Организация" [(ngModel)]="data['DUE_LINK_ORGANIZ']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="date" class="form-control" placeholder="Дата начала действия" aria-describedby="basic-addon1" [(ngModel)]="data['startDate']">
-                <p *ngIf="!editMode" class="form-control">{{data['startDate']}}</p>
+            <span class="checkbox">
+                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['CARD_FLAG']">
+                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                    Картотека</label>
+            </span>
+            <div class="form-group">
+                <label for="CARD_NAME">Наименование картотеки:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CARD_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CARD_NAME', $event)" 
+                        id="CARD_NAME" type="text" class="form-control" placeholder="Наименование картотеки" [(ngModel)]="data['CARD_NAME']">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="date" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="data['endDate']">
-                <p *ngIf="!editMode" class="form-control">{{data['endDate']}}</p>
+            <div class="form-group">
+                <label for="NOTE">Примичание:</label>
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                        id="NOTE" type="text" class="form-control" placeholder="Примичание" [(ngModel)]="data['NOTE']">
             </div>
         </div>
     </div>
