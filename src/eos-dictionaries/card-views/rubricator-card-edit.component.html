@@ -1,12 +1,4 @@
 <div class="rubricator-card-edit" *ngIf="data">
-    <!--<aside class="edit-aside">
-        <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="changeEditMode(false)" [ngClass]="{'active': !editMode}">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="changeEditMode(true)" [ngClass]="{'active': editMode}">Редактирование</button>
-        </div>
-    </aside>
-    editMode {{editMode}}-->
     <article class="edit-content">
         <div class="form form-horizontal">
             <div class="form-group">
@@ -16,13 +8,16 @@
             </div>
             <div class="form-group">
                 <label for="title">Краткое наименование:</label>
-                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" id="title"
-                    type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']">
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" 
+                    (ngModelChange)="change('CLASSIF_NAME', $event)" id="title"
+                    type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required 
+                    maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
             </div>
             <div class="form-group">
                 <label for="description">Полное наименование:</label>
-                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" id="description" type="text"
-                    class="form-control" placeholder="Полное наименование" [(ngModel)]="data['NOTE']">
+                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="data['NOTE']" 
+                maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
             </div>
             <!--<div class="form-group">
                 <label for="note">Примечание:</label>
