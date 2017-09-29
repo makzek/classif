@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
@@ -7,7 +8,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
     DictionaryActionService,
     DICTIONARY_ACTIONS,
-   /* DICTIONARY_STATES*/
+    DICTIONARY_STATES
 } from '../dictionary/dictionary-action.service';
 
 @Component({
@@ -19,9 +20,15 @@ export class DictionaryComponent implements OnDestroy {
     private _nodeId: string;
 
     nodes: EosDictionaryNode[];
-    hideTree = true;
-    hideFullInfo = true;
+    // hideTree = true;
+    // hideFullInfo = true;
     dictionaryName: string;
+
+    currentState: number;
+    readonly states = DICTIONARY_STATES;
+
+    private _actionSubscription: Subscription;
+    private _dictionarySubscription: Subscription;
 
     constructor(
         private _dictSrv: EosDictService,
@@ -45,7 +52,7 @@ export class DictionaryComponent implements OnDestroy {
 
         this.nodes = [];
 
-        this._dictSrv.dictionary$.subscribe((dictionary) => {
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 if (dictionary.root) {
@@ -55,46 +62,58 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
-        /*  this._actSrv.state$.subscribe((state) => {
-              if (state !== null) {
-                  switch (state) {
-                      case DICTIONARY_STATES.full:
-                          this.hideTree = false;
-                          this.hideFullInfo = false;
-                          break;
-                      case DICTIONARY_STATES.info:
-                          this.hideTree = false;
-                          this.hideFullInfo = true;
-                          break;
-                      case DICTIONARY_STATES.tree:
-                          this.hideTree = true;
-                          this.hideFullInfo = false;
-                          break;
-                      case DICTIONARY_STATES.selected:
-                          this.hideTree = true;
-                          this.hideFullInfo = true;
-                          break;
-                  }
-              }
-          });*/
-
-        this._actSrv.action$.subscribe((action) => {
-            switch (action) {
-                case DICTIONARY_ACTIONS.closeTree:
-                    this.hideTree = true;
-                    break;
-                case DICTIONARY_ACTIONS.openTree:
-                    this.hideTree = false;
-                    break;
-                case DICTIONARY_ACTIONS.closeInfo:
-                    this.hideFullInfo = true;
-                    break;
-                case DICTIONARY_ACTIONS.openInfo:
-                    this.hideFullInfo = false;
-                    break;
-            }
+        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
+            this._swichCurrentState(action);
         });
 
+        this. currentState = this._actSrv.state;
+
+    }
+
+    private _swichCurrentState(action: DICTIONARY_ACTIONS) {
+        switch (action) {
+            // TODO: try to find more simple solition
+            case DICTIONARY_ACTIONS.closeTree:
+                switch (this.currentState) {
+                    case DICTIONARY_STATES.full:
+                        this.currentState = DICTIONARY_STATES.info;
+                        break;
+                    case DICTIONARY_STATES.tree:
+                        this.currentState = DICTIONARY_STATES.selected;
+                        break;
+                }
+                break;
+            case DICTIONARY_ACTIONS.openTree:
+                switch (this.currentState) {
+                    case DICTIONARY_STATES.info:
+                        this.currentState = DICTIONARY_STATES.full;
+                        break;
+                    case DICTIONARY_STATES.selected:
+                        this.currentState = DICTIONARY_STATES.tree;
+                        break;
+                }
+                break;
+            case DICTIONARY_ACTIONS.closeInfo:
+                switch (this.currentState) {
+                    case DICTIONARY_STATES.full:
+                        this.currentState = DICTIONARY_STATES.tree;
+                        break;
+                    case DICTIONARY_STATES.info:
+                        this.currentState = DICTIONARY_STATES.selected;
+                        break;
+                }
+                break;
+            case DICTIONARY_ACTIONS.openInfo:
+                switch (this.currentState) {
+                    case DICTIONARY_STATES.tree:
+                        this.currentState = DICTIONARY_STATES.full;
+                        break;
+                    case DICTIONARY_STATES.selected:
+                        this.currentState = DICTIONARY_STATES.info;
+                        break;
+                }
+                break;
+        }
     }
 
     private _update() {
@@ -108,36 +127,11 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
-    openTree() {
-        this.hideTree = !this.hideTree;
-    }
-
-    openInfo() {
-        this.hideFullInfo = !this.hideFullInfo;
-    }
-
     ngOnDestroy() {
-        /*this._actSrv.emitState(null);
-        if (this.hideFullInfo && this.hideTree) {
-            this._actSrv.emitState(DICTIONARY_STATES.selected);
-        }
+        this._actSrv.emitAction(null);
+        this._actSrv.state = this.currentState;
+        this._dictionarySubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
 
-        if (!this.hideFullInfo && this.hideTree) {
-            this._actSrv.emitState(DICTIONARY_STATES.info);
-        }
-
-        if (this.hideFullInfo && !this.hideTree) {
-            this._actSrv.emitState(DICTIONARY_STATES.tree);
-        }
-
-        if (!this.hideFullInfo && !this.hideTree) {
-            this._actSrv.emitState(DICTIONARY_STATES.full);
-        }*/
     }
-
-    /* ngOnInit() {
-        if (!this.hideFullInfo) {
-            this._actionService.emitAction(DICTIONARY_ACTIONS.openInfoActions);
-        }
-    }*/
 }

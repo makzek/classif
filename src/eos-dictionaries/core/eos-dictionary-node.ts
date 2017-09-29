@@ -40,12 +40,20 @@ export class EosDictionaryNode {
         }
     }
 
+    get neighbors(): EosDictionaryNode[] {
+        return this.parent.children;
+    }
+
     get hasSubnodes(): boolean {
         return (this.data['IS_NODE'] !== undefined && this.data['IS_NODE'] === 0);
     }
 
     get loaded(): boolean {
-        return this.hasSubnodes && this.children !== undefined;
+        return !this.hasSubnodes || this.children !== undefined;
+    }
+
+    isVisible(showDeleted: boolean): boolean {
+        return showDeleted || !this.isDeleted;
     }
 
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {

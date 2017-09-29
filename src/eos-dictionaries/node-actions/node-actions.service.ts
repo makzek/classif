@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Injectable()
 export class NodeActionsService {
-    private _action$: BehaviorSubject<E_RECORD_ACTIONS>;
+    private _action$: Subject<E_RECORD_ACTIONS>;
 
     constructor() {
-        this._action$ = new BehaviorSubject<E_RECORD_ACTIONS>(null);
+        this._action$ = new Subject<E_RECORD_ACTIONS>();
     }
 
     get action$(): Observable<E_RECORD_ACTIONS> {

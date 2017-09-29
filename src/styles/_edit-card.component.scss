@@ -1,4 +1,4 @@
-.eos-edit-card {
+.eos-card {
     min-height: 450px;
     width: 800px;
     margin: 20px auto;
@@ -13,8 +13,8 @@
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 100px 20px 1fr 170px;
-            grid-template-columns: 100px 20px 1fr 170px;
+            -ms-grid-columns: 100px 20px 1fr 172px;
+            grid-template-columns: 100px 20px 1fr 172px;
         }
 
         .btn {
@@ -63,6 +63,12 @@
 
     }
 
+    .spinner-wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
@@ -96,6 +102,7 @@
                 line-height: 20px;
                 border-radius: 0;
                 padding: 8px;
+                padding-right: 37px;
             }
         }
     }

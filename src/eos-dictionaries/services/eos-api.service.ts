@@ -95,6 +95,10 @@ export class EosDictApiService {
             });
     }
 
+    update (data: any[]): Promise<any> {
+        return this._service.update(data);
+    }
+
     getChildren(parentISN: number): Promise<any[]> {
         let _promise: Promise<any[]>;
 

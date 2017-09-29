@@ -1,18 +1,18 @@
-<div class="eos-dictionary" [ngClass]="{'full': !hideTree && !hideFullInfo, 'only-selected': hideTree && hideFullInfo,
-    'tree-hidden': hideTree && !hideFullInfo, 'info-hidden': !hideTree && hideFullInfo}">
-    <!--<button class="btn sandwich" (click)="openTree()">
-        <span class="icon icon-left eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': !hideTree}"></span>
-    </button>-->
-    <div class="tree-wrapper" [ngClass]="{'open-tree': !hideTree}">
-        <eos-tree [nodes]="nodes"></eos-tree>
+<div class="eos-dictionary" 
+    [ngClass]="{'full': currentState === states.full, 
+        'only-selected': currentState === states.selected,
+        'info': currentState === states.info, 
+        'tree': currentState === states.tree}">
+    <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
+        'has-spinner': !nodes.length}">
+        <eos-spinner *ngIf="!nodes.length" [size]="'lg'"></eos-spinner>
+        <eos-tree *ngIf="nodes.length" [nodes]="nodes"></eos-tree>
     </div>
-    <div class="selected-wrapper" [ngClass]="{'open-tree': !hideTree}">
+    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}">
         <eos-node-list></eos-node-list>
     </div>
-    <!--<button class="btn right sandwich" (click)="openInfo()">
-        <span class="icon icon-right eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-right': !hideFullInfo}"></span>
-    </button>-->
-    <div class="opened-wrapper" [ngClass]="{'open-info': !hideFullInfo}">
+
+    <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
         <eos-opened-node></eos-opened-node>
     </div>
 </div>

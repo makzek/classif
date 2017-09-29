@@ -21,7 +21,7 @@ export class AuthService {
         const r = this._http.get(_url, HTTP_OPTIONS).toPromise<any>()
             .then( d => {
             // tslint:disable-next-line:no-debugger
-            debugger;
+            /* debugger; */
            return this.appCtx.init();
         });
 

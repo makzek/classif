@@ -34,3 +34,14 @@
 .dropdown-item {
     cursor: pointer;
 }
+
+.input-cleaner {
+    float: right;
+    margin-top: -34px;
+    background-color: transparent;
+    position: relative;
+}
+
+input[type=text]::-ms-clear {
+    display: none;
+}

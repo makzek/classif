@@ -15,13 +15,12 @@ export class ConfirmWindowService {
 
         Object.assign(_wnd, content);
 
-        return new Promise((res) => {
-            this._bsModalSrv.onHidden.subscribe((reason: string) => {
+        return new Promise((res, rej) => {
+            this._bsModalSrv.onHidden.subscribe((reason) => {
                 if (reason === 'backdrop-click' || reason === 'esc') {
-                    res(false);
+                    rej(false);
                 }
             });
-
             _wnd.confirmEvt.subscribe((confirm: boolean) => res(confirm));
         })
     }

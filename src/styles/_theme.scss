@@ -43,6 +43,17 @@
         }
     }
 
+
+    .ng-invalid {
+        border-color: $invalid-color-main-theme;
+        outline-color: $invalid-color-main-theme;
+    }
+
+    .ng-valid {
+        border-color: $valid-color-main-theme;
+        outline-color: $valid-color-main-theme;
+    }
+
     .pagination {
         & > li {
             & > a,
@@ -62,6 +73,14 @@
                     color: white;
                 }
             }
+        }
+    }
+
+    .input-cleaner {
+        color: $button-color-main-theme;
+
+        &:hover {
+            color: $button-color-hover-main-theme;
         }
     }
 
@@ -238,7 +257,7 @@
         }
     }
 
-    .eos-edit-card {
+    .eos-card {
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
@@ -258,6 +277,10 @@
                 color: $secondary-font-color-main-theme;
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
+
+                &.ng-invalid {
+                    border-color: $invalid-color-main-theme;
+                }
             }
         }
     }

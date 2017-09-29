@@ -15,6 +15,12 @@
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
+
+        &.has-spinner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
     }
 
     .opened-wrapper {
@@ -23,7 +29,7 @@
         border-left: 1px solid transparent;
     }
 
-    &.tree-hidden {
+    &.info {
         .tree-wrapper {
             left: -1 * $dictionary-block-width;
         }
@@ -40,7 +46,7 @@
         }
     }
 
-    &.info-hidden {
+    &.tree {
         .tree-wrapper {
             left: 0;
         }
@@ -98,8 +104,8 @@
             z-index: 4;
         }
 
-        &.tree-hidden,
-        &.info-hidden,
+        &.info,
+        &.tree,
         &.full {
             .selected-wrapper {
                 top: $grid-gutter-width / 2 + $top-menu-height;
@@ -108,7 +114,7 @@
             }
         }
 
-        &.tree-hidden {
+        &.info {
             .selected-wrapper {
                 left: $grid-gutter-width / 2;
             }
