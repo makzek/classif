@@ -1,5 +1,7 @@
 import { Output, Input, EventEmitter, OnChanges, OnInit } from '@angular/core';
 
+import { TITLE_LENGTH, DESCRIPTION_LENGTH } from '../consts/input-validation';
+
 export class CardEditComponent implements OnInit, OnChanges {
     @Input() data: any = {};
     @Input() editMode = false;
@@ -9,6 +11,9 @@ export class CardEditComponent implements OnInit, OnChanges {
 
     private originalData: any = {};
     private _changed: boolean;
+
+    readonly titleLenth = TITLE_LENGTH;
+    readonly descriptionLength = DESCRIPTION_LENGTH;
 
     constructor() {}
 

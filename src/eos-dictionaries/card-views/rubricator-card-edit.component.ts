@@ -7,6 +7,7 @@ import { CardEditComponent } from './card-edit.component';
     templateUrl: 'rubricator-card-edit.component.html',
 })
 export class RubricatorCardEditComponent extends CardEditComponent {
+
      constructor() {
         super();
     }

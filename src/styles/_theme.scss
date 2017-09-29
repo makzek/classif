@@ -277,6 +277,10 @@
                 color: $secondary-font-color-main-theme;
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
+
+                &.ng-invalid {
+                    border-color: $invalid-color-main-theme;
+                }
             }
         }
     }

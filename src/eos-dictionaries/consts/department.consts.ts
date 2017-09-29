@@ -308,14 +308,17 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
     },
     quickViewFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
+        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+        department: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
-        person: ['CLASSIF_NAME']
+        person: ['CLASSIF_NAME'],
+        department: ['CLASSIF_NAME']
     },
-    editFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
+    editFields: { // TODO: remove IS_NODE!!!
+        person: ['IS_NODE', 'RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
+        department: ['IS_NODE', 'RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ' ]
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*
