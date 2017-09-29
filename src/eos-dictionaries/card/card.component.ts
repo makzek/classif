@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
 import { CardActionService } from './card-action.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
@@ -76,7 +75,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     constructor(
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
-        private _nodeActSrv: NodeActionsService,
         private _actSrv: CardActionService,
         private _deskSrv: EosDeskService,
         private _profileSrv: EosUserProfileService,
@@ -146,8 +144,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                     this._actSrv.emitMode(this.mode);
                 }
             }).catch((err) => console.log('getNode error', err));
-
-        /* this._nodeActSrv.emitAction(null); */
     }
 
     ngOnDestroy() {

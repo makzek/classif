@@ -1,6 +1,6 @@
 <div class="eos-node-list">
     <eos-node-actions (onAction)="actionEventHandler($event)"></eos-node-actions>
-    <eos-selected-node *ngIf="hasParent"></eos-selected-node>
+    <eos-selected-node (onActionSelected)="actionEventHandler($event)" *ngIf="hasParent"></eos-selected-node>
     <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" [size]="'md'"></eos-spinner>
 

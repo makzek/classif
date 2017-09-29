@@ -33,6 +33,8 @@ export class NodeListComponent implements OnDestroy {
 
     modalRef: BsModalRef;
     private _dictionaryId: string;
+    private checkedAll = true;
+    private checkedItem = false;
 
     private _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
@@ -53,7 +55,6 @@ export class NodeListComponent implements OnDestroy {
     private _startPage = 1;
     private _dropStartPage = true;
 
-    private _actionSubscription: Subscription;
     private _openedNodeSubscription: Subscription;
     private _dictionarySubscription: Subscription;
     private _selectedNodeSubscription: Subscription;
@@ -167,15 +168,12 @@ export class NodeListComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        /*
         this._openedNodeSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
         this._selectedNodeSubscription.unsubscribe();
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
         this._orderSubscription.unsubscribe();
-        */
     }
 
     // On this methon required test check nodes
@@ -192,6 +190,24 @@ export class NodeListComponent implements OnDestroy {
             this._getListData();
         }
 
+        for (const item of nodes) {
+            this.checkedItem = this.checkedAll || item.selected;
+            this.checkedAll = this.checkedAll && item.selected;
+        }
+        if (this._selectedNodeCmp) {
+            console.log('ss')
+            if (this.checkedAll) {
+                 this._nodeActionsCmp.checkedAll = true;
+                 console.log(this._nodeActionsCmp.checkedAll)
+            } else if (this.checkedItem) {
+                this._nodeActionsCmp.checkedItem = true;
+                console.log(this._nodeActionsCmp.checkedAll)
+            } else {
+                this._nodeActionsCmp.checkedAll = false;
+                console.log(this._nodeActionsCmp.checkedAll)
+            }
+        }
+
     }
 
     checkAllItems(value: boolean): void {
@@ -199,6 +215,11 @@ export class NodeListComponent implements OnDestroy {
             for (const item of this.nodes) {
                 item.selected = value;
             }
+        }
+        if (value) {
+            this._selectedNodeCmp.selectedNode.selected = true;
+        } else {
+            this._selectedNodeCmp.selectedNode.selected = false;
         }
     }
 

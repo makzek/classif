@@ -1,9 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
+import { NodeActionsService } from '../node-actions/node-actions.service'
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
-import { NodeActionsService } from '../node-actions/node-actions.service';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
@@ -12,6 +11,7 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
     templateUrl: 'opened-node.component.html',
 })
 export class OpenedNodeComponent implements OnDestroy {
+    @Output('onActionOpenedCmp') private  onActionOpenedCmp = new EventEmitter();
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
 
@@ -53,6 +53,6 @@ export class OpenedNodeComponent implements OnDestroy {
     }
 
     actionHandler (type: E_RECORD_ACTIONS) {
-        this._nodeActSrv.emitAction(type);
+        this.onActionOpenedCmp.emit(type);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -11,11 +11,21 @@ import {
     DICTIONARY_STATES
 } from '../dictionary/dictionary-action.service';
 
+import { SpinnerComponent } from '../../eos-common/spinner/spinner.component';
+import { TreeNodeComponent } from '../tree/tree-node.component';
+import { NodeListComponent } from '../node-list/node-list.component';
+import { OpenedNodeComponent } from '../opened-node/opened-node.component';
+
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy {
+    @ViewChild(SpinnerComponent) private _spinnerComponent: SpinnerComponent;
+    @ViewChild(TreeNodeComponent) private _treeNodeComponent: TreeNodeComponent;
+    @ViewChild(NodeListComponent) private _nodeListComponent: NodeListComponent;
+    @ViewChild(OpenedNodeComponent) private _openedNodeComponent: OpenedNodeComponent;
+
     private _dictionaryId: string;
     private _nodeId: string;
 
@@ -133,5 +143,10 @@ export class DictionaryComponent implements OnDestroy {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
 
+    }
+
+    private test($evt) {
+        console.log('event from opened')
+        this._nodeListComponent.actionEventHandler($evt);
     }
 }

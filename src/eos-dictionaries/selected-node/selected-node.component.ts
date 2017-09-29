@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -7,7 +7,6 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeActionsService } from '../node-actions/node-actions.service';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
@@ -21,6 +20,7 @@ import {
     templateUrl: 'selected-node.component.html',
 })
 export class SelectedNodeComponent implements OnDestroy {
+    @Output('onActionSelected') private onActionSelected = new EventEmitter();
     private _dictionaryId: string;
     dictionary: EosDictionary;
     selectedNode: EosDictionaryNode;
@@ -32,13 +32,11 @@ export class SelectedNodeComponent implements OnDestroy {
     private _selectedNodeSubscription: Subscription;
     private _openedNodeSubscription: Subscription;
     private _userSettingsSubscription: Subscription;
-    private _actionSubscription: Subscription;
 
     constructor(private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         private _router: Router,
         private _profileSrv: EosUserProfileService,
-        private _actSrv: NodeActionsService
     ) {
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
             (dictionary) => {
@@ -82,40 +80,41 @@ export class SelectedNodeComponent implements OnDestroy {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
+    }
 
-        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
-            switch (action) {
-                case E_RECORD_ACTIONS.remove: {
-                    this.delete();
-                    break;
-                }
-                case E_RECORD_ACTIONS.editSelected: {
-                    this.editNode();
-                    break;
-                }
-                case E_RECORD_ACTIONS.removeHard: {
-                    this.physicallyDelete();
-                    break;
-                }
-                // case E_RECORD_ACTIONS.restore: {
-                case E_RECORD_ACTIONS.showDeleted: {
-                    this.restoringLogicallyDeletedItem();
-                    break;
-                }
-                case E_RECORD_ACTIONS.markRecords: {
-                    if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = true;
-                    }
-                    break;
-                }
-                case E_RECORD_ACTIONS.unmarkRecords: {
-                    if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = false;
-                    }
-                    break;
-                }
+    // Было в подписках на события
+    actionHandler(action) {
+        switch (action) {
+            case E_RECORD_ACTIONS.remove: {
+                this.delete();
+                break;
             }
-        });
+            case E_RECORD_ACTIONS.editSelected: {
+                this.editNode();
+                break;
+            }
+            case E_RECORD_ACTIONS.removeHard: {
+                this.physicallyDelete();
+                break;
+            }
+            // case E_RECORD_ACTIONS.restore: {
+            case E_RECORD_ACTIONS.showDeleted: {
+                this.restoringLogicallyDeletedItem();
+                break;
+            }
+            case E_RECORD_ACTIONS.markRecords: {
+                if (this.selectedNode) { // maybe we need save this value
+                    this.selectedNode.selected = true;
+                }
+                break;
+            }
+            case E_RECORD_ACTIONS.unmarkRecords: {
+                if (this.selectedNode) { // maybe we need save this value
+                    this.selectedNode.selected = false;
+                }
+                break;
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -123,7 +122,6 @@ export class SelectedNodeComponent implements OnDestroy {
         this._selectedNodeSubscription.unsubscribe();
         this._openedNodeSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
     }
 
     openFullInfo(node: EosDictionaryNode): void {
@@ -192,9 +190,9 @@ export class SelectedNodeComponent implements OnDestroy {
 
     mark() {
         if (this.selectedNode.selected) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+            this.onActionSelected.emit(E_RECORD_ACTIONS.markRoot)
         } else {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+            this.onActionSelected.emit(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
 

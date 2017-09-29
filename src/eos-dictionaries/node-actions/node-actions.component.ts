@@ -60,7 +60,6 @@ export class NodeActionsComponent implements OnDestroy {
 
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription;
 
     newNodeData: any;
 
@@ -107,7 +106,6 @@ export class NodeActionsComponent implements OnDestroy {
     ngOnDestroy() {
         this._userSettingsSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
     }
 
     actionHandler (type: E_RECORD_ACTIONS) {
