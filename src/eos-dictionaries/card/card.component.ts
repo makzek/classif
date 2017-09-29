@@ -1,12 +1,12 @@
-import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, HostListener, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionary } from '../core/eos-dictionary';
+// import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { NodeActionsService } from '../node-actions/node-actions.service';
+// import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
 // import { CardActionService } from './card-action.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
@@ -14,9 +14,8 @@ import { EosUserProfileService } from '../../app/services/eos-user-profile.servi
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './card-action.service';
-import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES } from '../consts/messages.consts';
+import { /* EDIT_CARD_ACTIONS, */ EDIT_CARD_MODES } from './card-action.service';
+import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES, DANGER_EDIT_DELETED_ERROR } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 
 /* Object that stores info about the last edited card in the LocalStorage */
@@ -30,8 +29,8 @@ export class EditedCard {
     selector: 'eos-card',
     templateUrl: 'card.component.html',
 })
-export class CardComponent implements CanDeactivateGuard, OnDestroy {
-    private _dict: EosDictionary;
+export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
+    // private _dict: EosDictionary;
     private node: EosDictionaryNode;
     private nodeData: any;
 
@@ -51,7 +50,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     private nextState: any;
     private nextRoute: string;
 
-    mode: EDIT_CARD_MODES;
+    private _mode: EDIT_CARD_MODES;
     editMode: boolean;
     private _changed = false;
 
@@ -87,7 +86,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
-            this._init();
         });
 
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
@@ -97,8 +95,14 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
+    ngOnInit() {
+        this._init();
+    }
+
     private _update(node: EosDictionaryNode) {
-        this.node = node
+        let _canEdit: boolean;
+
+        this.node = node;
         this.nodeData = {};
         if (this.node) {
             this.node.getEditView().forEach(fld => {
@@ -106,20 +110,15 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             });
         }
 
-        /* prevent editing multiple cards */
-        this.lastEditedCard = this.getLastEditedCard();
-        if (this.lastEditedCard && this.lastEditedCard.id !== node.id) {
-            this.modalOnlyRef.show();
-            this.editMode = false;
-        }
+        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
+            this._preventDeletedEdit() &&
+            this._preventMultiEdit();
 
-        /* prevent editing deleted nodes */
-        this.editMode = this.editMode && !this.node.isDeleted;
-
-        if (this.editMode) {
+        if (_canEdit) {
             this._setEditingCardLink();
         }
 
+        this.editMode = _canEdit;
         this._updateBorders();
     }
 
@@ -127,11 +126,39 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
         this._urlSegments = this._router.url.split('/');
-        const mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-        this.editMode = mode === EDIT_CARD_MODES.edit ? true : false;
+
+        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+
         this._dictSrv.getNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
+    }
+
+    forceView() {
+        if (this._mode === EDIT_CARD_MODES.edit) {
+            console.log('force open view');
+            this._openNode(this.node, EDIT_CARD_MODES.view);
+        }
+    }
+
+    private _preventMultiEdit(): boolean {
+        /* prevent editing multiple cards */
+        this.lastEditedCard = this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id !== this.node.id) {
+            this.modalOnlyRef.show();
+            return false;
+        }
+        return true;
+    }
+
+    private _preventDeletedEdit(): boolean {
+        if (!this.node.isDeleted) {
+            return true;
+        } else {
+            /* show warn */
+            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            return false;
+        }
     }
 
     ngOnDestroy() {
@@ -144,10 +171,10 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     edit() {
-        if (!this.node.isDeleted) {
-            this.editMode = true;
-        } else {
-
+        const _canEdit = this._preventMultiEdit() && this._preventDeletedEdit();
+        if (_canEdit) {
+            console.log('force open edit');
+            this._openNode(this.node, EDIT_CARD_MODES.edit);
         }
     }
 
@@ -157,9 +184,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     cancel(): void {
-        /* do clean */
-        this.editMode = false;
-        this._clearEditingCardLink();
+        this._openNode(this.node, EDIT_CARD_MODES.view);
     }
 
     recordChanged(changed: boolean) {
@@ -180,9 +205,14 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         }
     }
 
-    resetAndClose(): void {
-        this.cancel();
-        this._changed = false;
+    private _reset(): void {
+        if (this._changed) {
+            /* do reset data */
+        }
+        if (this.editMode) {
+            this.editMode = false;
+            this._clearEditingCardLink();
+        }
     }
 
     saveAndClose(): boolean {
@@ -232,61 +262,66 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this._openNode(_node);
     }
 
-    private _openNode(node: EosDictionaryNode) {
+    private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
         if (node) {
-            this.goTo(this._makeUrl(node.id));
+            this.goTo(this._makeUrl(node.id, forceMode));
         } else {
             this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
         }
     }
 
-    private _makeUrl(nodeId: string, onlyView?: boolean): string {
+    private _makeUrl(nodeId: string, forceMode?: EDIT_CARD_MODES): string {
         const _url = [].concat([], this._urlSegments);
         _url[_url.length - 2] = nodeId;
 
-        if (onlyView) {
-            _url[_url.length - 1] = 'view';
+        if (forceMode !== undefined) {
+            _url[_url.length - 1] = EDIT_CARD_MODES[forceMode];
         }
-
         return _url.join('/');
     }
 
     goTo(url: string): void {
         if (url) {
-            this._router.navigateByUrl(url).then((navigated) => this._navigationResult(url, navigated));
+            this._router.navigateByUrl(url);
         } else {
-            this._router.navigate([this.nextRoute]).then((res) => this._navigationResult(this.nextRoute, res));
+            this._router.navigate([this.nextRoute]);
         }
     }
 
-    private _navigationResult(url: string, result: boolean) {
-        console.log('navigation result', url, result);
-    }
-
-    canDeactivate(nextState?: any): boolean | Promise<boolean> {
-        this.nextState = nextState;
+    private _askForSaving(): Promise<boolean> {
         if (this._changed) {
             return this._confirmSrv.confirm(CONFIRM_SAVE_ON_LEAVE)
                 .then((save) => {
                     if (save) {
                         return this.saveAndClose();
                     } else {
-                        this._clearEditingCardLink();
+                        this._reset();
+                        return true;
                     }
-                    return true;
                 })
                 .catch((err) => {
                     console.log('cancel reason', err);
                     return false;
                 });
         } else {
-            this._clearEditingCardLink();
-            return true;
+            this._reset();
+            return Promise.resolve(true);
         }
+    }
+
+    canDeactivate(nextState?: any): boolean | Promise<boolean> {
+        this.nextState = nextState;
+        return this._askForSaving();
     }
 
     @HostListener('window:beforeunload', ['$event'])
     private _canWndUnload(evt: BeforeUnloadEvent): any {
+
+        if (this.editMode) {
+            /* clean link on close or reload */
+            /* cann't handle user answer */
+            this._clearEditingCardLink();
+        }
         if (this._changed) {
             evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
             return false;

@@ -45,7 +45,7 @@
     <eos-departments-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit [data]="nodeData" [editMode]="editMode" (changed)="recordChanged($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>
 
-    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true" (onHide)="forceView($event)">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
