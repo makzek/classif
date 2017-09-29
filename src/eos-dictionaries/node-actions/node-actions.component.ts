@@ -9,7 +9,6 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeActionsService } from './node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
@@ -66,7 +65,6 @@ export class NodeActionsComponent implements OnDestroy {
     newNodeData: any;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
-
     @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
     get noSearchData(): boolean {
@@ -88,7 +86,6 @@ export class NodeActionsComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
-        private _actSrv: NodeActionsService,
         private _editActSrv: CardActionService) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -105,55 +102,6 @@ export class NodeActionsComponent implements OnDestroy {
             }
         });
 
-        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
-            switch (act) {
-                case E_RECORD_ACTIONS.markOne:
-                    this.itemIsChecked = true;
-                    this.checkAll = false;
-                    this.someChildrenSelected = true;
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkAllChildren:
-                    this.allChildrenSelected = false;
-                    this.someChildrenSelected = false;
-                    this.itemIsChecked = false;
-                    this.checkAll = false;
-                    break;
-
-                case E_RECORD_ACTIONS.markAllChildren:
-                    this.allChildrenSelected = true;
-                    if (this.rootSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.markRoot:
-                    this.rootSelected = true;
-                    if (this.allChildrenSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.checkAll = false;
-                        this.itemIsChecked = true;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkRoot:
-                    this.rootSelected = false;
-                    if (this.allChildrenSelected || this.someChildrenSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
-                    break;
-            }
-        });
     }
 
     ngOnDestroy() {
@@ -176,7 +124,53 @@ export class NodeActionsComponent implements OnDestroy {
             case E_RECORD_ACTIONS.edit:
                 this.editNode();
                 break;
+            //
+            case E_RECORD_ACTIONS.markOne:
+                this.itemIsChecked = true;
+                this.checkAll = false;
+                this.someChildrenSelected = true;
+                break;
 
+            case E_RECORD_ACTIONS.unmarkAllChildren:
+                this.allChildrenSelected = false;
+                this.someChildrenSelected = false;
+                this.itemIsChecked = false;
+                this.checkAll = false;
+                break;
+
+            case E_RECORD_ACTIONS.markAllChildren:
+                this.allChildrenSelected = true;
+                if (this.rootSelected) {
+                    this.checkAll = true;
+                    this.itemIsChecked = false;
+                } else {
+                    this.itemIsChecked = true;
+                    this.checkAll = false;
+                }
+                break;
+
+                case E_RECORD_ACTIONS.markRoot:
+                this.rootSelected = true;
+                if (this.allChildrenSelected) {
+                    this.checkAll = true;
+                    this.itemIsChecked = false;
+                } else {
+                    this.checkAll = false;
+                    this.itemIsChecked = true;
+                }
+                break;
+
+                case E_RECORD_ACTIONS.unmarkRoot:
+                this.rootSelected = false;
+                if (this.allChildrenSelected || this.someChildrenSelected) {
+                    this.itemIsChecked = true;
+                    this.checkAll = false;
+                } else {
+                    this.itemIsChecked = false;
+                    this.checkAll = false;
+                }
+                break;
+            //
             default:
                 this.onAction.emit(type);
                 break;
@@ -201,7 +195,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     switchUserSort() {
         this.userSort = !this.userSort;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
+        this.onAction.emit(E_RECORD_ACTIONS.userOrder);
     }
 
     openModal(template: TemplateRef<any>) {

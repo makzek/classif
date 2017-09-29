@@ -1,4 +1,4 @@
-import { Component, Input,  OnDestroy } from '@angular/core';
+import { Component, Input,  OnDestroy, ViewChild } from '@angular/core';
 // import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
@@ -9,7 +9,6 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { NodeActionsService } from '../node-actions/node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
@@ -19,12 +18,16 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
+import { NodeActionsComponent } from '../node-actions/node-actions.component';
+import { SelectedNodeComponent } from '../selected-node/selected-node.component';
 
 @Component({
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
 export class NodeListComponent implements OnDestroy {
+    @ViewChild(NodeActionsComponent) private _nodeActionsCmp;
+    @ViewChild(SelectedNodeComponent) private _selectedNodeCmp;
     // @Input() nodes: EosDictionaryNode[];
     nodes: EosDictionaryNode[];
 
@@ -64,7 +67,6 @@ export class NodeListComponent implements OnDestroy {
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
         private _router: Router,
-        private _actSrv: NodeActionsService
     ) {
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
@@ -117,7 +119,7 @@ export class NodeListComponent implements OnDestroy {
                 if (this.openedNode) {
                     this.editNode(this.openedNode);
                 } else {
-                    this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
+                    // this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected) (What is it? ¯\_(ツ)_/¯)
                 }
                 break;
             }
@@ -165,6 +167,7 @@ export class NodeListComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        /*
         this._openedNodeSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
         this._selectedNodeSubscription.unsubscribe();
@@ -172,6 +175,7 @@ export class NodeListComponent implements OnDestroy {
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
         this._orderSubscription.unsubscribe();
+        */
     }
 
     // On this methon required test check nodes
@@ -202,16 +206,16 @@ export class NodeListComponent implements OnDestroy {
         /* tslint:disable:no-bitwise */
         if (node.selected) {
             if (!~this.nodes.findIndex((_n) => !_n.selected)) {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markAllChildren);
             } else {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
+                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markOne);
             }
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.unmarkAllChildren);
             } else {
                 if (!!~this.nodes.findIndex((_n) => _n.selected)) {
-                    this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
+                    this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markOne);
                 }
             }
         }
