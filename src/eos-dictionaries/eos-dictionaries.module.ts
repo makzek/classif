@@ -28,7 +28,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-import { CardActionService } from './card/card-action.service';
+// import { CardActionService } from './card/card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -79,7 +79,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         EosDictService,
         EosDictOrderService,
         NodeActionsService,
-        CardActionService,
+        // CardActionService,
         DictionaryActionService,
     ],
 })

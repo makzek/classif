@@ -1,22 +1,21 @@
-import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, HostListener, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictionary } from '../core/eos-dictionary';
+// import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { NodeActionsService } from '../node-actions/node-actions.service';
+// import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
-import { CardActionService } from './card-action.service';
+// import { CardActionService } from './card-action.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { EDIT_CARD_ACTIONS, EDIT_CARD_MODES } from './card-action.service';
-import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES } from '../consts/messages.consts';
+import { /* EDIT_CARD_ACTIONS, */ EDIT_CARD_MODES } from './card-action.service';
+import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES, DANGER_EDIT_DELETED_ERROR } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 
 /* Object that stores info about the last edited card in the LocalStorage */
@@ -30,17 +29,18 @@ export class EditedCard {
     selector: 'eos-card',
     templateUrl: 'card.component.html',
 })
-export class CardComponent implements CanDeactivateGuard, OnDestroy {
-    private _dict: EosDictionary;
+export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
+    // private _dict: EosDictionary;
     private node: EosDictionaryNode;
     private nodeData: any;
 
     dictionaryId: string;
     nodeId: string;
     selfLink: string;
-    private _urlSegments: string[];
 
+    private _urlSegments: string[];
     private nodeIndex: number = -1;
+
     isFirst: boolean;
     isLast: boolean;
 
@@ -50,17 +50,39 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     private nextState: any;
     private nextRoute: string;
 
-    mode: EDIT_CARD_MODES;
-    editMode = true;
-    private wasEdit = false;
+    private _mode: EDIT_CARD_MODES;
+    editMode: boolean;
+    private _originalData: any = {};
+    private _changed = false;
 
     showDeleted = false;
 
-    private _actionSubscription: Subscription;
+    // private _actionSubscription: Subscription;
     private _profileSubscription: Subscription;
     private _dictionarySubscription: Subscription;
 
-    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
+    @ViewChild('onlyEdit') private modalOnlyRef: ModalDirective;
+
+    /* todo: check tasks for reson
+    @HostListener('document:blur')
+    private _blur(): boolean {
+        return this.canDeactivate();
+    }
+    */
+
+    @HostListener('window:beforeunload', ['$event'])
+    private _canWndUnload(evt: BeforeUnloadEvent): any {
+
+        if (this.editMode) {
+            /* clean link on close or reload */
+            /* cann't handle user answer */
+            this._clearEditingCardLink();
+        }
+        if (this._changed) {
+            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
+            return false;
+        }
+    }
 
     get nodeName() {
         let _nodeName = '';
@@ -76,8 +98,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     constructor(
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
-        private _nodeActSrv: NodeActionsService,
-        private _actSrv: CardActionService,
+        // private _nodeActSrv: NodeActionsService,
         private _deskSrv: EosDeskService,
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
@@ -87,27 +108,8 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
-            this._init();
         });
-        /*
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => {
-            this._dict = dict;
-            if (dict) {
-                this.dictIdFromDescriptor = dict.descriptor.id;
-            }
-        });
-        */
-        /*
-        this._actionSubscription = this._actSrv.mode$.subscribe((mode) => {
-            if (mode === EDIT_CARD_MODES.unsavedChanges) {
-                this.wasEdit = true;
-            }
-            if (mode === EDIT_CARD_MODES.nothingChanges) {
-                this.wasEdit = false;
-                this._msgSrv.addNewMessage(INFO_NOTHING_CHANGES);
-            }
-        });
-        */
+
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
@@ -115,254 +117,235 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
-    private _prepareNodeData() {
+    ngOnInit() {
+        this._init();
+    }
+
+    private _init() {
+        this.selfLink = this._router.url;
+        this.nextRoute = this.selfLink;
+        this._urlSegments = this._router.url.split('/');
+
+        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+
+        this._dictSrv.getNode(this.dictionaryId, this.nodeId)
+            .then((node) => this._update(node))
+            .catch((err) => console.log('getNode error', err));
+    }
+
+    private _update(node: EosDictionaryNode) {
+        let _canEdit: boolean;
+
+        this.node = node;
         this.nodeData = {};
         if (this.node) {
             this.node.getEditView().forEach(fld => {
                 this.nodeData[fld.key] = fld.value;
             });
         }
+
+        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
+            this._preventDeletedEdit() &&
+            this._preventMultiEdit();
+
+        if (_canEdit) {
+            this._setEditingCardLink();
+            this._setOriginalData();
+        }
+
+        this.editMode = _canEdit;
+        this._updateBorders();
     }
 
-    private _init() {
-        console.log('init fired');
-        this.selfLink = this._router.url;
-        this.nextRoute = this.selfLink;
-        this._urlSegments = this._router.url.split('/');
-        this.mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-        this.editMode = this.mode === EDIT_CARD_MODES.edit ? true : false;
-        this._dictSrv.getNode(this.dictionaryId, this.nodeId)
-            .then((node) => {
-                this.node = node;
-                if (node) {
-                    this._prepareNodeData();
-                    this.nodeIndex = node.parent.children.findIndex((chld) => {
-                        return chld.id === node.id;
-                    });
-                    this._updateBorders();
-                    if (node.isDeleted && this.mode === EDIT_CARD_MODES.edit) { // for unexpected situation
-                        this.goTo(this._makeUrl(node.id, true));
-                    }
-                    this._actSrv.emitMode(this.mode);
-                }
-            }).catch((err) => console.log('getNode error', err));
+    private _setOriginalData() {
+        this._originalData = Object.assign({}, this.nodeData);
+    }
 
-        /* this._nodeActSrv.emitAction(null); */
+    forceView() {
+        if (this._mode === EDIT_CARD_MODES.edit) {
+            this._openNode(this.node, EDIT_CARD_MODES.view);
+        }
+    }
+
+    private _preventMultiEdit(): boolean {
+        /* prevent editing multiple cards */
+        this.lastEditedCard = this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id !== this.node.id) {
+            this.modalOnlyRef.show();
+            return false;
+        }
+        return true;
+    }
+
+    private _preventDeletedEdit(): boolean {
+        if (!this.node.isDeleted) {
+            return true;
+        } else {
+            /* show warn */
+            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            return false;
+        }
     }
 
     ngOnDestroy() {
-        // this._actionSubscription.unsubscribe();
         this._profileSubscription.unsubscribe();
-        // if we went from the same card (from editing to view mode)
-        this.lastEditedCard = this.getLastEditedCard();
-        if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId && this.mode === EDIT_CARD_MODES.edit) {
-            this.clearStorage();
+        if (this.editMode) {
+            this._clearEditingCardLink();
         }
     }
 
-    save(): void {
-        // this._actSrv.emitAction(EDIT_CARD_ACTIONS.save);
-        this.clearStorage();
-        this.changeMode();
+    edit() {
+        const _canEdit = this._preventMultiEdit() && this._preventDeletedEdit();
+        if (_canEdit) {
+            this._openNode(this.node, EDIT_CARD_MODES.edit);
+        }
     }
+
 
     cancel(): void {
-        // this._actSrv.emitAction(EDIT_CARD_ACTIONS.cancel);
-        this.changeMode();
+        /* _askForSaving fired on route change */
+        this._openNode(this.node, EDIT_CARD_MODES.view);
     }
 
-    /* changeEditMode(value: boolean) {
-        this.editMode = value;
-        if (value) {
-            this.actionService.emitMode(EDIT_CARD_MODES.edit);
-        } else {
-            this.actionService.emitMode(EDIT_CARD_MODES.view);
-        }
-    }*/
-
-    recordChanged(changed: boolean) {
-        this.wasEdit = changed;
-    }
-
-    recordResult(data: any) {
-        if (data) {
-            this._dictSrv.updateNode(data)
-                .then(() => {
-                    this._deskSrv.addRecentItem({
-                        link: this.selfLink.slice(0, this.selfLink.length - 5),
-                        title: this.nodeName,
-                    });
-                    this.wasEdit = false;
-                    this.editMode = false;
-                });
+    recordChanged(data: any) {
+        if (this.nodeData) {
+            /* tslint:disable:no-bitwise */
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((key) => this.nodeData[key] !== this._originalData[key]);
+            /* tslint:enable:no-bitwise */
+            this._changed = hasChanges;
         }
     }
-
-    resetAndClose(): void {
-        this.cancel();
-        this.clearStorage();
-        this.wasEdit = false;
-    }
-
-    saveAndClose(): void {
-        this.save();
-        this.clearStorage();
-        this.wasEdit = false;
-        /*
-        // this.router.navigate([this.selfLink]);
-        // this._location.back();
-        if (this.nextState) {
-            this._router.navigateByUrl(this.nextState.url);
-        } else {
-            this._router.navigate([this.nextRoute]);
-        }
-        */
-    }
-
 
     private _updateBorders() {
         const firstIndex = this.node.neighbors.findIndex((node) => node.isVisible(this.showDeleted));
         let lastIndex = -1;
 
         for (let idx = this.node.neighbors.length - 1; idx > lastIndex; idx--) {
-            if (this.node.neighbors[idx].isVisible) {
+            if (this.node.neighbors[idx].isVisible(this.showDeleted)) {
                 lastIndex = idx;
             }
         }
 
+        this.nodeIndex = this.node.neighbors.findIndex((chld) => chld.id === this.node.id);
         this.isFirst = this.nodeIndex <= firstIndex || firstIndex < 0;
         this.isLast = this.nodeIndex >= lastIndex;
-
-        console.log('first last', firstIndex, lastIndex);
-    }
-
-    private _makeUrl(nodeId: string, onlyView?: boolean): string {
-        const _url = [].concat([], this._urlSegments);
-        _url[_url.length - 2] = nodeId;
-
-        if (onlyView) {
-            _url[_url.length - 1] = 'view';
-        }
-
-        return _url.join('/');
     }
 
     next() {
         const _node = this.node.neighbors.find((node, idx) => idx > this.nodeIndex && node.isVisible(this.showDeleted));
-        if (_node) {
-            this.goTo(this._makeUrl(_node.id));
+        this._openNode(_node);
+    }
+
+    prev() {
+        let _node: EosDictionaryNode = null;
+
+        for (let idx = this.nodeIndex - 1; idx > -1 && !_node; idx--) {
+            if (this.node.neighbors[idx].isVisible(this.showDeleted)) {
+                _node = this.node.neighbors[idx];
+            }
+        }
+        this._openNode(_node);
+    }
+
+    private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
+        if (node) {
+            this.goTo(this._makeUrl(node.id, forceMode));
         } else {
             this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
         }
     }
 
-    prev() {
-        const _node = this.node.neighbors.find((node, idx) => idx < this.nodeIndex && node.isVisible(this.showDeleted));
-        if (_node) {
-            this.goTo(this._makeUrl(_node.id));
-        } else {
-            this._msgSrv.addNewMessage(DANGER_NAVIGATE_TO_DELETED_ERROR);
+    private _makeUrl(nodeId: string, forceMode?: EDIT_CARD_MODES): string {
+        const _url = [].concat([], this._urlSegments);
+        _url[_url.length - 2] = nodeId;
+
+        if (forceMode !== undefined && EDIT_CARD_MODES[forceMode]) {
+            _url[_url.length - 1] = EDIT_CARD_MODES[forceMode];
         }
+        return _url.join('/');
     }
 
     goTo(url: string): void {
         if (url) {
-            console.log('going to', url);
-            this._router.navigateByUrl(url).then((navigated) => this._navigationResult(url, navigated));
+            this._router.navigateByUrl(url);
         } else {
-            console.log('nextroute', this.nextRoute);
-            this._router.navigate([this.nextRoute]).then((res) => this._navigationResult(this.nextRoute, res));
+            this._router.navigate([this.nextRoute]);
         }
-    }
-
-    private _navigationResult(url: string, result: boolean) {
-        console.log('navigation result', url, result);
     }
 
     canDeactivate(nextState?: any): boolean | Promise<boolean> {
         this.nextState = nextState;
-        if (this.wasEdit) {
+        return this._askForSaving();
+    }
+
+    private _askForSaving(): Promise<boolean> {
+        if (this._changed) {
             return this._confirmSrv.confirm(CONFIRM_SAVE_ON_LEAVE)
-                .then((save) => {
-                    console.log('save confirmed', save);
-                    if (save) {
-                        this.saveAndClose();
+                .then((doSave) => {
+                    if (doSave) {
+                        return this._save(this.nodeData)
+                            .then(() => {
+                                return true;
+                            });
                     } else {
-                        this.resetAndClose();
+                        this._reset();
+                        return true;
                     }
-                    return true;
                 })
                 .catch((err) => {
                     console.log('cancel reason', err);
                     return false;
                 });
         } else {
-            console.log('can deactivate');
-            return true;
+            this._reset();
+            return Promise.resolve(true);
         }
     }
 
-    @HostListener('window:beforeunload', ['$event'])
-    private _canWndUnload(evt: BeforeUnloadEvent): any {
-        if (this.wasEdit) {
-            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
-            return false;
+    save(): void {
+        this._save(this.nodeData);
+        /* this.changeMode(); */
+    }
+
+    private _save(data: any): Promise<any> {
+        return this._dictSrv.updateNode(data)
+            .then(() => {
+                this._deskSrv.addRecentItem({
+                    link: this.selfLink.slice(0, this.selfLink.length - 5),
+                    title: this.nodeName,
+                });
+                this._setOriginalData();
+                this.recordChanged(this.nodeData);
+            });
+    }
+
+    private _reset(): void {
+        if (this._changed) {
+            /* do reset data */
+            Object.assign(this.nodeData, this._originalData);
+        }
+        if (this.editMode) {
+            this.editMode = false;
+            this._clearEditingCardLink();
         }
     }
 
-    /* todo: check tasks for reson
-    @HostListener('document:blur')
-    private _blur(): boolean {
-        return this.canDeactivate();
-    }
-    */
-
-    private _setEditingCardValue() {
+    private _setEditingCardLink() {
         this.lastEditedCard = this.getLastEditedCard();
         if (!this.lastEditedCard) {
             localStorage.setItem('lastEditedCard', JSON.stringify({
                 'id': this.nodeId,
                 'title': this.nodeName,
-                'link': this._makeUrl(this.nodeId).replace('/edit', '/view')
+                'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit)
             }));
         }
     }
 
-    clearStorage(): void {
+    private _clearEditingCardLink(): void {
         localStorage.removeItem('lastEditedCard');
     }
 
-    getLastEditedCard(): EditedCard {
+    private getLastEditedCard(): EditedCard {
         return JSON.parse(localStorage.getItem('lastEditedCard'));
-    }
-
-    /* hideCardWarning(): void {
-        this.modalUnsaveRef.hide();
-        this.router.navigate([this.selfLink]);
-    }*/
-
-    changeMode() {
-        let navigate = true;
-        this.lastEditedCard = this.getLastEditedCard();
-        if (this.mode === EDIT_CARD_MODES.view) {
-            if (this.lastEditedCard) {
-                if (this.nodeId !== this.lastEditedCard.id) {
-                    navigate = false;
-                    this.modalOnlyRef.show();
-                }
-            } else {
-                this._setEditingCardValue();
-            }
-        } else {
-            this.clearStorage();
-        }
-        if (navigate) {
-            this._router.navigate([
-                'spravochniki',
-                this.dictionaryId,
-                this.nodeId,
-                (this.mode === EDIT_CARD_MODES.view ? 'edit' : 'view')
-            ]);
-        }
     }
 }

@@ -14,7 +14,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
+// import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
 
@@ -88,7 +88,8 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        private _editActSrv: CardActionService) {
+        // private _editActSrv: CardActionService
+    ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
@@ -165,7 +166,7 @@ export class NodeActionsComponent implements OnDestroy {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
-                this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+                // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
@@ -248,7 +249,7 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     create() {
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this.creatingModal.hide();
     }
 
@@ -270,13 +271,13 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     createOneMore() {
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 
     cancelCreate() {
         this.creatingModal.hide();
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 
     editNode() {

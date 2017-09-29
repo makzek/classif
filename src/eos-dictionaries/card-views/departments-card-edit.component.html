@@ -63,13 +63,13 @@
                     <label for="SURNAME">Фамилия И.О.:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('SURNAME', $event)" [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
                             id="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [(ngModel)]="data['SURNAME']"
-                            required tooltip="Обязательное поле" [isDisabled]="!editMode" placement="right">
+                            required pattern="[A-Za-zА-Яа-яёЁ][A-Za-zА-Яа-яёЁ\s]*" tooltip="Обязательное поле" [isDisabled]="!editMode" placement="right">
                 </div>
                 <div class="form-group">
                     <label for="CLASSIF_NAME">Краткое наименование должности:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
                             id="CLASSIF_NAME" type="text" class="form-control" placeholder="Краткое наименование должности" [(ngModel)]="data['CLASSIF_NAME']"
-                            required maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                            required pattern="[A-Za-zА-Яа-я0-9ёЁ][A-Za-zА-Яа-я0-9ёЁ,\.\s]*" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
                 </div>
                 <span class="checkbox">
                     <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
@@ -268,10 +268,10 @@
         </div>
         <div class="col-2">
             <div>
-                <label for="CLASSIF_NAME">Краткое наименование должности:</label>
+                <label for="CLASSIF_NAME">Краткое наименование:</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
-                        id="CLASSIF_NAME" type="text" class="form-control" placeholder="Краткое наименование должности" [(ngModel)]="data['CLASSIF_NAME']"
-                        required maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                        id="CLASSIF_NAME" type="text" class="form-control" placeholder="Краткое наименование" [(ngModel)]="data['CLASSIF_NAME']"
+                        required pattern="[A-Za-zА-Яа-я0-9ёЁ][A-Za-zА-Яа-я0-9ёЁ,\.\s]*" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
             </div>
             <span class="checkbox">
                 <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['notInPositionTitle']">
@@ -279,9 +279,9 @@
                         Не использовать подразделение в названии должности</label>
             </span>
             <div class="form-group">
-                    <label for="fullPosition">Полное наименование должности:</label>
+                    <label for="fullPosition">Полное наименование:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
-                            id="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [(ngModel)]="data['fullPosition']"
+                            id="fullPosition" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="data['fullPosition']"
                             maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
             </div>
             <div class="form-group">
