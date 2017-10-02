@@ -295,13 +295,11 @@
 
     .eos-departments-card-edit {
         .tabs {
-            .tab-item {
-                border-color: $secondary-color-main-theme;
+            border-color: $border-color-main-theme;
 
+            .tab-item {
                 &.active {
-                    background-color: $button-color-main-theme;
-                    border-color: transparent;
-                    color: $block-color-main-theme;
+                    border-color: $button-color-main-theme;
                 }
             }
         }

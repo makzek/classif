@@ -58,6 +58,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     editMode: boolean;
 
     showDeleted = false;
+    disableSave = false;
 
     // private _actionSubscription: Subscription;
     private _profileSubscription: Subscription;
@@ -120,6 +121,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     ngOnInit() {
         this._init();
+    }
+
+    turnOffSave(val: boolean) {
+        // console.log(val);
+        this.disableSave = val;
     }
 
     private _init() {
@@ -304,6 +310,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     save(): void {
+        console.log('save');
         this._save(this.nodeData);
         /* this.changeMode(); */
     }

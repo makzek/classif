@@ -92,7 +92,7 @@
             <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newNode.description" aria-describedby="basic-addon1">
         </div>
         <button class="btn btn-default" (click)="createItem()">Создать</button>-->
-                <eos-departments-card-edit *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
+                <eos-departments-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
                 <eos-rubricator-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
                 <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
                 <button class="btn btn-default" (click)="create()">Добавить</button>
