@@ -1,9 +1,28 @@
 <div class="eos-photo-uploader">
-    <input class="input-file" type="file"  #fileInput name="file" id="file" [multiple]="multiple" (change)="refreshFileCount()" placeholder="Upload file" accept=".jpg, .png">
-    <label for="file" class="input-file-label" [ngClass]="{'uploading': uploading}" tooltip="Нажмите, чтобы выбрать фотографию" container="body">
-        <eos-spinner *ngIf="uploading" [size]="'md'"></eos-spinner>
+    <div class="current-image" [ngStyle]="{'background-image': currentUrl}"></div>
+    <input class="input-file" type="file" #fileInput name="file" id="file" [multiple]="multiple" (change)="chooseFile($event)" placeholder="Upload file" 
+    accept=".jpg, .png">
+    <label for="file" class="input-file-label">
+        <span *ngIf="!uploading" class="eos-icon eos-icon-edit-blue small"></span>
+        <span *ngIf="uploading">
+            <eos-spinner></eos-spinner>
+        </span>
     </label>
-    <button [disabled]="!fileCount" type="button" class="btn upload-btn special-text" (click)="upload($event)" tooltip="Начать загрузку" container="body">
-        <i class="fa fa-upload fa-2x" aria-hidden="true"></i>
-    </button>
 </div>
+
+<div bsModal #confirmModal="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Выбранная фотография:</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="image-wrapper">
+                        <div class="user-image" [ngStyle]="{'background-image': imageSrc}" ></div>
+                    </div>
+                    <button class="btn btn-primary" (click)="upload()">Подтвердить</button>
+                    <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+                </div>
+            </div>
+        </div>
+    </div>

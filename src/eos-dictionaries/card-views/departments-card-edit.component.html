@@ -11,7 +11,7 @@
         <div class="wrapper" *ngIf="currTab === 0">
             <div class="col-1">
                 <span class="photo">
-                    <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event" [multiple]="true"></eos-photo-uploader>
+                    <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event"></eos-photo-uploader>
                 </span>
                 <div class="form-group">
                     <label for="gender">Пол:</label>
