@@ -58,5 +58,6 @@ export const INFO_NOTHING_CHANGES: IMessage = {
 export const SUCCESS_SAVE: IMessage = {
     type: 'success',
     title: 'Изменения сохранены',
-    msg: ''
+    msg: '',
+    dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
 }
