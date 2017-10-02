@@ -294,7 +294,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     }
                 })
                 .catch((err) => {
-                    console.log('cancel reason', err);
+                    // console.log('cancel reason', err);
                     return false;
                 });
         } else {
@@ -309,8 +309,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
-        return this._dictSrv.updateNode(data)
-            .then(() => {
+        return this._dictSrv.updateNode(this.node, data)
+            .then((resp) => {
+                // console.log('update response', resp);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,

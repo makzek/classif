@@ -245,8 +245,8 @@ export class EosDictService {
         return newNode;
     }
 
-    public updateNode(data: any[]): Promise<any> {
-        return this._api.update(data);
+    public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
+        return this._api.update(node.data, data);
     }
 
     private _deleteNode(node: EosDictionaryNode): void {
