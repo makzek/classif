@@ -3,20 +3,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosDictService } from '../services/eos-dict.service';
-// import { EosDictionary } from '../core/eos-dictionary';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
-// import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
-// import { CardActionService } from './card-action.service';
+
+import { EosDictService } from '../services/eos-dict.service';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
+
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
-import { /* EDIT_CARD_ACTIONS, */ EDIT_CARD_MODES } from './card-action.service';
 import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES, DANGER_EDIT_DELETED_ERROR } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
+
+export enum EDIT_CARD_MODES {
+    edit,
+    view,
+};
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -30,12 +33,13 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
-    // private _dict: EosDictionary;
     private node: EosDictionaryNode;
     private nodeData: any = {};
+    private _originalData: any = {};
+    private _changed = false;
 
-    dictionaryId: string;
-    nodeId: string;
+    private dictionaryId: string;
+    private nodeId: string;
     selfLink: string;
 
     private _urlSegments: string[];
@@ -52,11 +56,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _mode: EDIT_CARD_MODES;
     editMode: boolean;
-    private _originalData: any = {};
-    private _changed = false;
-    disableSave = false;
 
     showDeleted = false;
+    disableSave = false;
 
     // private _actionSubscription: Subscription;
     private _profileSubscription: Subscription;
@@ -99,7 +101,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     constructor(
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
-        // private _nodeActSrv: NodeActionsService,
         private _deskSrv: EosDeskService,
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
