@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { USER_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
@@ -18,11 +19,23 @@ export class UserRestComponent implements OnInit {
     items: USER_CL[] = [];
     currentItem: USER_CL;
     username: string;
+    userPhotoUrl: SafeUrl;
+
     // errorMessage: string;
-    constructor(private pip: PipRX, private _ctx: AppContext) { }
+    constructor(
+        private pip: PipRX,
+        private _ctx: AppContext,
+        private _sanitizer: DomSanitizer
+    ) {
+        this.userPhotoUrl = this._sanitizeUrl('/assets/images/no-user.png');
+    }
     //
     ngOnInit() {
 
+    }
+
+    private _sanitizeUrl(url: string): SafeUrl {
+        return this._sanitizer.bypassSecurityTrustUrl(url);
     }
 
     getData() {
@@ -43,6 +56,8 @@ export class UserRestComponent implements OnInit {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;
+            /* sanitize image url */
+            // this.userPhotoUrl = this._sanitizeUrl(r.user_photo);
         });
 
 
