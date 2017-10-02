@@ -13,7 +13,12 @@ import { EosUserProfileService } from '../../app/services/eos-user-profile.servi
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
-import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES, DANGER_EDIT_DELETED_ERROR } from '../consts/messages.consts';
+import {
+    DANGER_NAVIGATE_TO_DELETED_ERROR,
+    INFO_NOTHING_CHANGES,
+    DANGER_EDIT_DELETED_ERROR,
+    SUCCESS_SAVE
+} from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 
 export enum EDIT_CARD_MODES {
@@ -300,7 +305,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     }
                 })
                 .catch((err) => {
-                    console.log('cancel reason', err);
+                    // console.log('cancel reason', err);
                     return false;
                 });
         } else {
@@ -316,8 +321,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
-        return this._dictSrv.updateNode(data)
-            .then(() => {
+        return this._dictSrv.updateNode(this.node, data)
+            .then((resp) => {
+                this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                console.log('update response', resp);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,

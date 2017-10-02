@@ -61,13 +61,15 @@ export class EosDictionaryNode {
             this.selected = !!this.selected;
 
             this._descriptor = descriptor;
-            this.data = {};
+            /* store all data from backend in .data */
+            this.data = data;
+            /*
             this._descriptor.fields.forEach((fld) => {
                 if (fld) {
                     this.data[fld.key] = data[fld.key];
                 }
             });
-
+            */
             if (this.parentId === undefined) {
                 this.parentId = data[this._descriptor.parentField.key];
             }
