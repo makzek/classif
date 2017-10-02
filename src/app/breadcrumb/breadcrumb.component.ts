@@ -25,8 +25,9 @@ export class BreadcrumbsComponent {
         private _actSrv: DictionaryActionService
     ) {
         this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
-            if (bc) {
+            if (bc[0] !== undefined) {
                 this.breadcrumbs = bc;
+                this.breadcrumbs[0].title = 'Главная';
             }
         });
 

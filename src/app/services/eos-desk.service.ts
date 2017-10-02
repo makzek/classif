@@ -12,7 +12,7 @@ import { EosDesk } from '../core/eos-desk';
 
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
-    name: 'System desk',
+    name: 'Стандартный рабочий стол',
     references: [],
     edited: false,
 }, {

@@ -12,7 +12,7 @@
                     <label for="title">Краткое наименование:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event, rubricatorForm.invalid)" [readonly]="!editMode" 
                         (ngModelChange)="change('CLASSIF_NAME', $event, rubricatorForm.invalid)" id="title" name="title"
-                        type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required pattern="[A-Za-zА-Яа-я0-9ёЁ][A-Za-zА-Яа-я0-9ёЁ,\.\s]*"
+                        type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)"
                         maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
                 </div>
                 <div class="form-group">

@@ -11,7 +11,7 @@
         <div class="wrapper" *ngIf="currTab === 0">
             <div class="col-1">
                 <span class="photo">
-                    <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event" [multiple]="true"></eos-photo-uploader>
+                    <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event"></eos-photo-uploader>
                 </span>
                 <div class="form-group">
                     <label for="gender">Пол:</label>
@@ -65,13 +65,13 @@
                     <label for="SURNAME">Фамилия И.О.:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('SURNAME', $event)" [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
                             id="SURNAME" name="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [(ngModel)]="data['SURNAME']"
-                            required pattern="[A-Za-zА-Яа-яёЁ][A-Za-zА-Яа-яёЁ\s]*" tooltip="Обязательное поле" [isDisabled]="!editMode" placement="right">
+                            required pattern="^\S(.*\S$|$)" tooltip="Обязательное поле" [isDisabled]="!editMode" placement="right">
                 </div>
                 <div class="form-group">
                     <label for="CLASSIF_NAME">Краткое наименование должности:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
                             id="CLASSIF_NAME" name="position" type="text" class="form-control" placeholder="Краткое наименование должности" [(ngModel)]="data['CLASSIF_NAME']"
-                            required pattern="[A-Za-zА-Яа-я0-9ёЁ][A-Za-zА-Яа-я0-9ёЁ,-\.\s]*" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                            required pattern="^\S(.*\S$|$)" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
                 </div>
                 <span class="checkbox">
                     <label><input type="checkbox" name="POST_H" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
@@ -289,7 +289,7 @@
                 <label for="CLASSIF_NAME">Краткое наименование:</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
                         id="CLASSIF_NAME" name="CLASSIF_NAME_DEP" type="text" class="form-control" placeholder="Краткое наименование" [(ngModel)]="data['CLASSIF_NAME']"
-                        required pattern="[A-Za-zА-Яа-я0-9ёЁ][A-Za-zА-Яа-я0-9ёЁ,\.\s]*" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                        required pattern="^\S(.*\S$|$)" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
             </div>
             <span class="checkbox">
                 <label><input type="checkbox" name="notInPositionTitle" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['notInPositionTitle']">
