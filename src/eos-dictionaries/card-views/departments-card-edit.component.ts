@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { CardEditComponent } from './card-edit.component';
 
@@ -6,9 +6,10 @@ import { CardEditComponent } from './card-edit.component';
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends CardEditComponent {
+export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit {
     fieldGroups: string[];
     currTab = 0;
+    @ViewChild('departmentsForm') form;
 
     constructor() {
         super();
@@ -18,5 +19,10 @@ export class DepartmentsCardEditComponent extends CardEditComponent {
 
     setTab(i: number) {
         this.currTab = i;
+    }
+
+    ngOnInit() {
+        this.form.control.valueChanges
+        .subscribe(values => this.invalid.emit(!this.form.valid));
     }
 }

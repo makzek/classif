@@ -32,7 +32,7 @@ export class EditedCard {
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     // private _dict: EosDictionary;
     private node: EosDictionaryNode;
-    private nodeData: any;
+    private nodeData: any = {};
 
     dictionaryId: string;
     nodeId: string;
@@ -54,6 +54,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     editMode: boolean;
     private _originalData: any = {};
     private _changed = false;
+    disableSave = false;
 
     showDeleted = false;
 
@@ -119,6 +120,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     ngOnInit() {
         this._init();
+    }
+
+    turnOffSave(val: boolean) {
+        // console.log(val);
+        this.disableSave = val;
     }
 
     private _init() {
@@ -303,6 +309,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     save(): void {
+        console.log('save');
         this._save(this.nodeData);
         /* this.changeMode(); */
     }

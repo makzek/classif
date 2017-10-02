@@ -62,7 +62,7 @@ export class NodeActionsComponent implements OnDestroy {
     private _dictionarySubscription: Subscription;
     private _actionSubscription: Subscription;
 
-    newNodeData: any;
+    newNodeData: any = {};
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
