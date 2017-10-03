@@ -7,6 +7,11 @@
         &:checked + span {
             background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
         }
+
+        & + span {
+            margin-right: 6px;
+            margin-bottom: -3px;
+        }
     }
 
     label {
@@ -19,7 +24,13 @@
         &:checked + span {
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
+
+        & + span {
+            margin-right: 6px;
+            margin-bottom: -3px;
+        }
     }
+
 }
 
 .modal-body {

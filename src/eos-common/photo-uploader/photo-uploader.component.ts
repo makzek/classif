@@ -10,6 +10,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class PhotoUploaderComponent implements OnInit {
     // @Input() multiple = false;
     @Input() currentPhoto = '../assets/images/no-user.png';
+    @Input() disableEdit = false;
     @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('fileInput') inputEl: ElementRef;
