@@ -157,7 +157,7 @@ export class PipRX {
 
         const _options = Object.assign({}, this._options, {
             headers: new Headers({
-                'DataServiceVersion': '1.0',
+                // 'DataServiceVersion': '1.0', //todo: add in Allowed-Headers in OPTIONS response
                 'Accept': 'multipart/mixed',
                 'Content-Type': 'multipart/mixed;boundary=' + BATCH_BOUNDARY,
                 'MaxDataServiceVersion': '3.0'
@@ -165,7 +165,6 @@ export class PipRX {
         });
 
         const d = Utils.buildBatch(changeSet);
-
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
