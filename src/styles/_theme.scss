@@ -278,6 +278,10 @@
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
 
+                &.readonly {
+                    background-color: transparent;
+                }
+
                 &.ng-invalid {
                     border-color: $invalid-color-main-theme;
                 }
@@ -295,19 +299,18 @@
 
     .eos-departments-card-edit {
         .tabs {
-            .tab-item {
-                border-color: $secondary-color-main-theme;
+            border-color: $border-color-main-theme;
 
+            .tab-item {
                 &.active {
-                    background-color: $button-color-main-theme;
-                    border-color: transparent;
-                    color: $block-color-main-theme;
+                    border-color: $button-color-main-theme;
                 }
             }
         }
 
-        .photo {
-            border-color: $secondary-color-main-theme;
+        .block-title {
+            border-color: $border-color-main-theme;
+            color: $unimportant-info-color-main-theme;
         }
     }
 }

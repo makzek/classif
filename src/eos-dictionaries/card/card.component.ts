@@ -3,20 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosDictService } from '../services/eos-dict.service';
-// import { EosDictionary } from '../core/eos-dictionary';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
-// import { NodeActionsService } from '../node-actions/node-actions.service';
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
-// import { CardActionService } from './card-action.service';
+
+import { EosDictService } from '../services/eos-dict.service';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
+
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
-import { /* EDIT_CARD_ACTIONS, */ EDIT_CARD_MODES } from './card-action.service';
-import { DANGER_NAVIGATE_TO_DELETED_ERROR, INFO_NOTHING_CHANGES, DANGER_EDIT_DELETED_ERROR } from '../consts/messages.consts';
+import {
+    DANGER_NAVIGATE_TO_DELETED_ERROR,
+    INFO_NOTHING_CHANGES,
+    DANGER_EDIT_DELETED_ERROR,
+    SUCCESS_SAVE
+} from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
+
+export enum EDIT_CARD_MODES {
+    edit,
+    view,
+};
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -30,12 +38,13 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
-    // private _dict: EosDictionary;
     private node: EosDictionaryNode;
-    private nodeData: any;
+    private nodeData: any = {};
+    private _originalData: any = {};
+    private _changed = false;
 
-    dictionaryId: string;
-    nodeId: string;
+    private dictionaryId: string;
+    private nodeId: string;
     selfLink: string;
 
     private _urlSegments: string[];
@@ -52,10 +61,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _mode: EDIT_CARD_MODES;
     editMode: boolean;
-    private _originalData: any = {};
-    private _changed = false;
 
     showDeleted = false;
+    disableSave = false;
 
     // private _actionSubscription: Subscription;
     private _profileSubscription: Subscription;
@@ -98,7 +106,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     constructor(
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
-        // private _nodeActSrv: NodeActionsService,
         private _deskSrv: EosDeskService,
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
@@ -121,6 +128,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._init();
     }
 
+    turnOffSave(val: boolean) {
+        // console.log(val);
+        this.disableSave = val;
+    }
+
     private _init() {
         this.selfLink = this._router.url;
         this.nextRoute = this.selfLink;
@@ -128,7 +140,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
 
-        this._dictSrv.getNode(this.dictionaryId, this.nodeId)
+        this._getNode();
+    }
+
+    private _getNode() {
+        return this._dictSrv.getNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
     }
@@ -159,6 +175,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _setOriginalData() {
         this._originalData = Object.assign({}, this.nodeData);
+        this.recordChanged(this.nodeData);
     }
 
     forceView() {
@@ -293,7 +310,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     }
                 })
                 .catch((err) => {
-                    console.log('cancel reason', err);
+                    // console.log('cancel reason', err);
                     return false;
                 });
         } else {
@@ -304,19 +321,26 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     save(): void {
         this._save(this.nodeData);
-        /* this.changeMode(); */
     }
 
     private _save(data: any): Promise<any> {
-        return this._dictSrv.updateNode(data)
-            .then(() => {
+        return this._dictSrv.updateNode(this.node, data)
+            .then((resp) => {
+                this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                console.log('update response', resp);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,
                 });
+
+                /*
                 this._setOriginalData();
                 this.recordChanged(this.nodeData);
-            });
+                */
+                return this._dictSrv.reloadNode(this.node)
+            })
+            .then((node) => this._update(node))
+            .catch((err) => console.log('getNode error', err));
     }
 
     private _reset(): void {

@@ -62,7 +62,7 @@ export class NodeActionsComponent implements OnDestroy {
     private _dictionarySubscription: Subscription;
     private _actionSubscription: Subscription;
 
-    newNodeData: any;
+    newNodeData: any = {};
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
@@ -76,7 +76,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     @HostListener('window:click', [])
     private _closeSearchModal(): void {
-        if ( ! this.innerClick) {
+        if (!this.innerClick) {
             this.dropdownIsOpen = false;
         }
         this.innerClick = false;
@@ -162,7 +162,7 @@ export class NodeActionsComponent implements OnDestroy {
         this._actionSubscription.unsubscribe();
     }
 
-    actionHandler (type: E_RECORD_ACTIONS) {
+    actionHandler(type: E_RECORD_ACTIONS) {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
@@ -183,7 +183,7 @@ export class NodeActionsComponent implements OnDestroy {
         }
     }
 
-    isEnabled (group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
+    isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
         if (this.dictionary) {
             switch (type) {
                 case E_RECORD_ACTIONS.moveUp:
@@ -259,7 +259,9 @@ export class NodeActionsComponent implements OnDestroy {
 
     saveNewNode(data: any) {
         const newNode = this._dictSrv.getEmptyNode();
-        this._dictSrv.updateNode(data);
+        /*
+        this._dictSrv.addNode(data);
+        */
         let title = '';
         newNode.getShortQuickView().forEach((_f) => {
             title += data[_f.key];

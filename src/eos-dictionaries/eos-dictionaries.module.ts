@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
+// import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { APP_CONFIG } from '../app/app.config';
 import { AppRoutingModule } from '../app/app-routing.module';
@@ -59,6 +60,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
+        // DatepickerModule.forRoot(),
     ],
     exports: [
         DepartmentsCardEditComponent,

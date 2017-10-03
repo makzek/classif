@@ -8,22 +8,14 @@
         overflow: hidden;
         position: absolute;
         z-index: -1;
+        height: 0;
     }
 
-    .input-file + .input-file-label {
-        display: inline-block;
-        height: 150px;
-        width: 150px;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        background-image: url("../assets/images/no-user.png");
-        background-size: cover;
-        margin-bottom: -5px;
-
-        &.uploading {
-            background-image: none;
-            background-color: white;
-        }
+    .input-file-label {
+        cursor: pointer;
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 
     .upload-btn {
@@ -33,4 +25,26 @@
         background-color: transparent;
         padding: 0;
     }
+
+    .current-image {
+        height: 150px;
+        width: 150px;
+        display: inline-block;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        // background-image: url("../assets/images/no-user.png");
+        background-size: cover;
+    }
+}
+
+.image-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.user-image {
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+    margin: 20px auto;
 }

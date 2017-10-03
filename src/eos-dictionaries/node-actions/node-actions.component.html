@@ -38,7 +38,7 @@
                             <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
                                 <span class="checkbox">
                                     <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
-                                        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                                        <span></span>
                                     </label>
                                 </span>
                             </span>
@@ -52,12 +52,12 @@
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                    <span></span>
                 </label>
             </span>
             <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
                 <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                    <span></span>
                 </label>
             </span>
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
@@ -92,7 +92,7 @@
             <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newNode.description" aria-describedby="basic-addon1">
         </div>
         <button class="btn btn-default" (click)="createItem()">Создать</button>-->
-                <eos-departments-card-edit *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
+                <eos-departments-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
                 <eos-rubricator-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
                 <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
                 <button class="btn btn-default" (click)="create()">Добавить</button>
@@ -135,7 +135,7 @@
         <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
         <div class="checkbox">
             <label><input type="checkbox" [(ngModel)]="searchInDeleted">
-                <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                <span></span>
                 Учитывать логически удаленные</label>
         </div>
         <div *ngIf="fields">
@@ -150,7 +150,7 @@
                 </div>
                 <div class="checkbox" *ngIf="field.type === 6">
                     <label><input type="checkbox" [(ngModel)]="field.value">
-                        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                        <span></span>
                         {{field.title}}</label>
                 </div>
             </div>
