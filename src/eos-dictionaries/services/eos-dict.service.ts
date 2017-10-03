@@ -144,13 +144,7 @@ export class EosDictService {
                         if (_node.loaded) {
                             return _node;
                         } else {
-                            _node.updating = true;
-                            return this._api.getChildren(_node.data['ISN_NODE'])
-                                .then((data: any[]) => {
-                                    this._updateDictNodes(this._dictionary, data);
-                                    _node.updating = false;
-                                    return this._dictionary.getNode(_node.id);
-                                });
+                            return this.loadChildren(_node);
                         }
                     } else {
                         return this._api.getNodeWithChildren(nodeId) // temp solution
@@ -161,6 +155,17 @@ export class EosDictService {
                     }
                 }
             });
+    }
+
+    public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        node.updating = true;
+        return this._api.getChildren(node.data['ISN_NODE'])
+            .then((data: any[]) => {
+                this._updateDictNodes(this._dictionary, data);
+                node.updating = false;
+                return this._dictionary.getNode(node.id);
+            });
+
     }
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
@@ -232,31 +237,23 @@ export class EosDictService {
         });
     }
 
-    public getChildren(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode[]> {
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((_node) => {
-                    rej('not implemented (may be useless???)');
-                })
-                .catch((err) => rej(err));
-        });
-    }
-
-    public getEmptyNode() { // Param of perent is needed
-        const newNode = new EosDictionaryNode(this._dictionary.descriptor.record, {}, '000' + this._dictionary.nodes.size);
-        // here we must generate id and assign some other parameters
-        newNode._descriptor = this._dictionary.descriptor.record;
-        // newNode.parent = this._selectedNode;
-        // newNode.parentId = this._selectedNode.id;
-        // here we must add newNode to nodesList
-        // and refresh all list too (not sure)
-        // this._selectedNode$.next(this._selectedNode);
-        this.addChild(newNode);
-        return newNode;
-    }
-
     public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
         return this._api.update(node.data, data);
+    }
+
+    public addNode(data: any): Promise<any> {
+        if (this._selectedNode) {
+            return this._api.addNode(this._selectedNode.data, data)
+                .then((resp) => {
+                    console.log('add node result', resp);
+                    return this.loadChildren(this._selectedNode);
+                })
+                .then((node) => {
+                    return this._dictionary.getNode(data[node._descriptor.keyField.key]);
+                });
+        } else {
+            return Promise.reject('No selected node');
+        }
     }
 
     private _deleteNode(node: EosDictionaryNode): void {
@@ -277,16 +274,6 @@ export class EosDictService {
         });
         this._dictionary$.next(this._dictionary);
         /* fake */
-    }
-
-    public addChild(node: EosDictionaryNode) {
-        if (this._selectedNode) {
-            this._dictionary.addNode(node, this._selectedNode.id);
-        } else {
-            this._dictionary.addNode(node);
-        }
-        this._selectedNode$.next(this._selectedNode);
-        this._dictionary$.next(this._dictionary);
     }
 
     public physicallyDelete(nodeId: string): boolean {

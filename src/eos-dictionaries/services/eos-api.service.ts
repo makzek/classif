@@ -95,7 +95,7 @@ export class EosDictApiService {
             });
     }
 
-    update (originalData: any, updates: any): Promise<any> {
+    update(originalData: any, updates: any): Promise<any> {
         return this._service.update(originalData, updates);
     }
 
@@ -116,5 +116,9 @@ export class EosDictApiService {
 
     private _noData(): Promise<any[]> {
         return new Promise((res, rej) => res([]));
+    }
+
+    addNode(parentData: any, nodeData: any): Promise<any> {
+        return this._service.create(parentData, nodeData);
     }
 }
