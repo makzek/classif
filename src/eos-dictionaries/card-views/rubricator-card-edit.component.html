@@ -19,7 +19,7 @@
                     <label for="description">Полное наименование:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event, rubricatorForm.invalid)" [readonly]="!editMode" 
                     (ngModelChange)="change('NOTE', $event, rubricatorForm.invalid)" id="description" name="description" type="text" class="form-control" 
-                    placeholder="Полное наименование" [(ngModel)]="data['NOTE']" maxlength="{{descriptionLength}}" 
+                    placeholder="Полное наименование" [ngModel]="data['NOTE']" maxlength="{{descriptionLength}}" 
                     tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
                 </div>
 

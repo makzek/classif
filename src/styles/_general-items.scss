@@ -11,6 +11,21 @@
         & + span {
             margin-right: 6px;
             margin-bottom: -3px;
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+            background-size: cover;
+            background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
+        }
+
+        &[disabled] {
+            & + span {
+                background-image: url("../assets/icons/Minus-Grey.svg");
+            }
+
+            &:checked + span {
+                background-image: url("../assets/icons/Checkbox-Grey.svg");
+            }
         }
     }
 
