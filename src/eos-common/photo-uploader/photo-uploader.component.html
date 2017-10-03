@@ -1,12 +1,8 @@
 <div class="eos-photo-uploader">
-    <div class="current-image" [ngStyle]="{'background-image': currentUrl}"></div>
     <input class="input-file" type="file" #fileInput name="file" id="file" [multiple]="multiple" (change)="chooseFile($event)" placeholder="Upload file" 
     accept=".jpg, .png">
     <label for="file" class="input-file-label">
-        <span *ngIf="!uploading && !disableEdit" class="eos-icon eos-icon-edit-blue small"></span>
-        <span *ngIf="uploading">
-            <eos-spinner></eos-spinner>
-        </span>
+        <span *ngIf="!disableEdit" class="eos-icon eos-icon-edit-blue small"></span>
     </label>
 </div>
 
