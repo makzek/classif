@@ -47,6 +47,11 @@ export class TreeNodeComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
+        const arr = this._router.routerState.snapshot.url.toString().split('/');
+        if (!arr[3]) {
+            this._router.navigate(['spravochniki', this._dictionaryId, '0.']);
+        }
+
         this._update();
     }
 
