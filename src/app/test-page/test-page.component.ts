@@ -25,7 +25,7 @@ export class TestPageComponent implements OnInit {
         });
     }
 
-    lala(evt) {
+    newImage(evt) {
         this.defaultImage = 'url(' + evt + ')';
         // send it on server
     }
