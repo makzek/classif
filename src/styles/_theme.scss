@@ -295,6 +295,12 @@
         }
     }
 
+    .search-wrapper {
+        .ng-valid {
+            border-color: $border-color-main-theme;
+        }
+    }
+
     // spacial templates
 
     .eos-departments-card-edit {

@@ -5,8 +5,9 @@
                     <label for="code">Код:</label>
                     <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event, rubricatorForm.invalid)" [eosInputCleaner]="editMode" 
                         (formCleaned)="clean('RUBRIC_CODE', $event, rubricatorForm.invalid)" id="code" name="code"
-                        type="text" class="form-control" placeholder="Код" required pattern="[0-9][0-9,\.\s]*" tooltip="Обязательное поле" placement="right"
-                        [ngModel]="data['RUBRIC_CODE']">
+                        type="text" class="form-control" placeholder="Код" required pattern="^\S(.*\S$|$)" 
+                        tooltip="Обязательное поле. Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
+                        maxlength="{{codeLenth}}" [ngModel]="data['RUBRIC_CODE']">
                 </div>
                 <div class="form-group">
                     <label for="title">Краткое наименование:</label>
