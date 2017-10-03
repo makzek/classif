@@ -16,12 +16,9 @@ export class PhotoUploaderComponent implements OnInit {
     @ViewChild('fileInput') inputEl: ElementRef;
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
-<<<<<<< HEAD
     contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
     uploading = false;
 
-=======
->>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
     imageSrc = '';
     currentUrl = '';
 
@@ -29,11 +26,7 @@ export class PhotoUploaderComponent implements OnInit {
     // fileCount: number;
     file: File;
 
-<<<<<<< HEAD
-    constructor(private _http: Http, private pip: PipRX) {
-=======
-    constructor( /*private _http: Http*/ ) {
->>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
+    constructor(private pip: PipRX) {
     }
 
     ngOnInit() {
@@ -60,7 +53,6 @@ export class PhotoUploaderComponent implements OnInit {
             for (let i = 0; i < this.fileCount; i++) {
                 formData.append('file[]', this.nativeInputEl.files.item(i));
             }*/
-<<<<<<< HEAD
             let s = this.imageSrc;
             const pos = s.indexOf(',') + 1;
             // убрать последнюю скобку и преамбулу
@@ -84,9 +76,6 @@ export class PhotoUploaderComponent implements OnInit {
             })
 
             /*formData.append('file', this.file);
-=======
-          /*  formData.append('file[]', this.file);
->>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
             this._http
                 .post(this.contactUrl, formData).subscribe(
                 data => {
