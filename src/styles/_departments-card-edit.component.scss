@@ -1,4 +1,7 @@
 .eos-departments-card-edit {
+    overflow-y: auto;
+    overflow-x: hidden;
+
     .tabs {
         display: inline-block;
         width: 100%;
@@ -16,42 +19,21 @@
         }
     }
 
-    .wrapper {
-        padding: 10px;
-    }
-
-    .col-1,
-    .col-2,
-    .first-name,
-    .fathers-name {
-        display: inline-block;
-    }
-
-    .col-1 {
-        width: 154px;
-        margin-right: 40px;
-    }
-
-    .col-2 {
-        width: 560px;
-    }
-
-    .block-title {
-        font-weight: bold;
-    }
-
-    .first-name,
-    .fathers-name {
-        width: 278px;
-    }
-
     .photo {
         display: block;
-        border: 1px dashed blue;
         height: 150px;
         width: 150px;
         margin: 0 auto;
     }
 
+    .block-title {
+        border-bottom: 1px solid transparent;
+        display: inline-block;
+        height: 38px;
+        line-height: 38px;
+        width: 100%;
+        font-weight: 700;
+        font-size: 16px;
+    }
 }
 

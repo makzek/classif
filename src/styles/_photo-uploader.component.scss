@@ -2,28 +2,20 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
 
     .input-file {
         opacity: 0;
         overflow: hidden;
         position: absolute;
         z-index: -1;
+        height: 0;
     }
 
-    .input-file + .input-file-label {
-        display: inline-block;
-        height: 150px;
-        width: 150px;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        background-image: url("../assets/images/no-user.png");
-        background-size: cover;
-        margin-bottom: -5px;
-
-        &.uploading {
-            background-image: none;
-            background-color: white;
-        }
+    label {
+        margin: 0;
     }
 
     .upload-btn {
@@ -33,4 +25,16 @@
         background-color: transparent;
         padding: 0;
     }
+}
+
+.image-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.user-image {
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+    margin: 20px auto;
 }
