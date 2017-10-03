@@ -1,8 +1,10 @@
 .eos-card {
-    min-height: 450px;
+    // min-height: 450px;
+    max-height: calc(100vh - 108px - 60px);
     width: 800px;
     margin: 20px auto;
     border: 1px solid transparent;
+    overflow-y: auto;
 
     .edit-header {
         padding: 5px;
@@ -102,6 +104,13 @@
             border-radius: 0;
             padding: 8px;
             padding-right: 37px;
+        }
+
+
+        .readonly {
+            border: 0;
+            box-shadow: none;
+            padding: 0;
         }
     }
 }

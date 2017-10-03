@@ -1,4 +1,7 @@
 .eos-departments-card-edit {
+    overflow-y: auto;
+    overflow-x: hidden;
+
     .tabs {
         display: inline-block;
         width: 100%;
@@ -18,11 +21,19 @@
 
     .photo {
         display: block;
-        border: 1px dashed blue;
         height: 150px;
         width: 150px;
         margin: 0 auto;
     }
 
+    .block-title {
+        border-bottom: 1px solid transparent;
+        display: inline-block;
+        height: 38px;
+        line-height: 38px;
+        width: 100%;
+        font-weight: 700;
+        font-size: 16px;
+    }
 }
 
