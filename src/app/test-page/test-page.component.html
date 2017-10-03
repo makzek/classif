@@ -8,4 +8,7 @@
     <li><a routerLink="/user">User REST test page</a></li>
 </ul>
 
-<eos-photo-uploader></eos-photo-uploader>
+<div class="current-image" [ngStyle]="{'background-image': defaultImage}">
+        <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
+</div>
+

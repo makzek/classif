@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+// import { Http, Headers, RequestOptions } from '@angular/http';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PipRX} from '../../eos-rest/services/pipRX.service';
 import { Utils } from '../../eos-rest/core/utils';
@@ -11,17 +10,18 @@ import {DELO_BLOB} from '../../eos-rest/interfaces/structures';
     templateUrl: 'photo-uploader.component.html',
 })
 export class PhotoUploaderComponent implements OnInit {
-    // @Input() multiple = false;
-    @Input() currentPhoto = '../assets/images/no-user.png';
     @Input() disableEdit = false;
     @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('fileInput') inputEl: ElementRef;
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
+<<<<<<< HEAD
     contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
     uploading = false;
 
+=======
+>>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
     imageSrc = '';
     currentUrl = '';
 
@@ -29,13 +29,15 @@ export class PhotoUploaderComponent implements OnInit {
     // fileCount: number;
     file: File;
 
+<<<<<<< HEAD
     constructor(private _http: Http, private pip: PipRX) {
+=======
+    constructor( /*private _http: Http*/ ) {
+>>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
     }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;
-        // this.fileCount = this.nativeInputEl.files.length;
-        this.currentUrl = 'url(' + this.currentPhoto + ')';
     }
 
     chooseFile(e) {
@@ -53,11 +55,12 @@ export class PhotoUploaderComponent implements OnInit {
 
     upload() {
         this.confirmModalRef.hide();
-        const formData = new FormData();
+        // const formData = new FormData();
        /* if (this.fileCount > 0) {
             for (let i = 0; i < this.fileCount; i++) {
                 formData.append('file[]', this.nativeInputEl.files.item(i));
             }*/
+<<<<<<< HEAD
             let s = this.imageSrc;
             const pos = s.indexOf(',') + 1;
             // убрать последнюю скобку и преамбулу
@@ -81,6 +84,9 @@ export class PhotoUploaderComponent implements OnInit {
             })
 
             /*formData.append('file', this.file);
+=======
+          /*  formData.append('file[]', this.file);
+>>>>>>> 3b20e9e6b0b88aebbb0dc55d819fb26254b74967
             this._http
                 .post(this.contactUrl, formData).subscribe(
                 data => {
@@ -96,6 +102,8 @@ export class PhotoUploaderComponent implements OnInit {
                     this.endUploading.emit(null);
                 })*/
         // }
+
+        this.endUploading.emit(this.file);
         this.nativeInputEl.value = null;
     }
 
