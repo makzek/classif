@@ -2,6 +2,9 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
 
     .input-file {
         opacity: 0;
@@ -11,11 +14,8 @@
         height: 0;
     }
 
-    .input-file-label {
-        cursor: pointer;
-        position: absolute;
-        bottom: 0;
-        right: 0;
+    label {
+        margin: 0;
     }
 
     .upload-btn {
@@ -24,16 +24,6 @@
         right: 0;
         background-color: transparent;
         padding: 0;
-    }
-
-    .current-image {
-        height: 150px;
-        width: 150px;
-        display: inline-block;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        // background-image: url("../assets/images/no-user.png");
-        background-size: cover;
     }
 }
 

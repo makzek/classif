@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+// import { Http, Headers, RequestOptions } from '@angular/http';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -8,16 +7,11 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
     templateUrl: 'photo-uploader.component.html',
 })
 export class PhotoUploaderComponent implements OnInit {
-    // @Input() multiple = false;
-    @Input() currentPhoto = '../assets/images/no-user.png';
     @Input() disableEdit = false;
     @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('fileInput') inputEl: ElementRef;
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
-
-    contactUrl = 'http://lalala';
-    uploading = false;
 
     imageSrc = '';
     currentUrl = '';
@@ -26,13 +20,11 @@ export class PhotoUploaderComponent implements OnInit {
     // fileCount: number;
     file: File;
 
-    constructor(private _http: Http) {
+    constructor( /*private _http: Http*/ ) {
     }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;
-        // this.fileCount = this.nativeInputEl.files.length;
-        this.currentUrl = 'url(' + this.currentPhoto + ')';
     }
 
     chooseFile(e) {
@@ -50,12 +42,12 @@ export class PhotoUploaderComponent implements OnInit {
 
     upload() {
         this.confirmModalRef.hide();
-        const formData = new FormData();
+        // const formData = new FormData();
        /* if (this.fileCount > 0) {
             for (let i = 0; i < this.fileCount; i++) {
                 formData.append('file[]', this.nativeInputEl.files.item(i));
             }*/
-            formData.append('file[]', this.file);
+          /*  formData.append('file[]', this.file);
             this._http
                 .post(this.contactUrl, formData).subscribe(
                 data => {
@@ -67,8 +59,10 @@ export class PhotoUploaderComponent implements OnInit {
                     console.log(error);
                     this.uploading = false;
                     this.endUploading.emit(null);
-                })
+                })*/
         // }
+
+        this.endUploading.emit(this.file);
         this.nativeInputEl.value = null;
     }
 

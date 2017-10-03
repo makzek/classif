@@ -9,6 +9,8 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 })
 export class TestPageComponent implements OnInit {
 
+    defaultImage = 'url(../assets/images/no-user.png)';
+
     constructor(private _messageService: EosMessageService) { }
 
     ngOnInit() {
@@ -21,6 +23,11 @@ export class TestPageComponent implements OnInit {
             msg: 'что-то пошло не так',
             dismissOnTimeout: 5000,
         });
+    }
+
+    lala(evt) {
+        this.defaultImage = 'url(' + evt + ')';
+        // send it on server
     }
 
 }
