@@ -4,48 +4,48 @@
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
                 <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="actionHandler(action.type)">
                     <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right" container="body"></span>
-                </button>
-            </span>
-            <div class="btn-group" dropdown>
-                <span class="actions">
+        </button>
+        </span>
+        <div class="btn-group" dropdown>
+            <span class="actions">
                     <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right">
                         <span class="eos-icon eos-icon-fab-blue small"></span>
-                    </button>
-                </span>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
-                        <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right">
-                            <a class="dropdown-item" (click)="actionHandler(item.type)">{{item.title}}</a>
-                        </li>
-                    </ng-template>
-                </ul>
-            </div>
+            </button>
+            </span>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
+                    <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right">
+                        <a class="dropdown-item" (click)="actionHandler(item.type)">{{item.title}}</a>
+                    </li>
+                </ng-template>
+            </ul>
+        </div>
         </span>
         <span class="pull-right">
             <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
-            <span class="icon eos-icon eos-icon-calendar-blue small"></span>
-            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
-                <span dropdownToggle type="button">
+        <span class="icon eos-icon eos-icon-calendar-blue small"></span>
+        <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
+            <span dropdownToggle type="button">
                         <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left"></span>
-                </span>
-                <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
-                    <li>
-                        <div class="input-group search">
-                            <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
+            </span>
+            <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
+                <li>
+                    <div class="input-group search">
+                        <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
                                 <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)" tooltip="Расширенный поиск"></span>
-                            </span>
-                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                            <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
+                        </span>
+                        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                        <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
                                 <span class="checkbox">
                                     <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
                                         <span></span>
-                                    </label>
-                                </span>
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        </label>
+                        </span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
         </span>
     </div>
     <div class="second-line block special-text">
@@ -53,13 +53,13 @@
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
                     <span></span>
-                </label>
-            </span>
-            <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
+        </label>
+        </span>
+        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
                 <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
                     <span></span>
-                </label>
-            </span>
+        </label>
+        </span>
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
         </span>
 
@@ -73,28 +73,17 @@
     <div class="creating-modal modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title pull-left">Создание новой ветки</h4>
+                <h4 class="modal-title pull-left">Добавление записи</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="creatingModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="create-new-node modal-body">
-                <!--<div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Код</span>
-            <input type="text" class="form-control" placeholder="Code" [(ngModel)]="newNode.code" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Название</span>
-            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newNode.title" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Описание</span>
-            <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newNode.description" aria-describedby="basic-addon1">
-        </div>
-        <button class="btn btn-default" (click)="createItem()">Создать</button>-->
-                <eos-departments-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
-                <eos-rubricator-card-edit [data]="newNodeData" (result)="saveNewNode($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
-                <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit>
+                <eos-rubricator-card-edit [data]="newNodeData" editMode="true" (onChange)="dataChanged($event)" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
+                <!--eos-departments-card-edit [data]="newNodeData" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
+                <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit-->
+            </div>
+            <div class="modal-footer">
                 <button class="btn btn-default" (click)="create()">Добавить</button>
                 <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
                 <button class="btn btn-default" (click)="createOneMore()">Добавить ещё</button>

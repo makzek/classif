@@ -63,6 +63,7 @@ export class NodeActionsComponent implements OnDestroy {
     private _actionSubscription: Subscription;
 
     newNodeData: any = {};
+    private editMode = true;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
@@ -247,28 +248,30 @@ export class NodeActionsComponent implements OnDestroy {
         this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
     }
 
-    create() {
+    create(hide = false) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this.creatingModal.hide();
+        this._dictSrv.addNode(this.newNodeData)
+            .then((node) => {
+                let title = '';
+                node.getShortQuickView().forEach((_f) => {
+                    title += this.newNodeData[_f.key];
+                });
+                this._deskSrv.addRecentItem({
+                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
+                    title: title,
+                });
+                if (hide) {
+                    this.creatingModal.hide();
+                }
+                this.newNodeData = {};
+            });
     }
 
-    dataChanged(isChanged: boolean) {
+    dataChanged(data: any) {
         console.log('new data changed');
     }
 
     saveNewNode(data: any) {
-        // const newNode = this._dictSrv.getEmptyNode();
-        /*
-        this._dictSrv.addNode(data);
-        */
-        // let title = '';
-        // newNode.getShortQuickView().forEach((_f) => {
-          //   title += data[_f.key];
-        // });
-        // this._deskSrv.addRecentItem({
-          //  link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
-           // title: title,
-        // });
     }
 
     createOneMore() {

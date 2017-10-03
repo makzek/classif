@@ -1,10 +1,10 @@
-import { Output, Input, EventEmitter, OnInit } from '@angular/core';
-import { NgForm} from '@angular/forms';
+import { Output, Input, EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { CODE_LENGTH, TITLE_LENGTH, DESCRIPTION_LENGTH } from '../consts/input-validation';
 
 export class CardEditComponent {
-    @Input() data: any = {};
+    @Input() data: any;
     @Input() editMode = false;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -12,7 +12,6 @@ export class CardEditComponent {
     readonly codeLenth = CODE_LENGTH;
     readonly titleLenth = TITLE_LENGTH;
     readonly descriptionLength = DESCRIPTION_LENGTH;
-
 
     change(fldKey: string, value: string, formInvalid?: boolean) {
         this.data[fldKey] = value;
