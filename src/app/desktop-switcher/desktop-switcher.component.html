@@ -21,7 +21,7 @@
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group">
-                    <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}" required />
+                    <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk)" class="btn btn-default"
                             [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
@@ -38,7 +38,8 @@
         <li *ngIf="deskList.length < 6">
             <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required />
+                    <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required 
+                        pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить"
                             [disabled]="!deskName?.trim().substring(0, this.maxLength).length">

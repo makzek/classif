@@ -54,3 +54,10 @@ export const INFO_NOTHING_CHANGES: IMessage = {
     title: 'Информация о сохранении изменений: ',
     msg: 'текущие изменения совпадают с изначальным значением. Изменения не будут сохранены'
 };
+
+export const SUCCESS_SAVE: IMessage = {
+    type: 'success',
+    title: 'Изменения сохранены',
+    msg: '',
+    dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+}

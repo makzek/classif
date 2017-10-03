@@ -1,0 +1,15 @@
+.current-image {
+    height: 150px;
+    width: 150px;
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background-size: cover;
+    position: relative;
+
+    .photo-uploader {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}

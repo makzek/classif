@@ -28,8 +28,12 @@ export class RubricService {
         })
     }
 
-    update(data: any[]): Promise<any> {
-        return this._pipe.batch(data, '').toPromise();
+    update(originalData: any, updates: any): Promise<any> {
+        const _data: any = Object.assign({}, originalData);
+        Utils.prepareForEdit(_data);
+        Object.assign(_data, updates);
+        const changes = Utils.changeList([_data]);
+        return this._pipe.batch(changes, '').toPromise();
     }
 
     delete(data: any, params?: any): Promise<any> {

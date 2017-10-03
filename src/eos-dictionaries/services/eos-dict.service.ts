@@ -147,15 +147,15 @@ export class EosDictService {
                             _node.updating = true;
                             return this._api.getChildren(_node.data['ISN_NODE'])
                                 .then((data: any[]) => {
-                                    this._updateNodes(_dict, data);
+                                    this._updateDictNodes(this._dictionary, data);
                                     _node.updating = false;
-                                    return _dict.getNode(nodeId);
+                                    return this._dictionary.getNode(_node.id);
                                 });
                         }
                     } else {
                         return this._api.getNodeWithChildren(nodeId) // temp solution
                             .then((data: any[]) => {
-                                this._updateNodes(_dict, data);
+                                this._updateDictNodes(_dict, data);
                                 return _dict.getNode(nodeId);
                             });
                     }
@@ -163,11 +163,21 @@ export class EosDictService {
             });
     }
 
+    public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        node.updating = true;
+        return this._api.getNode(node.id)
+            .then((nodeData) => {
+                node.updateData(nodeData);
+                node.updating = false;
+                return node;
+            })
+    }
+
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.getNode(this._dictionary.id, nodeId);
     }
 
-    private _updateNodes(dict: EosDictionary, data: any[]) {
+    private _updateDictNodes(dict: EosDictionary, data: any[]) {
         if (data && data.length) {
             dict.updateNodes(data);
         }
@@ -245,8 +255,8 @@ export class EosDictService {
         return newNode;
     }
 
-    public updateNode(data: any[]): Promise<any> {
-        return this._api.update(data);
+    public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
+        return this._api.update(node.data, data);
     }
 
     private _deleteNode(node: EosDictionaryNode): void {

@@ -278,6 +278,10 @@
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
 
+                &.readonly {
+                    background-color: transparent;
+                }
+
                 &.ng-invalid {
                     border-color: $invalid-color-main-theme;
                 }
@@ -288,6 +292,12 @@
     .eos-node-actions {
         .icon {
             color: $button-color-main-theme;
+        }
+    }
+
+    .search-wrapper {
+        .ng-valid {
+            border-color: $border-color-main-theme;
         }
     }
 
@@ -304,8 +314,9 @@
             }
         }
 
-        .photo {
-            border-color: $secondary-color-main-theme;
+        .block-title {
+            border-color: $border-color-main-theme;
+            color: $unimportant-info-color-main-theme;
         }
     }
 }
