@@ -1,32 +1,36 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { CardComponent } from '../../eos-dictionaries/card/card.component'
 
 @Component({
     selector: 'eos-sandwich',
     templateUrl: 'sandwich.component.html',
 })
 export class SandwichComponent {
-    // @Input() isRotated: boolean;
-    isRotated = false;
-    show = false;
-
     @Input() isLeft: boolean;
     @Input() isWide: boolean;
     @Output() onClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(private _bcSrv: EosBreadcrumbsService) {
-        _bcSrv.breadcrumbs.subscribe((_bc) => {
-            /* tslint:disable:no-bitwise */
-            this.show = !!~_bc.findIndex((_bcItem) => _bcItem.params.dictionaryId)
-                && !~_bc.findIndex((_bcItem) => !!~_bcItem.url.indexOf('edit'))
-                && !~_bc.findIndex((_bcItem) => !!~_bcItem.url.indexOf('view'));
-            /* tslint:enable:no-bitwise */
-        });
+    isOpen = false;
+    show = false;
+
+    constructor(
+        //     private _bcSrv: EosBreadcrumbsService,
+        private _route: ActivatedRoute,
+        private _router: Router,
+    ) {
+        _router.events
+            .filter((evt) => evt instanceof NavigationEnd)
+            .subscribe((evt) => {
+                let _actRoute = _route.snapshot;
+                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+                console.log(_actRoute);
+                this.show = _actRoute.params && _actRoute.params.dictionaryId && _actRoute.component !== CardComponent;
+            })
     }
 
     changeState() {
-        this.isRotated = !this.isRotated;
-        this.onClick.emit(this.isRotated);
+        this.isOpen = !this.isOpen;
+        this.onClick.emit(this.isOpen);
     }
 }

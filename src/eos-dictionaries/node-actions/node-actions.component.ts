@@ -166,7 +166,6 @@ export class NodeActionsComponent implements OnDestroy {
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.creatingModal.show();
-                // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
@@ -258,18 +257,18 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     saveNewNode(data: any) {
-        const newNode = this._dictSrv.getEmptyNode();
+        // const newNode = this._dictSrv.getEmptyNode();
         /*
         this._dictSrv.addNode(data);
         */
-        let title = '';
-        newNode.getShortQuickView().forEach((_f) => {
-            title += data[_f.key];
-        });
-        this._deskSrv.addRecentItem({
-            link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
-            title: title,
-        });
+        // let title = '';
+        // newNode.getShortQuickView().forEach((_f) => {
+          //   title += data[_f.key];
+        // });
+        // this._deskSrv.addRecentItem({
+          //  link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
+           // title: title,
+        // });
     }
 
     createOneMore() {

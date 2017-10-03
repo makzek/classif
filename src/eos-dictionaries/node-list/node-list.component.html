@@ -2,7 +2,7 @@
     <eos-node-actions></eos-node-actions>
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
-        <eos-spinner *ngIf="!nodes?.length" [size]="'md'"></eos-spinner>
+        <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li class="child">
                 <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
