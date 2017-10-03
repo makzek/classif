@@ -67,8 +67,6 @@ export class NodeActionsComponent implements OnDestroy {
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
 
-    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
-
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
         return !~this.fields.findIndex((f) => f.value);
@@ -89,7 +87,6 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        // private _editActSrv: CardActionService
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -163,18 +160,15 @@ export class NodeActionsComponent implements OnDestroy {
         this._actionSubscription.unsubscribe();
     }
 
-    actionHandler(type: E_RECORD_ACTIONS) {
+    doAction(type: E_RECORD_ACTIONS) {
         switch (type) {
             case E_RECORD_ACTIONS.add:
+                this.newNodeData = {};
                 this.creatingModal.show();
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
-                break;
-
-            case E_RECORD_ACTIONS.edit:
-                this.editNode();
                 break;
 
             default:
@@ -267,30 +261,7 @@ export class NodeActionsComponent implements OnDestroy {
             });
     }
 
-    dataChanged(data: any) {
-        console.log('new data changed');
-    }
-
-    saveNewNode(data: any) {
-    }
-
-    createOneMore() {
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
-    }
-
     cancelCreate() {
         this.creatingModal.hide();
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
-    }
-
-    editNode() {
-        /* forbid to open a card in the edit mode if there is another card opened */
-        this.lastEditedCard = JSON.parse(localStorage.getItem('lastEditedCard'));
-        if (this.lastEditedCard) {
-            this.modalOnlyRef.show();
-        } else {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.edit);
-        }
     }
 }
