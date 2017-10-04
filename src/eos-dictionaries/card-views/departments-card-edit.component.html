@@ -155,7 +155,7 @@
                 <span class="block-title">Склонение должности</span>
 
                     <div class="form-group">
-                        <label for="shortPositionRP">Родительный падеж (кого, чего):</label>
+                        <label for="shortPositionRP">Родительный падеж (кого, чего?)</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('shortPositionRP', $event)" [readonly]="!editMode" 
                             (ngModelChange)="change('shortPositionRP', $event)" id="shortPositionRP" name="shortPositionRP" type="text" 
                             class="form-control" placeholder="Родительный падеж (кого, чего)" [ngModel]="data['shortPositionRP']"
@@ -163,14 +163,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="shortPositionDP">Дательный падеж (кому, чему):</label>
+                        <label for="shortPositionDP">Дательный падеж (кому, чему?)</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('shortPositionDP', $event)" [readonly]="!editMode" 
                             (ngModelChange)="change('shortPositionDP', $event)" id="shortPositionDP" name="shortPositionDP" type="text" 
                             class="form-control" placeholder="Дательный падеж (кому, чему)" [ngModel]="data['shortPositionDP']" [ngClass]="{'readonly': !editMode }">
                     </div>
 
                     <div class="form-group">
-                        <label for="shortPositionVP">Винительный падеж (кого, что):</label>
+                        <label for="shortPositionVP">Винительный падеж (кого, что?)</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('shortPositionVP', $event)" [readonly]="!editMode" 
                             (ngModelChange)="change('shortPositionVP', $event)" id="shortPositionVP" name="shortPositionVP" type="text" 
                             class="form-control" placeholder="Винительный падеж (кого, что)" [ngModel]="data['shortPositionVP']" [ngClass]="{'readonly': !editMode }">
@@ -178,13 +178,13 @@
 
                 <span class="block-title">Склонение фамилии, имени, отчества</span>            
                 <div class="form-group">
-                    <label for="fioDP">Фамилия И.О., дат. падеж:</label>
+                    <label for="fioDP">Фамилия И.О. в дательном падеже</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('fioDP', $event)" [readonly]="!editMode" 
                         (ngModelChange)="change('fioDP', $event)" id="fioDP" name="fioDP" type="text" 
                         class="form-control" placeholder="Фамилия И.О., дат. падеж" [ngModel]="data['fioDP']" [ngClass]="{'readonly': !editMode }">
                 </div>                
                 <div class="form-group">
-                    <label for="iof">И.О. Фамилия:</label>
+                    <label for="iof">И.О. Фамилия в дательном падеже</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('iof', $event)" [readonly]="!editMode" 
                         (ngModelChange)="change('iof', $event)" id="iof" name="iof" type="text" 
                         class="form-control" placeholder="И.О. Фамилия" [ngModel]="data['iof']" [ngClass]="{'readonly': !editMode }">
@@ -291,22 +291,22 @@
                     </div>
                 </div>
                 <span class="block-title">Данные для формирования поручений</span>
-                <span class="subcol-3-wrapper">
+                <div class="form-group">
                     <div class="input-group dbl-subcol">
-                        <label for="shortPosition">Должность:</label>
+                        <label for="shortPosition">Должность</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('shortPosition', $event)" [readonly]="!editMode" 
                             (ngModelChange)="change('shortPosition', $event)" id="shortPosition" name="shortPosition" type="text" 
                             class="form-control" placeholder="Должность" [ngModel]="data['shortPosition']" [ngClass]="{'readonly': !editMode }">
                     </div>
-                </span>
-                <span class="subcol-3-wrapper">
+                </div>
+                <div class="form-group">
                     <div class="input-group dbl-subcol">
-                        <label for="department">Подразделение:</label>
+                        <label for="department">Подразделение</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('department', $event)" [readonly]="!editMode" 
                             (ngModelChange)="change('department', $event)" id="department" name="department" type="text" 
                             class="form-control" placeholder="Подразделение" [ngModel]="data['department']" [ngClass]="{'readonly': !editMode }">
                     </div>
-                </span>
+                </div>
             </div>
         </div>
     </div>
