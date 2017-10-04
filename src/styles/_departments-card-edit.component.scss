@@ -19,13 +19,6 @@
         }
     }
 
-    .photo {
-        display: block;
-        height: 150px;
-        width: 150px;
-        margin: 0 auto;
-    }
-
     .block-title {
         border-bottom: 1px solid transparent;
         display: inline-block;
@@ -33,7 +26,42 @@
         line-height: 38px;
         width: 100%;
         font-weight: 700;
-        font-size: 16px;
+        font-size: 17px;
+    }
+
+    .form-group:not(:first-child) {
+        &.fathers-name {
+            margin-top: 0;
+        }
+
+        &.email {
+            margin-top: 5px;
+        }
+
+        &.full-position {
+            margin-top: 61px;
+        }
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .current-image {
+        height: 150px;
+        width: 150px;
+        display: inline-block;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: relative;
+
+        .photo-uploader {
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+        }
     }
 }
-

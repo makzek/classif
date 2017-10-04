@@ -7,7 +7,7 @@
 </div>
 
 <div bsModal #confirmModal="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-md photo-uploder-modal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Выбранная фотография:</h4>
@@ -16,8 +16,10 @@
                     <div class="image-wrapper">
                         <div class="user-image" [ngStyle]="{'background-image': imageSrc}" ></div>
                     </div>
-                    <button class="btn btn-primary" (click)="upload()">Подтвердить</button>
-                    <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+                    <div class="pull-right">
+                        <button class="btn btn-default" (click)="upload()">Подтвердить</button>
+                        <button class="btn btn-default" (click)="cancel()">Отменить</button>
+                    </div>
                 </div>
             </div>
         </div>

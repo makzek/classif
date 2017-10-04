@@ -63,10 +63,9 @@ export class NodeActionsComponent implements OnDestroy {
     private _actionSubscription: Subscription;
 
     newNodeData: any = {};
+    private editMode = true;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
-
-    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
 
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
@@ -88,7 +87,6 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        // private _editActSrv: CardActionService
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -162,19 +160,15 @@ export class NodeActionsComponent implements OnDestroy {
         this._actionSubscription.unsubscribe();
     }
 
-    actionHandler(type: E_RECORD_ACTIONS) {
+    doAction(type: E_RECORD_ACTIONS) {
         switch (type) {
             case E_RECORD_ACTIONS.add:
+                this.newNodeData = {};
                 this.creatingModal.show();
-                // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
-                break;
-
-            case E_RECORD_ACTIONS.edit:
-                this.editNode();
                 break;
 
             default:
@@ -248,47 +242,27 @@ export class NodeActionsComponent implements OnDestroy {
         this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
     }
 
-    create() {
+    create(hide = true) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this.creatingModal.hide();
-    }
-
-    dataChanged(isChanged: boolean) {
-        console.log('new data changed');
-    }
-
-    saveNewNode(data: any) {
-        const newNode = this._dictSrv.getEmptyNode();
-        /*
-        this._dictSrv.addNode(data);
-        */
-        let title = '';
-        newNode.getShortQuickView().forEach((_f) => {
-            title += data[_f.key];
-        });
-        this._deskSrv.addRecentItem({
-            link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
-            title: title,
-        });
-    }
-
-    createOneMore() {
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+        this._dictSrv.addNode(this.newNodeData)
+            .then((node) => {
+                console.log('created node', node);
+                let title = '';
+                node.getShortQuickView().forEach((_f) => {
+                    title += this.newNodeData[_f.key];
+                });
+                this._deskSrv.addRecentItem({
+                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
+                    title: title,
+                });
+                if (hide) {
+                    this.creatingModal.hide();
+                }
+                this.newNodeData = {};
+            });
     }
 
     cancelCreate() {
         this.creatingModal.hide();
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
-    }
-
-    editNode() {
-        /* forbid to open a card in the edit mode if there is another card opened */
-        this.lastEditedCard = JSON.parse(localStorage.getItem('lastEditedCard'));
-        if (this.lastEditedCard) {
-            this.modalOnlyRef.show();
-        } else {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.edit);
-        }
     }
 }

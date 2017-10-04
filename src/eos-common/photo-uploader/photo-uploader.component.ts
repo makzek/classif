@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit }
 // import { Http, Headers, RequestOptions } from '@angular/http';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
+
 @Component({
     selector: 'eos-photo-uploader',
     templateUrl: 'photo-uploader.component.html',
@@ -13,14 +14,17 @@ export class PhotoUploaderComponent implements OnInit {
     @ViewChild('fileInput') inputEl: ElementRef;
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
+    contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
+    uploading = false;
+
     imageSrc = '';
-    currentUrl = '';
+    // currentUrl = '';
 
     nativeInputEl: HTMLInputElement;
     // fileCount: number;
     file: File;
 
-    constructor( /*private _http: Http*/ ) {
+    constructor() {
     }
 
     ngOnInit() {
@@ -47,10 +51,15 @@ export class PhotoUploaderComponent implements OnInit {
             for (let i = 0; i < this.fileCount; i++) {
                 formData.append('file[]', this.nativeInputEl.files.item(i));
             }*/
-          /*  formData.append('file[]', this.file);
+
+            /* DON'T USE THIS COMPONENT FOR SANDING PHOTO!!! */
+
+            /*formData.append('file', this.file);
             this._http
                 .post(this.contactUrl, formData).subscribe(
                 data => {
+                    // tslint:disable-next-line:no-debugger
+                    debugger;
                     console.log('success');
                     this.uploading = false;
                     this.endUploading.emit(data);
@@ -74,6 +83,6 @@ export class PhotoUploaderComponent implements OnInit {
     private _handleReaderLoaded(e) {
         const reader = e.target;
         this.file = reader.result;
-        this.imageSrc = 'url(' + reader.result + ')'
+        this.imageSrc = 'url(' + reader.result + ')';
     }
 }

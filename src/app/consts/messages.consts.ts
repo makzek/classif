@@ -1,7 +1,4 @@
-import { IMessage } from '../../eos-common/core/message.interface';
-
-export const DEFAULT_DISMISS_TIMEOUT = 1000;
-export const LONG_DISMISS_TIMEOUT = 2000;
+import { IMessage, DEFAULT_DISMISS_TIMEOUT, LONG_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
 
 export const WARN_DESK_EDITING: IMessage = {
     type: 'warning',

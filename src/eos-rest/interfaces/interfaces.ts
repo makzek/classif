@@ -24,7 +24,7 @@ export interface IHierCL extends IEnt {
     DUE: string;
     ISN_NODE: number;
     ISN_HIGH_NODE: number;
-    PERENT_DUE: string;
+    PARENT_DUE: string;
     IS_NODE: number;
     CLASSIF_NAME: string;
     PROTECTED: number;

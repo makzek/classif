@@ -4,7 +4,6 @@
     position: relative;
     height: 24px;
     width: 24px;
-    cursor: pointer;
 
     .input-file {
         opacity: 0;
@@ -16,6 +15,7 @@
 
     label {
         margin: 0;
+        cursor: pointer;
     }
 
     .upload-btn {
@@ -27,14 +27,22 @@
     }
 }
 
-.image-wrapper {
-    height: 100%;
-    width: 100%;
-}
+.photo-uploder-modal {
+    .modal-body {
+        height: 325px;
+    }
 
-.user-image {
-    height: 200px;
-    width: 200px;
-    background-size: cover;
-    margin: 20px auto;
+    .image-wrapper {
+        height: 240px;
+        width: 100%;
+    }
+
+    .user-image {
+        height: 200px;
+        width: 200px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: 20px auto;
+    }
 }

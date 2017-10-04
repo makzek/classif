@@ -8,7 +8,7 @@ import { Utils } from '../core/utils';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-    selector: 'eos-delivery',
+    selector: 'eos-rest-delivery',
     templateUrl: './delivery.component.html'
 })
 export class DeliveryComponent implements OnInit {

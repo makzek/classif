@@ -119,6 +119,11 @@ export class EosDictService {
                         _dictionary.init(data);
                         this._dictionary = _dictionary;
                         this._dictionary$.next(this._dictionary);
+                        if (this._dictionary.root) {
+                            this._selectNode(this._dictionary.root)
+                        } else {
+                            this._selectNode(null);
+                        }
                     } else {
                         this.closeDictionary();
                     }
@@ -144,13 +149,7 @@ export class EosDictService {
                         if (_node.loaded) {
                             return _node;
                         } else {
-                            _node.updating = true;
-                            return this._api.getChildren(_node.data['ISN_NODE'])
-                                .then((data: any[]) => {
-                                    this._updateDictNodes(this._dictionary, data);
-                                    _node.updating = false;
-                                    return this._dictionary.getNode(_node.id);
-                                });
+                            return this.loadChildren(_node);
                         }
                     } else {
                         return this._api.getNodeWithChildren(nodeId) // temp solution
@@ -161,6 +160,17 @@ export class EosDictService {
                     }
                 }
             });
+    }
+
+    public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        node.updating = true;
+        return this._api.getChildren(node.data['ISN_NODE'])
+            .then((data: any[]) => {
+                this._updateDictNodes(this._dictionary, data);
+                node.updating = false;
+                return this._dictionary.getNode(node.id);
+            });
+
     }
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
@@ -186,11 +196,9 @@ export class EosDictService {
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             if (!nodeId) {
-                this._selectedNode = this._dictionary.root;
-                this._selectedNode$.next(this._selectedNode);
-                this._openedNode = this._dictionary.root;
-                this._openedNode$.next(this._openedNode);
-                res(null);
+                this._selectNode(this._dictionary.root);
+                this._openNode(this._dictionary.root);
+                res(this._dictionary.root);
             }
             return this.getNode(dictionaryId, nodeId)
                 .then((node) => {
@@ -204,14 +212,22 @@ export class EosDictService {
                             }
                         }
                         /* console.log('selectNode', node); */
-                        this._selectedNode = node;
-                        this._selectedNode$.next(node);
-                        this._openedNode = null;
-                        this._openedNode$.next(null);
+                        this._selectNode(node);
+                        this._openNode(null);
                     }
-                    return node;
+                    return this._selectedNode;
                 });
         });
+    }
+
+    private _selectNode(node: EosDictionaryNode) {
+        this._selectedNode = node;
+        this._selectedNode$.next(node);
+    }
+
+    private _openNode(node: EosDictionaryNode) {
+        this._openedNode = node;
+        this._openedNode$.next(node);
     }
 
     public isRoot(nodeId: string): boolean {
@@ -232,31 +248,23 @@ export class EosDictService {
         });
     }
 
-    public getChildren(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode[]> {
-        return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
-            this.getNode(dictionaryId, nodeId)
-                .then((_node) => {
-                    rej('not implemented (may be useless???)');
-                })
-                .catch((err) => rej(err));
-        });
-    }
-
-    public getEmptyNode() { // Param of perent is needed
-        const newNode = new EosDictionaryNode(this._dictionary.descriptor.record, {}, '000' + this._dictionary.nodes.size);
-        // here we must generate id and assign some other parameters
-        newNode._descriptor = this._dictionary.descriptor.record;
-        // newNode.parent = this._selectedNode;
-        // newNode.parentId = this._selectedNode.id;
-        // here we must add newNode to nodesList
-        // and refresh all list too (not sure)
-        // this._selectedNode$.next(this._selectedNode);
-        this.addChild(newNode);
-        return newNode;
-    }
-
     public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
         return this._api.update(node.data, data);
+    }
+
+    public addNode(data: any): Promise<any> {
+        if (this._selectedNode) {
+            return this._api.addNode(this._selectedNode.data, data)
+                .then((newNodeId) => {
+                    return this.loadChildren(this._selectedNode)
+                        .then(() => {
+                            this._selectedNode$.next(this._selectedNode);
+                            return this._dictionary.getNode(newNodeId);
+                        });
+                });
+        } else {
+            return Promise.reject('No selected node');
+        }
     }
 
     private _deleteNode(node: EosDictionaryNode): void {
@@ -277,16 +285,6 @@ export class EosDictService {
         });
         this._dictionary$.next(this._dictionary);
         /* fake */
-    }
-
-    public addChild(node: EosDictionaryNode) {
-        if (this._selectedNode) {
-            this._dictionary.addNode(node, this._selectedNode.id);
-        } else {
-            this._dictionary.addNode(node);
-        }
-        this._selectedNode$.next(this._selectedNode);
-        this._dictionary$.next(this._dictionary);
     }
 
     public physicallyDelete(nodeId: string): boolean {
