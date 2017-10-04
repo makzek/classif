@@ -242,10 +242,11 @@ export class NodeActionsComponent implements OnDestroy {
         this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
     }
 
-    create(hide = false) {
+    create(hide = true) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this._dictSrv.addNode(this.newNodeData)
             .then((node) => {
+                console.log('created node', node);
                 let title = '';
                 node.getShortQuickView().forEach((_f) => {
                     title += this.newNodeData[_f.key];

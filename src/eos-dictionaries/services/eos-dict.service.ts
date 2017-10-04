@@ -244,12 +244,12 @@ export class EosDictService {
     public addNode(data: any): Promise<any> {
         if (this._selectedNode) {
             return this._api.addNode(this._selectedNode.data, data)
-                .then((resp) => {
-                    console.log('add node result', resp);
-                    return this.loadChildren(this._selectedNode);
-                })
-                .then((node) => {
-                    return this._dictionary.getNode(data[node._descriptor.keyField.key]);
+                .then((newNodeId) => {
+                    return this.loadChildren(this._selectedNode)
+                        .then(() => {
+                            this._selectedNode$.next(this._selectedNode);
+                            return this._dictionary.getNode(newNodeId);
+                        });
                 });
         } else {
             return Promise.reject('No selected node');
