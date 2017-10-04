@@ -26,7 +26,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true },
+        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: true },
@@ -55,7 +55,7 @@ const routes: Routes = [{
     }],
 }, {
     path: 'desk',
-    data: { title: 'Главная', showInBreadcrumb: true },
+    data: { title: 'Главная', showInBreadcrumb: false },
     children: [{
         path: '',
         pathMatch: 'full',

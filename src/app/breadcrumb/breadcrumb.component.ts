@@ -24,17 +24,10 @@ export class BreadcrumbsComponent {
         private _actSrv: DictionaryActionService
     ) {
         this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
-            if (bc[0] !== undefined) {
+            if (bc) {
                 this.breadcrumbs = bc;
-                // this.breadcrumbs[0].title = 'Главная';
             }
         });
-
-        /* this._actSrv.action$.subscribe((action) => {
-             if (action === DICTIONARY_ACTIONS.closeInfo) {
-                 this.infoOpened = false;
-             }
-         });*/
     }
 
     openTree(value: boolean) {

@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { CardComponent } from '../../eos-dictionaries/card/card.component'
 
 @Component({
     selector: 'eos-sandwich',
@@ -23,7 +22,7 @@ export class SandwichComponent {
             .subscribe((evt) => {
                 let _actRoute = _route.snapshot;
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-                this.show = _actRoute.params && _actRoute.params.dictionaryId && _actRoute.component !== CardComponent;
+                this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
             })
     }
 

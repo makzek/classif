@@ -43,7 +43,7 @@ export class EosBreadcrumbsService {
     }
 
     makeBreadCrumbs(desk: EosDesk) {
-        if (desk /*&& this._routes*/) {
+        if (desk) {
             this._breadcrumbs = [{
                 url: '/desk/' + desk.id,
                 title: 'Главная', // desk.name,
@@ -52,8 +52,7 @@ export class EosBreadcrumbsService {
 
             Promise.all(this._parseState(this._route.snapshot))
                 .then((breadcrumbs) => {
-                    console.log('fire bc', breadcrumbs);
-                    this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => !!bc.title));
+                    this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
 
                     let title = '';
                     this._breadcrumbs.forEach(element => {
@@ -65,7 +64,6 @@ export class EosBreadcrumbsService {
                         link: this._breadcrumbs[this._breadcrumbs.length - 1].url,
                         title: title
                     }
-                    console.log('current link', this._currentLink);
 
                     this._breadcrumbs$.next(this._breadcrumbs);
                     this._currentLink$.next(this._currentLink);
@@ -80,31 +78,24 @@ export class EosBreadcrumbsService {
         const crumbs: Promise<IBreadcrumb>[] = [];
 
         while (_current) {
-            console.log('_current url ', _current.url);
             const subpath = _current.url.map((item) => item.path).join('/');
 
-            if (subpath && subpath !== 'desk' && _current.data.showInBreadcrumb) {
+            if (subpath && _current.data && _current.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
-                /* WTF??????
-                if (_current.data) {
-                    // console.log('data', _currentSnaphot.data);
-                    bc['data'] = { showSandwichInBreadcrumb: _current.data.showSandwichInBreadcrumb };
-                }
-                */
 
-                if (_current.params && _current.data.showInBreadcrumb) {
-                    const bc: IBreadcrumb = {
-                        title: _current.data.title,
-                        url: currUrl,
-                        params: _current.params,
-                    };
-                    let _crumbPromise: Promise<IBreadcrumb>;
+                const bc: IBreadcrumb = {
+                    title: _current.data.title,
+                    url: currUrl,
+                    params: _current.params,
+                };
 
+                let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
+
+                if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
                         _crumbPromise = this._dictSrv.getDictionariesList()
                             .then((list) => {
-                                console.log('get dict name');
                                 const _d = list.find((e: any) => e.id === _dictId);
                                 if (_d) {
                                     bc.title = _d.title;
@@ -116,7 +107,6 @@ export class EosBreadcrumbsService {
                         const _nodeId = _current.params.nodeId
                         _crumbPromise = this._dictSrv.getNode(_dictId, _nodeId)
                             .then((node) => {
-                                console.log('get node');
                                 if (node) {
                                     if (this._dictSrv.isRoot(node.id)) { // remove root node from bc
                                         bc.title = null;
@@ -129,32 +119,24 @@ export class EosBreadcrumbsService {
                                 }
                                 return bc;
                             });
-                    } else if (_current.params.desktopId && _current.data.showInBreadcrumb) { // is it still need ????
+                    } /* else if (_current.params.desktopId && _current.data.showInBreadcrumb) { // is it still need ????
                         const _deskId = _current.params.desktopId;
                         _crumbPromise = this._deskSrv.desksList.toPromise()
                             .then((list) => {
-                                console.log('get desk');
+                                console.warn('get desk');
                                 const _d = list.find((e: any) => e.id === _deskId);
                                 if (_d) {
                                     bc.title = _d.name;
                                 }
                                 return bc;
                             });
-                    } else {
-                        console.log('static bc', bc.title);
-                        _crumbPromise = Promise.resolve(bc);
-                    }
-                    crumbs.push(_crumbPromise);
+                    } */
                 }
-                /*
-                if (bc) {
-                    this._breadcrumbs.push(bc);
-                }
-                */
+
+                crumbs.push(_crumbPromise);
             }
             _current = _current.firstChild;
         }
-        console.log(crumbs);
         return crumbs;
     }
 }
