@@ -11,6 +11,8 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
     currTab = 0;
     @ViewChild('departmentsForm') form;
 
+    defaultImage = 'url(../assets/images/no-user.png)';
+
     constructor() {
         super();
 
@@ -24,5 +26,10 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
     ngOnInit() {
         this.form.control.valueChanges
         .subscribe(values => this.invalid.emit(!this.form.valid));
+    }
+
+    newImage(evt) {
+        this.defaultImage = 'url(' + evt + ')';
+        // send it on server
     }
 }

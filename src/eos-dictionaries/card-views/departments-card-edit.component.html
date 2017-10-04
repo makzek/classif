@@ -10,9 +10,9 @@
         </ul>
         <div class="wrapper row" *ngIf="currTab === 0">
             <div class="col-md-3 col-lg-3 col-xl-3">
-                <span class="photo">
-                    <eos-photo-uploader (endUploading)="data['photo'] = $event" [disableEdit]="!editMode"></eos-photo-uploader>
-                </span>
+                <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
+                    <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
+                </div>
                 <div class="form-group">
                     <label for="gender">Пол:</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('gender', $event)" [readonly]="!editMode" (ngModelChange)="change('gender', $event)" 
@@ -39,15 +39,13 @@
                 </div>
                 <div class="form-group">
                     <label for="START_DATE">Дата начала действия:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('START_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('START_DATE', $event)" 
-                          id="START_DATE" name="START_DATE" type="text" class="form-control" placeholder="Дата начала действия" [ngModel]="data['START_DATE']"
-                          [ngClass]="{'readonly': !editMode }">
+                    <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['START_DATE']"
+                        (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                 </div>
                 <div class="form-group">
                     <label for="END_DATE">Дата окончания действия:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('END_DATE', $event)" [readonly]="!editMode" (ngModelChange)="change('END_DATE', $event)" 
-                        id="END_DATE" name="END_DATE" type="text" class="form-control" placeholder="Дата окончания действия" [ngModel]="data['END_DATE']"
-                        [ngClass]="{'readonly': !editMode }">
+                    <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['END_DATE']"
+                        (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                 </div>
             </div>
             <div class="col-md-9 col-lg-9 col-xl-9">
@@ -106,46 +104,59 @@
                 </div>
                 <div class="form-group">
                     <label for="NOTE">Примичание:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
-                            id="NOTE" name="NOTE" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" [ngClass]="{'readonly': !editMode }">
+                    <textarea [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                            id="NOTE" name="NOTE" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                            [ngClass]="{'readonly': !editMode }" rows="5"></textarea>
                 </div>
             </div>
         </div>
         <div class="wrapper" *ngIf="currTab === 1">
-            <div class="col-1">
-                <div class="form-group">
-                    <label for="PHONE">Номер телефона:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE', $event)" [readonly]="!editMode" (ngModelChange)="change('PHONE', $event)" 
-                            id="PHONE" name="PHONE" type="text" class="form-control" placeholder="Номер телефона" [ngModel]="data['PHONE']" [ngClass]="{'readonly': !editMode }">
-                </div>
-                <div class="form-group">
-                    <label for="PHONE_LOCAL">Номер местного телефона:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE_LOCAL', $event)" [readonly]="!editMode"
-                        (ngModelChange)="change('PHONE_LOCAL', $event)" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control" 
-                        placeholder="Номер местного телефона" [ngModel]="data['PHONE_LOCAL']" [ngClass]="{'readonly': !editMode }">
-                </div>
-                <div class="form-group">
-                    <label for="E_MAIL">E-mail:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('E_MAIL', $event)" [readonly]="!editMode" (ngModelChange)="change('E_MAIL', $event)" 
-                            id="E_MAIL" name="E_MAIL" type="text" class="form-control" placeholder="E-mail" [ngModel]="data['E_MAIL']"
-                            [ngClass]="{'readonly': !editMode }">
-                </div>
-                <div class="form-group">
-                    <label for="skype">Skype:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('skype', $event)" [readonly]="!editMode" (ngModelChange)="change('skype', $event)" 
-                            id="skype" name="skype" type="text" class="form-control" placeholder="Skype" [ngModel]="data['skype']" 
-                            [ngClass]="{'readonly': !editMode }">
-                </div>
-                <div class="form-group">
-                    <label for="FAX">Факс:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('FAX', $event)" [readonly]="!editMode" (ngModelChange)="change('FAX', $event)" 
-                            id="FAX" name="FAX" type="text" class="form-control" placeholder="Факс" [ngModel]="data['FAX']" [ngClass]="{'readonly': !editMode }">
-                </div>
-                <div class="form-group">
-                    <label for="NUM_CAB">Кабинет:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('NUM_CAB', $event)" [readonly]="!editMode" (ngModelChange)="change('NUM_CAB', $event)" 
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <div class="form-group">
+                        <label for="NUM_CAB">Кабинет:</label>
+                        <input [eosInputCleaner]="editMode" (formCleaned)="clean('NUM_CAB', $event)" [readonly]="!editMode" (ngModelChange)="change('NUM_CAB', $event)" 
                             id="NUM_CAB" name="NUM_CAB" type="text" class="form-control" placeholder="Кабинет" [ngModel]="data['NUM_CAB']"
                             [ngClass]="{'readonly': !editMode }">
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="PHONE">Номер телефона:</label>
+                                <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE', $event)" [readonly]="!editMode" (ngModelChange)="change('PHONE', $event)" 
+                                    id="PHONE" name="PHONE" type="text" class="form-control" placeholder="Номер телефона" [ngModel]="data['PHONE']" [ngClass]="{'readonly': !editMode }">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="PHONE_LOCAL">Номер местного телефона:</label>
+                                <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE_LOCAL', $event)" [readonly]="!editMode"
+                                    (ngModelChange)="change('PHONE_LOCAL', $event)" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control" 
+                                    placeholder="Номер местного телефона" [ngModel]="data['PHONE_LOCAL']" [ngClass]="{'readonly': !editMode }">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group email">
+                        <label for="E_MAIL">E-mail:</label>
+                        <input [eosInputCleaner]="editMode" (formCleaned)="clean('E_MAIL', $event)" [readonly]="!editMode" (ngModelChange)="change('E_MAIL', $event)" 
+                            id="E_MAIL" name="E_MAIL" type="text" class="form-control" placeholder="E-mail" [ngModel]="data['E_MAIL']"
+                            [ngClass]="{'readonly': !editMode }">
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <div class="form-group">
+                        <label for="FAX">Факс:</label>
+                        <input [eosInputCleaner]="editMode" (formCleaned)="clean('FAX', $event)" [readonly]="!editMode" (ngModelChange)="change('FAX', $event)" 
+                            id="FAX" name="FAX" type="text" class="form-control" placeholder="Факс" [ngModel]="data['FAX']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                    <div class="form-group">
+                        <label for="skype">Skype:</label>
+                        <input [eosInputCleaner]="editMode" (formCleaned)="clean('skype', $event)" [readonly]="!editMode" (ngModelChange)="change('skype', $event)" 
+                            id="skype" name="skype" type="text" class="form-control" placeholder="Skype" [ngModel]="data['skype']" 
+                            [ngClass]="{'readonly': !editMode }">
+                    </div>
                 </div>
             </div>
         </div>

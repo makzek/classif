@@ -84,7 +84,7 @@
     }*/
 
     .edit-content {
-        padding: 10px;
+        padding: 0 20px;
 
         label {
             font-size: 12px;
@@ -99,6 +99,7 @@
 
             label {
                 text-transform: uppercase;
+                white-space: nowrap;
             }
         }
 
