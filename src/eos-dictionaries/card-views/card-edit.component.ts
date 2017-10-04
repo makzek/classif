@@ -14,13 +14,12 @@ export class CardEditComponent {
     readonly descriptionLength = DESCRIPTION_LENGTH;
 
 
-    change(fldKey: string, value: string, formInvalid?: boolean) {
+    change(fldKey: string, value: string) {
         this.data[fldKey] = value;
         this.onChange.emit(this.data);
-        this.invalid.emit(formInvalid);
     }
 
-    clean(field: string, value: string, formInvalid?: boolean) {
-        this.change(field, value, formInvalid);
+    clean(field: string, value: string) {
+        this.change(field, value);
     }
 }

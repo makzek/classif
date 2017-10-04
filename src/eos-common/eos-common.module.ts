@@ -9,9 +9,10 @@ import { EosMessageService } from './services/eos-message.service';
 import { InfoComponent } from './info/info.component';
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
 import { ConfirmWindowService } from './confirm-window/confirm-window.service';
-import { InputCleanerDirective  } from './input-cleaner/input-cleaner.directive';
-import { SpinnerComponent  } from './spinner/spinner.component';
-import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.component';
+import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
+import { DatepickerComponent } from './datepicker/datepicker.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.compone
         InputCleanerDirective,
         SpinnerComponent,
         PhotoUploaderComponent,
+        DatepickerComponent,
     ],
     imports: [
         BrowserModule,
@@ -36,6 +38,7 @@ import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.compone
         InputCleanerDirective,
         SpinnerComponent,
         PhotoUploaderComponent,
+        DatepickerComponent,
     ],
     entryComponents: [
         ConfirmWindowComponent,
@@ -45,4 +48,4 @@ import { PhotoUploaderComponent  } from './photo-uploader/photo-uploader.compone
         EosMessageService,
     ]
 })
-export class EosCommonModule {}
+export class EosCommonModule { }

@@ -11,6 +11,8 @@ export class TestPageComponent implements OnInit {
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
+    date: Date = new Date();
+
     constructor(private _messageService: EosMessageService) { }
 
     ngOnInit() {
@@ -28,6 +30,11 @@ export class TestPageComponent implements OnInit {
     lala(evt) {
         this.defaultImage = 'url(' + evt + ')';
         // send it on server
+    }
+
+    change(evt) {
+        console.log('evt', evt)
+        this.date = evt;
     }
 
 }

@@ -14,7 +14,7 @@ export class PhotoUploaderComponent implements OnInit {
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
     imageSrc = '';
-    currentUrl = '';
+    // currentUrl = '';
 
     nativeInputEl: HTMLInputElement;
     // fileCount: number;

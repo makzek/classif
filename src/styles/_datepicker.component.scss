@@ -1,0 +1,71 @@
+.eos-datepicker {
+    position: relative;
+
+    .datepicker-input {
+        padding-right: 40px;
+
+        &.readonly {
+            padding-right: 40px;
+        }
+    }
+
+    .icon {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
+    }
+
+    .well-sm {
+        position: fixed;
+        background: white;
+        padding: 0;
+        z-index: 1;
+
+        button {
+            border-color: transparent;
+            border-radius: 50%;
+            height: 34px;
+            width: 24px;
+            padding: 5px;
+            margin: 5px;
+            font-weight: bold;
+
+            .text-info {
+                color: $invalid-color-hover-main-theme;
+            }
+
+            &.active {
+                color: white;
+                background-color: $button-color-main-theme;
+
+                .text-info {
+                    color: white;
+                }
+            }
+        }
+
+        thead {
+            tr:first-child {
+                background-color: $button-color-main-theme;
+
+                button {
+                    border-radius: 0;
+                    background-color: $button-color-main-theme;
+                    color: white;
+                    height: $item-height;
+
+                    &:hover {
+                        background-color: $button-color-hover-main-theme;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            td:last-child {
+                padding-right: 8px;
+            }
+        }
+    }
+}
