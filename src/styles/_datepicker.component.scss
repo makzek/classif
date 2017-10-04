@@ -3,10 +3,6 @@
 
     .datepicker-input {
         padding-right: 40px;
-
-        &.readonly {
-            padding-right: 40px;
-        }
     }
 
     .icon {
@@ -59,6 +55,10 @@
                         background-color: $button-color-hover-main-theme;
                     }
                 }
+            }
+
+            th:not(:last-child) {
+                padding-left: 10px;
             }
         }
 

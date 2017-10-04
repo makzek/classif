@@ -14,67 +14,67 @@
                     <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
                 </div>
                 <div class="form-group">
-                    <label for="gender">Пол:</label>
+                    <label for="gender">Пол</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('gender', $event)" [readonly]="!editMode" (ngModelChange)="change('gender', $event)" 
                         id="gender" name="gender" type="text" class="form-control" placeholder="Пол" [ngModel]="data['gender']" 
                         [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="form-group">
-                    <label for="RUBRIC_CODE">Код:</label>
+                    <label for="RUBRIC_CODE">Код</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
                         id="RUBRIC_CODE" name="code" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
                         [ngClass]="{'readonly': !editMode }" tooltip="Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
                         pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}">
                 </div>
                 <div class="form-group">
-                    <label for="DEPARTMENT_INDEX">Индекс ДЛ:</label>
+                    <label for="DEPARTMENT_INDEX">Индекс ДЛ</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('DEPARTMENT_INDEX', $event)" [readonly]="!editMode" (ngModelChange)="change('DEPARTMENT_INDEX', $event)" 
                         id="DEPARTMENT_INDEX" name="DEPARTMENT_INDEX" type="text" class="form-control" placeholder="Индекс ДЛ" [ngModel]="data['DEPARTMENT_INDEX']"
                         [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="form-group">
-                    <label for="SEV">Индекс СЭВ:</label>
+                    <label for="SEV">Индекс СЭВ</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('SEV', $event)" [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
                         id="SEV" name="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [ngModel]="data['SEV']" [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="form-group">
-                    <label for="START_DATE">Дата начала действия:</label>
+                    <label for="START_DATE">Дата начала действия</label>
                     <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['START_DATE']"
                         (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                 </div>
                 <div class="form-group">
-                    <label for="END_DATE">Дата окончания действия:</label>
+                    <label for="END_DATE">Дата окончания действия</label>
                     <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['END_DATE']"
                         (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                 </div>
             </div>
             <div class="col-md-9 col-lg-9 col-xl-9">
                 <div class="form-group">
-                    <label for="lastName">Фамилия:</label>
+                    <label for="lastName">Фамилия</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('lastName', $event)" [readonly]="!editMode" (ngModelChange)="change('lastName', $event)" 
                         id="lastName" name="lastName" type="text" class="form-control" placeholder="Фамилия" [ngModel]="data['lastName']" [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="row">
                     <div class="form-group first-name col-md-6 col-lg-6 col-xl-6">
-                        <label for="firstName">Имя:</label>
+                        <label for="firstName">Имя</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('firstName', $event)" [readonly]="!editMode" (ngModelChange)="change('firstName', $event)" 
                             id="firstName" name="firstName" type="text" class="form-control" placeholder="Имя" [ngModel]="data['firstName']" [ngClass]="{'readonly': !editMode }">
                     </div>
                     <div class="form-group fathers-name col-md-6 col-lg-6 col-xl-6">
-                        <label for="fathersName">Отчество:</label>
+                        <label for="fathersName">Отчество</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('fathersName', $event)" [readonly]="!editMode" (ngModelChange)="change('fathersName', $event)" 
                             id="fathersName" name="fathersName" type="text" class="form-control" placeholder="Отчество" [ngModel]="data['fathersName']" [ngClass]="{'readonly': !editMode }">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="SURNAME">Фамилия И.О.:</label>
+                    <label for="SURNAME">Фамилия И.О.</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('SURNAME', $event)" [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
                             id="SURNAME" name="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [ngModel]="data['SURNAME']"
                             required pattern="^\S(.*\S$|$)" tooltip="Обязательное поле" container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="form-group">
-                    <label for="CLASSIF_NAME">Краткое наименование должности:</label>
+                    <label for="CLASSIF_NAME">Краткое наименование должности</label>
                     <div class="row">
                         <div class="col-md-9 col-lg-9 col-xl-9">
                             <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" 
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="fullPosition">Полное наименование должности:</label>
+                    <label for="fullPosition">Полное наименование должности</label>
                     <input [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
                             id="fullPosition" name="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [ngModel]="data['fullPosition']"
                             maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов"  container="body" 
@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-md-3 col-lg-3 col-xl-3">
                     <div class="form-group">
-                        <label for="NUM_CAB">Кабинет:</label>
+                        <label for="NUM_CAB">Кабинет</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('NUM_CAB', $event)" [readonly]="!editMode" (ngModelChange)="change('NUM_CAB', $event)" 
                             id="NUM_CAB" name="NUM_CAB" type="text" class="form-control" placeholder="Кабинет" [ngModel]="data['NUM_CAB']"
                             [ngClass]="{'readonly': !editMode }">
@@ -124,14 +124,14 @@
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
-                                <label for="PHONE">Номер телефона:</label>
+                                <label for="PHONE">Номер телефона</label>
                                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE', $event)" [readonly]="!editMode" (ngModelChange)="change('PHONE', $event)" 
                                     id="PHONE" name="PHONE" type="text" class="form-control" placeholder="Номер телефона" [ngModel]="data['PHONE']" [ngClass]="{'readonly': !editMode }">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="form-group">
-                                <label for="PHONE_LOCAL">Номер местного телефона:</label>
+                                <label for="PHONE_LOCAL">Номер местного телефона</label>
                                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('PHONE_LOCAL', $event)" [readonly]="!editMode"
                                     (ngModelChange)="change('PHONE_LOCAL', $event)" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control" 
                                     placeholder="Номер местного телефона" [ngModel]="data['PHONE_LOCAL']" [ngClass]="{'readonly': !editMode }">
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="form-group email">
-                        <label for="E_MAIL">E-mail:</label>
+                        <label for="E_MAIL">E-mail</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('E_MAIL', $event)" [readonly]="!editMode" (ngModelChange)="change('E_MAIL', $event)" 
                             id="E_MAIL" name="E_MAIL" type="text" class="form-control" placeholder="E-mail" [ngModel]="data['E_MAIL']"
                             [ngClass]="{'readonly': !editMode }">
@@ -147,12 +147,12 @@
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
                     <div class="form-group">
-                        <label for="FAX">Факс:</label>
+                        <label for="FAX">Факс</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('FAX', $event)" [readonly]="!editMode" (ngModelChange)="change('FAX', $event)" 
                             id="FAX" name="FAX" type="text" class="form-control" placeholder="Факс" [ngModel]="data['FAX']" [ngClass]="{'readonly': !editMode }">
                     </div>
                     <div class="form-group">
-                        <label for="skype">Skype:</label>
+                        <label for="skype">Skype</label>
                         <input [eosInputCleaner]="editMode" (formCleaned)="clean('skype', $event)" [readonly]="!editMode" (ngModelChange)="change('skype', $event)" 
                             id="skype" name="skype" type="text" class="form-control" placeholder="Skype" [ngModel]="data['skype']" 
                             [ngClass]="{'readonly': !editMode }">
@@ -324,7 +324,7 @@
     <div *ngIf="!data['IS_NODE']" class="wrapper row">
         <div class="col-md-3 col-lg-3 col-xl-3">
             <div class="form-group">
-                <label for="RUBRIC_CODE">Код:</label>
+                <label for="RUBRIC_CODE">Код</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
                     id="RUBRIC_CODE" name="RUBRIC_CODE_DEP" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
                     tooltip="Максимальная длинна {{codeLenth}} символов" [isDisabled]="!editMode" placement="right" container="body"
@@ -337,18 +337,18 @@
                     [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="SEV">Индекс СЭВ:</label>
+                <label for="SEV">Индекс СЭВ</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('SEV', $event)" [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
                     id="SEV" name="SEV_DEP" type="text" class="form-control" placeholder="Индекс СЭВ" [ngModel]="data['SEV']"
                     [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="START_DATE">Дата начала действия:</label>
+                <label for="START_DATE">Дата начала действия</label>
                 <eos-datepicker [placeholder]="'Дата начала действия'" [value]="data['START_DATE']"
                     (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
             </div>
             <div class="form-group">
-                <label for="END_DATE">Дата окончания действия:</label>
+                <label for="END_DATE">Дата окончания действия</label>
                 <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['END_DATE']"
                     (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
             </div>
@@ -360,7 +360,7 @@
         </div>
         <div class="col-md-9 col-lg-9 col-xl-9">
             <div class="form-group"> 
-                <label for="CLASSIF_NAME">Краткое наименование:</label>
+                <label for="CLASSIF_NAME">Краткое наименование подразделения</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
                         id="CLASSIF_NAME" name="CLASSIF_NAME_DEP" type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']"
                         required pattern="^\S(.*\S$|$)" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" 
@@ -371,35 +371,36 @@
                     <span></span>
                         Не использовать подразделение в названии должности</label>
             </span>
-            <div class="form-group">
-                    <label for="fullPosition">Полное наименование:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
+            <div class="form-group full-position">
+                    <label for="fullPosition">Полное наименование подразделения</label>
+                    <textarea [eosInputCleaner]="editMode" (formCleaned)="clean('fullPosition', $event)" [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
                             id="fullPosition" name="fullPosition_DEP" type="text" class="form-control" placeholder="Полное наименование" [ngModel]="data['fullPosition']"
                             maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" 
-                            container="body" placement="right" [ngClass]="{'readonly': !editMode }">
+                            container="body" placement="right" [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
             <div class="form-group">
-                <label for="titleRP">Подразделение в родительном падеже:</label>
+                <label for="titleRP">Наименование в родительном падеже (чего?)</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('titleRP', $event)" [readonly]="!editMode" (ngModelChange)="change('titleRP', $event)" 
                        id="titleRP" name="titleRP" type="text" class="form-control" placeholder="Подразделение в родительном падеже" [ngModel]="data['titleRP']"
                        [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="DUE_LINK_ORGANIZ">Организация:</label>
+                <label for="DUE_LINK_ORGANIZ">Организация</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('DUE_LINK_ORGANIZ', $event)" [readonly]="!editMode" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)" 
                         id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control" placeholder="Организация" 
                         [ngModel]="data['DUE_LINK_ORGANIZ']" [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="CARD_NAME">Наименование картотеки:</label>
+                <label for="CARD_NAME">Наименование картотеки</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('CARD_NAME', $event)" [readonly]="!editMode" (ngModelChange)="change('CARD_NAME', $event)" 
                         id="CARD_NAME" name="CARD_NAME" type="text" class="form-control" placeholder="Наименование картотеки" [ngModel]="data['CARD_NAME']"
                         [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="NOTE">Примичание:</label>
-                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
-                        id="NOTE" name="NOTE_DEP" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" [ngClass]="{'readonly': !editMode }">
+                <label for="NOTE">Примичание</label>
+                <textarea [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                        id="NOTE" name="NOTE_DEP" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                        [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
         </div>
     </div>

@@ -37,6 +37,14 @@
         &.email {
             margin-top: 5px;
         }
+
+        &.full-position {
+            margin-top: 61px;
+        }
+    }
+
+    textarea {
+        resize: none;
     }
 
     .current-image {
