@@ -15,7 +15,6 @@ export class SandwichComponent {
     show = false;
 
     constructor(
-        //     private _bcSrv: EosBreadcrumbsService,
         private _route: ActivatedRoute,
         private _router: Router,
     ) {
@@ -24,7 +23,6 @@ export class SandwichComponent {
             .subscribe((evt) => {
                 let _actRoute = _route.snapshot;
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-                console.log(_actRoute);
                 this.show = _actRoute.params && _actRoute.params.dictionaryId && _actRoute.component !== CardComponent;
             })
     }

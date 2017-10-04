@@ -33,18 +33,20 @@ export class RubricService {
             CLASSIF_NAME: 'new_classif_name',
             RUBRIC_CODE: 'unic_rubric_code'
         }, INSTANCE_NAME);
-        return this._postChanges(tmp, data);
+        return this._postChanges(tmp, data)
+            .then((resp: any[]) => {
+                if (resp && resp[0]) {
+                    return resp[0].ID;
+                } else {
+                    return null;
+                }
+            });
     }
 
     update(originalData: any, updates: any): Promise<any> {
         const _data: any = Object.assign({}, originalData);
         Utils.prepareForEdit(_data);
         return this._postChanges(_data, updates);
-        /*
-        Object.assign(_data, updates);
-        const changes = Utils.changeList([_data]);
-        return this._pipe.batch(changes, '').toPromise();
-        */
     }
 
     delete(data: any, params?: any): Promise<any> {
@@ -56,7 +58,7 @@ export class RubricService {
     private _postChanges(data: any, updates: any): Promise<any> {
         Object.assign(data, updates);
         const changes = Utils.changeList([data]);
-        console.log('changes', changes);
+        // console.log('changes', changes);
         return this._pipe.batch(changes, '').toPromise();
     }
 }
