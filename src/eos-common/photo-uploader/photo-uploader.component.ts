@@ -73,6 +73,7 @@ export class PhotoUploaderComponent implements OnInit {
 
             this.pip.batch(chl, '').subscribe(data => {
                 alert(this.pip.sequenceMap.GetFixed(delo_blob.ISN_BLOB));
+                console.log('dkdk');
             })
 
             /*formData.append('file', this.file);

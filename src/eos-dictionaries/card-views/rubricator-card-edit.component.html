@@ -3,22 +3,21 @@
         <form #rubricatorForm="ngForm"  class="form form-horizontal">
                 <div class="form-group">
                     <label for="code">Код:</label>
-                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event, rubricatorForm.invalid)" [eosInputCleaner]="editMode" 
-                        (formCleaned)="clean('RUBRIC_CODE', $event, rubricatorForm.invalid)" id="code" name="code"
+                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event, rubricatorForm.invalid)" id="code" name="code"
                         type="text" class="form-control" placeholder="Код" required pattern="^\S(.*\S$|$)" 
                         tooltip="Обязательное поле. Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
                         maxlength="{{codeLenth}}" [ngModel]="data['RUBRIC_CODE']">
                 </div>
                 <div class="form-group">
                     <label for="title">Краткое наименование:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event, rubricatorForm.invalid)" [readonly]="!editMode" 
+                    <input [readonly]="!editMode" 
                         (ngModelChange)="change('CLASSIF_NAME', $event, rubricatorForm.invalid)" id="title" name="title"
                         type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)"
                         maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
                 </div>
                 <div class="form-group">
                     <label for="description">Полное наименование:</label>
-                    <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event, rubricatorForm.invalid)" [readonly]="!editMode" 
+                    <input [readonly]="!editMode" 
                     (ngModelChange)="change('NOTE', $event, rubricatorForm.invalid)" id="description" name="description" type="text" class="form-control" 
                     placeholder="Полное наименование" [ngModel]="data['NOTE']" maxlength="{{descriptionLength}}" 
                     tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
