@@ -115,6 +115,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
+            this._init();
         });
 
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
