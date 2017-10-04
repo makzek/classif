@@ -24,3 +24,8 @@ export interface USER_CL {
     ISN_LCLASSIF: number;
     CLASSIF_NAME: string;
 }
+
+export interface DELO_BLOB extends IEnt {
+    ISN_BLOB: number;
+    EXTENSION: string;
+}

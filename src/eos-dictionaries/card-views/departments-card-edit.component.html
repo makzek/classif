@@ -316,7 +316,7 @@
                 <label for="RUBRIC_CODE">Код:</label>
                 <input [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
                     id="RUBRIC_CODE" name="RUBRIC_CODE_DEP" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
-                    tooltip="Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
+                    tooltip="Максимальная длинна {{codeLenth}} символов" [isDisabled]="!editMode" placement="right" container="body"
                     [ngClass]="{'readonly': !editMode }" pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}" >
             </div>
             <div class="form-group">
