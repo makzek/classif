@@ -119,6 +119,11 @@ export class EosDictService {
                         _dictionary.init(data);
                         this._dictionary = _dictionary;
                         this._dictionary$.next(this._dictionary);
+                        if (this._dictionary.root) {
+                            this._selectNode(this._dictionary.root)
+                        } else {
+                            this._selectNode(null);
+                        }
                     } else {
                         this.closeDictionary();
                     }
@@ -191,11 +196,9 @@ export class EosDictService {
     public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return new Promise((res, rej) => {
             if (!nodeId) {
-                this._selectedNode = this._dictionary.root;
-                this._selectedNode$.next(this._selectedNode);
-                this._openedNode = this._dictionary.root;
-                this._openedNode$.next(this._openedNode);
-                res(null);
+                this._selectNode(this._dictionary.root);
+                this._openNode(this._dictionary.root);
+                res(this._dictionary.root);
             }
             return this.getNode(dictionaryId, nodeId)
                 .then((node) => {
@@ -209,14 +212,22 @@ export class EosDictService {
                             }
                         }
                         /* console.log('selectNode', node); */
-                        this._selectedNode = node;
-                        this._selectedNode$.next(node);
-                        this._openedNode = null;
-                        this._openedNode$.next(null);
+                        this._selectNode(node);
+                        this._openNode(null);
                     }
-                    return node;
+                    return this._selectedNode;
                 });
         });
+    }
+
+    private _selectNode(node: EosDictionaryNode) {
+        this._selectedNode = node;
+        this._selectedNode$.next(node);
+    }
+
+    private _openNode(node: EosDictionaryNode) {
+        this._openedNode = node;
+        this._openedNode$.next(node);
     }
 
     public isRoot(nodeId: string): boolean {
