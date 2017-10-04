@@ -26,7 +26,7 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true },
+            data: { title: 'Запись', showInBreadcrumb: true },
             children: [{
                 path: '',
                 component: DictionaryComponent,
@@ -52,7 +52,7 @@ const routes: Routes = [{
     }],
 }, {
     path: 'desk',
-    data: { title: 'Рабочий стол', showInBreadcrumb: true },
+    data: { title: 'Главная', showInBreadcrumb: true },
     children: [{
         path: '',
         pathMatch: 'full',
@@ -60,7 +60,7 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Рабочий стол', showInBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false }
     }]
 }, {
     path: 'test',

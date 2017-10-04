@@ -28,7 +28,6 @@ export class ModeFieldSet {
 
 export interface IDictionaryDescriptor {
     id: string;
-    nodeId: string;
     apiInstance: string;
     title: string;
     actions: string[];

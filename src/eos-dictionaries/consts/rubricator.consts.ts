@@ -3,7 +3,6 @@ import { IRubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-d
 */
 export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     id: 'rubricator',
-    nodeId: '0.',
     apiInstance: 'RUBRIC_CL',
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',

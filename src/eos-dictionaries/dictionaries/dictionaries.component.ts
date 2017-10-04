@@ -7,7 +7,7 @@ import { EosDictService } from '../services/eos-dict.service';
     templateUrl: 'dictionaries.component.html',
 })
 export class DictionariesComponent {
-    dictionariesList: { id: string, title: string, rootId: string }[];
+    dictionariesList: { id: string, title: string }[];
 
     constructor(private _dictSrv: EosDictService) {
         this.dictionariesList = [];

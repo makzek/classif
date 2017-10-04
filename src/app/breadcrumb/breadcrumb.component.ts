@@ -26,7 +26,7 @@ export class BreadcrumbsComponent {
         this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
             if (bc[0] !== undefined) {
                 this.breadcrumbs = bc;
-                this.breadcrumbs[0].title = 'Главная';
+                // this.breadcrumbs[0].title = 'Главная';
             }
         });
 

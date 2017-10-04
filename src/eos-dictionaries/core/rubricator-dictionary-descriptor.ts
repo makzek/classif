@@ -3,7 +3,6 @@ import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dict
 import { RecordDescriptor } from './record-descriptor';
 
 export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
-    nodeId: string;
     quickViewFields: string[];
     shortQuickViewFields: string[];
     editFields: string[];

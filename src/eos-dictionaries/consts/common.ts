@@ -4,7 +4,6 @@ import { IDictionaryDescriptor } from '../core/dictionary-descriptor';
 
 export const ROOMS_DICT: IDictionaryDescriptor = {
     id: 'rooms',
-    nodeId: '', // получить id корня
     apiInstance: 'ROOMS',
     title: 'Кабинеты',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
