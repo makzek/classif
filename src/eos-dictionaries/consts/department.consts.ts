@@ -2,6 +2,7 @@ import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-d
 /* tslint:disable:max-line-length */
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
+    nodeId: '0.',
     apiInstance: 'DEPARTMENT',
     title: 'Подразделения',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',

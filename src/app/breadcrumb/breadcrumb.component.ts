@@ -17,7 +17,6 @@ export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
     treeOpened = false;
     infoOpened = false;
-
     isDictionaryPage = false;
 
     constructor(
@@ -28,13 +27,6 @@ export class BreadcrumbsComponent {
             if (bc[0] !== undefined) {
                 this.breadcrumbs = bc;
                 this.breadcrumbs[0].title = 'Главная';
-                console.log(this.breadcrumbs)
-                if (this.breadcrumbs[3] !== undefined && this.breadcrumbs[3].params.nodeId === '0.') {
-                    this.breadcrumbs[2].url = this.breadcrumbs[3].url;
-                    this.breadcrumbs[2].params = this.breadcrumbs[3].params;
-                    this.breadcrumbs.pop();
-                    console.log(this.breadcrumbs)
-                }
             }
         });
 

@@ -8,6 +8,8 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
+import { RUBRICATOR_DICT } from '../../eos-dictionaries/consts/rubricator.consts';
+import { DEPARTMENTS_DICT } from '../../eos-dictionaries/consts/department.consts';
 
 @Injectable()
 export class EosBreadcrumbsService {
@@ -30,7 +32,7 @@ export class EosBreadcrumbsService {
             .filter((e) => e instanceof NavigationEnd)
             .combineLatest(_deskSrv.selectedDesk)
             .subscribe((val: [NavigationEnd, EosDesk]) => {
-                this.makeBreadCrumbs(val[1]);
+                    this.makeBreadCrumbs(val[1]);
             });
     }
 
@@ -79,6 +81,39 @@ export class EosBreadcrumbsService {
             const subpath = route.url.map((item) => item.path).join('/');
 
             /* console.log(subpath); */
+            if (subpath === RUBRICATOR_DICT.id) {
+                const bc: IBreadcrumb = {
+                    title: RUBRICATOR_DICT.title,
+                    url: '/spravochniki/' + RUBRICATOR_DICT.id + '/' + RUBRICATOR_DICT.nodeId,
+                    params: {
+                        dictionaryId: RUBRICATOR_DICT.id,
+                        nodeId: RUBRICATOR_DICT.nodeId
+                    }
+                };
+                this._breadcrumbs.push(bc);
+                continue;
+            }
+
+            if (subpath === DEPARTMENTS_DICT.id) {
+                const bc: IBreadcrumb = {
+                    title: DEPARTMENTS_DICT.title,
+                    url: '/' + DEPARTMENTS_DICT.id + '/' + DEPARTMENTS_DICT.nodeId,
+                    params: {
+                        dictionaryId: DEPARTMENTS_DICT.id,
+                        nodeId: DEPARTMENTS_DICT.nodeId
+                    },
+                };
+                this._breadcrumbs.push(bc);
+                continue;
+            }
+
+            if (subpath === RUBRICATOR_DICT.nodeId) {
+                continue;
+            }
+
+            if (subpath === DEPARTMENTS_DICT.nodeId) {
+                continue;
+            }
 
             if (subpath && subpath !== 'desk' && route.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
