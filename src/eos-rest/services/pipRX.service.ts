@@ -9,6 +9,7 @@ import { Metadata } from '../core/metadata';
 import { ApiCfg } from '../core/api-cfg';
 import { Utils } from '../core/utils';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class PipRX {
@@ -17,6 +18,8 @@ export class PipRX {
     private _options = HTTP_OPTIONS;
 
     public sequenceMap: SequenceMap = new SequenceMap();
+    // TODO: если сервис, то в конструктор? если хелпер то переимновать?
+    public errorService = new ErrorService();
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
@@ -28,21 +31,10 @@ export class PipRX {
         return this._cfg;
     }
 
-    private getData(url: string) {
-        return this.http
-            .get(this._cfg.dataSrv + url, this._options)
-            .map((r) => {
-                try {
-                    return r.json().value;
-                } catch (e) {
-                    Observable.throw(r);
-                }
-            });
-    }
-
     private makeArgs(args: IKeyValuePair): string {
         let url = '';
-        args.keys.foreach((argname) => {
+        // tslint:disable-next-line:forin
+        for ( const argname in args) {
             let q = '',
                 v = args[argname];
             const t = typeof (args[argname]);
@@ -51,7 +43,7 @@ export class PipRX {
                 v = t !== 'string' ? encodeURIComponent(JSON.stringify(v)) : v;
             }
             url += ['&', argname, '=', q, v, q].join('');
-        });
+        };
         return url;
     }
 
@@ -117,7 +109,7 @@ export class PipRX {
         const ask = req[r._et];
         delete req[r._et];
         const a = ask;
-        const ids = (a.criteries === undefined && a.args === undefined && a !== ALL_ROWS) ? a : undefined;
+        const ids = ((a.criteries === undefined) && (a.args === undefined) && (a !== ALL_ROWS)) ? a : undefined;
         const urls = this._makeUrls(r, a, ids);
 
         return this._odataGet<T>(urls, req);
@@ -139,9 +131,13 @@ export class PipRX {
                     try {
                         return Utils.nativeParser(r.json());
                     } catch (e) {
-                        return Observable.throw(r);
+                        return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
-                });
+                })
+                .catch((err, caught) => {
+                    return this.errorService.errorHandler({ http: err, _request: req });
+                })
+
         });
 
         return rl.reduce((acc: T[], v: T[]) => {
@@ -171,10 +167,14 @@ export class PipRX {
                 const answer: any[] = [];
                 const e = this.parseBatchResponse(r, answer);
                 if (e) {
-                    return Observable.throw(new Error(e.toString()));
+                    return this.errorService.errorHandler({ odataErrors: e });
                 }
                 return answer;
-            });
+            })
+            .catch((err, caught) => {
+                return  this.errorService.httpCatch(err);
+            })
+;
     }
 
     private parseBatchResponse(response: Response, answer: any[]): any[] {

@@ -51,4 +51,24 @@ export class DeliveryComponent implements OnInit {
         }, 'DELIVERY_CL');
         this.currentItem = tmp;
     }
+
+    onErrorMirror() {
+        /* this.pip.read( {ErrorMirror_GetError: Utils.args({code: 404, msg: 'What?'})})
+        .subscribe(d => {
+                alert('пустой результат не ошибка');
+            }
+        );*/
+        // потеря соединения при чтении
+        this.pip.read( {ErrorMirror_GetError: Utils.args({code: 434, msg: 'What?'})})
+        .subscribe(d => {
+                alert('пустой результат не ошибка');
+            }
+        )
+        /*const ch = [];
+        Utils.invokeSop( ch, 'ErrorMirror_BatchError', {code: -1, msg: 'incorrect data'});
+        this.pip.batch(ch, '')
+        .subscribe(d => {
+            alert(d);
+        });*/
+    }
 }

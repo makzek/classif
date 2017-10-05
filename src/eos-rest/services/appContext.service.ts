@@ -21,6 +21,8 @@ export class AppContext {
 
     init(): Promise<any> {
         const p = this.pip;
+        // раз присоеденились сбрасываем подавление ругательства о потере соединения
+        p.errorService.LostConnectionAlerted = false;
         const oSysParams = p.read({
             SysParms: ALL_ROWS,
             _moreJSON: {
