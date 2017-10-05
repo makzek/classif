@@ -20,6 +20,8 @@ import {
     SUCCESS_SAVE
 } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
+import { LS_EDIT_CARD } from '../consts/common';
+import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
     edit,
@@ -31,6 +33,7 @@ export class EditedCard {
     id: string;
     title: string;
     link: string;
+    uuid: string;
 }
 
 @Component({
@@ -45,6 +48,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private dictionaryId: string;
     private nodeId: string;
+    private _uuid: string;
     selfLink: string;
 
     private _urlSegments: string[];
@@ -112,6 +116,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _route: ActivatedRoute,
         private _router: Router
     ) {
+        this._uuid = UUID.UUID();
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
@@ -187,8 +192,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _preventMultiEdit(): boolean {
         /* prevent editing multiple cards */
-        this.lastEditedCard = this.getLastEditedCard();
-        if (this.lastEditedCard && this.lastEditedCard.id !== this.node.id) {
+        this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id !== this.nodeId /* && this.lastEditedCard.uuid !== this._uuid*/) {
             this.modalOnlyRef.show();
             return false;
         }
@@ -356,21 +361,29 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _setEditingCardLink() {
-        this.lastEditedCard = this.getLastEditedCard();
+        this.getLastEditedCard();
         if (!this.lastEditedCard) {
-            localStorage.setItem('lastEditedCard', JSON.stringify({
+            this.lastEditedCard = {
                 'id': this.nodeId,
                 'title': this.nodeName,
-                'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit)
-            }));
+                'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
+                uuid: this._uuid
+            };
+            localStorage.setItem(LS_EDIT_CARD, JSON.stringify(this.lastEditedCard));
         }
     }
 
     private _clearEditingCardLink(): void {
-        localStorage.removeItem('lastEditedCard');
+        if (this.lastEditedCard && this.lastEditedCard.uuid === this._uuid) {
+            this.lastEditedCard = null;
+            localStorage.removeItem(LS_EDIT_CARD);
+        }
     }
 
-    private getLastEditedCard(): EditedCard {
-        return JSON.parse(localStorage.getItem('lastEditedCard'));
+    private getLastEditedCard() {
+        this.lastEditedCard = JSON.parse(localStorage.getItem(LS_EDIT_CARD));
+        if (this.lastEditedCard && !this.lastEditedCard.uuid) {
+            this.lastEditedCard.uuid = this._uuid;
+        }
     }
 }
