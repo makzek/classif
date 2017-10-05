@@ -67,15 +67,35 @@
             margin-top: -5px;
         }
 
-        &.eos-icon-calendar-blue {
-            position: relative;
-            top: 5px;
-        }
-
         &.eos-icon-search-blue {
             position: relative;
-            top: -7px;
+            top: -2px;
         }
+    }
+
+    .full-search {
+        position: relative;
+        top: -3px;
+    }
+
+    .date-comment {
+        position: relative;
+        top: 3px;
+    }
+
+    .eos-datepicker {
+        display: inline-block;
+        width: 145px;
+        top: 5px;
+        font-weight: bold;
+        top: -1px;
+
+        .datepicker-input {
+            border: 0;
+            box-shadow: none;
+            height: 48px;
+        }
+
     }
 }
 

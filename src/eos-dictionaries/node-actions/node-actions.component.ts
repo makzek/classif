@@ -265,4 +265,8 @@ export class NodeActionsComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
     }
+
+    dataSeted(date: Date) {
+        console.log('recive date: ', date);
+    }
 }

@@ -42,7 +42,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Удалить логически',
-    iconClass: 'eos-icon eos-icon-close-blue',
+    iconClass: 'eos-icon eos-icon-bin-blue',
     buttonClass: null
 },
     RECORD_ACTIONS_NAVIGATION_UP,
