@@ -191,7 +191,14 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     mark() {
-        if (this.selectedNode.selected) {
+        console.log(this.selectedNode);
+        if (this.selectedNode.selected && !this.selectedNode.children) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+        } else if (this.selectedNode.selected === false && !this.selectedNode.children) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+        } else if (this.selectedNode.selected) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
         } else {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
