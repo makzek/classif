@@ -21,6 +21,10 @@
         color: $button-color-main-theme;
         border-color: transparent;
         padding: 1px 6px;
+
+        &:hover {
+            color: $button-color-hover-main-theme;
+        }
     }
 
     /* .btn-icon {
@@ -35,11 +39,21 @@
         background: white;
         padding: 0 4px;
 
-        &:hover,
-        &:active,
-        &:focus {
-            color: white;
-            background: $button-color-main-theme;
+        &:hover {
+            color: $button-color-hover-main-theme;
+            border-color: $button-color-hover-main-theme;
+        }
+    }
+
+    .btn-primary-full {
+        border: 2px solid $button-color-main-theme;
+        background: $button-color-main-theme;
+        color: white;
+        padding: 0 4px;
+
+        &:hover {
+            border-color: $button-color-hover-main-theme;
+            background: $button-color-hover-main-theme;
         }
     }
 
