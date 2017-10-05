@@ -26,7 +26,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
     }, {
         key: 'NOTE',
-        title: 'Описание',
+        title: 'Примечание',
         type: 'text'
     }, {
         key: 'CODE',
@@ -162,6 +162,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // key: 'indexOfficial',
         key: 'DEPARTMENT_INDEX',
         title: 'Индекс ДЛ',
+        type: 'text',
+    }, {
+        key: 'DEPARTMENT_DUE',
+        title: 'Картотека ДЛ',
         type: 'text',
     }, {
         // key: 'boss',
