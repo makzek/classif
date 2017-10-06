@@ -1,4 +1,4 @@
-import { Component, Input,  OnDestroy, ViewChild } from '@angular/core';
+import { Component, Input,  OnDestroy } from '@angular/core';
 // import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
@@ -18,23 +19,17 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
-import { NodeActionsComponent } from '../node-actions/node-actions.component';
-import { SelectedNodeComponent } from '../selected-node/selected-node.component';
 
 @Component({
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
 export class NodeListComponent implements OnDestroy {
-    @ViewChild(NodeActionsComponent) private _nodeActionsCmp;
-    @ViewChild(SelectedNodeComponent) private _selectedNodeCmp;
     // @Input() nodes: EosDictionaryNode[];
     nodes: EosDictionaryNode[];
 
     modalRef: BsModalRef;
     private _dictionaryId: string;
-    private checkedAll = true;
-    private checkedItem = false;
 
     private _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
@@ -55,6 +50,7 @@ export class NodeListComponent implements OnDestroy {
     private _startPage = 1;
     private _dropStartPage = true;
 
+    private _actionSubscription: Subscription;
     private _openedNodeSubscription: Subscription;
     private _dictionarySubscription: Subscription;
     private _selectedNodeSubscription: Subscription;
@@ -68,6 +64,7 @@ export class NodeListComponent implements OnDestroy {
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
         private _router: Router,
+        private _actSrv: NodeActionsService
     ) {
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
@@ -112,59 +109,60 @@ export class NodeListComponent implements OnDestroy {
                 this.nodes = nodes;
             }
         });
-    }
 
-    actionEventHandler(action): void {
-        switch (action) {
-            case E_RECORD_ACTIONS.edit: {
-                if (this.openedNode) {
-                    this.editNode(this.openedNode);
-                } else {
-                    // this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected) (What is it? ¯\_(ツ)_/¯)
+        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
+            switch (action) {
+                case E_RECORD_ACTIONS.edit: {
+                    if (this.openedNode) {
+                        this.editNode(this.openedNode);
+                    } else {
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
+                    }
+                    break;
                 }
-                break;
+                case E_RECORD_ACTIONS.remove: {
+                    this.deleteSelectedItems();
+                    break;
+                }
+                case E_RECORD_ACTIONS.navigateDown: {
+                    this.nextItem(false);
+                    break;
+                }
+                case E_RECORD_ACTIONS.navigateUp: {
+                    this.nextItem(true);
+                    break;
+                }
+                case E_RECORD_ACTIONS.removeHard: {
+                    this.physicallyDelete();
+                    break;
+                }
+                // case E_RECORD_ACTIONS.restore: {
+                case E_RECORD_ACTIONS.showDeleted: {
+                    this.restoringLogicallyDeletedItem();
+                    break;
+                }
+                case E_RECORD_ACTIONS.markRecords: {
+                    this.checkAllItems(true);
+                    break;
+                }
+                case E_RECORD_ACTIONS.unmarkRecords: {
+                    this.checkAllItems(false);
+                    break;
+                }
+                case E_RECORD_ACTIONS.userOrder: {
+                    this.toggleUserSort();
+                    break;
+                }
+                case E_RECORD_ACTIONS.moveUp: {
+                    this.userSortMoveUp();
+                    break;
+                }
+                case E_RECORD_ACTIONS.moveDown: {
+                    this.userSortMoveDown();
+                    break;
+                }
             }
-            case E_RECORD_ACTIONS.remove: {
-                this.deleteSelectedItems();
-                break;
-            }
-            case E_RECORD_ACTIONS.navigateDown: {
-                this.nextItem(false);
-                break;
-            }
-            case E_RECORD_ACTIONS.navigateUp: {
-                this.nextItem(true);
-                break;
-            }
-            case E_RECORD_ACTIONS.removeHard: {
-                this.physicallyDelete();
-                break;
-            }
-            case E_RECORD_ACTIONS.showDeleted: {
-                this.restoringLogicallyDeletedItem();
-                break;
-            }
-            case E_RECORD_ACTIONS.markRecords: {
-                this.checkAllItems(true);
-                break;
-            }
-            case E_RECORD_ACTIONS.unmarkRecords: {
-                this.checkAllItems(false);
-                break;
-            }
-            case E_RECORD_ACTIONS.userOrder: {
-                this.toggleUserSort();
-                break;
-            }
-            case E_RECORD_ACTIONS.moveUp: {
-                this.userSortMoveUp();
-                break;
-            }
-            case E_RECORD_ACTIONS.moveDown: {
-                this.userSortMoveDown();
-                break;
-            }
-        }
+        });
     }
 
     ngOnDestroy() {
@@ -173,10 +171,10 @@ export class NodeListComponent implements OnDestroy {
         this._selectedNodeSubscription.unsubscribe();
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
+        this._actionSubscription.unsubscribe();
         this._orderSubscription.unsubscribe();
     }
 
-    // On this methon required test check nodes
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
         this.nodes = nodes;
         this.hasParent = hasParent;
@@ -190,24 +188,6 @@ export class NodeListComponent implements OnDestroy {
             this._getListData();
         }
 
-        for (const item of nodes) {
-            this.checkedItem = this.checkedAll || item.selected;
-            this.checkedAll = this.checkedAll && item.selected;
-        }
-        if (this._selectedNodeCmp) {
-            console.log('ss')
-            if (this.checkedAll) {
-                 this._nodeActionsCmp.checkedAll = true;
-                 console.log(this._nodeActionsCmp.checkedAll)
-            } else if (this.checkedItem) {
-                this._nodeActionsCmp.checkedItem = true;
-                console.log(this._nodeActionsCmp.checkedAll)
-            } else {
-                this._nodeActionsCmp.checkedAll = false;
-                console.log(this._nodeActionsCmp.checkedAll)
-            }
-        }
-
     }
 
     checkAllItems(value: boolean): void {
@@ -216,27 +196,22 @@ export class NodeListComponent implements OnDestroy {
                 item.selected = value;
             }
         }
-        if (value) {
-            this._selectedNodeCmp.selectedNode.selected = true;
-        } else {
-            this._selectedNodeCmp.selectedNode.selected = false;
-        }
     }
 
     checkItem(node: EosDictionaryNode) {
         /* tslint:disable:no-bitwise */
         if (node.selected) {
             if (!~this.nodes.findIndex((_n) => !_n.selected)) {
-                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markAllChildren);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
             } else {
-                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markOne);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
             }
         } else {
             if (!~this.nodes.findIndex((_n) => _n.selected)) {
-                this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.unmarkAllChildren);
+                this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
             } else {
                 if (!!~this.nodes.findIndex((_n) => _n.selected)) {
-                    this._nodeActionsCmp.actionHandler(E_RECORD_ACTIONS.markOne);
+                    this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
                 }
             }
         }

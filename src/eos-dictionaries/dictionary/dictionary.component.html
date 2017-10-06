@@ -1,7 +1,7 @@
-<div class="eos-dictionary"
-    [ngClass]="{'full': currentState === states.full,
+<div class="eos-dictionary" 
+    [ngClass]="{'full': currentState === states.full, 
         'only-selected': currentState === states.selected,
-        'info': currentState === states.info,
+        'info': currentState === states.info, 
         'tree': currentState === states.tree}">
     <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
         'has-spinner': !nodes.length}">
@@ -13,6 +13,6 @@
     </div>
 
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
-        <eos-opened-node (onActionOpenedCmp)="test($event)"></eos-opened-node>
+        <eos-opened-node></eos-opened-node>
     </div>
 </div>
