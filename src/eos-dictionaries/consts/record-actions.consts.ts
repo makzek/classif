@@ -84,7 +84,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     iconClass: null,
     buttonClass: null
 }, {
-    type: E_RECORD_ACTIONS.restoreDeleted,
+    type: E_RECORD_ACTIONS.restore,
     group: E_ACTION_GROUPS.group,
     title: 'Восстановить логически удаленные элементы',
     hint: null,

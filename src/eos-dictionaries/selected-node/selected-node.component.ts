@@ -97,8 +97,8 @@ export class SelectedNodeComponent implements OnDestroy {
                     this.physicallyDelete();
                     break;
                 }
-                // case E_RECORD_ACTIONS.restore: {
-                case E_RECORD_ACTIONS.showDeleted: {
+                case E_RECORD_ACTIONS.restore: {
+                // case E_RECORD_ACTIONS.showDeleted: {
                     this.restoringLogicallyDeletedItem();
                     break;
                 }

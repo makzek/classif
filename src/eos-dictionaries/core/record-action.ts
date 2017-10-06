@@ -5,7 +5,6 @@ export enum E_RECORD_ACTIONS {
     remove,
     removeHard,
     showDeleted,
-    restoreDeleted,
     order,
     userOrder,
     moveUp,

@@ -186,7 +186,7 @@ export class NodeActionsComponent implements OnDestroy {
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
                 case E_RECORD_ACTIONS.moveDown:
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.restoreDeleted:
+                case E_RECORD_ACTIONS.restore:
                     return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
                 default:
                     return this.dictionary.descriptor.canDo(group, type);
