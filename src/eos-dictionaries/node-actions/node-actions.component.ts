@@ -17,6 +17,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 // import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -87,6 +88,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -253,9 +255,16 @@ export class NodeActionsComponent implements OnDestroy {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.newNodeData[_f.key];
                 });
+                const bCrumbs = this._breadcrumbsSrv.getLastBreadcrumbs();
+                let path = '';
+                for (const bc of bCrumbs) {
+                    path = path + bc.title + '/';
+                }
+                console.log(path);
                 this._deskSrv.addRecentItem({
                     link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
                     title: title,
+                    path: path + title
                 });
                 if (hide) {
                     this.creatingModal.hide();

@@ -12,7 +12,7 @@
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="left">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.path}}" placement="left">
                     <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
                 </li>
             </ul>
@@ -22,7 +22,7 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <div class="btn item-content block edited" *ngIf="editing(item.value)">
-        <textarea id="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
+        <textarea id="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
             required pattern="^\S(.*\S$|$)" maxlength="80"></textarea>
     </div>
     <button *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]" tooltip="{{item.value.title}}" placement="right">
