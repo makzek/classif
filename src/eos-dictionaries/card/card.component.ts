@@ -333,19 +333,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                console.log('update response', resp);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,
                 });
-
-                /*
-                this._setOriginalData();
-                this.recordChanged(this.nodeData);
-                */
-                return this._dictSrv.reloadNode(this.node)
+                this._clearEditingCardLink();
+                return this._dictSrv.reloadNode(this.node);
             })
-            .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
     }
 
@@ -374,7 +368,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _clearEditingCardLink(): void {
-        if (this.lastEditedCard && this.lastEditedCard.uuid === this._uuid) {
+        if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId) {
             this.lastEditedCard = null;
             localStorage.removeItem(LS_EDIT_CARD);
         }
@@ -382,8 +376,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private getLastEditedCard() {
         this.lastEditedCard = JSON.parse(localStorage.getItem(LS_EDIT_CARD));
+        /*
         if (this.lastEditedCard && !this.lastEditedCard.uuid) {
             this.lastEditedCard.uuid = this._uuid;
         }
+        */
     }
 }
