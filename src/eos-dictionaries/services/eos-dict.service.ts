@@ -96,6 +96,7 @@ export class EosDictService {
                         //                        this._selectRoot();
                         return this._dictionary;
                     } else {
+                        this.closeDictionary();
                         return this._openDictionary(dictionaryId);
                     }
                 } else {
