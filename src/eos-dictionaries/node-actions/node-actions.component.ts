@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -9,7 +9,6 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeActionsService } from './node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
@@ -23,6 +22,7 @@ import { EditedCard } from '../card/card.component';
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
+    @Output('onAction') private onAction = new EventEmitter();
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
 
@@ -60,13 +60,11 @@ export class NodeActionsComponent implements OnDestroy {
 
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription;
 
     newNodeData: any = {};
     private editMode = true;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
-
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
         return !~this.fields.findIndex((f) => f.value);
@@ -86,7 +84,6 @@ export class NodeActionsComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
-        private _actSrv: NodeActionsService,
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -103,61 +100,11 @@ export class NodeActionsComponent implements OnDestroy {
             }
         });
 
-        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
-            switch (act) {
-                case E_RECORD_ACTIONS.markOne:
-                    this.itemIsChecked = true;
-                    this.checkAll = false;
-                    this.someChildrenSelected = true;
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkAllChildren:
-                    this.allChildrenSelected = false;
-                    this.someChildrenSelected = false;
-                    this.itemIsChecked = false;
-                    this.checkAll = false;
-                    break;
-
-                case E_RECORD_ACTIONS.markAllChildren:
-                    this.allChildrenSelected = true;
-                    if (this.rootSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.markRoot:
-                    this.rootSelected = true;
-                    if (this.allChildrenSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.checkAll = false;
-                        this.itemIsChecked = true;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkRoot:
-                    this.rootSelected = false;
-                    if (this.allChildrenSelected || this.someChildrenSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
-                    break;
-            }
-        });
     }
 
     ngOnDestroy() {
         this._userSettingsSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
     }
 
     doAction(type: E_RECORD_ACTIONS) {
@@ -171,9 +118,52 @@ export class NodeActionsComponent implements OnDestroy {
                 this.switchUserSort();
                 break;
 
-            default:
-                this._actSrv.emitAction(type);
+            case E_RECORD_ACTIONS.markOne:
+                this.itemIsChecked = true;
+                this.checkAll = false;
+                this.someChildrenSelected = true;
                 break;
+
+            case E_RECORD_ACTIONS.unmarkAllChildren:
+                this.allChildrenSelected = false;
+                this.someChildrenSelected = false;
+                this.itemIsChecked = false;
+                this.checkAll = false;
+                break;
+
+            case E_RECORD_ACTIONS.markAllChildren:
+                this.allChildrenSelected = true;
+                if (this.rootSelected) {
+                    this.checkAll = true;
+                    this.itemIsChecked = false;
+                } else {
+                    this.itemIsChecked = true;
+                    this.checkAll = false;
+                }
+                break;
+
+            case E_RECORD_ACTIONS.markRoot:
+                this.rootSelected = true;
+                if (this.allChildrenSelected) {
+                    this.checkAll = true;
+                    this.itemIsChecked = false;
+                } else {
+                    this.checkAll = false;
+                    this.itemIsChecked = true;
+                }
+                break;
+
+            case E_RECORD_ACTIONS.unmarkRoot:
+                this.rootSelected = false;
+                if (this.allChildrenSelected || this.someChildrenSelected) {
+                    this.itemIsChecked = true;
+                    this.checkAll = false;
+                } else {
+                    this.itemIsChecked = false;
+                    this.checkAll = false;
+                }
+                break;
+            //
         }
     }
 
@@ -195,7 +185,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     switchUserSort() {
         this.userSort = !this.userSort;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
+        this.onAction.emit(E_RECORD_ACTIONS.userOrder);
     }
 
     openModal(template: TemplateRef<any>) {
@@ -212,21 +202,13 @@ export class NodeActionsComponent implements OnDestroy {
             this.rootSelected = true;
             this.allChildrenSelected = true;
             this.itemIsChecked = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRecords);
+            this.onAction.emit(E_RECORD_ACTIONS.markRecords);
         } else {
             this.itemIsChecked = false;
             this.allChildrenSelected = false;
             this.someChildrenSelected = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
+            this.onAction.emit(E_RECORD_ACTIONS.unmarkRecords);
         }
-    }
-
-    uncheckAllItems() {
-        this.checkAll = false;
-        this.itemIsChecked = false;
-        this.allChildrenSelected = false;
-        this.someChildrenSelected = false;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
     }
 
     search(event) {
