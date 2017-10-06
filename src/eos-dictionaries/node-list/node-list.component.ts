@@ -1,4 +1,4 @@
-import { Component, Input,  OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 // import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
@@ -81,12 +81,18 @@ export class NodeListComponent implements OnDestroy {
             this._selectedNode = node;
             if (node) {
                 this.viewFields = node.getListView();
-                /*if (node.children) {
-                    this._update(node.children, true);
-                } else {
-                    this._update([], true);
-                }*/
                 this._update(node.children, true);
+                if (!this.nodes) {
+                    if (node.selected) {
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+                    } else {
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+                    }
+                } else {
+                    this.checkState(node.selected);
+                }
             }
         });
 
@@ -176,9 +182,9 @@ export class NodeListComponent implements OnDestroy {
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
-        this.nodes = nodes;
         this.hasParent = hasParent;
         if (nodes) {
+            this.nodes = nodes;
             this.totalItems = nodes.length;
             if (nodes.length) {
                 if (!this.hasParent) {
@@ -186,6 +192,8 @@ export class NodeListComponent implements OnDestroy {
                 }
             }
             this._getListData();
+        } else {
+            this.nodes = null;
         }
 
     }
@@ -389,5 +397,29 @@ export class NodeListComponent implements OnDestroy {
         // localStorage.setItem('viewCardUrlRedirect', this._router.url);
         const url = this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + this._selectedNode.id;
         localStorage.setItem('viewCardUrlRedirect', url);
+    }
+
+    private checkState(selected?: boolean) {
+        let checkAllFlag = true,
+            checkSome = false;
+        for (const item of this.nodes) {
+            if (item.selected) {
+                checkSome = true;
+            }
+            checkAllFlag = checkAllFlag && item.selected;
+        }
+        checkAllFlag = checkAllFlag && selected;
+        if (selected) {
+            checkSome = true;
+        }
+        if (checkAllFlag) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+        } else if (checkSome) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
+        } else if (!checkAllFlag) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+        }
     }
 }
