@@ -9,7 +9,7 @@
                     </label>
                 </span>
                 <span class="node-info" >
-                        <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.key]}}</span>
+                        <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.foreignKey]}}</span>
                 </span>
                 <eos-spinner *ngIf="selectedNode.updating" class="spinner" [size]="'sm'"></eos-spinner>
             </div>
