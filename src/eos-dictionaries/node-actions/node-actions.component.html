@@ -21,7 +21,6 @@
             </ul>
         </div>
         </span>
-
         <span class="pull-right">
             <span class="date">Состояние на </span>
         <!--<span class="icon eos-icon eos-icon-calendar-blue small"></span>-->
@@ -53,7 +52,6 @@
         </div>
         </span>
     </div>
-
     <div class="second-line block special-text">
         <span class="table-title">
             <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
@@ -62,7 +60,7 @@
         </label>
         </span>
         <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="checkAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
                     <span></span>
         </label>
         </span>

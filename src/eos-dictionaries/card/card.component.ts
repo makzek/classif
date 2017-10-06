@@ -165,6 +165,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 this.nodeData[fld.key] = fld.value;
             });
         }
+
         _canEdit = this._mode === EDIT_CARD_MODES.edit &&
             this._preventDeletedEdit() &&
             this._preventMultiEdit();
