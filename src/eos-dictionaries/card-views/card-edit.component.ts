@@ -17,9 +17,10 @@ export class CardEditComponent {
     change(fldKey: string, value: string) {
         this.data[fldKey] = value;
         this.onChange.emit(this.data);
+        console.log('data', this.data);
     }
 
-    clean(field: string, value: string) {
+    /* clean(field: string, value: string) {
         this.change(field, value);
-    }
+    }*/
 }
