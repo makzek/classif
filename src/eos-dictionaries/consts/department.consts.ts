@@ -20,12 +20,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Код',
         type: 'string'
     }, {
-        key: 'CLASSIF_NAME',
-        title: 'Заголовок',
-        type: 'text'
+        key: 'title',
+        title: 'Краткое наименование',
+        type: 'text',
+        foreignKey: 'CLASSIF_NAME',
     }, {
         key: 'NOTE',
-        title: 'Описание',
+        title: 'Примечание',
         type: 'text'
     }, {
         key: 'CODE',
@@ -135,10 +136,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Полное наименование должности',
         type: 'text',
     }, {
-        // key: 'fio',
-        key: 'CLASSIF_NAME', // not sure
+        key: 'fio',
+        // key: 'CLASSIF_NAME', // not sure
         title: 'Фамилия И.О.',
         type: 'text',
+        foreignKey: 'CLASSIF_NAME',
     }, {
         key: 'gender',
         title: 'Пол',
@@ -160,6 +162,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // key: 'indexOfficial',
         key: 'DEPARTMENT_INDEX',
         title: 'Индекс ДЛ',
+        type: 'text',
+    }, {
+        key: 'DEPARTMENT_DUE',
+        title: 'Картотека ДЛ',
         type: 'text',
     }, {
         // key: 'boss',
@@ -298,24 +304,27 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     listFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-        department: ['RUBRIC_CODE', 'CLASSIF_NAME']
+        person: ['RUBRIC_CODE', 'fio'],
+        department: ['RUBRIC_CODE', 'title']
     },
     fullSearchFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+        person: ['RUBRIC_CODE', 'fio', 'NOTE'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
-        department: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
+        department: ['RUBRIC_CODE', 'title', 'NOTE']
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
     },
     quickViewFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE']
+        person: ['RUBRIC_CODE', 'fio', 'NOTE'],
+        department: ['RUBRIC_CODE', 'title', 'NOTE']
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
-        person: ['CLASSIF_NAME']
+        person: ['fio'],
+        department: ['title']
     },
-    editFields: {
-        person: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
+    editFields: { // TODO: remove IS_NODE!!!
+        person: ['IS_NODE', 'RUBRIC_CODE', 'fio', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
+        department: ['IS_NODE', 'RUBRIC_CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ' ]
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*

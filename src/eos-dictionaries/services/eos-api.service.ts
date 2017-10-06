@@ -95,8 +95,8 @@ export class EosDictApiService {
             });
     }
 
-    update (data: any[]): Promise<any> {
-        return this._service.update(data);
+    update(originalData: any, updates: any): Promise<any> {
+        return this._service.update(originalData, updates);
     }
 
     getChildren(parentISN: number): Promise<any[]> {
@@ -116,5 +116,9 @@ export class EosDictApiService {
 
     private _noData(): Promise<any[]> {
         return new Promise((res, rej) => res([]));
+    }
+
+    addNode(parentData: any, nodeData: any): Promise<any> {
+        return this._service.create(parentData, nodeData);
     }
 }

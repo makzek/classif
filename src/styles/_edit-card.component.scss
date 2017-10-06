@@ -1,13 +1,17 @@
 .eos-card {
-    min-height: 450px;
+    // min-height: 450px;
+    max-height: calc(100vh - 108px - 60px);
     width: 800px;
     margin: 20px auto;
     border: 1px solid transparent;
+    overflow-y: auto;
 
     .edit-header {
         padding: 5px;
         display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
+        display: grid;
+
+        // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 20px 1fr 130px;
         grid-template-columns: 100px 20px 1fr 130px;
         border-bottom: 1px solid transparent;
@@ -60,7 +64,6 @@
             grid-column: 4;
             grid-row: 1;
         }
-
     }
 
     .spinner-wrapper {
@@ -81,29 +84,41 @@
     }*/
 
     .edit-content {
+        padding: 10px 20px;
+
         label {
-            font-weight: normal;
-            text-transform: uppercase;
             font-size: 12px;
             line-height: 16px;
+            font-weight: normal;
         }
 
-        .form {
-            margin: 20px;
-            margin-top: -4px;
-
-            .form-group {
-                margin: 0;
+        .form-group {
+            &:not(:first-child) {
                 margin-top: 20px;
             }
 
-            .form-control {
-                font-size: 14px;
-                line-height: 20px;
-                border-radius: 0;
-                padding: 8px;
-                padding-right: 37px;
+            label {
+                text-transform: uppercase;
+                white-space: nowrap;
             }
         }
+
+        .form-control {
+            font-size: 14px;
+            line-height: 20px;
+            border-radius: 0;
+            padding: 8px;
+            padding-right: 37px;
+        }
+
+        .readonly {
+            border: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+    }
+
+    .rubricator-card-edit {
+        padding: 20px;
     }
 }

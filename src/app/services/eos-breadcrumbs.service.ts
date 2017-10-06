@@ -43,98 +43,100 @@ export class EosBreadcrumbsService {
     }
 
     makeBreadCrumbs(desk: EosDesk) {
-        if (desk /*&& this._routes*/) {
+        if (desk) {
             this._breadcrumbs = [{
                 url: '/desk/' + desk.id,
-                title: desk.name,
-                params: new Object(),
+                title: 'Главная', // desk.name,
+                params: null,
             }];
 
-            this._parseState(this._route.snapshot);
+            Promise.all(this._parseState(this._route.snapshot))
+                .then((breadcrumbs) => {
+                    this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
 
-            this._breadcrumbs$.next(this._breadcrumbs);
+                    let title = '';
+                    this._breadcrumbs.forEach(element => {
+                        title += element.title + '/';
+                    });
+                    title = title.slice(0, title.length - 1);
 
-            setTimeout(() => {
-                let title = '';
-                this._breadcrumbs.forEach(element => {
-                    title += element.title + '/';
+                    this._currentLink = {
+                        link: this._breadcrumbs[this._breadcrumbs.length - 1].url,
+                        title: title
+                    }
+
+                    this._breadcrumbs$.next(this._breadcrumbs);
+                    this._currentLink$.next(this._currentLink);
                 });
-                title = title.slice(0, title.length - 1);
-                this._currentLink = {
-                    link: this._route.snapshot.url.toString(),
-                    title: title
-                }
-
-                this._currentLink$.next(this._currentLink);
-            }, 0);
         }
     }
 
-    private _parseState(route: ActivatedRouteSnapshot) {
+    private _parseState(route: ActivatedRouteSnapshot): Promise<IBreadcrumb>[] {
         let currUrl = '';
+        let _current = route;
 
-        while (route.firstChild) {
-            route = route.firstChild;
-            /* const routeSnaphot = route.value as ActivatedRouteSnapshot; */
-            const subpath = route.url.map((item) => item.path).join('/');
+        const crumbs: Promise<IBreadcrumb>[] = [];
 
-            /* console.log(subpath); */
+        while (_current) {
+            const subpath = _current.url.map((item) => item.path).join('/');
 
-            if (subpath && subpath !== 'desk' && route.data.showInBreadcrumb) {
+            if (subpath && _current.data && _current.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
+
                 const bc: IBreadcrumb = {
-                    title: route.data.title,
+                    title: _current.data.title,
                     url: currUrl,
-                    params: route.params,
+                    params: _current.params,
                 };
 
-                if (route.data) {
-                    // console.log('data', routeSnaphot.data);
-                    bc['data'] = { showSandwichInBreadcrumb: route.data.showSandwichInBreadcrumb };
-                }
+                let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
 
-                if (route.params && route.data.showInBreadcrumb) {
-                    if (route.params.dictionaryId && !route.params.nodeId) {
-                        this._dictSrv.getDictionariesList()
+                if (_current.params) {
+                    if (_current.params.dictionaryId && !_current.params.nodeId) {
+                        const _dictId = _current.params.dictionaryId;
+                        _crumbPromise = this._dictSrv.getDictionariesList()
                             .then((list) => {
-                                const _d = list.find((e: any) => e.id === route.params.dictionaryId);
+                                const _d = list.find((e: any) => e.id === _dictId);
                                 if (_d) {
                                     bc.title = _d.title;
                                 }
+                                return bc;
                             });
-                    }
-                    if (route.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
-                        this._dictSrv.getNode(route.params.dictionaryId, route.params.nodeId)
+                    } else if (_current.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
+                        const _dictId = _current.params.dictionaryId;
+                        const _nodeId = _current.params.nodeId
+                        _crumbPromise = this._dictSrv.getNode(_dictId, _nodeId)
                             .then((node) => {
                                 if (node) {
-                                    const _titleView = node.getShortQuickView()[0];
-                                    if (_titleView) {
-                                        bc.title = _titleView.value;
+                                    if (this._dictSrv.isRoot(node.id)) { // remove root node from bc
+                                        bc.title = null;
+                                    } else {
+                                        const _titleView = node.getShortQuickView()[0];
+                                        if (_titleView) {
+                                            bc.title = _titleView.value;
+                                        }
                                     }
                                 }
+                                return bc;
                             });
-                    }
-
-                    if (route.params.desktopId && route.data.showInBreadcrumb) {
-                        this._deskSrv.desksList.toPromise().then(
-                            (list) => {
-                                const _d = list.find((e: any) => e.id === route.params.desktopId);
+                    } /* else if (_current.params.desktopId && _current.data.showInBreadcrumb) { // is it still need ????
+                        const _deskId = _current.params.desktopId;
+                        _crumbPromise = this._deskSrv.desksList.toPromise()
+                            .then((list) => {
+                                console.warn('get desk');
+                                const _d = list.find((e: any) => e.id === _deskId);
                                 if (_d) {
                                     bc.title = _d.name;
-                                    /*this._deskService.getName(_d.id).subscribe((_n) => {
-                                         console.log('name from bc', _n);
-                                        bc.title = _n;
-                                     });*/
                                 }
-                            }
-                        );
-                    }
+                                return bc;
+                            });
+                    } */
                 }
 
-                if (bc) {
-                    this._breadcrumbs.push(bc);
-                }
+                crumbs.push(_crumbPromise);
             }
+            _current = _current.firstChild;
         }
+        return crumbs;
     }
 }

@@ -59,7 +59,7 @@ export abstract class RecordDescriptor {
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
-        return fields.map((fld) => Object.assign({}, fld, { value: data[fld.key] }));
+        return fields.map((fld) => Object.assign({}, fld, { value: data[fld.foreignKey] }));
     }
 }
 

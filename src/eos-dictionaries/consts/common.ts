@@ -1,4 +1,5 @@
 import { IDictionaryDescriptor } from '../core/dictionary-descriptor';
+export const LS_EDIT_CARD = 'lastEditedCard';
 
 /* tslint:disable:max-line-length */
 

@@ -21,6 +21,10 @@
         color: $button-color-main-theme;
         border-color: transparent;
         padding: 1px 6px;
+
+        &:hover {
+            color: $button-color-hover-main-theme;
+        }
     }
 
     /* .btn-icon {
@@ -35,11 +39,21 @@
         background: white;
         padding: 0 4px;
 
-        &:hover,
-        &:active,
-        &:focus {
-            color: white;
-            background: $button-color-main-theme;
+        &:hover {
+            color: $button-color-hover-main-theme;
+            border-color: $button-color-hover-main-theme;
+        }
+    }
+
+    .btn-primary-full {
+        border: 2px solid $button-color-main-theme;
+        background: $button-color-main-theme;
+        color: white;
+        padding: 0 4px;
+
+        &:hover {
+            border-color: $button-color-hover-main-theme;
+            background: $button-color-hover-main-theme;
         }
     }
 
@@ -278,6 +292,10 @@
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
 
+                &.readonly {
+                    background-color: transparent;
+                }
+
                 &.ng-invalid {
                     border-color: $invalid-color-main-theme;
                 }
@@ -291,23 +309,28 @@
         }
     }
 
+    .search-wrapper {
+        .ng-valid {
+            border-color: $border-color-main-theme;
+        }
+    }
+
     // spacial templates
 
     .eos-departments-card-edit {
         .tabs {
-            .tab-item {
-                border-color: $secondary-color-main-theme;
+            border-color: $border-color-main-theme;
 
+            .tab-item {
                 &.active {
-                    background-color: $button-color-main-theme;
-                    border-color: transparent;
-                    color: $block-color-main-theme;
+                    border-color: $button-color-main-theme;
                 }
             }
         }
 
-        .photo {
-            border-color: $secondary-color-main-theme;
+        .block-title {
+            border-color: $border-color-main-theme;
+            color: $unimportant-info-color-main-theme;
         }
     }
 }

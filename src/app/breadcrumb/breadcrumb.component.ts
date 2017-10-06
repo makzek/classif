@@ -17,7 +17,6 @@ export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
     treeOpened = false;
     infoOpened = false;
-
     isDictionaryPage = false;
 
     constructor(
@@ -29,12 +28,6 @@ export class BreadcrumbsComponent {
                 this.breadcrumbs = bc;
             }
         });
-
-        /* this._actSrv.action$.subscribe((action) => {
-             if (action === DICTIONARY_ACTIONS.closeInfo) {
-                 this.infoOpened = false;
-             }
-         });*/
     }
 
     openTree(value: boolean) {

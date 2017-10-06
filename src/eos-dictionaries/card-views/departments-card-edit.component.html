@@ -1,327 +1,408 @@
-<div class="eos-departments-card-edit">
-    <!--<aside *ngIf="dictIdFromDescriptor !== 'departments'" class="edit-aside">
-        <div class="btn-group vertical-buttons" role="group">
-            <button type="button" class="btn btn-default">Что-то ещё</button>
-            <button type="button" class="btn btn-default" (click)="editMode = false" [ngClass]="{'active': !editMode}">Просмотр</button>
-            <button type="button" class="btn btn-default" (click)="editMode = true" [ngClass]="{'active': editMode}">Редактирование</button>
-        </div>
-    </aside>-->
-    <div *ngIf="1 === 1"> <!--TODO: replace with isPerson check -->
+<div class="eos-departments-card-edit edit-content">
+    <!--WARNING: now in create node always form for department because there is not data['IS_NODE']-->
+    <form #departmentsForm="ngForm">
+    <div *ngIf="data['IS_NODE']">
         <ul class="tabs">
             <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
                 (click)="setTab(i)">
-                <span>{{tab}}</span>
+                <span class="tab-title">{{tab}}</span>
             </li>
         </ul>
-        <div class="wrapper" *ngIf="currTab === 0">
-            <div class="col-1">
-                <span class="subcol-3-wrapper">
-                    <div class="input-group subcol-1">
-                        <span class="input-group-addon" id="basic-addon1">Фамилия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Фамилия" aria-describedby="basic-addon1" [(ngModel)]="data['lastName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['lastName']}}</p>
-                    </div>
-                    <div class="input-group subcol-2">
-                        <span class="input-group-addon" id="basic-addon1">Имя:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Имя" aria-describedby="basic-addon1" [(ngModel)]="data['firstName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['firstName']}}</p>
-                    </div>
-                    <div class="input-group subcol-3">
-                        <span class="input-group-addon" id="basic-addon1">Отчество:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Отчество" aria-describedby="basic-addon1" [(ngModel)]="data['fathersName']">
-                        <p *ngIf="!editMode" class="form-control">{{data['fathersName']}}</p>
-                    </div>
-                </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Фамилия И.О.:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Фамилия И.О." aria-describedby="basic-addon1" [(ngModel)]="data['SURNAME']">
-                <p *ngIf="!editMode" class="form-control">{{data['SURNAME']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Краткое наименование должности:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Краткое наименование должности" aria-describedby="basic-addon1" [(ngModel)]="data['CLASSIF_NAME']">
-                <p *ngIf="!editMode" class="form-control">{{data['CLASSIF_NAME']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Полное наименование должности:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Полное наименование должности" aria-describedby="basic-addon1" [(ngModel)]="data['fullPosition']">
-                <p *ngIf="!editMode" class="form-control">{{data['fullPosition']}}</p>
-            </div>
-            <span class="subcol-3-wrapper">
-                <div class="input-group subcol-1">
-                    <span class="input-group-addon" id="basic-addon1">Пол:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Пол" aria-describedby="basic-addon1" [(ngModel)]="data['gender']">
-                    <p *ngIf="!editMode" class="form-control">{{data['gender']}}</p>
+        <div class="wrapper row" *ngIf="currTab === 0">
+            <div class="col-md-3 col-lg-3 col-xl-3">
+                <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
+                    <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
                 </div>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Заместитель:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Заместитель" aria-describedby="basic-addon1" [(ngModel)]="data['alternate']">
-                <p *ngIf="!editMode" class="form-control">{{data['alternate']}}</p>
-             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="data['note']">
-                <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
+                <div class="form-group">
+                    <label for="gender">Пол</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('gender', $event)" 
+                        id="gender" name="gender" type="text" class="form-control" placeholder="Пол" [ngModel]="data['gender']" 
+                        [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="RUBRIC_CODE">Код</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
+                        id="RUBRIC_CODE" name="code" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
+                        [ngClass]="{'readonly': !editMode }" tooltip="Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
+                        pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}">
+                </div>
+                <div class="form-group">
+                    <label for="DEPARTMENT_INDEX">Индекс ДЛ</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('DEPARTMENT_INDEX', $event)" 
+                        id="DEPARTMENT_INDEX" name="DEPARTMENT_INDEX" type="text" class="form-control" placeholder="Индекс ДЛ" [ngModel]="data['DEPARTMENT_INDEX']"
+                        [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="SEV">Индекс СЭВ</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
+                        id="SEV" name="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [ngModel]="data['SEV']" [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="START_DATE">Дата начала действия</label>
+                    <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['START_DATE']"
+                        (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                </div>
+                <div class="form-group">
+                    <label for="END_DATE">Дата окончания действия</label>
+                    <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['END_DATE']"
+                        (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                </div>
             </div>
+            <div class="col-md-9 col-lg-9 col-xl-9">
+                <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('lastName', $event)" 
+                        id="lastName" name="lastName" type="text" class="form-control" placeholder="Фамилия" [ngModel]="data['lastName']" [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="row">
+                    <div class="form-group first-name col-md-6 col-lg-6 col-xl-6">
+                        <label for="firstName">Имя</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('firstName', $event)" 
+                            id="firstName" name="firstName" type="text" class="form-control" placeholder="Имя" [ngModel]="data['firstName']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                    <div class="form-group fathers-name col-md-6 col-lg-6 col-xl-6">
+                        <label for="fathersName">Отчество</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('fathersName', $event)" 
+                            id="fathersName" name="fathersName" type="text" class="form-control" placeholder="Отчество" [ngModel]="data['fathersName']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                </div>
 
-                <span class="subcol-3-wrapper">
-                    <div class="input-group subcol-1">
-                        <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="data" class="form-control" placeholder="Дата начала действия:" aria-describedby="basic-addon1" [(ngModel)]="data['START_DATE']">
-                        <p *ngIf="!editMode" class="form-control">{{data['START_DATE']}}</p>
+                <div class="form-group">
+                    <label for="SURNAME">Фамилия И.О.</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
+                            id="SURNAME" name="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [ngModel]="data['SURNAME']"
+                            required pattern="^\S(.*\S$|$)" tooltip="Обязательное поле" container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="CLASSIF_NAME">Краткое наименование должности</label>
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('CLASSIF_NAME', $event)" id="CLASSIF_NAME" name="position" type="text" class="form-control" 
+                                placeholder="Краткое наименование должности" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)" 
+                                maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов"
+                                container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <span class="checkbox col-md-3 col-lg-3 col-xl-3">
+                            <label><input type="checkbox" name="POST_H" (change)="checkChanges()" [disabled]="!editMode" [ngModel]="data['POST_H']">
+                                <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
+                            </label>
+                        </span>
                     </div>
-                    <div class="input-group subcol-2">
-                        <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="data" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="data['END_DATE']">
-                        <p *ngIf="!editMode" class="form-control">{{data['END_DATE']}}</p>
-                    </div>
-                </span>
+                </div>
+                <div class="form-group">
+                    <label for="fullPosition">Полное наименование должности</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
+                            id="fullPosition" name="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [ngModel]="data['fullPosition']"
+                            maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов"  container="body" 
+                            [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="alternate">Заместитель:</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('alternate', $event)" 
+                            id="alternate" name="alternate" type="text" class="form-control" placeholder="Заместитель" [ngModel]="data['alternate']" [ngClass]="{'readonly': !editMode }">
+                </div>
+                <div class="form-group">
+                    <label for="NOTE">Примичание:</label>
+                    <textarea [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                            id="NOTE" name="NOTE" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                            [ngClass]="{'readonly': !editMode }" rows="5"></textarea>
+                </div>
             </div>
-            <div class="col-2">
-            <span class="photo">
-                <!--<input *ngIf="editMode" (input)="checkChanges()" type="image" [(ngModel)]="data['photo']">
-                <p class="photo" *ngIf="!editMode" class="form-control">{{data['photo']}}</p>-->
-                <eos-photo-uploader *ngIf="editMode" (endUploading)="data['photo'] = $event" [multiple]="true"></eos-photo-uploader>
-            </span>
-            <span class="checkbox">
-                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['POST_H']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                    Начальник
-                </label>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Код:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="data['code']">
-                <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс ДЛ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс ДЛ" aria-describedby="basic-addon1" [(ngModel)]="data['DEPARTMENT_INDEX']">
-                <p *ngIf="!editMode" class="form-control">{{data['DEPARTMENT_INDEX']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="data['SEV']">
-                <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
-            </div>
-        </div>
         </div>
         <div class="wrapper" *ngIf="currTab === 1">
-            <div class="col-1">
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Номер телефона:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Номер телефона" aria-describedby="basic-addon1" [(ngModel)]="data['PHONE']">
-                    <p *ngIf="!editMode" class="form-control">{{data['PHONE']}}</p>
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <div class="form-group">
+                        <label for="NUM_CAB">Кабинет</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('NUM_CAB', $event)" 
+                            id="NUM_CAB" name="NUM_CAB" type="text" class="form-control" placeholder="Кабинет" [ngModel]="data['NUM_CAB']"
+                            [ngClass]="{'readonly': !editMode }">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Номер местного телефона:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Номер местного телефона" aria-describedby="basic-addon1" [(ngModel)]="data['PHONE_LOCAL']">
-                    <p *ngIf="!editMode" class="form-control">{{data['PHONE_LOCAL']}}</p>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="PHONE">Номер телефона</label>
+                                <input [readonly]="!editMode" (ngModelChange)="change('PHONE', $event)" 
+                                    id="PHONE" name="PHONE" type="text" class="form-control" placeholder="Номер телефона" [ngModel]="data['PHONE']" [ngClass]="{'readonly': !editMode }">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <label for="PHONE_LOCAL">Номер местного телефона</label>
+                                <input [readonly]="!editMode"
+                                    (ngModelChange)="change('PHONE_LOCAL', $event)" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control" 
+                                    placeholder="Номер местного телефона" [ngModel]="data['PHONE_LOCAL']" [ngClass]="{'readonly': !editMode }">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group email">
+                        <label for="E_MAIL">E-mail</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('E_MAIL', $event)" 
+                            id="E_MAIL" name="E_MAIL" type="text" class="form-control" placeholder="E-mail" [ngModel]="data['E_MAIL']"
+                            [ngClass]="{'readonly': !editMode }">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">E-mail:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [(ngModel)]="data['E_MAIL']">
-                    <p *ngIf="!editMode" class="form-control">{{data['E_MAIL']}}</p>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Skype:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Skype" aria-describedby="basic-addon1" [(ngModel)]="data['skype']">
-                    <p *ngIf="!editMode" class="form-control">{{data['skype']}}</p>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Факс:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Факс" aria-describedby="basic-addon1" [(ngModel)]="data['FAX']">
-                    <p *ngIf="!editMode" class="form-control">{{data['FAX']}}</p>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">Кабинет:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Кабинет" aria-describedby="basic-addon1" [(ngModel)]="data['NUM_CAB']">
-                    <p *ngIf="!editMode" class="form-control">{{data['NUM_CAB']}}</p>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <div class="form-group">
+                        <label for="FAX">Факс</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('FAX', $event)" 
+                            id="FAX" name="FAX" type="text" class="form-control" placeholder="Факс" [ngModel]="data['FAX']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                    <div class="form-group">
+                        <label for="skype">Skype</label>
+                        <input [readonly]="!editMode" (ngModelChange)="change('skype', $event)" 
+                            id="skype" name="skype" type="text" class="form-control" placeholder="Skype" [ngModel]="data['skype']" 
+                            [ngClass]="{'readonly': !editMode }">
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="wrapper" *ngIf="currTab === 2">
             <div class="col-1">
-                <span class="block-title">Склонение должности:</span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Родительный падеж (кого, чего):</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, чего)" aria-describedby="basic-addon1" [(ngModel)]="data['shortPositionRP']">
-                        <p *ngIf="!editMode" class="form-control">{{data['shortPositionRP']}}</p>
-                    </div>
-                </span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Дательный падеж (кому, чему):</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Дательный падеж (кому, чему)" aria-describedby="basic-addon1" [(ngModel)]="data['shortPositionDP']">
-                        <p *ngIf="!editMode" class="form-control">{{data['shortPositionDP']}}</p>
-                    </div>
-                </span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Винительный падеж (кого, что):</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Родительный падеж (кого, что)" aria-describedby="basic-addon1" [(ngModel)]="data['shortPositionVP']">
-                        <p *ngIf="!editMode" class="form-control">{{data['shortPositionVP']}}</p>
-                    </div>
-                </span>
+                <span class="block-title">Склонение должности</span>
 
-                <span class="block-title">Склонение фамилии, имени, отчества:</span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Фамилия И.О., дат. падеж:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Фамилия И.О., дат. падеж" aria-describedby="basic-addon1" [(ngModel)]="data['fioDP']">
-                        <p *ngIf="!editMode" class="form-control">{{data['fioDP']}}</p>
+                    <div class="form-group">
+                        <label for="shortPositionRP">Родительный падеж (кого, чего?)</label>
+                        <input [readonly]="!editMode" 
+                            (ngModelChange)="change('shortPositionRP', $event)" id="shortPositionRP" name="shortPositionRP" type="text" 
+                            class="form-control" placeholder="Родительный падеж (кого, чего)" [ngModel]="data['shortPositionRP']"
+                            [ngClass]="{'readonly': !editMode }">
                     </div>
-                </span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">И.О. Фамилия:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="И.О. Фамилия" aria-describedby="basic-addon1" [(ngModel)]="data['iof']">
-                        <p *ngIf="!editMode" class="form-control">{{data['iof']}}</p>
+
+                    <div class="form-group">
+                        <label for="shortPositionDP">Дательный падеж (кому, чему?)</label>
+                        <input [readonly]="!editMode" 
+                            (ngModelChange)="change('shortPositionDP', $event)" id="shortPositionDP" name="shortPositionDP" type="text" 
+                            class="form-control" placeholder="Дательный падеж (кому, чему)" [ngModel]="data['shortPositionDP']" [ngClass]="{'readonly': !editMode }">
                     </div>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1"></span>
-                    <span class="subcol-2">Фамилия</span>
-                    <span class="subcol-3">Имя</span>
-                    <span class="subcol-4">Отчество</span>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1">Род. падеж (кого)</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-2" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['lastNameRP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-3" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['firstNameRP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-4" placeholder="Род. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['fathersNameRP']">
-                    <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameRP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameRP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameRP']}}</p>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1">Дат. падеж (кому)</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-2" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="data['lastNameDP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-3" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="data['firstNameDP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-4" placeholder="Дат. падеж (кому)" aria-describedby="basic-addon1" [(ngModel)]="data['fathersNameDP']">
-                    <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameDP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameDP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameDP']}}</p>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1">Вин. падеж (кого)</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-2" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['lastNameVP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-3" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['firstNameVP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-4" placeholder="Вин. падеж (кого)" aria-describedby="basic-addon1" [(ngModel)]="data['fathersNameVP']">
-                    <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameVP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameVP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameVP']}}</p>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1">Твор. падеж (кем)</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-2" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="data['lastNameTP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-3" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="data['firstNameTP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-4" placeholder="Твор. падеж (кем)" aria-describedby="basic-addon1" [(ngModel)]="data['fathersNameTP']">
-                    <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNameTP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNameTP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNameTP']}}</p>
-                </span>
-                <span class="subcol-4-wrapper">
-                    <span class="subcol-1">Пр. падеж (о ком)</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-2" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="data['lastNamePP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-3" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="data['firstNamePP']">
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control subcol-4" placeholder="Пр. падеж (о ком)" aria-describedby="basic-addon1" [(ngModel)]="data['fathersNamePP']">
-                    <p *ngIf="!editMode" class="form-control subcol-2">{{data['lastNamePP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-3">{{data['firstNamePP']}}</p>
-                    <p *ngIf="!editMode" class="form-control subcol-4">{{data['fathersNamePP']}}</p>
-                </span>
-                <span class="block-title">Данные для формирования поручений:</span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Должность:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Должность" aria-describedby="basic-addon1" [(ngModel)]="data['shortPosition']">
-                        <p *ngIf="!editMode" class="form-control">{{data['shortPosition']}}</p>
+
+                    <div class="form-group">
+                        <label for="shortPositionVP">Винительный падеж (кого, что?)</label>
+                        <input [readonly]="!editMode" 
+                            (ngModelChange)="change('shortPositionVP', $event)" id="shortPositionVP" name="shortPositionVP" type="text" 
+                            class="form-control" placeholder="Винительный падеж (кого, что)" [ngModel]="data['shortPositionVP']" [ngClass]="{'readonly': !editMode }">
                     </div>
-                </span>
-                <span class="subcol-3-wrapper">
-                    <div class="input-group dbl-subcol">
-                        <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
-                        <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Подразделение" aria-describedby="basic-addon1" [(ngModel)]="data['department']">
-                        <p *ngIf="!editMode" class="form-control">{{data['department']}}</p>
+
+                <span class="block-title">Склонение фамилии, имени, отчества</span>            
+                <div class="form-group">
+                    <label for="fioDP">Фамилия И.О. в дательном падеже</label>
+                    <input [readonly]="!editMode" 
+                        (ngModelChange)="change('fioDP', $event)" id="fioDP" name="fioDP" type="text" 
+                        class="form-control" placeholder="Фамилия И.О., дат. падеж" [ngModel]="data['fioDP']" [ngClass]="{'readonly': !editMode }">
+                </div>                
+                <div class="form-group">
+                    <label for="iof">И.О. Фамилия в дательном падеже</label>
+                    <input [readonly]="!editMode" 
+                        (ngModelChange)="change('iof', $event)" id="iof" name="iof" type="text" 
+                        class="form-control" placeholder="И.О. Фамилия" [ngModel]="data['iof']" [ngClass]="{'readonly': !editMode }">
+                </div>
+               
+                <div class="form-group">
+                    <label for="lastNameRP">Родительный падеж (кого?)</label>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('lastNameRP', $event)" id="lastNameRP" name="lastNameRP" type="text" 
+                                class="form-control" placeholder="Фамилия" [ngModel]="data['lastNameRP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('firstNameRP', $event)" id="firstNameRP" name="firstNameRP" type="text" 
+                                class="form-control" placeholder="Имя" [ngModel]="data['firstNameRP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input class="col-md-3 col-lg-3 col-xl-3" [readonly]="!editMode" 
+                                (ngModelChange)="change('fathersNameRP', $event)" id="fathersNameRP" name="fathersNameRP" type="text" 
+                                class="form-control" placeholder="Отчество" [ngModel]="data['fathersNameRP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
                     </div>
-                </span>
+                </div>
+                <div class="form-group">
+                    <label for="lastNameDP">Дательный падеж (кому?)</label>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('lastNameDP', $event)" id="lastNameDP" name="lastNameDP" type="text" 
+                                class="form-control" placeholder="Фамилия" [ngModel]="data['lastNameDP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('firstNameDP', $event)" id="firstNameDP" name="firstNameDP" type="text" 
+                                class="form-control" placeholder="Имя" [ngModel]="data['firstNameDP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input class="col-md-3 col-lg-3 col-xl-3" [readonly]="!editMode" 
+                                (ngModelChange)="change('fathersNameDP', $event)" id="fathersNameDP" name="fathersNameDP" type="text" 
+                                class="form-control" placeholder="Отчество" [ngModel]="data['fathersNameDP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastNameVP">Винительный падеж (кого?)</label>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('lastNameVP', $event)" id="lastNameVP" name="lastNameVP" type="text" 
+                                class="form-control" placeholder="Фамилия" [ngModel]="data['lastNameVP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('firstNameVP', $event)" id="firstNameVP" name="firstNameVP" type="text" 
+                                class="form-control" placeholder="Имя" [ngModel]="data['firstNameVP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input class="col-md-3 col-lg-3 col-xl-3" [readonly]="!editMode" 
+                                (ngModelChange)="change('fathersNameVP', $event)" id="fathersNameVP" name="fathersNameVP" type="text" 
+                                class="form-control" placeholder="Отчество" [ngModel]="data['fathersNameVP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastNameTP">Творительный падеж (кем?)</label>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('lastNameTP', $event)" id="lastNameTP" name="lastNameTP" type="text" 
+                                class="form-control" placeholder="Фамилия" [ngModel]="data['lastNameTP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('firstNameTP', $event)" id="firstNameTP" name="firstNameTP" type="text" 
+                                class="form-control" placeholder="Имя" [ngModel]="data['firstNameTP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input class="col-md-3 col-lg-3 col-xl-3" [readonly]="!editMode" 
+                                (ngModelChange)="change('fathersNameTP', $event)" id="fathersNameTP" name="fathersNameTP" type="text" 
+                                class="form-control" placeholder="Отчество" [ngModel]="data['fathersNameTP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastNamePP">Предложный падеж (о ком?)</label>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('lastNamePP', $event)" id="lastNamePP" name="lastNamePP" type="text" 
+                                class="form-control" placeholder="Фамилия" [ngModel]="data['lastNamePP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input [readonly]="!editMode" 
+                                (ngModelChange)="change('firstNamePP', $event)" id="firstNamePP" name="firstNamePP" type="text" 
+                                class="form-control" placeholder="Имя" [ngModel]="data['firstNamePP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <input class="col-md-3 col-lg-3 col-xl-3" [readonly]="!editMode" 
+                                (ngModelChange)="change('fathersNamePP', $event)" id="fathersNamePP" name="fathersNamePP" type="text" 
+                                class="form-control" placeholder="Отчество" [ngModel]="data['fathersNamePP']" [ngClass]="{'readonly': !editMode }">
+                        </div>
+                    </div>
+                </div>
+                <span class="block-title">Данные для формирования поручений</span>
+                <div class="form-group">
+                    <div class="input-group dbl-subcol">
+                        <label for="shortPosition">Должность</label>
+                        <input [readonly]="!editMode" 
+                            (ngModelChange)="change('shortPosition', $event)" id="shortPosition" name="shortPosition" type="text" 
+                            class="form-control" placeholder="Должность" [ngModel]="data['shortPosition']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group dbl-subcol">
+                        <label for="department">Подразделение</label>
+                        <input [readonly]="!editMode" 
+                            (ngModelChange)="change('department', $event)" id="department" name="department" type="text" 
+                            class="form-control" placeholder="Подразделение" [ngModel]="data['department']" [ngClass]="{'readonly': !editMode }">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div *ngIf="1 !== 1" class="wrapper"><!--TODO: replace with isDepartment check -->
-        <div class="col-1">
-            <span class="subcol-3-wrapper">
-                <div class="input-group subcol-1">
-                    <span class="input-group-addon" id="basic-addon1">Код:</span>
-                    <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Код" aria-describedby="basic-addon1" [(ngModel)]="data['code']">
-                    <p *ngIf="!editMode" class="form-control">{{data['code']}}</p>
-                </div>
-            </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Краткое наименование:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Краткое наименование" aria-describedby="basic-addon1" [(ngModel)]="data['title']">
-                <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
+    <div *ngIf="!data['IS_NODE']" class="wrapper row">
+        <div class="col-md-3 col-lg-3 col-xl-3">
+            <div class="form-group">
+                <label for="RUBRIC_CODE">Код</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
+                    id="RUBRIC_CODE" name="RUBRIC_CODE_DEP" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
+                    tooltip="Максимальная длинна {{codeLenth}} символов" [isDisabled]="!editMode" placement="right" container="body"
+                    [ngClass]="{'readonly': !editMode }" pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}" >
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Полное наименование:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Полное наименование" aria-describedby="basic-addon1" [(ngModel)]="data['description']">
-                <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
+            <div class="form-group">
+                <label for="INDEX">Индекс:</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('INDEX', $event)" 
+                    id="INDEX" name="INDEX_DEP" type="text" class="form-control" placeholder="Индекс" [ngModel]="data['INDEX']"
+                    [ngClass]="{'readonly': !editMode }">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Организация:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Организация" aria-describedby="basic-addon1" [(ngModel)]="data['organization']">
-                <p *ngIf="!editMode" class="form-control">{{data['organization']}}</p>
+            <div class="form-group">
+                <label for="SEV">Индекс СЭВ</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
+                    id="SEV" name="SEV_DEP" type="text" class="form-control" placeholder="Индекс СЭВ" [ngModel]="data['SEV']"
+                    [ngClass]="{'readonly': !editMode }">
+            </div>
+            <div class="form-group">
+                <label for="START_DATE">Дата начала действия</label>
+                <eos-datepicker [placeholder]="'Дата начала действия'" [value]="data['START_DATE']"
+                    (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+            </div>
+            <div class="form-group">
+                <label for="END_DATE">Дата окончания действия</label>
+                <eos-datepicker [placeholder]="'Дата окончания действия'" [value]="data['END_DATE']"
+                    (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
             </div>
             <span class="checkbox">
-                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['file']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
+                <label><input type="checkbox" name="CARD_FLAG" (change)="checkChanges()" [disabled]="!editMode" [ngModel]="data['CARD_FLAG']">
+                    <span></span>
                     Картотека</label>
             </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Наименование картотеки:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Наименование картотеки" aria-describedby="basic-addon1" [(ngModel)]="data['fileName']">
-                <p *ngIf="!editMode" class="form-control">{{data['fileName']}}</p>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Примичание:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Примичание" aria-describedby="basic-addon1" [(ngModel)]="data['note']">
-                <p *ngIf="!editMode" class="form-control">{{data['note']}}</p>
-            </div>
         </div>
-        <div class="col-2">
+        <div class="col-md-9 col-lg-9 col-xl-9">
+            <div class="form-group"> 
+                <label for="CLASSIF_NAME">Краткое наименование подразделения</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
+                        id="CLASSIF_NAME" name="CLASSIF_NAME_DEP" type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']"
+                        required pattern="^\S(.*\S$|$)" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" 
+                        container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+            </div>
             <span class="checkbox">
-                <label><input type="checkbox" (change)="checkChanges()" [disabled]="!editMode" [(ngModel)]="data['notInPositionTitle']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>
-                    Не использовать подразделение в названии должности</label>
+                <label><input type="checkbox" name="notInPositionTitle" (change)="checkChanges()" [disabled]="!editMode" [ngModel]="data['notInPositionTitle']">
+                    <span></span>
+                        Не использовать подразделение в названии должности</label>
             </span>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Подразделение в родительном падеже:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Подразделение в родительном падеже" aria-describedby="basic-addon1" [(ngModel)]="data['titleRP']">
-                <p *ngIf="!editMode" class="form-control">{{data['titleRP']}}</p>
+            <div class="form-group full-position">
+                    <label for="fullPosition">Полное наименование подразделения</label>
+                    <textarea [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
+                            id="fullPosition" name="fullPosition_DEP" type="text" class="form-control" placeholder="Полное наименование" [ngModel]="data['fullPosition']"
+                            maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" 
+                            container="body" placement="right" [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс" aria-describedby="basic-addon1" [(ngModel)]="data['index']">
-                <p *ngIf="!editMode" class="form-control">{{data['index']}}</p>
+            <div class="form-group">
+                <label for="titleRP">Наименование в родительном падеже (чего?)</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('titleRP', $event)" 
+                       id="titleRP" name="titleRP" type="text" class="form-control" placeholder="Подразделение в родительном падеже" [ngModel]="data['titleRP']"
+                       [ngClass]="{'readonly': !editMode }">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Индекс СЭВ:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="text" class="form-control" placeholder="Индекс СЭВ" aria-describedby="basic-addon1" [(ngModel)]="data['SEV']">
-                <p *ngIf="!editMode" class="form-control">{{data['SEV']}}</p>
+            <div class="form-group">
+                <label for="DUE_LINK_ORGANIZ">Организация</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)" 
+                        id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control" placeholder="Организация" 
+                        [ngModel]="data['DUE_LINK_ORGANIZ']" [ngClass]="{'readonly': !editMode }">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Дата начала действия:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="date" class="form-control" placeholder="Дата начала действия" aria-describedby="basic-addon1" [(ngModel)]="data['startDate']">
-                <p *ngIf="!editMode" class="form-control">{{data['startDate']}}</p>
+            <div class="form-group">
+                <label for="CARD_NAME">Наименование картотеки</label>
+                <input [readonly]="!editMode" (ngModelChange)="change('CARD_NAME', $event)" 
+                        id="CARD_NAME" name="CARD_NAME" type="text" class="form-control" placeholder="Наименование картотеки" [ngModel]="data['CARD_NAME']"
+                        [ngClass]="{'readonly': !editMode }">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Дата окончания действия:</span>
-                <input *ngIf="editMode" (input)="checkChanges()" type="date" class="form-control" placeholder="Дата окончания действия" aria-describedby="basic-addon1" [(ngModel)]="data['endDate']">
-                <p *ngIf="!editMode" class="form-control">{{data['endDate']}}</p>
+            <div class="form-group">
+                <label for="NOTE">Примичание</label>
+                <textarea [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
+                        id="NOTE" name="NOTE_DEP" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                        [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
         </div>
     </div>
+    </form>
 </div>

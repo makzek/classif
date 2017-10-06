@@ -1,0 +1,5 @@
+<div class="eos-datepicker">
+    <input readonly type="text" class="datepicker-input form-control" placeholder="{{placeholder}}" value="{{value | date:'dd.MM.yyyy'}}" [ngClass]="{'readonly': readonly }" (focus)="changeState()">
+        <span *ngIf="!readonly" class="eos-icon eos-icon-calendar-blue small icon" (click)="changeState()"></span>
+        <datepicker [hidden]="hideCalendar" #dp [ngModel]="value" (ngModelChange)="updateValue($event, dp)" [startingDay]="1" [showWeeks]="false"></datepicker>
+</div>

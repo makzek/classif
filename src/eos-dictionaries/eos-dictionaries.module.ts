@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
+import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { APP_CONFIG } from '../app/app.config';
 import { AppRoutingModule } from '../app/app-routing.module';
@@ -28,7 +29,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-import { CardActionService } from './card/card-action.service';
+// import { CardActionService } from './card/card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -59,6 +60,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
+        DatepickerModule.forRoot(),
     ],
     exports: [
         DepartmentsCardEditComponent,
@@ -79,7 +81,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         EosDictService,
         EosDictOrderService,
         NodeActionsService,
-        CardActionService,
+        // CardActionService,
         DictionaryActionService,
     ],
 })

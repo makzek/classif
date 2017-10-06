@@ -1,34 +1,38 @@
-<div class="rubricator-card-edit" *ngIf="data">
+<div class="rubricator-card-edit">
     <article class="edit-content">
-        <div class="form form-horizontal">
-            <div class="form-group">
-                <label for="code">Код:</label>
-                <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" [eosInputCleaner]="editMode" (formCleaned)="clean('RUBRIC_CODE', $event)" id="code"
-                    type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']">
-            </div>
-            <div class="form-group">
-                <label for="title">Краткое наименование:</label>
-                <input [eosInputCleaner]="editMode" (formCleaned)="clean('CLASSIF_NAME', $event)" [readonly]="!editMode" 
-                    (ngModelChange)="change('CLASSIF_NAME', $event)" id="title"
-                    type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required 
-                    maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
-            </div>
-            <div class="form-group">
-                <label for="description">Полное наименование:</label>
-                <input [eosInputCleaner]="editMode" (formCleaned)="clean('NOTE', $event)" [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
-                id="description" type="text" class="form-control" placeholder="Полное наименование" [(ngModel)]="data['NOTE']" 
-                maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
-            </div>
-            <!--<div class="form-group">
-                <label for="note">Примечание:</label>
-                <input *ngIf="editMode" (input)="checkChanges()" id="note" type="text" class="form-control" placeholder="Примечание" [(ngModel)]="data['note']">
-                <p *ngIf="!editMode && data['note']">{{data['note']}}</p>
-            </div>
-            <div class="form-group">
-                <label for="SEV">Индекс СЭВ:</label>
-                <input *ngIf="editMode" (input)="checkChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
-                <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
-            </div>-->
-        </div>
+        <form #rubricatorForm="ngForm"  class="form form-horizontal">
+                <div class="form-group">
+                    <label for="code">Код:</label>
+                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event, rubricatorForm.invalid)" id="code" name="code"
+                        type="text" class="form-control" placeholder="Код" required pattern="^\S(.*\S$|$)" 
+                        tooltip="Обязательное поле. Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
+                        maxlength="{{codeLenth}}" [ngModel]="data['RUBRIC_CODE']">
+                </div>
+                <div class="form-group">
+                    <label for="title">Краткое наименование:</label>
+                    <input [readonly]="!editMode" 
+                        (ngModelChange)="change('CLASSIF_NAME', $event, rubricatorForm.invalid)" id="title" name="title"
+                        type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)"
+                        maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                </div>
+                <div class="form-group">
+                    <label for="description">Полное наименование:</label>
+                    <input [readonly]="!editMode" 
+                    (ngModelChange)="change('NOTE', $event, rubricatorForm.invalid)" id="description" name="description" type="text" class="form-control" 
+                    placeholder="Полное наименование" [ngModel]="data['NOTE']" maxlength="{{descriptionLength}}" 
+                    tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
+                </div>
+
+                <!--<div class="form-group">
+                    <label for="note">Примечание:</label>
+                    <input *ngIf="editMode" (input)="checkChanges()" id="note" type="text" class="form-control" placeholder="Примечание" [(ngModel)]="data['note']">
+                    <p *ngIf="!editMode && data['note']">{{data['note']}}</p>
+                </div>
+                <div class="form-group">
+                    <label for="SEV">Индекс СЭВ:</label>
+                    <input *ngIf="editMode" (input)="checkChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
+                    <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
+                </div>-->
+        </form>
     </article>
 </div>

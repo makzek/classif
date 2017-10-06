@@ -78,13 +78,17 @@ export class EosDictionary {
 
     updateNodes(data: any[]) {
         data.forEach((nodeData) => {
-            const nodeId = nodeData[this.descriptor.record.keyField.key];
-            let _node = this._nodes.get(nodeId);
-            if (_node) {
-                _node.updateData(nodeData);
+            if (nodeData) {
+                const nodeId = nodeData[this.descriptor.record.keyField.key];
+                let _node = this._nodes.get(nodeId);
+                if (_node) {
+                    _node.updateData(nodeData);
+                } else {
+                    _node = new EosDictionaryNode(this.descriptor.record, nodeData);
+                    this._nodes.set(_node.id, _node);
+                }
             } else {
-                _node = new EosDictionaryNode(this.descriptor.record, nodeData);
-                this._nodes.set(_node.id, _node);
+                console.log('no data');
             }
         });
 

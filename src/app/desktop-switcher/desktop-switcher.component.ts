@@ -1,5 +1,5 @@
 import { Component, ViewChild, HostListener } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 import { EosDeskService } from '../services/eos-desk.service';
@@ -43,7 +43,8 @@ export class DesktopSwitcherComponent {
     constructor(private _deskSrv: EosDeskService,
         // private _router: Router,
         private _msgSrv: EosMessageService,
-        private _confirmSrv: ConfirmWindowService
+        private _confirmSrv: ConfirmWindowService,
+        private _router: Router
     ) {
         this._deskSrv.desksList.subscribe(
             (res) => {
@@ -185,6 +186,12 @@ export class DesktopSwitcherComponent {
                 }
             });
             return edited > 0;
+        }
+    }
+    private route(desk: EosDesk): void {
+        if (desk.edited === false) {
+            this._router.navigate(['/desk', desk.id]);
+            this.hideDropDown();
         }
     }
 }

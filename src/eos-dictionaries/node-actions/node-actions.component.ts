@@ -13,7 +13,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
+// import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
 
@@ -61,11 +61,10 @@ export class NodeActionsComponent implements OnDestroy {
     private _userSettingsSubscription: Subscription;
     private _dictionarySubscription: Subscription;
 
-    newNodeData: any;
+    newNodeData: any = {};
+    private editMode = true;
 
     @ViewChild('creatingModal') public creatingModal: ModalDirective;
-    @ViewChild('onlyEdit') public modalOnlyRef: ModalDirective;
-
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
         return !~this.fields.findIndex((f) => f.value);
@@ -74,7 +73,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     @HostListener('window:click', [])
     private _closeSearchModal(): void {
-        if ( ! this.innerClick) {
+        if (!this.innerClick) {
             this.dropdownIsOpen = false;
         }
         this.innerClick = false;
@@ -85,7 +84,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
-        private _editActSrv: CardActionService) {
+    ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
@@ -108,21 +107,17 @@ export class NodeActionsComponent implements OnDestroy {
         this._dictionarySubscription.unsubscribe();
     }
 
-    actionHandler (type: E_RECORD_ACTIONS) {
+    doAction(type: E_RECORD_ACTIONS) {
         switch (type) {
             case E_RECORD_ACTIONS.add:
+                this.newNodeData = {};
                 this.creatingModal.show();
-                this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
                 break;
 
-            case E_RECORD_ACTIONS.edit:
-                this.editNode();
-                break;
-            //
             case E_RECORD_ACTIONS.markOne:
                 this.itemIsChecked = true;
                 this.checkAll = false;
@@ -147,7 +142,7 @@ export class NodeActionsComponent implements OnDestroy {
                 }
                 break;
 
-                case E_RECORD_ACTIONS.markRoot:
+            case E_RECORD_ACTIONS.markRoot:
                 this.rootSelected = true;
                 if (this.allChildrenSelected) {
                     this.checkAll = true;
@@ -158,7 +153,7 @@ export class NodeActionsComponent implements OnDestroy {
                 }
                 break;
 
-                case E_RECORD_ACTIONS.unmarkRoot:
+            case E_RECORD_ACTIONS.unmarkRoot:
                 this.rootSelected = false;
                 if (this.allChildrenSelected || this.someChildrenSelected) {
                     this.itemIsChecked = true;
@@ -169,13 +164,10 @@ export class NodeActionsComponent implements OnDestroy {
                 }
                 break;
             //
-            default:
-                this.onAction.emit(type);
-                break;
         }
     }
 
-    isEnabled (group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
+    isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
         if (this.dictionary) {
             switch (type) {
                 case E_RECORD_ACTIONS.moveUp:
@@ -232,45 +224,31 @@ export class NodeActionsComponent implements OnDestroy {
         this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
     }
 
-    create() {
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this.creatingModal.hide();
-    }
-
-    dataChanged(isChanged: boolean) {
-        console.log('new data changed');
-    }
-
-    saveNewNode(data: any) {
-        const newNode = this._dictSrv.getEmptyNode();
-        this._dictSrv.updateNode(data);
-        let title = '';
-        newNode.getShortQuickView().forEach((_f) => {
-            title += data[_f.key];
-        });
-        this._deskSrv.addRecentItem({
-            link: '/spravochniki/' + this.dictionary.id + '/' + newNode.id,
-            title: title,
-        });
-    }
-
-    createOneMore() {
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
+    create(hide = true) {
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
+        this._dictSrv.addNode(this.newNodeData)
+            .then((node) => {
+                console.log('created node', node);
+                let title = '';
+                node.getShortQuickView().forEach((_f) => {
+                    title += this.newNodeData[_f.key];
+                });
+                this._deskSrv.addRecentItem({
+                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
+                    title: title,
+                });
+                if (hide) {
+                    this.creatingModal.hide();
+                }
+                this.newNodeData = {};
+            });
     }
 
     cancelCreate() {
         this.creatingModal.hide();
-        this._editActSrv.emitAction(EDIT_CARD_ACTIONS.makeEmptyObject);
     }
 
-    editNode() {
-        /* forbid to open a card in the edit mode if there is another card opened */
-        this.lastEditedCard = JSON.parse(localStorage.getItem('lastEditedCard'));
-        if (this.lastEditedCard) {
-            this.modalOnlyRef.show();
-        } else {
-            this.onAction.emit(E_RECORD_ACTIONS.edit);
-        }
+    dataSeted(date: Date) {
+        console.log('recive date: ', date);
     }
 }

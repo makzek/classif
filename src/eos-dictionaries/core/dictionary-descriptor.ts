@@ -89,6 +89,7 @@ export abstract class DictionaryDescriptor {
             this.id = data.id;
             this.title = data.title;
             this.apiInstance = data.apiInstance;
+            data = this._fillForeignKey(data);
             this._init(data);
             this._initActions(data);
             this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/], data);
@@ -96,6 +97,17 @@ export abstract class DictionaryDescriptor {
         } else {
             return undefined;
         }
+    }
+
+    private _fillForeignKey(data: IDictionaryDescriptor): IDictionaryDescriptor {
+        // console.log('dict descript', data);
+        data.fields.forEach(field => {
+            if (!field.foreignKey) {
+                field.foreignKey = field.key;
+            }
+        });
+
+        return data;
     }
 
     canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
@@ -165,19 +177,19 @@ export abstract class DictionaryDescriptor {
     private _initActions(data: IDictionaryDescriptor) {
         const actKeys = ['actions', 'itemActions', 'groupActions'];
 
-        actKeys.forEach((key) => {
-            this[key] = [];
-            if (data[key]) {
-                data[key].forEach((actName) => this._addAction(actName, this[key]));
+        actKeys.forEach((foreignKey) => {
+            this[foreignKey] = [];
+            if (data[foreignKey]) {
+                data[foreignKey].forEach((actName) => this._addAction(actName, this[foreignKey]));
             }
         })
     }
 
     protected _initFieldSets(fsKeys: string[], data: IDictionaryDescriptor) {
-        fsKeys.forEach((key) => {
-            this[key] = [];
-            if (data[key]) {
-                data[key].forEach((fldName) => this.record.addFieldToSet(fldName, this[key]));
+        fsKeys.forEach((foreignKey) => {
+            this[foreignKey] = [];
+            if (data[foreignKey]) {
+                data[foreignKey].forEach((fldName) => this.record.addFieldToSet(fldName, this[foreignKey]));
             }
         });
     }

@@ -2,7 +2,6 @@ import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
@@ -44,14 +43,7 @@ export class DictionaryComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _route: ActivatedRoute,
         private _actSrv: DictionaryActionService,
-        private _profileSrv: EosUserProfileService
     ) {
-        _profileSrv.authorized$.subscribe((auth) => {
-            if (auth) {
-                this._update();
-            }
-        });
-
         this._route.params.subscribe((params) => {
             if (params) {
                 this._dictionaryId = params.dictionaryId;
@@ -76,7 +68,7 @@ export class DictionaryComponent implements OnDestroy {
             this._swichCurrentState(action);
         });
 
-        this. currentState = this._actSrv.state;
+        this.currentState = this._actSrv.state;
 
     }
 
@@ -130,9 +122,7 @@ export class DictionaryComponent implements OnDestroy {
         if (this._dictionaryId) {
             this._dictSrv.openDictionary(this._dictionaryId)
                 .then(() => {
-                    if (this._nodeId) {
-                        this._dictSrv.selectNode(this._dictionaryId, this._nodeId);
-                    }
+                    this._dictSrv.selectNode(this._dictionaryId, this._nodeId);
                 });
         }
     }

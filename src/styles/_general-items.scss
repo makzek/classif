@@ -7,6 +7,26 @@
         &:checked + span {
             background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
         }
+
+        & + span {
+            margin-right: 6px;
+            margin-bottom: -3px;
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+            background-size: cover;
+            background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
+        }
+
+        &[disabled] {
+            & + span {
+                background-image: url("../assets/icons/Minus-Grey.svg");
+            }
+
+            &:checked + span {
+                background-image: url("../assets/icons/Checkbox-Grey.svg");
+            }
+        }
     }
 
     label {
@@ -19,7 +39,13 @@
         &:checked + span {
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
+
+        & + span {
+            margin-right: 6px;
+            margin-bottom: -3px;
+        }
     }
+
 }
 
 .modal-body {

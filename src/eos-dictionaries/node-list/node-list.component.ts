@@ -74,7 +74,6 @@ export class NodeListComponent implements OnDestroy {
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.viewFields = dictionary.descriptor.getFieldSet(E_FIELD_SET.list);
                     this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
             },
@@ -84,6 +83,7 @@ export class NodeListComponent implements OnDestroy {
         this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
+                this.viewFields = node.getListView();
                 /*if (node.children) {
                     this._update(node.children, true);
                 } else {

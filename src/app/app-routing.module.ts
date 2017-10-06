@@ -6,8 +6,11 @@ import { DictionaryComponent } from '../eos-dictionaries/dictionary/dictionary.c
 import { CardComponent } from '../eos-dictionaries/card/card.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { DesktopComponent } from './desktop/desktop.component';
+
 import { DeliveryComponent } from '../eos-rest/clman/delivery.component';
 import { RubricComponent } from '../eos-rest/clman/rubric.component';
+import { DepartmentComponent } from '../eos-rest/clman/department.component';
+import { UserRestComponent } from '../eos-rest/clman/user.component';
 
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { AuthGuard } from './guards/eos-auth.guard';
@@ -23,10 +26,10 @@ const routes: Routes = [{
         canActivate: [AuthGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true },
+        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true },
+            data: { title: 'Запись', showInBreadcrumb: true },
             children: [{
                 path: '',
                 component: DictionaryComponent,
@@ -36,13 +39,13 @@ const routes: Routes = [{
                 path: 'edit',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Редактирование', showInBreadcrumb: true },
+                data: { title: 'Редактирование', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Просмотр', showInBreadcrumb: true },
+                data: { title: 'Просмотр', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
             }],
         }, {
             path: '',
@@ -52,7 +55,7 @@ const routes: Routes = [{
     }],
 }, {
     path: 'desk',
-    data: { title: 'Рабочий стол', showInBreadcrumb: true },
+    data: { title: 'Главная', showInBreadcrumb: false },
     children: [{
         path: '',
         pathMatch: 'full',
@@ -60,7 +63,7 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Рабочий стол', showInBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false }
     }]
 }, {
     path: 'test',
@@ -76,6 +79,16 @@ const routes: Routes = [{
     canActivate: [AuthGuard],
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
+}, {
+    path: 'department',
+    canActivate: [AuthGuard],
+    component: DepartmentComponent,
+    data: { title: 'department page', showInBreadcrumb: true }
+}, {
+    path: 'user',
+    canActivate: [AuthGuard],
+    component: UserRestComponent,
+    data: { title: 'user page', showInBreadcrumb: true }
 }, {
     path: '',
     redirectTo: '/desk',

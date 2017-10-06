@@ -142,6 +142,19 @@ export class Utils {
         return chr;
     }
 
+    static invokeSop(chr, name, args, method = 'POST') {
+        const ar = [];
+        // tslint:disable-next-line:forin
+        for (const k in args) {
+            const quot = typeof (args[k]) === 'string' ?  '\'' : '';
+            ar.push(k + '=' + quot + encodeURIComponent(args[k]) + quot);
+        }
+
+        chr.push({
+            requestUri: name + '?' + ar.join('&'),
+            method: method
+        });
+    }
     /*
     static IsModified(it: IEnt, orig?: IEnt, propNames?: string[]) {
         orig = orig || it._orig;

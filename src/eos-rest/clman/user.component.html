@@ -1,18 +1,15 @@
-﻿
-<span>{{username}}</span>
-<img src='http://localhost/Eos.Delo.OData/image.ashx/7'/>
-
+﻿<span>{{username}}</span>
+<img [src]="userPhotoUrl">
 <button (click)="getData()">Get data</button>
 <div style="width:340px;height:600px;float:left;">
     Рубрики <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>
-    <ul >
-        <li *ngFor="let item of items" (click)="onSelect(item)" ><span *ngFor="let s of item.DUE.split('.')">&nbsp;&nbsp;</span><span>{{item.CLASSIF_NAME}}</span></li>
+    <ul>
+        <li *ngFor="let item of items" (click)="onSelect(item)"><span *ngFor="let s of item.DUE.split('.')">&nbsp;&nbsp;</span><span>{{item.CLASSIF_NAME}}</span></li>
     </ul>
 </div>
 
 <div *ngIf="currentItem" style="float: right;border:1px gray;width:300px;">
-    <hr/>
-    current item
+    <hr/> current item
     <h2>{{currentItem.CLASSIF_NAME}} details!</h2>
     <div><label>id: </label>{{currentItem.DUE}}</div>
     <div>
@@ -24,4 +21,3 @@
     </div>
     <div style="border:1px rised gray" (click)="onSave()">Сохранить</div>
 </div>
-

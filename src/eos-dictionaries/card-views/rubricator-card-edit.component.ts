@@ -1,18 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 
 import { CardEditComponent } from './card-edit.component';
-import { TITLE_LENGTH, DESCRIPTION_LENGTH } from '../consts/input-validation';
+import { Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'eos-rubricator-card-edit',
     templateUrl: 'rubricator-card-edit.component.html',
 })
-export class RubricatorCardEditComponent extends CardEditComponent {
+export class RubricatorCardEditComponent extends CardEditComponent implements OnInit, OnDestroy {
+    @ViewChild('rubricatorForm') form;
 
-    readonly titleLenth = TITLE_LENGTH;
-    readonly descriptionLength = DESCRIPTION_LENGTH;
+    private _changes: Subscription;
 
-     constructor() {
+    constructor() {
         super();
+    }
+
+    ngOnInit() {
+        /* todo: move to parent component */
+        this._changes = this.form.control.valueChanges
+            .subscribe(values => this.invalid.emit(!this.form.valid));
+    }
+
+    ngOnDestroy() {
+        this._changes.unsubscribe();
     }
 }

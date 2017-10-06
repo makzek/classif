@@ -1,128 +1,67 @@
 .eos-departments-card-edit {
+    overflow-y: auto;
+    overflow-x: hidden;
+
     .tabs {
         display: inline-block;
+        width: 100%;
+        border-bottom: 1px solid transparent;
 
         .tab-item {
             display: inline-block;
-            border: 1px solid transparent;
-            border-top-color: transparent;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+            border-bottom: 5px solid transparent;
             padding: 5px;
             position: relative;
             cursor: pointer;
+            height: $item-height;
+            padding-top: 12px;
+            margin-right: $item-width;
         }
-    }
-
-    .wrapper {
-        margin-left: 35px;
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 7fr 3fr;
-        grid-template-columns: 7fr 3fr;
-    }
-
-    .col-1,
-    .col-2 {
-        min-height: 450px;
-        padding: 10px;
-    }
-
-    .col-1 {
-        margin-right: 10px;
-        grid-row: 1;
-        grid-column: 1;
-    }
-
-    .col-2 {
-        grid-row: 1;
-        grid-column: 2;
-    }
-
-    .input-group {
-        margin-bottom: 10px;
     }
 
     .block-title {
-        font-weight: bold;
+        border-bottom: 1px solid transparent;
+        display: inline-block;
+        height: 38px;
+        line-height: 38px;
+        width: 100%;
+        font-weight: 700;
+        font-size: 17px;
     }
 
-    .subcol-3-wrapper,
-    .subcol-4-wrapper {
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-
-        .dbl-subcol {
-            grid-row: 1;
-            grid-column: 1;
-            -ms-grid-column-span: 2; // sass-lint:disable-line no-misspelled-properties
-            grid-column-start: 1;
-            grid-column-end: 3;
+    .form-group:not(:first-child) {
+        &.fathers-name {
+            margin-top: 0;
         }
 
-        .subcol-1 {
-            grid-row: 1;
-            grid-column: 1;
+        &.email {
+            margin-top: 5px;
         }
 
-        .subcol-2 {
-            grid-row: 1;
-            grid-column: 2;
-        }
-
-        .subcol-3 {
-            grid-row: 1;
-            grid-column: 3;
+        &.full-position {
+            margin-top: 61px;
         }
     }
 
-    .subcol-4-wrapper {
-        -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-
-        .dbl-subcol {
-            grid-row: 1;
-            grid-column: 2;
-            -ms-grid-column-span: 2; // sass-lint:disable-line no-misspelled-properties
-            grid-column-start: 2;
-            grid-column-end: 4;
-        }
-
-        .subcol-1 {
-            grid-row: 1;
-            grid-column: 1;
-        }
-
-        .subcol-2 {
-            grid-row: 1;
-            grid-column: 2;
-        }
-
-        .subcol-3 {
-            grid-row: 1;
-            grid-column: 3;
-        }
-
-        .subcol-4 {
-            grid-row: 1;
-            grid-column: 4;
-        }
+    textarea {
+        resize: none;
     }
 
-    .photo {
-        display: block;
-        border: 1px dashed transparent;
+    .current-image {
         height: 150px;
         width: 150px;
-        margin: 0 auto;
-    }
+        display: inline-block;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: relative;
 
-    .edit-aside {
-        .vertical-buttons {
-            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
+        .photo-uploader {
+            position: absolute;
+            bottom: -8px;
+            right: 0;
         }
     }
 }
-

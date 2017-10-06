@@ -47,6 +47,7 @@ export class TreeNodeComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
+
         this._update();
     }
 

@@ -1,7 +1,4 @@
-import { IMessage } from '../../eos-common/core/message.interface';
-
-export const DEFAULT_DISMISS_TIMEOUT = 1000;
-export const LONG_DISMISS_TIMEOUT = 2000;
+import { IMessage, DEFAULT_DISMISS_TIMEOUT, LONG_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
 
 export const WARN_EDIT_ERROR: IMessage = {
     type: 'warning',
@@ -54,3 +51,10 @@ export const INFO_NOTHING_CHANGES: IMessage = {
     title: 'Информация о сохранении изменений: ',
     msg: 'текущие изменения совпадают с изначальным значением. Изменения не будут сохранены'
 };
+
+export const SUCCESS_SAVE: IMessage = {
+    type: 'success',
+    title: 'Изменения сохранены',
+    msg: '',
+    dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+}

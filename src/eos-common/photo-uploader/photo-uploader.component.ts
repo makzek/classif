@@ -1,44 +1,65 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+// import { Http, Headers, RequestOptions } from '@angular/http';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+
 
 @Component({
     selector: 'eos-photo-uploader',
     templateUrl: 'photo-uploader.component.html',
 })
 export class PhotoUploaderComponent implements OnInit {
+    @Input() disableEdit = false;
     @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
-    contactUrl = 'http://lalala';
+
+    @ViewChild('fileInput') inputEl: ElementRef;
+    @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
+
+    contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
     uploading = false;
 
-    @Input() multiple = false;
-    @ViewChild('fileInput') inputEl: ElementRef;
+    imageSrc = '';
+    // currentUrl = '';
 
     nativeInputEl: HTMLInputElement;
-    fileCount: number;
+    // fileCount: number;
+    file: File;
 
-    constructor(private _http: Http) {
+    constructor() {
     }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;
-        this.fileCount = this.nativeInputEl.files.length;
     }
 
-    refreshFileCount() {
-        this.fileCount = this.nativeInputEl.files.length;
+    chooseFile(e) {
+        // this.fileCount = this.nativeInputEl.files.length;
+        // const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+        const file = e.target.files[0];
+
+        const reader = new FileReader();
+
+        reader.onload = this._handleReaderLoaded.bind(this);
+        reader.readAsDataURL(file);
+
+        this.confirmModalRef.show();
     }
 
-    upload(evt: Event) {
-
-        const formData = new FormData();
-        if (this.fileCount > 0) {
+    upload() {
+        this.confirmModalRef.hide();
+        // const formData = new FormData();
+       /* if (this.fileCount > 0) {
             for (let i = 0; i < this.fileCount; i++) {
                 formData.append('file[]', this.nativeInputEl.files.item(i));
-            }
+            }*/
+
+            /* DON'T USE THIS COMPONENT FOR SANDING PHOTO!!! */
+
+            /*formData.append('file', this.file);
             this._http
                 .post(this.contactUrl, formData).subscribe(
                 data => {
+                    // tslint:disable-next-line:no-debugger
+                    debugger;
                     console.log('success');
                     this.uploading = false;
                     this.endUploading.emit(data);
@@ -47,7 +68,21 @@ export class PhotoUploaderComponent implements OnInit {
                     console.log(error);
                     this.uploading = false;
                     this.endUploading.emit(null);
-                })
-        }
+                })*/
+        // }
+
+        this.endUploading.emit(this.file);
+        this.nativeInputEl.value = null;
+    }
+
+    cancel() {
+        this.confirmModalRef.hide();
+        this.nativeInputEl.value = null;
+    }
+
+    private _handleReaderLoaded(e) {
+        const reader = e.target;
+        this.file = reader.result;
+        this.imageSrc = 'url(' + reader.result + ')';
     }
 }

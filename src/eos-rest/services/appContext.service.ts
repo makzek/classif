@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { PipRX} from './pipRX.service';
+import { PipRX } from './pipRX.service';
 import { USER_CL } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
 
@@ -12,34 +12,41 @@ export class AppContext {
     public CurrentUser: USER_CL;
     public SysParms: any;
 
-/**
- * рабочие столы
- */
+    /**
+     * рабочие столы
+     */
     public workBanches: any[];
 
     constructor(private pip: PipRX) { }
 
-    Init(): Promise<any> {
+    init(): Promise<any> {
         const p = this.pip;
-        const rSP = p.read({ SysParms: ALL_ROWS,
-            _moreJSON: { DbDateTime: new Date(), licensed: null, ParamsDic: '-99' }
-         })
-         .subscribe(d => {
-            this.SysParms = d[0];
-         });
-        const rCU = p.read<USER_CL>({ CurrentUser: ALL_ROWS
-            , expand: 'USERDEP_List,USERSECUR_List'
-            , _moreJSON: { ParamsDic: null }
-         })
-         .map(u => {
-            this.CurrentUser = u[0];
-            return 'all readed';
+        const oSysParams = p.read({
+            SysParms: ALL_ROWS,
+            _moreJSON: {
+                DbDateTime: new Date(),
+                licensed: null,
+                ParamsDic: '-99'
+            }
         });
-        // TODO: объединиь промисы
-        return  rCU.toPromise();
+        const oCurrentUser = p.read<USER_CL>({
+            CurrentUser: ALL_ROWS,
+            expand: 'USERDEP_List,USERSECUR_List',
+            _moreJSON: { ParamsDic: null }
+        });
+
+        return oSysParams
+            .combineLatest(oCurrentUser)
+            .map(([sysParams, users]) => {
+                /* */
+                this.SysParms = sysParams[0];
+                this.CurrentUser = users[0];
+                return 'all readed';
+            })
+            .toPromise();
     }
 
-    ReInit() {
-        this.Init();
+    reInit() {
+        this.init();
     }
 }
