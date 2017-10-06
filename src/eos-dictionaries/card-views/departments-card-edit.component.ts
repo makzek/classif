@@ -13,6 +13,11 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
+    gender = [
+        { id: 'm', title: 'Мужской' },
+        { id: 'f', title: 'Женский' }
+    ];
+
     constructor() {
         super();
 
