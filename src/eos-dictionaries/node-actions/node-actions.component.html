@@ -54,13 +54,13 @@
     </div>
     <div class="second-line block special-text">
         <span class="table-title">
-            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
+            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" >
                     <span></span>
         </label>
         </span>
-        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
+        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
                     <span></span>
         </label>
         </span>
