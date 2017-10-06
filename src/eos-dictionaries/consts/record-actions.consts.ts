@@ -6,7 +6,7 @@ export const RECORD_ACTIONS_EDIT = {
     group: E_ACTION_GROUPS.item,
     title: null,
     hint: 'Редактировать',
-    iconClass: 'eos-icon eos-icon-edit-blue',
+    iconClass: 'eos-icon eos-icon-edit-blue small',
     buttonClass: null
 };
 
@@ -15,7 +15,7 @@ export const RECORD_ACTIONS_NAVIGATION_UP = {
     group: E_ACTION_GROUPS.item,
     title: null,
     hint: 'Следующая',
-    iconClass: 'eos-icon eos-icon-arrow-v-blue-top',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
     buttonClass: null
 };
 
@@ -24,7 +24,7 @@ export const RECORD_ACTIONS_NAVIGATION_DOWN = {
     group: E_ACTION_GROUPS.item,
     title: null,
     hint: 'Предыдущая',
-    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
     buttonClass: null
 };
 
@@ -33,7 +33,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.common,
     title: null,
     hint: 'Создать новый',
-    iconClass: 'eos-icon eos-icon-plus-blue',
+    iconClass: 'eos-icon eos-icon-plus-blue small',
     buttonClass: null
 },
     RECORD_ACTIONS_EDIT,
@@ -42,11 +42,39 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Удалить логически',
-    iconClass: 'eos-icon eos-icon-bin-blue',
+    iconClass: 'eos-icon eos-icon-bin-blue small',
     buttonClass: null
-},
-    RECORD_ACTIONS_NAVIGATION_UP,
-    RECORD_ACTIONS_NAVIGATION_DOWN];
+}, {
+    type: E_RECORD_ACTIONS.moveUp,
+    group: E_ACTION_GROUPS.item,
+    title: null,
+    hint: 'Вверх',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
+    buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.moveDown,
+    group: E_ACTION_GROUPS.item,
+    title: null,
+    hint: 'Вниз',
+    iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
+    buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.userOrder,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Включить пользователькую сортировку',
+    iconClass: 'fa fa-list',
+    buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.showDeleted,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Отображать логически удалённые',
+    iconClass: 'eos-icon eos-icon-show-blue small',
+    buttonClass: null
+}
+   /* RECORD_ACTIONS_NAVIGATION_UP,
+RECORD_ACTIONS_NAVIGATION_DOWN*/ ];
 
 export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.removeHard,
@@ -56,20 +84,20 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     iconClass: null,
     buttonClass: null
 }, {
-    type: E_RECORD_ACTIONS.showDeleted,
+    type: E_RECORD_ACTIONS.restoreDeleted,
     group: E_ACTION_GROUPS.group,
     title: 'Восстановить логически удаленные элементы',
     hint: null,
     iconClass: null,
     buttonClass: null
-}, {
+}, /* {
     type: E_RECORD_ACTIONS.userOrder,
     group: E_ACTION_GROUPS.group,
     title: 'Включить пользователькую сортировку',
     hint: null,
     iconClass: null,
     buttonClass: null
-}, {
+},  {
     type: E_RECORD_ACTIONS.moveUp,
     group: E_ACTION_GROUPS.item,
     title: 'Вверх',
@@ -83,7 +111,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     hint: null,
     iconClass: null,
     buttonClass: null
-}, {
+},*/ {
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
     title: 'Добавить элемент',

@@ -25,7 +25,7 @@
 
     .date {
         position: relative;
-        top: 4px;
+        top: 6px;
     }
 
     .search {
@@ -78,16 +78,10 @@
         top: 3px;
     }
 
-    /* .date-comment {
-        position: relative;
-        top: 3px;
-    }*/
-
     .eos-datepicker {
         display: inline-block;
         width: 145px;
         font-weight: bold;
-        // top: -1px;
 
         .datepicker-input {
             border: 0;

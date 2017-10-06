@@ -163,7 +163,9 @@ export class NodeActionsComponent implements OnDestroy {
                     this.checkAll = false;
                 }
                 break;
-            //
+            case E_RECORD_ACTIONS.showDeleted: // TODO: check if it works
+                this._profileSrv.setSetting('showDeleted', !this.showDeleted);
+                break;
         }
     }
 
@@ -174,7 +176,7 @@ export class NodeActionsComponent implements OnDestroy {
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
                 case E_RECORD_ACTIONS.moveDown:
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.showDeleted:
+                case E_RECORD_ACTIONS.restoreDeleted:
                     return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
                 default:
                     return this.dictionary.descriptor.canDo(group, type);
