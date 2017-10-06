@@ -7,11 +7,11 @@
         </span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)" tooltip="{{desk.name}}" placement="left">
+        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)" tooltip="{{desk.name}}" placement="left" container="body">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item">
-                        <span container="body">{{desk.name}}</span>
+                        <span>{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
