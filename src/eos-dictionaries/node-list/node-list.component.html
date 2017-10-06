@@ -21,7 +21,7 @@
                         </label>
                         </span>
                         <span class="node-info" >
-                            <span *ngFor="let field of viewFields" class="code">{{item.data[field.key]}}</span>
+                            <span *ngFor="let field of viewFields" class="code">{{item.data[field.foreignKey]}}</span>
                         </span>
                         <eos-spinner *ngIf="item.updating" class="spinner" [size]="'sm'"></eos-spinner>
                     </div>
@@ -61,7 +61,7 @@
             </label>
             </span>
             <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
-                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.key]}}</span>
+                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.foreignKey]}} {{field.foreignKey}}</span>
             </span>
         </div>
     </div>

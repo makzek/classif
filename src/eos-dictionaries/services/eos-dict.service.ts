@@ -93,6 +93,7 @@ export class EosDictService {
             .then((authorized) => {
                 if (authorized) {
                     if (this._dictionary && this._dictionary.id === dictionaryId) {
+                        //                        this._selectRoot();
                         return this._dictionary;
                     } else {
                         return this._openDictionary(dictionaryId);
@@ -119,11 +120,7 @@ export class EosDictService {
                         _dictionary.init(data);
                         this._dictionary = _dictionary;
                         this._dictionary$.next(this._dictionary);
-                        if (this._dictionary.root) {
-                            this._selectNode(this._dictionary.root)
-                        } else {
-                            this._selectNode(null);
-                        }
+                        this._selectRoot();
                     } else {
                         this.closeDictionary();
                     }
@@ -138,6 +135,14 @@ export class EosDictService {
             this._mDictionaryPromise.set(dictionaryId, _p);
         }
         return _p;
+    }
+
+    private _selectRoot() {
+        if (this._dictionary.root) {
+            this._selectNode(this._dictionary.root)
+        } else {
+            this._selectNode(null);
+        }
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -198,25 +203,26 @@ export class EosDictService {
             if (!nodeId) {
                 this._selectNode(this._dictionary.root);
                 this._openNode(this._dictionary.root);
-                res(this._dictionary.root);
-            }
-            return this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    if (this._selectedNode !== node) {
-                        if (node) {
-                            // expand all parents of selected node
-                            let parent = node.parent;
-                            while (parent) {
-                                parent.isExpanded = true;
-                                parent = parent.parent;
+                return res(this._dictionary.root);
+            } else {
+                return this.getNode(dictionaryId, nodeId)
+                    .then((node) => {
+                        if (this._selectedNode !== node) {
+                            if (node) {
+                                // expand all parents of selected node
+                                let parent = node.parent;
+                                while (parent) {
+                                    parent.isExpanded = true;
+                                    parent = parent.parent;
+                                }
                             }
+                            /* console.log('selectNode', node); */
+                            this._selectNode(node);
+                            this._openNode(null);
                         }
-                        /* console.log('selectNode', node); */
-                        this._selectNode(node);
-                        this._openNode(null);
-                    }
-                    return this._selectedNode;
-                });
+                        return this._selectedNode;
+                    });
+            }
         });
     }
 
@@ -242,7 +248,7 @@ export class EosDictService {
                         this._openedNode = node;
                         this._openedNode$.next(node);
                     }
-                    res(node);
+                    return res(node);
                 })
                 .catch((err) => rej(err));
         });

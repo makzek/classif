@@ -14,6 +14,7 @@ export interface IFieldDesriptor {
     type: string;
     length?: number;
     format?: string;
+    foreignKey?: string;
     /* column?: number;
     subcolumn?: number;*/
 }
@@ -29,6 +30,7 @@ export interface IFieldDesriptorBase {
     readonly type: E_FIELD_TYPE;
     readonly length?: number;
     readonly format?: string;
+    readonly foreignKey?: string;
 };
 
 export interface IFieldView extends IFieldDesriptorBase {
@@ -41,6 +43,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly type: E_FIELD_TYPE;
     readonly length?: number;
     readonly format?: string;
+    readonly foreignKey?: string;
     /* readonly column?: number;
     readonly subcolumn?: number;*/
 
@@ -49,6 +52,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
             this.key = data.key;
             this.title = data.title;
             this.type = E_FIELD_TYPE[data.type];
+            this.foreignKey = data.foreignKey;
         }
 
         if (data.length) {

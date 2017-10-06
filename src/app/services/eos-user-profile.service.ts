@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -47,6 +48,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     constructor(
+        private _router: Router,
         private _authSrv: AuthService,
         private _rubricSrv: RubricService,
         /* private _pipe: PipRX, */
@@ -105,6 +107,7 @@ export class EosUserProfileService implements IUserProfile {
             this._isAuthorized = false;
             this._authorized$.next(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
+            this._router.navigate(['/']);
             return resp;
         });
     }

@@ -33,10 +33,15 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
     getMode(values: any): E_DEPT_MODE {
         /* if IS_NODE or another boolean field */
         if (values) {
-            if (values[this.modeField.key]) {
+            /*if (values[this.modeField.key]) {
                 return E_DEPT_MODE.department;
             } else {
                 return E_DEPT_MODE.person;
+            }*/
+            if (values[this.modeField.key]) { // 0 - department, 1 - person !!!
+                return E_DEPT_MODE.person;
+            } else {
+                return E_DEPT_MODE.department;
             }
         } else {
             return undefined;
