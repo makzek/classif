@@ -12,6 +12,8 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
+
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
@@ -114,7 +116,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this._uuid = UUID.UUID();
         this._route.params.subscribe((params) => {
@@ -330,6 +333,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
+        console.log(data);
+        const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+        let path = '';
+        for (let i = 0; i <= bCrumbs.length - 2; i++) {
+            path = path + bCrumbs[i].title + '/';
+        }
+        path = path.substring(0, path.length - 1);
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
@@ -337,7 +347,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,
-                    path: ''
+                    fullTitle: path
                 });
 
                 /*

@@ -21,7 +21,7 @@ const DEFAULT_DESKS: EosDesk[] = [{
     references: [{
         link: '/spravochniki/rubricator',
         title: 'Рубрикатор',
-        path: 'Справочники/Рубликатор'
+        fullTitle: 'Главная/Справочники/Рубликатор'
     }],
     edited: false,
 }, {

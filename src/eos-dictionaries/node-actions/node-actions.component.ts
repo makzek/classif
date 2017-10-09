@@ -255,16 +255,15 @@ export class NodeActionsComponent implements OnDestroy {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.newNodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.getLastBreadcrumbs();
+                const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
                 let path = '';
                 for (const bc of bCrumbs) {
                     path = path + bc.title + '/';
                 }
-                console.log(path);
                 this._deskSrv.addRecentItem({
                     link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
                     title: title,
-                    path: path + title
+                    fullTitle: path + title
                 });
                 if (hide) {
                     this.creatingModal.hide();

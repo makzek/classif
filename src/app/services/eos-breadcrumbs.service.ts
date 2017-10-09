@@ -63,7 +63,7 @@ export class EosBreadcrumbsService {
                     this._currentLink = {
                         link: this._breadcrumbs[this._breadcrumbs.length - 1].url,
                         title: title,
-                        path: ''
+                        fullTitle: ''
                     }
 
                     this._breadcrumbs$.next(this._breadcrumbs);
@@ -141,7 +141,7 @@ export class EosBreadcrumbsService {
         return crumbs;
     }
 
-    public getLastBreadcrumbs() {
+    public getBreadcrumbs() {
         return this._breadcrumbs;
     }
 }

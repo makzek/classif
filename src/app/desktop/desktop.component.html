@@ -12,7 +12,7 @@
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.path}}" placement="left">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left">
                     <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
                 </li>
             </ul>
@@ -29,7 +29,7 @@
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" container="body" placement="top" class="text">{{item.value.title}}</span>
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.fullTitle}}" container="body" placement="top" class="text">{{item.value.title}}</span>
     </button>
     <button *ngIf="editing(item.value)" class="btn" [disabled]="!_newTitle?.length || title?.invalid" (click)="save($event)">
         <span class="icon-btn eos-icon eos-icon-checkbox-black small lefter"
