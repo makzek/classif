@@ -22,14 +22,14 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <div class="btn item-content block edited" *ngIf="editing(item.value)">
-        <textarea id="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
+        <textarea id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
             required pattern="^\S(.*\S$|$)" maxlength="80"></textarea>
     </div>
     <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" container="body" class="text">
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" container="body" class="text" containerClass="word-break-tooltip">
             {{item.value.title}}
         </span>
     </div>
