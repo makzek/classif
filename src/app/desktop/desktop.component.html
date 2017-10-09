@@ -22,8 +22,8 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <div class="btn item-content block edited" *ngIf="editing(item.value)">
-        <textarea id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
-            required pattern="^\S(.*\S$|$)" maxlength="80"></textarea>
+        <input id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
+            required pattern="^\S(.*\S$|$)" maxlength="80" />
         <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
             tooltip="Сохранить"
             placement="left"

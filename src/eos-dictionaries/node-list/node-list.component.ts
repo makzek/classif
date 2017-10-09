@@ -382,7 +382,7 @@ export class NodeListComponent implements OnDestroy {
     viewNode(node: EosDictionaryNode) {
         if (node) {
             this._rememberCurrentURL();
-            if (!this._dictSrv.isRoot(node.id) && !node.isDeleted) {
+            if (!this._dictSrv.isRoot(node.id)) {
                 this._router.navigate([
                     'spravochniki',
                     this._dictionaryId,
