@@ -4,6 +4,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -12,6 +13,8 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
+
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
@@ -21,7 +24,7 @@ import {
 } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
-import { UUID } from 'angular2-uuid';
+// import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
     edit,
@@ -33,7 +36,7 @@ export class EditedCard {
     id: string;
     title: string;
     link: string;
-    uuid: string;
+    // uuid: string;
 }
 
 @Component({
@@ -114,9 +117,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
-        this._uuid = UUID.UUID();
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
@@ -126,8 +129,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
-
-        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
     ngOnInit() {
@@ -222,6 +223,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         if (_canEdit) {
             this._openNode(this.node, EDIT_CARD_MODES.edit);
         }
+    }
+
+    close() {
+        const url = localStorage.getItem('viewCardUrlRedirect');
+        console.log('close redirect', url);
+        this.goTo(url);
     }
 
 
@@ -330,12 +337,20 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
+        console.log(data);
+        const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+        let path = '';
+        for (let i = 0; i <= bCrumbs.length - 2; i++) {
+            path = path + bCrumbs[i].title + '/';
+        }
+        path = path.substring(0, path.length - 1);
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,
+                    fullTitle: path
                 });
                 this._clearEditingCardLink();
                 return this._dictSrv.reloadNode(this.node);
@@ -361,7 +376,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'id': this.nodeId,
                 'title': this.nodeName,
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
-                uuid: this._uuid
+                // uuid: this._uuid
             };
             localStorage.setItem(LS_EDIT_CARD, JSON.stringify(this.lastEditedCard));
         }

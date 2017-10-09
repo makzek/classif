@@ -12,7 +12,7 @@
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.title}}" placement="left">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left">
                     <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
                 </li>
             </ul>
