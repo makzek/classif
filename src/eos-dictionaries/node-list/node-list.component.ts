@@ -4,6 +4,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
+import { EosStorageService } from '../../app/services/eos-storage.service';
+
+import { RECENT_URL } from '../../app/consts/common.consts';
+
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -59,6 +63,7 @@ export class NodeListComponent implements OnDestroy {
     private _orderSubscription: Subscription;
 
     constructor(
+        private _storageSrv: EosStorageService,
         private _dictSrv: EosDictService,
         private _orderSrv: EosDictOrderService,
         private _profileSrv: EosUserProfileService,
@@ -394,9 +399,9 @@ export class NodeListComponent implements OnDestroy {
     }
 
     private _rememberCurrentURL(): void {
-        // localStorage.setItem('viewCardUrlRedirect', this._router.url);
-        const url = this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + this._selectedNode.id;
-        localStorage.setItem('viewCardUrlRedirect', url);
+        // const url = this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + this._selectedNode.id;
+        const url = this._router.url;
+        this._storageSrv.setItem(RECENT_URL, url);
     }
 
     private checkState(selected?: boolean) {

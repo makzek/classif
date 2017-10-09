@@ -219,7 +219,7 @@ export class EosDictService {
                             }
                             /* console.log('selectNode', node); */
                             this._selectNode(node);
-                            this._openNode(null);
+                            /* this._openNode(null); */
                         }
                         return this.selectedNode;
                     });
@@ -228,13 +228,21 @@ export class EosDictService {
     }
 
     private _selectNode(node: EosDictionaryNode) {
-        this.selectedNode = node;
-        this._selectedNode$.next(node);
+        if (this.selectedNode !== node) {
+            if (this.selectedNode) {
+                this.selectedNode.isActive = false;
+            }
+            node.isActive = true;
+            this.selectedNode = node;
+            this._selectedNode$.next(node);
+        }
     }
 
     private _openNode(node: EosDictionaryNode) {
-        this._openedNode = node;
-        this._openedNode$.next(node);
+        if (this._openedNode !== node) {
+            this._openedNode = node;
+            this._openedNode$.next(node);
+        }
     }
 
     public isRoot(nodeId: string): boolean {
@@ -242,17 +250,12 @@ export class EosDictService {
     }
 
     public openNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return new Promise((res, rej) => {
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => {
-                    if (this._openedNode !== node) {
-                        this._openedNode = node;
-                        this._openedNode$.next(node);
-                    }
-                    return res(node);
-                })
-                .catch((err) => rej(err));
-        });
+        return this.getNode(dictionaryId, nodeId)
+            .then((node) => {
+                this._openNode(node);
+                return node;
+            });
+
     }
 
     public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
@@ -276,8 +279,7 @@ export class EosDictService {
 
     private _deleteNode(node: EosDictionaryNode): void {
         if (this._openedNode === node) {
-            this._openedNode = null;
-            this._openedNode$.next(this._openedNode);
+            this._openNode(null);
         }
         Object.assign(node, { ...node, isDeleted: true });
         if (node.children) {
@@ -285,14 +287,14 @@ export class EosDictService {
         }
     }
 
-    public deleteSelectedNodes(dictionaryId: string, nodes: string[]): void {
+    public deleteSelectedNodes(dictionaryId: string, nodes: string[]): Promise<any> {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => this._deleteNode(node));
         });
         this._dictionary$.next(this.dictionary);
         this._selectedNode$.next(this.selectedNode);
-        /* fake */
+        return Promise.resolve(true); /* fake */
     }
 
     public physicallyDelete(nodeId: string): boolean {
@@ -332,5 +334,13 @@ export class EosDictService {
         if (node.children) {
             node.children.forEach((subNode) => this.restoreItem(subNode));
         }
+    }
+
+    getNodePath(node: EosDictionaryNode): string[] {
+        return [
+            'spravochniki',
+            this.dictionary.id,
+            node.id + '',
+        ];
     }
 }

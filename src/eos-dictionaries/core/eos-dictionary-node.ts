@@ -11,7 +11,14 @@ export class EosDictionaryNode {
     description: string;
     /* hasSubnodes: boolean; */
     isExpanded?: boolean;
+    /**
+     * isActive: boolean, is node selected in tree
+     */
+    isActive: boolean;
     // isDeleted: boolean;
+    /**
+     * selected - node checked in list
+     */
     selected: boolean;
     /** record data container */
     data: any;
@@ -92,12 +99,12 @@ export class EosDictionaryNode {
         });
     }
 
-    hasParent(parent: EosDictionaryNode): boolean {
+    isChildOf(node: EosDictionaryNode): boolean {
         if (this.parent) {
-            if (this.parent.id === parent.id) {
+            if (this.parent.id === node.id) {
                 return true;
             } else {
-                return this.parent.hasParent(parent);
+                return this.parent.isChildOf(node);
             }
         } else {
             return false;
