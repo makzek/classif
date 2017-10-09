@@ -28,10 +28,11 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { TitleComponent } from './title/title.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
 
-import { EosDeskService } from './services/eos-desk.service';
-import { EosUserProfileService } from './services/eos-user-profile.service';
-import { EosNoticeService } from './services/eos-notice.service';
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
+import { EosDeskService } from './services/eos-desk.service';
+import { EosNoticeService } from './services/eos-notice.service';
+import { EosStorageService } from './services/eos-storage.service';
+import { EosUserProfileService } from './services/eos-user-profile.service';
 
 import { TestPageComponent } from './test-page/test-page.component';
 
@@ -75,12 +76,13 @@ import { LoginComponent } from './login/login.component';
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         AuthGuard,
-        EosErrorHandler,
-        EosDeskService,
-        EosUserProfileService,
-        EosNoticeService,
         CanDeactivateGuard,
         EosBreadcrumbsService,
+        EosDeskService,
+        EosErrorHandler,
+        EosNoticeService,
+        EosStorageService,
+        EosUserProfileService,
     ],
     bootstrap: [AppComponent],
 })
