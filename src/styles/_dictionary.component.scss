@@ -27,6 +27,7 @@
         height: calc(100vh - 60px);
         width: $dictionary-block-width;
         border-left: 1px solid transparent;
+        z-index: 3;
     }
 
     &.info {
@@ -118,6 +119,15 @@
             .selected-wrapper {
                 left: $grid-gutter-width / 2;
             }
+        }
+
+        .screen-wrapper {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
         }
     }
 }

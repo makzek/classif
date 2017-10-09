@@ -65,6 +65,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
+        this._actSrv.closeAll = false;
         switch (action) {
             // TODO: try to find more simple solition
             case DICTIONARY_ACTIONS.closeTree:
@@ -125,5 +126,10 @@ export class DictionaryComponent implements OnDestroy {
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
 
+    }
+
+    closeAsides() {
+        this.currentState = DICTIONARY_STATES.selected;
+        this._actSrv.closeAll = true;
     }
 }
