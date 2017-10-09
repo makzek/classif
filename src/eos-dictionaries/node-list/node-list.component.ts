@@ -117,6 +117,7 @@ export class NodeListComponent implements OnDestroy {
         });
 
         this._actionSubscription = this._actSrv.action$.subscribe((action) => {
+            console.log(this.nodeListPerPage)
             switch (action) {
                 case E_RECORD_ACTIONS.edit: {
                     if (this.openedNode) {
@@ -227,6 +228,7 @@ export class NodeListComponent implements OnDestroy {
     }
 
     openFullInfo(node: EosDictionaryNode): void {
+        console.log('work');
         if (!node.isDeleted) {
             if (node.id !== '') {
                 this._dictSrv.openNode(this._dictionaryId, node.id);
@@ -250,6 +252,7 @@ export class NodeListComponent implements OnDestroy {
     }
 
     toggleUserSort(): void {
+        this.userSorting = !this.userSorting;
         this._orderSrv.order(this.nodes);
     }
 
