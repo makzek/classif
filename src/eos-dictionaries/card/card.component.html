@@ -1,24 +1,28 @@
 <div class="eos-card">
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
-            <button *ngIf="node" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
-                aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
-            <button *ngIf="node" [disabled]="isLast || !node.parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
-                aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
+            <div>
+                <button *ngIf="node" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
+                    aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
+                <button *ngIf="node" [disabled]="isLast || !node.parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
+                    aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
+            </div>
         </div>
         <div class="check-wrapper">
             <span class="checkbox">
                 <label *ngIf="node"><input type="checkbox" [(ngModel)]="node.selected">
                     <span></span>
-            </label>
+                </label>
             </span>
         </div>
         <div class="name-wrapper">
             <span *ngIf="node" class="edit-title" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
-            <button class="btn btn-primary" (click)="cancel()">Отменить</button>
-            <button class="btn btn-primary-full" [disabled]="!_changed || disableSave" (click)="save()">Сохранить</button>
+            <div>
+                <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+                <button class="btn btn-primary-full" [disabled]="!_changed || disableSave" (click)="save()">Сохранить</button>
+            </div>
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
