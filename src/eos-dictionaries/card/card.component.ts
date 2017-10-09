@@ -4,6 +4,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
