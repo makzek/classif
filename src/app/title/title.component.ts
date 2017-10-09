@@ -11,15 +11,12 @@ export class TitleComponent {
     /* todo: define it or remove. Mocked now*/
     title = 'Администрирование системы';
 
-    constructor( private _deskSrv: EosDeskService) {
-        this._deskSrv.selectedDesk.subscribe(
-            (link) => {
-                if (link) {
-                    this.currentDesk = '/home/' + link.id;
-                } else {
-                    this.currentDesk = '';
-                }
+    constructor(private _deskSrv: EosDeskService) {
+        this._deskSrv.selectedDesk.subscribe((link) => {
+            this.currentDesk = '/home/';
+            if (link) {
+                this.currentDesk += link.id;
             }
-        );
+        });
     }
 }

@@ -4,6 +4,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -23,7 +24,7 @@ import {
 } from '../consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
-import { UUID } from 'angular2-uuid';
+// import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
     edit,
@@ -35,7 +36,7 @@ export class EditedCard {
     id: string;
     title: string;
     link: string;
-    uuid: string;
+    // uuid: string;
 }
 
 @Component({
@@ -119,7 +120,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _router: Router,
         private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
-        this._uuid = UUID.UUID();
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
@@ -129,8 +129,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
-
-        this.closeRedirect = localStorage.getItem('viewCardUrlRedirect');
     }
 
     ngOnInit() {
@@ -225,6 +223,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         if (_canEdit) {
             this._openNode(this.node, EDIT_CARD_MODES.edit);
         }
+    }
+
+    close() {
+        const url = localStorage.getItem('viewCardUrlRedirect');
+        console.log('close redirect', url);
+        this.goTo(url);
     }
 
 
@@ -343,20 +347,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                console.log('update response', resp);
                 this._deskSrv.addRecentItem({
                     link: this.selfLink.slice(0, this.selfLink.length - 5),
                     title: this.nodeName,
                     fullTitle: path
                 });
-
-                /*
-                this._setOriginalData();
-                this.recordChanged(this.nodeData);
-                */
-                return this._dictSrv.reloadNode(this.node)
+                this._clearEditingCardLink();
+                return this._dictSrv.reloadNode(this.node);
             })
-            .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
     }
 
@@ -378,14 +376,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'id': this.nodeId,
                 'title': this.nodeName,
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
-                uuid: this._uuid
+                // uuid: this._uuid
             };
             localStorage.setItem(LS_EDIT_CARD, JSON.stringify(this.lastEditedCard));
         }
     }
 
     private _clearEditingCardLink(): void {
-        if (this.lastEditedCard && this.lastEditedCard.uuid === this._uuid) {
+        if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId) {
             this.lastEditedCard = null;
             localStorage.removeItem(LS_EDIT_CARD);
         }
@@ -393,8 +391,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private getLastEditedCard() {
         this.lastEditedCard = JSON.parse(localStorage.getItem(LS_EDIT_CARD));
+        /*
         if (this.lastEditedCard && !this.lastEditedCard.uuid) {
             this.lastEditedCard.uuid = this._uuid;
         }
+        */
     }
 }

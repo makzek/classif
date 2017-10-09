@@ -51,6 +51,8 @@ export class DictionaryComponent implements OnDestroy {
                     this.dictionaryName = dictionary.root.title;
                 }
                 this.nodes = [dictionary.root];
+            } else {
+                this.nodes = [];
             }
         });
 
