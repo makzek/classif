@@ -290,6 +290,7 @@ export class EosDictService {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => this._deleteNode(node));
         });
+        this._selectedNode$.next(this._selectedNode);
         this._dictionary$.next(this._dictionary);
         /* fake */
     }
