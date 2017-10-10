@@ -13,11 +13,12 @@ export class CardEditComponent {
     readonly titleLenth = TITLE_LENGTH;
     readonly descriptionLength = DESCRIPTION_LENGTH;
 
+    tooltipText = '';
+
 
     change(fldKey: string, value: string) {
         this.data[fldKey] = value;
         this.onChange.emit(this.data);
-        console.log('data', this.data);
     }
 
     /* clean(field: string, value: string) {

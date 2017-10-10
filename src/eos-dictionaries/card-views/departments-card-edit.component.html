@@ -1,15 +1,17 @@
 <div class="eos-departments-card-edit edit-content">
     <!--WARNING: now in create node always form for department because there is not data['IS_NODE']-->
     <form #departmentsForm="ngForm">
-    <div *ngIf="data['IS_NODE']">
-        <ul class="tabs">
-            <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
-                (click)="setTab(i)">
-                <span class="tab-title">{{tab}}</span>
-            </li>
-        </ul>
-        <div class="wrapper row" *ngIf="currTab === 0">
-            <div class="col-md-3 col-lg-3 col-xl-3">
+    <div [hidden]="!data['IS_NODE']">
+        <div class="tabs-wrapper">
+            <ul class="tabs">
+                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
+                    (click)="setTab(i)">
+                    <span class="tab-title">{{tab}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="wrapper" [hidden]="currTab !== 0">
+            <div class="col-1">
                 <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
                     <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
                 </div>
@@ -24,10 +26,12 @@
                 </div>
                 <div class="form-group">
                     <label for="RUBRIC_CODE">Код</label>
-                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
-                        id="RUBRIC_CODE" name="code" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
-                        [ngClass]="{'readonly': !editMode }" tooltip="Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
-                        pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}">
+                    <span tooltip="{{tooltipText}}" triggers="" #personCodeTooltip="bs-tooltip" containerClass="invalid-tooltip right-tooltip"
+                        placement="right" container="body">
+                        <input [readonly]="!editMode" #personCodeInput (ngModelChange)="change('RUBRIC_CODE', $event, this, personCode)"
+                            id="RUBRIC_CODE" name="RUBRIC_CODE_PERSON" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
+                            [ngClass]="{'readonly': !editMode }" pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}">
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="DEPARTMENT_INDEX">Индекс ДЛ</label>
@@ -35,7 +39,7 @@
                         id="DEPARTMENT_INDEX" name="DEPARTMENT_INDEX" type="text" class="form-control" placeholder="Индекс ДЛ" [ngModel]="data['DEPARTMENT_INDEX']"
                         [ngClass]="{'readonly': !editMode }">
                 </div>
-                <div class="form-group">
+                <div class="form-group sev">
                     <label for="SEV">Индекс СЭВ</label>
                     <input [readonly]="!editMode" (ngModelChange)="change('SEV', $event)" 
                         id="SEV" name="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [ngModel]="data['SEV']" [ngClass]="{'readonly': !editMode }">
@@ -51,13 +55,13 @@
                         (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                 </div>
             </div>
-            <div class="col-md-9 col-lg-9 col-xl-9">
+            <div class="col-2">
                 <div class="form-group">
                     <label for="lastName">Фамилия</label>
                     <input [readonly]="!editMode" (ngModelChange)="change('lastName', $event)" 
                         id="lastName" name="lastName" type="text" class="form-control" placeholder="Фамилия" [ngModel]="data['lastName']" [ngClass]="{'readonly': !editMode }">
                 </div>
-                <div class="row">
+                <div class="row names">
                     <div class="form-group first-name col-md-6 col-lg-6 col-xl-6">
                         <label for="firstName">Имя</label>
                         <input [readonly]="!editMode" (ngModelChange)="change('firstName', $event)" 
@@ -74,7 +78,8 @@
                     <label for="SURNAME">Фамилия И.О.</label>
                     <input [readonly]="!editMode" (ngModelChange)="change('SURNAME', $event)" 
                             id="SURNAME" name="SURNAME" type="text" class="form-control" placeholder="Фамилия И.О." [ngModel]="data['SURNAME']"
-                            required pattern="^\S(.*\S$|$)" tooltip="Обязательное поле" container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                            required pattern="^\S(.*\S$|$)" tooltip="Обязательное поле" container="body" [isDisabled]="!editMode" placement="right"
+                            containerClass="right-tooltip" [ngClass]="{'readonly': !editMode }">
                 </div>
                 <div class="form-group">
                     <label for="CLASSIF_NAME">Краткое наименование должности</label>
@@ -84,7 +89,7 @@
                                 (ngModelChange)="change('CLASSIF_NAME', $event)" id="CLASSIF_NAME" name="position" type="text" class="form-control" 
                                 placeholder="Краткое наименование должности" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)" 
                                 maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов"
-                                container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                                container="body" containerClass="right-tooltip" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
                         </div>
                         <span class="checkbox col-md-3 col-lg-3 col-xl-3">
                             <label><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode" 
@@ -99,17 +104,17 @@
                     <input [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
                             id="fullPosition" name="fullPosition" type="text" class="form-control" placeholder="Полное наименование должности" [ngModel]="data['fullPosition']"
                             maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов"  container="body" 
-                            [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip" [ngClass]="{'readonly': !editMode }">
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="alternate">Заместитель:</label>
                     <input [readonly]="!editMode" (ngModelChange)="change('alternate', $event)" 
                             id="alternate" name="alternate" type="text" class="form-control" placeholder="Заместитель" [ngModel]="data['alternate']" [ngClass]="{'readonly': !editMode }">
-                </div>
+                </div>-->
                 <div class="form-group">
-                    <label for="NOTE">Примичание:</label>
+                    <label for="NOTE">Примечание:</label>
                     <textarea [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
-                            id="NOTE" name="NOTE" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                            id="NOTE" name="NOTE" type="text" class="form-control note" placeholder="Примечание" [ngModel]="data['NOTE']" 
                             [ngClass]="{'readonly': !editMode }" rows="5"></textarea>
                 </div>
             </div>
@@ -166,7 +171,6 @@
         </div>
 
         <div class="wrapper" *ngIf="currTab === 2">
-            <div class="col-1">
                 <span class="block-title">Склонение должности</span>
 
                     <div class="form-group">
@@ -322,7 +326,6 @@
                             class="form-control" placeholder="Подразделение" [ngModel]="data['department']" [ngClass]="{'readonly': !editMode }">
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     <div *ngIf="!data['IS_NODE']" class="wrapper row">
@@ -331,7 +334,7 @@
                 <label for="RUBRIC_CODE">Код</label>
                 <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event)" 
                     id="RUBRIC_CODE" name="RUBRIC_CODE_DEP" type="text" class="form-control" placeholder="Код" [ngModel]="data['RUBRIC_CODE']"
-                    tooltip="Максимальная длинна {{codeLenth}} символов" [isDisabled]="!editMode" placement="right" container="body"
+                    tooltip="Максимальная длинна {{codeLenth}} символов" [isDisabled]="!editMode" placement="right" containerClass="right-tooltip" container="body"
                     [ngClass]="{'readonly': !editMode }" pattern="^\S(.*\S$|$)" maxlength="{{codeLenth}}" >
             </div>
             <div class="form-group">
@@ -368,7 +371,7 @@
                 <input [readonly]="!editMode" (ngModelChange)="change('CLASSIF_NAME', $event)" 
                         id="CLASSIF_NAME" name="CLASSIF_NAME_DEP" type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']"
                         required pattern="^\S(.*\S$|$)" maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" 
-                        container="body" [isDisabled]="!editMode" placement="right" [ngClass]="{'readonly': !editMode }">
+                        container="body" [isDisabled]="!editMode" placement="right" containerClass="right-tooltip" [ngClass]="{'readonly': !editMode }">
             </div>
             <span class="checkbox">
                 <label><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
@@ -381,7 +384,7 @@
                     <textarea [readonly]="!editMode" (ngModelChange)="change('fullPosition', $event)" 
                             id="fullPosition" name="fullPosition_DEP" type="text" class="form-control" placeholder="Полное наименование" [ngModel]="data['fullPosition']"
                             maxlength="{{descriptionLength}}" tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" 
-                            container="body" placement="right" [ngClass]="{'readonly': !editMode }"></textarea>
+                            container="body" placement="right" containerClass="right-tooltip" [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
             <div class="form-group">
                 <label for="titleRP">Наименование в родительном падеже (чего?)</label>
@@ -402,9 +405,9 @@
                         [ngClass]="{'readonly': !editMode }">
             </div>
             <div class="form-group">
-                <label for="NOTE">Примичание</label>
+                <label for="NOTE">Примечание</label>
                 <textarea [readonly]="!editMode" (ngModelChange)="change('NOTE', $event)" 
-                        id="NOTE" name="NOTE_DEP" type="text" class="form-control" placeholder="Примичание" [ngModel]="data['NOTE']" 
+                        id="NOTE" name="NOTE_DEP" type="text" class="form-control" placeholder="Примечание" [ngModel]="data['NOTE']" 
                         [ngClass]="{'readonly': !editMode }"></textarea>
             </div>
         </div>

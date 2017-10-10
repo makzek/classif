@@ -2,20 +2,27 @@
     overflow-y: auto;
     overflow-x: hidden;
 
+    .tabs-wrapper {
+        width: 800px;
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 1px solid transparent;
+        margin: -11px -20px 20px;
+    }
+
     .tabs {
         display: inline-block;
-        width: 100%;
-        border-bottom: 1px solid transparent;
+        padding: 0;
+        margin: 0;
 
         .tab-item {
             display: inline-block;
             border-bottom: 5px solid transparent;
-            padding: 5px;
+            padding: 12px 0 5px;
             position: relative;
             cursor: pointer;
             height: $item-height;
-            padding-top: 12px;
-            margin-right: $item-width;
+            margin-right: 40px;
         }
     }
 
@@ -29,27 +36,39 @@
         font-size: 17px;
     }
 
-    .form-group:not(:first-child) {
-        &.fathers-name {
-            margin-top: 0;
-        }
+    .form-group {
+        margin-bottom: 10px;
 
-        &.email {
-            margin-top: 5px;
-        }
+        &:not(:first-child) {
+            &.fathers-name {
+                margin-top: 0;
+            }
 
-        &.full-position {
-            margin-top: 61px;
+            &.email {
+                margin-top: 5px;
+            }
+
+            &.full-position {
+                margin-top: 61px;
+            }
+
+            &.sev {
+                margin-top: 38px;
+            }
         }
     }
 
     textarea {
         resize: none;
+
+        &.note {
+            height: 189px;
+        }
     }
 
     .current-image {
-        height: 150px;
-        width: 150px;
+        height: 130px;
+        width: 130px;
         display: inline-block;
         border: 1px solid transparent;
         border-radius: 50%;
@@ -57,6 +76,7 @@
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
+        margin-left: 24px;
 
         .photo-uploader {
             position: absolute;
@@ -67,8 +87,8 @@
 
     .gender-placeholder {
         position: absolute;
-        top: 200px;
-        left: 28px;
+        top: 183px;
+        left: 9px;
         width: 30px;
     }
 
@@ -81,5 +101,28 @@
         background-position-x: right;
         background-position-y: center;
         background-size: 24px;
+    }
+
+    .names {
+        margin-top: 20px;
+    }
+
+    .wrapper {
+        display: flex;
+    }
+
+    .col-1,
+    .col-2 {
+        display: inline-block;
+    }
+
+    .col-1 {
+        width: 178px;
+        margin-right: 40px;
+        position: relative;
+    }
+
+    .col-2 {
+        width: 535px;
     }
 }

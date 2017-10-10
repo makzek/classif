@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 
 import { CardEditComponent } from './card-edit.component';
 
@@ -6,10 +6,11 @@ import { CardEditComponent } from './card-edit.component';
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit {
+export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit, OnChanges {
     fieldGroups: string[];
     currTab = 0;
     @ViewChild('departmentsForm') form;
+    @ViewChild('personCodeTooltip') personCodeTooltip;
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
@@ -20,7 +21,6 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
 
     constructor() {
         super();
-
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     }
 
@@ -30,7 +30,33 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
 
     ngOnInit() {
         this.form.control.valueChanges
-        .subscribe(values => this.invalid.emit(!this.form.valid));
+            .subscribe(() => {
+                this.invalid.emit(!this.form.valid);
+            });
+    }
+
+    ngOnChanges() {
+        if (this.form.controls.RUBRIC_CODE_PERSON) {
+            const personCode = this.form.controls.RUBRIC_CODE_PERSON;
+            const tooLong = 'Максимальная длинна ' + this.codeLenth + ' символов. ';
+            const noWhitespace = 'Пробелы в начале или в конце строки запрещены. ';
+            personCode.valueChanges.subscribe(() => {
+                this.tooltipText = '';
+                if (personCode.invalid) {
+                    this.tooltipText += noWhitespace;
+                    this.personCodeTooltip.show();
+                }
+
+                if (personCode.value.length >= 32) {
+                    this.tooltipText += tooLong;
+                    this.personCodeTooltip.show();
+                }
+
+                if (!personCode.invalid && personCode.value.length < 32) {
+                    this.personCodeTooltip.hide();
+                }
+            });
+        }
     }
 
     newImage(evt) {

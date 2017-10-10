@@ -4,6 +4,68 @@
     }
 }
 
+.tooltip {
+    .tooltip-inner {
+        color: $active-field-color-main-theme;
+        box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    &.invalid-tooltip {
+        .tooltip-inner {
+            color: $invalid-color-main-theme;
+            box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+.right-tooltip {
+    .tooltip-arrow {
+        border-right-color: $active-field-color-main-theme !important;
+    }
+
+    &.invalid-tooltip {
+        .tooltip-arrow {
+            border-right-color: $invalid-color-main-theme !important;
+        }
+    }
+}
+
+.left-tooltip {
+    .tooltip-arrow {
+        border-left-color: $active-field-color-main-theme !important;
+    }
+
+    &.invalid-tooltip {
+        .tooltip-arrow {
+            border-left-color: $invalid-color-main-theme !important;
+        }
+    }
+}
+
+.top-tooltip {
+    .tooltip-arrow {
+        border-top-color: $active-field-color-main-theme !important;
+    }
+
+    &.invalid-tooltip {
+        .tooltip-arrow {
+            border-top-color: $invalid-color-main-theme !important;
+        }
+    }
+}
+
+.bottom-tooltip {
+    .tooltip-arrow {
+        border-bottom-color: $active-field-color-main-theme !important;
+    }
+
+    &.invalid-tooltip {
+        .tooltip-arrow {
+            border-bottom-color: $invalid-color-main-theme !important;
+        }
+    }
+}
+
 .main-theme {
     // general
     .block {
@@ -56,7 +118,6 @@
             background: $button-color-hover-main-theme;
         }
     }
-
 
     .ng-invalid {
         border-color: $invalid-color-main-theme;
@@ -292,6 +353,10 @@
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
 
+                &:focus {
+                    border-color: $active-field-color-main-theme;
+                }
+
                 &.readonly {
                     background-color: transparent;
                 }
@@ -318,7 +383,7 @@
     // spacial templates
 
     .eos-departments-card-edit {
-        .tabs {
+        .tabs-wrapper {
             border-color: $border-color-main-theme;
 
             .tab-item {

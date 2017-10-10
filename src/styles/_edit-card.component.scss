@@ -2,7 +2,7 @@
     // min-height: 450px;
     max-height: calc(100vh - 108px - 60px);
     width: 800px;
-    margin: 20px auto;
+    margin: 0 auto;
     border: 1px solid transparent;
     overflow-y: auto;
 
@@ -17,8 +17,8 @@
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 100px 20px 1fr 172px;
-            grid-template-columns: 100px 20px 1fr 172px;
+            -ms-grid-columns: 24px 19px 1fr 172px;
+            grid-template-columns: 24px 19px 1fr 172px;
         }
 
         .btn {

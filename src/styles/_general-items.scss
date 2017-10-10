@@ -10,10 +10,10 @@
 
         & + span {
             margin-right: 6px;
-            margin-bottom: -3px;
+            margin-bottom: -7px;
             display: inline-block;
-            height: 16px;
-            width: 16px;
+            height: 24px;
+            width: 24px;
             background-size: cover;
             background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
         }
@@ -31,6 +31,8 @@
 
     label {
         padding-left: 0;
+        position: relative;
+        top: -4px;
     }
 }
 
@@ -40,10 +42,10 @@
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
 
-        & + span {
+        /*& + span {
             margin-right: 6px;
             margin-bottom: -3px;
-        }
+        }*/
     }
 
 }
@@ -70,4 +72,20 @@
 
 input[type=text]::-ms-clear {
     display: none;
+}
+
+
+.form-control {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.tooltip {
+    opacity: 1 !important;
+
+    .tooltip-inner {
+        border-radius: 0 !important;
+        background-color: white;
+    }
 }

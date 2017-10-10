@@ -2,9 +2,9 @@
     <header class="edit-header" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <div>
-                <button *ngIf="node" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
+                <button *ngIf="node && !editMode" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
                     aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
-                <button *ngIf="node" [disabled]="isLast || !node.parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
+                <button *ngIf="node && !editMode" [disabled]="isLast || !node.parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
                     aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
             </div>
         </div>
