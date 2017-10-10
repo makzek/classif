@@ -3,15 +3,29 @@
     <eos-selected-node *ngIf="hasParent"></eos-selected-node>
     <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
+        <!--Sortable list-->
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li class="child">
                 <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
-                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"
-                    (onChange)="userSortItems()">
+                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
                 </bs-sortable>
             </li>
         </ul>
-
+        <ng-template #childTemplate let-item="item" let-index="index">
+            <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.initData.id, 'flat-child': item.isDeleted && !showDeleted}">
+                <div *ngIf="!item.value.isDeleted || showDeleted" class="node-list-item" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
+                    <span *ngIf="showCheckbox" class="checkbox">
+                        <label><input type="checkbox" [(ngModel)]="item.value.selected">
+                            <span></span>
+                    </label>
+                    </span>
+                    <span class="node-info">
+                        <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.foreignKey]}}</span>
+                    </span>
+                </div>
+            </div>
+        </ng-template>
+        <!--Simple list-->
         <ul *ngIf="nodes && !userSorting && openedNode" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}" (click)="openFullInfo(item)" (dblclick)="viewNode(item)">
                 <div *ngIf="openedNode">
@@ -31,16 +45,16 @@
         </ul>
     </div>
 
-
     <div class="pagination-option block">
         <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
             [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"
             nextText="&rsaquo;"></pagination>
         <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
-
         <div class="btn-group count-select pull-right" dropdown container="body">
             <span dropdownToggle type="button" class="dropdown-toggle special-text">
-                  <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}<span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span></span>
+                <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}
+                    <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
+                </span>
             </span>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(10)">10</a></li>
@@ -49,21 +63,8 @@
             </ul>
         </div>
     </div>
+
 </div>
 <!--<div class="!nodes">
     <eos-spinner [size]="'lg'"></eos-spinner>
 </div>-->
-<ng-template #childTemplate let-item="item" let-index="index">
-    <div *ngIf="openedNode">
-        <div *ngIf="!item.value.isDeleted || showDeleted" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}" class="node-list-item">
-            <span *ngIf="showCheckbox" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="item.value.selected">
-                    <span></span>
-            </label>
-            </span>
-            <span class="node-info" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
-                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.foreignKey]}}</span>
-            </span>
-        </div>
-    </div>
-</ng-template>
