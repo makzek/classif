@@ -1,4 +1,4 @@
-import {IEnt, ILinearCL, IHierCL} from './interfaces'
+import {IEnt, ILinearCL, IHierCL, IStamp} from './interfaces'
 
 // tslint:disable class-name
 
@@ -10,9 +10,22 @@ export interface DELIVERY_CL extends ILinearCL {
     CLASSIF_NAME: string;
 }
 
-export interface RUBRIC_CL extends IHierCL {
+/**
+ * Справочник рубрик
+ */
+export interface RUBRIC_CL extends IHierCL, IStamp {
+    /**
+     * Код рубрики_
+    */
     CODE: string;
+    /**
+     * Код рубрики
+    */
     RUBRIC_CODE: string;
+    /**
+     * Наименование темы
+     */
+    CLASSIF_NAME: string;
 }
 
 export interface DEPARTMENT extends IHierCL {

@@ -8,10 +8,10 @@ import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIG
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
-    selector: 'eos-opened-node',
-    templateUrl: 'opened-node.component.html',
+    selector: 'eos-node-info',
+    templateUrl: 'node-info.component.html',
 })
-export class OpenedNodeComponent implements OnDestroy {
+export class NodeInfoComponent implements OnDestroy {
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
 
@@ -25,19 +25,8 @@ export class OpenedNodeComponent implements OnDestroy {
 
     constructor(private _dictSrv: EosDictService,
         private _nodeActSrv: NodeActionsService) {
-        /* this.eosDictService.dictionary$.subscribe((dict) => {
-            if (dict) {
-                this.eosDictService.openedNode$.subscribe(
-                    (node) => {
-                        if (node) {
-                            this.viewFields = node.getQuickView();
-                            this.shortViewFields = node.getShortQuickView();
-                        }
-                    },
-                    (error) => alert(error));
-            }
-        });*/
-        this._openedNodeSubscription  = this._dictSrv.openedNode$.subscribe(
+
+        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe(
             (node) => {
                 if (node) {
                     this.viewFields = node.getQuickView();
@@ -52,7 +41,7 @@ export class OpenedNodeComponent implements OnDestroy {
         this._openedNodeSubscription.unsubscribe();
     }
 
-    actionHandler (type: E_RECORD_ACTIONS) {
+    actionHandler(type: E_RECORD_ACTIONS) {
         this._nodeActSrv.emitAction(type);
     }
 }

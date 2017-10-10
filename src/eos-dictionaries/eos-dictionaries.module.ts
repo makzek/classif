@@ -20,7 +20,7 @@ import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { CardComponent } from './card/card.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
-import { OpenedNodeComponent } from './opened-node/opened-node.component';
+import { NodeInfoComponent } from './node-info/node-info.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
 import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
@@ -44,7 +44,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         CardComponent,
         NodeListComponent,
         NodeActionsComponent,
-        OpenedNodeComponent,
+        NodeInfoComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,
@@ -71,7 +71,7 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         CardComponent,
         NodeListComponent,
         NodeActionsComponent,
-        OpenedNodeComponent,
+        NodeInfoComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,

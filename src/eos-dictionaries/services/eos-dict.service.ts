@@ -330,7 +330,7 @@ export class EosDictService {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
         Object.assign(node, { ...node, isDeleted: false });
-        Object.assign(node, { ...node, selected: false });
+        Object.assign(node, { ...node, marked: false });
         if (node.children) {
             node.children.forEach((subNode) => this.restoreItem(subNode));
         }

@@ -19,6 +19,30 @@ export interface ILinearCL extends IEnt {
     DELETED: number;
     NOTE: string;
 }
+/**
+ * свойства записи про ее создание и изменение
+ * есть у многих
+ */
+export interface IStamp {
+    /**
+     * Дата и время создания
+     */
+    INS_DATE: number;
+    /**
+     * Дата и время обновления
+     */
+    UPD_DATE: number;
+    /**
+     * Кто создал
+     */
+    INS_WHO: number;
+    /**
+     * Кто обновил
+     */
+    UPD_WHO: number;
+}
+
+
 
 export interface IHierCL extends IEnt {
     DUE: string;

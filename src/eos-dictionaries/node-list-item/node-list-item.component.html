@@ -1,0 +1,44 @@
+<div class="selected-node">
+    <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}"
+        (click)="openFullInfo(selectedNode)" (dblclick)="viewNode()">
+        <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">
+                <label>
+                    <input type="checkbox" [(ngModel)]="selectedNode.marked" (change)="mark()" tooltip="{{ selectedNode.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
+                    <span></span>
+        </label>
+        </span>
+        <span class="node-info"><span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.foreignKey]}}</span></span>
+        <eos-spinner *ngIf="selectedNode.updating" class="spinner" size="sm"></eos-spinner>
+    </div>
+</div>
+
+
+<li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}"
+    (click)="openFullInfo(item)" (dblclick)="viewNode(item)">
+    <div>
+        <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="node-list-item">
+            <span *ngIf="showCheckbox" class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="item.marked" (change)="checkItem(item)" tooltip="{{ item.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
+            <span></span>
+            </label>
+            </span>
+            <span class="node-info">
+            <span *ngFor="let field of viewFields" class="code">{{item.data[field.foreignKey]}}</span>
+            </span>
+            <eos-spinner *ngIf="item.updating" class="spinner" [size]="'sm'"></eos-spinner>
+        </div>
+    </div>
+</li>
+
+<div *ngIf="openedNode" [ngClass]="{'highlight': openedNode?.id === item.initData.id, 'flat-child': item.isDeleted && !showDeleted}">
+    <div *ngIf="!item.value.isDeleted || showDeleted" class="node-list-item" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
+        <span *ngIf="showCheckbox" class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="item.value.marked">
+                    <span></span>
+        </label>
+        </span>
+        <span class="node-info">
+                <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.foreignKey]}}</span>
+        </span>
+    </div>
+</div>
