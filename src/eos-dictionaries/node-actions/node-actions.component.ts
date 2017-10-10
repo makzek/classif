@@ -17,6 +17,7 @@ import { E_FIELD_SET } from '../core/dictionary-descriptor';
 // import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -87,6 +88,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -170,7 +172,9 @@ export class NodeActionsComponent implements OnDestroy {
             case E_RECORD_ACTIONS.userOrder:
                 this.switchUserSort();
                 break;
-
+            case E_RECORD_ACTIONS.showDeleted: // TODO: check if it works
+                this._profileSrv.setSetting('showDeleted', !this.showDeleted);
+                break;
             default:
                 this._actSrv.emitAction(type);
                 break;
@@ -184,7 +188,7 @@ export class NodeActionsComponent implements OnDestroy {
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
                 case E_RECORD_ACTIONS.moveDown:
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.showDeleted:
+                case E_RECORD_ACTIONS.restore:
                     return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
                 default:
                     return this.dictionary.descriptor.canDo(group, type);
@@ -251,9 +255,15 @@ export class NodeActionsComponent implements OnDestroy {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.newNodeData[_f.key];
                 });
+                const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+                let path = '';
+                for (const bc of bCrumbs) {
+                    path = path + bc.title + '/';
+                }
                 this._deskSrv.addRecentItem({
                     link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
                     title: title,
+                    fullTitle: path + title
                 });
                 if (hide) {
                     this.creatingModal.hide();
@@ -264,5 +274,9 @@ export class NodeActionsComponent implements OnDestroy {
 
     cancelCreate() {
         this.creatingModal.hide();
+    }
+
+    dataSeted(date: Date) {
+        console.log('recive date: ', date);
     }
 }

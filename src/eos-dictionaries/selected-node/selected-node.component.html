@@ -1,15 +1,15 @@
 <div *ngIf="selectedNode" class="block eos-selected-node">
-    <a class="link special-text" *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
+    <a class="link special-text" *ngIf="hasParent" (click)="goUp()">Вверх</a>
     <div class="selected-node">
             <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}" (click)="openFullInfo(selectedNode)" (dblclick)="viewNode()">
                 <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">
                     <label>
-                        <input type="checkbox" [(ngModel)]="selectedNode.selected" (change)="mark()" tooltip="{{ selectedNode.selected ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
+                        <input type="checkbox" [(ngModel)]="selectedNode.marked" (change)="mark()" tooltip="{{ selectedNode.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
                         <span></span>
                     </label>
                 </span>
                 <span class="node-info" >
-                        <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.key]}}</span>
+                        <span *ngFor="let field of viewFields" class="code">{{selectedNode.data[field.foreignKey]}}</span>
                 </span>
                 <eos-spinner *ngIf="selectedNode.updating" class="spinner" [size]="'sm'"></eos-spinner>
             </div>

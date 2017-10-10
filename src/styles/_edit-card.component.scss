@@ -36,10 +36,13 @@
         .check-wrapper {
             grid-column: 2;
             grid-row: 1;
-            margin: 8px 0 0 -10px;
 
             .checkbox {
                 margin: 0;
+
+                label {
+                    margin-left: -15px;
+                }
             }
         }
 
@@ -57,12 +60,20 @@
         .buttons-wrapper {
             grid-column: 4;
             grid-row: 1;
-            margin: auto;
         }
 
         .action-wrapper {
             grid-column: 4;
             grid-row: 1;
+        }
+
+        .move-wrapper,
+        .check-wrapper,
+        .buttons-wrapper,
+        .action-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
         }
     }
 
@@ -84,7 +95,7 @@
     }*/
 
     .edit-content {
-        padding: 10px;
+        padding: 10px 20px;
 
         label {
             font-size: 12px;
@@ -99,6 +110,7 @@
 
             label {
                 text-transform: uppercase;
+                white-space: nowrap;
             }
         }
 
@@ -107,7 +119,6 @@
             line-height: 20px;
             border-radius: 0;
             padding: 8px;
-            padding-right: 37px;
         }
 
         .readonly {

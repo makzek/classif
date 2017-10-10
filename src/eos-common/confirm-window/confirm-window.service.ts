@@ -18,10 +18,17 @@ export class ConfirmWindowService {
         return new Promise((res, rej) => {
             this._bsModalSrv.onHidden.subscribe((reason) => {
                 if (reason === 'backdrop-click' || reason === 'esc') {
-                    rej(false);
+                    return rej(false);
                 }
             });
-            _wnd.confirmEvt.subscribe((confirm: boolean) => res(confirm));
+
+            _wnd.confirmEvt.subscribe((confirm: boolean) => {
+                if (confirm !== undefined) {
+                    res(confirm);
+                } else {
+                    rej('closed');
+                }
+            });
         })
     }
 }

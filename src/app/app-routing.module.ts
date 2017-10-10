@@ -26,10 +26,10 @@ const routes: Routes = [{
         canActivate: [AuthGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true },
+        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'node', showInBreadcrumb: true },
+            data: { title: 'Запись', showInBreadcrumb: true },
             children: [{
                 path: '',
                 component: DictionaryComponent,
@@ -39,13 +39,13 @@ const routes: Routes = [{
                 path: 'edit',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Редактирование', showInBreadcrumb: true },
+                data: { title: 'Редактирование', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Просмотр', showInBreadcrumb: true },
+                data: { title: 'Просмотр', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
             }],
         }, {
             path: '',
@@ -55,7 +55,7 @@ const routes: Routes = [{
     }],
 }, {
     path: 'desk',
-    data: { title: 'Рабочий стол', showInBreadcrumb: true },
+    data: { title: 'Главная', showInBreadcrumb: false },
     children: [{
         path: '',
         pathMatch: 'full',
@@ -63,7 +63,7 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Рабочий стол', showInBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false }
     }]
 }, {
     path: 'test',

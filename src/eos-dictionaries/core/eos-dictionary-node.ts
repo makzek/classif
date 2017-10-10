@@ -11,8 +11,15 @@ export class EosDictionaryNode {
     description: string;
     /* hasSubnodes: boolean; */
     isExpanded?: boolean;
+    /**
+     * isActive: boolean, is node selected in tree
+     */
+    isActive: boolean;
     // isDeleted: boolean;
-    selected: boolean;
+    /**
+     * marked - node checked in list
+     */
+    marked: boolean;
     /** record data container */
     data: any;
     sorting: number;
@@ -58,7 +65,7 @@ export class EosDictionaryNode {
 
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {
         if (data) {
-            this.selected = !!this.selected;
+            this.marked = !!this.marked;
 
             this._descriptor = descriptor;
             /* store all data from backend in .data */
@@ -92,12 +99,12 @@ export class EosDictionaryNode {
         });
     }
 
-    hasParent(parent: EosDictionaryNode): boolean {
+    isChildOf(node: EosDictionaryNode): boolean {
         if (this.parent) {
-            if (this.parent.id === parent.id) {
+            if (this.parent.id === node.id) {
                 return true;
             } else {
-                return this.parent.hasParent(parent);
+                return this.parent.isChildOf(node);
             }
         } else {
             return false;

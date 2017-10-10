@@ -2,11 +2,8 @@
     position: relative;
 
     .datepicker-input {
-        padding-right: 40px;
-
-        &.readonly {
-            padding-right: 40px;
-        }
+        padding-right: 37px !important;
+        background-color: transparent;
     }
 
     .icon {
@@ -21,6 +18,7 @@
         background: white;
         padding: 0;
         z-index: 1;
+        right: 10px;
 
         button {
             border-color: transparent;
@@ -59,6 +57,10 @@
                         background-color: $button-color-hover-main-theme;
                     }
                 }
+            }
+
+            th:not(:last-child) {
+                padding-left: 10px;
             }
         }
 

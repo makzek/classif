@@ -2,6 +2,10 @@ import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
+import { EosStorageService } from '../../app/services/eos-storage.service';
+
+import { RECENT_URL } from '../../app/consts/common.consts';
+
 import { EosDictService } from '../services/eos-dict.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
@@ -22,6 +26,7 @@ import {
 })
 export class SelectedNodeComponent implements OnDestroy {
     private _dictionaryId: string;
+    private hasParent: boolean;
     dictionary: EosDictionary;
     selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
@@ -34,7 +39,9 @@ export class SelectedNodeComponent implements OnDestroy {
     private _userSettingsSubscription: Subscription;
     private _actionSubscription: Subscription;
 
-    constructor(private _dictSrv: EosDictService,
+    constructor(
+        private _storageSrv: EosStorageService,
+        private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         private _router: Router,
         private _profileSrv: EosUserProfileService,
@@ -51,21 +58,22 @@ export class SelectedNodeComponent implements OnDestroy {
             (error) => alert(error)
         );
 
-      this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
-                this.selectedNode = node;
-                if (node) {
-                    // Uncheck all checboxes before changing selectedNode
-                    // if (this.selectedNode) {
-                    // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
-                    // }
+        this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
+            this.selectedNode = node;
+            if (node) {
+                this.hasParent = !!node.parent;
+                // Uncheck all checboxes before changing selectedNode
+                // if (this.selectedNode) {
+                // this.checkAllItems(false); //No! When go from edit checked elements stay unchecked
+                // }
 
-                    this.openFullInfo(node);
-                } else {
-                    if (this.dictionary) {
-                        this.selectedNode = this.dictionary.root;
-                    }
+                this.openFullInfo(node);
+            } else {
+                if (this.dictionary) {
+                    this.selectedNode = this.dictionary.root;
                 }
-            },
+            }
+        },
             (error) => alert(error)
         );
 
@@ -97,20 +105,20 @@ export class SelectedNodeComponent implements OnDestroy {
                     this.physicallyDelete();
                     break;
                 }
-                // case E_RECORD_ACTIONS.restore: {
-                case E_RECORD_ACTIONS.showDeleted: {
+                case E_RECORD_ACTIONS.restore: {
+                    // case E_RECORD_ACTIONS.showDeleted: {
                     this.restoringLogicallyDeletedItem();
                     break;
                 }
                 case E_RECORD_ACTIONS.markRecords: {
                     if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = true;
+                        this.selectedNode.marked = true;
                     }
                     break;
                 }
                 case E_RECORD_ACTIONS.unmarkRecords: {
                     if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = false;
+                        this.selectedNode.marked = false;
                     }
                     break;
                 }
@@ -127,16 +135,14 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     openFullInfo(node: EosDictionaryNode): void {
-        if (!node.isDeleted) {
-            if (node.id !== '') {
-                this._dictSrv.openNode(this._dictionaryId, node.id);
-            }
+        if (!node.isDeleted && node.id !== '') {
+            this._dictSrv.openNode(this._dictionaryId, node.id);
         }
     }
 
     editNode() {
         if (!this._dictSrv.isRoot(this.selectedNode.id)) {
-            localStorage.setItem('viewCardUrlRedirect', this._router.url);
+            this._storageSrv.setItem(RECENT_URL, this._router.url);
             this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,
@@ -148,15 +154,22 @@ export class SelectedNodeComponent implements OnDestroy {
         }
     }
 
-    selectNode(nodeId: string) {
-        this._dictSrv.selectNode(this._dictionaryId, nodeId);
-        localStorage.setItem('viewCardUrlRedirect', this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
+    goUp() {
+        /* this._dictSrv.selectNode(this._dictionaryId, nodeId); */
+        if (this.selectedNode && this.selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
+            this._router.navigate(path);
+        }
+        // this._storageSrv.setItem(RECENT_URL, this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
     }
 
     delete() {
-        if (this.selectedNode.selected) {
-            this.selectedNode.selected = false;
-            this._dictSrv.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id]);
+        if (this.selectedNode.marked) {
+            this.selectedNode.marked = false;
+            this._dictSrv.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id])
+                .then(() => {
+                    this.goUp();
+                });
             this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,
@@ -166,7 +179,7 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     physicallyDelete() {
-        if (this.selectedNode.selected) {
+        if (this.selectedNode.marked) {
             if (1 !== 1) { // here must be API request for check if possible to delete
                 this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
             } else {
@@ -185,13 +198,20 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     restoringLogicallyDeletedItem() {
-        if (this.selectedNode.selected && this.selectedNode.isDeleted) {
+        if (this.selectedNode.marked && this.selectedNode.isDeleted) {
             this._dictSrv.restoreItem(this.selectedNode.id);
         }
     }
 
     mark() {
-        if (this.selectedNode.selected) {
+        console.log(this.selectedNode);
+        if (this.selectedNode.marked && !this.selectedNode.children) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+        } else if (this.selectedNode.marked === false && !this.selectedNode.children) {
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+        } else if (this.selectedNode.marked) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
         } else {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
@@ -200,7 +220,7 @@ export class SelectedNodeComponent implements OnDestroy {
 
     viewNode() {
         if (!this._dictSrv.isRoot(this.selectedNode.id)) {
-            localStorage.setItem('viewCardUrlRedirect', this._router.url);
+            this._storageSrv.setItem(RECENT_URL, this._router.url);
             this._router.navigate([
                 'spravochniki',
                 this._dictionaryId,

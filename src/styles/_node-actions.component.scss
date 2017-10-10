@@ -25,7 +25,7 @@
 
     .date {
         position: relative;
-        top: -6px;
+        top: 6px;
     }
 
     .search {
@@ -67,15 +67,29 @@
             margin-top: -5px;
         }
 
-        &.eos-icon-calendar-blue {
-            position: relative;
-            top: 5px;
-        }
-
         &.eos-icon-search-blue {
             position: relative;
-            top: -7px;
+            top: 4px;
         }
+    }
+
+    .full-search {
+        position: relative;
+        top: 3px;
+    }
+
+    .eos-datepicker {
+        display: inline-block;
+        width: 145px;
+        font-weight: bold;
+
+        .datepicker-input {
+            border: 0;
+            box-shadow: none;
+            position: relative;
+            top: 6px;
+        }
+
     }
 }
 

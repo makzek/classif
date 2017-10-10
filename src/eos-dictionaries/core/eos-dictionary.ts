@@ -78,13 +78,17 @@ export class EosDictionary {
 
     updateNodes(data: any[]) {
         data.forEach((nodeData) => {
-            const nodeId = nodeData[this.descriptor.record.keyField.key];
-            let _node = this._nodes.get(nodeId);
-            if (_node) {
-                _node.updateData(nodeData);
+            if (nodeData) {
+                const nodeId = nodeData[this.descriptor.record.keyField.key];
+                let _node = this._nodes.get(nodeId);
+                if (_node) {
+                    _node.updateData(nodeData);
+                } else {
+                    _node = new EosDictionaryNode(this.descriptor.record, nodeData);
+                    this._nodes.set(_node.id, _node);
+                }
             } else {
-                _node = new EosDictionaryNode(this.descriptor.record, nodeData);
-                this._nodes.set(_node.id, _node);
+                console.log('no data');
             }
         });
 
@@ -142,7 +146,7 @@ export class EosDictionary {
 
     /* todo: search with API */
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
-        let searchResult = [];
+        let searchResult: EosDictionaryNode[] = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         searchString = searchString.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
         const _expr = new RegExp(searchString, 'i');
@@ -156,7 +160,7 @@ export class EosDictionary {
         /* tslint:enable:no-bitwise */
 
         if (!globalSearch) {
-            searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
+            searchResult = searchResult.filter((node) => node.isChildOf(selectedNode));
         }
         return searchResult;
     }

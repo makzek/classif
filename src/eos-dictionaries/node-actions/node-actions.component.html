@@ -3,7 +3,7 @@
         <span class="controller">
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
                 <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="doAction(action.type)">
-                    <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right" container="body"></span>
+                    <span class="{{action.iconClass}}" tooltip="{{action.hint}}" placement="right" container="body"></span>
         </button>
         </span>
         <div class="btn-group" dropdown>
@@ -22,8 +22,12 @@
         </div>
         </span>
         <span class="pull-right">
-            <span class="date"><span class="date-comment">Состояние на </span><b>{{date | date:'shortDate'}}</b></span>
-        <span class="icon eos-icon eos-icon-calendar-blue small"></span>
+            <span class="date">Состояние на </span>
+        <!--<span class="icon eos-icon eos-icon-calendar-blue small"></span>-->
+        <eos-datepicker class="datepicker" (change)="dataSeted()"></eos-datepicker>
+        <button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body">
+            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+        </button>
         <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
             <span dropdownToggle type="button">
                         <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left"></span>
@@ -36,11 +40,11 @@
                         </span>
                         <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
                         <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
-                                <span class="checkbox">
-                                    <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
-                                        <span></span>
-                        </label>
-                        </span>
+                            <span class="checkbox">
+                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
+                                    <span></span>
+                                </label>
+                            </span>
                         </span>
                     </div>
                 </li>
@@ -50,13 +54,13 @@
     </div>
     <div class="second-line block special-text">
         <span class="table-title">
-            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
+            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
+                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" >
                     <span></span>
         </label>
         </span>
-        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
+        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
+                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
                     <span></span>
         </label>
         </span>
