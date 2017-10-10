@@ -17,9 +17,9 @@ export class EosDictionaryNode {
     isActive: boolean;
     // isDeleted: boolean;
     /**
-     * selected - node checked in list
+     * marked - node checked in list
      */
-    selected: boolean;
+    marked: boolean;
     /** record data container */
     data: any;
     sorting: number;
@@ -65,7 +65,7 @@ export class EosDictionaryNode {
 
     constructor(descriptor: RecordDescriptor, data: any, id?: any) {
         if (data) {
-            this.selected = !!this.selected;
+            this.marked = !!this.marked;
 
             this._descriptor = descriptor;
             /* store all data from backend in .data */

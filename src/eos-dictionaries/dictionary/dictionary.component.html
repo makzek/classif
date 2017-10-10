@@ -10,10 +10,11 @@
         <eos-tree *ngIf="nodes.length" [nodes]="nodes" [showDeleted]="showDeleted"></eos-tree>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}">
+        <eos-node-actions></eos-node-actions>
         <eos-node-list></eos-node-list>
     </div>
 
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
-        <eos-opened-node></eos-opened-node>
+        <eos-node-info></eos-node-info>
     </div>
 </div>

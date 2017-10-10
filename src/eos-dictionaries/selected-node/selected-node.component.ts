@@ -112,13 +112,13 @@ export class SelectedNodeComponent implements OnDestroy {
                 }
                 case E_RECORD_ACTIONS.markRecords: {
                     if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = true;
+                        this.selectedNode.marked = true;
                     }
                     break;
                 }
                 case E_RECORD_ACTIONS.unmarkRecords: {
                     if (this.selectedNode) { // maybe we need save this value
-                        this.selectedNode.selected = false;
+                        this.selectedNode.marked = false;
                     }
                     break;
                 }
@@ -164,8 +164,8 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     delete() {
-        if (this.selectedNode.selected) {
-            this.selectedNode.selected = false;
+        if (this.selectedNode.marked) {
+            this.selectedNode.marked = false;
             this._dictSrv.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id])
                 .then(() => {
                     this.goUp();
@@ -179,7 +179,7 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     physicallyDelete() {
-        if (this.selectedNode.selected) {
+        if (this.selectedNode.marked) {
             if (1 !== 1) { // here must be API request for check if possible to delete
                 this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
             } else {
@@ -198,20 +198,20 @@ export class SelectedNodeComponent implements OnDestroy {
     }
 
     restoringLogicallyDeletedItem() {
-        if (this.selectedNode.selected && this.selectedNode.isDeleted) {
+        if (this.selectedNode.marked && this.selectedNode.isDeleted) {
             this._dictSrv.restoreItem(this.selectedNode.id);
         }
     }
 
     mark() {
         console.log(this.selectedNode);
-        if (this.selectedNode.selected && !this.selectedNode.children) {
+        if (this.selectedNode.marked && !this.selectedNode.children) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
             this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else if (this.selectedNode.selected === false && !this.selectedNode.children) {
+        } else if (this.selectedNode.marked === false && !this.selectedNode.children) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        } else if (this.selectedNode.selected) {
+        } else if (this.selectedNode.marked) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
         } else {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);

@@ -234,7 +234,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     close() {
         const url = this._storageSrv.getItem(RECENT_URL);
-        console.log('close redirect', url);
         if (url) {
             this.goTo(url);
         }

@@ -90,7 +90,7 @@ export class NodeListComponent implements OnDestroy {
                 this.viewFields = node.getListView();
                 this._update(node.children, true);
                 if (!this.nodes) {
-                    if (node.selected) {
+                    if (node.marked) {
                         this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
                         this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
                     } else {
@@ -98,7 +98,7 @@ export class NodeListComponent implements OnDestroy {
                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
                     }
                 } else {
-                    this.checkState(node.selected);
+                    this.checkState(node.marked);
                 }
             }
         });
@@ -207,24 +207,24 @@ export class NodeListComponent implements OnDestroy {
     checkAllItems(value: boolean): void {
         if (this.nodes) {
             for (const item of this.nodes) {
-                item.selected = value;
+                item.marked = value;
             }
         }
     }
 
     checkItem(node: EosDictionaryNode) {
         /* tslint:disable:no-bitwise */
-        if (node.selected) {
-            if (!~this.nodes.findIndex((_n) => !_n.selected)) {
+        if (node.marked) {
+            if (!~this.nodes.findIndex((_n) => !_n.marked)) {
                 this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
             } else {
                 this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
             }
         } else {
-            if (!~this.nodes.findIndex((_n) => _n.selected)) {
+            if (!~this.nodes.findIndex((_n) => _n.marked)) {
                 this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
             } else {
-                if (!!~this.nodes.findIndex((_n) => _n.selected)) {
+                if (!!~this.nodes.findIndex((_n) => _n.marked)) {
                     this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
                 }
             }
@@ -297,9 +297,9 @@ export class NodeListComponent implements OnDestroy {
         const selectedNodes: string[] = [];
         if (this.nodes) {
             this.nodes.forEach((child) => {
-                if (child.selected && !child.isDeleted) {
+                if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
-                    child.selected = false;
+                    child.marked = false;
                 }
             });
         }
@@ -332,7 +332,7 @@ export class NodeListComponent implements OnDestroy {
     physicallyDelete() {
         if (this.nodes) {
             this.nodes.forEach(node => {
-                if (node.selected) {
+                if (node.marked) {
                     if (1 !== 1) { // here must be API request for check if possible to delete
                         this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                     } else {
@@ -356,7 +356,7 @@ export class NodeListComponent implements OnDestroy {
         if (this.nodes) {
             this.nodes.forEach(child => {
 
-                if (child.selected && child.isDeleted) {
+                if (child.marked && child.isDeleted) {
                     this._dictSrv.restoreItem(child);
                 }
             });
@@ -415,17 +415,17 @@ export class NodeListComponent implements OnDestroy {
         this._storageSrv.setItem(RECENT_URL, url);
     }
 
-    private checkState(selected?: boolean) {
+    private checkState(marked?: boolean) {
         let checkAllFlag = true,
             checkSome = false;
         for (const item of this.nodes) {
-            if (item.selected) {
+            if (item.marked) {
                 checkSome = true;
             }
-            checkAllFlag = checkAllFlag && item.selected;
+            checkAllFlag = checkAllFlag && item.marked;
         }
-        checkAllFlag = checkAllFlag && selected;
-        if (selected) {
+        checkAllFlag = checkAllFlag && marked;
+        if (marked) {
             checkSome = true;
         }
         if (checkAllFlag) {
