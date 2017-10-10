@@ -84,6 +84,10 @@ input[type=text]::-ms-clear {
 .tooltip {
     opacity: 1 !important;
 
+    &.word-break {
+        word-break: break-all;
+    }
+
     .tooltip-inner {
         border-radius: 0 !important;
         background-color: white;

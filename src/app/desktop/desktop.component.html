@@ -7,12 +7,13 @@
 
         <div [ngClass]="{'left': historyToLeft}" class="block recent">
             <span class="recent-title-wrapper">
-                <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true" tooltip="Переместить влево"></span>
+                <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true" 
+                    tooltip="Переместить влево" containerClass="top-tooltip"></span>
                 <span class="recent-title">История:</span>
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="left-tooltip">
                     <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
                 </li>
             </ul>
@@ -27,6 +28,7 @@
         <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
             tooltip="Сохранить"
             placement="left"
+            containerClass="left-tooltip"
             container="body">
             <span class="eos-icon eos-icon-checkbox-black small"
                 aria-hidden="true"></span>
@@ -34,6 +36,7 @@
         <button class="icon-btn btn" (click)="cancel($event)"
             tooltip="Отмена"
             placement="left"
+            containerClass="left-tooltip"
             container="body">
             <span class="eos-icon eos-icon-close-black small"
                 aria-hidden="true"></span>
@@ -44,12 +47,13 @@
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" container="body" class="text" containerClass="word-break-tooltip">
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="top-tooltip word-break" container="body" class="text">
             {{item.value.title}}
         </span>
         <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
             tooltip="Редактировать"
             placement="left"
+            containerClass="left-tooltip"
             container="body">
             <span class="eos-icon eos-icon-edit-black small"
                 aria-hidden="true"></span>
@@ -57,6 +61,7 @@
         <button *ngIf="deskId !== 'system'" class="icon-btn btn" (click)="removeLink(item.value)"
             tooltip="Удалить"
             placement="left"
+            containerClass="left-tooltip"
             container="body">
             <span class="eos-icon eos-icon-close-black small"
                 aria-hidden="true"></span>

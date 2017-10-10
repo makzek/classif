@@ -3,9 +3,9 @@
         <div class="move-wrapper">
             <div>
                 <button *ngIf="node && !editMode" [disabled]="isFirst || !node.parent" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
-                    aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom"></button>
+                    aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom" containerClass="bottom-tooltip"></button>
                 <button *ngIf="node && !editMode" [disabled]="isLast || !node.parent" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
-                    aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom"></button>
+                    aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom" containerClass="bottom-tooltip"></button>
             </div>
         </div>
         <div class="check-wrapper">
@@ -26,15 +26,18 @@
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
             <span class="pull-right">
-                <button class="btn btn-primary-light" aria-hidden="true" (click)="edit()" tooltip="Редактировать" placement="bottom">
+                <button class="btn btn-primary-light" aria-hidden="true" (click)="edit()" tooltip="Редактировать" placement="bottom"
+                    containerClass="bottom-tooltip">
                     <span class="eos-icon eos-icon-edit-blue small"></span>
                 </button>
                 <a routerLink="{{selfLink}}" target="_blank">
-                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom">
+                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom"
+                        containerClass="bottom-tooltip">
                         <span class="eos-icon eos-icon-external-link-blue small"></span>
                     </button>
                 </a>
-                <button class="btn btn-primary-light" aria-hidden="true" (click)="close()" tooltip="Закрыть" placement="bottom">
+                <button class="btn btn-primary-light" aria-hidden="true" (click)="close()" tooltip="Закрыть" placement="bottom"
+                    containerClass="bottom-tooltip">
                     <span class="eos-icon eos-icon-close-blue small"></span>
                 </button>
             </span>

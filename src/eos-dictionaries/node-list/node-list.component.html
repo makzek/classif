@@ -31,7 +31,8 @@
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="node-list-item">
                         <span *ngIf="showCheckbox" class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="item.marked" (change)="checkItem(item)" tooltip="{{ item.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
+                        <label><input type="checkbox" [(ngModel)]="item.marked" (change)="checkItem(item)"
+                            tooltip="{{ item.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right" containerClass="right-tooltip">
                             <span></span>
                         </label>
                         </span>

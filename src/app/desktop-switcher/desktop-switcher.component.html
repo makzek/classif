@@ -1,13 +1,14 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
     <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
-        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" container="body">{{selectedDesk.name}}</span>
+        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" containerClass="bottom-tooltip" container="body">{{selectedDesk.name}}</span>
         <span class="btn-icon">
             <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)" tooltip="{{desk.name}}" placement="left" container="body">
+        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)" tooltip="{{desk.name}}" placement="left"
+            containerClass="left-tooltip" container="body">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item">
@@ -15,8 +16,8 @@
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" (click)="removeDesk(desk)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="top-tooltip" (click)="openEditForm($event, desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="top-tooltip" (click)="removeDesk(desk)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
@@ -25,10 +26,10 @@
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk)" class="btn btn-default"
                             [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
-                            <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить"></span>
+                            <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить" containerClass="top-tooltip"></span>
                         </button>
                         <button type="button" (click)="cancelEdit(desk)" class="btn btn-default">
-                            <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить"></span>
+                            <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить" containerClass="top-tooltip"></span>
                         </button>
                     </div>
                 </div>
@@ -41,11 +42,11 @@
                     <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required 
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить"
+                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить" containerClass="top-tooltip"
                             [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить">
+                        <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить" containerClass="top-tooltip">
                             <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </span>

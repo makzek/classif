@@ -4,7 +4,8 @@
             <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}" (click)="openFullInfo(selectedNode)" (dblclick)="viewNode()">
                 <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">
                     <label>
-                        <input type="checkbox" [(ngModel)]="selectedNode.marked" (change)="mark()" tooltip="{{ selectedNode.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right">
+                        <input type="checkbox" [(ngModel)]="selectedNode.marked" (change)="mark()"
+                            tooltip="{{ selectedNode.marked ? 'Снять пометку' : 'Пометить элемент' }}" placement="right" containerClass="right-tooltip">
                         <span></span>
                     </label>
                 </span>
