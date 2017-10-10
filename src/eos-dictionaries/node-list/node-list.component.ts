@@ -46,13 +46,16 @@ export class NodeListComponent implements OnDestroy {
     itemsPerPage = 10;
 
     currentPage = 1;
-    showDeleted: boolean;
 
     hasParent = true;
-    showCheckbox: boolean;
+
 
     userSorting = false;
 
+    private _params = {
+        showCheckbox: false,
+        showDeleted: false
+    }
     private _startPage = 1;
     private _dropStartPage = true;
 
@@ -78,7 +81,7 @@ export class NodeListComponent implements OnDestroy {
             (dictionary) => {
                 if (dictionary) {
                     this._dictionaryId = dictionary.id;
-                    this.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                    this._params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 }
             },
             (error) => alert(error)
@@ -114,7 +117,7 @@ export class NodeListComponent implements OnDestroy {
         });
 
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
+            this._params.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
 
         this._orderSubscription = this._orderSrv.order$.subscribe((nodes) => {
@@ -195,7 +198,7 @@ export class NodeListComponent implements OnDestroy {
             this.totalItems = nodes.length;
             if (nodes.length) {
                 if (!this.hasParent) {
-                    this._dictSrv.openNode(this._dictionaryId, this.nodes[0].id);
+                    this._dictSrv.openNode(this.nodes[0].id);
                 }
             }
             this._getListData();
@@ -235,7 +238,7 @@ export class NodeListComponent implements OnDestroy {
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted) {
             if (node.id !== '') {
-                this._dictSrv.openNode(this._dictionaryId, node.id);
+                this._dictSrv.openNode(node.id);
             }
         }
     }
@@ -316,12 +319,12 @@ export class NodeListComponent implements OnDestroy {
         }
         if (i < this.nodes.length) {
             if (goBack) {
-                this._dictSrv.openNode(this._dictionaryId, this.nodes[(i - 1 +
+                this._dictSrv.openNode(this.nodes[(i - 1 +
                     this.nodes.length) % this.nodes.length].id);
                 this.currentPage = Math.floor(((i - 1 + this.nodes.length)
                     % this.nodes.length) / (this.itemsPerPage)) + 1;
             } else {
-                this._dictSrv.openNode(this._dictionaryId, this.nodes[(i + 1 +
+                this._dictSrv.openNode(this.nodes[(i + 1 +
                     this.nodes.length) % this.nodes.length].id);
                 this.currentPage = Math.floor(((i + 1 + this.nodes.length)
                     % this.nodes.length) / (this.itemsPerPage)) + 1;
@@ -438,4 +441,15 @@ export class NodeListComponent implements OnDestroy {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
         }
     }
+
+    goUp() {
+        /* this._dictSrv.selectNode(this._dictionaryId, nodeId); */
+        if (this._selectedNode && this._selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
+            this._router.navigate(path);
+        }
+        // this._storageSrv.setItem(RECENT_URL, this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
+    }
 }
+
+

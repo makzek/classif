@@ -20,11 +20,11 @@ import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { CardComponent } from './card/card.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
+import { NodeListItemComponent } from './node-list-item/node-list-item.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
 import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
-import { SelectedNodeComponent } from './selected-node/selected-node.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 
@@ -43,12 +43,12 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         DictionariesComponent,
         CardComponent,
         NodeListComponent,
+        NodeListItemComponent,
         NodeActionsComponent,
         NodeInfoComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,
-        SelectedNodeComponent,
         TreeComponent,
         TreeNodeComponent,
     ],
@@ -75,7 +75,6 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,
-        SelectedNodeComponent,
         TreeComponent,
         TreeNodeComponent,
     ],

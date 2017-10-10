@@ -8,22 +8,33 @@ export class EosDictionaryNode {
     parentId?: string;
     parent?: EosDictionaryNode;
     children?: EosDictionaryNode[];
-    description: string;
-    /* hasSubnodes: boolean; */
     isExpanded?: boolean;
+
     /**
      * isActive: boolean, is node selected in tree
      */
     isActive: boolean;
-    // isDeleted: boolean;
+
     /**
      * marked - node checked in list
      */
     marked: boolean;
-    /** record data container */
+
+    /**
+     * isSelected - true if node selected (highlight it in middle list)
+     */
+    isSelected: boolean;
+
+    /**
+     * record data container
+     * */
     data: any;
+
     sorting: number;
-    /** flag for updating indication */
+
+    /**
+     * flag for updating indication
+     * */
     updating: boolean;
 
     get isDeleted(): boolean {

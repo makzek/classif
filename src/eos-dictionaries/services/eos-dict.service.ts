@@ -232,7 +232,9 @@ export class EosDictService {
             if (this.selectedNode) {
                 this.selectedNode.isActive = false;
             }
-            node.isActive = true;
+            if (node) {
+                node.isActive = true;
+            }
             this.selectedNode = node;
             this._selectedNode$.next(node);
         }
@@ -240,6 +242,12 @@ export class EosDictService {
 
     private _openNode(node: EosDictionaryNode) {
         if (this._openedNode !== node) {
+            if (node) {
+                node.isSelected = true;
+            }
+            if (this._openedNode) {
+                this._openedNode.isSelected = false;
+            }
             this._openedNode = node;
             this._openedNode$.next(node);
         }
@@ -249,12 +257,16 @@ export class EosDictService {
         return this.dictionary.root.id === nodeId;
     }
 
-    public openNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNode(dictionaryId, nodeId)
+    public openNode(nodeId: string): Promise<EosDictionaryNode> {
+        if (this.dictionary) {
+        return this.getNode(this.dictionary.id, nodeId)
             .then((node) => {
                 this._openNode(node);
                 return node;
             });
+        } else {
+            return Promise.resolve(null);
+        }
 
     }
 

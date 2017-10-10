@@ -136,7 +136,7 @@ export class SelectedNodeComponent implements OnDestroy {
 
     openFullInfo(node: EosDictionaryNode): void {
         if (!node.isDeleted && node.id !== '') {
-            this._dictSrv.openNode(this._dictionaryId, node.id);
+            this._dictSrv.openNode(node.id);
         }
     }
 
@@ -152,15 +152,6 @@ export class SelectedNodeComponent implements OnDestroy {
         } else {
             this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
         }
-    }
-
-    goUp() {
-        /* this._dictSrv.selectNode(this._dictionaryId, nodeId); */
-        if (this.selectedNode && this.selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
-            this._router.navigate(path);
-        }
-        // this._storageSrv.setItem(RECENT_URL, this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
     }
 
     delete() {

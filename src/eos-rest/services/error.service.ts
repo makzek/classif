@@ -13,7 +13,7 @@ export class ErrorService /*implements IErrorService*/ {
             switch (err.http.status) {
                 case 434:
                     if (!this.LostConnectionAlerted) {
-                        alert('Потеря соединения.');
+                        /* alert('Потеря соединения.');*/
                         this.LostConnectionAlerted = true;
                         // TODO: показать окно логина
                         // window.location.href = "../login.aspx";
@@ -34,7 +34,7 @@ export class ErrorService /*implements IErrorService*/ {
             return this.odataErrorsHandler(err);
         }
 
-        return Observable.throw(err);
+        return Observable.throw(new Error(err));
     }
 
     odataErrorsHandler(err) {

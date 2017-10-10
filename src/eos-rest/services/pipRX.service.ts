@@ -133,11 +133,12 @@ export class PipRX {
                     } catch (e) {
                         return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
-                })
+                }) /*
                 .catch((err, caught) => {
-                    return this.errorService.errorHandler({ http: err, _request: req });
+                    this.errorService.errorHandler({ http: err, _request: req });
+                    return [];
                 })
-
+                */
         });
 
         return rl.reduce((acc: T[], v: T[]) => {
@@ -170,11 +171,12 @@ export class PipRX {
                     return this.errorService.errorHandler({ odataErrors: e });
                 }
                 return answer;
-            })
+            }) /*
             .catch((err, caught) => {
-                return  this.errorService.httpCatch(err);
-            })
-;
+                this.errorService.httpCatch(err);
+                return [];
+            });
+            */
     }
 
     private parseBatchResponse(response: Response, answer: any[]): any[] {
