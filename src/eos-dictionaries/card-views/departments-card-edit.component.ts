@@ -36,6 +36,26 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
     }
 
     ngOnChanges() {
+
+        // fake data
+        const today = new Date();
+        this.data['alternates'] = [
+            {
+                name: 'Иван Иванович',
+                START_DATE: today,
+                END_DATE: today,
+            }, {
+                name: 'Пётр Иванович',
+                START_DATE: today,
+                END_DATE: today,
+            }, {
+                name: 'Иван Петрович',
+                START_DATE: today,
+                END_DATE: today,
+            }
+        ];
+        console.log(JSON.stringify(this.data.alternates));
+
         if (this.form.controls.RUBRIC_CODE_PERSON) {
             const personCode = this.form.controls.RUBRIC_CODE_PERSON;
             const tooLong = 'Максимальная длинна ' + this.codeLenth + ' символов. ';

@@ -34,6 +34,29 @@
         width: 100%;
         font-weight: 700;
         font-size: 17px;
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+
+    .alternates {
+        .form-group{
+            &:first-child {
+                margin-top: 20px;
+            }
+
+            &:last-child {
+                .form-control {
+                    padding-right: 32px;
+                    position: relative;
+                }
+            }
+
+            .user-icon {
+                position: absolute;
+                right: 25px;
+                top: 35px;  
+            }
+        }
     }
 
     .form-group {
@@ -63,6 +86,15 @@
 
         &.note {
             height: 189px;
+        }
+    }
+
+    .alternate-button-wrapper {
+        margin-top: 20px;
+
+        .alternate-button {
+            width: 100%;
+            height: 32px;
         }
     }
 
