@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { EosUserProfileService } from '../..//app/services/eos-user-profile.service';
+
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
     DictionaryActionService,
@@ -17,6 +19,7 @@ import {
 export class DictionaryComponent implements OnDestroy {
     private _dictionaryId: string;
     private _nodeId: string;
+    private showDeleted: boolean;
 
     nodes: EosDictionaryNode[];
     // hideTree = true;
@@ -26,13 +29,13 @@ export class DictionaryComponent implements OnDestroy {
     currentState: number;
     readonly states = DICTIONARY_STATES;
 
-    private _actionSubscription: Subscription;
-    private _dictionarySubscription: Subscription;
+    private _subscriptions: Subscription[];
 
     constructor(
         private _dictSrv: EosDictService,
         private _route: ActivatedRoute,
         private _actSrv: DictionaryActionService,
+        private _profileSrv: EosUserProfileService,
     ) {
         this._route.params.subscribe((params) => {
             if (params) {
@@ -43,8 +46,8 @@ export class DictionaryComponent implements OnDestroy {
         });
 
         this.nodes = [];
-
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dictionary) => {
+        this._subscriptions = [];
+        this._subscriptions.push(_dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 if (dictionary.root) {
@@ -54,17 +57,22 @@ export class DictionaryComponent implements OnDestroy {
             } else {
                 this.nodes = [];
             }
-        });
+        }));
 
-        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
+        this._subscriptions.push(_actSrv.action$.subscribe((action) => {
             this._swichCurrentState(action);
-        });
+        }));
 
+        this._subscriptions.push(_profileSrv.settings$
+            .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
+            .subscribe((s) => this.showDeleted = s)
+        );
         this.currentState = this._actSrv.state;
 
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
+        this._actSrv.closeAll = false;
         switch (action) {
             // TODO: try to find more simple solition
             case DICTIONARY_ACTIONS.closeTree:
@@ -122,8 +130,11 @@ export class DictionaryComponent implements OnDestroy {
     ngOnDestroy() {
         this._actSrv.emitAction(null);
         this._actSrv.state = this.currentState;
-        this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
+        this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
 
+    closeAsides() {
+        this.currentState = DICTIONARY_STATES.selected;
+        this._actSrv.closeAll = true;
     }
 }

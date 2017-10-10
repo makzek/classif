@@ -146,7 +146,7 @@ export class EosDictionary {
 
     /* todo: search with API */
     search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
-        let searchResult = [];
+        let searchResult: EosDictionaryNode[] = [];
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         searchString = searchString.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
         const _expr = new RegExp(searchString, 'i');
@@ -160,7 +160,7 @@ export class EosDictionary {
         /* tslint:enable:no-bitwise */
 
         if (!globalSearch) {
-            searchResult = searchResult.filter((node) => node.hasParent(selectedNode));
+            searchResult = searchResult.filter((node) => node.isChildOf(selectedNode));
         }
         return searchResult;
     }

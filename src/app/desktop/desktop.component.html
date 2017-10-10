@@ -22,9 +22,24 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <div class="btn item-content block edited" *ngIf="editing(item.value)">
-        <textarea id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
-            required pattern="^\S(.*\S$|$)" maxlength="80"></textarea>
+        <input id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
+            required pattern="^\S(.*\S$|$)" maxlength="80" />
+        <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
+            tooltip="Сохранить"
+            placement="left"
+            container="body">
+            <span class="eos-icon eos-icon-checkbox-black small"
+                aria-hidden="true"></span>
+        </button>
+        <button class="icon-btn btn" (click)="cancel($event)"
+            tooltip="Отмена"
+            placement="left"
+            container="body">
+            <span class="eos-icon eos-icon-close-black small"
+                aria-hidden="true"></span>
+        </button>
     </div>
+
     <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
@@ -32,33 +47,19 @@
         <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" container="body" class="text" containerClass="word-break-tooltip">
             {{item.value.title}}
         </span>
+        <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
+            tooltip="Редактировать"
+            placement="left"
+            container="body">
+            <span class="eos-icon eos-icon-edit-black small"
+                aria-hidden="true"></span>
+        </button>
+        <button *ngIf="deskId !== 'system'" class="icon-btn btn" (click)="removeLink(item.value)"
+            tooltip="Удалить"
+            placement="left"
+            container="body">
+            <span class="eos-icon eos-icon-close-black small"
+                aria-hidden="true"></span>
+        </button>
     </div>
-    <button *ngIf="editing(item.value)" class="icon-btn btn lefter" [disabled]="!_newTitle?.length || title?.invalid" (click)="save($event)"
-        tooltip="Сохранить"
-        placement="left"
-        container="body">
-        <span class="eos-icon eos-icon-checkbox-black small"
-            aria-hidden="true"></span>
-    </button>
-    <button *ngIf="editing(item.value)" class="icon-btn btn" (click)="cancel($event)"
-        tooltip="Отмена"
-        placement="left"
-        container="body">
-        <span class="eos-icon eos-icon-close-black small"
-            aria-hidden="true"></span>
-    </button>
-    <button *ngIf="!editing(item.value)" class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
-        tooltip="Редактировать"
-        placement="left"
-        container="body">
-        <span class="eos-icon eos-icon-edit-black small"
-            aria-hidden="true"></span>
-    </button>
-    <button *ngIf="deskId !== 'system' && !editing(item.value)" class="icon-btn btn" (click)="removeLink(item.value)"
-        tooltip="Удалить"
-        placement="left"
-        container="body">
-        <span class="eos-icon eos-icon-close-black small"
-            aria-hidden="true"></span>
-    </button>
 </ng-template>

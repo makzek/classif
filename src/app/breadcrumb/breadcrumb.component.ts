@@ -30,6 +30,10 @@ export class BreadcrumbsComponent {
         });
     }
 
+    get closeAll() {
+        return this._actSrv.closeAll;
+    }
+
     openTree(value: boolean) {
         if (value) {
             this._actSrv.emitAction(DICTIONARY_ACTIONS.openTree);

@@ -27,15 +27,22 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
     constructor(public modalRef: BsModalRef) { }
 
     confirm() {
-        if (this.modalRef) {
-            this.confirmEvt.emit(true);
-            this.modalRef.hide();
-        }
+        this.confirmEvt.emit(true);
+        this._hide();
     }
 
     cancel() {
+        this.confirmEvt.emit(false);
+        this._hide();
+    }
+
+    close() {
+        this.confirmEvt.emit(undefined);
+        this._hide();
+    }
+
+    private _hide() {
         if (this.modalRef) {
-            this.confirmEvt.emit(false);
             this.modalRef.hide();
         }
     }

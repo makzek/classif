@@ -15,6 +15,7 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
+import { RECENT_URL } from '../../app/consts/common.consts';
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
@@ -111,6 +112,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     constructor(
+        private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
@@ -156,16 +158,21 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .catch((err) => console.log('getNode error', err));
     }
 
-    private _update(node: EosDictionaryNode) {
-        let _canEdit: boolean;
-
+    private _initNodeData(node: EosDictionaryNode) {
         this.node = node;
+
         this.nodeData = {};
         if (this.node) {
             this.node.getEditView().forEach(fld => {
                 this.nodeData[fld.key] = fld.value;
             });
         }
+    }
+
+    private _update(node: EosDictionaryNode) {
+        let _canEdit: boolean;
+
+        this._initNodeData(node);
 
         _canEdit = this._mode === EDIT_CARD_MODES.edit &&
             this._preventDeletedEdit() &&
@@ -226,9 +233,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     close() {
-        const url = localStorage.getItem('viewCardUrlRedirect');
+        const url = this._storageSrv.getItem(RECENT_URL);
         console.log('close redirect', url);
-        this.goTo(url);
+        if (url) {
+            this.goTo(url);
+        }
     }
 
 
@@ -333,22 +342,27 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     save(): void {
-        this._save(this.nodeData);
+        this._save(this.nodeData)
+        .then((node) => {
+            this._initNodeData(node);
+            this._setOriginalData();
+        });
     }
 
     private _save(data: any): Promise<any> {
-        console.log(data);
+
         const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
         let path = '';
         for (let i = 0; i <= bCrumbs.length - 2; i++) {
             path = path + bCrumbs[i].title + '/';
         }
         path = path.substring(0, path.length - 1);
+
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
-                    link: this.selfLink.slice(0, this.selfLink.length - 5),
+                    link: this.selfLink.slice(0, this.selfLink.length - 5), // ????
                     title: this.nodeName,
                     fullTitle: path
                 });
@@ -378,19 +392,19 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
-            localStorage.setItem(LS_EDIT_CARD, JSON.stringify(this.lastEditedCard));
+            this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }
 
     private _clearEditingCardLink(): void {
         if (this.lastEditedCard && this.lastEditedCard.id === this.nodeId) {
             this.lastEditedCard = null;
-            localStorage.removeItem(LS_EDIT_CARD);
+            this._storageSrv.removeItem(LS_EDIT_CARD);
         }
     }
 
     private getLastEditedCard() {
-        this.lastEditedCard = JSON.parse(localStorage.getItem(LS_EDIT_CARD));
+        this.lastEditedCard = this._storageSrv.getItem(LS_EDIT_CARD);
         /*
         if (this.lastEditedCard && !this.lastEditedCard.uuid) {
             this.lastEditedCard.uuid = this._uuid;

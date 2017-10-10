@@ -21,7 +21,7 @@ export class EosStorageService {
     }
 
     /**
-     * @param key - string, data key
+     * @param key key for data
      */
     public getItem(key: string): any {
         return this._data[key];
@@ -29,25 +29,25 @@ export class EosStorageService {
 
     /**
      *
-     * @param key - string, key for data
-     * @param value - any, data
-     * @param save - boolean, store data in localStorage
+     * @param key key for data
+     * @param data data
+     * @param saveToLocalStorage boolean data, force store data in localStorage
      */
-    public setItem(key: string, value: any, save = false) {
-        this._data[key] = value;
-        if (save) {
+    public setItem(key: string, data: any, saveToLocalStorage = false) {
+        this._data[key] = data;
+        if (saveToLocalStorage) {
             try {
-                const _val = JSON.stringify(value);
+                const _val = JSON.stringify(data);
                 localStorage.setItem(key, _val);
             } catch (e) {
-                console.log('error storing', key, value, e);
+                console.log('error storing', key, data, e);
             }
         }
     }
 
     /**
      *
-     * @param key - string
+     * @param key remove data with key
      */
     public removeItem(key: string) {
         delete this._data[key];

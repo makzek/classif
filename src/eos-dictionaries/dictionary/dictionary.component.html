@@ -1,12 +1,13 @@
-<div class="eos-dictionary" 
-    [ngClass]="{'full': currentState === states.full, 
+<div class="eos-dictionary"
+    [ngClass]="{'full': currentState === states.full,
         'only-selected': currentState === states.selected,
-        'info': currentState === states.info, 
+        'info': currentState === states.info,
         'tree': currentState === states.tree}">
+    <div class="screen-wrapper" (click)="closeAsides()" *ngIf="currentState !== states.selected"></div>
     <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
         'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes.length" size="lg"></eos-spinner>
-        <eos-tree *ngIf="nodes.length" [nodes]="nodes"></eos-tree>
+        <eos-tree *ngIf="nodes.length" [nodes]="nodes" [showDeleted]="showDeleted"></eos-tree>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}">
         <eos-node-list></eos-node-list>

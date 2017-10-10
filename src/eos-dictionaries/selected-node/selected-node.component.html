@@ -1,5 +1,5 @@
 <div *ngIf="selectedNode" class="block eos-selected-node">
-    <a class="link special-text" *ngIf="selectedNode.parent" (click)="selectNode(selectedNode.parent.id)">Вверх</a>
+    <a class="link special-text" *ngIf="hasParent" (click)="goUp()">Вверх</a>
     <div class="selected-node">
             <div class="selected-node-info" *ngIf="(!selectedNode.isDeleted || showDeleted)" [ngClass]="{'highlight': openedNode.id === selectedNode.id && selectedNode.id !== ''}" (click)="openFullInfo(selectedNode)" (dblclick)="viewNode()">
                 <span *ngIf="selectedNode.id !== ''" [ngClass]="{'deleted': selectedNode.isDeleted && showDeleted}" class="checkbox">

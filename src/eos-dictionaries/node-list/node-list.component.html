@@ -27,7 +27,8 @@
         </ng-template>
         <!--Simple list-->
         <ul *ngIf="nodes && !userSorting && openedNode" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}" (click)="openFullInfo(item)" (dblclick)="viewNode(item)">
+            <li *ngFor="let item of nodeListPerPage" class="child" [ngClass]="{'highlight': openedNode.id === item.id, 'flat-child': item.isDeleted && !showDeleted}"
+                (click)="openFullInfo(item)" (dblclick)="viewNode(item)">
                 <div *ngIf="openedNode">
                     <div *ngIf="!item.isDeleted || showDeleted" [ngClass]="{'deleted': item.isDeleted && showDeleted}" class="node-list-item">
                         <span *ngIf="showCheckbox" class="checkbox">

@@ -1,7 +1,7 @@
 <div *ngIf="node && (!node.isDeleted || showDeleted)" [ngClass]="{'deleted': node.isDeleted && showDeleted}">
-    <span [ngClass]="{'active': isActive}" class="node-title-wrapper">
-        <span *ngIf="node.hasSubnodes" class="eos-icon x-small icon" 
-            [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}" 
+    <span [ngClass]="{'active': node.isActive}" class="node-title-wrapper">
+        <span *ngIf="node.hasSubnodes" class="eos-icon x-small icon"
+            [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"
             (click)="onExpand($event, node.isDeleted)"></span>
         <span class="node-title" (click)="onSelect($event, node.isDeleted);">
             <span *ngFor="let field of viewFields; let i = index">{{field.value}}&nbsp;<eos-info *ngIf="i === viewFields.length-1" [info]="'Some info which I want to show at tooltip'"></eos-info>
@@ -9,5 +9,5 @@
             <eos-spinner *ngIf="node.updating" [size]="sm"> </eos-spinner>
         </span>
     </span>
-    <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children"></eos-tree>
+    <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
 </div>

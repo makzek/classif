@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'eos-sandwich',
     templateUrl: 'sandwich.component.html',
 })
-export class SandwichComponent {
+export class SandwichComponent implements OnChanges {
     @Input() isLeft: boolean;
     @Input() isWide: boolean;
+    @Input() close: boolean;
     @Output() onClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     isOpen = false;
@@ -24,6 +25,12 @@ export class SandwichComponent {
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
                 this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
             })
+    }
+
+    ngOnChanges() {
+        if (this.close) {
+            this.isOpen = false;
+        }
     }
 
     changeState() {

@@ -21,6 +21,8 @@ export class DictionaryActionService {
     private _action$: BehaviorSubject<DICTIONARY_ACTIONS>;
     private _state = DICTIONARY_STATES.selected;
 
+    closeAll = false;
+
     constructor() {
         this._action$ = new BehaviorSubject<DICTIONARY_ACTIONS>(null);
     }
