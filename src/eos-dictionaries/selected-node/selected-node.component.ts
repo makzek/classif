@@ -194,6 +194,8 @@ export class SelectedNodeComponent implements OnDestroy {
         }
     }
 
+    goUp () {}
+
     mark() {
         console.log(this.selectedNode);
         if (this.selectedNode.marked && !this.selectedNode.children) {
