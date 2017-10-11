@@ -1,61 +1,50 @@
 .eos-node-list {
-    .checkbox {
+    .checkbox,
+    .checkbox-inline {
         margin-left: 12px;
         margin-bottom: 7px;
         vertical-align: middle;
     }
-
     bs-sortable {
         width: 100%;
     }
-
+    .node-list-item {
+        padding: 5px 0 5px;
+        display: flex;
+    }
     .elements {
         list-style: none;
         max-height: calc(100vh - 150px - 95px - 150px);
         overflow-y: auto;
         padding-left: 0;
-
         &.has-parent {
             max-height: calc(100vh - 150px - 95px - 215px);
         }
-
         .child {
             cursor: pointer;
         }
-
         .node-list-item {
-            padding: 5px 0 5px 20px;
+            padding-left: 20px;
         }
-
-        .flat-child {
+            .flat-child {
             padding: 0;
         }
-
-        li,
-        .node-list-item {
-            display: flex;
-        }
-
         .node-info {
             align-self: center;
             cursor: pointer;
             margin-left: 10px;
             margin-right: 20px;
         }
-
         .code {
             margin-right: 10px;
         }
-
         .spinner {
             margin-top: 10px;
         }
     }
-
     .list {
         border: 1px solid transparent;
         border-top: 0;
-
         &.has-spinner {
             display: flex;
             justify-content: space-around;
@@ -63,7 +52,6 @@
             height: 100px;
         }
     }
-
     .pagination-option {
         margin-top: 20px;
         height: $item-height;
@@ -72,31 +60,26 @@
         border: 1px solid transparent;
         display: flex;
         justify-content: space-between;
-
         .pagination,
         .count-select {
             display: inline-block;
             margin: 0;
         }
-
         .count-select {
             height: $item-height;
             width: 330px;
             border-left: 1px solid transparent;
-
             .icon-btn {
                 top: 7px;
                 position: relative;
                 margin-left: 5px;
             }
-
             .dropdown-toggle {
                 height: $item-height;
                 width: 100%;
                 display: inline-flex;
                 justify-content: space-around;
                 cursor: pointer;
-
                 .dropdown-toggle-text {
                     position: relative;
                     top: 5px;
@@ -104,7 +87,6 @@
                 }
             }
         }
-
         .page-link {
             height: $item-height;
             width: $item-width;
@@ -112,7 +94,6 @@
             padding: 12px 16px;
             font-size: 16px;
         }
-
         .show-more {
             margin: 0 30px;
             position: relative;
@@ -123,12 +104,11 @@
             font-size: 16px;
             line-height: 24px;
         }
-
-        .pagination-lg > li {
+        .pagination-lg>li {
             &:last-child,
             &:first-child {
-                & > a,
-                & > span {
+                &>a,
+                &>span {
                     border-radius: 0;
                 }
             }
@@ -164,7 +144,6 @@
                 font-size: 14px;
                 line-height: 20px;
             }
-
             .count-select {
                 width: 170px;
             }
@@ -180,7 +159,6 @@
                 font-size: 16px;
                 line-height: 24px;
             }
-
             .count-select {
                 width: 330px;
             }
