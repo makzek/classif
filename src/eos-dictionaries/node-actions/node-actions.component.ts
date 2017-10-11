@@ -185,7 +185,6 @@ export class NodeActionsComponent implements OnDestroy {
         if (this.dictionary) {
             switch (type) {
                 case E_RECORD_ACTIONS.moveUp:
-                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
                 case E_RECORD_ACTIONS.moveDown:
                     return this.userSort && this.dictionary.descriptor.canDo(group, type);
                 case E_RECORD_ACTIONS.restore:

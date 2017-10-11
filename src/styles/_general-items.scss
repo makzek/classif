@@ -1,5 +1,6 @@
 .checkbox-inline {
-    padding-left: 0;
+    padding-left: 12px;
+    line-height: 24px;
 }
 
 .checkbox-inline,
@@ -17,6 +18,7 @@
             display: inline-block;
             height: 24px;
             width: 24px;
+            line-height: 2px;
             background-size: cover;
             background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
         }
@@ -30,9 +32,9 @@
         }
     }
     label {
-        padding-left: 0;
-        position: relative;
-        top: -4px;
+        // padding-left: 0;
+        // position: relative;
+        margin: 0;
     }
 }
 
