@@ -1,5 +1,5 @@
 <div class="eos-opened-node">
-    <span [ngClass]="{'full': infoOpened}" class="opened-node-actions pull-right">
+    <span class="opened-node-actions pull-right">
         <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}" containerClass="top-tooltip">
                <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
         </button>
@@ -20,11 +20,11 @@
                 {{field.value}}
             </span>
         </div>
-        
+
         <div *ngIf="viewFields" [hidden]="hideFull" class="full-info">
             <div *ngFor="let field of viewFields" class="field">
-                <span class="field-title">{{field.title}}</span> 
-                <br><span class="field-value">{{field.value}}</span> 
+                <span class="field-title">{{field.title}}</span>
+                <br><span class="field-value">{{field.value}}</span>
             </div>
         </div>
     </div>

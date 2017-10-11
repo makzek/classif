@@ -16,6 +16,7 @@ export class PhotoUploaderComponent implements OnInit {
 
     contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
     uploading = false;
+    multiple = false;
 
     imageSrc = '';
     // currentUrl = '';
@@ -23,6 +24,7 @@ export class PhotoUploaderComponent implements OnInit {
     nativeInputEl: HTMLInputElement;
     // fileCount: number;
     file: File;
+
 
     constructor() {
     }

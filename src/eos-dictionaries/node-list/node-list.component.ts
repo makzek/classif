@@ -37,7 +37,7 @@ export class NodeListComponent implements OnDestroy {
     modalRef: BsModalRef;
     private _dictionaryId: string;
 
-    private _selectedNode: EosDictionaryNode;
+    _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
     viewFields: FieldDescriptor[];

@@ -45,12 +45,12 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
-    private node: EosDictionaryNode;
+    node: EosDictionaryNode;
     private nodeData: any = {};
     private _originalData: any = {};
     private _changed = false;
 
-    private dictionaryId: string;
+    dictionaryId: string;
     private nodeId: string;
     private _uuid: string;
     selfLink: string;
@@ -77,7 +77,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _profileSubscription: Subscription;
     private _dictionarySubscription: Subscription;
 
-    @ViewChild('onlyEdit') private modalOnlyRef: ModalDirective;
+    @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
 
     /* todo: check tasks for reson
     @HostListener('document:blur')
