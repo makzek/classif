@@ -46,7 +46,6 @@ export class NodeListComponent implements OnDestroy {
     _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
-    viewFields: FieldDescriptor[];
 
     totalItems: number;
     itemsPerPage = 10;
@@ -96,7 +95,6 @@ export class NodeListComponent implements OnDestroy {
         this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
-                this.viewFields = node.getListView();
                 this._update(node.children, true);
                 if (!this.nodes) {
                     if (node.marked) {

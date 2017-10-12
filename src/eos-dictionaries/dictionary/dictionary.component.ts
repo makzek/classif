@@ -11,15 +11,21 @@ import {
     DICTIONARY_ACTIONS,
     DICTIONARY_STATES
 } from '../dictionary/dictionary-action.service';
+import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy {
+
+    public _selectedNode: EosDictionaryNode;
+    public _params: any = {};
+
+    public showDeleted: boolean;
+
     private _dictionaryId: string;
     private _nodeId: string;
-    private showDeleted: boolean;
 
     nodes: EosDictionaryNode[];
     // hideTree = true;
@@ -54,6 +60,7 @@ export class DictionaryComponent implements OnDestroy {
                     this.dictionaryName = dictionary.root.title;
                 }
                 this.nodes = [dictionary.root];
+                this._params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
             } else {
                 this.nodes = [];
             }
@@ -65,8 +72,34 @@ export class DictionaryComponent implements OnDestroy {
 
         this._subscriptions.push(_profileSrv.settings$
             .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
-            .subscribe((s) => this.showDeleted = s)
+            .subscribe((s) => {
+                this.showDeleted = s;
+                this._params.showDeleted = s;
+
+            })
         );
+
+        this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
+            this._selectedNode = node;
+            /*
+            if (node) {
+                this.viewFields = node.getListView();
+                this._update(node.children, true);
+                if (!this.nodes) {
+                    if (node.marked) {
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+                    } else {
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+                    }
+                } else {
+                    this.checkState(node.marked);
+                }
+            }
+            */
+        }));
+
         this.currentState = this._actSrv.state;
 
     }
