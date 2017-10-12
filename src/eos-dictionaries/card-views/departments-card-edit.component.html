@@ -15,7 +15,7 @@
                 <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
                     <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
                 </div>
-                <div class="form-group">
+                <div class="form-group gender">
                     <label for="gender">{{fieldsDescription['gender']?.title}}</label>
                     <select *ngIf="editMode" name="gender" id="gender" class="form-control gender-select"
                         [ngModel]="data['gender']" (ngModelChange)="change('gender', $event)"
@@ -177,10 +177,10 @@
                             [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
-                        <label for="fullPosition">Исполняет мои обязанности</label>
+                        <label for="fullPosition">Исполнитель моих обязанностей</label>
                         <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control"
                             [ngModel]="alternate.name"
-                            placeholder="Исполняет мои обязанности"
+                            placeholder="Исполнитель моих обязанностей"
                             [ngClass]="{'readonly': !editMode }">
                         <i [hidden]="!editMode" class="fa fa-user-plus special-text user-icon" aria-hidden="true"></i>
                     </div>
@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div>
-                <span class="block-title">Исполняю обязонности</span>
+                <span class="block-title">Исполняю обязанности</span>
                 <div class="row alternates">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>

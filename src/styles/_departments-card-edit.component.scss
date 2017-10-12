@@ -41,6 +41,16 @@
         }
     }
 
+    .checkbox {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 0;
+
+        label {
+            padding-left: 0;
+        }
+    }
+
     .alternates {
         .form-group{
             &:first-child {
@@ -78,8 +88,8 @@
                 margin-top: 61px;
             }
 
-            &.sev {
-                margin-top: 38px;
+            &.gender {
+                margin-top: 31px;
             }
         }
     }
@@ -90,6 +100,10 @@
         &.note {
             height: 189px;
         }
+    }
+
+    select::-ms-expand {
+        display: none;
     }
 
     .alternate-button-wrapper {
@@ -122,7 +136,7 @@
 
     .gender-placeholder {
         position: absolute;
-        top: 183px;
+        top: 190px;
         left: 9px;
         width: 30px;
     }
