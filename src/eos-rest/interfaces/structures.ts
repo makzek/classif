@@ -1047,3 +1047,9 @@ export interface CB_PRINT_INFO extends IEnt {
     DUTY_DP: string,
     DUTY_VP: string
 }
+
+export interface CABINET extends IEnt {
+    ISN_CABINET: number;
+    DUE: string;
+    CABINET_NAME: string;
+}
