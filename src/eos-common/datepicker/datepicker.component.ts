@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+import * as moment from 'moment/moment';
 import 'moment/locale/ru';
-import * as moment from 'moment';
 
 @Component({
     selector: 'eos-datepicker',

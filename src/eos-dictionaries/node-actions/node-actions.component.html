@@ -1,77 +1,68 @@
 <div class="eos-node-actions">
     <div class="first-line block">
-        <span class="controller">
+        <div class="controller pull-left">
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
-                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="doAction(action.type)">
-                    <span class="{{action.iconClass}}" tooltip="{{action.hint}}" placement="right" containerClass="right-tooltip" container="body"></span>
-        </button>
-        </span>
-        <div class="btn-group" dropdown>
-            <span class="actions">
-                    <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right" containerClass="right-tooltip">
-                        <span class="eos-icon eos-icon-fab-blue small"></span>
-            </button>
+                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="doAction(action.type)"><span class="{{action.iconClass}}" tooltip="{{action.hint}}" placement="right" containerClass="right-tooltip" container="body"></span></button>
             </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
-                    <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
-                        containerClass="right-tooltip">
-                        <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
-                    </li>
-                </ng-template>
-            </ul>
+            <div class="btn-group" dropdown>
+                <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="right-tooltip"><span class="eos-icon eos-icon-fab-blue small"></span></button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
+                        <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
+                            containerClass="right-tooltip">
+                            <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
+                        </li>
+                    </ng-template>
+                </ul>
+            </div>
         </div>
-        </span>
-        <span class="pull-right">
+        <div class="pull-right">
             <span class="date">Состояние на </span>
-        <!--<span class="icon eos-icon eos-icon-calendar-blue small"></span>-->
-        <eos-datepicker class="datepicker" (change)="dataSeted()"></eos-datepicker>
-        <button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
-            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
-        </button>
-        <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
-            <span dropdownToggle type="button">
+            <eos-datepicker class="datepicker" (change)="dataSeted($event)"></eos-datepicker>
+            <button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
+                <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+            </button>
+            <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
+                <span dropdownToggle type="button">
                         <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left" containerClass="left-tooltip"></span>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
-                <li>
-                    <div class="input-group search">
-                        <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
+                </span>
+                <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
+                    <li>
+                        <div class="input-group search">
+                            <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
                                 <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)"
                                     tooltip="Расширенный поиск" containerClass="top-tooltip"></span>
-                        </span>
-                        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                        <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
+                            </span>
+                            <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                            <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
                             <span class="checkbox">
                                 <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom" containerClass="bottom-tooltip">
                                     <span></span>
-                                </label>
+                            </label>
                             </span>
-                        </span>
-                    </div>
-                </li>
-            </ul>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        </span>
     </div>
     <div class="second-line block special-text">
         <span class="table-title">
-            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
                 containerClass="top-tooltip">
                 <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" >
                     <span></span>
         </label>
         </span>
-        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox"
-            tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}" containerClass="top-tooltip">
+        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+            containerClass="top-tooltip">
                 <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
                     <span></span>
         </label>
         </span>
         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
         </span>
-
-
         <div class="clear-all"></div>
     </div>
 </div>
@@ -109,10 +100,8 @@
     </div>
     <div class="search-modal modal-body">
         <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
-        <div class="checkbox">
-            <label><input type="checkbox" [(ngModel)]="searchInDeleted">
-                <span></span>
-                Учитывать логически удаленные</label>
+        <div class="checkbox-inline">
+            <label><input type="checkbox" [(ngModel)]="searchInDeleted"><span></span>Учитывать логически удаленные</label>
         </div>
         <div *ngIf="fields">
             <div *ngFor="let field of fields">

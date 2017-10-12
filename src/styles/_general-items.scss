@@ -1,53 +1,53 @@
+.checkbox-inline {
+    padding-left: 12px;
+    line-height: 24px;
+}
+
+.checkbox-inline,
 .checkbox {
     input[type="checkbox"] {
         opacity: 0;
         cursor: pointer;
         margin-left: 0;
-
-        &:checked + span {
+        &:checked+span {
             background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
         }
-
-        & + span {
+        &+span {
             margin-right: 6px;
             margin-bottom: -7px;
             display: inline-block;
             height: 24px;
             width: 24px;
+            line-height: 2px;
             background-size: cover;
             background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
         }
-
         &[disabled] {
-            & + span {
+            &+span {
                 background-image: url("../assets/icons/Minus-Grey.svg");
             }
-
-            &:checked + span {
+            &:checked+span {
                 background-image: url("../assets/icons/Checkbox-Grey.svg");
             }
         }
     }
-
     label {
-        padding-left: 0;
-        position: relative;
-        top: -4px;
+        // padding-left: 0;
+        // position: relative;
+        margin: 0;
     }
 }
 
 .group-checkbox {
     input[type="checkbox"] {
-        &:checked + span {
+        &:checked+span {
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
-
         /*& + span {
             margin-right: 6px;
             margin-bottom: -3px;
         }*/
     }
-
 }
 
 .modal-body {
@@ -74,7 +74,6 @@ input[type=text]::-ms-clear {
     display: none;
 }
 
-
 .form-control {
     &:focus {
         box-shadow: none;
@@ -83,11 +82,9 @@ input[type=text]::-ms-clear {
 
 .tooltip {
     opacity: 1 !important;
-
     &.word-break {
         word-break: break-all;
     }
-
     .tooltip-inner {
         border-radius: 0 !important;
         background-color: white;

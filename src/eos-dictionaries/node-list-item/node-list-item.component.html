@@ -1,16 +1,17 @@
-<div (click)="selectNode()" (dblclick)="viewNode()" [ngClass]="{'highlight': node.isSelected, 'flat-child': node.isDeleted && !params?.showDeleted}">
+<div (click)="selectNode()" (dblclick)="viewNode()" [ngClass]="{'highlight': node.isSelected, 'flat-child': node.isActive}">
     <div *ngIf="!node.isDeleted || params?.showDeleted" [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
-        <span *ngIf="params?.showCheckbox" class="checkbox">
+        <span *ngIf="params?.showCheckbox" class="checkbox-inline">
                 <label><input type="checkbox"
                             [(ngModel)]="node.marked"
                             (change)="markNode()"
                             tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
                             placement="right"
                             containerClass="right-tooltip"><span></span>
-                </label>
+        </label>
         </span>
-        <span class="node-info"><span *ngFor="let field of viewFields" class="code">{{node.data[field.foreignKey]}}</span></span>
-        <eos-spinner *ngIf="node.updating" class="spinner" size="sm"></eos-spinner>
+        <span class="node-info">
+            <span *ngFor="let field of viewFields" class="code">{{node.data[field.foreignKey]}}</span>
+            <eos-spinner *ngIf="node.updating" class="spinner" size="sm"></eos-spinner>
+        </span>
     </div>
 </div>
-

@@ -33,11 +33,12 @@ export class NodeListComponent implements OnDestroy {
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     // @Input() nodes: EosDictionaryNode[];
     nodes: EosDictionaryNode[];
+    sortableNodes: EosDictionaryNode[];
 
     modalRef: BsModalRef;
     private _dictionaryId: string;
 
-    private _selectedNode: EosDictionaryNode;
+    _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
     nodeListPerPage: EosDictionaryNode[];
     viewFields: FieldDescriptor[];
@@ -65,7 +66,6 @@ export class NodeListComponent implements OnDestroy {
     private _selectedNodeSubscription: Subscription;
     private _searchResultSubscription: Subscription;
     private _userSettingsSubscription: Subscription;
-    private _orderSubscription: Subscription;
 
     constructor(
         private _storageSrv: EosStorageService,
@@ -118,12 +118,6 @@ export class NodeListComponent implements OnDestroy {
 
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this._params.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
-
-        this._orderSubscription = this._orderSrv.order$.subscribe((nodes) => {
-            if (nodes) {
-                this.nodes = nodes;
-            }
         });
 
         this._actionSubscription = this._actSrv.action$.subscribe((action) => {
@@ -188,20 +182,27 @@ export class NodeListComponent implements OnDestroy {
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
-        this._orderSubscription.unsubscribe();
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
         this.hasParent = hasParent;
         if (nodes) {
             this.nodes = nodes;
+            if (this.nodes[0]) {
+                this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
+            }
             this.totalItems = nodes.length;
             if (nodes.length) {
                 if (!this.hasParent) {
                     this._dictSrv.openNode(this.nodes[0].id);
                 }
             }
-            this._getListData();
+            if (this.userSorting) {
+                this._getListData(this.sortableNodes);
+            } else {
+                this._getListData(this.nodes);
+            }
+
         } else {
             this.nodes = null;
         }
@@ -213,6 +214,7 @@ export class NodeListComponent implements OnDestroy {
                 item.marked = value;
             }
         }
+        this._selectedNode.marked = value;
     }
 
     checkItem(node: EosDictionaryNode) {
@@ -266,10 +268,28 @@ export class NodeListComponent implements OnDestroy {
 
     toggleUserSort(): void {
         this.userSorting = !this.userSorting;
-        const sortableNodes = this._orderSrv.getUserOrder();
-        if (!sortableNodes) {
-            this._orderSrv.setUserOrder(this.nodes);
+        if (this.userSorting) {
+            this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
+            this._getListData(this.sortableNodes);
+        } else {
+            this._getListData(this.nodes);
         }
+    }
+
+    toggleItem(e) {
+        // console.log(this.nodes);
+        const from = (this.currentPage - 1) * this.itemsPerPage;
+        let before = this.currentPage * this.itemsPerPage - 1;
+        if (before > this.sortableNodes.length) {
+            before = this.sortableNodes.length - 1;
+        }
+        if (this.sortableNodes[0]) {
+            for (let i = from, j = 0; i <= before; i++, j++ ) {
+                this.sortableNodes[i] = this.nodeListPerPage[j];
+            }
+        }
+        // Генерируем порядок
+        this._orderSrv.generateOrder(this.sortableNodes, this.nodes[0].parentId);
     }
 
     editNode(node: EosDictionaryNode) {
@@ -366,9 +386,9 @@ export class NodeListComponent implements OnDestroy {
         }
     }
 
-    private _getListData() {
-        if (this.nodes && this.nodes.length) {
-            this.nodeListPerPage = this.nodes.slice(
+    private _getListData(nodes: EosDictionaryNode[]) {
+        if (nodes && nodes.length) {
+            this.nodeListPerPage = nodes.slice(
                 (this._startPage - 1) * this.itemsPerPage,
                 this.currentPage * this.itemsPerPage
             );
@@ -383,7 +403,11 @@ export class NodeListComponent implements OnDestroy {
         }
         this.currentPage = event.page;
         /* console.log('pageChanged fired', this._startPage, event.page); */
-        this._getListData();
+        if (this.userSorting) {
+            this._getListData(this.sortableNodes);
+        } else {
+            this._getListData(this.nodes);
+        }
         this._dropStartPage = true;
     }
 
@@ -395,7 +419,11 @@ export class NodeListComponent implements OnDestroy {
     setItemCount(value: string) {
         this.itemsPerPage = +value;
         this._startPage = this.currentPage;
-        this._getListData();
+        if (this.userSorting) {
+            this._getListData(this.sortableNodes);
+        } else {
+            this._getListData(this.nodes);
+        }
     }
 
     viewNode(node: EosDictionaryNode) {

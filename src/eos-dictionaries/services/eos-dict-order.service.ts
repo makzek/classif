@@ -1,31 +1,57 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { Observable } from 'rxjs/Observable';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
 
 @Injectable()
 export class EosDictOrderService {
-
-    private nodes: EosDictionaryNode[];
-    private _order$: BehaviorSubject<EosDictionaryNode[]>;
+    private NAME = '-ORDER';
 
     constructor(
         private _eosStorageService: EosStorageService
-    ) {
-        this._order$ = new BehaviorSubject<EosDictionaryNode[]>(null);
+    ) { }
+
+    public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
+        const order: string[] = [];
+        // Оптимизировать
+        // Например менять местами эллементы
+        for (const item of sortedList) {
+            order.push(item.id);
+        }
+        this._eosStorageService.setItem(ID + this.NAME, order, true);
     }
 
-    get order$(): Observable<EosDictionaryNode[]> {
-        return this._order$.asObservable();
+    private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        const order: string[] = JSON.parse(localStorage.getItem(ID + this.NAME));
+        const sortableList: EosDictionaryNode[] = [];
+        for (const id of order) {
+            for (const notSortedItem of list) {
+                if (notSortedItem.id === id) {
+                    sortableList.push(notSortedItem);
+                    break;
+                }
+            }
+        }
+        for (const item of list) {
+            const index = sortableList.indexOf(item);
+            if (index === -1) {
+                sortableList.push(item);
+            }
+        }
+        return sortableList;
     }
 
-    public setUserOrder(sortableNodeList: EosDictionaryNode[]): void {
-        this._eosStorageService.setItem('userOrder', sortableNodeList);
-    }
-
-    public getUserOrder(): void {
-        return this._eosStorageService.getItem('userOrder');
+    public getUserOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        if (!ID) {
+            console.warn('ID is undifined!')
+            return;
+        }
+        if (localStorage.getItem(ID + this.NAME)) {
+            const sortableList: EosDictionaryNode[] = this.restoreOrder(list, ID);
+            return sortableList;
+        } else {
+            this.generateOrder(list, ID);
+            return list;
+        }
     }
 }

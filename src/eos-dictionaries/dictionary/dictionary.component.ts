@@ -122,7 +122,7 @@ export class DictionaryComponent implements OnDestroy {
         if (this._dictionaryId) {
             this._dictSrv.openDictionary(this._dictionaryId)
                 .then(() => {
-                    this._dictSrv.selectNode(this._dictionaryId, this._nodeId);
+                    this._dictSrv.selectNode(this._nodeId);
                 });
         }
     }

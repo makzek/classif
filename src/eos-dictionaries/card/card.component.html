@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="check-wrapper">
-            <span class="checkbox">
+            <span class="checkbox-inline">
                 <label *ngIf="node"><input type="checkbox" [(ngModel)]="node.marked">
                     <span></span>
                 </label>
@@ -52,7 +52,7 @@
     <eos-departments-card-edit [data]="nodeData" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)" (invalid)="turnOffSave($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
     <eos-rooms-card-edit [data]="nodeData" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)" (invalid)="turnOffSave($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>
 
-    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true" (onHide)="forceView($event)">
+    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true" (onHide)="forceView()">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
