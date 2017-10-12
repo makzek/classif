@@ -3,7 +3,6 @@
         'only-selected': currentState === states.selected,
         'info': currentState === states.info,
         'tree': currentState === states.tree}">
-    <div class="screen-wrapper" (click)="closeAsides()" *ngIf="currentState !== states.selected"></div>
     <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
         'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes.length" size="lg"></eos-spinner>

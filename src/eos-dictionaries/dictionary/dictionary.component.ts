@@ -132,9 +132,4 @@ export class DictionaryComponent implements OnDestroy {
         this._actSrv.state = this.currentState;
         this._subscriptions.forEach((_s) => _s.unsubscribe());
     }
-
-    closeAsides() {
-        this.currentState = DICTIONARY_STATES.selected;
-        this._actSrv.closeAll = true;
-    }
 }
