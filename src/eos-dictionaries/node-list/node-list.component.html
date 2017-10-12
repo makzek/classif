@@ -9,23 +9,12 @@
         <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li class="child">
                 <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
-                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
+                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper" (onChange)="toggleItem($event)">
                 </bs-sortable>
             </li>
         </ul>
         <ng-template #childTemplate let-item="item" let-index="index">
-            <div *ngIf="openedNode" [ngClass]="{'highlight': openedNode.id === item.initData.id, 'flat-child': item.isDeleted && !showDeleted}">
-                <div *ngIf="!item.value.isDeleted || showDeleted" class="node-list-item" (click)="openFullInfo(item.value)" (dblclick)="viewNode(item.value)">
-                    <span *ngIf="showCheckbox" class="checkbox">
-                        <label><input type="checkbox" [(ngModel)]="item.value.marked">
-                            <span></span>
-                    </label>
-                    </span>
-                    <span class="node-info">
-                        <span *ngFor="let field of viewFields" class="code">{{item.value.data[field.foreignKey]}}</span>
-                    </span>
-                </div>
-            </div>
+            <eos-node-list-item [node]="item.value" [params]="_params" (mark)="checkItem(item)"></eos-node-list-item>
         </ng-template>
         <!--Simple list-->
         <ul *ngIf="nodes && !userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
