@@ -1,7 +1,7 @@
 <div class="eos-node-list">
     <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
         <a class="link special-text" *ngIf="hasParent" (click)="goUp()">Вверх</a>
-        <eos-node-list-item [node]="_selectedNode" [params]="_params" (mark)="checkItem(_selectedNode)"></eos-node-list-item>
+        <eos-node-list-item [node]="_selectedNode" [params]="_params" (mark)="checkState()"></eos-node-list-item>
     </div>
     <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
@@ -14,12 +14,12 @@
             </li>
         </ul>
         <ng-template #childTemplate let-item="item" let-index="index">
-            <eos-node-list-item [node]="item.value" [params]="_params" (mark)="checkItem(item)"></eos-node-list-item>
+            <eos-node-list-item [node]="item.value" [params]="_params" (mark)="checkState()"></eos-node-list-item>
         </ng-template>
         <!--Simple list-->
         <ul *ngIf="nodes && !userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
             <li *ngFor="let item of nodeListPerPage" class="child">
-                <eos-node-list-item [node]="item" [params]="_params" (mark)="checkItem(item)"></eos-node-list-item>
+                <eos-node-list-item [node]="item" [params]="_params" (mark)="checkState()"></eos-node-list-item>
             </li>
         </ul>
     </div>

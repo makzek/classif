@@ -101,7 +101,7 @@ export class NodeListComponent implements OnDestroy {
                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
                     }
                 } else {
-                    this.checkState(node.marked);
+                    this.checkState();
                 }
             }
         });
@@ -215,26 +215,6 @@ export class NodeListComponent implements OnDestroy {
             }
         }
         this._selectedNode.marked = value;
-    }
-
-    checkItem(node: EosDictionaryNode) {
-        /* tslint:disable:no-bitwise */
-        if (node.marked) {
-            if (!~this.nodes.findIndex((_n) => !_n.marked)) {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-            } else {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
-            }
-        } else {
-            if (!~this.nodes.findIndex((_n) => _n.marked)) {
-                this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-            } else {
-                if (!!~this.nodes.findIndex((_n) => _n.marked)) {
-                    this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
-                }
-            }
-        }
-        /* tslint:enable:no-bitwise */
     }
 
     openFullInfo(node: EosDictionaryNode): void {
@@ -446,19 +426,27 @@ export class NodeListComponent implements OnDestroy {
         this._storageSrv.setItem(RECENT_URL, url);
     }
 
-    private checkState(marked?: boolean) {
+    private checkState() {
         let checkAllFlag = true,
             checkSome = false;
-        for (const item of this.nodes) {
-            if (item.marked) {
+        if (this.nodes) {
+            for (const item of this.nodes) {
+                if (item.marked) {
+                    checkSome = true;
+                }
+                checkAllFlag = checkAllFlag && item.marked;
+            }
+            checkAllFlag = checkAllFlag && this._selectedNode.marked;
+            if (this._selectedNode.marked) {
                 checkSome = true;
             }
-            checkAllFlag = checkAllFlag && item.marked;
+        } else {
+            if (!this._selectedNode.marked) {
+                checkAllFlag = false;
+                checkSome = false;
+            }
         }
-        checkAllFlag = checkAllFlag && marked;
-        if (marked) {
-            checkSome = true;
-        }
+
         if (checkAllFlag) {
             this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
             this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
