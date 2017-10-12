@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
                     <input [readonly]="!editMode" id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control"
-                        [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event, this, personCode)"
+                        [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                         placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
@@ -534,7 +534,7 @@
             <div class="form-group">
                 <label for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
                 <input [readonly]="!editMode" id="RUBRIC_CODE_DEP" name="RUBRIC_CODE_DEP" type="text" class="form-control"
-                    [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event, this, personCode)"
+                    [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                     placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
                     [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
