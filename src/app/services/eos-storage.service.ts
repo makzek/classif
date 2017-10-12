@@ -12,10 +12,11 @@ export class EosStorageService {
         this._data = {};
         for (let i = localStorage.length; i; i--) {
             const _key = localStorage.key(i);
+            const _val = localStorage.getItem(_key);
             try {
-                JSON.parse(localStorage.getItem(_key))
+                JSON.parse(_val);
             } catch (e) {
-                console.log('error getting ${key}', e);
+                console.log('error parsing', _key, _val);
             }
         }
     }

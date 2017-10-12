@@ -138,34 +138,28 @@ export class EosDictService {
         return _p;
     }
 
-    private _selectRoot() {
-        if (this.dictionary.root) {
-            this._selectNode(this.dictionary.root)
-        } else {
-            this._selectNode(null);
-        }
+    public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
+        return this.openDictionary(dictionaryId)
+            .then(() => this._getNode(nodeId));
     }
 
-    public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return <Promise<EosDictionaryNode>>this.openDictionary(dictionaryId)
-            .then((_dict) => {
-                if (_dict) {
-                    const _node = _dict.getNode(nodeId);
-                    if (_node) {
-                        if (_node.loaded) {
-                            return _node;
-                        } else {
-                            return this.loadChildren(_node);
-                        }
-                    } else {
-                        return this._api.getNodeWithChildren(nodeId) // temp solution
-                            .then((data: any[]) => {
-                                this._updateDictNodes(_dict, data);
-                                return _dict.getNode(nodeId);
-                            });
-                    }
+    private _getNode(nodeId): Promise<EosDictionaryNode> {
+        if (this.dictionary) {
+            const _node = this.dictionary.getNode(nodeId);
+            if (_node) {
+                if (_node.loaded) {
+                    return Promise.resolve(_node);
+                } else {
+                    return this.loadChildren(_node);
                 }
-            });
+            } else {
+                return this._api.getNodeWithChildren(nodeId) // temp solution
+                    .then((data: any[]) => {
+                        this._updateDictNodes(this.dictionary, data);
+                        return this.dictionary.getNode(nodeId);
+                    });
+            }
+        }
     }
 
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
@@ -199,32 +193,28 @@ export class EosDictService {
         }
     }
 
-    public selectNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return new Promise((res, rej) => {
-            if (!nodeId) {
-                this._selectNode(this.dictionary.root);
-                this._openNode(this.dictionary.root);
-                return res(this.dictionary.root);
-            } else {
-                return this.getNode(dictionaryId, nodeId)
-                    .then((node) => {
-                        if (this.selectedNode !== node) {
-                            if (node) {
-                                // expand all parents of selected node
-                                let parent = node.parent;
-                                while (parent) {
-                                    parent.isExpanded = true;
-                                    parent = parent.parent;
-                                }
-                            }
-                            /* console.log('selectNode', node); */
-                            this._selectNode(node);
-                            /* this._openNode(null); */
+    /**
+     *
+     * @param nodeId node ID to be selected
+     * @returns selected node in current dictionary
+     */
+    public selectNode(nodeId: string): Promise<EosDictionaryNode> {
+        if (nodeId) {
+            return this._getNode(nodeId)
+                .then((node) => {
+                    if (node) {
+                        let parent = node.parent;
+                        while (parent) {
+                            parent.isExpanded = true;
+                            parent = parent.parent;
                         }
-                        return this.selectedNode;
-                    });
-            }
-        });
+                    }
+                    this._selectNode(node);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(this._selectRoot());
+        }
     }
 
     private _selectNode(node: EosDictionaryNode) {
@@ -237,6 +227,28 @@ export class EosDictService {
             }
             this.selectedNode = node;
             this._selectedNode$.next(node);
+            this._openNode(node);
+        }
+    }
+
+    private _selectRoot(): EosDictionaryNode {
+        let node: EosDictionaryNode = null;
+        if (this.dictionary && this.dictionary.root) {
+            node = this.dictionary.root;
+        }
+        this._selectNode(node);
+        return node;
+    }
+
+    public openNode(nodeId: string): Promise<EosDictionaryNode> {
+        if (this.dictionary) {
+            return this._getNode(nodeId)
+                .then((node) => {
+                    this._openNode(node);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(null);
         }
     }
 
@@ -255,19 +267,6 @@ export class EosDictService {
 
     public isRoot(nodeId: string): boolean {
         return this.dictionary.root.id === nodeId;
-    }
-
-    public openNode(nodeId: string): Promise<EosDictionaryNode> {
-        if (this.dictionary) {
-        return this.getNode(this.dictionary.id, nodeId)
-            .then((node) => {
-                this._openNode(node);
-                return node;
-            });
-        } else {
-            return Promise.resolve(null);
-        }
-
     }
 
     public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {

@@ -49,6 +49,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private nodeData: any = {};
     private _originalData: any = {};
     private _changed = false;
+    private fieldsDescription: any = {};
 
     dictionaryId: string;
     private nodeId: string;
@@ -163,9 +164,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this.nodeData = {};
         if (this.node) {
-            this.node.getEditView().forEach(fld => {
+            /* this.fields = this.node.getEditView();
+            this.fields.forEach(fld => {
                 this.nodeData[fld.key] = fld.value;
-            });
+            });*/
+            this.fieldsDescription = this.node.getEditFieldsDescription();
+            this.nodeData = this.node.getEditData();
         }
     }
 

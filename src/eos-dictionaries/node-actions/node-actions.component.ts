@@ -24,6 +24,8 @@ import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.servic
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
+    dictionary: EosDictionary;
+
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
 
@@ -37,7 +39,6 @@ export class NodeActionsComponent implements OnDestroy {
     searchString: string;
     searchInAllDict = false;
 
-    dictionary: EosDictionary;
     viewFields: FieldDescriptor[];
 
     showCheckbox: boolean;

@@ -8,7 +8,7 @@ import { Subscription} from 'rxjs/Subscription';
     templateUrl: 'rubricator-card-edit.component.html',
 })
 export class RubricatorCardEditComponent extends CardEditComponent implements OnInit, OnDestroy {
-    @ViewChild('rubricatorForm') form;
+    @ViewChild('rubricForm') form;
 
     private _changes: Subscription;
 
@@ -19,7 +19,9 @@ export class RubricatorCardEditComponent extends CardEditComponent implements On
     ngOnInit() {
         /* todo: move to parent component */
         this._changes = this.form.control.valueChanges
-            .subscribe(values => this.invalid.emit(!this.form.valid));
+            .subscribe(() => {
+                this.invalid.emit(!this.form.valid);
+            });
     }
 
     ngOnDestroy() {

@@ -1,5 +1,6 @@
 import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
 /* tslint:disable:max-line-length */
+import { NOT_EMPTY_STRING } from './input-validation';
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
     apiInstance: 'DEPARTMENT',
@@ -14,24 +15,39 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     fields: [{
         key: 'DUE',
         type: 'string',
-        title: 'ID'
+        title: 'ID',
+        length: 248,
     }, {
         key: 'RUBRIC_CODE',
         title: 'Код',
-        type: 'string'
+        type: 'string',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'title',
-        title: 'Краткое наименование',
+        title: 'Краткое наименование подразделения',
         type: 'text',
         foreignKey: 'CLASSIF_NAME',
+        length: 255,
+        pattern: NOT_EMPTY_STRING,
+    },  {
+        key: 'fullTitle',
+        title: 'Полное наименование подразделения',
+        type: 'text',
+        foreignKey: 'fullTitle',
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'NOTE',
         title: 'Примечание',
-        type: 'text'
+        type: 'text',
+        length: 255,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'CODE',
         title: 'Code',
-        type: 'string'
+        type: 'string',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DELETED',
         title: 'DELETED',
@@ -82,8 +98,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text'
     }, */{
         key: 'titleRP',
-        title: 'Подразделение в родительном падеже',
+        title: 'Наименование в родительном падеже (чего?)',
         type: 'text',
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'notInPositionTitle',
         title: 'Не использовать подразделение в названии должности',
@@ -92,10 +110,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'SEV',
         title: 'Индекс СЭВ',
         type: 'text',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'index',
+        key: 'INDEX',
         title: 'Индекс',
         type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'file',
         key: 'CARD_FLAG',
@@ -105,18 +126,17 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // key: 'fileName',
         key: 'CARD_NAME',
         title: 'Наименование картотеки',
-        type: 'text'
+        type: 'text',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'organization',
         key: 'DUE_LINK_ORGANIZ',
         title: 'Организация',
         type: 'text',
-    }, /* {
-        // key: 'note',
-        key: 'NOTE',
-        title: 'Примечание',
-        type: 'text',
-    },*/ {
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
+    }, {
         // key: 'startDate',
         key: 'START_DATE',
         title: 'Дата начала действия',
@@ -129,44 +149,62 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         // key: 'shortPosition',
         key: 'DUTY',
-        title: 'Наименование должности',
+        title: 'Краткое наименование должности',
         type: 'text',
+        length: 255,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fio',
-        // key: 'CLASSIF_NAME', // not sure
-        title: 'Фамилия И.О.',
+        title: 'Фамилия И.О. - должность',
         type: 'text',
         foreignKey: 'CLASSIF_NAME',
+        length: 255,
+        pattern: NOT_EMPTY_STRING,
+    }, {
+        key: 'SURNAME',
+        title: 'Фамилия И.О.',
+        type: 'text',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'gender',
         title: 'Пол',
         type: 'text',
     }, {
         // key: 'lastName',
-        key: 'SURNAME',
+        key: 'lastName',
         title: 'Фамилия',
         type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstName',
         title: 'Имя',
         type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fathersName',
         title: 'Отчество',
         type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'indexOfficial',
         key: 'DEPARTMENT_INDEX',
         title: 'Индекс ДЛ',
         type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DEPARTMENT_DUE',
         title: 'Картотека ДЛ',
         type: 'text',
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'boss',
         key: 'POST_H',
@@ -176,31 +214,43 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // key: 'localPhone',
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',
-        type: 'text'
+        type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'phone',
         key: 'PHONE',
         title: '№ телефона',
-        type: 'text'
+        type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'room',
         key: 'NUM_CAB',
         title: '№ кабинета',
-        type: 'text'
+        type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'fax',
         key: 'FAX',
         title: 'Факс',
-        type: 'text'
+        type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
     }, {
         // key: 'email',
         key: 'E_MAIL',
         title: 'E-mail',
-        type: 'text'
+        type: 'text',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'skype',
         title: 'Skype',
-        type: 'text'
+        type: 'text',
+        length: 64,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'photo',
         title: 'Фотография',
@@ -209,10 +259,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'alternate',
         title: 'Заместитель',
         type: 'text',
+        length: 248,
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'extraData',
         title: 'Дополнительные сведения',
-        type: 'text'
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'type',
         title: 'Тип',
@@ -220,87 +273,108 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'department',
         title: 'Подразделение',
-        type: 'text'
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'shortPositionRP',
-        title: 'Наименование должности в родительном падеже',
-        type: 'text'
+        title: 'Родительный падеж (кого, чего)',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'shortPositionDP',
-        title: 'Наименование должности в дательном падеже',
-        type: 'text'
+        title: 'Дательный падеж (кому, чему?)',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'shortPositionVP',
-        title: 'Наименование должности в винительном падеже',
-        type: 'text'
+        title: 'Винительный падеж (кого, что?)',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fioDP',
-        title: 'Фамилия И.О., дательный падеж',
-        type: 'text'
+        title: 'Фамилия И.О. в дательном падеже',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'iof',
-        title: 'И.О. Фамилия',
-        type: 'text'
+        key: 'iofDP',
+        title: 'И.О. Фамилия в дательном падеже',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'lastNameRP',
-        title: 'Фамилия, родительный падеж',
+        title: 'Фамилия',
         type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstNameRP',
-        title: 'Имя, родительный падеж',
-        type: 'text'
+        title: 'Имя',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'fathresNameRP',
-        title: 'Отчество, родительный падеж',
-        type: 'text'
+        key: 'fathersNameRP',
+        title: 'Отчество',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'lastNameDP',
-        title: 'Фамилия, дательный падеж',
-        type: 'text'
+        title: 'Фамилия',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstNameDP',
-        title: 'Имя, дательный падеж',
-        type: 'text'
+        title: 'Имя',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'fathresNameDP',
-        title: 'Отчество, дательный падеж',
-        type: 'text'
+        key: 'fathersNameDP',
+        title: 'Отчество',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'lastNameVP',
-        title: 'Фамилия, винительный падеж',
-        type: 'text'
+        title: 'Фамилия',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstNameVP',
-        title: 'Имя, винительный падеж',
-        type: 'text'
+        title: 'Имя',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'fathresNameVP',
-        title: 'Отчество, винительный падеж',
-        type: 'text'
+        key: 'fathersNameVP',
+        title: 'Отчество',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'lastNameTP',
-        title: 'Фамилия, творительный падеж',
-        type: 'text'
+        title: 'Фамилия',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstNameTP',
-        title: 'Имя, творительный падеж',
-        type: 'text'
+        title: 'Имя',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'fathresNameTP',
-        title: 'Отчество, творительный падеж',
-        type: 'text'
+        key: 'fathersNameTP',
+        title: 'Отчество',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'lastNamePP',
-        title: 'Фамилия, предложный падеж',
-        type: 'text'
+        title: 'Фамилия',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'firstNamePP',
-        title: 'Имя, предложный падеж',
-        type: 'text'
+        title: 'Имя',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'fathresNamePP',
-        title: 'Отчество, предложный падеж',
-        type: 'text'
+        key: 'fathersNamePP',
+        title: 'Отчество',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
     }],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     listFields: {
@@ -323,8 +397,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['title']
     },
     editFields: { // TODO: remove IS_NODE!!!
-        person: ['IS_NODE', 'RUBRIC_CODE', 'fio', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE', ],
-        department: ['IS_NODE', 'RUBRIC_CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ' ]
+        person: ['IS_NODE', 'RUBRIC_CODE', 'fio', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
+            'gender', 'SEV', 'lastName', 'firstName', 'fathersName', 'DUTY', 'fullPosition', 'skype', 'shortPositionRP', 'shortPositionDP', 'shortPositionVP',
+            'fioDP', 'iofDP', 'lastNameRP', 'firstNameRP', 'fathersNameRP', 'lastNameDP', 'firstNameDP', 'fathersNameDP', 'lastNameVP', 'firstNameVP', 'fathersNameVP',
+            'lastNameTP', 'firstNameTP', 'fathersNameTP', 'lastNamePP', 'firstNamePP', 'fathersNamePP'],
+        department: ['IS_NODE', 'RUBRIC_CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ',
+            'INDEX', 'SEV', 'fullTitle', 'titleRP', 'notInPositionTitle'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     /*
