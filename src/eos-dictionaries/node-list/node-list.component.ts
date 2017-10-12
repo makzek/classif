@@ -214,6 +214,7 @@ export class NodeListComponent implements OnDestroy {
                 item.marked = value;
             }
         }
+        this._selectedNode.marked = value;
     }
 
     checkItem(node: EosDictionaryNode) {
