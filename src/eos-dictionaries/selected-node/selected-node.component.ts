@@ -159,7 +159,7 @@ export class SelectedNodeComponent implements OnDestroy {
             this.selectedNode.marked = false;
             this._dictSrv.deleteSelectedNodes(this._dictionaryId, [this.selectedNode.id])
                 .then(() => {
-                    this.goUp();
+                    // this.goUp();
                 });
             this._router.navigate([
                 'spravochniki',

@@ -178,6 +178,29 @@ export class EosDictionaryNode {
     getEditView(): any {
         return this._descriptor.getEditView(this.data);
     }
+
+    getEditFieldsDescription(): any {
+        const _description = {};
+        this._descriptor.getEditView(this.data).forEach((_f) => {
+            _description[_f.key] = {
+                title: _f.title,
+                // type: _f.type,
+                length: _f.length,
+                // format: _f.format,
+                // foreignKey: _f.foreignKey,
+                pattern: _f.pattern,
+            }
+        });
+        return _description;
+    }
+
+    getEditData(): any {
+        const _data = {};
+        this._descriptor.getEditView(this.data).forEach((_f) => {
+            _data[_f.foreignKey] = _f.value;
+        });
+        return _data;
+    }
 }
 
 

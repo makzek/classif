@@ -15,6 +15,7 @@ export interface IFieldDesriptor {
     length?: number;
     format?: string;
     foreignKey?: string;
+    pattern?: RegExp;
     /* column?: number;
     subcolumn?: number;*/
 }
@@ -31,6 +32,7 @@ export interface IFieldDesriptorBase {
     readonly length?: number;
     readonly format?: string;
     readonly foreignKey?: string;
+    pattern?: RegExp;
 };
 
 export interface IFieldView extends IFieldDesriptorBase {
@@ -44,6 +46,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly length?: number;
     readonly format?: string;
     readonly foreignKey?: string;
+    readonly pattern?: RegExp;
     /* readonly column?: number;
     readonly subcolumn?: number;*/
 
@@ -61,6 +64,10 @@ export class FieldDescriptor implements IFieldDesriptorBase {
 
         if (data.format) {
             this.format = data.format
+        }
+
+        if (data.pattern) {
+            this.pattern = data.pattern
         }
 
         /*if (data.column) {

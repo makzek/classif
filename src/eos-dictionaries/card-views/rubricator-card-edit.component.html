@@ -1,38 +1,62 @@
 <div class="rubricator-card-edit">
     <article class="edit-content">
-        <form #rubricatorForm="ngForm"  class="form form-horizontal">
+        <form #rubricForm="ngForm"  class="form form-horizontal">
                 <div class="form-group">
-                    <label for="code">Код:</label>
-                    <input [readonly]="!editMode" (ngModelChange)="change('RUBRIC_CODE', $event, rubricatorForm.invalid)" id="code" name="code"
-                        type="text" class="form-control" placeholder="Код" required pattern="^\S(.*\S$|$)" 
-                        tooltip="Обязательное поле. Максимальная длинна {{codeLenth}} символов" placement="right" container="body"
-                        maxlength="{{codeLenth}}" [ngModel]="data['RUBRIC_CODE']">
+                    <label for="code">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                    <input [readonly]="!editMode" id="code" name="code" type="text" class="form-control"
+                        [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
+                        placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
+                        [ngClass]="{'readonly': !editMode }"
+                        required [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern" maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"
+                        tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" [isOpen]="rubricForm.controls.code?.invalid && rubricForm.controls.code?.dirty" triggers="">
                 </div>
                 <div class="form-group">
-                    <label for="title">Краткое наименование:</label>
-                    <input [readonly]="!editMode" 
-                        (ngModelChange)="change('CLASSIF_NAME', $event, rubricatorForm.invalid)" id="title" name="title"
-                        type="text" class="form-control" placeholder="Краткое наименование" [ngModel]="data['CLASSIF_NAME']" required pattern="^\S(.*\S$|$)"
-                        maxlength="{{titleLenth}}" tooltip="Обязательное поле. Максимальная длинна {{titleLenth}} символов" [isDisabled]="!editMode" placement="right">
+                    <label for="title">{{fieldsDescription['CLASSIF_NAME']?.title}}</label>
+                    <input [readonly]="!editMode" id="title" name="title" type="text" class="form-control"
+                        [ngModel]="data['CLASSIF_NAME']" (ngModelChange)="change('CLASSIF_NAME', $event)"
+                        placeholder="{{fieldsDescription['CLASSIF_NAME']?.title}}"
+                        [ngClass]="{'readonly': !editMode }"
+                        required [pattern]="fieldsDescription['CLASSIF_NAME']?.pattern" maxlength="{{fieldsDescription['CLASSIF_NAME']?.length}}"
+                        tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['CLASSIF_NAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isOpen]="rubricForm.controls.title?.invalid && rubricForm.controls.title?.dirty" triggers="">
                 </div>
                 <div class="form-group">
-                    <label for="description">Полное наименование:</label>
-                    <input [readonly]="!editMode" 
-                    (ngModelChange)="change('NOTE', $event, rubricatorForm.invalid)" id="description" name="description" type="text" class="form-control" 
-                    placeholder="Полное наименование" [ngModel]="data['NOTE']" maxlength="{{descriptionLength}}" 
-                    tooltip="Максимальная длинна {{descriptionLength}} символов" [isDisabled]="!editMode" placement="right">
+                    <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
+                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                        [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)"
+                        placeholder="{{fieldsDescription['fullTitle']?.title}}"
+                        [ngClass]="{'readonly': !editMode }"
+                        maxlength="{{fieldsDescription['fullTitle']?.length}}" [pattern]="fieldsDescription['fullTitle']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isOpen]="rubricForm.controls.fullTitle?.invalid && rubricForm.controls.fullTitle?.dirty" triggers="">
                 </div>
 
-                <!--<div class="form-group">
-                    <label for="note">Примечание:</label>
-                    <input *ngIf="editMode" (input)="checkChanges()" id="note" type="text" class="form-control" placeholder="Примечание" [(ngModel)]="data['note']">
-                    <p *ngIf="!editMode && data['note']">{{data['note']}}</p>
+                <div class="form-group">
+                    <label for="note">{{fieldsDescription['NOTE']?.title}}</label>
+                    <input [readonly]="!editMode" id="note" name="note" type="text" class="form-control"
+                        [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)" 
+                        placeholder="{{fieldsDescription['NOTE']?.title}}"
+                        [ngClass]="{'readonly': !editMode }"
+                        maxlength="{{fieldsDescription['NOTE']?.length}}" [pattern]="fieldsDescription['NOTE']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isOpen]="rubricForm.controls.note?.invalid && rubricForm.controls.note?.dirty" triggers="">
                 </div>
                 <div class="form-group">
-                    <label for="SEV">Индекс СЭВ:</label>
-                    <input *ngIf="editMode" (input)="checkChanges()" id="SEV" type="text" class="form-control" placeholder="Индекс СЭВ" [(ngModel)]="data['SEV']">
-                    <p *ngIf="!editMode && data['SEV']">{{data['SEV']}}</p>
-                </div>-->
+                    <label for="SEV">{{fieldsDescription['sev']?.title}}</label>
+                    <input [readonly]="!editMode" id="sev" name="sev" type="text" class="form-control"
+                        [ngModel]="data['sev']" (ngModelChange)="change('sev', $event)" 
+                        placeholder="{{fieldsDescription['sev']?.title}}"
+                        [ngClass]="{'readonly': !editMode }"
+                        maxlength="{{fieldsDescription['sev']?.length}}" [pattern]="fieldsDescription['sev']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['sev']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isOpen]="rubricForm.controls.sev?.invalid && rubricForm.controls.sev?.dirty" triggers="">
+                </div>
         </form>
     </article>
 </div>

@@ -9,8 +9,7 @@ import { CardEditComponent } from './card-edit.component';
 export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit, OnChanges {
     fieldGroups: string[];
     currTab = 0;
-    @ViewChild('departmentsForm') form;
-    @ViewChild('personCodeTooltip') personCodeTooltip;
+    @ViewChild('departForm') form;
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
@@ -36,7 +35,6 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
     }
 
     ngOnChanges() {
-
         // fake data
         const today = new Date();
         this.data['alternates'] = [
@@ -54,29 +52,6 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
                 END_DATE: today,
             }
         ];
-        console.log(JSON.stringify(this.data.alternates));
-
-        if (this.form.controls.RUBRIC_CODE_PERSON) {
-            const personCode = this.form.controls.RUBRIC_CODE_PERSON;
-            const tooLong = 'Максимальная длинна ' + this.codeLenth + ' символов. ';
-            const noWhitespace = 'Пробелы в начале или в конце строки запрещены. ';
-            personCode.valueChanges.subscribe(() => {
-                this.tooltipText = '';
-                if (personCode.invalid) {
-                    this.tooltipText += noWhitespace;
-                    this.personCodeTooltip.show();
-                }
-
-                if (personCode.value.length >= 32) {
-                    this.tooltipText += tooLong;
-                    this.personCodeTooltip.show();
-                }
-
-                if (!personCode.invalid && personCode.value.length < 32) {
-                    this.personCodeTooltip.hide();
-                }
-            });
-        }
     }
 
     newImage(evt) {
