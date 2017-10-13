@@ -139,12 +139,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         // key: 'startDate',
         key: 'START_DATE',
-        title: 'начало действия',
+        title: 'Начало действия',
         type: 'date',
     }, {
         // key: 'endDate',
         key: 'END_DATE',
-        title: 'окончание действия',
+        title: 'Окончание действия',
         type: 'date',
     }, {
         // key: 'shortPosition',

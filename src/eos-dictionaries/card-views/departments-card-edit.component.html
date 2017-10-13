@@ -132,7 +132,7 @@
                                 [isOpen]="departForm.controls.DUTY?.invalid && departForm.controls.DUTY?.dirty" triggers="">
                         </div>
                         <span class="checkbox col-md-3 col-lg-3 col-xl-3">
-                            <label><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode" 
+                            <label class="checkbox"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode" 
                                     [ngModel]="data['POST_H']">
                                 <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
                             </label>
@@ -186,11 +186,11 @@
                     </div>
                 </div>
 
-                <div class="row alternate-button-wrapper" [hidden]="!editMode">
+                <div class="row alternate-button-wrapper">
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <button class="btn btn-primary alternate-button">ЖУРНАЛ ДЕЛЕГИРОВАНИЯ ПОЛНОМОЧИЙ</button>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="col-md-6 col-lg-6 col-xl-6"  [hidden]="!editMode">
                         <button class="btn btn-primary-full alternate-button">ДОБАВИТЬ ИСПОЛНИТЕЛЯ</button>
                     </div>
                 </div>
@@ -576,7 +576,7 @@
                     (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
             </div>
             <span class="checkbox">
-                <label><input type="checkbox" name="CARD_FLAG"
+                <label class="checkbox"><input type="checkbox" name="CARD_FLAG"
                         [ngModel]="data['CARD_FLAG']" (ngModelChange)="change('CARD_FLAG', $event)"
                         [disabled]="!editMode">
                     <span></span>
@@ -596,7 +596,7 @@
                     [isOpen]="departForm.controls.CLASSIF_NAME_DEP?.invalid && departForm.controls.CLASSIF_NAME_DEP?.dirty" triggers="">
             </div>
             <span class="checkbox">
-                <label><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
+                <label class="checkbox"><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
                         [ngModel]="data['notInPositionTitle']">
                     <span></span>
                     {{fieldsDescription['notInPositionTitle']?.title}}</label>

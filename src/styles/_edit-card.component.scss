@@ -5,57 +5,77 @@
     margin: 0 auto;
     border: 1px solid transparent;
     overflow-y: auto;
+
     .edit-header {
+        height: 47px;
         padding: 5px;
         display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
+        display: grid;
+
+        // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 20px 1fr 130px;
         grid-template-columns: 100px 20px 1fr 130px;
         border-bottom: 1px solid transparent;
+
         &.edited {
             -ms-grid-columns: 24px 19px 1fr 172px;
             grid-template-columns: 24px 19px 1fr 172px;
         }
+
         .btn {
             padding: 1px 6px;
         }
+
         a:hover {
             text-decoration: none;
         }
+
         div {
             display: inline-block;
         }
+
         .check-wrapper {
             grid-column: 2;
             grid-row: 1;
+
             .checkbox {
                 margin: 0;
+
                 label {
                     padding: 0;
                 }
             }
+
             .checkbox-inline {
                 padding: 0;
-                margin-left: -5px; // ugly solution, sorry
+                margin-left: -5px;
+
+                // ugly solution, sorry
+           
             }
         }
+
         .move-wrapper {
             grid-column: 1;
             grid-row: 1;
         }
+
         .name-wrapper {
             align-self: center;
             grid-column: 3;
             grid-row: 1;
         }
+
         .buttons-wrapper {
             grid-column: 4;
             grid-row: 1;
         }
+
         .action-wrapper {
             grid-column: 4;
             grid-row: 1;
         }
+
         .move-wrapper,
         .check-wrapper,
         .buttons-wrapper,
@@ -65,48 +85,58 @@
             justify-content: space-around;
         }
     }
+
     .spinner-wrapper {
         display: flex;
         justify-content: space-around;
         align-items: center;
     }
+
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
         }
     }
+
     /* .active {
         background-color: #e6e5e5;
         border-color: #adadad;
     }*/
     .edit-content {
         padding: 10px 20px;
-        label {
-            font-size: 12px;
-            line-height: 16px;
+
+        label{
+            font-size: 10px;
+            line-height: 10px;
             font-weight: normal;
+            margin-bottom: 8px;
         }
+
         .form-group {
             &:not(:first-child) {
                 margin-top: 20px;
             }
-            label {
+
+            label:not(.checkbox) {
                 text-transform: uppercase;
                 white-space: nowrap;
             }
         }
+
         .form-control {
             font-size: 14px;
             line-height: 20px;
             border-radius: 0;
             padding: 8px;
         }
+
         .readonly {
             border: 0;
             box-shadow: none;
             padding: 0;
         }
     }
+
     .rubricator-card-edit {
         padding: 20px;
     }

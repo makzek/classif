@@ -1,5 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+// import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 export interface IConfirmWindow {
     title: string;

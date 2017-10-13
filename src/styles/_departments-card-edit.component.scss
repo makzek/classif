@@ -43,11 +43,15 @@
 
     .checkbox {
         display: block;
-        margin-top: 5px;
+        margin-top: 3px;
         margin-bottom: 0;
 
         label {
             padding-left: 0;
+        }
+
+        input[type="checkbox"] + span {
+            margin-right: 12px;
         }
     }
 
@@ -130,7 +134,7 @@
         .photo-uploader {
             position: absolute;
             bottom: -8px;
-            right: 0;
+            right: -24px;
         }
     }
 

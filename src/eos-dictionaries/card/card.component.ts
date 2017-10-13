@@ -353,7 +353,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
-
+        console.log('save', data);
         const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
         let path = '';
         for (let i = 0; i <= bCrumbs.length - 2; i++) {

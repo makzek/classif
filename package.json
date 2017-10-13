@@ -33,7 +33,7 @@
     "core-js": "^2.4.1",
     "fs-extra": "^4.0.1",
     "moment": "^2.18.1",
-    "ngx-bootstrap": "^1.8.1",
+    "ngx-bootstrap": "^1.9.3",
     "rxjs": "^5.1.0",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.4"
