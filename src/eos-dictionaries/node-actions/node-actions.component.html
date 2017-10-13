@@ -2,20 +2,23 @@
     <div class="first-line block">
         <div class="controller pull-left">
             <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
-                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="doAction(action.type)"><span class="{{action.iconClass}}" tooltip="{{action.hint}}" placement="right" containerClass="right-tooltip" container="body"></span></button>
+                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}"
+                tooltip="{{action.hint}}" placement="right" containerClass="right-tooltip" (click)="doAction(action.type)">
+                    <span class="{{action.iconClass}}" container="body"></span>
+                </button>
             </span>
             <div class="btn-group" dropdown>
                 <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="right-tooltip"><span class="eos-icon eos-icon-fab-blue small"></span></button>
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
-                    <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
-                        <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
+                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                        <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
+                            <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
                             containerClass="right-tooltip">
-                            <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
-                        </li>
-                    </ng-template>
-                </ul>
+                                <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
+                            </li>
+                        </ng-template>
+                    </ul>
+                </div>
             </div>
-        </div>
         <div class="pull-right">
             <span class="date">Состояние на </span>
             <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dataSeted($event)" [readonly]="false"></eos-datepicker>
