@@ -7,13 +7,13 @@
 
         <div [ngClass]="{'left': historyToLeft}" class="block recent">
             <span class="recent-title-wrapper">
-                <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true" 
+                <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true"
                     tooltip="Переместить влево" containerClass="top-tooltip"></span>
                 <span class="recent-title">История:</span>
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="left-tooltip">
+                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="left-tooltip  word-break">
                     <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
                 </li>
             </ul>
@@ -23,7 +23,7 @@
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
     <div class="btn item-content block edited" *ngIf="editing(item.value)">
-        <input id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)" 
+        <input id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
             required pattern="^\S(.*\S$|$)"/>
         <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
             tooltip="Сохранить"
