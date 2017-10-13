@@ -1,6 +1,8 @@
-<eos-node-actions></eos-node-actions>
-<div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
-    <a *ngIf="hasParent" class="link special-text" (click)="goUp()">Вверх</a>
-    <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
+<div class="eos-selected-node">
+    <eos-node-actions></eos-node-actions>
+    <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
+        <a *ngIf="hasParent" class="link special-text" (click)="goUp()">Вверх</a>
+        <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
+    </div>
+    <eos-node-list></eos-node-list>
 </div>
-<eos-node-list></eos-node-list>
