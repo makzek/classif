@@ -19,7 +19,7 @@ import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 })
 export class DictionaryComponent implements OnDestroy {
 
-    public _selectedNode: EosDictionaryNode;
+    // public _selectedNode: EosDictionaryNode;
     public _params: any = {};
 
     public showDeleted: boolean;
@@ -79,9 +79,9 @@ export class DictionaryComponent implements OnDestroy {
             })
         );
 
-        this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
+       /* this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
-            /*
+
             if (node) {
                 this.viewFields = node.getListView();
                 this._update(node.children, true);
@@ -97,8 +97,8 @@ export class DictionaryComponent implements OnDestroy {
                     this.checkState(node.marked);
                 }
             }
-            */
-        }));
+
+        }));*/
 
         this.currentState = this._actSrv.state;
 

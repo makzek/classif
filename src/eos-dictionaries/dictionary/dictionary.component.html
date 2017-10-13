@@ -8,12 +8,7 @@
         <eos-tree *ngIf="nodes.length" [nodes]="nodes" [showDeleted]="_params.showDeleted"></eos-tree>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}">
-        <eos-node-actions></eos-node-actions>
-        <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
-            <a *ngIf="hasParent" class="link special-text" (click)="goUp()">Вверх</a>
-            <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
-        </div>
-        <eos-node-list></eos-node-list>
+        <eos-selected-node></eos-selected-node>
     </div>
 
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">

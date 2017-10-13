@@ -19,10 +19,7 @@ import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-action
 import { EditedCard } from '../card/card.component';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
-import {
-    DictionaryActionService,
-    DICTIONARY_ACTIONS
-} from '../dictionary/dictionary-action.service';
+
 
 @Component({
     selector: 'eos-node-actions',
@@ -94,8 +91,7 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _dictActSrv: DictionaryActionService,
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
             this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
@@ -167,14 +163,6 @@ export class NodeActionsComponent implements OnDestroy {
         this._userSettingsSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
-    }
-
-    @HostListener('click') onClick() {
-        if (window.innerWidth <= 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.closeAll = true;
-        }
     }
 
     doAction(type: E_RECORD_ACTIONS) {

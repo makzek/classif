@@ -25,11 +25,6 @@ import {
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
 
-import {
-    DictionaryActionService,
-    DICTIONARY_ACTIONS
-} from '../dictionary/dictionary-action.service';
-
 @Component({
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
@@ -79,7 +74,6 @@ export class NodeListComponent implements OnDestroy {
         private _msgSrv: EosMessageService,
         private _router: Router,
         private _actSrv: NodeActionsService,
-        private _dictActSrv: DictionaryActionService,
     ) {
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
@@ -186,14 +180,6 @@ export class NodeListComponent implements OnDestroy {
         this._searchResultSubscription.unsubscribe();
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
-    }
-
-    @HostListener('click') onClick() {
-        if (window.innerWidth <= 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.closeAll = true;
-        }
     }
 
     private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
