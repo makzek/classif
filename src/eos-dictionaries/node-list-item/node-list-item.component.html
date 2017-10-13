@@ -1,4 +1,4 @@
-<div (mousedown)="selectNode()"  (dblclick)="viewNode()" [ngClass]="{'highlight': node.isSelected, 'flat-child': node.isActive}">
+<div class="eos-node-list-item" (mousedown)="selectNode()"  (dblclick)="viewNode()" [ngClass]="{'highlight': node.isSelected, 'flat-child': node.isActive}">
     <div *ngIf="!node.isDeleted || params?.showDeleted" [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
         <span *ngIf="params?.showCheckbox" class="checkbox-inline">
                 <label><input type="checkbox"

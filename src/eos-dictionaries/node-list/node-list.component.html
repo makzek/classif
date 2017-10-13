@@ -1,8 +1,4 @@
 <div class="eos-node-list">
-    <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
-        <a class="link special-text" *ngIf="hasParent" (click)="goUp()">Вверх</a>
-        <eos-node-list-item [node]="_selectedNode" [params]="_params" (mark)="checkState()"></eos-node-list-item>
-    </div>
     <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
         <!--Sortable list-->

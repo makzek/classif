@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
@@ -73,6 +74,7 @@ import { LoginComponent } from './login/login.component';
         EosRestModule,
     ],
     providers: [
+        { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         AuthGuard,

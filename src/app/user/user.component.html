@@ -5,8 +5,6 @@
         <span class="caret"></span>
   </span>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <!-- li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option1</a></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item">Option2</a></li -->
     <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
     <li class="divider dropdown-divider" *ngIf="fullname"></li>
     <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="logout()">Выйти</a>
@@ -14,12 +12,7 @@
   </ul>
 </div>
 
-<!--<span class="eos-user" (click)="openModal(loginWindow)">
-    <span class="text">{{'Пользователь' || fullname}}</span>
-    <span class="round-img-wrapper"><span class="round-img"></span></span>
-</span>-->
-
-<template #loginWindow>
+<ng-template #loginWindow>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
   </div>
@@ -32,7 +25,7 @@
         <div class="input-group">
             <input type="text" [(ngModel)]="inputPassword" maxlength="255" class="form-control" id="password" />
         </div>
-        <button type="button" class="btn btn-default" (click)="login()" [disabled]="!inputName || !inputPassword">Войти</button>
-        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Отмена</button>
+        <button type="button" class="btn btn-default" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()" [disabled]="inProcess">Отмена</button>
   </div>
-</template>
+</ng-template>
