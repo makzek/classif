@@ -223,7 +223,7 @@ export class NodeListComponent implements OnDestroy {
         }
     }
 
-    userSortMoveUp(): void {
+    private userSortMoveUp(): void {
         const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
         if (indexOfMoveItem !== 0) {
             const item  = this.nodeListPerPage[indexOfMoveItem - 1];
@@ -233,7 +233,7 @@ export class NodeListComponent implements OnDestroy {
         this.sortableComponent.writeValue(this.nodeListPerPage);
     }
 
-    userSortMoveDown(): void {
+     private userSortMoveDown(): void {
         const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
         const lastItem = this.nodeListPerPage.length - 1;
         if (lastItem !== indexOfMoveItem) {
@@ -244,7 +244,7 @@ export class NodeListComponent implements OnDestroy {
         this.sortableComponent.writeValue(this.nodeListPerPage);
     }
 
-    toggleUserSort(): void {
+    private toggleUserSort(): void {
         this.userSorting = !this.userSorting;
         if (this.userSorting) {
             this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
@@ -254,8 +254,7 @@ export class NodeListComponent implements OnDestroy {
         }
     }
 
-    toggleItem(e) {
-        // console.log(this.nodes);
+    private toggleItem(): void {
         const from = (this.currentPage - 1) * this.itemsPerPage;
         let before = this.currentPage * this.itemsPerPage - 1;
         if (before > this.sortableNodes.length) {
@@ -266,7 +265,6 @@ export class NodeListComponent implements OnDestroy {
                 this.sortableNodes[i] = this.nodeListPerPage[j];
             }
         }
-        // Генерируем порядок
         this._orderSrv.generateOrder(this.sortableNodes, this.nodes[0].parentId);
     }
 
