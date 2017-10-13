@@ -21,7 +21,7 @@
             </div>
         <div class="pull-right">
             <span class="date">Состояние на </span>
-            <eos-datepicker class="datepicker" (change)="dataSeted($event)"></eos-datepicker>
+            <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dataSeted($event)" [readonly]="false"></eos-datepicker>
             <button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
                 <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
             </button>

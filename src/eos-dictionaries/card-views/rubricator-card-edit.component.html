@@ -9,7 +9,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         required [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern" maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"
                         tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        placement="right" containerClass="right-tooltip invalid-tooltip"
+                        placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isDisabled]="!editMode" [isOpen]="rubricForm.controls.code?.invalid && rubricForm.controls.code?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -20,7 +20,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         required [pattern]="fieldsDescription['CLASSIF_NAME']?.pattern" maxlength="{{fieldsDescription['CLASSIF_NAME']?.length}}"
                         tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['CLASSIF_NAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="rubricForm.controls.title?.invalid && rubricForm.controls.title?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['fullTitle']?.length}}" [pattern]="fieldsDescription['fullTitle']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="rubricForm.controls.fullTitle?.invalid && rubricForm.controls.fullTitle?.dirty" triggers="">
                 </div>
 
@@ -43,7 +43,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['NOTE']?.length}}" [pattern]="fieldsDescription['NOTE']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="rubricForm.controls.note?.invalid && rubricForm.controls.note?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -54,7 +54,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['sev']?.length}}" [pattern]="fieldsDescription['sev']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['sev']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="rubricForm.controls.sev?.invalid && rubricForm.controls.sev?.dirty" triggers="">
                 </div>
         </form>
