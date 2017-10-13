@@ -1,10 +1,10 @@
 .eos-datepicker {
     position: relative;
 
-    .datepicker-input {
+    /*.datepicker-input {
         padding-right: 32px !important;
         background-color: transparent;
-    }
+    }*/
 
     .icon {
         position: absolute;
@@ -13,7 +13,7 @@
         cursor: pointer;
     }
 
-    .well-sm {
+    /*.well-sm {
         position: fixed;
         background: white;
         padding: 0;
@@ -23,6 +23,7 @@
         button {
             border-color: transparent;
             border-radius: 50%;
+            border-color: transparent;
             height: 34px;
             width: 24px;
             padding: 5px;
@@ -69,5 +70,5 @@
                 padding-right: 8px;
             }
         }
-    }
+    }*/
 }

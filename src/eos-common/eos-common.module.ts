@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { MessagesComponent } from './messages/messages.component';
 import { EosMessageService } from './services/eos-message.service';
@@ -28,6 +29,7 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
         BrowserModule,
         FormsModule,
         Ng2BootstrapModule.forRoot(),
+        BsDatepickerModule.forRoot(),
     ],
     exports: [
         ConfirmWindowComponent,

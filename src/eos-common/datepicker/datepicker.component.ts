@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-import * as moment from 'moment/moment';
-import 'moment/locale/ru';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/bs-moment';
+import { ru } from 'ngx-bootstrap/locale';
+defineLocale('ru', ru);
 
 @Component({
     selector: 'eos-datepicker',
@@ -12,21 +13,14 @@ export class DatepickerComponent {
     @Input() readonly = false;
     @Input() placeholder = '';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
-
-    hideCalendar = true;
+    bsConfig: Partial<BsDatepickerConfig>;
 
     constructor() {
-        moment.locale('ru');
-    }
-
-    changeState() {
-        if (!this.readonly) {
-            this.hideCalendar = !this.hideCalendar;
-        }
-    }
-
-    updateValue(evt: Date) {
-        this.change.emit(evt);
-        this.hideCalendar = true;
+        this.bsConfig = {
+            locale: 'ru',
+            showWeekNumbers: false,
+            containerClass: 'theme-dark-blue',
+            dateInputFormat: 'DD.MM.YYYY',
+        };
     }
 }

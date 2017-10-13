@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -83,6 +83,7 @@ import { LoginComponent } from './login/login.component';
         EosNoticeService,
         EosStorageService,
         EosUserProfileService,
+        { provide: LOCALE_ID, useValue: 'ru-RU' },
     ],
     bootstrap: [AppComponent],
 })
