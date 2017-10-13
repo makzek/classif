@@ -14,6 +14,7 @@ export class UserComponent {
     fullname: string;
     inputName = 'tver';
     inputPassword = 'tver';
+    inProcess: boolean;
 
     settings: any;
     public modalRef: BsModalRef;
@@ -35,15 +36,20 @@ export class UserComponent {
     }
 
     login(): void {
+        this.inProcess = true;
         this._profileSrv
             .login(this.inputName, this.inputPassword)
             .then((resp) => {
                 this.modalRef.hide();
+                this.inProcess = false;
             });
     }
 
     logout() {
-        this._profileSrv.logout().then((resp) => {});
+        this.inProcess = true;
+        this._profileSrv.logout().then((resp) => {
+            this.inProcess = false;
+        });
     }
     saveSettings(): void {
         this.modalRef.hide();
