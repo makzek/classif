@@ -14,7 +14,7 @@
                 <a *ngIf="hasParent" class="link special-text" (click)="goUp()">Вверх</a>
                 <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
             </div>
-            <eos-node-list></eos-node-list>
+            <eos-node-list [nodes]="nodes" [params]="params"></eos-node-list>
             <div class="pagination-option block">
                     <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
                         [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"

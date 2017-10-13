@@ -27,7 +27,7 @@
         .node-list-item {
             padding-left: 20px;
         }
-            .flat-child {
+        .flat-child {
             padding: 0;
         }
         .node-info {
@@ -53,65 +53,66 @@
             height: 100px;
         }
     }
-    .pagination-option {
-        margin-top: 20px;
+}
+
+.pagination-option {
+    margin-top: 20px;
+    height: $item-height;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    .pagination,
+    .count-select {
+        display: inline-block;
+        margin: 0;
+    }
+    .count-select {
         height: $item-height;
+        width: 330px;
+        border-left: 1px solid transparent;
+        .icon-btn {
+            top: 7px;
+            position: relative;
+            margin-left: 5px;
+        }
+        .dropdown-toggle {
+            height: $item-height;
+            width: 100%;
+            display: inline-flex;
+            justify-content: space-around;
+            cursor: pointer;
+            .dropdown-toggle-text {
+                position: relative;
+                top: 5px;
+                margin-left: 8px;
+            }
+        }
+    }
+    .page-link {
+        height: $item-height;
+        width: $item-width;
+        text-align: center;
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+    .show-more {
+        margin: 0 30px;
+        position: relative;
+        left: -5px;
+        height: $item-height;
+        padding: 0 10px;
+        background: transparent;
         font-size: 16px;
         line-height: 24px;
-        border: 1px solid transparent;
-        display: flex;
-        justify-content: space-between;
-        .pagination,
-        .count-select {
-            display: inline-block;
-            margin: 0;
-        }
-        .count-select {
-            height: $item-height;
-            width: 330px;
-            border-left: 1px solid transparent;
-            .icon-btn {
-                top: 7px;
-                position: relative;
-                margin-left: 5px;
-            }
-            .dropdown-toggle {
-                height: $item-height;
-                width: 100%;
-                display: inline-flex;
-                justify-content: space-around;
-                cursor: pointer;
-                .dropdown-toggle-text {
-                    position: relative;
-                    top: 5px;
-                    margin-left: 8px;
-                }
-            }
-        }
-        .page-link {
-            height: $item-height;
-            width: $item-width;
-            text-align: center;
-            padding: 12px 16px;
-            font-size: 16px;
-        }
-        .show-more {
-            margin: 0 30px;
-            position: relative;
-            left: -5px;
-            height: $item-height;
-            padding: 0 10px;
-            background: transparent;
-            font-size: 16px;
-            line-height: 24px;
-        }
-        .pagination-lg>li {
-            &:last-child,
-            &:first-child {
-                &>a,
-                &>span {
-                    border-radius: 0;
-                }
+    }
+    .pagination-lg>li {
+        &:last-child,
+        &:first-child {
+            &>a,
+            &>span {
+                border-radius: 0;
             }
         }
     }
