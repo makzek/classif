@@ -31,9 +31,9 @@
                         [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                         placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
-                        [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
-                        tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"  [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.RUBRIC_CODE_PERSON?.invalid && departForm.controls.RUBRIC_CODE_PERSON?.dirty" triggers="">
 
                 </div>
@@ -45,7 +45,7 @@
                         [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
                         maxlength="{{fieldsDescription['DEPARTMENT_INDEX']?.length}}" [pattern]="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['DEPARTMENT_INDEX']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.DEPARTMENT_INDEX?.invalid && departForm.controls.DEPARTMENT_INDEX?.dirty" triggers="">
                 </div>
                 <div class="form-group sev">
@@ -56,7 +56,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['SEV']?.length}}" [pattern]="fieldsDescription['SEV']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['SEV']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.SEV?.invalid && departForm.controls.SEV?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -81,7 +81,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['lastName']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.lastName?.invalid && departForm.controls.lastName?.dirty" triggers="">
                 </div>
                 <div class="names row-wrapper">
@@ -93,7 +93,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstName']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstName?.invalid && departForm.controls.firstName?.dirty" triggers="">
                     </div>
                     <div class="form-group fathers-name">
@@ -104,7 +104,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersName']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersName?.invalid && departForm.controls.fathersName?.dirty" triggers="">
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         required maxlength="{{fieldsDescription['SURNAME']?.length}}" [pattern]="fieldsDescription['SURNAME']?.pattern" 
                         tooltip="Обязательное поле. Максимальная длина {{fieldsDescription['SURNAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip" 
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip" 
                         [isOpen]="departForm.controls.SURNAME?.invalid && departForm.controls.SURNAME?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -130,7 +130,7 @@
                                 [ngClass]="{'readonly': !editMode }"
                                 required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
                                 tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                                containerClass="right-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="right"
+                                containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
                                 [isOpen]="departForm.controls.DUTY?.invalid && departForm.controls.DUTY?.dirty" triggers="">
                         </div>
                         <span class="checkbox col-md-3 col-lg-3 col-xl-3">
@@ -149,7 +149,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['fullPosition']?.length}}" [pattern]="fieldsDescription['fullPosition']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['fullPosition']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.fullPosition?.invalid && departForm.controls.fullPosition?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -160,7 +160,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['NOTE']?.length}}"
                         tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.NOTE?.invalid && departForm.controls.NOTE?.dirty" triggers=""></textarea>
                 </div>
             </div>
@@ -230,7 +230,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['NUM_CAB']?.length}}" [pattern]="fieldsDescription['NUM_CAB']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['NUM_CAB']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.NUM_CAB?.invalid && departForm.controls.NUM_CAB?.dirty" triggers="">
                 </div>
 
@@ -242,7 +242,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['PHONE']?.length}}" [pattern]="fieldsDescription['PHONE']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['PHONE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.PHONE?.invalid && departForm.controls.PHONE?.dirty" triggers="">
                 </div>
 
@@ -254,7 +254,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['PHONE_LOCAL']?.length}}" [pattern]="fieldsDescription['PHONE_LOCAL']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['PHONE_LOCAL']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.PHONE_LOCAL?.invalid && departForm.controls.PHONE_LOCAL?.dirty" triggers="">
                 </div>
 
@@ -266,7 +266,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['FAX']?.length}}" [pattern]="fieldsDescription['FAX']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['FAX']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.FAX?.invalid && departForm.controls.FAX?.dirty" triggers="">
                 </div>
             </div>
@@ -281,7 +281,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['E_MAIL']?.length}}" [pattern]="fieldsDescription['E_MAIL']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['E_MAIL']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.E_MAIL?.invalid && departForm.controls.E_MAIL?.dirty" triggers="">
                 </div>
                 <div class="form-group">
@@ -292,7 +292,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['skype']?.length}}" [pattern]="fieldsDescription['skype']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['skype']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.skype?.invalid && departForm.controls.skype?.dirty" triggers="">
                 </div>
             </div>
@@ -308,7 +308,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.shortPositionRP?.invalid && departForm.controls.shortPositionRP?.dirty" triggers="">
                     </div>
 
@@ -320,7 +320,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.shortPositionDP?.invalid && departForm.controls.shortPositionDP?.dirty" triggers="">
                     </div>
 
@@ -332,7 +332,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.shortPositionVP?.invalid && departForm.controls.shortPositionVP?.dirty" triggers="">
                     </div>
 
@@ -345,7 +345,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['fioDP']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.fioDP?.invalid && departForm.controls.fioDP?.dirty" triggers="">
                 </div>                
                 <div class="form-group">
@@ -356,7 +356,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['iofDP']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.iofDP?.invalid && departForm.controls.iofDP?.dirty" triggers="">
                 </div>
                
@@ -369,7 +369,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.lastNameRP?.invalid && departForm.controls.lastNameRP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameRP" name="firstNameRP" type="text" class="form-control"
                             [ngModel]="data['firstNameRP']" (ngModelChange)="change('firstNameRP', $event)"  
@@ -377,7 +377,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstNameRP?.invalid && departForm.controls.firstNameRP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameRP" name="fathersNameRP" type="text" class="form-control last"
                             [ngModel]="data['fathersNameRP']" (ngModelChange)="change('fathersNameRP', $event)"  
@@ -385,7 +385,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersNameRP?.invalid && departForm.controls.fathersNameRP?.dirty" triggers="">
                     </div>
                 </div>
@@ -398,7 +398,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.lastNameDP?.invalid && departForm.controls.lastNameDP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameDP" name="firstNameDP" type="text" class="form-control"
                             [ngModel]="data['firstNameDP']" (ngModelChange)="change('firstNameDP', $event)"  
@@ -406,7 +406,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstNameDP?.invalid && departForm.controls.firstNameDP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameDP" name="fathersNameDP" type="text" class="form-control last"
                             [ngModel]="data['fathersNameDP']" (ngModelChange)="change('fathersNameDP', $event)"  
@@ -414,7 +414,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersNameDP?.invalid && departForm.controls.fathersNameDP?.dirty" triggers="">
                     </div>
                 </div>
@@ -427,7 +427,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.lastNameVP?.invalid && departForm.controls.lastNameVP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameVP" name="firstNameVP" type="text" class="form-control"
                             [ngModel]="data['firstNameVP']" (ngModelChange)="change('firstNameVP', $event)"  
@@ -435,7 +435,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstNameVP?.invalid && departForm.controls.firstNameVP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameVP" name="fathersNameVP" type="text" class="form-control last"
                             [ngModel]="data['fathersNameVP']" (ngModelChange)="change('fathersNameVP', $event)"  
@@ -443,7 +443,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersNameVP?.invalid && departForm.controls.fathersNameVP?.dirty" triggers="">
                     </div>
                 </div>
@@ -456,7 +456,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.lastNameTP?.invalid && departForm.controls.lastNameTP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameTP" name="firstNameTP" type="text" class="form-control"
                             [ngModel]="data['firstNameTP']" (ngModelChange)="change('firstNameTP', $event)"  
@@ -464,7 +464,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstNameTP?.invalid && departForm.controls.firstNameTP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameTP" name="fathersNameTP" type="text" class="form-control last"
                             [ngModel]="data['fathersNameTP']" (ngModelChange)="change('fathersNameTP', $event)"  
@@ -472,7 +472,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersNameTP?.invalid && departForm.controls.fathersNameTP?.dirty" triggers="">
                     </div>
                 </div>
@@ -485,7 +485,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.lastNamePP?.invalid && departForm.controls.lastNamePP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNamePP" name="firstNamePP" type="text" class="form-control"
                             [ngModel]="data['firstNamePP']" (ngModelChange)="change('firstNamePP', $event)"  
@@ -493,7 +493,7 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstNamePP?.invalid && departForm.controls.firstNamePP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNamePP" name="fathersNamePP" type="text" class="form-control last"
                             [ngModel]="data['fathersNamePP']" (ngModelChange)="change('fathersNamePP', $event)"  
@@ -501,8 +501,8 @@
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNamePP?.invalid && departForm.controls.fathersNamePP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="right-tooltip invalid-tooltip"
+                            [isOpen]="departForm.controls.fathersNamePP?.invalid && bottom.controls.fathersNamePP?.dirty" triggers="">
                     </div>
                 </div>
                 <span class="block-title">Данные для формирования поручений</span>
@@ -514,7 +514,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
                         tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        containerClass="right-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="right"
+                        containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
                         [isOpen]="departForm.controls.shortPosition?.invalid && departForm.controls.shortPosition?.dirty" triggers="">
 
                 </div>
@@ -526,7 +526,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['department']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        containerClass="right-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="right"
+                        containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
                         [isOpen]="departForm.controls.department?.invalid && departForm.controls.department?.dirty" triggers="">
                 </div>
         </div>
@@ -541,7 +541,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
                     tooltip="Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.RUBRIC_CODE_DEP?.invalid && departForm.controls.RUBRIC_CODE_DEP?.dirty" triggers="">
 
             </div>
@@ -553,7 +553,7 @@
                     [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['INDEX']?.pattern"
                     [pattern]="fieldsDescription['INDEX']?.pattern"
                     tooltip="Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.INDEX?.invalid && departForm.controls.INDEX?.dirty" triggers="">
             </div>
             <div class="form-group">
@@ -564,7 +564,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['SEV']?.length}}" [pattern]="fieldsDescription['SEV']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['SEV']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.SEV_DEP?.invalid && departForm.controls.SEV_DEP?.dirty" triggers="">
             </div>
             <div class="form-group">
@@ -596,7 +596,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     required maxlength="{{fieldsDescription['title']?.length}}" [pattern]="fieldsDescription['title']?.pattern"
                     tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['title']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.CLASSIF_NAME_DEP?.invalid && departForm.controls.CLASSIF_NAME_DEP?.dirty" triggers="">
             </div>
             <span class="checkbox">
@@ -613,7 +613,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['fullTitle']?.length}}"
                         tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов."
-                        [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.fullTitle?.invalid && departForm.controls.fullTitle?.dirty" triggers=""></textarea>
             </div>
             <div class="form-group">
@@ -624,7 +624,7 @@
                     [ngClass]="{'readonly': !editMode }" 
                     maxlength="{{fieldsDescription['titleRP']?.length}}" [pattern]="fieldsDescription['titleRP']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['titleRP']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.titleRP?.invalid && departForm.controls.titleRP?.dirty" triggers="">
             </div>
             <div class="form-group">
@@ -635,7 +635,7 @@
                     [ngClass]="{'readonly': !editMode }" 
                     maxlength="{{fieldsDescription['DUE_LINK_ORGANIZ']?.length}}" [pattern]="fieldsDescription['DUE_LINK_ORGANIZ']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['DUE_LINK_ORGANIZ']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.DUE_LINK_ORGANIZ?.invalid && departForm.controls.DUE_LINK_ORGANIZ?.dirty" triggers="">
             </div>
             <div class="form-group">
@@ -646,7 +646,7 @@
                     [ngClass]="{'readonly': !editMode }" 
                     maxlength="{{fieldsDescription['CARD_NAME']?.length}}" [pattern]="fieldsDescription['CARD_NAME']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['CARD_NAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.CARD_NAME?.invalid && departForm.controls.CARD_NAME?.dirty" triggers="">
             </div>
             <div class="form-group">
@@ -657,7 +657,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['NOTE']?.length}}"
                     tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов."
-                    [isDisabled]="!editMode" placement="right" containerClass="right-tooltip invalid-tooltip"
+                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                     [isOpen]="departForm.controls.NOTE_DEP?.invalid && departForm.controls.NOTE_DEP?.dirty" triggers=""></textarea>
             </div>
         </div>
