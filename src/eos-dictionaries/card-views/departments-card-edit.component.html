@@ -62,12 +62,14 @@
                 <div class="form-group">
                     <label for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
                     <eos-datepicker [placeholder]="fieldsDescription['START_DATE']?.title" [value]="data['START_DATE']"
-                        (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                        (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
+                        placement="top"></eos-datepicker>
                 </div>
                 <div class="form-group">
                     <label for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
                     <eos-datepicker [placeholder]="fieldsDescription['END_DATE']?.title" [value]="data['END_DATE']"
-                        (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                        (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
+                        placement="top"></eos-datepicker>
                 </div>
             </div>
             <div class="col-2">
@@ -169,12 +171,12 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="alternate.START_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker> 
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker> 
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_END_DATE">окончание действия</label>
                         <eos-datepicker [placeholder]="'окончание действия'" [value]="alternate.END_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
                         <label for="fullPosition">Исполнитель моих обязанностей</label>
@@ -201,12 +203,12 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker> 
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker> 
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_END_DATE">окончание действия</label>
                         <eos-datepicker [placeholder]="'окончание действия'" [value]="data['alternates'][0].END_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
                         <label for="fullPosition">Исполняю обязанности</label>
@@ -568,12 +570,14 @@
             <div class="form-group">
                 <label for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
                 <eos-datepicker [placeholder]="fieldsDescription['START_DATE']?.title" [value]="data['START_DATE']"
-                    (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                    (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
+                    placement="top"></eos-datepicker>
             </div>
             <div class="form-group">
                 <label for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
                 <eos-datepicker [placeholder]="fieldsDescription['END_DATE']?.title" [value]="data['END_DATE']"
-                    (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"></eos-datepicker>
+                    (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
+                    placement="top"></eos-datepicker>
             </div>
             <span class="checkbox">
                 <label class="checkbox"><input type="checkbox" name="CARD_FLAG"
