@@ -19,26 +19,6 @@
             </li>
         </ul>
     </div>
-
-    <div class="pagination-option block">
-        <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"
-            nextText="&rsaquo;"></pagination>
-        <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
-        <div class="btn-group count-select pull-right" dropdown container="body">
-            <span dropdownToggle type="button" class="dropdown-toggle special-text">
-                <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}
-                    <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
-            </span>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(10)">10</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(20)">20</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(40)">40</a></li>
-            </ul>
-        </div>
-    </div>
-
 </div>
 <!--<div class="!nodes">
     <eos-spinner [size]="'lg'"></eos-spinner>

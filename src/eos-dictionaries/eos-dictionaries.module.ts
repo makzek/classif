@@ -27,7 +27,6 @@ import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.c
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
-import { SelectedNodeComponent } from './selected-node/selected-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
@@ -52,7 +51,6 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         SandwichComponent,
         TreeComponent,
         TreeNodeComponent,
-        SelectedNodeComponent,
     ],
     imports: [
         BrowserModule,

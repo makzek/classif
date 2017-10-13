@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -37,6 +37,7 @@ export class DictionaryComponent implements OnDestroy {
 
     private _subscriptions: Subscription[];
 
+    /* @HostListener('click') */
     constructor(
         private _dictSrv: EosDictService,
         private _route: ActivatedRoute,
@@ -79,29 +80,37 @@ export class DictionaryComponent implements OnDestroy {
             })
         );
 
-       /* this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
-            this._selectedNode = node;
+        /* this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
+             this._selectedNode = node;
 
-            if (node) {
-                this.viewFields = node.getListView();
-                this._update(node.children, true);
-                if (!this.nodes) {
-                    if (node.marked) {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-                    } else {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-                    }
-                } else {
-                    this.checkState(node.marked);
-                }
-            }
+             if (node) {
+                 this.viewFields = node.getListView();
+                 this._update(node.children, true);
+                 if (!this.nodes) {
+                     if (node.marked) {
+                         this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
+                         this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
+                     } else {
+                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
+                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
+                     }
+                 } else {
+                     this.checkState(node.marked);
+                 }
+             }
 
-        }));*/
+         }));*/
 
         this.currentState = this._actSrv.state;
 
+    }
+
+    onClick() {
+        if (window.innerWidth <= 1500) {
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+            this._actSrv.closeAll = true;
+        }
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
