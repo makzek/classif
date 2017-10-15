@@ -41,19 +41,18 @@ export class NodeListComponent implements OnDestroy {
 
     _selectedNode: EosDictionaryNode;
     openedNode: EosDictionaryNode;
-    nodeListPerPage: EosDictionaryNode[];
 
+    nodeListPerPage: EosDictionaryNode[];
     totalItems: number;
     itemsPerPage = 10;
-
     currentPage = 1;
+    private _startPage = 1;
+    private _dropStartPage = true;
 
     private _params = {
         showCheckbox: false,
         showDeleted: false
     }
-    private _startPage = 1;
-    private _dropStartPage = true;
 
     private _actionSubscription: Subscription;
     private _openedNodeSubscription: Subscription;

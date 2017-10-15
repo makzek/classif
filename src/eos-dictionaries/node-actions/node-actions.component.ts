@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -26,7 +26,10 @@ import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.servic
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
-    dictionary: EosDictionary;
+    @Input() params: any;
+    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+
+    private dictionary: EosDictionary;
 
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
@@ -93,9 +96,6 @@ export class NodeActionsComponent implements OnDestroy {
         private _actSrv: NodeActionsService,
         private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
-        this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
 
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
@@ -108,64 +108,15 @@ export class NodeActionsComponent implements OnDestroy {
             }
         });
 
-        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
-            switch (act) {
-                case E_RECORD_ACTIONS.markOne:
-                    this.itemIsChecked = true;
-                    this.checkAll = false;
-                    this.someChildrenSelected = true;
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkAllChildren:
-                    this.allChildrenSelected = false;
-                    this.someChildrenSelected = false;
-                    this.itemIsChecked = false;
-                    this.checkAll = false;
-                    break;
-
-                case E_RECORD_ACTIONS.markAllChildren:
-                    this.allChildrenSelected = true;
-                    if (this.rootSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.markRoot:
-                    this.rootSelected = true;
-                    if (this.allChildrenSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.checkAll = false;
-                        this.itemIsChecked = true;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkRoot:
-                    this.rootSelected = false;
-                    if (this.allChildrenSelected || this.someChildrenSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
-                    break;
-            }
-        });
     }
 
     ngOnDestroy() {
-        this._userSettingsSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
     }
 
     doAction(type: E_RECORD_ACTIONS) {
+        this.action.emit(type);
+        /*
         switch (type) {
             case E_RECORD_ACTIONS.add:
                 this.newNodeData = {};
@@ -179,9 +130,9 @@ export class NodeActionsComponent implements OnDestroy {
                 this._profileSrv.setSetting('showDeleted', !this.showDeleted);
                 break;
             default:
-                this._actSrv.emitAction(type);
                 break;
         }
+        */
     }
 
     isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
@@ -263,7 +214,7 @@ export class NodeActionsComponent implements OnDestroy {
                     path = path + bc.title + '/';
                 }
                 this._deskSrv.addRecentItem({
-                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
+                    link: this._dictSrv.getNodePath(node.id).join('/'),
                     title: title,
                     fullTitle: path + title
                 });

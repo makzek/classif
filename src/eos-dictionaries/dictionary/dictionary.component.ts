@@ -4,8 +4,19 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosUserProfileService } from '../..//app/services/eos-user-profile.service';
-
+import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { NodeActionsService } from '../node-actions/node-actions.service';
+import { FieldDescriptor } from '../core/field-descriptor';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import {
+    WARN_EDIT_ERROR,
+    DANGER_EDIT_ROOT_ERROR,
+    DANGER_EDIT_DELETED_ERROR,
+    DANGER_DELETE_ELEMENT
+} from '../consts/messages.consts';
+
 import {
     DictionaryActionService,
     DICTIONARY_ACTIONS,
@@ -20,18 +31,24 @@ import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 export class DictionaryComponent implements OnDestroy {
 
     // public _selectedNode: EosDictionaryNode;
-    public params: any = {
-        sortable: false,
-        showDeleted: false,
-        hasParent: false
-    };
+    public params: any;
 
     public _selectedNode: EosDictionaryNode;
 
     private _dictionaryId: string;
     private _nodeId: string;
 
+    treeNodes: EosDictionaryNode[];
     nodes: EosDictionaryNode[];
+
+    /// pages
+    nodeListPerPage: EosDictionaryNode[];
+    totalItems: number;
+    itemsPerPage = 10;
+    currentPage = 1;
+    private _startPage = 1;
+    private _dropStartPage = true;
+
     // hideTree = true;
     // hideFullInfo = true;
     dictionaryName: string;
@@ -55,18 +72,28 @@ export class DictionaryComponent implements OnDestroy {
             }
         });
 
+        this.params = {
+            sortable: false,
+            showDeleted: false,
+            hasParent: false
+        };
+
         this.nodes = [];
+        this.nodeListPerPage = [];
         this._subscriptions = [];
+        this.treeNodes = [];
+        this.currentState = this._actSrv.state;
+
         this._subscriptions.push(_dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this._dictionaryId = dictionary.id;
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                 }
-                this.nodes = [dictionary.root];
+                this.treeNodes = [dictionary.root];
                 this.params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
             } else {
-                this.nodes = [];
+                this.treeNodes = [];
             }
         }));
 
@@ -82,7 +109,10 @@ export class DictionaryComponent implements OnDestroy {
         );
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
-             this._selectedNode = node;
+            this._selectedNode = node;
+            if (node) {
+                this.nodes = node.children;
+            }
             /*
              if (node) {
                  this.viewFields = node.getListView();
@@ -100,10 +130,7 @@ export class DictionaryComponent implements OnDestroy {
                  }
              }
             */
-         }));
-
-        this.currentState = this._actSrv.state;
-
+        }));
     }
 
     onClick() {
@@ -177,7 +204,6 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     /*
-
         node-list methods
         --------
         constructor(
@@ -295,22 +321,23 @@ export class DictionaryComponent implements OnDestroy {
         this._userSettingsSubscription.unsubscribe();
         this._actionSubscription.unsubscribe();
     }
+    */
 
-    private _update(nodes: EosDictionaryNode[], hasParent: boolean) {
+    private _update_(nodes: EosDictionaryNode[], hasParent: boolean) {
         // this.params.hasParent = hasParent;
         if (this.nodes) {
             // this.nodes = nodes;
             if (this.nodes[0]) {
-                this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
+                // this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
             }
-            this.totalItems = this.nodes.length;
+            // this.totalItems = this.nodes.length;
             if (this.nodes.length) {
                 if (!this.params.hasParent) {
                     this._dictSrv.openNode(this.nodes[0].id);
                 }
             }
             if (this.params.sortable) {
-                this._getListData(this.sortableNodes);
+                // this._getListData(this.sortableNodes);
             } else {
                 this._getListData(this.nodes);
             }
@@ -337,52 +364,6 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
-    userSortMoveUp(): void {
-        const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
-        if (indexOfMoveItem !== 0) {
-            const item  = this.nodeListPerPage[indexOfMoveItem - 1];
-            this.nodeListPerPage[indexOfMoveItem - 1] = this.nodeListPerPage[indexOfMoveItem];
-            this.nodeListPerPage[indexOfMoveItem] = item;
-        }
-        this.sortableComponent.writeValue(this.nodeListPerPage);
-    }
-
-    userSortMoveDown(): void {
-        const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
-        const lastItem = this.nodeListPerPage.length - 1;
-        if (lastItem !== indexOfMoveItem) {
-            const item  = this.nodeListPerPage[indexOfMoveItem + 1];
-            this.nodeListPerPage[indexOfMoveItem + 1] = this.nodeListPerPage[indexOfMoveItem];
-            this.nodeListPerPage[indexOfMoveItem] = item;
-        }
-        this.sortableComponent.writeValue(this.nodeListPerPage);
-    }
-
-    toggleUserSort(): void {
-        this.params.sortable = !this.params.sortable;
-        if (this.params.sortable) {
-            this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
-            this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.nodes);
-        }
-    }
-
-    toggleItem(e) {
-        // console.log(this.nodes);
-        const from = (this.currentPage - 1) * this.itemsPerPage;
-        let before = this.currentPage * this.itemsPerPage - 1;
-        if (before > this.sortableNodes.length) {
-            before = this.sortableNodes.length - 1;
-        }
-        if (this.sortableNodes[0]) {
-            for (let i = from, j = 0; i <= before; i++, j++ ) {
-                this.sortableNodes[i] = this.nodeListPerPage[j];
-            }
-        }
-        // Генерируем порядок
-        this._orderSrv.generateOrder(this.sortableNodes, this.nodes[0].parentId);
-    }
 
     editNode(node: EosDictionaryNode) {
         if (node) {
