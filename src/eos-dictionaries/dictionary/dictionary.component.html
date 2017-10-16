@@ -9,33 +9,41 @@
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
         <div class="eos-selected-node">
-            <eos-node-actions [params]="params" (action)></eos-node-actions>
+            <eos-node-actions [params]="params" (actiot)="doAction($event)"></eos-node-actions>
             <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
                 <a *ngIf="params.hasParent" class="link special-text" (click)="goUp()">Вверх</a>
                 <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
             </div>
-            <eos-node-list [nodes]="nodes" [params]="params"></eos-node-list>
-            <div class="pagination-option block">
-                    <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-                        [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"
-                        nextText="&rsaquo;"></pagination>
-                    <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
-                    <div class="btn-group count-select pull-right" dropdown container="body">
-                        <span dropdownToggle type="button" class="dropdown-toggle special-text">
-                            <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}
-                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
-                        </span>
-                        </span>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(10)">10</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(20)">20</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(40)">40</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <eos-node-list [nodes]="visibleNodes" [params]="params"></eos-node-list>
+            <eos-node-list-pagination [total]="listNodes.length" (change)="pageChanged($event)"></eos-node-list-pagination>
         </div>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
         <eos-node-info></eos-node-info>
     </div>
 </div>
+<ng-template>
+    <div bsModal #creatingModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="creating-modal modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Добавление записи</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="creatingModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="create-new-node modal-body">
+                    <eos-rubricator-card-edit [data]="newNodeData" editMode="true" *ngIf="_dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+                    <!--eos-departments-card-edit [data]="newNodeData" *ngIf="_dictionaryId === 'departments'"></eos-departments-card-edit>
+            <eos-rooms-card-edit *ngIf="_dictionaryId === 'rooms'"></eos-rooms-card-edit-->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" (click)="create()">Добавить</button>
+                    <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
+                    <button class="btn btn-default" (click)="create(false)">Добавить ещё</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

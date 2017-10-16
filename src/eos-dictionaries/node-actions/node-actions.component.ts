@@ -14,7 +14,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
-// import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
+
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
@@ -89,7 +89,6 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     constructor(
-        private _profileSrv: EosUserProfileService,
         private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,

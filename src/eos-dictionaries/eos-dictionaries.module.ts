@@ -21,6 +21,7 @@ import { CardComponent } from './card/card.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
+import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
 import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
@@ -42,10 +43,11 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         DictionaryComponent,
         DictionariesComponent,
         CardComponent,
-        NodeListComponent,
-        NodeListItemComponent,
         NodeActionsComponent,
         NodeInfoComponent,
+        NodeListComponent,
+        NodeListItemComponent,
+        NodeListPaginationComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,
