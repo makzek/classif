@@ -88,6 +88,7 @@ input[type=text]::-ms-clear {
 
 .tooltip {
     opacity: 1 !important;
+    z-index: 5;
 
     &.word-break {
         word-break: break-all;
