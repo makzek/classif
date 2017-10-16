@@ -101,7 +101,6 @@ export class DictionaryComponent implements OnDestroy {
         }));*/
 
         this.currentState = this._actSrv.state;
-
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
