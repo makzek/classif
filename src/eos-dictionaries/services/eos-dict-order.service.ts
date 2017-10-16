@@ -6,10 +6,19 @@ import { EosStorageService } from '../../app/services/eos-storage.service';
 @Injectable()
 export class EosDictOrderService {
     private NAME = '-ORDER';
+    private LOCALSTORAGEKEY = 'OrderMod';
 
     constructor(
         private _eosStorageService: EosStorageService
     ) { }
+
+    public toggleSortingMode(val: boolean) {
+        localStorage.setItem(this.LOCALSTORAGEKEY, val.toString());
+    }
+
+    public getMode() {
+        return JSON.parse(localStorage.getItem(this.LOCALSTORAGEKEY));
+    }
 
     public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
         const order: string[] = [];
@@ -50,6 +59,22 @@ export class EosDictOrderService {
         } else {
             this.generateOrder(list, ID);
             return list;
+        }
+    }
+    /**
+     * Sorting on the field CLASSIF_NAME
+     * @param a Element a
+     * @param b Element b
+     */
+    public defaultSort(a: EosDictionaryNode, b: EosDictionaryNode) {
+        if (a.data.CLASSIF_NAME > b.data.CLASSIF_NAME) {
+            return 1;
+        }
+        if (a.data.CLASSIF_NAME < b.data.CLASSIF_NAME) {
+            return -1;
+        }
+        if (a.data.CLASSIF_NAME === b.data.CLASSIF_NAME) {
+            return 0;
         }
     }
 }

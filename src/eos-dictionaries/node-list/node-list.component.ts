@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, ViewChild, HostListener } from '@angular/core';
+import { Component, Input, OnDestroy, ViewChild, HostListener, OnInit } from '@angular/core';
 // import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { SortableComponent } from 'ngx-bootstrap';
@@ -29,7 +29,7 @@ import {
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
-export class NodeListComponent implements OnDestroy {
+export class NodeListComponent implements OnDestroy, OnInit {
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     // @Input() nodes: EosDictionaryNode[];
     nodes: EosDictionaryNode[];
@@ -173,6 +173,9 @@ export class NodeListComponent implements OnDestroy {
         });
     }
 
+    ngOnInit() {
+    }
+
     ngOnDestroy() {
         this._openedNodeSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
@@ -187,6 +190,8 @@ export class NodeListComponent implements OnDestroy {
         if (nodes) {
             this.nodes = nodes;
             if (this.nodes[0]) {
+                this.nodes.sort(this._orderSrv.defaultSort);
+                this.sortableNodes.sort(this._orderSrv.defaultSort)
                 this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
             }
             this.totalItems = nodes.length;
