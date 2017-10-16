@@ -1,8 +1,8 @@
 <div class="eos-desktop">
     <div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
         <div class="links-container" [ngClass]="{'right': historyToLeft}">
-        <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
-            placeholderItem="На этом рабочем столе нет ссылок" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
+            <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
+                placeholderItem="На этом рабочем столе нет ссылок" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
         </div>
 
         <div [ngClass]="{'left': historyToLeft}" class="block recent">
@@ -22,7 +22,7 @@
 </div>
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
-    <div class="btn item-content block edited" *ngIf="editing(item.value)">
+    <div class="btn item-content block edited" *ngIf="editing(item.value)" >
         <input id="title" name="title" #title class="title-input" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
             required pattern="^\S(.*\S$|$)"/>
         <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
@@ -43,11 +43,11 @@
         </button>
     </div>
 
-    <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]">
+    <div *ngIf="!editing(item.value)" class="btn item-content block">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="top-tooltip word-break" container="body" class="text">
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="top-tooltip word-break" [routerLink]="[item.value.link]" container="body" class="text">
             {{item.value.title}}
         </span>
         <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
