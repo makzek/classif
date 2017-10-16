@@ -13,8 +13,6 @@ export class EosDictOrderService {
 
     public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
         const order: string[] = [];
-        // Оптимизировать
-        // Например менять местами эллементы
         for (const item of sortedList) {
             order.push(item.id);
         }

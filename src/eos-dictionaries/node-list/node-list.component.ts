@@ -125,7 +125,7 @@ export class NodeListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    userSortMoveUp(): void {
+    private userSortMoveUp(): void {
         const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
         if (indexOfMoveItem !== 0) {
             const item = this.nodeListPerPage[indexOfMoveItem - 1];
@@ -135,7 +135,7 @@ export class NodeListComponent implements OnInit, OnChanges, OnDestroy {
         this.sortableComponent.writeValue(this.nodeListPerPage);
     }
 
-    userSortMoveDown(): void {
+     private userSortMoveDown(): void {
         const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
         const lastItem = this.nodeListPerPage.length - 1;
         if (lastItem !== indexOfMoveItem) {
@@ -146,7 +146,7 @@ export class NodeListComponent implements OnInit, OnChanges, OnDestroy {
         this.sortableComponent.writeValue(this.nodeListPerPage);
     }
 
-    toggleUserSort(): void {
+    private toggleUserSort(): void {
         this.params.sortable = !this.params.sortable;
         if (this.params.sortable) {
             this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
@@ -156,7 +156,7 @@ export class NodeListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    /*
+    private toggleItem(): void {
     editNode(node: EosDictionaryNode) {
         if (node) {
             this._rememberCurrentURL();

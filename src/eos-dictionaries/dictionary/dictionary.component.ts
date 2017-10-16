@@ -153,7 +153,6 @@ export class DictionaryComponent implements OnDestroy {
     pageChanged(page: IListPage) {
         this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
     }
-
     doAction(action: E_RECORD_ACTIONS) {
         console.log('alarmaaaa!!!', action);
     }

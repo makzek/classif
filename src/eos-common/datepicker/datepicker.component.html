@@ -1,4 +1,6 @@
 <div class="eos-datepicker">
-    <input placeholder="{{placeholder}}" type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+    <input placeholder="{{placeholder}}" type="text" class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig"
+        [bsValue]="value" placement="{{placement}}" (bsValueChange)="emitChange($event)"
+        [ngClass]="{'readonly': readonly }">
     <span *ngIf="!readonly" class="eos-icon eos-icon-calendar-blue small icon" (click)="dp.toggle()"></span>   
 </div>

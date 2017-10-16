@@ -98,6 +98,7 @@ export class DesktopSwitcherComponent {
     }
 
     saveDesk(desk: EosDesk): void {
+        console.log('save');
         desk.edited = false;
         /* todo: re-factor it to inline validation messages */
         const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);

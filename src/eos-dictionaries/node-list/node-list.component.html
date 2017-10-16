@@ -5,7 +5,9 @@
         <ul *ngIf="params.sortable" class="elements" [ngClass]="{'has-parent': params.hasParent}">
             <li class="child">
                 <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlight': node.isSelected}"
-                    itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper" (onChange)="toggleItem($event)">
+                    itemActiveClass="sortable-item-active" placeholderItem="Drag here"
+                    (drop)="toggleItem()"
+                    placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
                 </bs-sortable>
             </li>
         </ul>

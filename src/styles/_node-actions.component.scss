@@ -84,14 +84,13 @@
         display: inline-block;
         width: 145px;
         font-weight: bold;
+        position: relative;
+        top: 6px;
 
-        .datepicker-input {
-            border: 0;
+        input {
+            border-color: transparent;
             box-shadow: none;
-            position: relative;
-            top: 6px;
         }
-
     }
 }
 

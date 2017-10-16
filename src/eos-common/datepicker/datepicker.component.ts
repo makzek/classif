@@ -12,6 +12,7 @@ export class DatepickerComponent {
     @Input() value = Date();
     @Input() readonly = false;
     @Input() placeholder = '';
+    @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
     bsConfig: Partial<BsDatepickerConfig>;
 
@@ -21,6 +22,11 @@ export class DatepickerComponent {
             showWeekNumbers: false,
             containerClass: 'theme-dark-blue',
             dateInputFormat: 'DD.MM.YYYY',
+            isDisabled: true,
         };
+    }
+
+    emitChange(date: Date) {
+        this.change.emit(date);
     }
 }

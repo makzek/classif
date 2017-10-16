@@ -269,7 +269,7 @@ export class EosDictService {
         return this.dictionary.root.id === nodeId;
     }
 
-    public updateNode(node: EosDictionaryNode, data: any[]): Promise<any> {
+    public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
         return this._api.update(node.data, data);
     }
 
@@ -292,7 +292,10 @@ export class EosDictService {
         if (this._openedNode === node) {
             this._openNode(null);
         }
-        Object.assign(node, { ...node, isDeleted: true });
+        // Object.assign(node, { ...node, isDeleted: true });
+        this.updateNode(node, { DELETED: 1 }).then((res) => {
+            this.reloadNode(node);
+        });
         if (node.children) {
             node.children.forEach((subNode) => this._deleteNode(subNode));
         }
@@ -340,7 +343,10 @@ export class EosDictService {
         if (node.parent && node.parent.isDeleted) {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
-        Object.assign(node, { ...node, isDeleted: false });
+        // Object.assign(node, { ...node, isDeleted: false });
+        this.updateNode(node, { DELETED: 0 }).then((res) => {
+            this.reloadNode(node);
+        });
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
             node.children.forEach((subNode) => this.restoreItem(subNode));
