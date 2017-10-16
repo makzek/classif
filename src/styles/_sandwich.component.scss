@@ -1,6 +1,7 @@
 .eos-sandwich {
     z-index: 4;
     position: relative;
+    transition: width 0.20s ease-in-out;
 
     &.wide {
         display: inline-block;
