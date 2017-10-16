@@ -98,6 +98,9 @@ export class DesktopComponent implements OnDestroy {
         this.stopDefault(evt);
         this._editingItem = item;
         this._newTitle = item.title;
+        const index = this.referencesList.indexOf(item);
+        const itemDiv = document.getElementsByClassName('sortable-item');
+        itemDiv[index]['draggable'] = false;
     }
 
     save(evt: Event) {
@@ -110,6 +113,9 @@ export class DesktopComponent implements OnDestroy {
     }
 
     cancel(evt: Event) {
+        const index = this.referencesList.indexOf(this._editingItem);
+        const itemDiv = document.getElementsByClassName('sortable-item');
+        itemDiv[index]['draggable'] = true;
         this._editingItem = null;
     }
 
