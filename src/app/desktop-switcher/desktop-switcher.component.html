@@ -22,10 +22,10 @@
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group">
-                    <input type="text" class="form-control" [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                    <input type="text" class="form-control" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk)" class="btn btn-default"
-                            [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
+                            [disabled]="!deskName?.length || !nameForm.checkValidity()">
                             <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить" containerClass="top-tooltip"></span>
                         </button>
                         <button type="button" (click)="cancelEdit(desk)" class="btn btn-default">
@@ -39,11 +39,11 @@
         <li *ngIf="deskList.length < 6">
             <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required 
+                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required 
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить" containerClass="top-tooltip"
-                            [disabled]="!deskName?.trim().substring(0, this.maxLength).length">
+                            [disabled]="!deskName?.length || !createForm.checkValidity()">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
                         <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить" containerClass="top-tooltip">

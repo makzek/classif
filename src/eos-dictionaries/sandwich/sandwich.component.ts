@@ -24,7 +24,7 @@ export class SandwichComponent implements OnChanges {
                 let _actRoute = _route.snapshot;
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
                 this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
-            })
+            });
     }
 
     ngOnChanges() {
