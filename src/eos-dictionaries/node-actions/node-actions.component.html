@@ -1,10 +1,10 @@
 <div class="eos-node-actions">
     <div class="first-line block">
         <div class="controller pull-left">
-            <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
-                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}"
-                tooltip="{{action.hint}}" placement="right" containerClass="right-tooltip" (click)="doAction(action.type)">
-                    <span class="{{action.iconClass}}" container="body"></span>
+            <span *ngFor="let item of buttons" class="visible-lg-inline-block actions">
+                <button [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
+                tooltip="{{item.hint}}" placement="right" containerClass="right-tooltip" (click)="doAction(item)">
+                    <span class="{{item.iconClass}}" container="body"></span>
                 </button>
             </span>
             <div class="btn-group" dropdown>
@@ -13,9 +13,9 @@
                 </button>
                     <ul *dropdownMenu class="dropdown-menu" role="menu">
                         <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
-                            <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
+                            <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right"
                             containerClass="right-tooltip">
-                                <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
+                                <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item)">{{item.title}}</button>
                             </li>
                         </ng-template>
                     </ul>

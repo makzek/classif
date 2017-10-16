@@ -19,7 +19,7 @@ import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-action
 import { EditedCard } from '../card/card.component';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
-
+import { IActionButton, IAction } from '../core/action.interface';
 
 @Component({
     selector: 'eos-node-actions',
@@ -30,6 +30,10 @@ export class NodeActionsComponent implements OnDestroy {
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     private dictionary: EosDictionary;
+
+    buttons: IActionButton[];
+    ddButtons: IActionButton[];
+
 
     recordActions = RECORD_ACTIONS;
     dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
@@ -47,7 +51,6 @@ export class NodeActionsComponent implements OnDestroy {
     viewFields: FieldDescriptor[];
 
     showCheckbox: boolean;
-    userSort = false;
 
     rootSelected = false;
     allChildrenSelected = false;
@@ -58,8 +61,6 @@ export class NodeActionsComponent implements OnDestroy {
 
     fields: IFieldView[];
     searchInDeleted = false;
-
-    dictIdFromDescriptor: string;
 
     innerClick = false;
 
@@ -93,30 +94,65 @@ export class NodeActionsComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
         private _actSrv: NodeActionsService,
-        private _breadcrumbsSrv: EosBreadcrumbsService
+        private _breadcrumbsSrv: EosBreadcrumbsService,
+        private _profileSrv: EosUserProfileService,
     ) {
+        this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
 
         this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             this.dictionary = _d;
             if (_d) {
-                this.dictIdFromDescriptor = _d.descriptor.id;
                 this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
-
                 this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
             }
+            this._update();
         });
 
+    }
+
+    private _update() {
+        this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
+    }
+
+    private _actionToButton(action: IAction): IActionButton {
+        let _enabled = false;
+        let _active = false;
+
+        if (this.dictionary) {
+            _enabled = this.dictionary.descriptor.canDo(action.group, action.type);
+            switch (action.type) {
+                case E_RECORD_ACTIONS.moveUp:
+                case E_RECORD_ACTIONS.moveDown:
+                    _enabled = this.params.userSort && _enabled;
+                    break;
+                case E_RECORD_ACTIONS.restore:
+                    _enabled = this.params.showDeleted && _enabled;
+                    break;
+                case E_RECORD_ACTIONS.showDeleted:
+                    _active = this.params.showDeleted;
+                    break;
+                case E_RECORD_ACTIONS.userOrder:
+                    _active = this.params.userSort;
+                    break;
+            }
+        }
+
+        return Object.assign({
+            isActive: _active,
+            enabled: _enabled
+        }, action);
     }
 
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
     }
 
-    doAction(type: E_RECORD_ACTIONS) {
-        this.action.emit(type);
-        /*
-        switch (type) {
+    doAction(action: IAction) {
+        this.action.emit(action.type);
+        switch (action.type) {
             case E_RECORD_ACTIONS.add:
                 this.newNodeData = {};
                 this.creatingModal.show();
@@ -131,26 +167,9 @@ export class NodeActionsComponent implements OnDestroy {
             default:
                 break;
         }
-        */
-    }
-
-    isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
-        if (this.dictionary) {
-            switch (type) {
-                case E_RECORD_ACTIONS.moveUp:
-                case E_RECORD_ACTIONS.moveDown:
-                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.restore:
-                    return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
-                default:
-                    return this.dictionary.descriptor.canDo(group, type);
-            }
-        }
-        return false;
     }
 
     switchUserSort() {
-        this.userSort = !this.userSort;
         this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
     }
 
