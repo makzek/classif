@@ -17,18 +17,18 @@
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
                     <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="top-tooltip" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="top-tooltip" (click)="removeDesk(desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="top-tooltip" (click)="removeDesk(desk,$event)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group">
                     <input type="text" class="form-control" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
-                        <button type="button" (click)="saveDesk(desk)" class="btn btn-default"
+                        <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default"
                             [disabled]="!deskName?.length || !nameForm.checkValidity()">
                             <span class="eos-icon eos-icon-checkbox-black x-small" tooltip="Сохранить" containerClass="top-tooltip"></span>
                         </button>
-                        <button type="button" (click)="cancelEdit(desk)" class="btn btn-default">
+                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default">
                             <span class="eos-icon eos-icon-close-black x-small" tooltip="Отменить" containerClass="top-tooltip"></span>
                         </button>
                     </div>
@@ -39,7 +39,7 @@
         <li *ngIf="deskList.length < 6">
             <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required 
+                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить" containerClass="top-tooltip"
