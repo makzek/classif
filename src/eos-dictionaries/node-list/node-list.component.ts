@@ -191,7 +191,6 @@ export class NodeListComponent implements OnDestroy, OnInit {
             this.nodes = nodes;
             if (this.nodes[0]) {
                 this.nodes.sort(this._orderSrv.defaultSort);
-                this.sortableNodes.sort(this._orderSrv.defaultSort)
                 this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
             }
             this.totalItems = nodes.length;
