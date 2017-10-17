@@ -7,17 +7,17 @@
         </span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)" triggers="hover" #nameTooltip="bs-tooltip" tooltip="{{desk.name}}" placement="left"
-            containerClass="left-tooltip" container="body">
+        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item">
-                        <span>{{desk.name}}</span>
+                        <span triggers="hover" tooltip="{{desk.name}}" placement="left"
+                        containerClass="left-tooltip">{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" (mouseenter)="nameTooltip.hide()" containerClass="top-tooltip" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" (mouseenter)="nameTooltip.hide()" containerClass="top-tooltip" (click)="removeDesk(desk,$event)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="top-tooltip" (click)="openEditForm($event, desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="top-tooltip" (click)="removeDesk(desk,$event)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
