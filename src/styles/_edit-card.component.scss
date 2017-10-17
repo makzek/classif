@@ -10,16 +10,14 @@
         min-height: $item-height;
         padding: 5px;
         display: -ms-grid;
-        display: grid;
-
-        // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 100px 20px 1fr 130px;
-        grid-template-columns: 100px 20px 1fr 130px;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 70px 48px 1fr 130px;
+        grid-template-columns: 70px 48px 1fr 130px;
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 24px 19px 1fr 172px;
-            grid-template-columns: 24px 19px 1fr 172px;
+            -ms-grid-columns: 0 48px 1fr 172px;
+            grid-template-columns: 0 48px 1fr 172px;
         }
 
         .btn {
@@ -48,10 +46,7 @@
 
             .checkbox-inline {
                 padding: 0;
-                margin-left: -5px;
-
-                // ugly solution, sorry
-           
+                margin-left: 12px;
             }
         }
 
