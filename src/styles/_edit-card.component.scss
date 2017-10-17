@@ -7,7 +7,7 @@
     overflow-y: auto;
 
     .edit-header {
-        height: 47px;
+        min-height: $item-height;
         padding: 5px;
         display: -ms-grid;
         display: grid;
@@ -113,6 +113,10 @@
         }
 
         .form-group {
+            &:not(.gender) {
+                position: relative;
+            }
+
             &:not(:first-child) {
                 margin-top: 20px;
             }
