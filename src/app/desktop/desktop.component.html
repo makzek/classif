@@ -43,11 +43,11 @@
         </button>
     </div>
 
-    <div *ngIf="!editing(item.value)" class="btn item-content block">
+    <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="top-tooltip word-break" [routerLink]="[item.value.link]" container="body" class="text">
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="top-tooltip word-break" container="body" class="text">
             {{item.value.title}}
         </span>
         <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
