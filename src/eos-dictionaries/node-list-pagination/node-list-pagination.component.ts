@@ -44,6 +44,7 @@ export class NodeListPaginationComponent {
             current: 1,
             length: this.pageLength.value
         };
+        // this.change.emit(this.page);
     }
 
     setPageLength(length: IPageLength) {
@@ -63,7 +64,6 @@ export class NodeListPaginationComponent {
         }
         this.page.current = event.page;
         this._dropStartPage = true;
-        console.log('page updated', this.page);
         this.change.emit(this.page);
     }
 }

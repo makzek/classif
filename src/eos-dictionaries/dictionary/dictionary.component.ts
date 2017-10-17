@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -27,19 +27,21 @@ import {
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { IListPage } from '../node-list-pagination/node-list-pagination.component';
+import { INodeListParams } from '../core/dictionary.interface';
+import { NodeListComponent } from '../node-list/node-list.component';
 
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy {
+    @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
 
-    // public _selectedNode: EosDictionaryNode;
-    public params: any;
+    dictionaryName: string;
 
+    public params: INodeListParams;
     public _selectedNode: EosDictionaryNode;
-    private _openedNode: EosDictionaryNode;
-
+    public _selectedNodeText: string;
     public _dictionaryId: string;
     private _nodeId: string;
 
@@ -47,22 +49,16 @@ export class DictionaryComponent implements OnDestroy {
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[];
 
-    /// pages
-    nodeListPerPage: EosDictionaryNode[];
-    totalItems: number;
-    itemsPerPage = 10;
-    currentPage = 1;
-    private _startPage = 1;
-    private _dropStartPage = true;
-
-    // hideTree = true;
-    // hideFullInfo = true;
-    dictionaryName: string;
+    private _page: IListPage;
 
     currentState: number;
     readonly states = DICTIONARY_STATES;
 
     private _subscriptions: Subscription[];
+
+    anyMarked: boolean;
+    anyUnmarked: boolean;
+    allMarked: boolean;
 
     constructor(
         private _route: ActivatedRoute,
@@ -71,22 +67,21 @@ export class DictionaryComponent implements OnDestroy {
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
+        private _orderSrv: EosDictOrderService,
         /* remove unused */
-        private _actSrv: DictionaryActionService,
+        private _dictActSrv: DictionaryActionService,
     ) {
-
         this.params = {
-            sortable: false,
+            userSort: false,
             showDeleted: false,
             hasParent: false
         };
 
-        this.listNodes = [];
-        this.nodeListPerPage = [];
         this._subscriptions = [];
         this.treeNodes = [];
+        this.listNodes = [];
         this.visibleNodes = [];
-        this.currentState = this._actSrv.state;
+        this.currentState = this._dictActSrv.state;
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -109,7 +104,7 @@ export class DictionaryComponent implements OnDestroy {
             }
         }));
 
-        this._subscriptions.push(_actSrv.action$.subscribe((action) => {
+        this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._swichCurrentState(action); // ??????????????????
         }));
 
@@ -123,27 +118,11 @@ export class DictionaryComponent implements OnDestroy {
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
+                this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                this.params.hasParent = !!node.parent;
                 this.listNodes = node.children;
-                this._getVisibleNodes();
+                this._updateVisibleNodes();
             }
-
-            /*
-             if (node) {
-                 this.viewFields = node.getListView();
-                 this._update(node.children, true);
-                 if (!this.listNodes) {
-                     if (node.marked) {
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-                     } else {
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-                     }
-                 } else {
-                     this.checkState(node.marked);
-                 }
-             }
-            */
         }));
     }
 
@@ -152,59 +131,79 @@ export class DictionaryComponent implements OnDestroy {
     }
 
 
-    private _getVisibleNodes() {
-        this.visibleNodes = this.listNodes;
+    private _update() {
+        if (this._dictionaryId) {
+            this._dictSrv.openDictionary(this._dictionaryId)
+                .then(() => this._dictSrv.selectNode(this._nodeId));
+        }
+    }
+
+    private _updateVisibleNodes() {
+        let _list: EosDictionaryNode[];
+        const page = this._page;
+        if (this.params && this.params.userSort) {
+            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
+        } else {
+            _list = this.listNodes;
+        }
+
+        if (page) {
+            this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
+        } else {
+            this.visibleNodes = _list;
+        }
     }
 
     pageChanged(page: IListPage) {
-        this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
+        this._page = page;
+        this._updateVisibleNodes();
     }
+
     doAction(action: E_RECORD_ACTIONS) {
         switch (action) {
-            case E_RECORD_ACTIONS.navigateDown: {
-                this.openNodeNavigate(false);
+            case E_RECORD_ACTIONS.navigateDown:
+                this._openNodeNavigate(false);
                 break;
-            }
-            case E_RECORD_ACTIONS.navigateUp: {
-                this.openNodeNavigate(true);
+
+            case E_RECORD_ACTIONS.navigateUp:
+                this._openNodeNavigate(true);
                 break;
-            }
-            case E_RECORD_ACTIONS.edit: {
+
+            case E_RECORD_ACTIONS.edit:
                 this._editNode();
                 break;
-            }
-            /*
-            case E_RECORD_ACTIONS.remove: {
+
+            case E_RECORD_ACTIONS.showDeleted:
+                this._toggleDeleted();
+                break;
+
+            case E_RECORD_ACTIONS.userOrder:
+                this._toggleUserSort();
+                break;
+
+            case E_RECORD_ACTIONS.moveUp:
+                this._moveUp();
+                break;
+
+            case E_RECORD_ACTIONS.moveDown:
+                this._moveDown();
+                break;
+
+            case E_RECORD_ACTIONS.remove:
                 this.deleteSelectedItems();
                 break;
-            }
-            case E_RECORD_ACTIONS.removeHard: {
+
+            case E_RECORD_ACTIONS.removeHard:
                 this.physicallyDelete();
                 break;
-            }
+            /*
             // case E_RECORD_ACTIONS.restore: {
-            case E_RECORD_ACTIONS.showDeleted: {
-                this.restoringLogicallyDeletedItem();
-                break;
-            }
-            case E_RECORD_ACTIONS.markRecords: {
+            case E_RECORD_ACTIONS.markRecords:
                 this.checkAllItems(true);
                 break;
-            }
+
             case E_RECORD_ACTIONS.unmarkRecords: {
                 this.checkAllItems(false);
-                break;
-            }
-            case E_RECORD_ACTIONS.userOrder: {
-                this.toggleUserSort();
-                break;
-            }
-            case E_RECORD_ACTIONS.moveUp: {
-                this.userSortMoveUp();
-                break;
-            }
-            case E_RECORD_ACTIONS.moveDown: {
-                this.userSortMoveDown();
                 break;
             }
             */
@@ -212,17 +211,146 @@ export class DictionaryComponent implements OnDestroy {
                 console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
         }
     }
+    private _moveUp(): void {
+        const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+
+        if (_idx > 0) {
+            const item = this.visibleNodes[_idx - 1];
+            this.visibleNodes[_idx - 1] = this.visibleNodes[_idx];
+            this.visibleNodes[_idx] = item;
+            this.nodeListComponent.writeValues(this.visibleNodes);
+        }
+    }
+
+    private _moveDown(): void {
+        const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+        if (_idx > 0) {
+            const item = this.visibleNodes[_idx + 1];
+            this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
+            this.visibleNodes[_idx] = item;
+            this.nodeListComponent.writeValues(this.visibleNodes);
+        }
+    }
+
+    private _editNode() {
+        const node = this.visibleNodes.find((n) => n.isSelected || n.isActive);
+        if (node) {
+            if (node.data.PROTECTED) {
+                this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+            } else if (node.isDeleted) {
+                this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
+                const url = this._router.url;
+                this._storageSrv.setItem(RECENT_URL, url);
+                const _path = this._dictSrv.getNodePath(node);
+                _path.push('edit');
+                this._router.navigate(_path);
+            }
+        } else {
+            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
+        }
+    }
+
+    private _openNodeNavigate(backward = false): void {
+        let _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+        /*
+        if (_idx < 0) {
+            _idx = 0;
+        }
+        */
+
+        if (backward) {
+            if (_idx > -1) {
+                _idx--;
+            }
+        } else {
+            _idx++;
+        }
+        _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
+
+        this._dictSrv.openNode(this.visibleNodes[_idx].id);
+    }
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._actSrv.closeAll = true;
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+            this._dictActSrv.closeAll = true;
+        }
+    }
+
+    goUp() {
+        if (this._selectedNode && this._selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
+            this._router.navigate(path);
+        }
+    }
+
+    private _toggleDeleted() {
+        this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
+        // todo: update visible list
+    }
+
+    private _toggleUserSort(): void {
+        this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
+        this._updateVisibleNodes();
+    }
+
+    updateMarks() {
+        this.anyMarked = this.listNodes.findIndex((node) => node.marked) > -1;
+        this.anyUnmarked = this.listNodes.findIndex((node) => !node.marked) > -1;
+        this.allMarked = this.anyMarked;
+    }
+
+    toggleAllMarks() {
+        this.anyMarked = this.allMarked;
+        this.anyUnmarked = !this.allMarked;
+        this.listNodes.forEach((node) => node.marked = this.allMarked);
+    }
+
+    private _updateChildrenMarks(marked: boolean) {
+        this.listNodes.forEach((node) => node.marked = marked);
+    }
+    /* darkside */
+
+    deleteSelectedItems(): void {
+        const selectedNodes: string[] = [];
+        if (this.listNodes) {
+            this.listNodes.forEach((child) => {
+                if (child.marked && !child.isDeleted) {
+                    selectedNodes.push(child.id);
+                    child.marked = false;
+                }
+            });
+        }
+        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
+    }
+
+    physicallyDelete() {
+        if (this.listNodes) {
+            this.listNodes.forEach(node => {
+                if (node.marked) {
+                    if (1 !== 1) { // here must be API request for check if possible to delete
+                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                    } else {
+                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
+                        if (_deleteResult) {
+                            this._router.navigate([
+                                'spravochniki',
+                                this._dictionaryId,
+                                node.parent.id,
+                            ]);
+                        } else {
+                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                        }
+                    }
+                }
+            });
         }
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        this._actSrv.closeAll = false;
+        this._dictActSrv.closeAll = false;
         switch (action) {
             // TODO: try to find more simple solition
             case DICTIONARY_ACTIONS.closeTree:
@@ -267,258 +395,6 @@ export class DictionaryComponent implements OnDestroy {
                 break;
         }
     }
-
-    private _update() {
-        if (this._dictionaryId) {
-            this._dictSrv.openDictionary(this._dictionaryId)
-                .then(() => {
-                    this._dictSrv.selectNode(this._nodeId);
-                });
-        }
-    }
-
-    openNodeNavigate(backward = false): void {
-        let _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < 0) {
-            _idx = 0;
-        }
-
-        if (backward) {
-            _idx--;
-        } else {
-            _idx++;
-        }
-        _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
-
-        this._dictSrv.openNode(this.visibleNodes[_idx].id);
-    }
-
-    goUp() {
-        if (this._selectedNode && this._selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
-            this._router.navigate(path);
-        }
-    }
-
-    private _update_(nodes: EosDictionaryNode[], hasParent: boolean) {
-        // this.params.hasParent = hasParent;
-        if (this.listNodes) {
-            // this.listNodes = nodes;
-            if (this.listNodes[0]) {
-                // this.sortableNodes = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
-            }
-            // this.totalItems = this.listNodes.length;
-            if (this.listNodes.length) {
-                if (!this.params.hasParent) {
-                    this._dictSrv.openNode(this.listNodes[0].id);
-                }
-            }
-            if (this.params.sortable) {
-                // this._getListData(this.sortableNodes);
-            } else {
-                this._getListData(this.listNodes);
-            }
-
-        } else {
-            this.listNodes = [];
-        }
-    }
-
-    checkAllItems(value: boolean): void {
-        if (this.listNodes) {
-            for (const item of this.listNodes) {
-                item.marked = value;
-            }
-        }
-        this._selectedNode.marked = value;
-    }
-
-    openFullInfo(node: EosDictionaryNode): void {
-        if (!node.isDeleted) {
-            if (node.id !== '') {
-                this._dictSrv.openNode(node.id);
-            }
-        }
-    }
-
-
-    private _editNode() {
-        const node = this.visibleNodes.find((n) => n.isSelected || n.isActive);
-        if (node) {
-            this._rememberCurrentURL();
-            if (node.data.PROTECTED) {
-                this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
-            } else if (node.isDeleted) {
-                this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-            } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
-                const _path = this._dictSrv.getNodePath(node);
-                _path.push('edit');
-                this._router.navigate(_path);
-            }
-        } else {
-            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
-        }
-    }
-
-    deleteSelectedItems(): void {
-        const selectedNodes: string[] = [];
-        if (this.listNodes) {
-            this.listNodes.forEach((child) => {
-                if (child.marked && !child.isDeleted) {
-                    selectedNodes.push(child.id);
-                    child.marked = false;
-                }
-            });
-        }
-        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
-    }
-
-    physicallyDelete() {
-        if (this.listNodes) {
-            this.listNodes.forEach(node => {
-                if (node.marked) {
-                    if (1 !== 1) { // here must be API request for check if possible to delete
-                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                    } else {
-                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                        if (_deleteResult) {
-                            this._router.navigate([
-                                'spravochniki',
-                                this._dictionaryId,
-                                node.parent.id,
-                            ]);
-                        } else {
-                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    restoringLogicallyDeletedItem() {
-        /* todo: implemend with API call */
-        if (this.listNodes) {
-            this.listNodes.forEach(child => {
-                if (child.marked && child.isDeleted) {
-                    this._dictSrv.restoreItem(child);
-                }
-            });
-        }
-    }
-
-    private _getListData(nodes: EosDictionaryNode[]) {
-        if (nodes && nodes.length) {
-            this.nodeListPerPage = nodes.slice(
-                (this._startPage - 1) * this.itemsPerPage,
-                this.currentPage * this.itemsPerPage
-            );
-        } else {
-            this.nodeListPerPage = [];
-        }
-    }
-
-
-    setItemCount(value: string) {
-        this.itemsPerPage = +value;
-        this._startPage = this.currentPage;
-        if (this.params.sortable) {
-            // this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.listNodes);
-        }
-    }
-
-    viewNode(node: EosDictionaryNode) {
-        if (node) {
-            this._rememberCurrentURL();
-            if (!this._dictSrv.isRoot(node.id)) {
-                this._router.navigate([
-                    'spravochniki',
-                    this._dictionaryId,
-                    node.id,
-                    'view',
-                ]);
-            }
-        }
-    }
-
-    private _rememberCurrentURL(): void {
-        const url = this._router.url;
-        this._storageSrv.setItem(RECENT_URL, url);
-    }
-
-    private checkState() {
-        let checkAllFlag = true,
-            checkSome = false;
-        if (this.listNodes) {
-            for (const item of this.listNodes) {
-                if (item.marked) {
-                    checkSome = true;
-                }
-                checkAllFlag = checkAllFlag && item.marked;
-            }
-            checkAllFlag = checkAllFlag && this._selectedNode.marked;
-            if (this._selectedNode.marked) {
-                checkSome = true;
-            }
-        } else {
-            if (!this._selectedNode.marked) {
-                checkAllFlag = false;
-                checkSome = false;
-            }
-        }
-
-        if (checkAllFlag) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else if (checkSome) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
-        } else if (!checkAllFlag) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        }
-    }
-
-    private _toggleUserSort(): void {
-        this.params.sortable = !this.params.sortable;
-        if (this.params.sortable) {
-            // this.visibleNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
-            // this._getListData(this.sortableNodes);
-        } else {
-            // this._getListData(this.nodes);
-        }
-    }
-
-    /*
-switchUserSort() {
-    this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
-}
-*/
-    /*
-    checkAllItems() {
-        if (this.checkAll) {
-            this.rootSelected = true;
-            this.allChildrenSelected = true;
-            this.itemIsChecked = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRecords);
-        } else {
-            this.itemIsChecked = false;
-            this.allChildrenSelected = false;
-            this.someChildrenSelected = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-        }
-    }
-    */
-    /*
-    uncheckAllItems() {
-        this.checkAll = false;
-        this.itemIsChecked = false;
-        this.allChildrenSelected = false;
-        this.someChildrenSelected = false;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-    }
-    */
     /*
     create(hide = true) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
@@ -551,258 +427,3 @@ switchUserSort() {
     }
     */
 }
-
-    /*
-    checkAllItems(value: boolean): void {
-        if (this.nodes) {
-            for (const item of this.nodes) {
-                item.marked = value;
-            }
-        }
-        this._selectedNode.marked = value;
-    }
-
-    openFullInfo(node: EosDictionaryNode): void {
-        if (!node.isDeleted) {
-            if (node.id !== '') {
-                this._dictSrv.openNode(node.id);
-            }
-        }
-    }
-
-    private userSortMoveUp(): void {
-        const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
-        if (indexOfMoveItem !== 0) {
-            const item = this.nodeListPerPage[indexOfMoveItem - 1];
-            this.nodeListPerPage[indexOfMoveItem - 1] = this.nodeListPerPage[indexOfMoveItem];
-            this.nodeListPerPage[indexOfMoveItem] = item;
-        }
-        this.sortableComponent.writeValue(this.nodeListPerPage);
-    }
-
-     private userSortMoveDown(): void {
-        const indexOfMoveItem = this.nodeListPerPage.indexOf(this.openedNode);
-        const lastItem = this.nodeListPerPage.length - 1;
-        if (lastItem !== indexOfMoveItem) {
-            const item = this.nodeListPerPage[indexOfMoveItem + 1];
-            this.nodeListPerPage[indexOfMoveItem + 1] = this.nodeListPerPage[indexOfMoveItem];
-            this.nodeListPerPage[indexOfMoveItem] = item;
-        }
-        this.sortableComponent.writeValue(this.nodeListPerPage);
-    }
-
-    private toggleUserSort(): void {
-        this.params.sortable = !this.params.sortable;
-        if (this.params.sortable) {
-            this.sortableNodes = this._orderSrv.getUserOrder(this.nodes, this.nodes[0].parentId);
-            this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.nodes);
-        }
-    }
-
-    private toggleItem(): void {
-    editNode(node: EosDictionaryNode) {
-        if (node) {
-            this._rememberCurrentURL();
-            if (!node.data.PROTECTED && !node.isDeleted) {
-                this._router.navigate([
-                    'spravochniki',
-                    this._dictionaryId,
-                    node.id,
-                    'edit',
-                ]);
-            } else {
-                if (node.data.PROTECTED) {
-                    this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
-                }
-
-                if (node.isDeleted) {
-                    this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-                }
-            }
-        } else {
-            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
-        }
-    }
-
-    nextItem(goBack: boolean): void {
-        let i = 0;
-        for (const node of this.nodes) {
-            if (node.id === this.openedNode.id) {
-                break;
-            }
-            i++;
-        }
-        if (i < this.nodes.length) {
-            if (goBack) {
-                this._dictSrv.openNode(this.nodes[(i - 1 +
-                    this.nodes.length) % this.nodes.length].id);
-                this.currentPage = Math.floor(((i - 1 + this.nodes.length)
-                    % this.nodes.length) / (this.itemsPerPage)) + 1;
-            } else {
-                this._dictSrv.openNode(this.nodes[(i + 1 +
-                    this.nodes.length) % this.nodes.length].id);
-                this.currentPage = Math.floor(((i + 1 + this.nodes.length)
-                    % this.nodes.length) / (this.itemsPerPage)) + 1;
-            }
-        }
-    }
-
-    restoringLogicallyDeletedItem() {
-        if (this.nodes) {
-            this.nodes.forEach(child => {
-
-                if (child.marked && child.isDeleted) {
-                    this._dictSrv.restoreItem(child);
-                }
-            });
-        }
-    }
-
-    pageChanged(event: any): void {
-        if (this._dropStartPage) {
-            this._startPage = event.page;
-        }
-        this.currentPage = event.page;
-        // console.log('pageChanged fired', this._startPage, event.page);
-        if (this.params.sortable) {
-            this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.nodes);
-        }
-        this._dropStartPage = true;
-    }
-
-    showMore() {
-        this._dropStartPage = false;
-        this.currentPage++;
-    }
-
-    setItemCount(value: string) {
-        this.itemsPerPage = +value;
-        this._startPage = this.currentPage;
-        if (this.params.sortable) {
-            this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.nodes);
-        }
-    }
-
-    private _rememberCurrentURL(): void {
-        // const url = this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + this._selectedNode.id;
-        const url = this._router.url;
-        this._storageSrv.setItem(RECENT_URL, url);
-    }
-
-    private checkState() {
-        let checkAllFlag = true,
-            checkSome = false;
-        if (this.nodes) {
-            for (const item of this.nodes) {
-                if (item.marked) {
-                    checkSome = true;
-                }
-                checkAllFlag = checkAllFlag && item.marked;
-            }
-            checkAllFlag = checkAllFlag && this._selectedNode.marked;
-            if (this._selectedNode.marked) {
-                checkSome = true;
-            }
-        } else {
-            if (!this._selectedNode.marked) {
-                checkAllFlag = false;
-                checkSome = false;
-            }
-        }
-
-        if (checkAllFlag) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else if (checkSome) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
-        } else if (!checkAllFlag) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        }
-    }
-
-    goUp() {
-        // this._dictSrv.selectNode(this._dictionaryId, nodeId);
-        if (this._selectedNode && this._selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
-            this._router.navigate(path);
-        }
-        // this._storageSrv.setItem(RECENT_URL, this._router.url.substring(0, this._router.url.lastIndexOf('/') + 1) + nodeId);
-    }
-    */
-
-    /*
-        node-list methods
-        --------
-        constructor(
-        private _storageSrv: EosStorageService,
-        private _dictSrv: EosDictService,
-        private _orderSrv: EosDictOrderService,
-        private _profileSrv: EosUserProfileService,
-        private _msgSrv: EosMessageService,
-        private _router: Router,
-        private _actSrv: NodeActionsService,
-    ) {
-        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
-            (dictionary) => {
-                if (dictionary) {
-                    this._dictionaryId = dictionary.id;
-                    this._params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                }
-            },
-            (error) => alert(error)
-        );
-
-        this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
-            this._selectedNode = node;
-            if (node) {
-                this._update(node.children, true);
-                if (!this.listNodes) {
-                    if (node.marked) {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-                    } else {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-                    }
-                } else {
-                    this.checkState();
-                }
-            }
-        });
-
-        this._searchResultSubscription = this._dictSrv.searchResults$.subscribe((listNodes) => {
-            if (listNodes.length) {
-                this._update(listNodes, false);
-            } else if (this._selectedNode) {
-                this._update(this._selectedNode.children, true);
-            } else {
-                this._update([], true);
-            }
-        });
-
-        this._userSettingsSubscription = this.position_profileSrv.settings$.subscribe((res) => {
-            this._params.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
-
-        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this._openedNodeSubscription.unsubscribe();
-        this._dictionarySubscription.unsubscribe();
-        this._selectedNodeSubscription.unsubscribe();
-        this._searchResultSubscription.unsubscribe();
-        this._userSettingsSubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
-    }
-    */

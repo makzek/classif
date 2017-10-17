@@ -80,7 +80,10 @@
             color: $button-color-hover-main-theme;
         }
     }
-    /* .btn-icon {
+    .active {
+        border-color: $button-color-main-theme;
+    }
+/* .btn-icon {
         background-color: white;
         width: $item-width;
         color: $button-color-main-theme;

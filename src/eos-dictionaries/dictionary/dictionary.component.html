@@ -20,19 +20,10 @@
                 </div>
                 <div class="second-line block special-text">
                     <span class="table-title">
-                        <span *ngIf="params.showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                        <span *ngIf="params.showCheckbox" class="checkbox-inline" tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}"
+                            [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="top-tooltip">
-                            <label>
-                                <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
-                                <span></span>
-                            </label>
-                        </span>
-                        <span *ngIf="params.showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
-                            containerClass="top-tooltip">
-                            <label>
-                                <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
-                                <span></span>
-                            </label>
+                            <label><input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                         </span>
                         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
                     </span>
@@ -42,9 +33,9 @@
 
             <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
                 <a *ngIf="params.hasParent" class="link special-text" (click)="goUp()">Вверх</a>
-                <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
+                {{_selectedNodeText}}
             </div>
-            <eos-node-list [nodes]="visibleNodes" [params]="params"></eos-node-list>
+            <eos-node-list [nodes]="visibleNodes" [params]="params" (change)="updateMarks()"></eos-node-list>
             <eos-node-list-pagination [total]="listNodes.length" (change)="pageChanged($event)"></eos-node-list-pagination>
         </div>
     </div>

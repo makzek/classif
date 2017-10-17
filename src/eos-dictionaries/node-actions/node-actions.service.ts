@@ -4,6 +4,9 @@ import { Subject } from 'rxjs/Subject';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Injectable()
+/**
+ * @deprecated
+ */
 export class NodeActionsService {
     private _action$: Subject<E_RECORD_ACTIONS>;
 
