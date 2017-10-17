@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,9 +9,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
-import { NodeActionsService } from '../node-actions/node-actions.service';
-import { FieldDescriptor } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { IFieldView } from '../core/field-descriptor';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
@@ -59,6 +57,8 @@ export class DictionaryComponent implements OnDestroy {
     anyMarked: boolean;
     anyUnmarked: boolean;
     allMarked: boolean;
+
+    viewFields: IFieldView[] = []; // todo: fill for title
 
     constructor(
         private _route: ActivatedRoute,
@@ -119,6 +119,7 @@ export class DictionaryComponent implements OnDestroy {
             this._selectedNode = node;
             if (node) {
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children;
                 this._updateVisibleNodes();
