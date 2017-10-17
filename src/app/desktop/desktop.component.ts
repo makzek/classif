@@ -70,6 +70,9 @@ export class DesktopComponent implements OnDestroy {
 
     _update(dictionariesList: IDeskItem[]) {
         this.referencesList = dictionariesList;
+        /*
+        console.log(dictionariesList);
+        */
     }
 
     removeLink(link: IDeskItem): void {
