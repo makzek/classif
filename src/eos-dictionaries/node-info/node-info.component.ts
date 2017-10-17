@@ -1,9 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
-import { NodeActionsService } from '../node-actions/node-actions.service';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
@@ -12,6 +11,7 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
     templateUrl: 'node-info.component.html',
 })
 export class NodeInfoComponent implements OnDestroy {
+    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
     viewFields: IFieldView[];
     shortViewFields: IFieldView[];
 
@@ -23,17 +23,14 @@ export class NodeInfoComponent implements OnDestroy {
 
     updating: boolean;
 
-    constructor(private _dictSrv: EosDictService,
-        private _nodeActSrv: NodeActionsService) {
-
-        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe(
-            (node) => {
-                if (node) {
-                    this.viewFields = node.getQuickView();
-                    this.shortViewFields = node.getShortQuickView();
-                    this.updating = node.updating;
-                }
-            },
+    constructor(private _dictSrv: EosDictService) {
+        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
+            if (node) {
+                this.viewFields = node.getQuickView();
+                this.shortViewFields = node.getShortQuickView();
+                this.updating = node.updating;
+            }
+        },
             (error) => alert(error));
     }
 
@@ -42,6 +39,6 @@ export class NodeInfoComponent implements OnDestroy {
     }
 
     actionHandler(type: E_RECORD_ACTIONS) {
-        this._nodeActSrv.emitAction(type);
+        this.action.emit(type);
     }
 }

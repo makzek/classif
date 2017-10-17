@@ -121,7 +121,7 @@ export class EosDictService {
                         _dictionary.init(data);
                         this.dictionary = _dictionary;
                         this._dictionary$.next(this.dictionary);
-                        this._selectRoot();
+                        // this._selectRoot();
                     } else {
                         this.closeDictionary();
                     }
@@ -227,7 +227,9 @@ export class EosDictService {
             }
             this.selectedNode = node;
             this._selectedNode$.next(node);
-            this._openNode(node);
+            if (node.children) {
+                this._openNode(node.children[0]);
+            }
         }
     }
 

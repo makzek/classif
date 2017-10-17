@@ -17,37 +17,17 @@
                     <div class="pull-right">
                         <eos-dictionary-search></eos-dictionary-search>
                     </div>
-                    <div class="second-line block special-text">
-                        <span class="table-title">
-                            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
-                                containerClass="top-tooltip">
-                                <label>
-                                    <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
-                                    <span></span>
-                                </label>
-                            </span>
-                            <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
-                                containerClass="top-tooltip">
-                                <label>
-                                    <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
-                                    <span></span>
-                                </label>
-                            </span>
-                            <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
-                        </span>
-                        <div class="clear-all"></div>
-                    </div>
                 </div>
                 <div class="second-line block special-text">
                     <span class="table-title">
-                        <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                        <span *ngIf="params.showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
                             containerClass="top-tooltip">
                             <label>
                                 <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
                                 <span></span>
                             </label>
                         </span>
-                        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+                        <span *ngIf="params.showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
                             containerClass="top-tooltip">
                             <label>
                                 <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
@@ -69,7 +49,7 @@
         </div>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
-        <eos-node-info></eos-node-info>
+        <eos-node-info (action)=doAction($event)></eos-node-info>
     </div>
 </div>
 <ng-template>
