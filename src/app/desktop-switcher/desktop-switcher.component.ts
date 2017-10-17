@@ -127,7 +127,8 @@ export class DesktopSwitcherComponent {
         this.deskName = '';
     }
 
-    create() {
+    create($evt: Event) {
+        $evt.stopPropagation();
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
@@ -171,7 +172,8 @@ export class DesktopSwitcherComponent {
             .catch();
     }
 
-    cancelCreating() {
+    cancelCreating($evt: Event) {
+        $evt.stopPropagation();
         this.creating = false;
         this.deskName = '';
     }

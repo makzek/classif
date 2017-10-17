@@ -36,17 +36,17 @@
             </span>
         </li>
         <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
-        <li *ngIf="deskList.length < 6">
-            <a><span *ngIf="!creating" class="create" (click)="openCreateForm()">Создать рабочий стол</span>
+        <li *ngIf="deskList.length < 6" (click)="openCreateForm()">
+            <a><span *ngIf="!creating" class="create">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
                     <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="create()" type="button" tooltip="Сохранить" containerClass="top-tooltip"
+                        <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="top-tooltip"
                             [disabled]="!deskName?.length || !createForm.checkValidity()">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button class="btn btn-default" (click)="cancelCreating()" type="button" tooltip="Отменить" containerClass="top-tooltip">
+                        <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="top-tooltip">
                             <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </span>
