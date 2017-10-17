@@ -36,7 +36,7 @@ export class PushpinComponent {
         /* tslint:disable:no-bitwise */
         if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
             let arr = this._link.title.split('/');
-            arr = arr.slice(2, arr.length);
+            arr = arr.slice(3, arr.length);
             let newName = '';
             for (const piece of arr) {
                 newName += piece + '/';
