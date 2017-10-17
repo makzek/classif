@@ -20,10 +20,12 @@
                 </div>
                 <div class="second-line block special-text">
                     <span class="table-title">
-                        <span *ngIf="params.showCheckbox" class="checkbox-inline" tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}"
-                            [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <span *ngIf="params.showCheckbox" class="checkbox-inline" tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="top-tooltip">
-                            <label><input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
+                            <label>
+                                <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
+                                <span></span>
+                            </label>
                         </span>
                         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
                     </span>
@@ -43,28 +45,21 @@
         <eos-node-info (action)=doAction($event)></eos-node-info>
     </div>
 </div>
-<ng-template>
-    <div bsModal #creatingModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-        aria-hidden="true">
-        <div class="creating-modal modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title pull-left">Добавление записи</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="creatingModal.hide()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="create-new-node modal-body">
-                    <eos-rubricator-card-edit [data]="newNodeData" editMode="true" *ngIf="_dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
-                    <!--eos-departments-card-edit [data]="newNodeData" *ngIf="_dictionaryId === 'departments'"></eos-departments-card-edit>
+<ng-template #createTpl>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Добавление записи</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="cancelCreate()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="create-new-node modal-body">
+        <eos-rubricator-card-edit [data]="newNodeData" editMode="true" *ngIf="_dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+        <!--eos-departments-card-edit [data]="newNodeData" *ngIf="_dictionaryId === 'departments'"></eos-departments-card-edit>
             <eos-rooms-card-edit *ngIf="_dictionaryId === 'rooms'"></eos-rooms-card-edit-->
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" (click)="create()">Добавить</button>
-                    <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
-                    <button class="btn btn-default" (click)="create(false)">Добавить ещё</button>
-                </div>
-            </div>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" (click)="create()">Добавить</button>
+        <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
+        <button class="btn btn-default" (click)="create(false)">Добавить ещё</button>
     </div>
 </ng-template>

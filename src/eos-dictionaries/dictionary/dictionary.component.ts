@@ -1,9 +1,14 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
+import { EosDeskService } from '../../app/services/eos-desk.service';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
-import { EosUserProfileService } from '../..//app/services/eos-user-profile.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
@@ -34,6 +39,7 @@ import { NodeListComponent } from '../node-list/node-list.component';
 })
 export class DictionaryComponent implements OnDestroy {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
+    @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
     dictionaryName: string;
 
@@ -60,6 +66,9 @@ export class DictionaryComponent implements OnDestroy {
 
     viewFields: IFieldView[] = []; // todo: fill for title
 
+    newNodeData: any = {};
+    creatingModal: BsModalRef;
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -68,6 +77,9 @@ export class DictionaryComponent implements OnDestroy {
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _orderSrv: EosDictOrderService,
+        private _modalSrv: BsModalService,
+        private _breadcrumbsSrv: EosBreadcrumbsService,
+        private _deskSrv: EosDeskService,
         /* remove unused */
         private _dictActSrv: DictionaryActionService,
     ) {
@@ -197,16 +209,12 @@ export class DictionaryComponent implements OnDestroy {
             case E_RECORD_ACTIONS.removeHard:
                 this.physicallyDelete();
                 break;
+
+            case E_RECORD_ACTIONS.add:
+                this._create();
+                break;
             /*
             // case E_RECORD_ACTIONS.restore: {
-            case E_RECORD_ACTIONS.markRecords:
-                this.checkAllItems(true);
-                break;
-
-            case E_RECORD_ACTIONS.unmarkRecords: {
-                this.checkAllItems(false);
-                break;
-            }
             */
             default:
                 console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
@@ -396,7 +404,11 @@ export class DictionaryComponent implements OnDestroy {
                 break;
         }
     }
-    /*
+
+    private _create() {
+        this.creatingModal = this._modalSrv.show(this.createTemplate, {class: 'creating-modal modal-lg'});
+    }
+
     create(hide = true) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this._dictSrv.addNode(this.newNodeData)
@@ -426,5 +438,4 @@ export class DictionaryComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
     }
-    */
 }
