@@ -3,15 +3,97 @@
         'info': currentState === states.info,
         'tree': currentState === states.tree}">
     <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
-        'has-spinner': !nodes.length}">
-        <eos-spinner *ngIf="!nodes.length" size="lg"></eos-spinner>
-        <eos-tree *ngIf="nodes.length" [nodes]="nodes" [showDeleted]="_params.showDeleted"></eos-tree>
+        'has-spinner': !treeNodes.length}">
+        <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
+        <eos-tree *ngIf="treeNodes.length" [nodes]="treeNodes" [showDeleted]="params.showDeleted"></eos-tree>
     </div>
-    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}">
-        <eos-selected-node></eos-selected-node>
-    </div>
+    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
+        <div class="eos-selected-node">
+            <div class="eos-node-actions">
+                <div class="first-line block">
+                    <div class="controller pull-left">
+                        <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
+                    </div>
+                    <div class="pull-right">
+                        <eos-dictionary-search></eos-dictionary-search>
+                    </div>
+                    <div class="second-line block special-text">
+                        <span class="table-title">
+                            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                                containerClass="top-tooltip">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
+                                    <span></span>
+                                </label>
+                            </span>
+                            <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+                                containerClass="top-tooltip">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
+                                    <span></span>
+                                </label>
+                            </span>
+                            <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
+                        </span>
+                        <div class="clear-all"></div>
+                    </div>
+                </div>
+                <div class="second-line block special-text">
+                    <span class="table-title">
+                        <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                            containerClass="top-tooltip">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
+                                <span></span>
+                            </label>
+                        </span>
+                        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+                            containerClass="top-tooltip">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
+                                <span></span>
+                            </label>
+                        </span>
+                        <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
+                    </span>
+                    <div class="clear-all"></div>
+                </div>
+            </div>
 
+            <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
+                <a *ngIf="params.hasParent" class="link special-text" (click)="goUp()">Вверх</a>
+                <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
+            </div>
+            <eos-node-list [nodes]="visibleNodes" [params]="params"></eos-node-list>
+            <eos-node-list-pagination [total]="listNodes.length" (change)="pageChanged($event)"></eos-node-list-pagination>
+        </div>
+    </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
         <eos-node-info></eos-node-info>
     </div>
 </div>
+<ng-template>
+    <div bsModal #creatingModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="creating-modal modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Добавление записи</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="creatingModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="create-new-node modal-body">
+                    <eos-rubricator-card-edit [data]="newNodeData" editMode="true" *ngIf="_dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+                    <!--eos-departments-card-edit [data]="newNodeData" *ngIf="_dictionaryId === 'departments'"></eos-departments-card-edit>
+            <eos-rooms-card-edit *ngIf="_dictionaryId === 'rooms'"></eos-rooms-card-edit-->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" (click)="create()">Добавить</button>
+                    <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
+                    <button class="btn btn-default" (click)="create(false)">Добавить ещё</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

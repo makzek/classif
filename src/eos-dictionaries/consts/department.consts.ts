@@ -183,23 +183,35 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Фамилия',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
+        length: 248,
     }, {
         key: 'firstName',
         title: 'Имя',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
+        length: 248,
     }, {
         key: 'fathersName',
         title: 'Отчество',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
+        length: 248,
     }, {
         // key: 'indexOfficial',
-        key: 'DEPARTMENT_INDEX',
+        key: 'indexPerson',
         title: 'Индекс ДЛ',
         type: 'text',
         length: 24,
         pattern: NOT_EMPTY_STRING,
+        foreignKey: 'DEPARTMENT_INDEX',
+    }, {
+        // key: 'indexOfficial',
+        key: 'indexDep',
+        title: 'Индекс',
+        type: 'text',
+        length: 24,
+        pattern: NOT_EMPTY_STRING,
+        foreignKey: 'DEPARTMENT_INDEX',
     }, {
         key: 'DEPARTMENT_DUE',
         title: 'Картотека ДЛ',
@@ -398,11 +410,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['title']
     },
     editFields: { // TODO: remove IS_NODE!!!
-        person: ['IS_NODE', 'RUBRIC_CODE', 'fio', 'NOTE', 'SURNAME', 'DEPARTMENT_INDEX', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
+        person: ['IS_NODE', 'RUBRIC_CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
             'gender', 'SEV', 'lastName', 'firstName', 'fathersName', 'DUTY', 'fullPosition', 'skype', 'shortPositionRP', 'shortPositionDP', 'shortPositionVP',
             'fioDP', 'iofDP', 'lastNameRP', 'firstNameRP', 'fathersNameRP', 'lastNameDP', 'firstNameDP', 'fathersNameDP', 'lastNameVP', 'firstNameVP', 'fathersNameVP',
             'lastNameTP', 'firstNameTP', 'fathersNameTP', 'lastNamePP', 'firstNamePP', 'fathersNamePP'],
-        department: ['IS_NODE', 'RUBRIC_CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ',
+        department: ['IS_NODE', 'RUBRIC_CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
             'INDEX', 'SEV', 'fullTitle', 'titleRP', 'notInPositionTitle'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },

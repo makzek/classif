@@ -1,0 +1,68 @@
+<span class="date">Состояние на </span>
+<eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
+<button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
+    <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+</button>
+<div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
+    <span dropdownToggle type="button">
+        <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left" containerClass="left-tooltip"></span>
+    </span>
+    <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
+        <li>
+            <div class="input-group search">
+                <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
+                    <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)" tooltip="Расширенный поиск"
+                        containerClass="top-tooltip"></span>
+                </span>
+                <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
+                <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
+                    <span class="checkbox">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom" containerClass="bottom-tooltip">
+                            <span></span>
+                        </label>
+                    </span>
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<ng-template #searchModal>
+    <div class="search-modal modal-header">
+        <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="search-modal modal-body">
+        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
+        <div class="checkbox-inline">
+            <label>
+                <input type="checkbox" [(ngModel)]="searchInDeleted">
+                <span></span>Учитывать логически удаленные</label>
+        </div>
+        <div *ngIf="fields">
+            <div *ngFor="let field of fields">
+                <div class="input-group" *ngIf="field.type === 3">
+                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
+                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group" *ngIf="field.type === 0">
+                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
+                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                </div>
+                <div class="checkbox" *ngIf="field.type === 6">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="field.value">
+                        <span></span>
+                        {{field.title}}</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
+        </div>
+    </div>
+</ng-template>

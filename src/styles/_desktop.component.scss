@@ -2,6 +2,7 @@
     .sortable-wrapper {
         display: flex;
         flex-wrap: wrap;
+        width: calc(100vw - 300px - 40px);
 
         .icon-btn {
             cursor: pointer;
@@ -35,9 +36,10 @@
             font-size: 18px;
             line-height: 26px;
             text-align: left;
+            border-radius: 0;
 
             &.edited {
-                padding: 5px 53px 5px 5px;
+                padding: 32px 53px 32px 5px;
                 flex-direction: column;
                 display: flex;
                 justify-content: space-around;

@@ -128,7 +128,7 @@ export class EosDictionaryNode {
         }
     }
 
-    delete(hard = false) {
+    delete(hard = false) { // TODO: check maybe this is unused
         if (hard) {
             if ((!this.children || this.children.length < 1) && this.parent) {
                 this.parent.deleteChild(this);

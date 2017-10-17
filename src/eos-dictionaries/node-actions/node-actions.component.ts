@@ -1,8 +1,9 @@
-import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, HostListener, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs/Subscription';
+
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
@@ -13,206 +14,81 @@ import { NodeActionsService } from './node-actions.service';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
-// import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
+
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { EditedCard } from '../card/card.component';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
-
+import { IActionButton, IAction } from '../core/action.interface';
 
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
-    dictionary: EosDictionary;
+    @Input() params: any;
+    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
-    recordActions = RECORD_ACTIONS;
-    dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
+    buttons: IActionButton[];
+    ddButtons: IActionButton[];
 
-    showDeleted = false;
-    modalRef: BsModalRef;
-    checkAll = false;
-    itemIsChecked = false;
-    // newNode: EosDictionaryNode;
-
-    searchResults: EosDictionaryNode[];
-    searchString: string;
-    searchInAllDict = false;
-
-    viewFields: FieldDescriptor[];
-
-    showCheckbox: boolean;
-    userSort = false;
-
-    rootSelected = false;
-    allChildrenSelected = false;
-    someChildrenSelected = false;
-
-    dropdownIsOpen = false;
-    date = new Date();
-
-    fields: IFieldView[];
-    searchInDeleted = false;
-
-    dictIdFromDescriptor: string;
-
-    innerClick = false;
-
-    lastEditedCard: EditedCard;
-
-    private _userSettingsSubscription: Subscription;
+    private dictionary: EosDictionary;
     private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription;
-
-    newNodeData: any = {};
-    private editMode = true;
-
-    @ViewChild('creatingModal') public creatingModal: ModalDirective;
-
-    get noSearchData(): boolean {
-        /* tslint:disable:no-bitwise */
-        return !~this.fields.findIndex((f) => f.value);
-        /* tslint:enable:no-bitwise */
-    }
-
-    @HostListener('window:click', [])
-    private _closeSearchModal(): void {
-        if (!this.innerClick) {
-            this.dropdownIsOpen = false;
-        }
-        this.innerClick = false;
-    }
 
     constructor(
-        private _profileSrv: EosUserProfileService,
-        private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
-        private _deskSrv: EosDeskService,
-        private _actSrv: NodeActionsService,
-        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
-        this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
+        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((dict) => this._update(dict));
+    }
 
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((_d) => {
-            this.dictionary = _d;
-            if (_d) {
-                this.dictIdFromDescriptor = _d.descriptor.id;
-                this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
+    private _update(dictionary: EosDictionary) {
+        this.dictionary = dictionary;
+        this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
+    }
 
-                this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
-            }
-        });
+    private _actionToButton(action: IAction): IActionButton {
+        let _enabled = false;
+        let _active = false;
 
-        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
-            switch (act) {
-                case E_RECORD_ACTIONS.markOne:
-                    this.itemIsChecked = true;
-                    this.checkAll = false;
-                    this.someChildrenSelected = true;
+        if (this.dictionary) {
+            _enabled = this.dictionary.descriptor.canDo(action.group, action.type);
+            switch (action.type) {
+                case E_RECORD_ACTIONS.moveUp:
+                case E_RECORD_ACTIONS.moveDown:
+                    _enabled = this.params.userSort && _enabled;
                     break;
-
-                case E_RECORD_ACTIONS.unmarkAllChildren:
-                    this.allChildrenSelected = false;
-                    this.someChildrenSelected = false;
-                    this.itemIsChecked = false;
-                    this.checkAll = false;
+                case E_RECORD_ACTIONS.restore:
+                    _enabled = this.params.showDeleted && _enabled;
                     break;
-
-                case E_RECORD_ACTIONS.markAllChildren:
-                    this.allChildrenSelected = true;
-                    if (this.rootSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    }
+                case E_RECORD_ACTIONS.showDeleted:
+                    _active = this.params.showDeleted;
                     break;
-
-                case E_RECORD_ACTIONS.markRoot:
-                    this.rootSelected = true;
-                    if (this.allChildrenSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.checkAll = false;
-                        this.itemIsChecked = true;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkRoot:
-                    this.rootSelected = false;
-                    if (this.allChildrenSelected || this.someChildrenSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
+                case E_RECORD_ACTIONS.userOrder:
+                    _active = this.params.userSort;
                     break;
             }
-        });
+        }
+
+        return Object.assign({
+            isActive: _active,
+            enabled: _enabled
+        }, action);
     }
 
     ngOnDestroy() {
-        this._userSettingsSubscription.unsubscribe();
         this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
     }
 
-    doAction(type: E_RECORD_ACTIONS) {
-        switch (type) {
-            case E_RECORD_ACTIONS.add:
-                this.newNodeData = {};
-                this.creatingModal.show();
-                break;
-
-            case E_RECORD_ACTIONS.userOrder:
-                this.switchUserSort();
-                break;
-            case E_RECORD_ACTIONS.showDeleted: // TODO: check if it works
-                this._profileSrv.setSetting('showDeleted', !this.showDeleted);
-                break;
-            default:
-                this._actSrv.emitAction(type);
-                break;
-        }
+    doAction(action: IAction) {
+        this.action.emit(action.type);
     }
-
-    isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
-        if (this.dictionary) {
-            switch (type) {
-                case E_RECORD_ACTIONS.moveUp:
-                case E_RECORD_ACTIONS.moveDown:
-                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.restore:
-                    return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
-                default:
-                    return this.dictionary.descriptor.canDo(group, type);
-            }
-        }
-        return false;
-    }
-
+    /*
     switchUserSort() {
-        this.userSort = !this.userSort;
         this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
     }
-
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this._modalSrv.show(template);
-        this.dropdownIsOpen = true;
-    }
-
-    public change(value: boolean): void {
-        this.dropdownIsOpen = value;
-    }
-
+    */
+    /*
     checkAllItems() {
         if (this.checkAll) {
             this.rootSelected = true;
@@ -226,7 +102,8 @@ export class NodeActionsComponent implements OnDestroy {
             this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
         }
     }
-
+    */
+    /*
     uncheckAllItems() {
         this.checkAll = false;
         this.itemIsChecked = false;
@@ -234,20 +111,8 @@ export class NodeActionsComponent implements OnDestroy {
         this.someChildrenSelected = false;
         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
     }
-
-    search(event) {
-        if (event.keyCode === 13) {
-            this.dropdownIsOpen = false;
-            this._dictSrv.search(this.searchString, this.searchInAllDict);
-            event.target.blur();
-        }
-    }
-
-    fullSearch() {
-        this.modalRef.hide();
-        this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
-    }
-
+    */
+    /*
     create(hide = true) {
         // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
         this._dictSrv.addNode(this.newNodeData)
@@ -263,7 +128,7 @@ export class NodeActionsComponent implements OnDestroy {
                     path = path + bc.title + '/';
                 }
                 this._deskSrv.addRecentItem({
-                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
+                    link: this._dictSrv.getNodePath(node.id).join('/'),
                     title: title,
                     fullTitle: path + title
                 });
@@ -277,8 +142,5 @@ export class NodeActionsComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
     }
-
-    dataSeted(date: Date) {
-        console.log('recive date: ', date);
-    }
+    */
 }
