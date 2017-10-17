@@ -97,8 +97,10 @@ export class DesktopSwitcherComponent {
         return _newName;
     }
 
-    saveDesk(desk: EosDesk): void {
-        console.log('save');
+    saveDesk(desk: EosDesk, $evt?: Event): void {
+        if ($evt) {
+            $evt.stopPropagation();
+        }
         desk.edited = false;
         /* todo: re-factor it to inline validation messages */
         const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
@@ -125,7 +127,8 @@ export class DesktopSwitcherComponent {
         this.deskName = '';
     }
 
-    create() {
+    create($evt: Event) {
+        $evt.stopPropagation();
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
@@ -142,7 +145,8 @@ export class DesktopSwitcherComponent {
         }
     }
 
-    cancelEdit(desk: EosDesk) {
+    cancelEdit(desk: EosDesk, $evt: Event) {
+        $evt.stopPropagation();
         desk.edited = false;
         this.deskName = desk.name;
     }
@@ -152,7 +156,8 @@ export class DesktopSwitcherComponent {
         this.innerClick = false;
     }
 
-    removeDesk(desk: EosDesk): void {
+    removeDesk(desk: EosDesk, $evt: Event): void {
+        $evt.stopPropagation();
         const _confrm = Object.assign({}, CONFIRM_DESK_DELETE);
         _confrm.body = _confrm.body.replace('{{name}}', desk.name);
 
@@ -167,7 +172,8 @@ export class DesktopSwitcherComponent {
             .catch();
     }
 
-    cancelCreating() {
+    cancelCreating($evt: Event) {
+        $evt.stopPropagation();
         this.creating = false;
         this.deskName = '';
     }
@@ -190,6 +196,7 @@ export class DesktopSwitcherComponent {
         }
     }
     private route(desk: EosDesk): void {
+        console.log('!')
         if (desk.edited === false) {
             this._router.navigate(['/desk', desk.id]);
             this.hideDropDown();
