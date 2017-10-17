@@ -35,6 +35,15 @@ export class PushpinComponent {
     pin(desk: EosDesk) {
         /* tslint:disable:no-bitwise */
         if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
+            let arr = this._link.title.split('/');
+            arr = arr.slice(2, arr.length);
+            let newName = '';
+            for (const piece of arr) {
+                newName += piece + '/';
+            }
+            newName = newName.slice(0, newName.length - 1);
+            this._link.fullTitle = this._link.title;
+            this._link.title = newName;
             desk.references.push(this._link);
             this._deskSrv.editDesk(desk);
         } else {
