@@ -51,6 +51,7 @@
                 width: calc(100% - 170px);
                 overflow: hidden;
                 text-overflow: ellipsis;
+                max-width: 200px;
             }
 
             .icon {
