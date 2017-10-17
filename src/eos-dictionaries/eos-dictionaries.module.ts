@@ -14,10 +14,11 @@ import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
 
 /* components */
+import { CardComponent } from './card/card.component';
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { CardComponent } from './card/card.component';
+import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
@@ -31,7 +32,6 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-// import { CardActionService } from './card/card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
@@ -39,10 +39,11 @@ import { NodeActionsService } from './node-actions/node-actions.service';
 
 @NgModule({
     declarations: [
+        CardComponent,
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
-        CardComponent,
+        DictionarySearchComponent,
         NodeActionsComponent,
         NodeInfoComponent,
         NodeListComponent,

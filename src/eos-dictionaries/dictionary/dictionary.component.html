@@ -9,7 +9,57 @@
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
         <div class="eos-selected-node">
-            <eos-node-actions [params]="params" (actiot)="doAction($event)"></eos-node-actions>
+            <div class="eos-node-actions">
+                <div class="first-line block">
+                    <div class="controller pull-left">
+                        <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
+                    </div>
+                    <div class="pull-right">
+                        <eos-dictionary-search></eos-dictionary-search>
+                    </div>
+                    <div class="second-line block special-text">
+                        <span class="table-title">
+                            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                                containerClass="top-tooltip">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
+                                    <span></span>
+                                </label>
+                            </span>
+                            <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+                                containerClass="top-tooltip">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
+                                    <span></span>
+                                </label>
+                            </span>
+                            <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
+                        </span>
+                        <div class="clear-all"></div>
+                    </div>
+                </div>
+                <div class="second-line block special-text">
+                    <span class="table-title">
+                        <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox-inline" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}"
+                            containerClass="top-tooltip">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()">
+                                <span></span>
+                            </label>
+                        </span>
+                        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox-inline" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}"
+                            containerClass="top-tooltip">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()">
+                                <span></span>
+                            </label>
+                        </span>
+                        <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
+                    </span>
+                    <div class="clear-all"></div>
+                </div>
+            </div>
+
             <div *ngIf="_selectedNode" class="block eos-selected-node selected-node">
                 <a *ngIf="params.hasParent" class="link special-text" (click)="goUp()">Вверх</a>
                 <eos-node-list-item [node]="_selectedNode"></eos-node-list-item>
