@@ -15,6 +15,11 @@ export interface IRecordMode {
     [mode: string]: string[];
 }
 
+export interface IRecordModeDescription {
+    key: string,
+    title: string,
+}
+
 export class ModeFieldSet {
     [mode: string]: FieldDescriptor[];
 
@@ -158,6 +163,10 @@ export abstract class DictionaryDescriptor {
             default:
                 return null;
         }
+    }
+
+    getModeList() {
+        return null;
     }
 
     getFieldView(aSet: E_FIELD_SET, mode?: string) {

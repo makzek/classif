@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { NgForm } from '@angular/forms';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
@@ -7,7 +8,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { E_FIELD_SET, IRecordModeDescription } from '../core/dictionary-descriptor';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
 
@@ -17,80 +18,66 @@ import { SearchSettings } from '../core/search-settings.interface';
 })
 
 export class DictionarySearchComponent {
-    searchInAllDict: boolean;
-    searchString: string;
-    modalRef: BsModalRef;
-    dropdownIsOpen = false;
-    date = new Date();
-    fields: IFieldView[];
-    searchInDeleted = false;
-    innerClick = false;
-
-    private dictionary: EosDictionary;
-
     dictId = '';
-    fieldsDescr = {};
+    fieldsDescription = {};
     data = {};
     settings: SearchSettings;
-    currTab = 0;
-    fieldGroups = ['Подразделение', 'Кабинет', 'Должностное лицо'];
+    currTab: string;
+    modes: IRecordModeDescription[];
+    loading = true;
+    @ViewChild('searchForm') searchForm;
+    @ViewChild('pop') searchPop;
 
-    setTab(i: number) {
-        this.currTab = i;
+    setTab(key: string) {
+        this.currTab = key;
     }
 
     get noSearchData(): boolean {
-        /* tslint:disable:no-bitwise */
-        // return !~this.fields.findIndex((f) => f.value);
-        return false;
-        /* tslint:enable:no-bitwise */
+        if (this.searchForm) {
+            for (const _field in this.searchForm.value) {
+                if (this.searchForm.value[_field] && this.searchForm.value[_field] !== '') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     constructor(
-        private _modalSrv: BsModalService,
         private _dictSrv: EosDictService,
     ) {
         this._dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
+                this.loading = false;
                 this.dictId = _d.id;
-                this.fieldsDescr = _d.descriptor.getFieldDescription(_d.descriptor.getFieldSet(E_FIELD_SET.search));
+                this.fieldsDescription = _d.descriptor.getFieldDescription(_d.descriptor.getFieldSet(E_FIELD_SET.fullSearch));
+                this.modes = _d.descriptor.getModeList();
+                if (this.modes) {
+                    this.currTab = this.modes[0].key;
+                }
             }
         });
     }
 
-    @HostListener('window:click', [])
-    private _closeSearchModal(): void {
-        if (!this.innerClick) {
-            this.dropdownIsOpen = false;
-        }
-        this.innerClick = false;
-    }
 
     search(event: KeyboardEvent) {
         if (event.keyCode === 13) {
-            this.dropdownIsOpen = false;
-            this._dictSrv.search(this.searchString, this.searchInAllDict);
+            // this.dropdownIsOpen = false;
+            // this._dictSrv.search(this.searchString, this.searchInAllDict);
             // event.target.blur();
         }
     }
 
     fullSearch() {
-        this.modalRef.hide();
-        this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
+        this.searchPop.hide();
+        this._dictSrv.fullSearch(this.data, this.settings);
     }
 
-    dateSet(date: Date) {
-        console.log('recive date: ', date);
+    clearForm() {
+        for (const _field in this.data) {
+            if (this.data[_field]) {
+                this.data[_field] = '';
+            }
+        }
     }
-
-
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this._modalSrv.show(template);
-        this.dropdownIsOpen = true;
-    }
-
-    public change(value: boolean): void {
-        this.dropdownIsOpen = value;
-    }
-
 }

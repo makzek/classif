@@ -87,6 +87,15 @@
         &:hover {
             color: $button-color-hover-main-theme;
         }
+
+        &.full-search-btn {
+            &:active,
+            &:focus {
+                color: white;
+                background: $button-color-main-theme;
+                outline: none;
+            }
+        }
     }
 
     .active {

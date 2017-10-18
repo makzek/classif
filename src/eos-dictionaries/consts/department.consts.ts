@@ -12,6 +12,16 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
+    modeList: [ {
+        key: 'department',
+        title: 'Подразделение',
+    }, {
+        key: 'room',
+        title: 'Кабинет',
+    }, {
+        key: 'person',
+        title: 'Должностное лицо',
+    }],
     fields: [{
         key: 'DUE',
         type: 'string',
@@ -388,6 +398,18 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Отчество',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
+    }, {
+        key: 'titleRoom',
+        title: 'Краткое наименование кабинета',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
+        foreignKey: 'CLASSIF_NAME',
+    }, {
+        key: 'fullTitleRoom',
+        title: 'Краткое наименование кабинета',
+        type: 'text',
+        pattern: NOT_EMPTY_STRING,
+        foreignKey: 'fullTitleRoom',
     }],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     listFields: {
@@ -395,10 +417,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['RUBRIC_CODE', 'title']
     },
     fullSearchFields: {
-        person: ['RUBRIC_CODE', 'fio', 'NOTE'],
+        person: ['RUBRIC_CODE', 'PHONE', 'firstName', 'lastName', 'fathersName', 'E_MAIL'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
-        department: ['RUBRIC_CODE', 'title', 'NOTE']
+        department: ['RUBRIC_CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
+        room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
         person: ['RUBRIC_CODE', 'fio', 'NOTE'],
