@@ -122,7 +122,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }));
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
-            console.log(action);
             switch (action) {
                 // TODO: try to find more simple solition
                 case DICTIONARY_ACTIONS.closeTree:
