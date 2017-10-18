@@ -89,6 +89,6 @@ export class DictionarySearchComponent {
     }
 
     dateFilter(date: Date) {
-        // this._dictSrv.dateFilter(date, this.settings);
+        this._dictSrv.fullSearch({date: date}, this.settings);
     }
 }
