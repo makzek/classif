@@ -25,8 +25,12 @@ export class DictionarySearchComponent {
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
+    isOpenFull = false;
     @ViewChild('searchForm') searchForm;
     @ViewChild('pop') searchPop;
+
+    isOpenQuick = false;
+    dataQuick = '';
 
     setTab(key: string) {
         this.currTab = key;
@@ -59,13 +63,16 @@ export class DictionarySearchComponent {
         });
     }
 
+    toggleForm() {
+        this.isOpenQuick = !this.isOpenQuick;
+    }
 
-    search(event: KeyboardEvent) {
-        if (event.keyCode === 13) {
-            // this.dropdownIsOpen = false;
-            // this._dictSrv.search(this.searchString, this.searchInAllDict);
-            // event.target.blur();
-        }
+
+    quickSearch(evt: KeyboardEvent) {
+        if (evt.keyCode === 13) {
+            this.isOpenQuick = false;
+            this._dictSrv.search(this.dataQuick, this.settings);
+         }
     }
 
     fullSearch() {

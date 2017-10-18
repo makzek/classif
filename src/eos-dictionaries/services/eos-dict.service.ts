@@ -321,11 +321,12 @@ export class EosDictService {
         return _result;
     }
 
-    public search(searchString: string, globalSearch: boolean) {
+    public search(searchString: string, params: SearchSettings) {
         this._searchString = searchString;
         if (searchString.length) {
-            this._searchResults = this.dictionary.search(searchString, globalSearch, this.selectedNode);
-            if (!this._searchResults.length) {
+            // TODO: replace it with API query
+            // this._searchResults = this.dictionary.search(searchString, globalSearch, this.selectedNode);
+            if (!this._searchResults) {
                 this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
             }
         } else {

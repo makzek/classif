@@ -1,33 +1,15 @@
-<span class="date">Состояние на </span>
-<eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
-<button class="btn btn-primary-light full-search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom" #pop="bs-popover">
-    <i class="fa fa-filter fa-2x" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
-</button>
-<div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
-    <span dropdownToggle type="button">
-        <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left" containerClass="left-tooltip"></span>
-    </span>
-    <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
-        <li>
-            <div class="input-group search">
-                <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
-                    <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)" tooltip="Расширенный поиск"
-                        containerClass="top-tooltip"></span>
-                </span>
-                <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
-                    <span class="checkbox">
-                        <label>
-                            <input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom" containerClass="bottom-tooltip">
-                            <span></span>
-                        </label>
-                    </span>
-                </span>
-            </div>
-        </li>
-    </ul>
+<div class="eos-dictionary-search">
+    <span class="date">Состояние на </span>
+    <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
+    <button class="btn btn-primary-light search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom" #pop="bs-popover"
+        [ngClass]="{'opened': isOpenFull}" (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
+        <i class="fa fa-filter" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
+    </button>
+    <input type="text" class="form-control quick-search-form" [ngClass]="{'opened': isOpenQuick}" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
+    <button class="btn btn-primary-light search-btn quick-search-btn" (click)="toggleForm()" [ngClass]="{'opened': isOpenQuick}"> 
+            <i class="fa fa-search" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="left-tooltip"></i>
+    </button>
 </div>
-
 
 <ng-template #searchModal>
     <div class="full-search-top">

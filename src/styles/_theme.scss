@@ -88,9 +88,8 @@
             color: $button-color-hover-main-theme;
         }
 
-        &.full-search-btn {
-            &:active,
-            &:focus {
+        &.search-btn {
+            &.opened {
                 color: white;
                 background: $button-color-main-theme;
                 outline: none;
@@ -417,6 +416,12 @@
         }
 
         .form-control.ng-valid {
+            border-color: $border-color-main-theme;
+        }
+    }
+
+    .eos-dictionary-search {
+        .quick-search-form {
             border-color: $border-color-main-theme;
         }
     }
