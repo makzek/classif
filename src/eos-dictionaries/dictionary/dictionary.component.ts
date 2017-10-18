@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -38,7 +38,7 @@ import { NodeListComponent } from '../node-list/node-list.component';
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy {
+export class DictionaryComponent implements OnDestroy, OnInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
@@ -120,9 +120,52 @@ export class DictionaryComponent implements OnDestroy {
                 this.treeNodes = [];
             }
         }));
-
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
-            this._swichCurrentState(action); // ??????????????????
+            this._dictActSrv.closeAll = false;
+            console.log(action);
+            switch (action) {
+                // TODO: try to find more simple solition
+                case DICTIONARY_ACTIONS.closeTree:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.full:
+                            this.currentState = DICTIONARY_STATES.info;
+                            break;
+                        case DICTIONARY_STATES.tree:
+                            this.currentState = DICTIONARY_STATES.selected;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.openTree:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.info:
+                            this.currentState = DICTIONARY_STATES.full;
+                            break;
+                        case DICTIONARY_STATES.selected:
+                            this.currentState = DICTIONARY_STATES.tree;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.closeInfo:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.full:
+                            this.currentState = DICTIONARY_STATES.tree;
+                            break;
+                        case DICTIONARY_STATES.info:
+                            this.currentState = DICTIONARY_STATES.selected;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.openInfo:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.tree:
+                            this.currentState = DICTIONARY_STATES.full;
+                            break;
+                        case DICTIONARY_STATES.selected:
+                            this.currentState = DICTIONARY_STATES.info;
+                            break;
+                    }
+                    break;
+            }
         }));
 
         this._subscriptions.push(_profileSrv.settings$
@@ -362,53 +405,6 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
-    private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        this._dictActSrv.closeAll = false;
-        switch (action) {
-            // TODO: try to find more simple solition
-            case DICTIONARY_ACTIONS.closeTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.closeInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                }
-                break;
-        }
-    }
-
     validate(valid: boolean) {
         this.formValidated = valid;
     }
@@ -452,5 +448,22 @@ export class DictionaryComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    ngOnInit() {
+        if (window.innerWidth > 1500) {
+             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        }
+    }
+
+    private resize(): void {
+        if (window.innerWidth > 1500) {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        } else {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+        }
     }
 }

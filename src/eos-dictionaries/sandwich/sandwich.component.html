@@ -1,5 +1,5 @@
 <span *ngIf="show" class="eos-sandwich">
     <button class="btn sandwich" (click)="changeState()">
-        <span class="icon eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': isOpen && isLeft, 'rotate-right': isOpen && !isLeft }"></span>
+        <span class="icon eos-icon eos-icon-menu-blue small" [ngClass]="{'rotate-left': isWide && isLeft, 'rotate-right': isWide && !isLeft }"></span>
     </button>
 </span>

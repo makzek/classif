@@ -1,7 +1,7 @@
 <div class="eos-dictionary" [ngClass]="{'full': currentState === states.full,
         'only-selected': currentState === states.selected,
         'info': currentState === states.info,
-        'tree': currentState === states.tree}">
+        'tree': currentState === states.tree}" (window:resize)="resize()">
     <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
         'has-spinner': !treeNodes.length}">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
