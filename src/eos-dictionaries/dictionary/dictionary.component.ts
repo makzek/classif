@@ -230,58 +230,6 @@ export class DictionaryComponent implements OnDestroy {
     private _moveUp(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
 
-<<<<<<< HEAD
-    onClick() {
-        if (window.innerWidth <= 1500) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-        }
-    }
-
-    private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        switch (action) {
-            // TODO: try to find more simple solition
-            case DICTIONARY_ACTIONS.closeTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.closeInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                }
-                break;
-=======
         if (_idx > 0) {
             const item = this.visibleNodes[_idx - 1];
             this.visibleNodes[_idx - 1] = this.visibleNodes[_idx];
@@ -297,7 +245,6 @@ export class DictionaryComponent implements OnDestroy {
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
             this.nodeListComponent.writeValues(this.visibleNodes);
->>>>>>> master
         }
     }
 
