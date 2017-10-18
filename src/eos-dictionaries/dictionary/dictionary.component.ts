@@ -217,12 +217,10 @@ export class DictionaryComponent implements OnDestroy {
         if (window.innerWidth <= 1500) {
             this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
             this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._actSrv.closeAll = true;
         }
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        this._actSrv.closeAll = false;
         switch (action) {
             // TODO: try to find more simple solition
             case DICTIONARY_ACTIONS.closeTree:
