@@ -82,7 +82,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         key: 'fullTitle',
         title: 'Полное наименование',
         type: 'text',
-        length: 248,
+        length: 2000,
         pattern: NOT_EMPTY_STRING,
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
