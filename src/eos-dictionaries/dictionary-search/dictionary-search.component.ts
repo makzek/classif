@@ -87,4 +87,8 @@ export class DictionarySearchComponent {
             }
         }
     }
+
+    dateFilter(date: Date) {
+        // this._dictSrv.dateFilter(date, this.settings);
+    }
 }

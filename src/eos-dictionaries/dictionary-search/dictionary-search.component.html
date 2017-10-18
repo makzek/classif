@@ -1,6 +1,8 @@
 <div class="eos-dictionary-search">
-    <span class="date">Состояние на </span>
-    <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
+    <div *ngIf="dictId === 'departments'" class="date-filter-wrapper">
+        <span class="date">Состояние на </span>
+        <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [readonly]="false"></eos-datepicker>
+    </div>
     <button class="btn btn-primary-light search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom" #pop="bs-popover"
         [ngClass]="{'opened': isOpenFull}" (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
         <i class="fa fa-filter" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
