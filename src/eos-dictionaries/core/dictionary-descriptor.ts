@@ -135,6 +135,18 @@ export abstract class DictionaryDescriptor {
         return this._getFieldSet(aSet, values);
     }
 
+    getFieldDescription(fields: FieldDescriptor[]): any {
+        const _description = {};
+        fields.forEach((_f) => {
+            _description[_f.key] = {
+                title: _f.title,
+                length: _f.length,
+                pattern: _f.pattern,
+            }
+        });
+        return _description;
+    }
+
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
             /*

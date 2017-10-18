@@ -1,7 +1,7 @@
 <span class="date">Состояние на </span>
 <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
-<button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
-    <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+<button class="btn btn-primary-light full-search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom">
+    <i class="fa fa-filter fa-2x" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
 </button>
 <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
     <span dropdownToggle type="button">
@@ -30,39 +30,59 @@
 
 
 <ng-template #searchModal>
-    <div class="search-modal modal-header">
-        <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="full-search-top">
+        <span class="pull-left title">Область поиска</span>
     </div>
-    <div class="search-modal modal-body">
-        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
+    <div>
         <div class="checkbox-inline">
             <label>
                 <input type="checkbox" [(ngModel)]="searchInDeleted">
                 <span></span>Учитывать логически удаленные</label>
         </div>
-        <div *ngIf="fields">
-            <div *ngFor="let field of fields">
-                <div class="input-group" *ngIf="field.type === 3">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group" *ngIf="field.type === 0">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-                </div>
-                <div class="checkbox" *ngIf="field.type === 6">
-                    <label>
-                        <input type="checkbox" [(ngModel)]="field.value">
-                        <span></span>
-                        {{field.title}}</label>
+        <div class="tabs-wrapper">
+            <ul class="tabs">
+                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
+                    (click)="setTab(i)">
+                    <span class="tab-title">{{tab}}</span>
+                </li>
+            </ul>
+        </div>
+        <form #rubricForm="ngForm"  [hidden]="dictId !== 'rubricator'" class="row full-search-form">
+            <div class="col-md-3 col-lg-3 col-xl-3">
+                <div class="form-group">
+                    <label for="code">{{fieldsDescr['RUBRIC_CODE']?.title}}</label>
+                    <input id="code" name="code" type="text" class="form-control"
+                        [(ngModel)]="data['RUBRIC_CODE']"
+                        placeholder="{{fieldsDescr['RUBRIC_CODE']?.title}}">
                 </div>
             </div>
-        </div>
-        <div>
-            <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
+            <div class="col-md-9 col-lg-9 col-xl-9">
+                <div class="form-group">
+                    <label for="title">{{fieldsDescr['CLASSIF_NAME']?.title}}</label>
+                    <input id="title" name="title" type="text" class="form-control"
+                        [(ngModel)]="data['CLASSIF_NAME']"
+                        placeholder="{{fieldsDescr['CLASSIF_NAME']?.title}}">
+                </div>
+                <div class="form-group">
+                    <label for="fullTitle">{{fieldsDescr['fullTitle']?.title}}</label>
+                    <input id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                        [(ngModel)]="data['fullTitle']"
+                        placeholder="{{fieldsDescr['fullTitle']?.title}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="note">{{fieldsDescr['NOTE']?.title}}</label>
+                    <input id="note" name="note" type="text" class="form-control"
+                        [(ngModel)]="data['NOTE']"
+                        placeholder="{{fieldsDescr['NOTE']?.title}}">
+                </div>
+            </div>
+        </form>
+        <div class="full-search-bottom">
+            <span class="pull-right">
+                <button [disabled]="noSearchData" class="btn btn-primary">Сбросить</button>
+                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full">Найти</button>
+            </span>
         </div>
     </div>
 </ng-template>

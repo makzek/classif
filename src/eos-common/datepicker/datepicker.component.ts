@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { BsDatepickerConfig, BsDatepickerComponent} from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/bs-moment';
 import { ru } from 'ngx-bootstrap/locale';
 defineLocale('ru', ru);
@@ -8,7 +8,7 @@ defineLocale('ru', ru);
     selector: 'eos-datepicker',
     templateUrl: 'datepicker.component.html',
 })
-export class DatepickerComponent implements OnInit, OnDestroy {
+export class DatepickerComponent {
     @Input() value = Date();
     @Input() readonly = false;
     @Input() placeholder = '';
@@ -19,7 +19,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     placement = 'bottom';
 
     @ViewChild('dpw') datePickerWrapper: ElementRef;
-    @ViewChild('dp') datePicker;
+    @ViewChild('dp') datePicker: BsDatepickerComponent;
 
     constructor() {
         this.bsConfig = {
@@ -30,19 +30,6 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             isDisabled: true,
         };
     }
-
-    ngOnInit() {
-        this.measureDistance();
-        window.addEventListener('scroll', this.scroll, true);
-    }
-
-    ngOnDestroy() {
-        window.removeEventListener('scroll', this.scroll, true);
-    }
-
-    scroll = (): void => {
-        this.measureDistance();
-    };
 
     emitChange(date: Date) {
         this.change.emit(date);
@@ -62,5 +49,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        this.datePicker.toggle();
+        this.datePicker.toggle();
     }
 }

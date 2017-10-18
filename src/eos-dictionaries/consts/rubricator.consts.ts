@@ -86,7 +86,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
-    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],

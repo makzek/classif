@@ -9,11 +9,13 @@ import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET } from '../core/dictionary-descriptor';
 import { EosDictionary } from '../core/eos-dictionary';
+import { SearchSettings } from '../core/search-settings.interface';
 
 @Component({
     selector: 'eos-dictionary-search',
     templateUrl: 'dictionary-search.component.html'
 })
+
 export class DictionarySearchComponent {
     searchInAllDict: boolean;
     searchString: string;
@@ -26,9 +28,21 @@ export class DictionarySearchComponent {
 
     private dictionary: EosDictionary;
 
+    dictId = '';
+    fieldsDescr = {};
+    data = {};
+    settings: SearchSettings;
+    currTab = 0;
+    fieldGroups = ['Подразделение', 'Кабинет', 'Должностное лицо'];
+
+    setTab(i: number) {
+        this.currTab = i;
+    }
+
     get noSearchData(): boolean {
         /* tslint:disable:no-bitwise */
-        return !~this.fields.findIndex((f) => f.value);
+        // return !~this.fields.findIndex((f) => f.value);
+        return false;
         /* tslint:enable:no-bitwise */
     }
 
@@ -37,11 +51,9 @@ export class DictionarySearchComponent {
         private _dictSrv: EosDictService,
     ) {
         this._dictSrv.dictionary$.subscribe((_d) => {
-            this.dictionary = _d;
             if (_d) {
-                this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
-            } else {
-                this.fields = [];
+                this.dictId = _d.id;
+                this.fieldsDescr = _d.descriptor.getFieldDescription(_d.descriptor.getFieldSet(E_FIELD_SET.search));
             }
         });
     }
