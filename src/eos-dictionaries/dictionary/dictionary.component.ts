@@ -10,6 +10,7 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
+import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
@@ -41,12 +42,13 @@ export class DictionaryComponent implements OnDestroy {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
+    dictionary: EosDictionary;
     dictionaryName: string;
+    public dictionaryId: string;
 
     public params: INodeListParams;
     public _selectedNode: EosDictionaryNode;
     public _selectedNodeText: string;
-    public _dictionaryId: string;
     private _nodeId: string;
 
     treeNodes: EosDictionaryNode[];
@@ -66,8 +68,10 @@ export class DictionaryComponent implements OnDestroy {
 
     viewFields: IFieldView[] = []; // todo: fill for title
 
-    newNodeData: any = {};
+    nodeData: any = {};
     creatingModal: BsModalRef;
+    fieldsDescription: any;
+    formValidated: boolean;
 
     constructor(
         private _route: ActivatedRoute,
@@ -97,7 +101,7 @@ export class DictionaryComponent implements OnDestroy {
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
-                this._dictionaryId = params.dictionaryId;
+                this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
                 this._update();
             }
@@ -105,7 +109,8 @@ export class DictionaryComponent implements OnDestroy {
 
         this._subscriptions.push(_dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
-                this._dictionaryId = dictionary.id;
+                this.dictionary = dictionary;
+                this.dictionaryId = dictionary.id;
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                 }
@@ -133,8 +138,10 @@ export class DictionaryComponent implements OnDestroy {
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
-                this.listNodes = node.children;
+                this.listNodes = node.children || [];
                 this._updateVisibleNodes();
+            } else {
+                this.listNodes = [];
             }
         }));
     }
@@ -145,8 +152,8 @@ export class DictionaryComponent implements OnDestroy {
 
 
     private _update() {
-        if (this._dictionaryId) {
-            this._dictSrv.openDictionary(this._dictionaryId)
+        if (this.dictionaryId) {
+            this._dictSrv.openDictionary(this.dictionaryId)
                 .then(() => this._dictSrv.selectNode(this._nodeId));
         }
     }
@@ -332,7 +339,7 @@ export class DictionaryComponent implements OnDestroy {
                 }
             });
         }
-        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
+        this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
     physicallyDelete() {
@@ -344,11 +351,8 @@ export class DictionaryComponent implements OnDestroy {
                     } else {
                         const _deleteResult = this._dictSrv.physicallyDelete(node.id);
                         if (_deleteResult) {
-                            this._router.navigate([
-                                'spravochniki',
-                                this._dictionaryId,
-                                node.parent.id,
-                            ]);
+                            const path = this._dictSrv.getNodePath(node.parent);
+                            this._router.navigate(path);
                         } else {
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                         }
@@ -405,18 +409,28 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
+    validate(valid: boolean) {
+        this.formValidated = valid;
+    }
+
+    private _clearForm() {
+        this.formValidated = false;
+        this.nodeData = {};
+    }
+
     private _create() {
-        this.creatingModal = this._modalSrv.show(this.createTemplate, {class: 'creating-modal modal-lg'});
+        this._clearForm();
+        this.fieldsDescription = this._selectedNode.getEditFieldsDescription();
+        this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
     }
 
     create(hide = true) {
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this._dictSrv.addNode(this.newNodeData)
+        this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 console.log('created node', node);
                 let title = '';
                 node.getShortQuickView().forEach((_f) => {
-                    title += this.newNodeData[_f.key];
+                    title += this.nodeData[_f.key];
                 });
                 const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
                 let path = '';
@@ -431,11 +445,12 @@ export class DictionaryComponent implements OnDestroy {
                 if (hide) {
                     this.creatingModal.hide();
                 }
-                this.newNodeData = {};
+                this._clearForm();
             });
     }
 
     cancelCreate() {
         this.creatingModal.hide();
+        this._clearForm();
     }
 }
