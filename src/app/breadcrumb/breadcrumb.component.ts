@@ -21,51 +21,45 @@ export class BreadcrumbsComponent {
 
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _actSrv: DictionaryActionService
+        private _dictActSrv: DictionaryActionService
     ) {
         this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
             if (bc) {
                 this.breadcrumbs = bc;
             }
         });
+        this._dictActSrv.action$.subscribe((action) => {
+            if (action === DICTIONARY_ACTIONS.openInfo) {
+                this.infoOpened = true
+            } else if (action === DICTIONARY_ACTIONS.closeInfo) {
+                this.infoOpened = false;
+            } else if (action === DICTIONARY_ACTIONS.openTree) {
+                this.treeOpened = true;
+            } else if (action === DICTIONARY_ACTIONS.closeTree) {
+                this.treeOpened = false;
+            }
+        })
     }
 
     get closeAll() {
-        return this._actSrv.closeAll;
+        return this._dictActSrv.closeAll;
     }
 
     openTree(value: boolean) {
         this.treeOpened = value;
         if (value) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
         } else {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
         }
     }
 
     openInfo(value: boolean) {
         this.infoOpened = value;
         if (value) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
         } else {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-        }
-    }
-
-    private firstLoad(): void {
-        if (window.innerWidth > 1500) {
-             this.openTree(true);
-             this.openInfo(true);
-        }
-    }
-
-    private resize(): void {
-        if (window.innerWidth > 1500) {
-            this.openInfo(true);
-            this.openTree(true)
-        } else {
-            this.openInfo(false);
-            this.openTree(false);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
         }
     }
 }

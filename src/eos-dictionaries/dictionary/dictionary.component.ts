@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -38,7 +38,7 @@ import { NodeListComponent } from '../node-list/node-list.component';
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy {
+export class DictionaryComponent implements OnDestroy, OnInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
@@ -120,10 +120,9 @@ export class DictionaryComponent implements OnDestroy {
                 this.treeNodes = [];
             }
         }));
-
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
-            console.warn(action);
+            console.log(action);
             switch (action) {
                 // TODO: try to find more simple solition
                 case DICTIONARY_ACTIONS.closeTree:
@@ -449,5 +448,22 @@ export class DictionaryComponent implements OnDestroy {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    ngOnInit() {
+        if (window.innerWidth > 1500) {
+             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        }
+    }
+
+    private resize(): void {
+        if (window.innerWidth > 1500) {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        } else {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+        }
     }
 }

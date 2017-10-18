@@ -1,4 +1,4 @@
-<div class="eos-breadcrumb block" (window:load)="firstLoad()" (window:resize)="resize()">
+<div class="eos-breadcrumb block">
     <eos-sandwich class="left-sandwich" (onClick)="openTree($event)" [isLeft]="true" [isWide]="treeOpened" [close]="closeAll"></eos-sandwich>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
