@@ -14,6 +14,7 @@ import { EosCommonModule } from '../eos-common/eos-common.module';
 
 /* components */
 import { CardComponent } from './card/card.component';
+import { CardEditComponent } from './card-views/card-edit.component';
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
@@ -38,6 +39,7 @@ import { EosDictService } from './services/eos-dict.service';
 @NgModule({
     declarations: [
         CardComponent,
+        CardEditComponent,
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,

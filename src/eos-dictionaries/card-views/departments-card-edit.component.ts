@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 
-import { CardEditComponent } from './card-edit.component';
+import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit, OnChanges {
+export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnInit, OnChanges {
     fieldGroups: string[];
     currTab = 0;
     @ViewChild('departForm') form;

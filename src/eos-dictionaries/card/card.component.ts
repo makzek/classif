@@ -49,7 +49,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private nodeData: any = {};
     private _originalData: any = {};
     private _changed = false;
-    private fieldsDescription: any = {};
+    fieldsDescription: any = {};
 
     dictionaryId: string;
     private nodeId: string;
