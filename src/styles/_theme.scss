@@ -9,6 +9,7 @@
         color: $active-field-color-main-theme;
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
     }
+
     &.invalid-tooltip {
         .tooltip-inner {
             color: $invalid-color-main-theme;
@@ -21,6 +22,7 @@
     .tooltip-arrow {
         border-right-color: $active-field-color-main-theme !important;
     }
+
     &.invalid-tooltip {
         .tooltip-arrow {
             border-right-color: $invalid-color-main-theme !important;
@@ -32,6 +34,7 @@
     .tooltip-arrow {
         border-left-color: $active-field-color-main-theme !important;
     }
+
     &.invalid-tooltip {
         .tooltip-arrow {
             border-left-color: $invalid-color-main-theme !important;
@@ -43,6 +46,7 @@
     .tooltip-arrow {
         border-top-color: $active-field-color-main-theme !important;
     }
+
     &.invalid-tooltip {
         .tooltip-arrow {
             border-top-color: $invalid-color-main-theme !important;
@@ -54,6 +58,7 @@
     .tooltip-arrow {
         border-bottom-color: $active-field-color-main-theme !important;
     }
+
     &.invalid-tooltip {
         .tooltip-arrow {
             border-bottom-color: $invalid-color-main-theme !important;
@@ -68,61 +73,85 @@
         color: $primary-font-color-main-theme;
         border-color: $border-color-main-theme;
     }
+
     .special-text {
         color: $button-color-main-theme;
     }
+
     .btn-primary-light {
         background-color: transparent;
         color: $button-color-main-theme;
         border-color: transparent;
         padding: 1px 6px;
+
         &:hover {
             color: $button-color-hover-main-theme;
         }
+
+        &.full-search-btn {
+            &:active,
+            &:focus {
+                color: white;
+                background: $button-color-main-theme;
+                outline: none;
+            }
+        }
     }
+
+    .active {
+        border-color: $button-color-main-theme;
+    }
+
     /* .btn-icon {
-        background-color: white;
-        width: $item-width;
-        color: $button-color-main-theme;
-    }*/
+            background-color: white;
+            width: $item-width;
+            color: $button-color-main-theme;
+        }*/
     .btn-primary {
         border: 2px solid $button-color-main-theme;
         color: $button-color-main-theme;
         background: white;
         padding: 0 4px;
+
         &:hover {
             color: $button-color-hover-main-theme;
             border-color: $button-color-hover-main-theme;
         }
     }
+
     .btn-primary-full {
         border: 2px solid $button-color-main-theme;
         background: $button-color-main-theme;
         color: white;
         padding: 0 4px;
+
         &:hover {
             border-color: $button-color-hover-main-theme;
             background: $button-color-hover-main-theme;
         }
     }
+
     .ng-invalid {
         border-color: $invalid-color-main-theme;
         outline-color: $invalid-color-main-theme;
     }
+
     .ng-valid {
         border-color: $valid-color-main-theme;
         outline-color: $valid-color-main-theme;
     }
+
     .pagination {
-        &>li {
-            &>a,
-            &>span {
+        & > li {
+            & > a,
+            & > span {
                 color: $button-color-main-theme;
             }
         }
-        &>.active {
-            &>a,
-            &>span {
+
+        & > .active {
+            & > a,
+            & > span {
                 &,
                 &:hover,
                 &:focus {
@@ -133,26 +162,45 @@
             }
         }
     }
+
     .input-cleaner {
         color: $button-color-main-theme;
+
         &:hover {
             color: $button-color-hover-main-theme;
         }
     }
+
     .deleted {
         color: $disabled-color-main-theme;
-    } // main-layout
+    }
+
+    .tabs-wrapper {
+        border-color: $border-color-main-theme;
+
+        .tab-item {
+            &.active {
+                border-color: $button-color-main-theme;
+            }
+        }
+    }
+
+    // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
         color: $primary-font-color-main-theme;
+
         .header-wrapper {
             background-color: $primary-color-main-theme;
+
             .header-content {
                 .header-item {
                     color: $primary-font-color-main-theme;
+
                     a {
                         color: $primary-font-color-main-theme;
                     }
+
                     .active {
                         color: $button-color-main-theme;
                     }
@@ -160,44 +208,56 @@
             }
         }
     }
+
     .content-wrapper {
         background: $secondary-color-main-theme;
     }
+
     .eos-breadcrumb {
         .link {
             color: $primary-font-color-main-theme;
         }
-        .breadcrumb>li::before {
+
+        .breadcrumb > li::before {
             color: $button-color-main-theme;
         }
     }
+
     .sidebar-wrapper,
     .header-wrapper,
     .breadcrumb-wrapper {
         border-color: $border-color-main-theme;
     }
+
     .opened-wrapper {
         background-color: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
     }
+
     .tree-wrapper {
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
-    } // components
+    }
+
+    // components
     .eos-opened-node {
         .full-info {
             border-color: $border-color-main-theme;
+
             .field-title {
                 color: $unimportant-info-color-main-theme;
             }
         }
+
         .opened-node-actions {
             border-color: $border-color-main-theme;
         }
     }
+
     .eos-node-list-item {
         color: $secondary-font-color-main-theme;
     }
+
     .eos-node-list,
     .eos-node-list-item {
         // background-color: $block-color-main-theme;
@@ -205,38 +265,47 @@
         .selected-node {
             color: $secondary-font-color-main-theme;
         }
+
         .highlight,
         &.highlight {
             background: $highlight-color-main-theme;
         }
+
         .count-select {
             border-color: $border-color-main-theme;
         }
     }
+
     .eos-tree-node {
         .deleted {
             .node-title {
                 color: $disabled-color-main-theme;
             }
         }
+
         .active {
             background-color: $highlight-color-main-theme;
+
             .node-title {
                 color: $secondary-font-color-main-theme;
             }
         }
+
         .node-title {
             color: $primary-font-color-main-theme;
         }
     }
+
     .eos-search {
         color: $button-color-main-theme;
     }
+
     .eos-notice {
         .btn {
             color: $button-color-main-theme;
         }
     }
+
     .eos-desktop {
         .recent {
             .recent-title-wrapper,
@@ -244,16 +313,19 @@
                 border-color: $border-color-main-theme;
             }
         }
+
         .icon-btn {
             color: $secondary-font-color-main-theme;
         }
     }
+
     .eos-dictionary {
         .tree-wrapper,
         .opened-wrapper {
             border-color: $border-color-main-theme;
         }
     }
+
     .eos-user {
         /* .avatar {
             background: $block-color-main-theme;
@@ -262,72 +334,95 @@
             color: $secondary-font-color-main-theme;
         }
     }
+
     .eos-desktop-switcher {
         color: $secondary-font-color-main-theme;
+
         .menuitem {
             a {
                 color: $secondary-font-color-main-theme;
             }
+
             &:hover {
                 background-color: $secondary-color-main-theme;
             }
+
             &:active {
                 background-color: $secondary-color-main-theme;
             }
         }
+
         .dropdown-button {
             border-color: $border-color-main-theme;
             color: $primary-font-color-main-theme;
         }
     }
+
     .eos-card {
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
+
         .edit-header {
             background: $block-color-main-theme;
             color: $secondary-font-color-main-theme;
             border-color: $border-color-main-theme;
         }
+
         .edit-content {
             label {
                 color: $unimportant-info-color-main-theme;
             }
+
             .form-control {
                 color: $secondary-font-color-main-theme;
                 background-color: $secondary-color-main-theme;
                 border-color: $border-color-main-theme;
+
                 &:focus {
                     border-color: $active-field-color-main-theme;
                 }
+
                 &.readonly {
                     background-color: transparent;
                 }
+
                 &.ng-invalid {
                     border-color: $invalid-color-main-theme;
                 }
             }
         }
     }
+
     .eos-node-actions {
         .icon {
             color: $button-color-main-theme;
         }
     }
+
     .search-wrapper {
         .ng-valid {
             border-color: $border-color-main-theme;
         }
-    } // spacial templates
-    .eos-departments-card-edit {
-        .tabs-wrapper {
-            border-color: $border-color-main-theme;
-            .tab-item {
-                &.active {
-                    border-color: $button-color-main-theme;
-                }
-            }
+    }
+
+    .full-search-top,
+    .full-search-bottom {
+        border-color: $border-color-main-theme;
+    }
+
+    .full-search-form {
+        label {
+            color: $unimportant-info-color-main-theme;
         }
+
+        .form-control.ng-valid {
+            border-color: $border-color-main-theme;
+        }
+    }
+
+    // spacial templates
+    .eos-departments-card-edit {
         .block-title {
             border-color: $border-color-main-theme;
             color: $unimportant-info-color-main-theme;

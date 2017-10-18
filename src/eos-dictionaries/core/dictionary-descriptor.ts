@@ -15,6 +15,11 @@ export interface IRecordMode {
     [mode: string]: string[];
 }
 
+export interface IRecordModeDescription {
+    key: string,
+    title: string,
+}
+
 export class ModeFieldSet {
     [mode: string]: FieldDescriptor[];
 
@@ -135,6 +140,18 @@ export abstract class DictionaryDescriptor {
         return this._getFieldSet(aSet, values);
     }
 
+    getFieldDescription(fields: FieldDescriptor[]): any {
+        const _description = {};
+        fields.forEach((_f) => {
+            _description[_f.key] = {
+                title: _f.title,
+                length: _f.length,
+                pattern: _f.pattern,
+            }
+        });
+        return _description;
+    }
+
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
             /*
@@ -146,6 +163,10 @@ export abstract class DictionaryDescriptor {
             default:
                 return null;
         }
+    }
+
+    getModeList() {
+        return null;
     }
 
     getFieldView(aSet: E_FIELD_SET, mode?: string) {

@@ -6,13 +6,14 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
+import { INodeListParams } from '../core/dictionary.interface';
 
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnChanges, OnDestroy {
-    @Input() params: any;
+    @Input() params: INodeListParams;
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     buttons: IActionButton[];

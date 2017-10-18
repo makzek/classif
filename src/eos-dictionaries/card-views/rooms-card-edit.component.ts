@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { CardEditComponent } from './card-edit.component';
+import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-rooms-card-edit',
     templateUrl: 'rooms-card-edit.component.html',
 })
-export class RoomsCardEditComponent extends CardEditComponent {
+export class RoomsCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showUsers = true;
     showAccess = true;

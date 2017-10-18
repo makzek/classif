@@ -2,30 +2,6 @@
     overflow-y: auto;
     overflow-x: hidden;
 
-    .tabs-wrapper {
-        width: 800px;
-        display: flex;
-        justify-content: space-around;
-        border-bottom: 1px solid transparent;
-        margin: -11px -20px 20px;
-    }
-
-    .tabs {
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-
-        .tab-item {
-            display: inline-block;
-            border-bottom: 5px solid transparent;
-            padding: 12px 0 5px;
-            position: relative;
-            cursor: pointer;
-            height: $item-height;
-            margin-right: 40px;
-        }
-    }
-
     .block-title {
         border-bottom: 1px solid transparent;
         display: inline-block;

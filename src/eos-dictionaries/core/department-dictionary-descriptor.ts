@@ -1,5 +1,6 @@
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
+import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, IRecordModeDescription,
+    ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 
 export enum E_DEPT_MODE {
@@ -9,6 +10,7 @@ export enum E_DEPT_MODE {
 
 export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     modeField: string;
+    modeList: IRecordModeDescription[];
     fullSearchFields: IRecordMode;
     quickViewFields: IRecordMode;
     shortQuickViewFields: IRecordMode;
@@ -19,6 +21,7 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     parent: DepartmentDictionaryDescriptor;
     modeField: FieldDescriptor;
+    modeList: IRecordModeDescription[];
 
     constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
         /* fields: IFieldDesriptor[], typeFieldName: string */
@@ -28,6 +31,8 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         if (!this.modeField) {
             throw new Error('No field decribed for "' + data.modeField + '"');
         }
+
+        this.modeList = data.modeList;
     }
 
     getMode(values: any): E_DEPT_MODE {
@@ -88,11 +93,15 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
                 return this._getModeSet(this.editFields, values);
             case E_FIELD_SET.list:
                 return this._getModeSet(this.listFields, values);
-            case E_FIELD_SET.fullSearch:
-                return this._getModeSet(this.fullSearchFields, values);
+            /* case E_FIELD_SET.fullSearch:
+                return this._getModeSet(this.fullSearchFields, values);*/
             default:
                 throw new Error('Unknown field set');
         }
+    }
+
+    getModeList(): IRecordModeDescription[] {
+        return this.record.modeList;
     }
 
 

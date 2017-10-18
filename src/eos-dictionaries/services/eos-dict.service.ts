@@ -6,6 +6,7 @@ import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
+import { SearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
@@ -333,9 +334,10 @@ export class EosDictService {
         this._searchResults$.next(this._searchResults);
     }
 
-    public fullSearch(queries: IFieldView[], searchInDeleted: boolean) {
-        this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
-        if (!this._searchResults.length) {
+    public fullSearch(data: any, params: SearchSettings) {
+        // TODO: replace it with API query
+        // this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
+        if (!this._searchResults) {
             this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
         }
         this._searchResults$.next(this._searchResults);

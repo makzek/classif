@@ -1,7 +1,7 @@
 <span class="date">Состояние на </span>
 <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateSet($event)" [readonly]="false"></eos-datepicker>
-<button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip">
-    <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+<button class="btn btn-primary-light full-search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom" #pop="bs-popover">
+    <i class="fa fa-filter fa-2x" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
 </button>
 <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
     <span dropdownToggle type="button">
@@ -30,39 +30,163 @@
 
 
 <ng-template #searchModal>
-    <div class="search-modal modal-header">
-        <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="full-search-top">
+        <span class="pull-left title">Область поиска</span>
     </div>
-    <div class="search-modal modal-body">
-        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
+    <div>
         <div class="checkbox-inline">
             <label>
                 <input type="checkbox" [(ngModel)]="searchInDeleted">
                 <span></span>Учитывать логически удаленные</label>
         </div>
-        <div *ngIf="fields">
-            <div *ngFor="let field of fields">
-                <div class="input-group" *ngIf="field.type === 3">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+        <div *ngIf="loading" class="spinner-wrapper">
+            <eos-spinner size="md"></eos-spinner>
+        </div>
+        <form #searchForm="ngForm">
+            <div [hidden]="dictId !== 'departments'" class="full-search-form">
+                <div *ngIf="modes" class="tabs-wrapper">
+                    <ul class="tabs">
+                        <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active': tab.key === currTab}"
+                            (click)="setTab(tab.key)">
+                            <span class="tab-title">{{tab.title}}</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="input-group" *ngIf="field.type === 0">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
+                <div *ngIf="currTab === 'person'">
+                    <div class="row">
+                        <div class="form-group col-md-3 col-lg-3 col-xl-3">
+                            <label for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                            <input id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control"
+                                [(ngModel)]="data['RUBRIC_CODE']"
+                                placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}" >
+                        </div>
+
+                        <div class="form-group col-md-9 col-lg-9 col-xl-9">
+                            <label for="lastName">{{fieldsDescription['lastName']?.title}}</label>
+                            <input id="lastName" name="lastName" type="text" class="form-control"
+                                [(ngModel)]="data['lastName']"
+                                placeholder="{{fieldsDescription['lastName']?.title}}" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xl-3"></div>
+
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <div class="row">
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                    <label for="firstName">{{fieldsDescription['firstName']?.title}}</label>
+                                    <input id="firstName" name="firstName" type="text" class="form-control"
+                                        [(ngModel)]="data['firstName']"
+                                        placeholder="{{fieldsDescription['firstName']?.title}}" >
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                    <label for="fathersName">{{fieldsDescription['fathersName']?.title}}</label>
+                                    <input id="fathersName" name="fathersName" type="text" class="form-control"
+                                        [(ngModel)]="data['fathersName']"
+                                        placeholder="{{fieldsDescription['fathersName']?.title}}" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-lg-3 col-xl-3">
+                            <label for="PHONE">{{fieldsDescription['PHONE']?.title}}</label>
+                            <input id="PHONE" name="PHONE" type="text" class="form-control"
+                                [(ngModel)]="data['PHONE']"
+                                placeholder="{{fieldsDescription['PHONE']?.title}}" >
+                        </div>
+
+                        <div class="form-group col-md-9 col-lg-9 col-xl-9">
+                            <label for="E_MAIL">{{fieldsDescription['E_MAIL']?.title}}</label>
+                            <input id="E_MAIL" name="E_MAIL" type="text" class="form-control"
+                                [(ngModel)]="data['E_MAIL']"
+                                placeholder="{{fieldsDescription['E_MAIL']?.title}}" >
+                        </div>
+                    </div>
                 </div>
-                <div class="checkbox" *ngIf="field.type === 6">
-                    <label>
-                        <input type="checkbox" [(ngModel)]="field.value">
-                        <span></span>
-                        {{field.title}}</label>
+                <div *ngIf="currTab === 'room'">
+                    <div class="form-group">
+                        <label for="titleRoom">{{fieldsDescription['titleRoom']?.title}}</label>
+                        <input id="titleRoom" name="titleRoom" type="text" class="form-control"
+                            [(ngModel)]="data['CLASSIF_NAME']"
+                            placeholder="{{fieldsDescription['titleRoom']?.title}}" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fullTitleRoom">{{fieldsDescription['fullTitleRoom']?.title}}</label>
+                        <input id="fullTitleRoom" name="fullTitleRoom" type="text" class="form-control"
+                            [(ngModel)]="data['fullTitleRoom']"
+                            placeholder="{{fieldsDescription['fullTitleRoom']?.title}}" >
+                    </div>
+                </div>
+                <div *ngIf="currTab === 'department'" class="row">
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <label for="code">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                            <input id="code" name="code" type="text" class="form-control"
+                                [(ngModel)]="data['RUBRIC_CODE']"
+                                placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
+                            <input id="indexDep" name="indexDepcode" type="text" class="form-control"
+                                [(ngModel)]="data['DEPARTMENT_INDEX']"
+                                placeholder="{{fieldsDescription['indexDep']?.title}}">
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-lg-9 col-xl-9">
+                        <div class="form-group">
+                            <label for="title">{{fieldsDescription['title']?.title}}</label>
+                            <input id="title" name="title" type="text" class="form-control"
+                                [(ngModel)]="data['CLASSIF_NAME']"
+                                placeholder="{{fieldsDescription['title']?.title}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
+                            <input id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                                [(ngModel)]="data['fullTitle']"
+                                placeholder="{{fieldsDescription['fullTitle']?.title}}">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
+            <div [hidden]="dictId !== 'rubricator'" class="row full-search-form">
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <div class="form-group">
+                        <label for="code">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                        <input id="code" name="code" type="text" class="form-control"
+                            [(ngModel)]="data['RUBRIC_CODE']"
+                            placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}">
+                    </div>
+                </div>
+                <div class="col-md-9 col-lg-9 col-xl-9">
+                    <div class="form-group">
+                        <label for="title">{{fieldsDescription['CLASSIF_NAME']?.title}}</label>
+                        <input id="title" name="title" type="text" class="form-control"
+                            [(ngModel)]="data['CLASSIF_NAME']"
+                            placeholder="{{fieldsDescription['CLASSIF_NAME']?.title}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
+                        <input id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                            [(ngModel)]="data['fullTitle']"
+                            placeholder="{{fieldsDescription['fullTitle']?.title}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note">{{fieldsDescription['NOTE']?.title}}</label>
+                        <input id="note" name="note" type="text" class="form-control"
+                            [(ngModel)]="data['NOTE']"
+                            placeholder="{{fieldsDescription['NOTE']?.title}}">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="full-search-bottom">
+            <span class="pull-right">
+                <button [disabled]="noSearchData" class="btn btn-primary" (click)="clearForm()">Сбросить</button>
+                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full">Найти</button>
+            </span>
         </div>
     </div>
 </ng-template>
