@@ -10,7 +10,7 @@ export enum DICTIONARY_ACTIONS {
 }
 
 export enum DICTIONARY_STATES {
-    full,
+    full, // For what?
     selected,
     info,
     tree
@@ -32,6 +32,7 @@ export class DictionaryActionService {
     }
 
     emitAction(value: DICTIONARY_ACTIONS) {
+        console.warn(value)
         this._action$.next(value);
     }
 
