@@ -3,11 +3,12 @@
 
     input {
         padding-right: 32px !important;
-        background-image: url("../assets/icons/Calendar-Blue.svg");
+        background-image: url("../assets/icons/Calendar-Blue.png");
         background-repeat: no-repeat;
-        background-position: right;
-        background-size: 24px;
         cursor: pointer;
+        background-position-x: right;
+        background-position-y: center;
+        background-size: 24px;
 
         &.readonly {
             border-color: transparent;
