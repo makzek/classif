@@ -6,6 +6,7 @@ import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
+import { SearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
@@ -121,7 +122,7 @@ export class EosDictService {
                         _dictionary.init(data);
                         this.dictionary = _dictionary;
                         this._dictionary$.next(this.dictionary);
-                        this._selectRoot();
+                        // this._selectRoot();
                     } else {
                         this.closeDictionary();
                     }
@@ -227,7 +228,9 @@ export class EosDictService {
             }
             this.selectedNode = node;
             this._selectedNode$.next(node);
-            this._openNode(node);
+            if (node.children) {
+                this._openNode(node.children[0]);
+            }
         }
     }
 
@@ -318,11 +321,12 @@ export class EosDictService {
         return _result;
     }
 
-    public search(searchString: string, globalSearch: boolean) {
+    public search(searchString: string, params: SearchSettings) {
         this._searchString = searchString;
         if (searchString.length) {
-            this._searchResults = this.dictionary.search(searchString, globalSearch, this.selectedNode);
-            if (!this._searchResults.length) {
+            // TODO: replace it with API query
+            // this._searchResults = this.dictionary.search(searchString, globalSearch, this.selectedNode);
+            if (!this._searchResults) {
                 this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
             }
         } else {
@@ -331,9 +335,10 @@ export class EosDictService {
         this._searchResults$.next(this._searchResults);
     }
 
-    public fullSearch(queries: IFieldView[], searchInDeleted: boolean) {
-        this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
-        if (!this._searchResults.length) {
+    public fullSearch(data: any, params: SearchSettings) {
+        // TODO: replace it with API query
+        // this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
+        if (!this._searchResults) {
             this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
         }
         this._searchResults$.next(this._searchResults);

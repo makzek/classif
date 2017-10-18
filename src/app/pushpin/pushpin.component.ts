@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
@@ -14,6 +14,9 @@ import { WARN_LINK_PIN } from '../consts/messages.consts';
 export class PushpinComponent {
     deskList: EosDesk[];
     _link: IDeskItem;
+    @Input() infoOpened: boolean;
+    openStyle = '350px';
+    closeStyle = '0px';
 
     constructor(
         private _deskSrv: EosDeskService,
@@ -35,6 +38,15 @@ export class PushpinComponent {
     pin(desk: EosDesk) {
         /* tslint:disable:no-bitwise */
         if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
+            let arr = this._link.title.split('/');
+            arr = arr.slice(3, arr.length);
+            let newName = '';
+            for (const piece of arr) {
+                newName += piece + '/';
+            }
+            newName = newName.slice(0, newName.length - 1);
+            this._link.fullTitle = this._link.title;
+            this._link.title = newName;
             desk.references.push(this._link);
             this._deskSrv.editDesk(desk);
         } else {

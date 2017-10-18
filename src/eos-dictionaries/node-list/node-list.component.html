@@ -1,10 +1,10 @@
 <div class="eos-node-list">
-    <div *ngIf="nodes" class="block list" [ngClass]="{'has-spinner': !nodes.length}">
+    <div class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
         <!--Sortable list-->
-        <ul *ngIf="nodes && userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
+        <ul *ngIf="params.userSort" class="elements" [ngClass]="{'has-parent': params.hasParent}">
             <li class="child">
-                <bs-sortable [(ngModel)]="nodeListPerPage" [itemTemplate]="childTemplate" itemClass="{'highlight': openedNode && openedNode.id === item.value.id}"
+                <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlight': node.isSelected}"
                     itemActiveClass="sortable-item-active" placeholderItem="Drag here"
                     (drop)="toggleItem()"
                     placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
@@ -12,36 +12,13 @@
             </li>
         </ul>
         <ng-template #childTemplate let-item="item" let-index="index">
-            <eos-node-list-item [node]="item.value" [params]="_params" (mark)="checkState()"></eos-node-list-item>
+            <eos-node-list-item [node]="item.value" [params]="params" (mark)="checkState()"></eos-node-list-item>
         </ng-template>
         <!--Simple list-->
-        <ul *ngIf="nodes && !userSorting" class="elements" [ngClass]="{'has-parent': hasParent}">
-            <li *ngFor="let item of nodeListPerPage" class="child">
-                <eos-node-list-item [node]="item" [params]="_params" (mark)="checkState()"></eos-node-list-item>
+        <ul *ngIf="!params.userSort" class="elements" [ngClass]="{'has-parent': params.hasParent}">
+            <li *ngFor="let item of nodes" class="child">
+                <eos-node-list-item [node]="item" [params]="params" (mark)="checkState()"></eos-node-list-item>
             </li>
         </ul>
     </div>
-
-    <div class="pagination-option block">
-        <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage" [maxSize]="5" [rotate]="true" [ngModel]="currentPage" class="pagination-lg" previousText="&lsaquo;"
-            nextText="&rsaquo;"></pagination>
-        <button class="btn show-more special-text" [disabled]="currentPage * itemsPerPage >= totalItems" (click)="showMore()">Показывать еще</button>
-        <div class="btn-group count-select pull-right" dropdown container="body">
-            <span dropdownToggle type="button" class="dropdown-toggle special-text">
-                <span class="dropdown-toggle-text">Показывать по {{itemsPerPage}}
-                    <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
-            </span>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(10)">10</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(20)">20</a></li>
-                <li role="menuitem"><a class="dropdown-item" (click)="setItemCount(40)">40</a></li>
-            </ul>
-        </div>
-    </div>
-
 </div>
-<!--<div class="!nodes">
-    <eos-spinner [size]="'lg'"></eos-spinner>
-</div>-->

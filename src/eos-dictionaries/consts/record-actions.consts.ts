@@ -14,7 +14,7 @@ export const RECORD_ACTIONS_NAVIGATION_UP = {
     type: E_RECORD_ACTIONS.navigateUp,
     group: E_ACTION_GROUPS.item,
     title: null,
-    hint: 'Следующая',
+    hint: 'Предыдущая',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
     buttonClass: null
 };
@@ -23,7 +23,7 @@ export const RECORD_ACTIONS_NAVIGATION_DOWN = {
     type: E_RECORD_ACTIONS.navigateDown,
     group: E_ACTION_GROUPS.item,
     title: null,
-    hint: 'Предыдущая',
+    hint: 'Следующая',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
     buttonClass: null
 };

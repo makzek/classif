@@ -1,29 +1,29 @@
 .eos-datepicker {
     position: relative;
 
-    .icon {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        cursor: pointer;
-        margin: 0;
-    }
-
     input {
         padding-right: 32px !important;
+        background-image: url("../assets/icons/Calendar-Blue.png");
+        background-repeat: no-repeat;
+        cursor: pointer;
+        background-position-x: right;
+        background-position-y: center;
+        background-size: 24px;
+        display: inline-block;
 
         &.readonly {
             border-color: transparent;
             background-color: transparent;
             box-shadow: none;
+            background-image: none;
         }
     }
 }
 
 .theme-dark-blue .bs-datepicker-head,
-.theme-dark-blue .bs-datepicker-body table td span.selected, 
-.theme-dark-blue .bs-datepicker-body table td.selected span, 
-.theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after, 
+.theme-dark-blue .bs-datepicker-body table td span.selected,
+.theme-dark-blue .bs-datepicker-body table td.selected span,
+.theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after,
 .theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
     background-color: $button-color-main-theme !important;
 }

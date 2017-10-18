@@ -8,3 +8,8 @@ export interface IAction {
     iconClass: string
     buttonClass: string
 };
+
+export interface IActionButton extends IAction {
+    isActive: boolean;
+    enabled: boolean;
+}

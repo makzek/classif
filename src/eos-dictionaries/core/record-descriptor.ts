@@ -58,6 +58,10 @@ export abstract class RecordDescriptor {
         return this._bindData(this.parent.getFieldSet(E_FIELD_SET.edit, data), data);
     }
 
+    getEditFieldDescription(data: any): any {
+        return this.parent.getFieldDescription(this.parent.getFieldSet(E_FIELD_SET.edit, data));
+    }
+
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
         return fields.map((fld) => Object.assign({}, fld, { value: data[fld.foreignKey] }));
     }

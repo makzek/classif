@@ -1,13 +1,13 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 
-import { CardEditComponent } from './card-edit.component';
+import { BaseCardEditComponent } from './base-card-edit.component';
 import { Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'eos-rubricator-card-edit',
     templateUrl: 'rubricator-card-edit.component.html',
 })
-export class RubricatorCardEditComponent extends CardEditComponent implements OnInit, OnDestroy {
+export class RubricatorCardEditComponent extends BaseCardEditComponent implements OnInit, OnDestroy {
     @ViewChild('rubricForm') form;
 
     private _changes: Subscription;

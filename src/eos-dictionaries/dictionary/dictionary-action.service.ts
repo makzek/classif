@@ -10,7 +10,7 @@ export enum DICTIONARY_ACTIONS {
 }
 
 export enum DICTIONARY_STATES {
-    full,
+    full, // For what?
     selected,
     info,
     tree

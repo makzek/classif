@@ -1,19 +1,17 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'eos-sandwich',
     templateUrl: 'sandwich.component.html',
 })
-export class SandwichComponent implements OnChanges {
+export class SandwichComponent {
     @Input() isLeft: boolean;
     @Input() isWide: boolean;
     @Input() close: boolean;
     @Output() onClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    isOpen = false;
     show = false;
-    width = '0px';
 
     constructor(
         private _route: ActivatedRoute,
@@ -28,19 +26,7 @@ export class SandwichComponent implements OnChanges {
             });
     }
 
-    ngOnChanges() {
-        if (this.isWide) {
-            this.width = '400px';
-        } else {
-            this.width = '0px';
-        }
-        if (this.close) {
-            this.isOpen = false;
-        }
-    }
-
     changeState() {
-        this.isOpen = !this.isOpen;
-        this.onClick.emit(this.isOpen);
+        this.onClick.emit(!this.isWide);
     }
 }

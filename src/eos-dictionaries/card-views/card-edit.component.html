@@ -1,0 +1,3 @@
+<eos-rubricator-card-edit [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)" (invalid)="onInvalid($event)" *ngIf="dictionaryId === 'rubricator'"></eos-rubricator-card-edit>
+<eos-departments-card-edit [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)" (invalid)="onInvalid($event)" *ngIf="dictionaryId === 'departments'"></eos-departments-card-edit>
+<eos-rooms-card-edit [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)" (invalid)="onInvalid($event)" *ngIf="dictionaryId === 'rooms'"></eos-rooms-card-edit>

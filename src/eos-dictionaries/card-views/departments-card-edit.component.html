@@ -38,15 +38,15 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="DEPARTMENT_INDEX">{{fieldsDescription['DEPARTMENT_INDEX']?.title}}</label>
-                    <input [readonly]="!editMode" id="DEPARTMENT_INDEX" name="DEPARTMENT_INDEX" type="text" class="form-control"
+                    <label for="indexPerson">{{fieldsDescription['indexPerson']?.title}}</label>
+                    <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control"
                         [ngModel]="data['DEPARTMENT_INDEX']" (ngModelChange)="change('DEPARTMENT_INDEX', $event)" 
-                        placeholder="{{fieldsDescription['DEPARTMENT_INDEX']?.title}}"
+                        placeholder="{{fieldsDescription['indexPerson']?.title}}"
                         [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
-                        maxlength="{{fieldsDescription['DEPARTMENT_INDEX']?.length}}" [pattern]="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
-                        tooltip="Максимальная длинна {{fieldsDescription['DEPARTMENT_INDEX']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        maxlength="{{fieldsDescription['indexPerson']?.length}}" [pattern]="fieldsDescription['indexPerson']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['indexPerson']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.DEPARTMENT_INDEX?.invalid && departForm.controls.DEPARTMENT_INDEX?.dirty" triggers="">
+                        [isOpen]="departForm.controls.indexPerson?.invalid && departForm.controls.indexPerson?.dirty" triggers="">
                 </div>
                 <div class="form-group sev">
                     <label for="SEV">{{fieldsDescription['SEV']?.title}}</label>
@@ -79,8 +79,8 @@
                         [ngModel]="data['lastName']" (ngModelChange)="change('lastName', $event)" 
                         placeholder="{{fieldsDescription['lastName']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
-                        [pattern]="fieldsDescription['lastName']?.pattern"
-                        tooltip="Пробелы в начале и в конце строки запрещены."
+                        maxlength="{{fieldsDescription['lastName']?.length}}" [pattern]="fieldsDescription['lastName']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['lastName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                         [isOpen]="departForm.controls.lastName?.invalid && departForm.controls.lastName?.dirty" triggers="">
                 </div>
@@ -91,8 +91,8 @@
                             [ngModel]="data['firstName']" (ngModelChange)="change('firstName', $event)" 
                             placeholder="{{fieldsDescription['firstName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
-                            [pattern]="fieldsDescription['firstName']?.pattern"
-                            tooltip="Пробелы в начале и в конце строки запрещены."
+                            maxlength="{{fieldsDescription['firstName']?.length}}" [pattern]="fieldsDescription['firstName']?.pattern"
+                            tooltip="Максимальная длинна {{fieldsDescription['firstName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.firstName?.invalid && departForm.controls.firstName?.dirty" triggers="">
                     </div>
@@ -102,8 +102,8 @@
                             [ngModel]="data['fathersName']" (ngModelChange)="change('fathersName', $event)" 
                             placeholder="{{fieldsDescription['fathersName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
-                            [pattern]="fieldsDescription['fathersName']?.pattern"
-                            tooltip="Пробелы в начале и в конце строки запрещены."
+                            maxlength="{{fieldsDescription['fathersName']?.length}}" [pattern]="fieldsDescription['fathersName']?.pattern"
+                            tooltip="Максимальная длинна {{fieldsDescription['fathersName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
                             [isOpen]="departForm.controls.fathersName?.invalid && departForm.controls.fathersName?.dirty" triggers="">
                     </div>
@@ -169,13 +169,13 @@
                 <span class="block-title">Исполнитель моих обязанностей</span>
                 <div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                        <label for="alternate_START_DATE">начало действия</label>
-                        <eos-datepicker [placeholder]="'начало действия'" [value]="alternate.START_DATE"
+                        <label for="alternate_START_DATE">Начало действия</label>
+                        <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
                             [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker> 
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                        <label for="alternate_END_DATE">окончание действия</label>
-                        <eos-datepicker [placeholder]="'окончание действия'" [value]="alternate.END_DATE"
+                        <label for="alternate_END_DATE">Окончание действия</label>
+                        <eos-datepicker [placeholder]="'Окончание действия'" [value]="alternate.END_DATE"
                             [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
@@ -546,15 +546,15 @@
 
             </div>
             <div class="form-group">
-                <label for="INDEX">{{fieldsDescription['INDEX']?.title}}</label>
-                <input [readonly]="!editMode" id="INDEX" name="INDEX" type="text" class="form-control"
+                <label for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
+                <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control"
                     [ngModel]="data['INDEX']" (ngModelChange)="change('INDEX', $event)" 
-                    placeholder="{{fieldsDescription['INDEX']?.title}}"
-                    [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['INDEX']?.pattern"
-                    [pattern]="fieldsDescription['INDEX']?.pattern"
-                    tooltip="Пробелы в начале и в конце строки запрещены."
+                    placeholder="{{fieldsDescription['indexDep']?.title}}"
+                    [ngClass]="{'readonly': !editMode }"
+                    maxlength="{{fieldsDescription['indexDep']?.length}}" [pattern]="fieldsDescription['indexDep']?.pattern"
+                    tooltip="Максимальная длинна {{fieldsDescription['indexDep']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.INDEX?.invalid && departForm.controls.INDEX?.dirty" triggers="">
+                    [isOpen]="departForm.controls.indexDep?.invalid && departForm.controls.indexDep?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="SEV_DEP">{{fieldsDescription['SEV']?.title}}</label>
@@ -607,14 +607,14 @@
             </span>
             <div class="form-group full-position">
                     <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
-                    <textarea [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control"
                         [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)" 
                         placeholder="{{fieldsDescription['fullTitle']?.title}}" 
                         [ngClass]="{'readonly': !editMode }"
-                        maxlength="{{fieldsDescription['fullTitle']?.length}}"
-                        tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов."
+                        maxlength="{{fieldsDescription['fullTitle']?.length}}" [pattern]="fieldsDescription['fullTitle']?.pattern"
+                        tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.fullTitle?.invalid && departForm.controls.fullTitle?.dirty" triggers=""></textarea>
+                        [isOpen]="departForm.controls.fullTitle?.invalid && departForm.controls.fullTitle?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="titleRP">{{fieldsDescription['titleRP']?.title}}</label>

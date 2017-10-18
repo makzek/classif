@@ -9,50 +9,51 @@ import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { APP_CONFIG } from '../app/app.config';
 import { AppRoutingModule } from '../app/app-routing.module';
-/* import { AppModule } from '../app/app.module'; */
 import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
 
 /* components */
+import { CardComponent } from './card/card.component';
+import { CardEditComponent } from './card-views/card-edit.component';
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
-import { CardComponent } from './card/card.component';
+import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
+import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
 import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
-import { SelectedNodeComponent } from './selected-node/selected-node.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
-// import { CardActionService } from './card/card-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
-import { NodeActionsService } from './node-actions/node-actions.service';
 
 @NgModule({
     declarations: [
+        CardComponent,
+        CardEditComponent,
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
-        CardComponent,
-        NodeListComponent,
-        NodeListItemComponent,
+        DictionarySearchComponent,
         NodeActionsComponent,
         NodeInfoComponent,
+        NodeListComponent,
+        NodeListItemComponent,
+        NodeListPaginationComponent,
         RoomsCardEditComponent,
         RubricatorCardEditComponent,
         SandwichComponent,
         TreeComponent,
         TreeNodeComponent,
-        SelectedNodeComponent,
     ],
     imports: [
         BrowserModule,
@@ -84,8 +85,6 @@ import { NodeActionsService } from './node-actions/node-actions.service';
         EosDictApiService,
         EosDictService,
         EosDictOrderService,
-        NodeActionsService,
-        // CardActionService,
         DictionaryActionService,
     ],
 })
