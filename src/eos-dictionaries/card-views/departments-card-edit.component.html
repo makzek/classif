@@ -1,5 +1,5 @@
 <div class="eos-departments-card-edit edit-content">
-    <form #departForm="ngForm">
+    <form #cardForm="ngForm">
     <div [hidden]="!data['IS_NODE']">
         <div class="tabs-wrapper">
             <ul class="tabs">
@@ -33,31 +33,31 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"  [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.RUBRIC_CODE_PERSON?.invalid && departForm.controls.RUBRIC_CODE_PERSON?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.RUBRIC_CODE_PERSON?.invalid && cardForm.controls.RUBRIC_CODE_PERSON?.dirty" triggers="">
 
                 </div>
                 <div class="form-group">
                     <label for="indexPerson">{{fieldsDescription['indexPerson']?.title}}</label>
                     <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control"
-                        [ngModel]="data['DEPARTMENT_INDEX']" (ngModelChange)="change('DEPARTMENT_INDEX', $event)" 
+                        [ngModel]="data['DEPARTMENT_INDEX']" (ngModelChange)="change('DEPARTMENT_INDEX', $event)"
                         placeholder="{{fieldsDescription['indexPerson']?.title}}"
                         [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
                         maxlength="{{fieldsDescription['indexPerson']?.length}}" [pattern]="fieldsDescription['indexPerson']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['indexPerson']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.indexPerson?.invalid && departForm.controls.indexPerson?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.indexPerson?.invalid && cardForm.controls.indexPerson?.dirty" triggers="">
                 </div>
                 <div class="form-group sev">
                     <label for="SEV">{{fieldsDescription['SEV']?.title}}</label>
                     <input [readonly]="!editMode" id="SEV" name="SEV" type="text" class="form-control"
-                        [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)" 
+                        [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                         placeholder="{{fieldsDescription['SEV']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['SEV']?.length}}" [pattern]="fieldsDescription['SEV']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['SEV']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.SEV?.invalid && departForm.controls.SEV?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.SEV?.invalid && cardForm.controls.SEV?.dirty" triggers="">
                 </div>
                 <div class="form-group">
                     <label for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
@@ -76,65 +76,65 @@
                 <div class="form-group">
                     <label for="lastName">{{fieldsDescription['lastName']?.title}}</label>
                     <input [readonly]="!editMode" id="lastName" name="lastName" type="text" class="form-control"
-                        [ngModel]="data['lastName']" (ngModelChange)="change('lastName', $event)" 
+                        [ngModel]="data['lastName']" (ngModelChange)="change('lastName', $event)"
                         placeholder="{{fieldsDescription['lastName']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['lastName']?.length}}" [pattern]="fieldsDescription['lastName']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['lastName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.lastName?.invalid && departForm.controls.lastName?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.lastName?.invalid && cardForm.controls.lastName?.dirty" triggers="">
                 </div>
                 <div class="names row-wrapper">
                     <div class="form-group first-name">
                         <label for="firstName">{{fieldsDescription['firstName']?.title}}</label>
                         <input [readonly]="!editMode" id="firstName" name="firstName" type="text" class="form-control"
-                            [ngModel]="data['firstName']" (ngModelChange)="change('firstName', $event)" 
+                            [ngModel]="data['firstName']" (ngModelChange)="change('firstName', $event)"
                             placeholder="{{fieldsDescription['firstName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['firstName']?.length}}" [pattern]="fieldsDescription['firstName']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['firstName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstName?.invalid && departForm.controls.firstName?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstName?.invalid && cardForm.controls.firstName?.dirty" triggers="">
                     </div>
                     <div class="form-group fathers-name">
                         <label for="fathersName">{{fieldsDescription['fathersName']?.title}}</label>
                         <input [readonly]="!editMode" id="fathersName" name="fathersName" type="text" class="form-control"
-                            [ngModel]="data['fathersName']" (ngModelChange)="change('fathersName', $event)" 
+                            [ngModel]="data['fathersName']" (ngModelChange)="change('fathersName', $event)"
                             placeholder="{{fieldsDescription['fathersName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['fathersName']?.length}}" [pattern]="fieldsDescription['fathersName']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['fathersName']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersName?.invalid && departForm.controls.fathersName?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersName?.invalid && cardForm.controls.fathersName?.dirty" triggers="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="SURNAME">{{fieldsDescription['SURNAME']?.title}}</label>
                     <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control"
-                        [ngModel]="data['SURNAME']" (ngModelChange)="change('SURNAME', $event)" 
+                        [ngModel]="data['SURNAME']" (ngModelChange)="change('SURNAME', $event)"
                         placeholder="{{fieldsDescription['SURNAME']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
-                        required maxlength="{{fieldsDescription['SURNAME']?.length}}" [pattern]="fieldsDescription['SURNAME']?.pattern" 
+                        required maxlength="{{fieldsDescription['SURNAME']?.length}}" [pattern]="fieldsDescription['SURNAME']?.pattern"
                         tooltip="Обязательное поле. Максимальная длина {{fieldsDescription['SURNAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip" 
-                        [isOpen]="departForm.controls.SURNAME?.invalid && departForm.controls.SURNAME?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.SURNAME?.invalid && cardForm.controls.SURNAME?.dirty" triggers="">
                 </div>
                 <div class="form-group">
                     <label for="DUTY">{{fieldsDescription['DUTY']?.title}}</label>
                     <div class="row">
                         <div class="col-md-9 col-lg-9 col-xl-9">
                             <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control"
-                                [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)" 
+                                [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
                                 placeholder="{{fieldsDescription['DUTY']?.title}}"
                                 [ngClass]="{'readonly': !editMode }"
                                 required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
                                 tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                                containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
-                                [isOpen]="departForm.controls.DUTY?.invalid && departForm.controls.DUTY?.dirty" triggers="">
+                                containerClass="tooltip-error" [isDisabled]="!editMode" placement="bottom"
+                                [isOpen]="cardForm.controls.DUTY?.invalid && cardForm.controls.DUTY?.dirty" triggers="">
                         </div>
                         <span class="checkbox col-md-3 col-lg-3 col-xl-3">
-                            <label class="checkbox"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode" 
+                            <label class="checkbox"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
                                     [ngModel]="data['POST_H']">
                                 <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
                             </label>
@@ -144,24 +144,24 @@
                 <div class="form-group">
                     <label for="fullPosition">{{fieldsDescription['fullPosition']?.title}}</label>
                     <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control"
-                        [ngModel]="data['fullPosition']" (ngModelChange)="change('fullPosition', $event)" 
+                        [ngModel]="data['fullPosition']" (ngModelChange)="change('fullPosition', $event)"
                         placeholder="{{fieldsDescription['fullPosition']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['fullPosition']?.length}}" [pattern]="fieldsDescription['fullPosition']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['fullPosition']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.fullPosition?.invalid && departForm.controls.fullPosition?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.fullPosition?.invalid && cardForm.controls.fullPosition?.dirty" triggers="">
                 </div>
                 <div class="form-group">
                     <label for="NOTE">{{fieldsDescription['NOTE']?.title}}</label>
                     <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control note"  rows="5"
-                        [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)" 
-                        placeholder="{{fieldsDescription['NOTE']?.title}}"  
+                        [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
+                        placeholder="{{fieldsDescription['NOTE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['NOTE']?.length}}"
                         tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.NOTE?.invalid && departForm.controls.NOTE?.dirty" triggers=""></textarea>
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.NOTE?.invalid && cardForm.controls.NOTE?.dirty" triggers=""></textarea>
                 </div>
             </div>
             </div>
@@ -171,7 +171,7 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">Начало действия</label>
                         <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker> 
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_END_DATE">Окончание действия</label>
@@ -203,7 +203,7 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker> 
+                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_END_DATE">окончание действия</label>
@@ -225,25 +225,25 @@
                 <div class="form-group">
                     <label for="NUM_CAB">{{fieldsDescription['NUM_CAB']?.title}}</label>
                     <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control"
-                        [ngModel]="data['NUM_CAB']" (ngModelChange)="change('NUM_CAB', $event)" 
-                        placeholder="{{fieldsDescription['NUM_CAB']?.title}}" 
+                        [ngModel]="data['NUM_CAB']" (ngModelChange)="change('NUM_CAB', $event)"
+                        placeholder="{{fieldsDescription['NUM_CAB']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['NUM_CAB']?.length}}" [pattern]="fieldsDescription['NUM_CAB']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['NUM_CAB']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.NUM_CAB?.invalid && departForm.controls.NUM_CAB?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.NUM_CAB?.invalid && cardForm.controls.NUM_CAB?.dirty" triggers="">
                 </div>
 
                 <div class="form-group">
                     <label for="PHONE">{{fieldsDescription['PHONE']?.title}}</label>
                     <input [readonly]="!editMode" id="PHONE" name="PHONE" type="text" class="form-control"
-                        [ngModel]="data['PHONE']" (ngModelChange)="change('PHONE', $event)" 
+                        [ngModel]="data['PHONE']" (ngModelChange)="change('PHONE', $event)"
                         placeholder="{{fieldsDescription['PHONE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['PHONE']?.length}}" [pattern]="fieldsDescription['PHONE']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['PHONE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.PHONE?.invalid && departForm.controls.PHONE?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.PHONE?.invalid && cardForm.controls.PHONE?.dirty" triggers="">
                 </div>
 
                 <div class="form-group">
@@ -254,20 +254,20 @@
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['PHONE_LOCAL']?.length}}" [pattern]="fieldsDescription['PHONE_LOCAL']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['PHONE_LOCAL']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.PHONE_LOCAL?.invalid && departForm.controls.PHONE_LOCAL?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.PHONE_LOCAL?.invalid && cardForm.controls.PHONE_LOCAL?.dirty" triggers="">
                 </div>
 
                 <div class="form-group">
                     <label for="FAX">{{fieldsDescription['FAX']?.title}}</label>
                     <input [readonly]="!editMode" id="FAX" name="FAX" type="text" class="form-control"
-                        [ngModel]="data['FAX']" (ngModelChange)="change('FAX', $event)" 
+                        [ngModel]="data['FAX']" (ngModelChange)="change('FAX', $event)"
                         placeholder="{{fieldsDescription['FAX']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['FAX']?.length}}" [pattern]="fieldsDescription['FAX']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['FAX']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.FAX?.invalid && departForm.controls.FAX?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.FAX?.invalid && cardForm.controls.FAX?.dirty" triggers="">
                 </div>
             </div>
 
@@ -276,24 +276,24 @@
                 <div class="form-group email">
                     <label for="E_MAIL">{{fieldsDescription['E_MAIL']?.title}}</label>
                         <input [readonly]="!editMode" id="E_MAIL" name="E_MAIL" type="text" class="form-control"
-                            [ngModel]="data['E_MAIL']" (ngModelChange)="change('E_MAIL', $event)" 
-                            placeholder="{{fieldsDescription['E_MAIL']?.title}}" 
+                            [ngModel]="data['E_MAIL']" (ngModelChange)="change('E_MAIL', $event)"
+                            placeholder="{{fieldsDescription['E_MAIL']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['E_MAIL']?.length}}" [pattern]="fieldsDescription['E_MAIL']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['E_MAIL']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.E_MAIL?.invalid && departForm.controls.E_MAIL?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.E_MAIL?.invalid && cardForm.controls.E_MAIL?.dirty" triggers="">
                 </div>
                 <div class="form-group">
                     <label for="skype">{{fieldsDescription['skype']?.title}}</label>
                         <input [readonly]="!editMode" id="skype" name="skype" type="text" class="form-control"
-                            [ngModel]="data['skype']" (ngModelChange)="change('skype', $event)" 
-                            placeholder="{{fieldsDescription['skype']?.title}}" 
+                            [ngModel]="data['skype']" (ngModelChange)="change('skype', $event)"
+                            placeholder="{{fieldsDescription['skype']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             maxlength="{{fieldsDescription['skype']?.length}}" [pattern]="fieldsDescription['skype']?.pattern"
                             tooltip="Максимальная длинна {{fieldsDescription['skype']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.skype?.invalid && departForm.controls.skype?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.skype?.invalid && cardForm.controls.skype?.dirty" triggers="">
                 </div>
             </div>
         </div>
@@ -304,39 +304,39 @@
                         <label for="shortPositionRP">{{fieldsDescription['shortPositionRP']?.title}}</label>
                         <input [readonly]="!editMode" id="shortPositionRP" name="shortPositionRP" type="text" class="form-control"
                             [ngModel]="data['shortPositionRP']" (ngModelChange)="change('shortPositionRP', $event)"
-                            placeholder="{{fieldsDescription['shortPositionRP']?.title}}" 
+                            placeholder="{{fieldsDescription['shortPositionRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.shortPositionRP?.invalid && departForm.controls.shortPositionRP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.shortPositionRP?.invalid && cardForm.controls.shortPositionRP?.dirty" triggers="">
                     </div>
 
                     <div class="form-group">
                         <label for="shortPositionDP">{{fieldsDescription['shortPositionDP']?.title}}</label>
                         <input [readonly]="!editMode"  id="shortPositionDP" name="shortPositionDP" type="text" class="form-control"
-                            [ngModel]="data['shortPositionDP']" (ngModelChange)="change('shortPositionDP', $event)" 
+                            [ngModel]="data['shortPositionDP']" (ngModelChange)="change('shortPositionDP', $event)"
                             placeholder="{{fieldsDescription['shortPositionDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.shortPositionDP?.invalid && departForm.controls.shortPositionDP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.shortPositionDP?.invalid && cardForm.controls.shortPositionDP?.dirty" triggers="">
                     </div>
 
                     <div class="form-group">
                         <label for="shortPositionVP">{{fieldsDescription['shortPositionVP']?.title}}</label>
                         <input [readonly]="!editMode"  id="shortPositionVP" name="shortPositionVP" type="text" class="form-control"
-                            [ngModel]="data['shortPositionVP']" (ngModelChange)="change('shortPositionVP', $event)" 
+                            [ngModel]="data['shortPositionVP']" (ngModelChange)="change('shortPositionVP', $event)"
                             placeholder="{{fieldsDescription['shortPositionVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['shortPositionVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.shortPositionVP?.invalid && departForm.controls.shortPositionVP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.shortPositionVP?.invalid && cardForm.controls.shortPositionVP?.dirty" triggers="">
                     </div>
 
-                <span class="block-title">Склонение фамилии, имени, отчества</span>            
+                <span class="block-title">Склонение фамилии, имени, отчества</span>
                 <div class="form-group">
                     <label for="fioDP">{{fieldsDescription['fioDP']?.title}}</label>
                     <input [readonly]="!editMode"  id="fioDP" name="fioDP" type="text" class="form-control"
@@ -345,9 +345,9 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['fioDP']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.fioDP?.invalid && departForm.controls.fioDP?.dirty" triggers="">
-                </div>                
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.fioDP?.invalid && cardForm.controls.fioDP?.dirty" triggers="">
+                </div>
                 <div class="form-group">
                     <label for="iofDP">{{fieldsDescription['iofDP']?.title}}</label>
                     <input [readonly]="!editMode"  id="iofDP" name="iofDP" type="text" class="form-control"
@@ -356,166 +356,166 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['iofDP']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.iofDP?.invalid && departForm.controls.iofDP?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.iofDP?.invalid && cardForm.controls.iofDP?.dirty" triggers="">
                 </div>
-               
+
                 <div class="form-group">
                     <label for="lastNameRP">Родительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameRP" name="lastNameRP" type="text" class="form-control"
-                            [ngModel]="data['lastNameRP']" (ngModelChange)="change('lastNameRP', $event)"  
+                            [ngModel]="data['lastNameRP']" (ngModelChange)="change('lastNameRP', $event)"
                             placeholder="{{fieldsDescription['lastNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.lastNameRP?.invalid && departForm.controls.lastNameRP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.lastNameRP?.invalid && cardForm.controls.lastNameRP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameRP" name="firstNameRP" type="text" class="form-control"
-                            [ngModel]="data['firstNameRP']" (ngModelChange)="change('firstNameRP', $event)"  
+                            [ngModel]="data['firstNameRP']" (ngModelChange)="change('firstNameRP', $event)"
                             placeholder="{{fieldsDescription['firstNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstNameRP?.invalid && departForm.controls.firstNameRP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstNameRP?.invalid && cardForm.controls.firstNameRP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameRP" name="fathersNameRP" type="text" class="form-control last"
-                            [ngModel]="data['fathersNameRP']" (ngModelChange)="change('fathersNameRP', $event)"  
+                            [ngModel]="data['fathersNameRP']" (ngModelChange)="change('fathersNameRP', $event)"
                             placeholder="{{fieldsDescription['fathersNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameRP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNameRP?.invalid && departForm.controls.fathersNameRP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersNameRP?.invalid && cardForm.controls.fathersNameRP?.dirty" triggers="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastNameDP">Дательный падеж (кому?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameDP" name="lastNameDP" type="text" class="form-control"
-                            [ngModel]="data['lastNameDP']" (ngModelChange)="change('lastNameDP', $event)"  
+                            [ngModel]="data['lastNameDP']" (ngModelChange)="change('lastNameDP', $event)"
                             placeholder="{{fieldsDescription['lastNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.lastNameDP?.invalid && departForm.controls.lastNameDP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.lastNameDP?.invalid && cardForm.controls.lastNameDP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameDP" name="firstNameDP" type="text" class="form-control"
-                            [ngModel]="data['firstNameDP']" (ngModelChange)="change('firstNameDP', $event)"  
+                            [ngModel]="data['firstNameDP']" (ngModelChange)="change('firstNameDP', $event)"
                             placeholder="{{fieldsDescription['firstNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstNameDP?.invalid && departForm.controls.firstNameDP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstNameDP?.invalid && cardForm.controls.firstNameDP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameDP" name="fathersNameDP" type="text" class="form-control last"
-                            [ngModel]="data['fathersNameDP']" (ngModelChange)="change('fathersNameDP', $event)"  
+                            [ngModel]="data['fathersNameDP']" (ngModelChange)="change('fathersNameDP', $event)"
                             placeholder="{{fieldsDescription['fathersNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameDP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNameDP?.invalid && departForm.controls.fathersNameDP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersNameDP?.invalid && cardForm.controls.fathersNameDP?.dirty" triggers="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastNameVP">Винительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameVP" name="lastNameVP" type="text" class="form-control"
-                            [ngModel]="data['lastNameVP']" (ngModelChange)="change('lastNameVP', $event)"  
+                            [ngModel]="data['lastNameVP']" (ngModelChange)="change('lastNameVP', $event)"
                             placeholder="{{fieldsDescription['lastNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.lastNameVP?.invalid && departForm.controls.lastNameVP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.lastNameVP?.invalid && cardForm.controls.lastNameVP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameVP" name="firstNameVP" type="text" class="form-control"
-                            [ngModel]="data['firstNameVP']" (ngModelChange)="change('firstNameVP', $event)"  
+                            [ngModel]="data['firstNameVP']" (ngModelChange)="change('firstNameVP', $event)"
                             placeholder="{{fieldsDescription['firstNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstNameVP?.invalid && departForm.controls.firstNameVP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstNameVP?.invalid && cardForm.controls.firstNameVP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameVP" name="fathersNameVP" type="text" class="form-control last"
-                            [ngModel]="data['fathersNameVP']" (ngModelChange)="change('fathersNameVP', $event)"  
+                            [ngModel]="data['fathersNameVP']" (ngModelChange)="change('fathersNameVP', $event)"
                             placeholder="{{fieldsDescription['fathersNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameVP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNameVP?.invalid && departForm.controls.fathersNameVP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersNameVP?.invalid && cardForm.controls.fathersNameVP?.dirty" triggers="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastNameTP">Творительный падеж (кем?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameTP" name="lastNameTP" type="text" class="form-control"
-                            [ngModel]="data['lastNameTP']" (ngModelChange)="change('lastNameTP', $event)"  
+                            [ngModel]="data['lastNameTP']" (ngModelChange)="change('lastNameTP', $event)"
                             placeholder="{{fieldsDescription['lastNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.lastNameTP?.invalid && departForm.controls.lastNameTP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.lastNameTP?.invalid && cardForm.controls.lastNameTP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNameTP" name="firstNameTP" type="text" class="form-control"
-                            [ngModel]="data['firstNameTP']" (ngModelChange)="change('firstNameTP', $event)"  
+                            [ngModel]="data['firstNameTP']" (ngModelChange)="change('firstNameTP', $event)"
                             placeholder="{{fieldsDescription['firstNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstNameTP?.invalid && departForm.controls.firstNameTP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstNameTP?.invalid && cardForm.controls.firstNameTP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNameTP" name="fathersNameTP" type="text" class="form-control last"
-                            [ngModel]="data['fathersNameTP']" (ngModelChange)="change('fathersNameTP', $event)"  
+                            [ngModel]="data['fathersNameTP']" (ngModelChange)="change('fathersNameTP', $event)"
                             placeholder="{{fieldsDescription['fathersNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNameTP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNameTP?.invalid && departForm.controls.fathersNameTP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersNameTP?.invalid && cardForm.controls.fathersNameTP?.dirty" triggers="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastNamePP">Предложный падеж (о ком?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNamePP" name="lastNamePP" type="text" class="form-control"
-                            [ngModel]="data['lastNamePP']" (ngModelChange)="change('lastNamePP', $event)"  
+                            [ngModel]="data['lastNamePP']" (ngModelChange)="change('lastNamePP', $event)"
                             placeholder="{{fieldsDescription['lastNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['lastNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.lastNamePP?.invalid && departForm.controls.lastNamePP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.lastNamePP?.invalid && cardForm.controls.lastNamePP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="firstNamePP" name="firstNamePP" type="text" class="form-control"
-                            [ngModel]="data['firstNamePP']" (ngModelChange)="change('firstNamePP', $event)"  
+                            [ngModel]="data['firstNamePP']" (ngModelChange)="change('firstNamePP', $event)"
                             placeholder="{{fieldsDescription['firstNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['firstNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.firstNamePP?.invalid && departForm.controls.firstNamePP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.firstNamePP?.invalid && cardForm.controls.firstNamePP?.dirty" triggers="">
                         <input [readonly]="!editMode" id="fathersNamePP" name="fathersNamePP" type="text" class="form-control last"
-                            [ngModel]="data['fathersNamePP']" (ngModelChange)="change('fathersNamePP', $event)"  
+                            [ngModel]="data['fathersNamePP']" (ngModelChange)="change('fathersNamePP', $event)"
                             placeholder="{{fieldsDescription['fathersNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
                             [pattern]="fieldsDescription['fathersNamePP']?.pattern"
                             tooltip="Пробелы в начале и в конце строки запрещены."
-                            [isDisabled]="!editMode" placement="bottom" containerClass="right-tooltip invalid-tooltip"
-                            [isOpen]="departForm.controls.fathersNamePP?.invalid && bottom.controls.fathersNamePP?.dirty" triggers="">
+                            [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                            [isOpen]="cardForm.controls.fathersNamePP?.invalid && bottom.controls.fathersNamePP?.dirty" triggers="">
                     </div>
                 </div>
                 <span class="block-title">Данные для формирования поручений</span>
                 <div class="form-group">
                     <label for="shortPosition">{{fieldsDescription['DUTY']?.title}}</label>
                     <input [readonly]="!editMode" id="shortPosition" name="shortPosition" type="text" class="form-control"
-                        [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)" 
+                        [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
                         placeholder="{{fieldsDescription['DUTY']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
                         tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
-                        [isOpen]="departForm.controls.shortPosition?.invalid && departForm.controls.shortPosition?.dirty" triggers="">
+                        containerClass="tooltip-error" [isDisabled]="!editMode" placement="bottom"
+                        [isOpen]="cardForm.controls.shortPosition?.invalid && cardForm.controls.shortPosition?.dirty" triggers="">
 
                 </div>
                 <div class="form-group">
@@ -526,8 +526,8 @@
                         [ngClass]="{'readonly': !editMode }"
                         [pattern]="fieldsDescription['department']?.pattern"
                         tooltip="Пробелы в начале и в конце строки запрещены."
-                        containerClass="bottom-tooltip invalid-tooltip" [isDisabled]="!editMode" placement="bottom"
-                        [isOpen]="departForm.controls.department?.invalid && departForm.controls.department?.dirty" triggers="">
+                        containerClass="tooltip-error" [isDisabled]="!editMode" placement="bottom"
+                        [isOpen]="cardForm.controls.department?.invalid && cardForm.controls.department?.dirty" triggers="">
                 </div>
         </div>
     </div>
@@ -541,31 +541,31 @@
                     [ngClass]="{'readonly': !editMode }"
                     [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
                     tooltip="Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.RUBRIC_CODE_DEP?.invalid && departForm.controls.RUBRIC_CODE_DEP?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.RUBRIC_CODE_DEP?.invalid && cardForm.controls.RUBRIC_CODE_DEP?.dirty" triggers="">
 
             </div>
             <div class="form-group">
                 <label for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
                 <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control"
-                    [ngModel]="data['INDEX']" (ngModelChange)="change('INDEX', $event)" 
+                    [ngModel]="data['INDEX']" (ngModelChange)="change('INDEX', $event)"
                     placeholder="{{fieldsDescription['indexDep']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['indexDep']?.length}}" [pattern]="fieldsDescription['indexDep']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['indexDep']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.indexDep?.invalid && departForm.controls.indexDep?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.indexDep?.invalid && cardForm.controls.indexDep?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="SEV_DEP">{{fieldsDescription['SEV']?.title}}</label>
                 <input [readonly]="!editMode" id="SEV_DEP" name="SEV_DEP" type="text" class="form-control"
-                    [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)" 
+                    [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                     placeholder="{{fieldsDescription['SEV']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['SEV']?.length}}" [pattern]="fieldsDescription['SEV']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['SEV']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.SEV_DEP?.invalid && departForm.controls.SEV_DEP?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.SEV_DEP?.invalid && cardForm.controls.SEV_DEP?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
@@ -588,16 +588,16 @@
             </span>
         </div>
         <div class="col-2">
-            <div class="form-group"> 
+            <div class="form-group">
                 <label for="CLASSIF_NAME_DEP">{{fieldsDescription['title']?.title}}</label>
                 <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control"
-                    [ngModel]="data['CLASSIF_NAME']" (ngModelChange)="change('CLASSIF_NAME', $event)" 
+                    [ngModel]="data['CLASSIF_NAME']" (ngModelChange)="change('CLASSIF_NAME', $event)"
                     placeholder="{{fieldsDescription['title']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
                     required maxlength="{{fieldsDescription['title']?.length}}" [pattern]="fieldsDescription['title']?.pattern"
                     tooltip="Обязательное поле. Максимальная длинна {{fieldsDescription['title']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.CLASSIF_NAME_DEP?.invalid && departForm.controls.CLASSIF_NAME_DEP?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.CLASSIF_NAME_DEP?.invalid && cardForm.controls.CLASSIF_NAME_DEP?.dirty" triggers="">
             </div>
             <span class="checkbox">
                 <label class="checkbox"><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
@@ -608,57 +608,57 @@
             <div class="form-group full-position">
                     <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
                     <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control"
-                        [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)" 
-                        placeholder="{{fieldsDescription['fullTitle']?.title}}" 
+                        [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)"
+                        placeholder="{{fieldsDescription['fullTitle']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
                         maxlength="{{fieldsDescription['fullTitle']?.length}}" [pattern]="fieldsDescription['fullTitle']?.pattern"
                         tooltip="Максимальная длинна {{fieldsDescription['fullTitle']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                        [isOpen]="departForm.controls.fullTitle?.invalid && departForm.controls.fullTitle?.dirty" triggers="">
+                        [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                        [isOpen]="cardForm.controls.fullTitle?.invalid && cardForm.controls.fullTitle?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="titleRP">{{fieldsDescription['titleRP']?.title}}</label>
                 <input [readonly]="!editMode" id="titleRP" name="titleRP" type="text" class="form-control"
-                    [ngModel]="data['titleRP']" (ngModelChange)="change('titleRP', $event)" 
-                    placeholder="{{fieldsDescription['titleRP']?.title}}" 
-                    [ngClass]="{'readonly': !editMode }" 
+                    [ngModel]="data['titleRP']" (ngModelChange)="change('titleRP', $event)"
+                    placeholder="{{fieldsDescription['titleRP']?.title}}"
+                    [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['titleRP']?.length}}" [pattern]="fieldsDescription['titleRP']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['titleRP']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.titleRP?.invalid && departForm.controls.titleRP?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.titleRP?.invalid && cardForm.controls.titleRP?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="DUE_LINK_ORGANIZ">{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}</label>
                 <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control"
-                    [ngModel]="data['DUE_LINK_ORGANIZ']" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)" 
-                    placeholder="{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}" 
-                    [ngClass]="{'readonly': !editMode }" 
+                    [ngModel]="data['DUE_LINK_ORGANIZ']" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)"
+                    placeholder="{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}"
+                    [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['DUE_LINK_ORGANIZ']?.length}}" [pattern]="fieldsDescription['DUE_LINK_ORGANIZ']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['DUE_LINK_ORGANIZ']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.DUE_LINK_ORGANIZ?.invalid && departForm.controls.DUE_LINK_ORGANIZ?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.DUE_LINK_ORGANIZ?.invalid && cardForm.controls.DUE_LINK_ORGANIZ?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="CARD_NAME">{{fieldsDescription['CARD_NAME']?.title}}</label>
                 <input [readonly]="!editMode" id="CARD_NAME" name="CARD_NAME" type="text" class="form-control"
-                    [ngModel]="data['CARD_NAME']" (ngModelChange)="change('CARD_NAME', $event)" 
-                    placeholder="{{fieldsDescription['CARD_NAME']?.title}}" 
-                    [ngClass]="{'readonly': !editMode }" 
+                    [ngModel]="data['CARD_NAME']" (ngModelChange)="change('CARD_NAME', $event)"
+                    placeholder="{{fieldsDescription['CARD_NAME']?.title}}"
+                    [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['CARD_NAME']?.length}}" [pattern]="fieldsDescription['CARD_NAME']?.pattern"
                     tooltip="Максимальная длинна {{fieldsDescription['CARD_NAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.CARD_NAME?.invalid && departForm.controls.CARD_NAME?.dirty" triggers="">
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.CARD_NAME?.invalid && cardForm.controls.CARD_NAME?.dirty" triggers="">
             </div>
             <div class="form-group">
                 <label for="NOTE_DEP">{{fieldsDescription['NOTE']?.title}}</label>
                 <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control note"  rows="5"
-                    [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)" 
-                    placeholder="{{fieldsDescription['NOTE']?.title}}"  
+                    [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
+                    placeholder="{{fieldsDescription['NOTE']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
                     maxlength="{{fieldsDescription['NOTE']?.length}}"
                     tooltip="Максимальная длинна {{fieldsDescription['NOTE']?.length}} символов."
-                    [isDisabled]="!editMode" placement="bottom" containerClass="bottom-tooltip invalid-tooltip"
-                    [isOpen]="departForm.controls.NOTE_DEP?.invalid && departForm.controls.NOTE_DEP?.dirty" triggers=""></textarea>
+                    [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
+                    [isOpen]="cardForm.controls.NOTE_DEP?.invalid && cardForm.controls.NOTE_DEP?.dirty" triggers=""></textarea>
             </div>
         </div>
     </div>

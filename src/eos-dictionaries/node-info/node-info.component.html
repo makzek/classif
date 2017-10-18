@@ -1,12 +1,12 @@
 <div class="eos-opened-node">
     <span class="opened-node-actions pull-right">
-        <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}" containerClass="top-tooltip">
+        <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}" containerClass="tooltip-info">
                <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
         </button>
-        <button class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}" containerClass="top-tooltip">
+        <button class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}" containerClass="tooltip-info">
             <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
         </button>
-        <button class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}" containerClass="top-tooltip">
+        <button class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}" containerClass="tooltip-info">
             <span class="icon {{actionEdit.iconClass}} small"></span>
         </button>
     </span>

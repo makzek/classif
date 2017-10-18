@@ -456,7 +456,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }
     }
 
-    private resize(): void {
+    public resize(): void {
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);

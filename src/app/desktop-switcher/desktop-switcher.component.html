@@ -1,7 +1,7 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
     <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
-        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" containerClass="bottom-tooltip" container="body">{{selectedDesk.name}}</span>
+        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" containerClass="tooltip-info" container="body">{{selectedDesk.name}}</span>
         <span class="btn-icon">
             <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </span>
@@ -12,12 +12,12 @@
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item">
                         <span triggers="hover" tooltip="{{desk.name}}" placement="left"
-                        containerClass="left-tooltip">{{desk.name}}</span>
+                        containerClass="tooltip-info">{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="top-tooltip" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="top-tooltip" (click)="removeDesk(desk,$event)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="tooltip-info" (click)="openEditForm($event, desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
@@ -26,10 +26,10 @@
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default"
                             [disabled]="!deskName?.length || !nameForm.checkValidity()" tooltip="Сохранить">
-                            <span class="eos-icon eos-icon-checkbox-black x-small" containerClass="top-tooltip"></span>
+                            <span class="eos-icon eos-icon-checkbox-black x-small" containerClass="tooltip-info"></span>
                         </button>
                         <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить">
-                            <span class="eos-icon eos-icon-close-black x-small" containerClass="top-tooltip"></span>
+                            <span class="eos-icon eos-icon-close-black x-small" containerClass="tooltip-info"></span>
                         </button>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                     <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="top-tooltip"
+                        <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
                             [disabled]="!deskName?.length || !createForm.checkValidity()">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="top-tooltip">
+                        <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </span>

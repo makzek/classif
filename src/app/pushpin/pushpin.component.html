@@ -1,6 +1,6 @@
 <div class="pushpin btn-group special-text" dropdown placement="bottom right" container="body">
     <a dropdownToggle type="button" class="dropdown-toggle">
-        <span class="eos-icon eos-icon-pin-blue small" [style.right]="infoOpened ? openStyle : closeStyle" tooltip="Прикрепить" placement="left" containerClass="left-tooltip"></span>
+        <span class="eos-icon eos-icon-pin-blue small" tooltip="Прикрепить" placement="left" containerClass="tooltip-info"></span>
     </a>
     <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
         <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)"><a>{{desk.name}}</a></li>

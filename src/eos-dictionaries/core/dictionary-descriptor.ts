@@ -147,6 +147,8 @@ export abstract class DictionaryDescriptor {
                 title: _f.title,
                 length: _f.length,
                 pattern: _f.pattern,
+                required: _f.required,
+                invalidMessage: _f.invalidMessage,
             }
         });
         return _description;
