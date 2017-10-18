@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
@@ -14,6 +14,9 @@ import { WARN_LINK_PIN } from '../consts/messages.consts';
 export class PushpinComponent {
     deskList: EosDesk[];
     _link: IDeskItem;
+    @Input() infoOpened: boolean;
+    openStyle = '350px';
+    closeStyle = '0px';
 
     constructor(
         private _deskSrv: EosDeskService,

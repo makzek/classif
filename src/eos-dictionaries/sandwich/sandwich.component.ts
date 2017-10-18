@@ -13,7 +13,7 @@ export class SandwichComponent implements OnChanges {
 
     isOpen = false;
     show = false;
-    width = '0px';
+    // width = '0px';
 
     constructor(
         private _route: ActivatedRoute,
@@ -29,11 +29,12 @@ export class SandwichComponent implements OnChanges {
     }
 
     ngOnChanges() {
+        /*
         if (this.isWide) {
             this.width = '400px';
         } else {
             this.width = '0px';
-        }
+        }*/
         if (this.close) {
             this.isOpen = false;
         }
