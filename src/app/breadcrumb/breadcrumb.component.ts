@@ -54,23 +54,18 @@ export class BreadcrumbsComponent {
 
     private firstLoad(): void {
         if (window.innerWidth > 1500) {
-            this.openInfo(true);
-            this.openTree(true);
+             this.openTree(true);
+             this.openInfo(true);
         }
     }
-    /*
-    resize($evt: Event) {
-        // console.log($evt.target['innerWidth'])
-        if ($evt.target['innerWidth'] > 1500) {
-            this.infoOpened = true;
-            this.treeOpened = true;
-            this.openInfo(this.infoOpened);
-            this.openTree(this.treeOpened)
+
+    private resize(): void {
+        if (window.innerWidth > 1500) {
+            this.openInfo(true);
+            this.openTree(true)
         } else {
-            this.infoOpened = false;
-            this.treeOpened = false;
-            this.openInfo(this.infoOpened);
-            this.openTree(this.treeOpened);
+            this.openInfo(false);
+            this.openTree(false);
         }
-    }*/
+    }
 }

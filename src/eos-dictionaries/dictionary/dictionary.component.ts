@@ -122,7 +122,51 @@ export class DictionaryComponent implements OnDestroy {
         }));
 
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
-            this._swichCurrentState(action); // ??????????????????
+            this._dictActSrv.closeAll = false;
+            console.warn(action);
+            switch (action) {
+                // TODO: try to find more simple solition
+                case DICTIONARY_ACTIONS.closeTree:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.full:
+                            this.currentState = DICTIONARY_STATES.info;
+                            break;
+                        case DICTIONARY_STATES.tree:
+                            this.currentState = DICTIONARY_STATES.selected;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.openTree:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.info:
+                            this.currentState = DICTIONARY_STATES.full;
+                            break;
+                        case DICTIONARY_STATES.selected:
+                            this.currentState = DICTIONARY_STATES.tree;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.closeInfo:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.full:
+                            this.currentState = DICTIONARY_STATES.tree;
+                            break;
+                        case DICTIONARY_STATES.info:
+                            this.currentState = DICTIONARY_STATES.selected;
+                            break;
+                    }
+                    break;
+                case DICTIONARY_ACTIONS.openInfo:
+                    switch (this.currentState) {
+                        case DICTIONARY_STATES.tree:
+                            this.currentState = DICTIONARY_STATES.full;
+                            break;
+                        case DICTIONARY_STATES.selected:
+                            this.currentState = DICTIONARY_STATES.info;
+                            break;
+                    }
+                    break;
+            }
         }));
 
         this._subscriptions.push(_profileSrv.settings$
@@ -359,53 +403,6 @@ export class DictionaryComponent implements OnDestroy {
                     }
                 }
             });
-        }
-    }
-
-    private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        this._dictActSrv.closeAll = false;
-        switch (action) {
-            // TODO: try to find more simple solition
-            case DICTIONARY_ACTIONS.closeTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openTree:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.closeInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.full:
-                        this.currentState = DICTIONARY_STATES.tree;
-                        break;
-                    case DICTIONARY_STATES.info:
-                        this.currentState = DICTIONARY_STATES.selected;
-                        break;
-                }
-                break;
-            case DICTIONARY_ACTIONS.openInfo:
-                switch (this.currentState) {
-                    case DICTIONARY_STATES.tree:
-                        this.currentState = DICTIONARY_STATES.full;
-                        break;
-                    case DICTIONARY_STATES.selected:
-                        this.currentState = DICTIONARY_STATES.info;
-                        break;
-                }
-                break;
         }
     }
 
