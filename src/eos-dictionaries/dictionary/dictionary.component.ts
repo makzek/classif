@@ -1,17 +1,20 @@
-import { Component, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
+import { EosDeskService } from '../../app/services/eos-desk.service';
+import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
-import { EosUserProfileService } from '../..//app/services/eos-user-profile.service';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
-import { NodeActionsService } from '../node-actions/node-actions.service';
-import { FieldDescriptor } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { IFieldView } from '../core/field-descriptor';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
@@ -27,18 +30,22 @@ import {
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { IListPage } from '../node-list-pagination/node-list-pagination.component';
+import { INodeListParams } from '../core/dictionary.interface';
+import { NodeListComponent } from '../node-list/node-list.component';
 
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy {
+    @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
+    @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
-    // public _selectedNode: EosDictionaryNode;
-    public params: any;
+    dictionaryName: string;
 
+    public params: INodeListParams;
     public _selectedNode: EosDictionaryNode;
-
+    public _selectedNodeText: string;
     public _dictionaryId: string;
     private _nodeId: string;
 
@@ -46,22 +53,21 @@ export class DictionaryComponent implements OnDestroy {
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[];
 
-    /// pages
-    nodeListPerPage: EosDictionaryNode[];
-    totalItems: number;
-    itemsPerPage = 10;
-    currentPage = 1;
-    private _startPage = 1;
-    private _dropStartPage = true;
-
-    // hideTree = true;
-    // hideFullInfo = true;
-    dictionaryName: string;
+    private _page: IListPage;
 
     currentState: number;
     readonly states = DICTIONARY_STATES;
 
     private _subscriptions: Subscription[];
+
+    anyMarked: boolean;
+    anyUnmarked: boolean;
+    allMarked: boolean;
+
+    viewFields: IFieldView[] = []; // todo: fill for title
+
+    newNodeData: any = {};
+    creatingModal: BsModalRef;
 
     constructor(
         private _route: ActivatedRoute,
@@ -70,22 +76,24 @@ export class DictionaryComponent implements OnDestroy {
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
+        private _orderSrv: EosDictOrderService,
+        private _modalSrv: BsModalService,
+        private _breadcrumbsSrv: EosBreadcrumbsService,
+        private _deskSrv: EosDeskService,
         /* remove unused */
-        private _actSrv: DictionaryActionService,
+        private _dictActSrv: DictionaryActionService,
     ) {
-
         this.params = {
-            sortable: false,
+            userSort: false,
             showDeleted: false,
             hasParent: false
         };
 
-        this.listNodes = [];
-        this.nodeListPerPage = [];
         this._subscriptions = [];
         this.treeNodes = [];
+        this.listNodes = [];
         this.visibleNodes = [];
-        this.currentState = this._actSrv.state;
+        this.currentState = this._dictActSrv.state;
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -108,7 +116,7 @@ export class DictionaryComponent implements OnDestroy {
             }
         }));
 
-        this._subscriptions.push(_actSrv.action$.subscribe((action) => {
+        this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._swichCurrentState(action); // ??????????????????
         }));
 
@@ -122,51 +130,236 @@ export class DictionaryComponent implements OnDestroy {
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
+                this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                this.viewFields = node.getListView();
+                this.params.hasParent = !!node.parent;
                 this.listNodes = node.children;
-                this._getVisibleNodes();
+                this._updateVisibleNodes();
             }
-
-            /*
-             if (node) {
-                 this.viewFields = node.getListView();
-                 this._update(node.children, true);
-                 if (!this.listNodes) {
-                     if (node.marked) {
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-                     } else {
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-                         this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-                     }
-                 } else {
-                     this.checkState(node.marked);
-                 }
-             }
-            */
         }));
     }
 
-    private _getVisibleNodes() {
-        this.visibleNodes = this.listNodes;
+    ngOnDestroy() {
+        this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
+
+
+    private _update() {
+        if (this._dictionaryId) {
+            this._dictSrv.openDictionary(this._dictionaryId)
+                .then(() => this._dictSrv.selectNode(this._nodeId));
+        }
+    }
+
+    private _updateVisibleNodes() {
+        let _list: EosDictionaryNode[];
+        const page = this._page;
+        if (this.params && this.params.userSort) {
+            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
+        } else {
+            _list = this.listNodes;
+        }
+
+        if (page) {
+            this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
+        } else {
+            this.visibleNodes = _list;
+        }
     }
 
     pageChanged(page: IListPage) {
-        this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
+        this._page = page;
+        this._updateVisibleNodes();
     }
+
     doAction(action: E_RECORD_ACTIONS) {
-        console.log('alarmaaaa!!!', action);
+        switch (action) {
+            case E_RECORD_ACTIONS.navigateDown:
+                this._openNodeNavigate(false);
+                break;
+
+            case E_RECORD_ACTIONS.navigateUp:
+                this._openNodeNavigate(true);
+                break;
+
+            case E_RECORD_ACTIONS.edit:
+                this._editNode();
+                break;
+
+            case E_RECORD_ACTIONS.showDeleted:
+                this._toggleDeleted();
+                break;
+
+            case E_RECORD_ACTIONS.userOrder:
+                this._toggleUserSort();
+                break;
+
+            case E_RECORD_ACTIONS.moveUp:
+                this._moveUp();
+                break;
+
+            case E_RECORD_ACTIONS.moveDown:
+                this._moveDown();
+                break;
+
+            case E_RECORD_ACTIONS.remove:
+                this.deleteSelectedItems();
+                break;
+
+            case E_RECORD_ACTIONS.removeHard:
+                this.physicallyDelete();
+                break;
+
+            case E_RECORD_ACTIONS.add:
+                this._create();
+                break;
+            /*
+            // case E_RECORD_ACTIONS.restore: {
+            */
+            default:
+                console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
+        }
+    }
+    private _moveUp(): void {
+        const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+
+        if (_idx > 0) {
+            const item = this.visibleNodes[_idx - 1];
+            this.visibleNodes[_idx - 1] = this.visibleNodes[_idx];
+            this.visibleNodes[_idx] = item;
+            this.nodeListComponent.writeValues(this.visibleNodes);
+        }
+    }
+
+    private _moveDown(): void {
+        const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+        if (_idx > 0) {
+            const item = this.visibleNodes[_idx + 1];
+            this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
+            this.visibleNodes[_idx] = item;
+            this.nodeListComponent.writeValues(this.visibleNodes);
+        }
+    }
+
+    private _editNode() {
+        const node = this.visibleNodes.find((n) => n.isSelected || n.isActive);
+        if (node) {
+            if (node.data.PROTECTED) {
+                this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
+            } else if (node.isDeleted) {
+                this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
+                const url = this._router.url;
+                this._storageSrv.setItem(RECENT_URL, url);
+                const _path = this._dictSrv.getNodePath(node);
+                _path.push('edit');
+                this._router.navigate(_path);
+            }
+        } else {
+            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
+        }
+    }
+
+    private _openNodeNavigate(backward = false): void {
+        let _idx = this.visibleNodes.findIndex((node) => node.isSelected);
+        /*
+        if (_idx < 0) {
+            _idx = 0;
+        }
+        */
+
+        if (backward) {
+            if (_idx > -1) {
+                _idx--;
+            }
+        } else {
+            _idx++;
+        }
+        _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
+
+        this._dictSrv.openNode(this.visibleNodes[_idx].id);
     }
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._actSrv.closeAll = true;
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
+            this._dictActSrv.closeAll = true;
+        }
+    }
+
+    goUp() {
+        if (this._selectedNode && this._selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
+            this._router.navigate(path);
+        }
+    }
+
+    private _toggleDeleted() {
+        this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
+        // todo: update visible list
+    }
+
+    private _toggleUserSort(): void {
+        this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
+        this._updateVisibleNodes();
+    }
+
+    updateMarks() {
+        this.anyMarked = this.listNodes.findIndex((node) => node.marked) > -1;
+        this.anyUnmarked = this.listNodes.findIndex((node) => !node.marked) > -1;
+        this.allMarked = this.anyMarked;
+    }
+
+    toggleAllMarks() {
+        this.anyMarked = this.allMarked;
+        this.anyUnmarked = !this.allMarked;
+        this.listNodes.forEach((node) => node.marked = this.allMarked);
+    }
+
+    private _updateChildrenMarks(marked: boolean) {
+        this.listNodes.forEach((node) => node.marked = marked);
+    }
+    /* darkside */
+
+    deleteSelectedItems(): void {
+        const selectedNodes: string[] = [];
+        if (this.listNodes) {
+            this.listNodes.forEach((child) => {
+                if (child.marked && !child.isDeleted) {
+                    selectedNodes.push(child.id);
+                    child.marked = false;
+                }
+            });
+        }
+        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
+    }
+
+    physicallyDelete() {
+        if (this.listNodes) {
+            this.listNodes.forEach(node => {
+                if (node.marked) {
+                    if (1 !== 1) { // here must be API request for check if possible to delete
+                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                    } else {
+                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
+                        if (_deleteResult) {
+                            this._router.navigate([
+                                'spravochniki',
+                                this._dictionaryId,
+                                node.parent.id,
+                            ]);
+                        } else {
+                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                        }
+                    }
+                }
+            });
         }
     }
 
     private _swichCurrentState(action: DICTIONARY_ACTIONS) {
-        this._actSrv.closeAll = false;
+        this._dictActSrv.closeAll = false;
         switch (action) {
             // TODO: try to find more simple solition
             case DICTIONARY_ACTIONS.closeTree:
@@ -212,322 +405,37 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
-    private _update() {
-        if (this._dictionaryId) {
-            this._dictSrv.openDictionary(this._dictionaryId)
-                .then(() => {
-                    this._dictSrv.selectNode(this._nodeId);
+    private _create() {
+        this.creatingModal = this._modalSrv.show(this.createTemplate, {class: 'creating-modal modal-lg'});
+    }
+
+    create(hide = true) {
+        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
+        this._dictSrv.addNode(this.newNodeData)
+            .then((node) => {
+                console.log('created node', node);
+                let title = '';
+                node.getShortQuickView().forEach((_f) => {
+                    title += this.newNodeData[_f.key];
                 });
-        }
-    }
-
-    ngOnDestroy() {
-        this._subscriptions.forEach((_s) => _s.unsubscribe());
-    }
-
-    /*
-        node-list methods
-        --------
-        constructor(
-        private _storageSrv: EosStorageService,
-        private _dictSrv: EosDictService,
-        private _orderSrv: EosDictOrderService,
-        private _profileSrv: EosUserProfileService,
-        private _msgSrv: EosMessageService,
-        private _router: Router,
-        private _actSrv: NodeActionsService,
-    ) {
-        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => this.openedNode = node);
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe(
-            (dictionary) => {
-                if (dictionary) {
-                    this._dictionaryId = dictionary.id;
-                    this._params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+                let path = '';
+                for (const bc of bCrumbs) {
+                    path = path + bc.title + '/';
                 }
-            },
-            (error) => alert(error)
-        );
-
-        this._selectedNodeSubscription = this._dictSrv.selectedNode$.subscribe((node) => {
-            this._selectedNode = node;
-            if (node) {
-                this._update(node.children, true);
-                if (!this.listNodes) {
-                    if (node.marked) {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-                    } else {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-                    }
-                } else {
-                    this.checkState();
+                this._deskSrv.addRecentItem({
+                    link: this._dictSrv.getNodePath(node.id).join('/'),
+                    title: title,
+                    fullTitle: path + title
+                });
+                if (hide) {
+                    this.creatingModal.hide();
                 }
-            }
-        });
-
-        this._searchResultSubscription = this._dictSrv.searchResults$.subscribe((listNodes) => {
-            if (listNodes.length) {
-                this._update(listNodes, false);
-            } else if (this._selectedNode) {
-                this._update(this._selectedNode.children, true);
-            } else {
-                this._update([], true);
-            }
-        });
-
-        this._userSettingsSubscription = this.position_profileSrv.settings$.subscribe((res) => {
-            this._params.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
-
-        this._actionSubscription = this._actSrv.action$.subscribe((action) => {
-            switch (action) {
-                case E_RECORD_ACTIONS.edit: {
-                    if (this.openedNode) {
-                        this.editNode(this.openedNode);
-                    } else {
-                        this._actSrv.emitAction(E_RECORD_ACTIONS.editSelected)
-                    }
-                    break;
-                }
-                case E_RECORD_ACTIONS.remove: {
-                    this.deleteSelectedItems();
-                    break;
-                }
-                case E_RECORD_ACTIONS.navigateDown: {
-                    this.nextItem(false);
-                    break;
-                }
-                case E_RECORD_ACTIONS.navigateUp: {
-                    this.nextItem(true);
-                    break;
-                }
-                case E_RECORD_ACTIONS.removeHard: {
-                    this.physicallyDelete();
-                    break;
-                }
-                // case E_RECORD_ACTIONS.restore: {
-                case E_RECORD_ACTIONS.showDeleted: {
-                    this.restoringLogicallyDeletedItem();
-                    break;
-                }
-                case E_RECORD_ACTIONS.markRecords: {
-                    this.checkAllItems(true);
-                    break;
-                }
-                case E_RECORD_ACTIONS.unmarkRecords: {
-                    this.checkAllItems(false);
-                    break;
-                }
-                case E_RECORD_ACTIONS.userOrder: {
-                    this.toggleUserSort();
-                    break;
-                }
-                case E_RECORD_ACTIONS.moveUp: {
-                    this.userSortMoveUp();
-                    break;
-                }
-                case E_RECORD_ACTIONS.moveDown: {
-                    this.userSortMoveDown();
-                    break;
-                }
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this._openedNodeSubscription.unsubscribe();
-        this._dictionarySubscription.unsubscribe();
-        this._selectedNodeSubscription.unsubscribe();
-        this._searchResultSubscription.unsubscribe();
-        this._userSettingsSubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
-    }
-    */
-
-    private _update_(nodes: EosDictionaryNode[], hasParent: boolean) {
-        // this.params.hasParent = hasParent;
-        if (this.listNodes) {
-            // this.listNodes = nodes;
-            if (this.listNodes[0]) {
-                // this.sortableNodes = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
-            }
-            // this.totalItems = this.listNodes.length;
-            if (this.listNodes.length) {
-                if (!this.params.hasParent) {
-                    this._dictSrv.openNode(this.listNodes[0].id);
-                }
-            }
-            if (this.params.sortable) {
-                // this._getListData(this.sortableNodes);
-            } else {
-                this._getListData(this.listNodes);
-            }
-
-        } else {
-            this.listNodes = [];
-        }
-    }
-
-    checkAllItems(value: boolean): void {
-        if (this.listNodes) {
-            for (const item of this.listNodes) {
-                item.marked = value;
-            }
-        }
-        this._selectedNode.marked = value;
-    }
-
-    openFullInfo(node: EosDictionaryNode): void {
-        if (!node.isDeleted) {
-            if (node.id !== '') {
-                this._dictSrv.openNode(node.id);
-            }
-        }
-    }
-
-
-    editNode(node: EosDictionaryNode) {
-        if (node) {
-            this._rememberCurrentURL();
-            if (node.data.PROTECTED) {
-                this._msgSrv.addNewMessage(DANGER_EDIT_ROOT_ERROR);
-            } else if (node.isDeleted) {
-                this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-            } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
-                const _path = this._dictSrv.getNodePath(node);
-                _path.push('edit');
-                this._router.navigate(_path);
-            }
-        } else {
-            this._msgSrv.addNewMessage(WARN_EDIT_ERROR);
-        }
-    }
-
-    deleteSelectedItems(): void {
-        const selectedNodes: string[] = [];
-        if (this.listNodes) {
-            this.listNodes.forEach((child) => {
-                if (child.marked && !child.isDeleted) {
-                    selectedNodes.push(child.id);
-                    child.marked = false;
-                }
+                this.newNodeData = {};
             });
-        }
-        this._dictSrv.deleteSelectedNodes(this._dictionaryId, selectedNodes);
     }
 
-    physicallyDelete() {
-        if (this.listNodes) {
-            this.listNodes.forEach(node => {
-                if (node.marked) {
-                    if (1 !== 1) { // here must be API request for check if possible to delete
-                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                    } else {
-                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                        if (_deleteResult) {
-                            this._router.navigate([
-                                'spravochniki',
-                                this._dictionaryId,
-                                node.parent.id,
-                            ]);
-                        } else {
-                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    restoringLogicallyDeletedItem() {
-        /* todo: implemend with API call */
-        if (this.listNodes) {
-            this.listNodes.forEach(child => {
-                if (child.marked && child.isDeleted) {
-                    this._dictSrv.restoreItem(child);
-                }
-            });
-        }
-    }
-
-    private _getListData(nodes: EosDictionaryNode[]) {
-        if (nodes && nodes.length) {
-            this.nodeListPerPage = nodes.slice(
-                (this._startPage - 1) * this.itemsPerPage,
-                this.currentPage * this.itemsPerPage
-            );
-        } else {
-            this.nodeListPerPage = [];
-        }
-    }
-
-
-    setItemCount(value: string) {
-        this.itemsPerPage = +value;
-        this._startPage = this.currentPage;
-        if (this.params.sortable) {
-            // this._getListData(this.sortableNodes);
-        } else {
-            this._getListData(this.listNodes);
-        }
-    }
-
-    viewNode(node: EosDictionaryNode) {
-        if (node) {
-            this._rememberCurrentURL();
-            if (!this._dictSrv.isRoot(node.id)) {
-                this._router.navigate([
-                    'spravochniki',
-                    this._dictionaryId,
-                    node.id,
-                    'view',
-                ]);
-            }
-        }
-    }
-
-    private _rememberCurrentURL(): void {
-        const url = this._router.url;
-        this._storageSrv.setItem(RECENT_URL, url);
-    }
-
-    private checkState() {
-        let checkAllFlag = true,
-            checkSome = false;
-        if (this.listNodes) {
-            for (const item of this.listNodes) {
-                if (item.marked) {
-                    checkSome = true;
-                }
-                checkAllFlag = checkAllFlag && item.marked;
-            }
-            checkAllFlag = checkAllFlag && this._selectedNode.marked;
-            if (this._selectedNode.marked) {
-                checkSome = true;
-            }
-        } else {
-            if (!this._selectedNode.marked) {
-                checkAllFlag = false;
-                checkSome = false;
-            }
-        }
-
-        if (checkAllFlag) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else if (checkSome) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.markOne);
-        } else if (!checkAllFlag) {
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-            // this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        }
-    }
-
-    goUp() {
-        if (this._selectedNode && this._selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
-            this._router.navigate(path);
-        }
+    cancelCreate() {
+        this.creatingModal.hide();
     }
 }

@@ -89,11 +89,15 @@
         }
     }
 
+    .active {
+        border-color: $button-color-main-theme;
+    }
+
     /* .btn-icon {
-        background-color: white;
-        width: $item-width;
-        color: $button-color-main-theme;
-    }*/
+            background-color: white;
+            width: $item-width;
+            color: $button-color-main-theme;
+        }*/
     .btn-primary {
         border: 2px solid $button-color-main-theme;
         color: $button-color-main-theme;

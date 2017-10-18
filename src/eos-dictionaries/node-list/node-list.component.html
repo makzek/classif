@@ -2,7 +2,7 @@
     <div class="block list" [ngClass]="{'has-spinner': !nodes.length}">
         <eos-spinner *ngIf="!nodes?.length" size="md"></eos-spinner>
         <!--Sortable list-->
-        <ul *ngIf="params.sortable" class="elements" [ngClass]="{'has-parent': params.hasParent}">
+        <ul *ngIf="params.userSort" class="elements" [ngClass]="{'has-parent': params.hasParent}">
             <li class="child">
                 <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlight': node.isSelected}"
                     itemActiveClass="sortable-item-active" placeholderItem="Drag here"
@@ -15,7 +15,7 @@
             <eos-node-list-item [node]="item.value" [params]="params" (mark)="checkState()"></eos-node-list-item>
         </ng-template>
         <!--Simple list-->
-        <ul *ngIf="!params.sortable" class="elements" [ngClass]="{'has-parent': params.hasParent}">
+        <ul *ngIf="!params.userSort" class="elements" [ngClass]="{'has-parent': params.hasParent}">
             <li *ngFor="let item of nodes" class="child">
                 <eos-node-list-item [node]="item" [params]="params" (mark)="checkState()"></eos-node-list-item>
             </li>
