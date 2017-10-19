@@ -182,7 +182,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children || [];
                 this.listNodes.sort(this._orderSrv.defaultSort);
-                this._updateVisibleNodes();
+                if (this.listNodes[0]) {
+                    this._updateVisibleNodes();
+                }
             } else {
                 this.listNodes = [];
             }
@@ -219,7 +221,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     pageChanged(page: IListPage) {
         this._page = page;
-        this._updateVisibleNodes();
+        if (this.listNodes[0]) {
+            this._updateVisibleNodes();
+        }
     }
 
     doAction(action: E_RECORD_ACTIONS) {
