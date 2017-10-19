@@ -54,6 +54,7 @@ export class NodeListPaginationComponent implements OnInit {
         this.pageLength = length;
         this.page.current = this.page.start
         this.page.length = length.value;
+        this.change.emit(this.page);
     }
 
     showMore() {
@@ -62,6 +63,7 @@ export class NodeListPaginationComponent implements OnInit {
     }
 
     pageChanged(event: any): void {
+        console.log('pageChanged');
         if (this._dropStartPage) {
             this.page.start = event.page;
         }
