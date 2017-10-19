@@ -1,6 +1,6 @@
 <div class="eos-datepicker" #dpw>
     <input placeholder="{{placeholder}}" type="text" readonly class="form-control" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig"
         [bsValue]="value" placement="{{placement}}" (bsValueChange)="emitChange($event)"
-        [ngClass]="{'readonly': readonly }" (focus)="measureDistance()">
+        [ngClass]="{'readonly': readonly }" (click)="measureDistance()">
     <!--<span *ngIf="!readonly" class="eos-icon eos-icon-calendar-blue small icon" (click)="openOnButton()"></span>--> 
 </div>
