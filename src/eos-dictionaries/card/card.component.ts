@@ -46,7 +46,7 @@ export class EditedCard {
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     node: EosDictionaryNode;
-    private nodeData: any = {};
+    nodeData: any = {};
     private _originalData: any = {};
     private _changed = false;
     fieldsDescription: any = {};

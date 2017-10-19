@@ -3,8 +3,8 @@
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
             <a class="breadcrumb-item link" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" container="body"
-                containerClass="bottom-tooltip word-break" *ngIf="!isLast">{{route.title}}</a>
-            <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" container="body" containerClass="bottom-tooltip word-break"
+                containerClass="tooltip-info word-break" *ngIf="!isLast">{{route.title}}</a>
+            <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" container="body" containerClass="tooltip-info word-break"
                 *ngIf="isLast"> {{route.title}}</span>
         </li>
     </ol>

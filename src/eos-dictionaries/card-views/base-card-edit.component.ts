@@ -1,35 +1,36 @@
-import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import {
-    RUBRIC_CODE_LENGTH,
-    RUBRIC_TITLE_LENGTH,
-    DESCRIPTION_LENGTH,
-    NOTE_LENGTH, SEV_LENGTH,
-    DEPARTMENT_TITLE_LENGTH,
-    SURNAME_LENGTH
-} from '../consts/input-validation';
+import { Subscription } from 'rxjs/Subscription';
 
-export class BaseCardEditComponent implements OnChanges {
+export class BaseCardEditComponent implements OnInit, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    readonly rubricCodeLenth = RUBRIC_CODE_LENGTH;
-    readonly rubricTitleLenth = RUBRIC_TITLE_LENGTH;
-    readonly descriptionLength = DESCRIPTION_LENGTH;
-    readonly noteLenth = NOTE_LENGTH;
-    readonly sevLength = SEV_LENGTH;
-    readonly departmentTitleLenth = DEPARTMENT_TITLE_LENGTH;
-    // readonly surnameLenth = SURNAME_LENGTH;
-    readonly surnameLenth;
+    @ViewChild('cardForm') cardForm: NgForm;
+    private _subscrChanges: Subscription;
 
     tooltipText = '';
 
-    ngOnChanges() {
-        console.log(this, this.fieldsDescription);
+    keys(data: Object): string[] {
+        return Object.keys(data);
+    }
+
+    ngOnInit() {
+        if (this.cardForm) {
+            this.cardForm.control.valueChanges.subscribe(() => {
+                this.invalid.emit(!this.cardForm.valid);
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        if (this._subscrChanges) {
+            this._subscrChanges.unsubscribe();
+        }
     }
 
     change(fldKey: string, value: string) {

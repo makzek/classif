@@ -5,11 +5,11 @@
     </div>
     <button class="btn btn-primary-light search-btn" [popover]="searchModal" containerClass="full-search-popover" placement="bottom" #pop="bs-popover"
         [ngClass]="{'opened': isOpenFull}" (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
-        <i class="fa fa-filter" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="left-tooltip"></i>
+        <i class="fa fa-filter" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
     <input type="text" class="form-control quick-search-form" [ngClass]="{'opened': isOpenQuick}" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
-    <button class="btn btn-primary-light search-btn quick-search-btn" (click)="toggleForm()" [ngClass]="{'opened': isOpenQuick}"> 
-            <i class="fa fa-search" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="left-tooltip"></i>
+    <button class="btn btn-primary-light search-btn quick-search-btn" (click)="toggleForm()" [ngClass]="{'opened': isOpenQuick}">
+            <i class="fa fa-search" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
 </div>
 
@@ -127,7 +127,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
-                            <input id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                    <input id="fullTitle" name="fullTitle" type="text" class="form-control"
                                 [(ngModel)]="data['fullTitle']"
                                 placeholder="{{fieldsDescription['fullTitle']?.title}}">
                         </div>
@@ -152,7 +152,7 @@
                     </div>
                     <div class="form-group">
                         <label for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
-                        <input id="fullTitle" name="fullTitle" type="text" class="form-control" 
+                        <input id="fullTitle" name="fullTitle" type="text" class="form-control"
                             [(ngModel)]="data['fullTitle']"
                             placeholder="{{fieldsDescription['fullTitle']?.title}}">
                     </div>

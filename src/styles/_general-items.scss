@@ -86,20 +86,6 @@ input[type=text]::-ms-clear {
     }
 }
 
-.tooltip {
-    opacity: 1 !important;
-    z-index: 5;
-
-    &.word-break {
-        word-break: break-all;
-    }
-
-    .tooltip-inner {
-        border-radius: 0 !important;
-        background-color: white;
-    }
-}
-
 .tabs-wrapper {
     width: 800px;
     display: flex;

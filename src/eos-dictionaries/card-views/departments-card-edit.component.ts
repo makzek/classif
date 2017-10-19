@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
-
+import { Component, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnInit, OnChanges {
+export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnChanges {
     fieldGroups: string[];
     currTab = 0;
-    @ViewChild('departForm') form;
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
@@ -25,13 +23,6 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
 
     setTab(i: number) {
         this.currTab = i;
-    }
-
-    ngOnInit() {
-        this.form.control.valueChanges
-            .subscribe(() => {
-                this.invalid.emit(!this.form.valid);
-            });
     }
 
     ngOnChanges() {

@@ -16,8 +16,8 @@ export interface IFieldDesriptor {
     format?: string;
     foreignKey?: string;
     pattern?: RegExp;
-    /* column?: number;
-    subcolumn?: number;*/
+    required?: boolean;
+    invalidMessage?: string;
 }
 /*
 export interface IFieldGroup {
@@ -33,6 +33,8 @@ export interface IFieldDesriptorBase {
     readonly format?: string;
     readonly foreignKey?: string;
     pattern?: RegExp;
+    readonly required?: boolean;
+    readonly invalidMessage?: string;
 };
 
 export interface IFieldView extends IFieldDesriptorBase {
@@ -47,8 +49,8 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly format?: string;
     readonly foreignKey?: string;
     readonly pattern?: RegExp;
-    /* readonly column?: number;
-    readonly subcolumn?: number;*/
+    readonly required?: boolean;
+    readonly invalidMessage?: string;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -70,13 +72,9 @@ export class FieldDescriptor implements IFieldDesriptorBase {
             this.pattern = data.pattern
         }
 
-        /*if (data.column) {
-            this.column = data.column
-        }
+        this.required = !!data.required;
 
-        if (data.subcolumn) {
-            this.subcolumn = data.subcolumn
-        }*/
+        this.invalidMessage = data.invalidMessage || '';
     }
 }
 

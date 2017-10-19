@@ -122,7 +122,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }));
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
-            console.log(action);
             switch (action) {
                 // TODO: try to find more simple solition
                 case DICTIONARY_ACTIONS.closeTree:
@@ -182,6 +181,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children || [];
+                this.listNodes.sort(this._orderSrv.defaultSort);
                 this._updateVisibleNodes();
             } else {
                 this.listNodes = [];
@@ -205,7 +205,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[];
         const page = this._page;
         if (this.params && this.params.userSort) {
-            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
+            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list = this.listNodes;
         }
@@ -352,7 +352,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleUserSort(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        this._updateVisibleNodes();
+        if (this._selectedNode) {
+            this._updateVisibleNodes();
+        }
     }
 
     updateMarks() {
@@ -457,7 +459,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }
     }
 
-    private resize(): void {
+    public resize(): void {
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);

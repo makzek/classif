@@ -5,64 +5,66 @@
 }
 
 .tooltip {
+    opacity: 1 !important;
+    z-index: 5;
+
+    &.word-break {
+        word-break: break-all;
+    }
+
+    .tooltip-inner {
+        color: #333333;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+}
+
+.tooltip-info {
     .tooltip-inner {
         color: $active-field-color-main-theme;
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
+        border-color: $active-field-color-main-theme;
     }
 
-    &.invalid-tooltip {
-        .tooltip-inner {
-            color: $invalid-color-main-theme;
-            box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
-        }
-    }
-}
-
-.right-tooltip {
-    .tooltip-arrow {
-        border-right-color: $active-field-color-main-theme !important;
+    &.tooltip-right .tooltip-arrow {
+        border-right-color: $active-field-color-main-theme;
     }
 
-    &.invalid-tooltip {
-        .tooltip-arrow {
-            border-right-color: $invalid-color-main-theme !important;
-        }
+    &.tooltip-left .tooltip-arrow {
+        border-left-color: $active-field-color-main-theme;
+    }
+
+    &.tooltip-top .tooltip-arrow {
+        border-top-color: $active-field-color-main-theme;
+    }
+
+    &.tooltip-bottom .tooltip-arrow {
+        border-bottom-color: $active-field-color-main-theme;
     }
 }
 
-.left-tooltip {
-    .tooltip-arrow {
-        border-left-color: $active-field-color-main-theme !important;
+.tooltip-error {
+    .tooltip-inner {
+        color: $invalid-color-main-theme;
+        box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
+        border-color: $invalid-color-main-theme;
     }
 
-    &.invalid-tooltip {
-        .tooltip-arrow {
-            border-left-color: $invalid-color-main-theme !important;
-        }
-    }
-}
-
-.top-tooltip {
-    .tooltip-arrow {
-        border-top-color: $active-field-color-main-theme !important;
+    &.tooltip-right .tooltip-arrow {
+        border-right-color: $invalid-color-main-theme;
     }
 
-    &.invalid-tooltip {
-        .tooltip-arrow {
-            border-top-color: $invalid-color-main-theme !important;
-        }
-    }
-}
-
-.bottom-tooltip {
-    .tooltip-arrow {
-        border-bottom-color: $active-field-color-main-theme !important;
+    &.tooltip-left .tooltip-arrow {
+        border-left-color: $invalid-color-main-theme;
     }
 
-    &.invalid-tooltip {
-        .tooltip-arrow {
-            border-bottom-color: $invalid-color-main-theme !important;
-        }
+    &.tooltip-top .tooltip-arrow {
+        border-top-color: $invalid-color-main-theme;
+    }
+
+    &.tooltip-bottom .tooltip-arrow {
+        border-bottom-color: $invalid-color-main-theme;
     }
 }
 

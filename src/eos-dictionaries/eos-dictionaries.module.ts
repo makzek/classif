@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
@@ -26,8 +26,8 @@ import { NodeListItemComponent } from './node-list-item/node-list-item.component
 import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
 import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
-import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
+import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
@@ -52,8 +52,8 @@ import { EosDictService } from './services/eos-dict.service';
         NodeListItemComponent,
         NodeListPaginationComponent,
         RoomsCardEditComponent,
-        RubricatorCardEditComponent,
         SandwichComponent,
+        SimpleCardEditComponent,
         TreeComponent,
         TreeNodeComponent,
         ColumnSettingsComponent,
@@ -61,6 +61,7 @@ import { EosDictService } from './services/eos-dict.service';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
         AppRoutingModule,
         /* AppModule, */
@@ -72,18 +73,9 @@ import { EosDictService } from './services/eos-dict.service';
         DragulaModule,
     ],
     exports: [
-        DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
-        CardComponent,
-        NodeListComponent,
-        NodeActionsComponent,
-        NodeInfoComponent,
-        RoomsCardEditComponent,
-        RubricatorCardEditComponent,
         SandwichComponent,
-        TreeComponent,
-        TreeNodeComponent,
     ],
     providers: [
         EosDictApiService,

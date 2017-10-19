@@ -32,7 +32,6 @@ export class DictionaryActionService {
     }
 
     emitAction(value: DICTIONARY_ACTIONS) {
-        console.warn(value)
         this._action$.next(value);
     }
 
