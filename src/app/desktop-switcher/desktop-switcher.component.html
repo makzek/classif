@@ -1,7 +1,7 @@
-<div *ngIf="deskList" #dropDown="bs-dropdown" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
+<div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.toggle(false)" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
     <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
-        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" containerClass="tooltip-info" container="body">{{selectedDesk.name}}</span>
+        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" [isDisabled]="dropDown.isOpen" #hint="bs-tooltip" containerClass="tooltip-info" container="body">{{selectedDesk.name}}</span>
         <span class="btn-icon">
             <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </span>
@@ -25,11 +25,11 @@
                     <input type="text" class="form-control" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default"
-                            [disabled]="!deskName?.length || !nameForm.checkValidity()" tooltip="Сохранить">
-                            <span class="eos-icon eos-icon-checkbox-black x-small" containerClass="tooltip-info"></span>
+                            [disabled]="!deskName?.length || !nameForm.checkValidity()" tooltip="Сохранить" containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить">
-                            <span class="eos-icon eos-icon-close-black x-small" containerClass="tooltip-info"></span>
+                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить" containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </div>
                 </div>
