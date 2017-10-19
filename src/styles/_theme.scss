@@ -386,6 +386,10 @@
 
                 &.readonly {
                     background-color: transparent;
+                    border-color: transparent;
+                    &:focus {
+                        border-color: transparent;
+                    }
                 }
 
                 &.ng-invalid {
