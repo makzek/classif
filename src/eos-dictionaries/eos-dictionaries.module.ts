@@ -76,6 +76,7 @@ import { EosDictService } from './services/eos-dict.service';
         DictionaryComponent,
         DictionariesComponent,
         SandwichComponent,
+        ColumnSettingsComponent,
     ],
     providers: [
         EosDictApiService,
