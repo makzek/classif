@@ -1,0 +1,63 @@
+.eos-column-settings {
+
+}
+
+.column-settings-modal {
+    .title {
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .modal-title {
+        font-size: 18px;
+    }
+
+    .modal-header {
+        padding: 8px 15px;
+    }
+
+    .info-block {
+        border: 1px solid transparent;
+        min-height: 300px;
+
+        .item {
+            height: 32px;
+            padding: 8px;
+        }
+    }
+
+    .col-wrapper {
+        display: flex;
+    }
+
+    .arrow-wrapper {
+        flex-basis: $item-width;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .btn {
+            display: block;
+            width: $item-width;
+            height: $item-height;
+        }
+    }
+
+    .modal-content {
+        width: 800px;
+    }
+
+    .col {
+        margin: 5px;
+        flex-basis: 390px;
+
+        &:first-child {
+            margin-right: 0;
+        }
+
+        &:last-child {
+            margin-left: 0;
+        }
+    }
+}

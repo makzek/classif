@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DragulaModule } from 'ng2-dragula';
 
 import { APP_CONFIG } from '../app/app.config';
 import { AppRoutingModule } from '../app/app-routing.module';
@@ -29,6 +30,7 @@ import { RubricatorCardEditComponent } from './card-views/rubricator-card-edit.c
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
+import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
@@ -54,6 +56,7 @@ import { EosDictService } from './services/eos-dict.service';
         SandwichComponent,
         TreeComponent,
         TreeNodeComponent,
+        ColumnSettingsComponent,
     ],
     imports: [
         BrowserModule,
@@ -66,6 +69,7 @@ import { EosDictService } from './services/eos-dict.service';
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         DatepickerModule.forRoot(),
+        DragulaModule,
     ],
     exports: [
         DepartmentsCardEditComponent,

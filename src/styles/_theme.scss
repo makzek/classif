@@ -426,6 +426,24 @@
         }
     }
 
+    .column-settings-modal {
+        color: $unimportant-info-color-main-theme;
+
+        .modal-title {
+            color: $primary-font-color-main-theme;
+        }
+
+        .info-block {
+            background-color: $secondary-color-main-theme;
+            border-color: $border-color-main-theme;
+            color: $secondary-font-color-main-theme;
+        }
+
+        .selected {
+            background-color: $highlight-color-main-theme;
+        }
+    }
+
     // spacial templates
     .eos-departments-card-edit {
         .block-title {
