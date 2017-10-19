@@ -68,4 +68,5 @@ export class ColumnSettingsComponent {
             this.selectedDictItem = item;
         }
     }
+
 }

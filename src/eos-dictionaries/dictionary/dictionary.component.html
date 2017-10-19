@@ -13,6 +13,7 @@
                 <div class="first-line block">
                     <div class="controller pull-left">
                         <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
+                        <button class="btn btn-primary" (click)="_configColumns()">COLUMNS</button>
                     </div>
                     <div class="pull-right">
                         <eos-dictionary-search></eos-dictionary-search>
