@@ -177,7 +177,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
-                console.log('!')
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
@@ -206,7 +205,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[];
         const page = this._page;
         if (this.params && this.params.userSort) {
-            console.log(this._selectedNode.id, this.listNodes[0].parentId);
             _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list = this.listNodes;
