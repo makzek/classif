@@ -9,6 +9,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
     selector: 'eos-node-list',
     templateUrl: 'node-list.component.html',
 })
+
 export class NodeListComponent {
     @Input() nodes: EosDictionaryNode[];
     @Input() params: any;
