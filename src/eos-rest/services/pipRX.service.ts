@@ -21,6 +21,16 @@ export class PipRX {
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     public errorService = new ErrorService();
 
+    static clone<T>(o: T): T {
+        const r = <T>{};
+        for (const pn in <any>o) {
+            if (o.hasOwnProperty(pn)) {
+                r[pn] = o[pn];
+            }
+        }
+        return r;
+    }
+
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
         this._cfg = cfg;
         this._metadata = new Metadata(cfg);
@@ -216,5 +226,23 @@ export class PipRX {
         ent.__metadata = { __type: typeName };
         ent._State = _ES.Added;
         return ent;
+    }
+
+    public prepareForEdit<T extends IEnt>(it: any, typeName: string): T {
+        if (it === undefined) {
+            if (typeName !== undefined) {
+                const e = <T>{};
+                const et = this._metadata[typeName];
+                e.__metadata = {__type: typeName, _ES: _ES.Stub};
+                // tslint:disable-next-line:forin
+                for (const pn in et.properties) {
+                    e[pn] = null;
+                }
+                return e;
+            }
+        } else if (it._State !== _ES.Added && !it.hasOwnProperty('_orig')) {
+            it._orig = PipRX.clone(it);
+        }
+        return it;
     }
 }
