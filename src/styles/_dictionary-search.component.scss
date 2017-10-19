@@ -13,12 +13,23 @@
         height: 45px;
         border: 0;
         transition: 300ms ease-in-out;
+        position: relative;
 
         &.opened {
-            width: 300px;
+            width: 476px;
             padding: 6px 12px 6px 20px;
             border-left: 1px solid grey;
         }
+    }
+
+    .clear-btn {
+        position: absolute;
+        top: 2px;
+        right: 56px;
+        height: 46px;
+        width: $item-width;
+        border: 0;
+        background-color: transparent;
     }
 
     .search-btn {
@@ -58,7 +69,7 @@
     border-radius: 0;
 
     .popover-arrow.arrow {
-        right: 65px !important;
+        right: 75px !important;
         left: auto !important;
     }
 

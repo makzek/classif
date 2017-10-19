@@ -65,14 +65,25 @@ export class DictionarySearchComponent {
 
     toggleForm() {
         this.isOpenQuick = !this.isOpenQuick;
+        this.searchPop.hide();
     }
 
 
     quickSearch(evt: KeyboardEvent) {
+        const _settings = {
+            onlyCurrentNode: false,
+            subbranches: true,
+            deleted: true
+        }
+
         if (evt.keyCode === 13) {
             this.isOpenQuick = false;
-            this._dictSrv.search(this.dataQuick, this.settings);
+            this._dictSrv.search(this.dataQuick, _settings);
          }
+    }
+
+    clearQuickForm() {
+        this.dataQuick = '';
     }
 
     fullSearch() {
