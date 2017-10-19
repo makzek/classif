@@ -62,7 +62,7 @@ export class EosDictOrderService {
         }
     }
     /**
-     * Sorting on the field CLASSIF_NAME
+     * Sorting on the field CLASSIF_NAME, use it method as parameter in to Array.sort()
      * @param a Element a
      * @param b Element b
      */

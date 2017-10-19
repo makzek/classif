@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -7,12 +7,13 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
 import { INodeListParams } from '../core/dictionary.interface';
+import { EosDictOrderService } from '../services/eos-dict-order.service';
 
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements OnChanges, OnDestroy {
+export class NodeActionsComponent implements OnChanges, OnDestroy, OnInit {
     @Input() params: INodeListParams;
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
@@ -22,11 +23,19 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     private dictionary: EosDictionary;
     private _dictionarySubscription: Subscription;
 
-    constructor(_dictSrv: EosDictService) {
+    constructor(_dictSrv: EosDictService,
+        private _orderSrv: EosDictOrderService
+    ) {
         this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
             this.dictionary = dict;
             this._update();
         });
+    }
+
+    ngOnInit() {
+        if (this._orderSrv.getMode()) {
+            this.doAction(this.buttons[5]);
+        }
     }
 
     ngOnChanges() {
@@ -61,6 +70,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
                     break;
                 case E_RECORD_ACTIONS.userOrder:
                     _active = this.params.userSort;
+                    this._orderSrv.toggleSortingMode(_active);
                     break;
             }
         }

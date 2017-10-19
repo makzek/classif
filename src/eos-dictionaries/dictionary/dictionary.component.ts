@@ -177,10 +177,12 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             this._selectedNode = node;
             if (node) {
+                console.log('!')
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children || [];
+                this.listNodes.sort(this._orderSrv.defaultSort);
                 this._updateVisibleNodes();
             } else {
                 this.listNodes = [];
@@ -204,7 +206,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[];
         const page = this._page;
         if (this.params && this.params.userSort) {
-            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId);
+            console.log(this._selectedNode.id, this.listNodes[0].parentId);
+            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list = this.listNodes;
         }
@@ -351,7 +354,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleUserSort(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        this._updateVisibleNodes();
+        if (this._selectedNode) {
+            this._updateVisibleNodes();
+        }
     }
 
     updateMarks() {
