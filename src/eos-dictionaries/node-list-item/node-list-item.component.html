@@ -1,12 +1,11 @@
 <div class="eos-node-list-item" (mousedown)="selectNode()"  (dblclick)="viewNode()" [ngClass]="{'highlight': node.isSelected, 'flat-child': node.isActive}">
     <div *ngIf="!node.isDeleted || params?.showDeleted" [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
         <span *ngIf="params?.showCheckbox" class="checkbox-inline">
-                <label><input type="checkbox"
+                <label tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
+                containerClass="tooltip-info" container="body" placement="right"><input type="checkbox"
                             [(ngModel)]="node.marked"
                             (change)="markNode()"
-                            tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
-                            placement="right"
-                            containerClass="tooltip-info" container="body"><span></span>
+                            ><span></span>
         </label>
         </span>
         <span class="node-info">

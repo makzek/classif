@@ -20,9 +20,9 @@
                 </div>
                 <div class="second-line block special-text">
                     <span class="table-title">
-                        <span *ngIf="params.showCheckbox" class="checkbox-inline" tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <span *ngIf="params.showCheckbox" class="checkbox-inline">
+                            <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
-                            <label>
                                 <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                                 <span></span>
                             </label>
