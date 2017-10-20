@@ -362,7 +362,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         console.log('save', data);
         const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
         let path = '';
-        for (let i = 0; i <= bCrumbs.length - 2; i++) {
+        for (let i = 0; i <= bCrumbs.length - 1; i++) {
             path = path + bCrumbs[i].title + '/';
         }
         path = path.substring(0, path.length - 1);
@@ -371,7 +371,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
-                    link: this.selfLink.slice(0, this.selfLink.length - 5), // ????
+                    link: this.selfLink,
                     title: this.nodeName,
                     fullTitle: path
                 });
