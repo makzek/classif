@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
@@ -20,7 +21,8 @@ export class BreadcrumbsComponent {
 
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _dictActSrv: DictionaryActionService
+        private _dictActSrv: DictionaryActionService,
+        private _router: Router
     ) {
         this._breadcrumbsSrv.breadcrumbs.subscribe((bc: IBreadcrumb[]) => {
             if (bc) {
@@ -38,6 +40,10 @@ export class BreadcrumbsComponent {
                 this.treeOpened = false;
             }
         })
+        _router.events.filter((evt) => evt instanceof NavigationStart).subscribe((evt) => {
+            this.treeOpened = false;
+            this.infoOpened = false;
+        });
     }
 
     get closeAll() {

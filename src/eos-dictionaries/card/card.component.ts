@@ -137,8 +137,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
         this._init();
     }
 
