@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -13,7 +13,7 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements OnChanges, OnDestroy, OnInit {
+export class NodeActionsComponent implements OnChanges, OnDestroy {
     @Input() params: INodeListParams;
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
@@ -30,12 +30,6 @@ export class NodeActionsComponent implements OnChanges, OnDestroy, OnInit {
             this.dictionary = dict;
             this._update();
         });
-    }
-
-    ngOnInit() {
-        if (this._orderSrv.getMode()) {
-            this.doAction(this.buttons[5]);
-        }
     }
 
     ngOnChanges() {
@@ -70,7 +64,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy, OnInit {
                     break;
                 case E_RECORD_ACTIONS.userOrder:
                     _active = this.params.userSort;
-                    this._orderSrv.toggleSortingMode(_active);
+                    this._orderSrv.setSortingMode(_active);
                     break;
             }
         }
@@ -81,7 +75,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy, OnInit {
         }, action);
     }
 
-    doAction(action: IActionButton) {
+    doAction(action: IAction) {
         this.action.emit(action.type);
     }
 }

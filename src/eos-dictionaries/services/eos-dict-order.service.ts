@@ -12,11 +12,11 @@ export class EosDictOrderService {
         private _eosStorageService: EosStorageService
     ) { }
 
-    public toggleSortingMode(val: boolean) {
+    public setSortingMode(val: boolean) {
         localStorage.setItem(this.LOCALSTORAGEKEY, val.toString());
     }
 
-    public getMode() {
+    public getSortingMode() {
         return JSON.parse(localStorage.getItem(this.LOCALSTORAGEKEY));
     }
 
