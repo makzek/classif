@@ -1,6 +1,7 @@
 import { IFieldDesriptor, /*IFieldGroup,*/ FieldDescriptor/*, FieldGroup*/ } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
+import { SEARCH_TYPES } from '../consts/search-types';
 
 export enum E_FIELD_SET {
     list,
@@ -43,6 +44,7 @@ export interface IDictionaryDescriptor {
     parentField: string;
     // listFields: string[];
     searchFields: string[];
+    searchConfig: SEARCH_TYPES[],
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;
@@ -57,6 +59,7 @@ export abstract class DictionaryDescriptor {
     readonly id: string;
     readonly title: string;
     readonly apiInstance: string;
+    readonly searchConfig: SEARCH_TYPES[];
 
     /* set of actions available for dictionary */
     private actions: E_RECORD_ACTIONS[];
@@ -94,6 +97,7 @@ export abstract class DictionaryDescriptor {
             this.id = data.id;
             this.title = data.title;
             this.apiInstance = data.apiInstance;
+            this.searchConfig = data.searchConfig;
             data = this._fillForeignKey(data);
             this._init(data);
             this._initActions(data);
@@ -152,6 +156,10 @@ export abstract class DictionaryDescriptor {
             }
         });
         return _description;
+    }
+
+    getSearchConfig(): SEARCH_TYPES[] {
+        return this.searchConfig;
     }
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
 
@@ -11,13 +11,14 @@ import { IFieldView } from '../core/field-descriptor';
 import { E_FIELD_SET, IRecordModeDescription } from '../core/dictionary-descriptor';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
+import { SEARCH_TYPES } from '../consts/search-types';
 
 @Component({
     selector: 'eos-dictionary-search',
     templateUrl: 'dictionary-search.component.html'
 })
 
-export class DictionarySearchComponent {
+export class DictionarySearchComponent implements OnDestroy {
     dictId = '';
     fieldsDescription = {};
     data = {};
@@ -31,6 +32,12 @@ export class DictionarySearchComponent {
 
     isOpenQuick = false;
     dataQuick = '';
+
+    hasDate: boolean;
+    hasQuick: boolean;
+    hasFull: boolean;
+
+    dictSubscription: Subscription;
 
     setTab(key: string) {
         this.currTab = key;
@@ -50,7 +57,7 @@ export class DictionarySearchComponent {
     constructor(
         private _dictSrv: EosDictService,
     ) {
-        this._dictSrv.dictionary$.subscribe((_d) => {
+        this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
@@ -59,8 +66,20 @@ export class DictionarySearchComponent {
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
                 }
+
+                const _config = _d.descriptor.getSearchConfig();
+                /* tslint:disable:no-bitwise */
+                this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
+                this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
+                this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
+                /* tslint:enable:no-bitwise */
+                console.log(this.hasDate, this.hasFull, this.hasQuick);
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.dictSubscription.unsubscribe();
     }
 
     toggleForm() {

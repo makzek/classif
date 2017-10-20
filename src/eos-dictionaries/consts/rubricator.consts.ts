@@ -1,5 +1,6 @@
 import { IRubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
 import { NOT_EMPTY_STRING } from './input-validation';
+import { SEARCH_TYPES } from './search-types';
 /*
 */
 export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
@@ -12,6 +13,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
+    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'DUE',
         type: 'string',

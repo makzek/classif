@@ -1,6 +1,8 @@
 import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
 /* tslint:disable:max-line-length */
 import { NOT_EMPTY_STRING } from './input-validation';
+import { SEARCH_TYPES } from './search-types';
+
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
     apiInstance: 'DEPARTMENT',
@@ -12,6 +14,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
+    searchConfig: [SEARCH_TYPES.full, SEARCH_TYPES.quick, SEARCH_TYPES.dateFilter],
     modeList: [ {
         key: 'department',
         title: 'Подразделение',
