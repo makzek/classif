@@ -13,7 +13,6 @@
                 <div class="first-line block">
                     <div class="controller pull-left">
                         <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
-                        <button class="btn btn-primary" (click)="_configColumns()">COLUMNS</button>
                     </div>
                     <div class="pull-right">
                         <eos-dictionary-search></eos-dictionary-search>
@@ -30,6 +29,7 @@
                         </span>
                         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
                     </span>
+                    <button class="btn btn-primary-light pull-right config-btn" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>
                     <div class="clear-all"></div>
                 </div>
             </div>

@@ -58,7 +58,7 @@ import { EosDictService } from './services/eos-dict.service';
         TreeComponent,
         TreeNodeComponent,
     ],
-    entryComponents:[
+    entryComponents: [
         ColumnSettingsComponent,
     ],
     imports: [
