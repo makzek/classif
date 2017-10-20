@@ -33,7 +33,7 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 import { IListPage } from '../node-list-pagination/node-list-pagination.component';
 import { INodeListParams } from '../core/dictionary.interface';
 import { NodeListComponent } from '../node-list/node-list.component';
-
+import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
@@ -426,6 +426,16 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
     }
 
+    public _configColumns() {
+        const _fldsCurr = [];
+        const _allFields = [];
+        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal' });
+        this.creatingModal.content.onChoose.subscribe((choose) => {
+            console.log(choose);
+            this.creatingModal.hide();
+        })
+    }
+
     create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
@@ -458,8 +468,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         if (window.innerWidth > 1500) {
-             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
         }
     }
 

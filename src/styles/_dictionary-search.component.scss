@@ -20,6 +20,10 @@
             padding: 6px 12px 6px 20px;
             border-left: 1px solid grey;
         }
+
+        &.hidden {
+            display: none;
+        }
     }
 
     .clear-btn {
@@ -43,6 +47,10 @@
         height: 47px;
         position: relative;
         top: -7px;
+
+        &.hidden {
+            display: none;
+        }
 
         .eos-datepicker {
             input {

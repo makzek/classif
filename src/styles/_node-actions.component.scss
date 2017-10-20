@@ -12,6 +12,15 @@
     .second-line {
         border: 1px solid transparent;
         padding: 8px 0;
+
+        .config-btn {
+            height: 41px;
+            margin-top: -9px;
+
+            .fa {
+                font-size: 22px;
+            }
+        }
     }
 
     .table-title {

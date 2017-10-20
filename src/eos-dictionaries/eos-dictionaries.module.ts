@@ -42,6 +42,7 @@ import { EosDictService } from './services/eos-dict.service';
     declarations: [
         CardComponent,
         CardEditComponent,
+        ColumnSettingsComponent,
         DepartmentsCardEditComponent,
         DictionaryComponent,
         DictionariesComponent,
@@ -56,6 +57,8 @@ import { EosDictService } from './services/eos-dict.service';
         SimpleCardEditComponent,
         TreeComponent,
         TreeNodeComponent,
+    ],
+    entryComponents: [
         ColumnSettingsComponent,
     ],
     imports: [

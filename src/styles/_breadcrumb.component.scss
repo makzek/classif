@@ -46,11 +46,9 @@
 
     .pushpin {
         top: 11px;
-        span {
-            position: relative;
-            transition: right 0.20s ease-in-out;
-            right: 0;
-        }
+        position: relative;
+        transition: right .25s ease-in-out;
+        right: 0;
     }
 
     .left-sandwich {

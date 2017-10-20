@@ -20,6 +20,52 @@
     }
 }
 
+.column-settings-modal {
+    color: $unimportant-info-color-main-theme;
+
+    .modal-title {
+        color: $primary-font-color-main-theme;
+    }
+
+    .info-block {
+        background-color: $secondary-color-main-theme;
+        border-color: $border-color-main-theme;
+        color: $secondary-font-color-main-theme;
+    }
+
+    .selected {
+        background-color: $highlight-color-main-theme;
+    }
+
+    .btn {
+        background-color: transparent;
+    }
+}
+
+.btn-primary {
+    border: 2px solid $button-color-main-theme !important;
+    color: $button-color-main-theme !important;
+    background: white !important;
+    padding: 0 4px;
+
+    &:hover {
+        color: $button-color-hover-main-theme !important;
+        border-color: $button-color-hover-main-theme !important;
+    }
+}
+
+.btn-primary-full {
+    border: 2px solid $button-color-main-theme !important;
+    background-color: $button-color-main-theme !important;
+    color: white !important;
+    padding: 0 4px;
+
+    &:hover {
+        border-color: $button-color-hover-main-theme !important;
+        background: $button-color-hover-main-theme !important;
+    }
+}
+
 .tooltip-info {
     .tooltip-inner {
         color: $active-field-color-main-theme;
@@ -108,29 +154,6 @@
             width: $item-width;
             color: $button-color-main-theme;
         }*/
-    .btn-primary {
-        border: 2px solid $button-color-main-theme;
-        color: $button-color-main-theme;
-        background: white;
-        padding: 0 4px;
-
-        &:hover {
-            color: $button-color-hover-main-theme;
-            border-color: $button-color-hover-main-theme;
-        }
-    }
-
-    .btn-primary-full {
-        border: 2px solid $button-color-main-theme;
-        background: $button-color-main-theme;
-        color: white;
-        padding: 0 4px;
-
-        &:hover {
-            border-color: $button-color-hover-main-theme;
-            background: $button-color-hover-main-theme;
-        }
-    }
 
     .ng-invalid {
         border-color: $invalid-color-main-theme;
@@ -429,24 +452,6 @@
     .eos-dictionary-search {
         .quick-search-form {
             border-color: $border-color-main-theme;
-        }
-    }
-
-    .column-settings-modal {
-        color: $unimportant-info-color-main-theme;
-
-        .modal-title {
-            color: $primary-font-color-main-theme;
-        }
-
-        .info-block {
-            background-color: $secondary-color-main-theme;
-            border-color: $border-color-main-theme;
-            color: $secondary-font-color-main-theme;
-        }
-
-        .selected {
-            background-color: $highlight-color-main-theme;
         }
     }
 

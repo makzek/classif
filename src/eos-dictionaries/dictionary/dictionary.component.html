@@ -20,15 +20,16 @@
                 </div>
                 <div class="second-line block special-text">
                     <span class="table-title">
-                        <span *ngIf="params.showCheckbox" class="checkbox-inline" tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <span *ngIf="params.showCheckbox" class="checkbox-inline">
+                            <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
-                            <label>
                                 <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                                 <span></span>
                             </label>
                         </span>
                         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
                     </span>
+                    <button class="btn btn-primary-light pull-right config-btn" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>
                     <div class="clear-all"></div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
@@ -23,7 +22,7 @@ export class BreadcrumbsComponent {
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _dictActSrv: DictionaryActionService
     ) {
-        this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
+        this._breadcrumbsSrv.breadcrumbs.subscribe((bc: IBreadcrumb[]) => {
             if (bc) {
                 this.breadcrumbs = bc;
             }

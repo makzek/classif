@@ -1,6 +1,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 @Component({
     selector: 'eos-column-settings',
@@ -15,7 +16,7 @@ export class ColumnSettingsComponent {
     selectedDictItem: string;
     selectedCurrItem: string;
 
-    constructor(private dragulaService: DragulaService) {
+    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
         dragulaService.dropModel.subscribe((value) => {
             this.onDropModel(value.slice(1));
         });
@@ -28,12 +29,8 @@ export class ColumnSettingsComponent {
         this.selectedDictItem = null;
     }
 
-    public showModal(): void {
-        this.modal.show();
-    }
-
     public hideModal(): void {
-        this.modal.hide();
+        this.bsModalRef.hide();
     }
 
     cancel() {
@@ -68,4 +65,5 @@ export class ColumnSettingsComponent {
             this.selectedDictItem = item;
         }
     }
+
 }
