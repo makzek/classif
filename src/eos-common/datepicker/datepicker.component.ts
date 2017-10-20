@@ -8,7 +8,7 @@ defineLocale('ru', ru);
     selector: 'eos-datepicker',
     templateUrl: 'datepicker.component.html',
 })
-export class DatepickerComponent {
+export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() value = Date();
     @Input() readonly = false;
     @Input() placeholder = '';
@@ -17,6 +17,8 @@ export class DatepickerComponent {
     bsConfig: Partial<BsDatepickerConfig>;
 
     placement = 'bottom';
+
+    private _handler;
 
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
@@ -29,6 +31,16 @@ export class DatepickerComponent {
             dateInputFormat: 'DD.MM.YYYY',
             isDisabled: true,
         };
+    }
+
+    ngOnInit() {
+        window.addEventListener('scroll', this._handler = () => {
+            this.datePicker.hide();
+        }, true);
+    }
+
+    ngOnDestroy() {
+        window.removeEventListener('scroll', this._handler, true);
     }
 
     emitChange(date: Date) {
