@@ -1,4 +1,6 @@
 import { IDictionaryDescriptor } from '../core/dictionary-descriptor';
+import { SEARCH_TYPES } from './search-types';
+
 export const LS_EDIT_CARD = 'lastEditedCard';
 
 /* tslint:disable:max-line-length */
@@ -12,6 +14,7 @@ export const ROOMS_DICT: IDictionaryDescriptor = {
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     parentField: 'parent',
+    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'id',
         type: 'string',
