@@ -4,7 +4,6 @@ import { RUBRIC_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 import { RubricService } from '../services/rubric.service';
-import { Utils } from '../core/utils';
 //
 import { AppContext } from '../services/appContext.service';
 
@@ -37,7 +36,7 @@ export class RubricComponent implements OnInit {
             //     1037681, 1037682, 1037683, 1037684, 1037685]
 
             // - поиск по критериям
-            RUBRIC_CL: Utils.criteries({ LAYER: '0:2', IS_NODE: '0' })
+            RUBRIC_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
         }).subscribe(r => {
             console.log('----->>>>>>>');
@@ -53,7 +52,7 @@ export class RubricComponent implements OnInit {
 
     onAdd() {
         const tisn = this.pip.sequenceMap.GetTempISN();
-        const tmp = this.pip.prepareAdded<RUBRIC_CL>( {
+        const tmp = this.pip.EntityHelper.prepareAdded<RUBRIC_CL>( {
             DUE: this.currentItem.DUE + tisn + '.',
             ISN_NODE: tisn,
             CLASSIF_NAME: 'Добавляем?',
@@ -63,7 +62,7 @@ export class RubricComponent implements OnInit {
     }
 
     onSave() {
-        const chl = Utils.changeList([this.currentItem]);
+        const chl = this.pip.changeList([this.currentItem]);
         this.pip.batch(chl, '').subscribe((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });

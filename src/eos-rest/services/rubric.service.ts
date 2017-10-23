@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
-import { Utils } from '../core/utils';
 import { RUBRIC_CL } from '../interfaces/structures';
 const INSTANCE_NAME = 'RUBRIC_CL';
 
@@ -13,9 +12,9 @@ export class RubricService {
     getAll(params?: any): Promise<any> {
         if (params) {
             if (params.criteries) {
-                params.criteries = Utils.criteries(params.criteries);
+                params.criteries = PipRX.criteries(params.criteries);
             } else {
-                params = Utils.criteries(params);
+                params = PipRX.criteries(params);
             }
         } else {
             params = ALL_ROWS;
@@ -25,7 +24,7 @@ export class RubricService {
 
     create(parent: RUBRIC_CL, data: any): Promise<any> {
         const _isn = this._pipe.sequenceMap.GetTempISN();
-        const tmp = this._pipe.prepareAdded<RUBRIC_CL>({
+        const tmp = this._pipe.EntityHelper.prepareAdded<RUBRIC_CL>({
             DUE: parent.DUE + _isn + '.',
             ISN_NODE: _isn,
             ISN_HIGH_NODE: parent.ISN_NODE,
@@ -45,7 +44,7 @@ export class RubricService {
 
     update(originalData: any, updates: any): Promise<any> {
         const _data: any = Object.assign({}, originalData);
-        Utils.prepareForEdit(_data);
+        this._pipe.EntityHelper.prepareForEdit(_data);
         return this._postChanges(_data, updates);
     }
 
@@ -57,7 +56,7 @@ export class RubricService {
 
     private _postChanges(data: any, updates: any): Promise<any> {
         Object.assign(data, updates);
-        const changes = Utils.changeList([data]);
+        const changes = this._pipe.changeList([data]);
         // console.log('changes', changes);
         return this._pipe.batch(changes, '').toPromise();
     }

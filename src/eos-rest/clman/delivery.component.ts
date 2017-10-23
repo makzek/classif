@@ -3,7 +3,6 @@
 import { DELIVERY_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { Utils } from '../core/utils';
 
 import { AuthService } from '../services/auth.service';
 
@@ -45,7 +44,7 @@ export class DeliveryComponent implements OnInit {
     }
 
     onAdd() {
-        const tmp = this.pip.prepareAdded<DELIVERY_CL>({
+        const tmp = this.pip.EntityHelper.prepareAdded<DELIVERY_CL>({
             ISN_LCLASSIF: this.pip.sequenceMap.GetTempISN(),
             CLASSIF_NAME: 'Добавляем?'
         }, 'DELIVERY_CL');
@@ -59,7 +58,7 @@ export class DeliveryComponent implements OnInit {
             }
         );*/
         // потеря соединения при чтении
-        this.pip.read( {ErrorMirror_GetError: Utils.args({code: 434, msg: 'What?'})})
+        this.pip.read( {ErrorMirror_GetError: PipRX.args({code: 434, msg: 'What?'})})
         .subscribe(d => {
                 alert('пустой результат не ошибка');
             }

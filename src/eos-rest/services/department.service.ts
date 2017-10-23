@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
-import { Utils } from '../core/utils';
 
 const INSTANCE_NAME = 'DEPARTMENT';
 
@@ -12,7 +11,7 @@ export class DepartmentService {
 
     getAll(params?: any): Promise<any> {
         if (params) {
-            params = Utils.criteries(params);
+            params = PipRX.criteries(params);
         } else {
             params = ALL_ROWS;
         }

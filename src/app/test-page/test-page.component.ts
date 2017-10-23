@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { PipRX} from '../../eos-rest/services/pipRX.service';
-import { Utils } from '../../eos-rest/core/utils';
 import {DELO_BLOB} from '../../eos-rest/interfaces/structures';
 
 @Component({
@@ -40,15 +39,15 @@ export class TestPageComponent implements OnInit {
         s = s.replace(/\s/g, '+');
         // TODO: из преамбулы получить правильное расширение файла
 
-        const delo_blob = this.pip.prepareAdded<DELO_BLOB>({
+        const delo_blob = this.pip.EntityHelper.prepareAdded<DELO_BLOB>({
             ISN_BLOB: this.pip.sequenceMap.GetTempISN(),
             EXTENSION: 'PNG' // TODO: правиольное расширение файла указать сюда
         }, 'DELO_BLOB');
 
-        const chl = Utils.changeList([delo_blob]);
+        const chl = this.pip.changeList([delo_blob]);
 
         const content = { isn_target_blob: delo_blob.ISN_BLOB, data: s};
-        Utils.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
+        PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
 
 
         this.pip.batch(chl, '').subscribe(data => {

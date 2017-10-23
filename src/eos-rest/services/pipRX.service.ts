@@ -3,38 +3,232 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { IAsk, IApiCfg, IEnt, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
-import { ALL_ROWS, BATCH_BOUNDARY, _ES, HTTP_OPTIONS } from '../core/consts';
+import { ALL_ROWS, _ES, _T, HTTP_OPTIONS } from '../core/consts';
 import { SequenceMap } from '../core/sequence-map';
 import { Metadata } from '../core/metadata';
+import { EntityHelper } from '../core/EntityHelper';
 import { ApiCfg } from '../core/api-cfg';
-import { Utils } from '../core/utils';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ErrorService } from './error.service';
 
+// контсанты внутренние для pip
+const BATCH_BOUNDARY = 'batch__lima';
+const CHANGESET_BOUNDARY = 'changeSet__lima'; // createBoundary('changeset_');
+const URL_LIMIT = 1000;
+
+
+class PipeUtils {
+    protected _metadata: Metadata;
+
+    private static combinePath(path: string, s: string) {
+        if (path.length !== 0) { path += '/'; }
+        return path + s;
+    }
+
+
+    protected static distinctIDS(l: any[]): string {
+        let result = ',';
+        for (let i = 0; i < l.length; i++) {
+            if (l[i] !== null) {
+                const id = typeof (l[i]) !== 'string' ? (l[i] + ',') : ('\'' + l[i] + '\',');
+
+                if (result.indexOf(',' + id) === -1) {
+                    result += id;
+                }
+            }
+        }
+        result = result.substr(1, result.length - 2);
+        return result;
+    }
+
+    protected  static chunkIds(ids: any): string[] {
+        const ss = ids.split(',');
+        const result = [''];
+        let cp = 0;
+        for (let i = 0; i < ss.length; i++) {
+            if (result[cp].length > URL_LIMIT) {
+                result.push('');
+                result[cp] = result[cp].substring(1);
+                cp++;
+            }
+            result[cp] += ',' + ss[i];
+        }
+        result[cp] = result[cp].substring(1);
+        return result;
+    }
+
+    private parseMoreJson(item: any, tn: string) {
+        item._more_json = JSON.parse(item._more_json);
+        const exp = item._more_json.expand;
+        if (exp) {
+            for (const ln in exp) {
+                if (exp.hasOwnProperty(ln)) {
+                    item[ln] = exp[ln];
+                }
+            }
+
+            delete item._more_json.expand;
+        }
+    }
+
+    private parseEntity(items: any[], tn: string) {
+        // TODO: если понадобится публичный, подумаем
+        const t = (tn) ? this._metadata.typeDesc(tn) : undefined;
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item._more_json) {
+                this.parseMoreJson(item, tn);
+            }
+            for (const pn in item) {
+                if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
+                    delete item[pn];
+                } else if (t) {
+                    const pt = t.properties[pn];
+                    const pv = item[pn];
+                    if (pv !== null) {
+                        if (pn.lastIndexOf('_List') !== -1) {
+                            const chT = pn.replace('_List', '');
+                            this.parseEntity(pv, chT);
+                        }
+                    }
+                }
+            }
+
+            item.__metadata = { __type: tn };
+        }
+    }
+
+    protected nativeParser(data: any) {
+        const md = data['odata.metadata'];
+        const tn = md.split('#')[1].split('/')[0];
+        const items = data.value || [data];
+        this.parseEntity(items, tn);
+        return items;
+    }
+
+    public changeList(entities: IEnt[]) {
+        const startTime = new Date().getTime();
+
+        const chr: any[] = [];
+        for (let i = 0; i < entities.length; i++) {
+            const it = entities[i];
+            this.appendChange(it, chr, '');
+        };
+        console.log('changeList ' + (new Date().getTime() - startTime));
+        return chr;
+    }
+
+    private appendChange(it: any, chr: any[], path: string) {
+        const etn = this._metadata.etn(it);
+        const et = this._metadata[etn];
+        const pkn = et.pk;
+        let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
+        const ch: any = { method: it._State };
+        /*
+        if (it._State === _ES.Added && !it[pkn])
+            it[pkn] = SequenceMap.GetTempISN();
+        */
+
+
+        if (it._State === _ES.Added || it._State === _ES.Modified || (!it._State && it._orig)) {
+            ch.data = {};
+
+            for (const pn in et.properties) {
+                if (et.readonly.indexOf(pn) === -1 && it[pn] !== undefined) {
+                    let v = it[pn];
+                    if (v instanceof Function) { v = v(); }
+                    if (!it._orig || it._State === _ES.Added || v !== it._orig[pn]) {
+                        ch.data[pn] = v;
+                        hasChanges = true;
+                    }
+                }
+            }
+
+            if (hasChanges && !it._State) { ch.method = _ES.Modified; }
+        }
+        if (hasChanges) {
+            ch.requestUri = (path.length !== 0) ? path : etn;
+            if (ch.method !== _ES.Added) {
+                ch.requestUri += this.PKinfo(it._orig || it);
+            }
+            chr.push(ch);
+        };
+        if (et.prepareChange) {
+            et.prepareChange(it, ch, path, chr);
+        }
+
+        if (et.relations && it._State !== _ES.Deleted) {
+            for (let i = 0; i < et.relations.length; i++) {
+                const pr = et.relations[i];
+                if (pr.name.indexOf('_List') === -1) {
+                    const l = it[pr.name];
+                    if (!l) {
+
+                        for (let j = 0; j < l.length; j++) {
+                            l[j].__metadata = l[j].__metadata || {};
+                            l[j].__metadata.__type = pr.__type || pr.name.replace('_List', '');
+
+                            if (!l[j].hasOwnProperty(pr.tf)) {
+                                l[j][pr.tf] = it[pr.sf];
+                            }
+
+                            this.appendChange(l[j], chr,
+                                PipeUtils.combinePath((path ? path : etn) + this.PKinfo(it._orig || it),
+                                pr.name));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected PKinfo(it: any) {
+        const etn = this._metadata.etn(it);
+        const et = this._metadata.typeDesc(etn);
+        const v = it[et.pk];
+        return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
+    };
+}
+
 @Injectable()
-export class PipRX {
-    private _metadata: Metadata;
+export class PipRX extends PipeUtils {
     private _cfg: ApiCfg;
     private _options = HTTP_OPTIONS;
 
     public sequenceMap: SequenceMap = new SequenceMap();
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     public errorService = new ErrorService();
+    public EntityHelper: EntityHelper;
 
-    static clone<T>(o: T): T {
-        const r = <T>{};
-        for (const pn in <any>o) {
-            if (o.hasOwnProperty(pn)) {
-                r[pn] = o[pn];
-            }
+    static criteries(cr: any) {
+        return { criteries: cr };
+    }
+
+    static args(ar: any) {
+        return { args: ar };
+    }
+
+
+    static invokeSop(chr, name, args, method = 'POST') {
+        const ar = [];
+        // tslint:disable-next-line:forin
+        for (const k in args) {
+            const quot = typeof (args[k]) === 'string' ?  '\'' : '';
+            ar.push(k + '=' + quot + encodeURIComponent(args[k]) + quot);
         }
-        return r;
+
+        chr.push({
+            requestUri: name + '?' + ar.join('&'),
+            method: method
+        });
     }
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
+        super();
         this._cfg = cfg;
         this._metadata = new Metadata(cfg);
         this._metadata.init();
+        this.EntityHelper = new EntityHelper(this._metadata);
     }
 
     getConfig(): ApiCfg {
@@ -101,7 +295,7 @@ export class PipRX {
         }
 
         if (ids !== undefined) {
-            const idss = Utils.chunkIds(Utils.distinctIDS(ids instanceof Array ? ids : [ids]));
+            const idss = PipeUtils.chunkIds(PipeUtils.distinctIDS(ids instanceof Array ? ids : [ids]));
             for (let i = 0; i < idss.length; i++) {
                 result.push([this._cfg.dataSrv, r._et, '/?ids=', idss[i], url].join(''));
             }
@@ -139,7 +333,7 @@ export class PipRX {
                 .get(url, _options)
                 .map((r: Response) => {
                     try {
-                        return Utils.nativeParser(r.json());
+                        return this.nativeParser(r.json());
                     } catch (e) {
                         return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
@@ -170,7 +364,7 @@ export class PipRX {
             })
         });
 
-        const d = Utils.buildBatch(changeSet);
+        const d = this.buildBatch(changeSet);
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
@@ -183,8 +377,34 @@ export class PipRX {
             })
             .catch((err, caught) => {
                 return  this.errorService.httpCatch(err);
-            })
-;
+            });
+    }
+
+    private buildBatch(changeSets: any[]) {
+        let batch = '';
+        let i, len;
+        batch = ['--' + BATCH_BOUNDARY, 'Content-Type: multipart/mixed; boundary=' + CHANGESET_BOUNDARY, '']
+            .join('\r\n');
+
+        for (i = 0, len = changeSets.length; i < len; i++) {
+            const it = changeSets[i];
+            batch += [
+                '', '--' + CHANGESET_BOUNDARY,
+                'Content-Type: application/http',
+                'Content-Transfer-Encoding: binary',
+                '',
+                it.method + ' ' + it.requestUri + ' HTTP/1.1',
+                'Accept: application/json;odata=light;q=1,application/json;odata=nometadata;',
+                'MaxDataServiceVersion: 3.0',
+                'Content-Type: application/json',
+                'DataServiceVersion: 3.0',
+                '',
+                it.data ? JSON.stringify(it.data) : ''
+            ].join('\r\n');
+        }
+
+        batch += ['', '--' + CHANGESET_BOUNDARY + '--', '--' + BATCH_BOUNDARY + '--'].join('\r\n');
+        return batch;
     }
 
     private parseBatchResponse(response: Response, answer: any[]): any[] {
@@ -206,41 +426,11 @@ export class PipRX {
                 const e = d['odata.error'];
                 if (e) { allErr.push(e); }
                 console.log(d);
-                if (d.TempID) {
-                    this.sequenceMap.Fix(d.TempID, d.ID);
-                }
-                if (d.TempISN) {
-                    this.sequenceMap.Fix(d.TempISN, d.FixedISN);
-                }
+                this.sequenceMap.FixMapItem(d);
             }
         }
         if (allErr.length !== 0) {
             return allErr;
         }
-    }
-
-
-    public prepareAdded<T extends IEnt>(ent: any, typeName: string): T {
-        ent.__metadata = { __type: typeName };
-        ent._State = _ES.Added;
-        return ent;
-    }
-
-    public prepareForEdit<T extends IEnt>(it: any, typeName: string): T {
-        if (it === undefined) {
-            if (typeName !== undefined) {
-                const e = <T>{};
-                const et = this._metadata[typeName];
-                e.__metadata = {__type: typeName, _ES: _ES.Stub};
-                // tslint:disable-next-line:forin
-                for (const pn in et.properties) {
-                    e[pn] = null;
-                }
-                return e;
-            }
-        } else if (it._State !== _ES.Added && !it.hasOwnProperty('_orig')) {
-            it._orig = PipRX.clone(it);
-        }
-        return it;
     }
 }
