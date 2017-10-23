@@ -37,7 +37,7 @@ export class DeliveryDetailComponent {
 
     read(isn: number) {
         this.pip.read<DELIVERY_CL>({ 'DELIVERY_CL': [isn] })
-            .subscribe((r) => {
+            .then(r => {
                 this.pip.entityHelper.prepareForEdit(r[0]);
                 this.item = r[0];
             });
@@ -45,7 +45,7 @@ export class DeliveryDetailComponent {
 
     onSave() {
         const chl = this.pip.changeList([this.item]);
-        this.pip.batch(chl, '').subscribe((r) => {
+        this.pip.batch(chl, '').then((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.item.ISN_LCLASSIF));
         });
 
@@ -56,7 +56,7 @@ export class DeliveryDetailComponent {
         debugger;
         this.item._State = _ES.Deleted;
         const chl = this.pip.changeList([this.item]);
-        this.pip.batch(chl, '').subscribe((r) => {
+        this.pip.batch(chl, '').then((r) => {
             alert(r);
         });
     }

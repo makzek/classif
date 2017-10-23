@@ -25,6 +25,7 @@ export class TreeDictionaryDescriptor extends DictionaryDescriptor {
     protected shortQuickViewFields: FieldDescriptor[];
     protected editFields: FieldDescriptor[];
     protected listFields: FieldDescriptor[];
+    allVisibleFields: FieldDescriptor[];
 
     constructor(data: ITreeDictionaryDescriptor) {
         super(data);

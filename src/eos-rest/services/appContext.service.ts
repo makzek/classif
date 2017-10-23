@@ -1,6 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { PipRX } from './pipRX.service';
-import { USER_CL } from '../interfaces/structures'
+import { USER_CL, SYS_PARMS } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
 
 
@@ -10,7 +10,7 @@ export class AppContext {
      * залогиненый пользователь
      */
     public CurrentUser: USER_CL;
-    public SysParms: any;
+    public SysParms: SYS_PARMS;
 
     /**
      * рабочие столы
@@ -23,7 +23,7 @@ export class AppContext {
         const p = this.pip;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         p.errorService.LostConnectionAlerted = false;
-        const oSysParams = p.read({
+        const oSysParams = p.read<SYS_PARMS>({
             SysParms: ALL_ROWS,
             _moreJSON: {
                 DbDateTime: new Date(),
@@ -37,15 +37,17 @@ export class AppContext {
             _moreJSON: { ParamsDic: null }
         });
 
-        return oSysParams
-            .combineLatest(oCurrentUser)
-            .map(([sysParams, users]) => {
-                /* */
-                this.SysParms = sysParams[0];
-                this.CurrentUser = users[0];
-                return 'all readed';
-            })
-            .toPromise();
+        const result = Promise.all([oSysParams, oCurrentUser])
+        .then(([sysParms, curentUser]) => {
+            this.SysParms = sysParms[0];
+            this.CurrentUser = curentUser[0];
+            return 'all readed';
+        });
+        result.then(d => {
+            // tslint:disable-next-line:no-debugger
+            debugger;
+        });
+        return result;
     }
 
     reInit() {
