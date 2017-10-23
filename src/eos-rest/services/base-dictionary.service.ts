@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
-import { Utils } from '../core/utils';
 
 @Injectable()
 export abstract class BaseDictionaryService {
@@ -11,9 +10,9 @@ export abstract class BaseDictionaryService {
     getAll(params?: any): Promise<any> {
         if (params) {
             if (params.criteries) {
-                params.criteries = Utils.criteries(params.criteries);
+                params.criteries = PipRX.criteries(params.criteries);
             } else {
-                params = Utils.criteries(params);
+                params = PipRX.criteries(params);
             }
         } else {
             params = ALL_ROWS;
@@ -22,7 +21,7 @@ export abstract class BaseDictionaryService {
             .read({ [this.instance]: params, orderby: 'WEIGHT' })
             .toPromise<any>()
             .then((data) => {
-                Utils.prepareForEdit(data);
+                this._pipe.entityHelper.prepareForEdit(data);
                 return (data);
             });
     }
@@ -39,9 +38,8 @@ export abstract class BaseDictionaryService {
 
     protected _postChanges(data: any, updates: any): Promise<any> {
         Object.assign(data, updates);
-        const changes = Utils.changeList([data]);
+        const changes = this._pipe.changeList([data]);
         // console.log('changes', changes);
         return this._pipe.batch(changes, '').toPromise();
     }
-
 }

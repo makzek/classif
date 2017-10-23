@@ -1,19 +1,18 @@
+import { Metadata } from '../core/metadata';
+import { URL_LIMIT } from './consts';
 import { IEnt } from '../interfaces/interfaces';
-import { BATCH_BOUNDARY, CHANGESET_BOUNDARY, _ES, _T, URL_LIMIT } from './consts';
-import { Response } from '@angular/http';
-import { PipRX } from '../services/pipRX.service';
+import { _ES, _T } from '../core/consts';
 
-import { Metadata } from './metadata';
+export class PipeUtils {
+    protected _metadata: Metadata;
 
-declare let System: any;
+    private static combinePath(path: string, s: string) {
+        if (path.length !== 0) { path += '/'; }
+        return path + s;
+    }
 
-window['_t'] = _T;
 
-// export var _metadata: Metadata; /* wtf? */
-
-export class Utils {
-
-    static distinctIDS(l: any[]): string {
+    protected static distinctIDS(l: any[]): string {
         let result = ',';
         for (let i = 0; i < l.length; i++) {
             if (l[i] !== null) {
@@ -28,7 +27,7 @@ export class Utils {
         return result;
     }
 
-    static chunkIds(ids: any): string[] {
+    protected static chunkIds(ids: any): string[] {
         const ss = ids.split(',');
         const result = [''];
         let cp = 0;
@@ -44,8 +43,7 @@ export class Utils {
         return result;
     }
 
-
-    static parseMoreJson(item: any, tn: string) {
+    private parseMoreJson(item: any, tn: string) {
         item._more_json = JSON.parse(item._more_json);
         const exp = item._more_json.expand;
         if (exp) {
@@ -59,12 +57,13 @@ export class Utils {
         }
     }
 
-    static parseEntity(items: any[], tn: string) {
-        const t = (tn) ? window['_metadata'][tn] : undefined;
+    private parseEntity(items: any[], tn: string) {
+        // TODO: если понадобится публичный, подумаем
+        const t = (tn) ? this._metadata.typeDesc(tn) : undefined;
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (item._more_json) {
-                Utils.parseMoreJson(item, tn);
+                this.parseMoreJson(item, tn);
             }
             for (const pn in item) {
                 if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
@@ -75,7 +74,7 @@ export class Utils {
                     if (pv !== null) {
                         if (pn.lastIndexOf('_List') !== -1) {
                             const chT = pn.replace('_List', '');
-                            Utils.parseEntity(pv, chT);
+                            this.parseEntity(pv, chT);
                         }
                     }
                 }
@@ -85,100 +84,29 @@ export class Utils {
         }
     }
 
-    static nativeParser(data: any) {
-        /* console.log('nativeParser data', data); */
+    protected nativeParser(data: any) {
         const md = data['odata.metadata'];
         const tn = md.split('#')[1].split('/')[0];
         const items = data.value || [data];
-        Utils.parseEntity(items, tn);
+        this.parseEntity(items, tn);
         return items;
     }
 
-
-    static criteries(cr: any) {
-        return { criteries: cr };
-    }
-
-    static args(ar: any) {
-        return { args: ar };
-    }
-
-    static buildBatch(changeSets: any[]) {
-        let batch = '';
-        let i, len;
-        batch = ['--' + BATCH_BOUNDARY, 'Content-Type: multipart/mixed; boundary=' + CHANGESET_BOUNDARY, '']
-            .join('\r\n');
-
-        for (i = 0, len = changeSets.length; i < len; i++) {
-            const it = changeSets[i];
-            batch += [
-                '', '--' + CHANGESET_BOUNDARY,
-                'Content-Type: application/http',
-                'Content-Transfer-Encoding: binary',
-                '',
-                it.method + ' ' + it.requestUri + ' HTTP/1.1',
-                'Accept: application/json;odata=light;q=1,application/json;odata=nometadata;',
-                'MaxDataServiceVersion: 3.0',
-                'Content-Type: application/json',
-                'DataServiceVersion: 3.0',
-                '',
-                it.data ? JSON.stringify(it.data) : ''
-            ].join('\r\n');
-        }
-
-        batch += ['', '--' + CHANGESET_BOUNDARY + '--', '--' + BATCH_BOUNDARY + '--'].join('\r\n');
-        return batch;
-    }
-
-    static changeList(entities: IEnt[]) {
+    public changeList(entities: IEnt[]) {
         const startTime = new Date().getTime();
 
         const chr: any[] = [];
         for (let i = 0; i < entities.length; i++) {
             const it = entities[i];
-            Utils.appendChange(it, chr, '');
+            this.appendChange(it, chr, '');
         };
         console.log('changeList ' + (new Date().getTime() - startTime));
         return chr;
     }
 
-    static invokeSop(chr, name, args, method = 'POST') {
-        const ar = [];
-        // tslint:disable-next-line:forin
-        for (const k in args) {
-            const quot = typeof (args[k]) === 'string' ?  '\'' : '';
-            ar.push(k + '=' + quot + encodeURIComponent(args[k]) + quot);
-        }
-
-        chr.push({
-            requestUri: name + '?' + ar.join('&'),
-            method: method
-        });
-    }
-    /*
-    static IsModified(it: IEnt, orig?: IEnt, propNames?: string[]) {
-        orig = orig || it._orig;
-        if (!orig && it._State === _ES.Added) return true;
-        if (!propNames) {
-            let etn = _metadata.etn(it);
-            let et = _metadata[etn];
-            propNames = et.properties;
-        }
-        if (!propNames) return undefined;
-
-        for (let pn in propNames) {
-            if (it[pn] === undefined) continue;
-            let v = it[pn];
-            if (orig && v !== it._orig[pn])
-                return true;
-        }
-        return false;
-    }
-    */
-
-    static appendChange(it: any, chr: any[], path: string) {
-        const etn = window['_metadata'].etn(it);
-        const et = window['_metadata'][etn];
+    private appendChange(it: any, chr: any[], path: string) {
+        const etn = this._metadata.etn(it);
+        const et = this._metadata[etn];
         const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
@@ -207,7 +135,7 @@ export class Utils {
         if (hasChanges) {
             ch.requestUri = (path.length !== 0) ? path : etn;
             if (ch.method !== _ES.Added) {
-                ch.requestUri += Utils.PKinfo(it._orig || it);
+                ch.requestUri += this.PKinfo(it._orig || it);
             }
             chr.push(ch);
         };
@@ -230,7 +158,9 @@ export class Utils {
                                 l[j][pr.tf] = it[pr.sf];
                             }
 
-                            Utils.appendChange(l[j], chr, Utils.combinePath((path ? path : etn) + Utils.PKinfo(it._orig || it), pr.name));
+                            this.appendChange(l[j], chr,
+                                PipeUtils.combinePath((path ? path : etn) + this.PKinfo(it._orig || it),
+                                    pr.name));
                         }
                     }
                 }
@@ -238,33 +168,10 @@ export class Utils {
         }
     }
 
-    static combinePath(path: string, s: string) {
-        if (path.length !== 0) { path += '/'; }
-        return path + s;
-    }
-
-    static PKinfo(it: any) {
-        const etn = window['_metadata'].etn(it);
-        const et = window['_metadata'][etn];
+    protected PKinfo(it: any) {
+        const etn = this._metadata.etn(it);
+        const et = this._metadata.typeDesc(etn);
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
-
-
-    static clone<T>(o: T): T {
-        const r = <T>{};
-        for (const pn in <any>o) {
-            if (o.hasOwnProperty(pn)) {
-                r[pn] = o[pn];
-            }
-        }
-        return r;
-    }
-
-    static prepareForEdit<T extends IEnt>(it: T) {
-        if (it._State !== _ES.Added && !it._orig) {
-            it._orig = Utils.clone(it);
-        }
-    }
-
 }

@@ -4,7 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { Utils } from '../core/utils';
 //
 import { AppContext } from '../services/appContext.service';
 import { Observable } from 'rxjs/Rx';
@@ -31,11 +30,11 @@ class vmDEPARTMENT {
         // или Pipe для крепкости переписать на промисы
 
         // ищем пользователя ассоцированного с показываемым дл
-        const rUser = pip.read<USER_CL>({USER_CL : Utils.criteries({DUE_DEP: due})});
+        const rUser = pip.read<USER_CL>({USER_CL : PipRX.criteries({DUE_DEP: due})});
         const rDopInfo = rDeps.flatMap( d => {
             const l = d.length - 1;
             // загружаем доп. инфо о ДЛ и подразделении
-            const rPrintInfo = pip.read<CB_PRINT_INFO>({ CB_PRINT_INFO: Utils.criteries({
+            const rPrintInfo = pip.read<CB_PRINT_INFO>({ CB_PRINT_INFO: PipRX.criteries({
                 ISN_OWNER: d[l].ISN_NODE.toString() + '|' + d[l].ISN_HIGH_NODE.toString(),
                 OWNER_KIND: '104' })});
             let rOrg = Observable.of([]);
@@ -48,7 +47,7 @@ class vmDEPARTMENT {
             return Observable.combineLatest(rPrintInfo, rOrg, rCab) ;
         });
         // загружаем индекс СЭВ
-        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: Utils.criteries({
+        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: PipRX.criteries({
             OBJECT_NAME: 'DEPARTMENT', OBJECT_ID : due
         })})
         return Observable.combineLatest(rDeps, rUser, rDopInfo, rSevIndex)
@@ -64,13 +63,13 @@ class vmDEPARTMENT {
             // ничего - если не заполнили ценных полей или ничего не изменили
             // INSERT, если записи нет, но чтото заполнили
             // UPDATE, если чтото изменили
-            result.CB_PRINT_INFO = pip.prepareForEdit<CB_PRINT_INFO>( dop[0][0], 'CB_PRINT_INFO' );
-            result.ORGANIZ = pip.prepareForEdit<ORGANIZ_CL>(dop[1][0], 'ORGANIZ_CL' );
+            result.CB_PRINT_INFO = pip.entityHelper.prepareForEdit<CB_PRINT_INFO>( dop[0][0], 'CB_PRINT_INFO' );
+            result.ORGANIZ = pip.entityHelper.prepareForEdit<ORGANIZ_CL>(dop[1][0], 'ORGANIZ_CL' );
             // Здесь врапить не надо - запись кабинете мы редатировать не должны
             // а ссылку на него можно и по другому поставить.
             result.cabinet = <CABINET>dop[2][0];
 
-            result.SEV_ASSOCIATION = pip.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
+            result.SEV_ASSOCIATION = pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
 
             console.log(JSON.stringify(result));
 
@@ -98,7 +97,7 @@ export class DepartmentComponent  implements OnInit {
 
     getData() {
         this.pip.read<DEPARTMENT>({
-            DEPARTMENT: Utils.criteries({ LAYER: '0:2', IS_NODE: '0' })
+            DEPARTMENT: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE'
         }).subscribe(r => {
             console.log('----->>>>>>>');
@@ -111,7 +110,7 @@ export class DepartmentComponent  implements OnInit {
         // tslint:disable-next-line:no-debugger
         debugger;
         this.pip.read<DEPARTMENT>({
-            DEPARTMENT: Utils.criteries({ ISN_HIGH_NODE: cur.ISN_NODE.toString() })
+            DEPARTMENT: PipRX.criteries({ ISN_HIGH_NODE: cur.ISN_NODE.toString() })
             , orderby: 'WEIGHT'
         }).subscribe(r => { this.listItems = r; });
     }

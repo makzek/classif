@@ -1,40 +1,56 @@
 ﻿import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { IAsk, IApiCfg, IEnt, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
-import { ALL_ROWS, BATCH_BOUNDARY, _ES, HTTP_OPTIONS } from '../core/consts';
+import { ApiCfg } from '../core/api-cfg';
+import { ALL_ROWS, HTTP_OPTIONS, BATCH_BOUNDARY, CHANGESET_BOUNDARY } from '../core/consts';
+import { IAsk, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
 import { SequenceMap } from '../core/sequence-map';
 import { Metadata } from '../core/metadata';
-import { ApiCfg } from '../core/api-cfg';
-import { Utils } from '../core/utils';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { EntityHelper } from '../core/entity-helper';
 import { ErrorService } from './error.service';
+import { PipeUtils } from '../core/pipe-utils';
 
 @Injectable()
-export class PipRX {
-    private _metadata: Metadata;
+export class PipRX extends PipeUtils {
     private _cfg: ApiCfg;
     private _options = HTTP_OPTIONS;
 
     public sequenceMap: SequenceMap = new SequenceMap();
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     public errorService = new ErrorService();
+    public entityHelper: EntityHelper;
 
-    static clone<T>(o: T): T {
-        const r = <T>{};
-        for (const pn in <any>o) {
-            if (o.hasOwnProperty(pn)) {
-                r[pn] = o[pn];
-            }
+    static criteries(cr: any) {
+        return { criteries: cr };
+    }
+
+    static args(ar: any) {
+        return { args: ar };
+    }
+
+
+    static invokeSop(chr, name, args, method = 'POST') {
+        const ar = [];
+        // tslint:disable-next-line:forin
+        for (const k in args) {
+            const quot = typeof (args[k]) === 'string' ? '\'' : '';
+            ar.push(k + '=' + quot + encodeURIComponent(args[k]) + quot);
         }
-        return r;
+
+        chr.push({
+            requestUri: name + '?' + ar.join('&'),
+            method: method
+        });
     }
 
     constructor(private http: Http, @Optional() cfg: ApiCfg) {
+        super();
         this._cfg = cfg;
         this._metadata = new Metadata(cfg);
         this._metadata.init();
+        this.entityHelper = new EntityHelper(this._metadata);
     }
 
     getConfig(): ApiCfg {
@@ -44,7 +60,7 @@ export class PipRX {
     private makeArgs(args: IKeyValuePair): string {
         let url = '';
         // tslint:disable-next-line:forin
-        for ( const argname in args) {
+        for (const argname in args) {
             let q = '',
                 v = args[argname];
             const t = typeof (args[argname]);
@@ -101,7 +117,7 @@ export class PipRX {
         }
 
         if (ids !== undefined) {
-            const idss = Utils.chunkIds(Utils.distinctIDS(ids instanceof Array ? ids : [ids]));
+            const idss = PipeUtils.chunkIds(PipeUtils.distinctIDS(ids instanceof Array ? ids : [ids]));
             for (let i = 0; i < idss.length; i++) {
                 result.push([this._cfg.dataSrv, r._et, '/?ids=', idss[i], url].join(''));
             }
@@ -139,16 +155,18 @@ export class PipRX {
                 .get(url, _options)
                 .map((r: Response) => {
                     try {
-                        return Utils.nativeParser(r.json());
+                        return this.nativeParser(r.json());
                     } catch (e) {
                         return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
-                }) /*
+                })
+                /*
                 .catch((err, caught) => {
                     this.errorService.errorHandler({ http: err, _request: req });
                     return [];
                 })
                 */
+                ;
         });
 
         return rl.reduce((acc: T[], v: T[]) => {
@@ -171,7 +189,7 @@ export class PipRX {
             })
         });
 
-        const d = Utils.buildBatch(changeSet);
+        const d = this.buildBatch(changeSet);
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
@@ -184,9 +202,35 @@ export class PipRX {
             }) /*
             .catch((err, caught) => {
                 this.errorService.httpCatch(err);
-                return [];
-            });
-            */
+            })*/
+            ;
+    }
+
+    private buildBatch(changeSets: any[]) {
+        let batch = '';
+        let i, len;
+        batch = ['--' + BATCH_BOUNDARY, 'Content-Type: multipart/mixed; boundary=' + CHANGESET_BOUNDARY, '']
+            .join('\r\n');
+
+        for (i = 0, len = changeSets.length; i < len; i++) {
+            const it = changeSets[i];
+            batch += [
+                '', '--' + CHANGESET_BOUNDARY,
+                'Content-Type: application/http',
+                'Content-Transfer-Encoding: binary',
+                '',
+                it.method + ' ' + it.requestUri + ' HTTP/1.1',
+                'Accept: application/json;odata=light;q=1,application/json;odata=nometadata;',
+                'MaxDataServiceVersion: 3.0',
+                'Content-Type: application/json',
+                'DataServiceVersion: 3.0',
+                '',
+                it.data ? JSON.stringify(it.data) : ''
+            ].join('\r\n');
+        }
+
+        batch += ['', '--' + CHANGESET_BOUNDARY + '--', '--' + BATCH_BOUNDARY + '--'].join('\r\n');
+        return batch;
     }
 
     private parseBatchResponse(response: Response, answer: any[]): any[] {
@@ -208,41 +252,11 @@ export class PipRX {
                 const e = d['odata.error'];
                 if (e) { allErr.push(e); }
                 console.log(d);
-                if (d.TempID) {
-                    this.sequenceMap.Fix(d.TempID, d.ID);
-                }
-                if (d.TempISN) {
-                    this.sequenceMap.Fix(d.TempISN, d.FixedISN);
-                }
+                this.sequenceMap.FixMapItem(d);
             }
         }
         if (allErr.length !== 0) {
             return allErr;
         }
-    }
-
-
-    public prepareAdded<T extends IEnt>(ent: any, typeName: string): T {
-        ent.__metadata = { __type: typeName };
-        ent._State = _ES.Added;
-        return ent;
-    }
-
-    public prepareForEdit<T extends IEnt>(it: any, typeName: string): T {
-        if (it === undefined) {
-            if (typeName !== undefined) {
-                const e = <T>{};
-                const et = this._metadata[typeName];
-                e.__metadata = {__type: typeName, _ES: _ES.Stub};
-                // tslint:disable-next-line:forin
-                for (const pn in et.properties) {
-                    e[pn] = null;
-                }
-                return e;
-            }
-        } else if (it._State !== _ES.Added && !it.hasOwnProperty('_orig')) {
-            it._orig = PipRX.clone(it);
-        }
-        return it;
     }
 }

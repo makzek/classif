@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { BaseDictionaryService } from './base-dictionary.service';
 import { PipRX } from './pipRX.service';
-import { ALL_ROWS } from '../core/consts';
-import { Utils } from '../core/utils';
 import { ILinearCL } from '../interfaces/interfaces';
 
 @Injectable()
@@ -25,7 +23,7 @@ export abstract class LinearDictionaryService extends BaseDictionaryService {
 
     create(data: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
-        _newRec = this._pipe.prepareAdded<any>(_newRec, this.instance);
+        _newRec = this._pipe.entityHelper.prepareAdded<any>(_newRec, this.instance);
         return this._postChanges(_newRec, data)
             .then((resp: any[]) => {
                 if (resp && resp[0]) {

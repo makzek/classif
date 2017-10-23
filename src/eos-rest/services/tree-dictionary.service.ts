@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BaseDictionaryService } from './base-dictionary.service';
 import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
-import { Utils } from '../core/utils';
 import { IHierCL } from '../interfaces/interfaces';
 
 @Injectable()
@@ -35,7 +34,7 @@ export abstract class TreeDictionaryService extends BaseDictionaryService {
 
     create(data: any, parent?: any, isNode = false, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(parent, isNode, isProtected, isDeleted);
-        _newRec = this._pipe.prepareAdded<any>(_newRec, this.instance);
+        _newRec = this._pipe.entityHelper.prepareAdded<any>(_newRec, this.instance);
         console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data)
             .then((resp: any[]) => {
