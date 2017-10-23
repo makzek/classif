@@ -3,30 +3,33 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
+import { FieldDescriptor } from '../core/field-descriptor';
+
 @Component({
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
 export class ColumnSettingsComponent {
-    @Input() currentFields = [];
-    @Input() dictionaryFields = ['Код', 'Краткое наименование', 'Полное наименование', 'Индекс СЭВ', 'Имя', 'Фамилия'];
-    @Output() onChoose: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Input() currentFields: FieldDescriptor[] = [];
+    @Input() dictionaryFields: FieldDescriptor[] = [];
+    @Output() onChoose: EventEmitter<FieldDescriptor[]> = new EventEmitter<FieldDescriptor[]>();
     @ViewChild('modal') public modal: ModalDirective;
 
-    selectedDictItem: string;
-    selectedCurrItem: string;
+    selectedDictItem: FieldDescriptor;
+    selectedCurrItem: FieldDescriptor;
 
     constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
-        dragulaService.dropModel.subscribe((value) => {
-            this.onDropModel(value.slice(1));
-        });
-    }
-
-    private onDropModel(args) {
-        // const [el, target, source] = args;
-        // do something else
-        this.selectedCurrItem = null;
-        this.selectedDictItem = null;
+        // value[3] - src
+        // value[1] - droped elem
+        dragulaService.drop.subscribe((value) => {
+            if (value[3].id === 'curr') {
+                this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
+                this.removeToCurrent();
+            } else {
+                this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
+                this.addToCurrent();
+            }
+          });
     }
 
     public hideModal(): void {
@@ -58,7 +61,7 @@ export class ColumnSettingsComponent {
         }
     }
 
-    select(item: string, isCurrent: boolean) {
+    select(item: FieldDescriptor, isCurrent: boolean) {
         if (isCurrent) {
             this.selectedCurrItem = item;
         } else {

@@ -100,5 +100,6 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
     quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],
-    listFields: ['RUBRIC_CODE', 'CLASSIF_NAME']
+    listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
 };

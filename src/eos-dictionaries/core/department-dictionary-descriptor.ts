@@ -61,6 +61,7 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
     shortQuickViewFields: ModeFieldSet;
     editFields: ModeFieldSet;
     listFields: ModeFieldSet;
+    allVisibleFields: FieldDescriptor[];
 
     constructor(data: IDepartmentDictionaryDescriptor) {
         super(data);
@@ -95,6 +96,8 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
                 return this._getModeSet(this.listFields, values);
             /* case E_FIELD_SET.fullSearch:
                 return this._getModeSet(this.fullSearchFields, values);*/
+            case E_FIELD_SET.allVisible:
+                return this._getFieldSet(E_FIELD_SET.allVisible, values);
             default:
                 throw new Error('Unknown field set');
         }
