@@ -1,14 +1,15 @@
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, IRecordModeDescription,
-    ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
-import { RecordDescriptor } from './record-descriptor';
+import { E_FIELD_SET } from './dictionary-descriptor';
+import { ITreeDictionaryDescriptor, TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
+import { IRecordMode, IRecordModeDescription, ModeFieldSet } from './record-mode';
+import { TreeRecordDescriptor } from './tree-record-descriptor';
 
 export enum E_DEPT_MODE {
     person,
     department
 }
 
-export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
+export interface IDepartmentDictionaryDescriptor extends ITreeDictionaryDescriptor {
     modeField: string;
     modeList: IRecordModeDescription[];
     fullSearchFields: IRecordMode;
@@ -18,7 +19,7 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     listFields: IRecordMode;
 }
 
-export class DepartmentRecordDescriptor extends RecordDescriptor {
+export class DepartmentRecordDescriptor extends TreeRecordDescriptor {
     parent: DepartmentDictionaryDescriptor;
     modeField: FieldDescriptor;
     modeList: IRecordModeDescription[];

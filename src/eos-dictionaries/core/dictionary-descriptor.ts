@@ -12,26 +12,6 @@ export enum E_FIELD_SET {
     edit,
     allVisible
 }
-/* mode for department-like ditionary */
-export interface IRecordMode {
-    [mode: string]: string[];
-}
-
-export interface IRecordModeDescription {
-    key: string,
-    title: string,
-}
-
-export class ModeFieldSet {
-    [mode: string]: FieldDescriptor[];
-
-    constructor(record: RecordDescriptor, data: IRecordMode) {
-        Object.keys(data).forEach((mode) => {
-            this[mode] = [];
-            data[mode].forEach((fldName) => record.addFieldToSet(fldName, this[mode]));
-        });
-    }
-}
 
 export interface IDictionaryDescriptor {
     id: string;
@@ -42,7 +22,6 @@ export interface IDictionaryDescriptor {
     groupActions: string[];
     fields: IFieldDesriptor[];
     keyField: string;
-    parentField: string;
     // listFields: string[];
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],

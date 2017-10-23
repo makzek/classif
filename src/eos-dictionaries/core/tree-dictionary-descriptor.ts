@@ -3,6 +3,7 @@ import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dict
 import { RecordDescriptor } from './record-descriptor';
 
 export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
+    parentField: string;
     quickViewFields: string[];
     shortQuickViewFields: string[];
     editFields: string[];
@@ -10,11 +11,11 @@ export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
 }
 
 export class TreeRecordDescriptor extends RecordDescriptor {
-    parent: TreeDictionaryDescriptor;
+    dictionary: TreeDictionaryDescriptor;
 
     constructor(dictionary: TreeDictionaryDescriptor, data: ITreeDictionaryDescriptor) {
         super(data);
-        this.parent = dictionary;
+        this.dictionary = dictionary;
     }
 }
 
