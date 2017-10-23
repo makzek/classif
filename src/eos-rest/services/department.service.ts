@@ -4,42 +4,11 @@ import { PipRX } from './pipRX.service';
 import { ALL_ROWS } from '../core/consts';
 import { DEPARTMENT } from '../interfaces/structures';
 import { Utils } from '../core/utils';
+import { TreeDictionaryService } from './tree-dictionary.service';
 
 const INSTANCE_NAME = 'DEPARTMENT';
 
 @Injectable()
-export class DepartmentService {
-    constructor(private _pipe: PipRX) { }
-
-    getAll(params?: any): Promise<any> {
-        if (params) {
-            if (params.criteries) {
-                params.criteries = Utils.criteries(params.criteries);
-            } else {
-                params = Utils.criteries(params);
-            }
-        } else {
-            params = ALL_ROWS;
-        }
-
-        return this._pipe.read<DEPARTMENT>({ [INSTANCE_NAME]: params }).toPromise<any>();
-    }
-
-    create(data: any, params?: any): Promise<any> {
-        return new Promise((res, rej) => {
-            rej('not implemented');
-        })
-    }
-
-    update(data: any, params?: any): Promise<any> {
-        return new Promise((res, rej) => {
-            rej('not implemented');
-        });
-    }
-
-    delete(data: any, params?: any): Promise<any> {
-        return new Promise((res, rej) => {
-            rej('not implemented');
-        });
-    }
+export class DepartmentService extends TreeDictionaryService {
+    instance = INSTANCE_NAME;
 }
