@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { PipRX} from '../../eos-rest/services/pipRX.service';
-import {DELO_BLOB} from '../../eos-rest/interfaces/structures';
+import { PipRX } from '../../eos-rest/services/pipRX.service';
+import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
 
 @Component({
     selector: 'eos-test-page',
@@ -35,7 +35,7 @@ export class TestPageComponent implements OnInit {
         let s = this.defaultImage;
         const pos = s.indexOf(',') + 1;
         // убрать последнюю скобку и преамбулу
-        s = s.substr(pos, s.length - pos - 1 );
+        s = s.substr(pos, s.length - pos - 1);
         s = s.replace(/\s/g, '+');
         // TODO: из преамбулы получить правильное расширение файла
 
@@ -46,7 +46,7 @@ export class TestPageComponent implements OnInit {
 
         const chl = this.pip.changeList([delo_blob]);
 
-        const content = { isn_target_blob: delo_blob.ISN_BLOB, data: s};
+        const content = { isn_target_blob: delo_blob.ISN_BLOB, data: s };
         PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
 
 

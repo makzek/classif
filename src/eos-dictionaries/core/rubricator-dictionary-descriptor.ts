@@ -7,6 +7,7 @@ export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
     shortQuickViewFields: string[];
     editFields: string[];
     listFields: string[];
+    allVisibleFields: string[];
 }
 
 export class RubricatorRecordDescriptor extends RecordDescriptor {
@@ -25,6 +26,7 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
     protected shortQuickViewFields: FieldDescriptor[];
     protected editFields: FieldDescriptor[];
     protected listFields: FieldDescriptor[];
+    protected allVisibleFields: FieldDescriptor[];
 
     constructor(data: IRubricatorDictionaryDescriptor) {
         super(data);
@@ -47,6 +49,8 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.allVisible:
+                return this.allVisibleFields;
             default:
                 throw new Error('Unknown field set');
         }

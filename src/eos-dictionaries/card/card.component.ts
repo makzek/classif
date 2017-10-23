@@ -355,6 +355,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         .then((node) => {
             this._initNodeData(node);
             this._setOriginalData();
+            this.cancel();
         });
     }
 

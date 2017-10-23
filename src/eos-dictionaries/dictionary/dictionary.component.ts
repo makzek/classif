@@ -22,6 +22,8 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
+import { E_FIELD_SET } from '../core/dictionary-descriptor'
+import { FieldDescriptor } from '../core/field-descriptor'
 
 import {
     DictionaryActionService,
@@ -72,6 +74,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     creatingModal: BsModalRef;
     fieldsDescription: any;
     formValidated: boolean;
+
+    customFields: FieldDescriptor[] = [];
 
     constructor(
         private _route: ActivatedRoute,
@@ -430,8 +434,11 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         const _fldsCurr = [];
         const _allFields = [];
         this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal' });
-        this.creatingModal.content.onChoose.subscribe((choose) => {
-            console.log(choose);
+        Object.assign(this.creatingModal.content.currentFields, this.customFields);
+        this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
+        this.creatingModal.content.onChoose.subscribe((_fields) => {
+            this.customFields = _fields;
+            console.log(this.customFields);
             this.creatingModal.hide();
         })
     }
@@ -467,7 +474,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
-        this.params.userSort = this._orderSrv.getSortingMode();
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
