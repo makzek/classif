@@ -26,7 +26,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         required: true,
         length: 248,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 248 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'CLASSIF_NAME',
         title: 'Краткое наименование',
@@ -34,20 +34,20 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         length: 2000,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 2000 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
         title: 'Описание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'CODE',
         title: 'Code',
         type: 'string',
         length: 64,
-        invalidMessage: 'Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'DELETED',
         title: 'DELETED',
@@ -86,19 +86,20 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
         type: 'number',
         length: 64,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'fullTitle',
         title: 'Полное наименование',
         type: 'text',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 248 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
     quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],
-    listFields: ['RUBRIC_CODE', 'CLASSIF_NAME']
+    listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
 };

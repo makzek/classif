@@ -444,6 +444,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
             'INDEX', 'SEV', 'fullTitle', 'titleRP', 'notInPositionTitle'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
     /*
     fieldGroups: [{
         title: 'Основаная информация',

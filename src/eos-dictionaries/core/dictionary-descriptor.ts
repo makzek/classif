@@ -9,7 +9,8 @@ export enum E_FIELD_SET {
     shortQuickView,
     search,
     fullSearch,
-    edit
+    edit,
+    allVisible
 }
 /* mode for department-like ditionary */
 export interface IRecordMode {
@@ -45,6 +46,7 @@ export interface IDictionaryDescriptor {
     // listFields: string[];
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
+    allVisibleFields: string[];
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;
@@ -92,6 +94,8 @@ export abstract class DictionaryDescriptor {
     /* set of fields for edit form */
     protected abstract editFields: any;
 
+    protected abstract allVisibleFields: FieldDescriptor[];
+
     constructor(data: IDictionaryDescriptor) {
         if (data) {
             this.id = data.id;
@@ -101,7 +105,7 @@ export abstract class DictionaryDescriptor {
             data = this._fillForeignKey(data);
             this._init(data);
             this._initActions(data);
-            this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/], data);
+            this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/, 'allVisibleFields'], data);
             /* this._initFieldGroups(data); */
         } else {
             return undefined;
