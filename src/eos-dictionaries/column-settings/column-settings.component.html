@@ -21,7 +21,7 @@
             <div class="col">
                 <span class="title">Исходный список</span>
                 <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
-                    <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item' (click)="select(item, false)"
+                    <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)"
                         [ngClass]="{'selected': item === selectedDictItem}"></div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="col">
                 <span class="title">Итоговый список</span>
                 <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
-                    <div class="item" *ngFor="let item of currentFields" [innerHtml]='item' (click)="select(item, true)"
+                    <div class="item" *ngFor="let item of currentFields" [innerHtml]='item.title' (click)="select(item, true)"
                         [ngClass]="{'selected': item === selectedCurrItem}"></div>
                 </div>
             </div>

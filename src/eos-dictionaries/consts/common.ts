@@ -89,6 +89,7 @@ export const ROOMS_DICT: IDictionaryDescriptor = {
     fullSearchFields: ['code', 'title', 'description'],
     quickViewFields: ['department', 'owner', 'roomUsers'],
     shortQuickViewFields: ['description'],
-    listFields: ['title']
+    listFields: ['title'],
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
 };
 /* tslint:enable:max-line-length */
