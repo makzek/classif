@@ -1,7 +1,6 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 
 import { FieldDescriptor } from '../core/field-descriptor';
 

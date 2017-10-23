@@ -1,5 +1,5 @@
 <p class="h4 text-center">Component test page</p>
-<button class="btn btn-default" (click)="addNewMessage()">Сгенерировать тестовое сообщение</button>
+
 <p> Ссылки </p>
 <ul>
     <li><a routerLink="/delivery">Delivery REST test page</a></li>
@@ -12,7 +12,4 @@
         <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
 </div>
 
-<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date"
-(change)="change($event)"></eos-datepicker>
-
-<eos-column-settings></eos-column-settings>
+<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" (change)="change($event)"></eos-datepicker>
