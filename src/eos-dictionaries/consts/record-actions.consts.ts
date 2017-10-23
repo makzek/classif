@@ -62,7 +62,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.userOrder,
     group: E_ACTION_GROUPS.group,
     title: null,
-    hint: 'Включить пользователькую сортировку',
+    hint: 'Пользовательская сортировка',
     iconClass: 'fa fa-list',
     buttonClass: null
 }, {

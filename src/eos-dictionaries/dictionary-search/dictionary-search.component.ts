@@ -73,7 +73,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
                 this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
                 /* tslint:enable:no-bitwise */
-                console.log(this.hasDate, this.hasFull, this.hasQuick);
+                console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
         });
     }

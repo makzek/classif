@@ -9,15 +9,16 @@ export class EosDictOrderService {
     private LOCALSTORAGEKEY = 'OrderMod';
 
     constructor(
-        private _eosStorageService: EosStorageService
+        private _storageSrv: EosStorageService
     ) { }
 
-    public toggleSortingMode(val: boolean) {
-        localStorage.setItem(this.LOCALSTORAGEKEY, val.toString());
+    public setSortingMode(val: boolean) {
+        val = !!val;
+        this._storageSrv.setItem(this.LOCALSTORAGEKEY, val.toString(), true);
     }
 
-    public getMode() {
-        return JSON.parse(localStorage.getItem(this.LOCALSTORAGEKEY));
+    public getSortingMode() {
+        return this._storageSrv.getItem(this.LOCALSTORAGEKEY);
     }
 
     public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
@@ -25,11 +26,11 @@ export class EosDictOrderService {
         for (const item of sortedList) {
             order.push(item.id);
         }
-        this._eosStorageService.setItem(ID + this.NAME, order, true);
+        this._storageSrv.setItem(ID + this.NAME, order, true);
     }
 
     private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
-        const order: string[] = JSON.parse(localStorage.getItem(ID + this.NAME));
+        const order: string[] = this._storageSrv.getItem(ID + this.NAME);
         const sortableList: EosDictionaryNode[] = [];
         for (const id of order) {
             for (const notSortedItem of list) {
@@ -53,7 +54,7 @@ export class EosDictOrderService {
             console.warn('ID is undifined!')
             return;
         }
-        if (localStorage.getItem(ID + this.NAME)) {
+        if (this._storageSrv.getItem(ID + this.NAME)) {
             const sortableList: EosDictionaryNode[] = this.restoreOrder(list, ID);
             return sortableList;
         } else {

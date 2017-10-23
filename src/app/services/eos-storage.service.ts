@@ -36,6 +36,7 @@ export class EosStorageService {
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
         this._data[key] = data;
+        // console.log('set to LS', typeof data, data);
         if (saveToLocalStorage) {
             try {
                 const _val = JSON.stringify(data);
