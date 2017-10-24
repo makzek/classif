@@ -72,7 +72,8 @@ export class DesktopComponent implements OnDestroy {
         this.referencesList = dictionariesList;
     }
 
-    removeLink(link: IDeskItem): void {
+    removeLink(link: IDeskItem, $evt: Event): void {
+        $evt.stopPropagation();
         const _confrm = Object.assign({}, CONFIRM_LINK_DELETE);
         _confrm.body = _confrm.body.replace('{{link}}', link.title);
 

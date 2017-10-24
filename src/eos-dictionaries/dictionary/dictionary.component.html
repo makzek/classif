@@ -29,7 +29,8 @@
                         </span>
                         <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
                     </span>
-                    <button class="btn btn-primary-light pull-right config-btn" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                    <button class="btn btn-primary-light pull-right config-btn" tooltip="Настройка отображения" containerClass="tooltip-info"
+                    placement="left" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>
                     <div class="clear-all"></div>
                 </div>
             </div>
@@ -46,6 +47,7 @@
         <eos-node-info (action)=doAction($event)></eos-node-info>
     </div>
 </div>
+
 <ng-template #createTpl>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Добавление записи</h4>
@@ -57,8 +59,8 @@
         <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)" ></eos-card-edit>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-default" [disabled]="formValidated" (click)="create()">Добавить</button>
-        <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
-        <button class="btn btn-default" [disabled]="formValidated" (click)="create(false)">Добавить ещё</button>
+        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create()">Добавить</button>
+        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create(false)">Добавить ещё</button>
+        <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
     </div>
 </ng-template>
