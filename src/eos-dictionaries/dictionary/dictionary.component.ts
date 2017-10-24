@@ -414,7 +414,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             for (const node of this.listNodes) {
                 if (node.marked) {
                     j++;
-                    list += node.data.CLASSIF_NAME + ', ';
+                    list += '"' + node.data.CLASSIF_NAME + '", ';
                 }
             }
             list = list.slice(0, list.length - 2);
