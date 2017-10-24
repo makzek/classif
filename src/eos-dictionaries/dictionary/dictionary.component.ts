@@ -512,6 +512,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        this.params.userSort = this._orderSrv.getSortingMode();
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
