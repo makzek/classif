@@ -1,6 +1,9 @@
 import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/confirms.const';
+import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
@@ -55,7 +58,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
-    visibleNodes: EosDictionaryNode[];
+    visibleNodes: EosDictionaryNode[]; // Checkbox use it property
 
     private _page: IListPage;
 
@@ -90,6 +93,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _deskSrv: EosDeskService,
         /* remove unused */
         private _dictActSrv: DictionaryActionService,
+        private _confirmSrv: ConfirmWindowService,
     ) {
         this.params = {
             userSort: false,
@@ -360,6 +364,15 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleDeleted() {
         this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
+        if (!this.params.showDeleted) {
+            // Fall checkbox with deleted elements
+            for (const node of this.listNodes) {
+                if (node.data.DELETED === 1 ) {
+                    node.marked = false;
+                }
+            }
+            this.updateMarks();
+        }
         // todo: update visible list
     }
 
@@ -400,24 +413,49 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
-    physicallyDelete() {
+    physicallyDelete(): void {
         if (this.listNodes) {
-            this.listNodes.forEach(node => {
+            let list = '', j = 0;
+            for (const node of this.listNodes) {
                 if (node.marked) {
-                    if (1 !== 1) { // here must be API request for check if possible to delete
-                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                    } else {
-                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                        if (_deleteResult) {
-                            const path = this._dictSrv.getNodePath(node.parent);
-                            this._router.navigate(path);
-                        } else {
+                    j++;
+                    list += node.data.CLASSIF_NAME + ', ';
+                }
+            }
+            list = list.slice(0, list.length - 2);
+            if (j === 0) {
+                return;
+            } else if (j === 1) {
+                const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
+                _confrm.body = _confrm.body.replace('{{name}}', list);
+                this._callDelWindow(_confrm);
+            } else {
+                const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
+                _confrm.body = _confrm.body.replace('{{name}}', list);
+                this._callDelWindow(_confrm);
+            }
+        }
+    }
+
+    private _callDelWindow(_confrm: IConfirmWindow): void {
+        this._confirmSrv.confirm(_confrm).then((confirmed: boolean) => {
+            if (confirmed) {
+                for (const node of this.listNodes) {
+                    if (node.marked) {
+                        if (1 !== 1) { // here must be API request for check if possible to delete
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                        } else {
+                            const _deleteResult = this._dictSrv.physicallyDelete(node.id);
+                            if (_deleteResult) {
+                                this._router.navigate(this._dictSrv.getNodePath(node.parent));
+                            } else {
+                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                            }
                         }
                     }
                 }
-            });
-        }
+            }
+        }).catch();
     }
 
     validate(valid: boolean) {
@@ -438,7 +476,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     public _configColumns() {
         const _fldsCurr = [];
         const _allFields = [];
-        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal' });
+        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         Object.assign(this.creatingModal.content.currentFields, this.customFields);
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
         this.creatingModal.content.onChoose.subscribe((_fields) => {
@@ -479,6 +517,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        this.params.userSort = this._orderSrv.getSortingMode();
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);

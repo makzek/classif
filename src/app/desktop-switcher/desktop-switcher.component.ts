@@ -196,7 +196,6 @@ export class DesktopSwitcherComponent {
         }
     }
     private route(desk: EosDesk): void {
-        console.log('!')
         if (desk.edited === false) {
             this._router.navigate(['/desk', desk.id]);
             this.hideDropDown();

@@ -58,7 +58,7 @@
             <span class="eos-icon eos-icon-edit-black small"
                 aria-hidden="true"></span>
         </button>
-        <button *ngIf="deskId !== 'system'" class="icon-btn btn" (click)="removeLink(item.value)"
+        <button *ngIf="deskId !== 'system'" class="icon-btn btn" (click)="removeLink(item.value, $event)"
             tooltip="Удалить"
             placement="left"
             containerClass="tooltip-info"

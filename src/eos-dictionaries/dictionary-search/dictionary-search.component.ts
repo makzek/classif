@@ -40,6 +40,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
+    date: Date = new Date();
+
     setTab(key: string) {
         this.currTab = key;
     }
@@ -120,6 +122,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
+        this.date = date;
         this._dictSrv.fullSearch({ date: date }, this.settings);
     }
 }
