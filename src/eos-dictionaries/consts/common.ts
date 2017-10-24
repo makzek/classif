@@ -1,4 +1,4 @@
-import { IDictionaryDescriptor } from '../core/dictionary-descriptor';
+import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary-descriptor';
 import { SEARCH_TYPES } from './search-types';
 
 export const LS_EDIT_CARD = 'lastEditedCard';
@@ -8,6 +8,7 @@ export const LS_EDIT_CARD = 'lastEditedCard';
 export const ROOMS_DICT: IDictionaryDescriptor = {
     id: 'rooms',
     apiInstance: 'ROOMS',
+    dictType: E_DICT_TYPE.tree,
     title: 'Кабинеты',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
     itemActions: ['edit', 'view'],

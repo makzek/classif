@@ -5,8 +5,6 @@ import { commonMergeMeta } from '../common/initMetaData';
 export class Metadata {
 
     constructor(private _cfg: IApiCfg) {
-        // TODO: на метадату замкнут pipeRx и Utils, надо както аккуратнее, наверное просто все вернуть в pipe
-        window['_metadata'] = this;
         // TODO: надо из конфига получить функции выполняющие заполнение метаданных
         _cfg.metaMergeFuncList = [commonMergeMeta];
       }
@@ -34,8 +32,11 @@ export class Metadata {
     etn(item: any) {
         return item.__metadata.__type;
     }
-
-    td(etn: string): ITypeDef {
+/**
+ * Описание типа
+ * @param etn имя типа, для которого вернуть описание
+ */
+    typeDesc(etn: string): ITypeDef {
         return this[etn];
     }
 }

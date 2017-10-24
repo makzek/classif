@@ -4,18 +4,15 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 @Injectable()
 export class EosErrorHandler implements ErrorHandler {
 
-    constructor( private _msgSrv: EosMessageService) {
-        /* this._msgSrv = injector.get(EosMessageService); */
-    }
+    constructor(private _msgSrv: EosMessageService) { }
 
     handleError(err: Error) {
-        console.error(err);
+        console.error('Unhandled error', err);
         try {
-
             this._msgSrv.addNewMessage({
                 type: 'danger',
                 title: 'Application error:',
-                msg: err.stack
+                msg: err.message
             });
         } catch (e) {
             console.error('addNewMessage failed', e);

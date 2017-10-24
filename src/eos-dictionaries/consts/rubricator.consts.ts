@@ -1,11 +1,13 @@
-import { IRubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
+import { ITreeDictionaryDescriptor } from '../core/tree-dictionary-descriptor';
+import { E_DICT_TYPE } from '../core/dictionary-descriptor';
 import { NOT_EMPTY_STRING } from './input-validation';
 import { SEARCH_TYPES } from './search-types';
 /*
 */
-export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
+export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     id: 'rubricator',
     apiInstance: 'RUBRIC_CL',
+    dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],

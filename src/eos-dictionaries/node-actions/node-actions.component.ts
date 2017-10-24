@@ -26,6 +26,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     constructor(_dictSrv: EosDictService,
         private _orderSrv: EosDictOrderService
     ) {
+        this._initButtons();
         this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
             this.dictionary = dict;
             this._update();
@@ -33,25 +34,30 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        this._update();
+        setTimeout(this._update(), 0);
     }
 
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
     }
 
-    private _update() {
+    private _initButtons() {
         this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
     }
 
-    private _actionToButton(action: IAction): IActionButton {
+    private _update() {
+        this.buttons.forEach((btn) => this._updateButton(btn));
+        this.ddButtons.forEach((btn) => this._updateButton(btn));
+    }
+
+    private _updateButton(button: IActionButton) {
         let _enabled = false;
         let _active = false;
 
         if (this.dictionary && this.params) {
-            _enabled = this.dictionary.descriptor.canDo(action.group, action.type);
-            switch (action.type) {
+            _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
+            switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                 case E_RECORD_ACTIONS.moveDown:
                     _enabled = this.params.userSort && _enabled;
@@ -68,11 +74,17 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
                     break;
             }
         }
+        button.enabled = _enabled;
+        button.isActive = _active;
+    }
 
-        return Object.assign({
-            isActive: _active,
-            enabled: _enabled
+    private _actionToButton(action: IAction): IActionButton {
+        const _btn = Object.assign({
+            isActive: false,
+            enabled: false
         }, action);
+        this._updateButton(_btn);
+        return _btn;
     }
 
     doAction(action: IAction) {

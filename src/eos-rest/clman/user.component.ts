@@ -5,7 +5,6 @@ import { USER_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 import { RubricService } from '../services/rubric.service';
-import { Utils } from '../core/utils';
 //
 import { AppContext } from '../services/appContext.service';
 
@@ -50,7 +49,7 @@ export class UserRestComponent implements OnInit {
             //     1037681, 1037682, 1037683, 1037684, 1037685]
 
             // - поиск по критериям
-            USER_CL: Utils.criteries({ LAYER: '0:2', IS_NODE: '0' })
+            USER_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
         }).subscribe(r => {
             console.log('----->>>>>>>');

@@ -12,29 +12,16 @@ export enum E_FIELD_SET {
     edit,
     allVisible
 }
-/* mode for department-like ditionary */
-export interface IRecordMode {
-    [mode: string]: string[];
-}
 
-export interface IRecordModeDescription {
-    key: string,
-    title: string,
-}
-
-export class ModeFieldSet {
-    [mode: string]: FieldDescriptor[];
-
-    constructor(record: RecordDescriptor, data: IRecordMode) {
-        Object.keys(data).forEach((mode) => {
-            this[mode] = [];
-            data[mode].forEach((fldName) => record.addFieldToSet(fldName, this[mode]));
-        });
-    }
+export enum E_DICT_TYPE {
+    linear,
+    tree,
+    department
 }
 
 export interface IDictionaryDescriptor {
     id: string;
+    dictType: E_DICT_TYPE;
     apiInstance: string;
     title: string;
     actions: string[];
@@ -42,7 +29,8 @@ export interface IDictionaryDescriptor {
     groupActions: string[];
     fields: IFieldDesriptor[];
     keyField: string;
-    parentField: string;
+    parentField?: string;
+
     // listFields: string[];
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
@@ -60,6 +48,7 @@ export abstract class DictionaryDescriptor {
     /* route subpath === id */
     readonly id: string;
     readonly title: string;
+    readonly type: E_DICT_TYPE;
     readonly apiInstance: string;
     readonly searchConfig: SEARCH_TYPES[];
 
@@ -100,6 +89,7 @@ export abstract class DictionaryDescriptor {
         if (data) {
             this.id = data.id;
             this.title = data.title;
+            this.type = data.dictType;
             this.apiInstance = data.apiInstance;
             this.searchConfig = data.searchConfig;
             data = this._fillForeignKey(data);

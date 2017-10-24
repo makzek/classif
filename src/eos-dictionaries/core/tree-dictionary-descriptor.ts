@@ -2,7 +2,8 @@ import { FieldDescriptor /*, IFieldDesriptor */ } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 
-export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
+export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
+    parentField: string;
     quickViewFields: string[];
     shortQuickViewFields: string[];
     editFields: string[];
@@ -10,17 +11,19 @@ export interface IRubricatorDictionaryDescriptor extends IDictionaryDescriptor {
     allVisibleFields: string[];
 }
 
-export class RubricatorRecordDescriptor extends RecordDescriptor {
-    parent: RubricatorDictionaryDescriptor;
+export class TreeRecordDescriptor extends RecordDescriptor {
+    dictionary: TreeDictionaryDescriptor;
+    parentField: FieldDescriptor;
 
-    constructor(dictionary: RubricatorDictionaryDescriptor, data: IRubricatorDictionaryDescriptor) {
+    constructor(dictionary: TreeDictionaryDescriptor, data: ITreeDictionaryDescriptor) {
         super(data);
-        this.parent = dictionary;
+        this.dictionary = dictionary;
+        this._setCustomField('parentField', data);
     }
 }
 
-export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
-    record: RubricatorRecordDescriptor;
+export class TreeDictionaryDescriptor extends DictionaryDescriptor {
+    record: TreeRecordDescriptor;
     protected fullSearchFields: FieldDescriptor[];
     protected quickViewFields: FieldDescriptor[];
     protected shortQuickViewFields: FieldDescriptor[];
@@ -28,9 +31,15 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
     protected listFields: FieldDescriptor[];
     protected allVisibleFields: FieldDescriptor[];
 
-    constructor(data: IRubricatorDictionaryDescriptor) {
+    constructor(data: ITreeDictionaryDescriptor) {
         super(data);
-        this._initFieldSets(['quickViewFields', 'shortQuickViewFields', 'editFields', 'listFields', 'fullSearchFields'], data);
+        this._initFieldSets([
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields'
+        ], data);
     }
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
@@ -49,16 +58,14 @@ export class RubricatorDictionaryDescriptor extends DictionaryDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
-            case E_FIELD_SET.allVisible:
-                return this.allVisibleFields;
             default:
                 throw new Error('Unknown field set');
         }
     }
 
-    _init(data: IRubricatorDictionaryDescriptor) {
+    _init(data: ITreeDictionaryDescriptor) {
         if (data.fields) {
-            this.record = new RubricatorRecordDescriptor(this, data);
+            this.record = new TreeRecordDescriptor(this, data);
         }
     }
 }

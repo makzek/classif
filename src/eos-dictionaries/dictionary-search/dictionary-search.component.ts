@@ -8,7 +8,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET, IRecordModeDescription } from '../core/dictionary-descriptor';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { IRecordModeDescription } from '../core/record-mode';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
