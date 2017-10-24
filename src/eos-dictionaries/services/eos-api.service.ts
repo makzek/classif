@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIES, DICT_API_INSTANCES } from '../consts/dictionaries.consts';
+import { DICTIONARIES } from '../consts/dictionaries.consts';
+import { E_DICT_TYPE } from '../core/dictionary-descriptor';
 import { DictionaryDescriptor } from '../core/dictionary-descriptor';
 
-import { RubricService, DepartmentService } from '../../eos-rest';
+import { LinearDictionaryService } from '../../eos-rest/services/linear-dictionary.service';
+import { TreeDictionaryService } from '../../eos-rest/services/tree-dictionary.service';
+import { DepartmentService } from '../../eos-rest/services/department.service';
 
 @Injectable()
 export class EosDictApiService {
@@ -11,7 +14,8 @@ export class EosDictApiService {
     private _service: any;
 
     constructor(
-        private _rubricSrv: RubricService,
+        private _linearSrv: LinearDictionaryService,
+        private _treeSrv: TreeDictionaryService,
         private _deptSrv: DepartmentService,
     ) {
         this._dictionaries = {};
@@ -19,13 +23,21 @@ export class EosDictApiService {
     }
 
     init(descriptor: DictionaryDescriptor) {
-        switch (descriptor.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                this._service = this._rubricSrv;
+        switch (descriptor.type) {
+            case E_DICT_TYPE.linear:
+                this._service = this._linearSrv;
+                this._linearSrv.setInstance(descriptor.apiInstance);
                 break;
-            case DICT_API_INSTANCES.department:
+
+            case E_DICT_TYPE.tree:
+                this._service = this._treeSrv;
+                this._treeSrv.setInstance(descriptor.apiInstance);
+                break;
+
+            case E_DICT_TYPE.department:
                 this._service = this._deptSrv;
                 break;
+
             default:
                 this._service = null;
         }

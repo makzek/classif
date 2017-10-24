@@ -12,7 +12,7 @@ import { DICTIONARIES } from '../consts/dictionaries.consts';
 
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 
-import { RecordDescriptor } from '../core/record-descriptor';
+// import { RecordDescriptor } from '../core/record-descriptor';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';

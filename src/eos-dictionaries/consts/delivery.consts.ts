@@ -6,14 +6,14 @@ import { SEARCH_TYPES } from './search-types';
 */
 export const DELIVERY_DICT: IDictionaryDescriptor = {
     id: 'delivery',
-    apiInstance: 'DELIVERY',
+    apiInstance: 'DELIVERY_CL',
     dictType: E_DICT_TYPE.linear,
-    title: 'Рубрикатор',
+    title: 'Виды доставки',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
-    keyField: 'DUE',
+    keyField: 'ISN_LCLASSIF',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'ISN_LCLASSIF',

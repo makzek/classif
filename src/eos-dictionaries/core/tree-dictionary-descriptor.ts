@@ -1,4 +1,4 @@
-import { FieldDescriptor /*, IFieldDesriptor */ } from './field-descriptor';
+import { FieldDescriptor } from './field-descriptor';
 import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 
@@ -29,7 +29,6 @@ export class TreeDictionaryDescriptor extends DictionaryDescriptor {
     protected shortQuickViewFields: FieldDescriptor[];
     protected editFields: FieldDescriptor[];
     protected listFields: FieldDescriptor[];
-    protected allVisibleFields: FieldDescriptor[];
 
     constructor(data: ITreeDictionaryDescriptor) {
         super(data);

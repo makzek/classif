@@ -5,7 +5,7 @@ import { PipRX } from './pipRX.service';
 import { ILinearCL } from '../interfaces/interfaces';
 
 @Injectable()
-export abstract class LinearDictionaryService extends BaseDictionaryService {
+export class LinearDictionaryService extends BaseDictionaryService {
 
     protected preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this._pipe.sequenceMap.GetTempISN();

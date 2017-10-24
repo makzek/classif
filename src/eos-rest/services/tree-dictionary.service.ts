@@ -6,7 +6,8 @@ import { ALL_ROWS } from '../core/consts';
 import { IHierCL } from '../interfaces/interfaces';
 
 @Injectable()
-export abstract class TreeDictionaryService extends BaseDictionaryService {
+export class TreeDictionaryService extends BaseDictionaryService {
+    protected instance: string;
 
     protected preCreate(parent?: IHierCL, isNode = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this._pipe.sequenceMap.GetTempISN();

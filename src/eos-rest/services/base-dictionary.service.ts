@@ -4,8 +4,14 @@ import { ALL_ROWS } from '../core/consts';
 
 @Injectable()
 export abstract class BaseDictionaryService {
-    abstract instance: string;
+    protected instance: string;
+
     constructor(protected _pipe: PipRX) { }
+
+    setInstance(instance: string) {
+        console.log('set instance to', this, instance);
+        this.instance = instance;
+    };
 
     getAll(params?: any): Promise<any> {
         if (params) {
@@ -17,6 +23,7 @@ export abstract class BaseDictionaryService {
         } else {
             params = ALL_ROWS;
         }
+        console.warn('getAll', this.instance, params);
         return this._pipe
             .read({ [this.instance]: params, orderby: 'WEIGHT' })
             .toPromise<any>()

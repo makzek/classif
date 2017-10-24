@@ -1,7 +1,6 @@
 import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor, E_DICT_TYPE } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor, ITreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor, IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
-import { DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { EosDictionaryNode } from './eos-dictionary-node';
 import { IFieldView } from '../core/field-descriptor';
 
@@ -25,6 +24,8 @@ export class EosDictionary {
     constructor(descData: IDictionaryDescriptor) {
         switch (descData.dictType) {
             case E_DICT_TYPE.linear:
+                // this.descriptor = new DictionaryDescriptor(descData);
+                // break;
             case E_DICT_TYPE.tree:
                 this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData);
                 break;

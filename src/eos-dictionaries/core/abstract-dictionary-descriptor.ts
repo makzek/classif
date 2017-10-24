@@ -44,7 +44,7 @@ export interface IDictionaryDescriptor {
     listFields: any;
 }
 
-export abstract class DictionaryDescriptor {
+export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
     readonly title: string;
     readonly type: E_DICT_TYPE;
@@ -95,8 +95,7 @@ export abstract class DictionaryDescriptor {
             data = this._fillForeignKey(data);
             this._init(data);
             this._initActions(data);
-            this._initFieldSets([/*'listFields', */'searchFields'/*, 'fullSearchFields'*/, 'allVisibleFields'], data);
-            /* this._initFieldGroups(data); */
+            this._initFieldSets(['searchFields', 'allVisibleFields'], data);
         } else {
             return undefined;
         }
