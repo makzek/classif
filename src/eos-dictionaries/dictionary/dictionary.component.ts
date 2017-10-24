@@ -373,7 +373,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
             this.updateMarks();
         }
-        // todo: update visible list
+        this._updateVisibleNodes();
     }
 
     private _toggleUserSort(): void {
