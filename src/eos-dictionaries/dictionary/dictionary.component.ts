@@ -58,7 +58,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
-    visibleNodes: EosDictionaryNode[];
+    visibleNodes: EosDictionaryNode[]; // Checkbox use it property
 
     private _page: IListPage;
 
@@ -359,6 +359,15 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleDeleted() {
         this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
+        if (!this.params.showDeleted) {
+            // Fall checkbox with deleted elements
+            for (const node of this.listNodes) {
+                if (node.data.DELETED === 1 ) {
+                    node.marked = false;
+                }
+            }
+            this.updateMarks();
+        }
         // todo: update visible list
     }
 
