@@ -433,7 +433,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     public _configColumns() {
         const _fldsCurr = [];
         const _allFields = [];
-        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal' });
+        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         Object.assign(this.creatingModal.content.currentFields, this.customFields);
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
         this.creatingModal.content.onChoose.subscribe((_fields) => {
