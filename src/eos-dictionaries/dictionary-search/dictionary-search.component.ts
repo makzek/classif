@@ -122,7 +122,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        this.date = date;
-        this._dictSrv.fullSearch({ date: date }, this.settings);
+        if (date !== this.date) {
+            this.date = date;
+            this._dictSrv.fullSearch({ date: date }, this.settings);
+        }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { BsDatepickerConfig, BsDatepickerComponent} from 'ngx-bootstrap/datepicker';
+import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/bs-moment';
 import { ru } from 'ngx-bootstrap/locale';
 defineLocale('ru', ru);
@@ -9,7 +9,7 @@ defineLocale('ru', ru);
     templateUrl: 'datepicker.component.html',
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
-    @Input() value = Date();
+    @Input() value: Date;
     @Input() readonly = false;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
@@ -48,7 +48,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     measureDistance() {
-        if (window.innerHeight - this.datePickerWrapper.nativeElement.getBoundingClientRect().bottom  >= 308) {
+        if (window.innerHeight - this.datePickerWrapper.nativeElement.getBoundingClientRect().bottom >= 308) {
             this.placement = 'bottom';
         } else {
             if (this.datePickerWrapper.nativeElement.getBoundingClientRect().top >= 308) {
