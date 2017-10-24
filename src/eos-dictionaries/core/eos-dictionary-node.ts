@@ -59,7 +59,11 @@ export class EosDictionaryNode {
     }
 
     get neighbors(): EosDictionaryNode[] {
-        return this.parent.children;
+        if (this.parent) {
+            return this.parent.children;
+        } else {
+            return null;
+        }
     }
 
     get hasSubnodes(): boolean {
@@ -81,14 +85,8 @@ export class EosDictionaryNode {
             this._descriptor = descriptor;
             /* store all data from backend in .data */
             this.data = data;
-            /*
-            this._descriptor.fields.forEach((fld) => {
-                if (fld) {
-                    this.data[fld.key] = data[fld.key];
-                }
-            });
-            */
-            if (this.parentId === undefined) {
+
+            if (this.parentId === undefined && this._descriptor.parentField) {
                 this.parentId = data[this._descriptor.parentField.key];
             }
 

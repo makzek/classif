@@ -1,15 +1,15 @@
 import { FieldDescriptor } from './field-descriptor';
-import { E_FIELD_SET } from './dictionary-descriptor';
-import { ITreeDictionaryDescriptor, TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
+import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
+import { RecordDescriptor } from './record-descriptor';
 import { IRecordMode, IRecordModeDescription, ModeFieldSet } from './record-mode';
-import { TreeRecordDescriptor } from './tree-record-descriptor';
-
+import { ITreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 export enum E_DEPT_MODE {
     person,
     department
 }
 
-export interface IDepartmentDictionaryDescriptor extends ITreeDictionaryDescriptor {
+export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
+    parentField: string;
     modeField: string;
     modeList: IRecordModeDescription[];
     fullSearchFields: IRecordMode;
@@ -17,17 +17,17 @@ export interface IDepartmentDictionaryDescriptor extends ITreeDictionaryDescript
     shortQuickViewFields: IRecordMode;
     editFields: IRecordMode;
     listFields: IRecordMode;
+    // allVisibleFields: string[];
 }
 
-export class DepartmentRecordDescriptor extends TreeRecordDescriptor {
-    parent: DepartmentDictionaryDescriptor;
+export class DepartmentRecordDescriptor extends RecordDescriptor {
+    dictionary: DepartmentDictionaryDescriptor;
     modeField: FieldDescriptor;
     modeList: IRecordModeDescription[];
 
     constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
-        /* fields: IFieldDesriptor[], typeFieldName: string */
         super(data);
-        this.parent = dictionary;
+        this.dictionary = dictionary;
         this.modeField = this.fieldsMap.get(data.modeField);
         if (!this.modeField) {
             throw new Error('No field decribed for "' + data.modeField + '"');
@@ -66,7 +66,14 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
 
     constructor(data: IDepartmentDictionaryDescriptor) {
         super(data);
-        this._initModeSets(['quickViewFields', 'shortQuickViewFields', 'editFields', 'listFields', 'fullSearchFields', 'listFields'], data);
+        this._initModeSets([
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields',
+            'listFields'
+        ], data);
     }
 
     _init(data: IDepartmentDictionaryDescriptor) {

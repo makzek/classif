@@ -1,5 +1,5 @@
-import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor } from './dictionary-descriptor';
-import { RubricatorDictionaryDescriptor /*, IRubricatorDictionaryDescriptor*/ } from './rubricator-dictionary-descriptor';
+import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor, E_DICT_TYPE } from './dictionary-descriptor';
+import { TreeDictionaryDescriptor, ITreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor, IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { DICT_API_INSTANCES } from '../consts/dictionaries.consts';
 import { EosDictionaryNode } from './eos-dictionary-node';
@@ -23,11 +23,12 @@ export class EosDictionary {
     }
 
     constructor(descData: IDictionaryDescriptor) {
-        switch (descData.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                this.descriptor = new RubricatorDictionaryDescriptor(descData);
+        switch (descData.dictType) {
+            case E_DICT_TYPE.linear:
+            case E_DICT_TYPE.tree:
+                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData);
                 break;
-            case DICT_API_INSTANCES.department:
+            case E_DICT_TYPE.department:
                 this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData);
                 break;
             default:
@@ -65,6 +66,7 @@ export class EosDictionary {
 
         /* fallback if root undefined */
         if (!this.root) {
+            console.log('root undefined');
             this.root = new EosDictionaryNode(this.descriptor.record, { title: this.descriptor.title });
             this.root.children = [];
         }

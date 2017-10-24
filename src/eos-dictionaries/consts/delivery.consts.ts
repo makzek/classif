@@ -1,11 +1,13 @@
 import { ITreeDictionaryDescriptor } from '../core/tree-dictionary-descriptor';
+import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary-descriptor';
 import { NOT_EMPTY_STRING } from './input-validation';
 import { SEARCH_TYPES } from './search-types';
 /*
 */
-export const DELIVERY_DICT: ITreeDictionaryDescriptor = {
+export const DELIVERY_DICT: IDictionaryDescriptor = {
     id: 'delivery',
     apiInstance: 'DELIVERY',
+    dictType: E_DICT_TYPE.linear,
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],

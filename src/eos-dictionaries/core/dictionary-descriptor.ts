@@ -13,8 +13,15 @@ export enum E_FIELD_SET {
     allVisible
 }
 
+export enum E_DICT_TYPE {
+    linear,
+    tree,
+    department
+}
+
 export interface IDictionaryDescriptor {
     id: string;
+    dictType: E_DICT_TYPE;
     apiInstance: string;
     title: string;
     actions: string[];
@@ -22,6 +29,8 @@ export interface IDictionaryDescriptor {
     groupActions: string[];
     fields: IFieldDesriptor[];
     keyField: string;
+    parentField?: string;
+
     // listFields: string[];
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
@@ -39,6 +48,7 @@ export abstract class DictionaryDescriptor {
     /* route subpath === id */
     readonly id: string;
     readonly title: string;
+    readonly type: E_DICT_TYPE;
     readonly apiInstance: string;
     readonly searchConfig: SEARCH_TYPES[];
 
@@ -79,6 +89,7 @@ export abstract class DictionaryDescriptor {
         if (data) {
             this.id = data.id;
             this.title = data.title;
+            this.type = data.dictType;
             this.apiInstance = data.apiInstance;
             this.searchConfig = data.searchConfig;
             data = this._fillForeignKey(data);

@@ -124,6 +124,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.treeNodes = [];
             }
         }));
+
         this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
             switch (action) {
@@ -214,6 +215,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list = this.listNodes;
+        }
+
+        if (!this.params.showDeleted) {
+            _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
         }
 
         if (page) {

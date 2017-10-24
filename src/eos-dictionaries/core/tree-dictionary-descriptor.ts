@@ -8,14 +8,17 @@ export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
     shortQuickViewFields: string[];
     editFields: string[];
     listFields: string[];
+    allVisibleFields: string[];
 }
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
+    parentField: FieldDescriptor;
 
     constructor(dictionary: TreeDictionaryDescriptor, data: ITreeDictionaryDescriptor) {
         super(data);
         this.dictionary = dictionary;
+        this._setCustomField('parentField', data);
     }
 }
 
@@ -30,7 +33,13 @@ export class TreeDictionaryDescriptor extends DictionaryDescriptor {
 
     constructor(data: ITreeDictionaryDescriptor) {
         super(data);
-        this._initFieldSets(['quickViewFields', 'shortQuickViewFields', 'editFields', 'listFields', 'fullSearchFields'], data);
+        this._initFieldSets([
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields'
+        ], data);
     }
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {

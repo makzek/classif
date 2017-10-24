@@ -13,7 +13,6 @@ export interface IConfirmWindowContent extends IConfirmWindow {
 }
 
 @Component({
-    selector: 'eos-confirm-window',
     templateUrl: 'confirm-window.component.html',
 })
 export class ConfirmWindowComponent implements IConfirmWindowContent {

@@ -8,7 +8,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET, IRecordModeDescription } from '../core/dictionary-descriptor';
+import { E_FIELD_SET } from '../core/dictionary-descriptor';
+import { IRecordModeDescription } from '../core/record-mode';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
@@ -98,7 +99,7 @@ export class DictionarySearchComponent implements OnDestroy {
         if (evt.keyCode === 13) {
             this.isOpenQuick = false;
             this._dictSrv.search(this.dataQuick, _settings);
-         }
+        }
     }
 
     clearQuickForm() {
@@ -119,6 +120,6 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        this._dictSrv.fullSearch({date: date}, this.settings);
+        this._dictSrv.fullSearch({ date: date }, this.settings);
     }
 }
