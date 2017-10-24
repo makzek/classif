@@ -39,6 +39,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
+    date: Date = new Date();
+
     setTab(key: string) {
         this.currTab = key;
     }
@@ -98,7 +100,7 @@ export class DictionarySearchComponent implements OnDestroy {
         if (evt.keyCode === 13) {
             this.isOpenQuick = false;
             this._dictSrv.search(this.dataQuick, _settings);
-         }
+        }
     }
 
     clearQuickForm() {
@@ -119,6 +121,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        this._dictSrv.fullSearch({date: date}, this.settings);
+        this.date = date;
+        this._dictSrv.fullSearch({ date: date }, this.settings);
     }
 }
