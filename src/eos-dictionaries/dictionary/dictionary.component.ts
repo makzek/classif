@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/confirms.const';
+import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
@@ -398,69 +399,49 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
-    physicallyDelete() {
+    physicallyDelete(): void {
         if (this.listNodes) {
-            let list = '',
-            j = 0;
+            let list = '', j = 0;
             for (const node of this.listNodes) {
                 if (node.marked) {
                     j++;
-                    list += node.data.CLASSIF_NAME + ', '
+                    list += node.data.CLASSIF_NAME + ', ';
                 }
             }
             list = list.slice(0, list.length - 2);
-            if (j === 1) {
+            if (j === 0) {
+                return;
+            } else if (j === 1) {
                 const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
                 _confrm.body = _confrm.body.replace('{{name}}', list);
-
-                this._confirmSrv
-                    .confirm(_confrm)
-                    .then((confirmed: boolean) => {
-                        if (confirmed) {
-                            this.listNodes.forEach(node => {
-                                if (node.marked) {
-                                    if (1 !== 1) { // here must be API request for check if possible to delete
-                                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                                    } else {
-                                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                                        if (_deleteResult) {
-                                            const path = this._dictSrv.getNodePath(node.parent);
-                                            this._router.navigate(path);
-                                        } else {
-                                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                }).catch();
+                this._callDelWindow(_confrm);
             } else {
                 const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
                 _confrm.body = _confrm.body.replace('{{name}}', list);
-
-                this._confirmSrv
-                    .confirm(_confrm)
-                    .then((confirmed: boolean) => {
-                        if (confirmed) {
-                            this.listNodes.forEach(node => {
-                                if (node.marked) {
-                                    if (1 !== 1) { // here must be API request for check if possible to delete
-                                        this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                                    } else {
-                                        const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                                        if (_deleteResult) {
-                                            const path = this._dictSrv.getNodePath(node.parent);
-                                            this._router.navigate(path);
-                                        } else {
-                                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                }).catch();
+                this._callDelWindow(_confrm);
             }
         }
+    }
+
+    private _callDelWindow(_confrm: IConfirmWindow): void {
+        this._confirmSrv.confirm(_confrm).then((confirmed: boolean) => {
+            if (confirmed) {
+                for (const node of this.listNodes) {
+                    if (node.marked) {
+                        if (1 !== 1) { // here must be API request for check if possible to delete
+                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                        } else {
+                            const _deleteResult = this._dictSrv.physicallyDelete(node.id);
+                            if (_deleteResult) {
+                                this._router.navigate(this._dictSrv.getNodePath(node.parent));
+                            } else {
+                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                            }
+                        }
+                    }
+                }
+            }
+        }).catch();
     }
 
     validate(valid: boolean) {
