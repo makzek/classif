@@ -109,7 +109,7 @@ export class EosDictionary {
 
     getNode(nodeId: string): EosDictionaryNode {
         const _res = this._nodes.get(nodeId);
-        console.log('get node', this.id, nodeId, this._nodes, _res);
+        // console.log('get node', this.id, nodeId, this._nodes, _res);
         return _res;
     }
 

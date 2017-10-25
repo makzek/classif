@@ -96,6 +96,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
     ) {
+        console.log('')
         this.params = {
             userSort: false,
             showDeleted: false,
