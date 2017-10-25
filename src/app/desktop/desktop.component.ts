@@ -10,7 +10,6 @@ import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-wi
 import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
 
 @Component({
-    selector: 'eos-desktop',
     templateUrl: 'desktop.component.html',
 })
 export class DesktopComponent implements OnDestroy {

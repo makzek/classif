@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export interface IListPage {
     start: number;
@@ -26,7 +26,7 @@ const PAGES: IPageLength[] = [{
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent implements OnInit {
+export class NodeListPaginationComponent {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
@@ -44,10 +44,6 @@ export class NodeListPaginationComponent implements OnInit {
             current: 1,
             length: this.pageLength.value
         };
-    }
-
-    ngOnInit() {
-        this.change.emit(this.page);
     }
 
     setPageLength(length: IPageLength) {

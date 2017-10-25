@@ -41,7 +41,6 @@ import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 
 @Component({
-    selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy, OnInit {
@@ -96,12 +95,17 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
     ) {
-        console.log('')
         this.params = {
-            userSort: false,
+            userSort: this._orderSrv.getSortingMode(),
             showDeleted: false,
             hasParent: false
         };
+
+        this._page = {
+            start: 1,
+            current: 1,
+            length: 10
+        }
 
         this._subscriptions = [];
         this.treeNodes = [];
@@ -109,15 +113,20 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.visibleNodes = [];
         this.currentState = this._dictActSrv.state;
 
+        if (window.innerWidth > 1500) {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        }
+
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
-                this._update();
+                this._selectNode();
             }
         }));
 
-        this._subscriptions.push(_dictSrv.dictionary$.subscribe((dictionary) => {
+        this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
@@ -131,7 +140,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
         }));
 
-        this._subscriptions.push(_dictActSrv.action$.subscribe((action) => {
+        this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
             switch (action) {
                 // TODO: try to find more simple solition
@@ -178,7 +187,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
         }));
 
-        this._subscriptions.push(_profileSrv.settings$
+        this._subscriptions.push(this._profileSrv.settings$
             .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
             .subscribe((s) => {
                 this.params.showDeleted = s;
@@ -186,28 +195,29 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         );
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
-            this._selectedNode = node;
             if (node) {
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children || [];
-                this.listNodes.sort(this._orderSrv.defaultSort);
-                if (this.listNodes[0]) {
-                    this._updateVisibleNodes();
-                }
             } else {
                 this.listNodes = [];
             }
+            if (node !== this._selectedNode) {
+                this._selectedNode = node;
+                this._updateVisibleNodes();
+            }
         }));
+    }
+
+    ngOnInit() {
     }
 
     ngOnDestroy() {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
     }
 
-
-    private _update() {
+    private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
                 .then(() => this._dictSrv.selectNode(this._nodeId));
@@ -215,13 +225,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     private _updateVisibleNodes() {
-        let _list: EosDictionaryNode[];
+        let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
+
         if (this.params && this.params.userSort) {
-            console.log('sorting', this.params);
-            _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
+            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId); // !!! Parent id err
         } else {
-            _list = this.listNodes;
+            _list.sort(this._orderSrv.defaultSort);
         }
 
         if (!this.params.showDeleted) {
@@ -517,14 +527,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
-    }
-
-    ngOnInit() {
-        this.params.userSort = this._orderSrv.getSortingMode();
-        if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-        }
     }
 
     public resize(): void {

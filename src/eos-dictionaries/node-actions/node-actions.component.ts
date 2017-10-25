@@ -13,7 +13,7 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements /*OnChanges,*/ OnDestroy {
+export class NodeActionsComponent implements OnChanges, OnDestroy {
     @Input('params') params: INodeListParams;
     @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
@@ -26,7 +26,6 @@ export class NodeActionsComponent implements /*OnChanges,*/ OnDestroy {
     constructor(_dictSrv: EosDictService,
         private _orderSrv: EosDictOrderService
     ) {
-        console.log('NodeActionsComponent constructor');
         this._initButtons();
         this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
             this.dictionary = dict;
@@ -34,12 +33,9 @@ export class NodeActionsComponent implements /*OnChanges,*/ OnDestroy {
         });
     }
 
-    /*
     ngOnChanges() {
-        console.log('NodeActionsComponent changes');
-        // setTimeout(this._update(), 0);
+        setTimeout(this._update(), 0);
     }
-    */
 
     ngOnDestroy() {
         this._dictionarySubscription.unsubscribe();
