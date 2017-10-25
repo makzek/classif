@@ -74,7 +74,7 @@ export class EosDictionary {
 
         /* fallback if root undefined */
         if (!this.root) {
-            this.root = new EosDictionaryNode(this.descriptor.record, { IS_NODE: 0, POTECTED: 0});
+            this.root = new EosDictionaryNode(this.descriptor.record, { IS_NODE: 0, POTECTED: 0 });
             this.root.children = [];
             this._nodes.set(this.root.id, this.root);
         }
