@@ -1,4 +1,4 @@
-import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary-descriptor';
+import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary.interfaces';
 import { SEARCH_TYPES } from './search-types';
 
 export const LS_EDIT_CARD = 'lastEditedCard';

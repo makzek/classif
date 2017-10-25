@@ -1,5 +1,4 @@
-import { ITreeDictionaryDescriptor } from '../core/tree-dictionary-descriptor';
-import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary-descriptor';
+import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary.interfaces';
 import { NOT_EMPTY_STRING } from './input-validation';
 import { SEARCH_TYPES } from './search-types';
 /*

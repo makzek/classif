@@ -1,5 +1,4 @@
-import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
-import { E_DICT_TYPE } from '../core/dictionary-descriptor';
+import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from '../core/dictionary.interfaces';
 /* tslint:disable:max-line-length */
 import { NOT_EMPTY_STRING } from './input-validation';
 import { SEARCH_TYPES } from './search-types';
@@ -8,7 +7,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
     apiInstance: 'DEPARTMENT',
     dictType: E_DICT_TYPE.department,
-    title: 'Подразделения',
+    title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],

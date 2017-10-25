@@ -1,16 +1,17 @@
-import { FieldDescriptor, IFieldView } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
+import { IDictionaryDescriptor, E_FIELD_SET, IFieldView } from './dictionary.interfaces';
+import { FieldDescriptor } from './field-descriptor';
+import { DictionaryDescriptor } from './dictionary-descriptor';
 
 export class RecordDescriptor {
-    protected dictionary: DictionaryDescriptor;
+    protected dictionary: DictionaryDescriptor | any;
     parentField?: FieldDescriptor;
     keyField: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor(data: IDictionaryDescriptor) {
+    constructor(dictionary: DictionaryDescriptor | any, data: IDictionaryDescriptor) {
         const fields = data.fields;
-
+        this.dictionary = dictionary;
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
         fields.forEach((f) => {

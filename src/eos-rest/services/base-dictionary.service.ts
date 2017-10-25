@@ -8,6 +8,8 @@ export abstract class BaseDictionaryService {
 
     constructor(protected _pipe: PipRX) { }
 
+    abstract create(...params): Promise<any>;
+
     setInstance(instance: string) {
         console.log('set instance to', this, instance);
         this.instance = instance;

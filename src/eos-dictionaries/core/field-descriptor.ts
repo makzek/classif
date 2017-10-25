@@ -1,46 +1,4 @@
-export enum E_FIELD_TYPE {
-    string,
-    number,
-    photo,
-    text,
-    date,
-    icon,
-    boolean
-};
-
-export interface IFieldDesriptor {
-    key: string;
-    title: string;
-    type: string;
-    length?: number;
-    format?: string;
-    foreignKey?: string;
-    pattern?: RegExp;
-    required?: boolean;
-    invalidMessage?: string;
-}
-/*
-export interface IFieldGroup {
-    title: string;
-    fields: string[];
-}
-*/
-export interface IFieldDesriptorBase {
-    readonly key: string;
-    readonly title: string;
-    readonly type: E_FIELD_TYPE;
-    readonly length?: number;
-    readonly format?: string;
-    readonly foreignKey?: string;
-    pattern?: RegExp;
-    readonly required?: boolean;
-    readonly invalidMessage?: string;
-};
-
-export interface IFieldView extends IFieldDesriptorBase {
-    value: any;
-}
-
+import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from './dictionary.interfaces';
 export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;

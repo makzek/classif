@@ -1,5 +1,6 @@
+import { IFieldView } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
-import { FieldDescriptor, IFieldView } from './field-descriptor';
+import { FieldDescriptor } from './field-descriptor';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -41,7 +42,7 @@ export class EosDictionaryNode {
         if (this.data['PROTECTED']) {
             return false;
         }
-        return this.data['DELETED'];
+        return !!this.data['DELETED'];
 
     }
 
@@ -87,25 +88,20 @@ export class EosDictionaryNode {
             this.data = data;
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = data[this._descriptor.parentField.key];
+                this.parentId = data[this._descriptor.parentField.key] + '';
             }
 
+            if (this.id === undefined && this.data[this._descriptor.keyField.key] !== undefined) {
+                this.id = this.data[this._descriptor.keyField.key] + '';
+            }
             if (this.id === undefined) {
-                this.id = this.data[this._descriptor.keyField.key];
+                this.id = '';
             }
-        }
-
-        if (id) {
-            this.id = id;
         }
     }
 
     updateData(nodeData: any) {
-        this._descriptor.fields.forEach((fld) => {
-            if (fld) {
-                this.data[fld.key] = nodeData[fld.key];
-            }
-        });
+        Object.assign(this.data, nodeData);
     }
 
     isChildOf(node: EosDictionaryNode): boolean {

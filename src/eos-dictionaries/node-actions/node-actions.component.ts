@@ -6,7 +6,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
-import { INodeListParams } from '../core/dictionary.interface';
+import { INodeListParams } from '../core/node-list.interfaces';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnChanges, OnDestroy {
-    @Input() params: INodeListParams;
-    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+    @Input('params') params: INodeListParams;
+    @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     buttons: IActionButton[];
     ddButtons: IActionButton[];
@@ -26,6 +26,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     constructor(_dictSrv: EosDictService,
         private _orderSrv: EosDictOrderService
     ) {
+        console.log('NodeActionsComponent constructor');
         this._initButtons();
         this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
             this.dictionary = dict;
@@ -34,7 +35,8 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        setTimeout(this._update(), 0);
+        console.log('NodeActionsComponent changes');
+        // setTimeout(this._update(), 0);
     }
 
     ngOnDestroy() {

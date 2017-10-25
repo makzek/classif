@@ -1,15 +1,6 @@
+import { IRecordMode } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
-
-/* mode for department-like ditionary */
-export interface IRecordMode {
-    [mode: string]: string[];
-}
-
-export interface IRecordModeDescription {
-    key: string,
-    title: string,
-}
 
 export class ModeFieldSet {
     [mode: string]: FieldDescriptor[];

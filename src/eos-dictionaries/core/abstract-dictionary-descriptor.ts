@@ -1,48 +1,8 @@
-import { IFieldDesriptor, FieldDescriptor } from './field-descriptor';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor } from './dictionary.interfaces';
+import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 import { SEARCH_TYPES } from '../consts/search-types';
-
-export enum E_FIELD_SET {
-    list,
-    quickView,
-    shortQuickView,
-    search,
-    fullSearch,
-    edit,
-    allVisible
-}
-
-export enum E_DICT_TYPE {
-    linear,
-    tree,
-    department
-}
-
-export interface IDictionaryDescriptor {
-    id: string;
-    dictType: E_DICT_TYPE;
-    apiInstance: string;
-    title: string;
-    actions: string[];
-    itemActions: string[];
-    groupActions: string[];
-    fields: IFieldDesriptor[];
-    keyField: string;
-    parentField?: string;
-
-    // listFields: string[];
-    searchFields: string[];
-    searchConfig: SEARCH_TYPES[],
-    allVisibleFields: string[];
-
-    /* abstract field sets, depend on dictionary type */
-    fullSearchFields: any;
-    quickViewFields: any;
-    shortQuickViewFields: any;
-    editFields: any;
-    listFields: any;
-}
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;

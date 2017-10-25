@@ -7,9 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
-import { IRecordModeDescription } from '../core/record-mode';
+import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';

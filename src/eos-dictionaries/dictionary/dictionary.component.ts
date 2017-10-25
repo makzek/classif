@@ -18,14 +18,15 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
-import { IFieldView } from '../core/field-descriptor';
+import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
+import { INodeListParams } from '../core/node-list.interfaces';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT
 } from '../consts/messages.consts';
-import { E_FIELD_SET } from '../core/dictionary-descriptor'
+
 import { FieldDescriptor } from '../core/field-descriptor'
 
 import {
@@ -36,9 +37,9 @@ import {
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { IListPage } from '../node-list-pagination/node-list-pagination.component';
-import { INodeListParams } from '../core/dictionary.interface';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+
 @Component({
     selector: 'eos-dictionary',
     templateUrl: 'dictionary.component.html',
@@ -367,7 +368,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         if (!this.params.showDeleted) {
             // Fall checkbox with deleted elements
             for (const node of this.listNodes) {
-                if (node.data.DELETED === 1 ) {
+                if (node.data.DELETED === 1) {
                     node.marked = false;
                 }
             }

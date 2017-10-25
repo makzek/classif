@@ -9,7 +9,7 @@ import { IHierCL } from '../interfaces/interfaces';
 export class TreeDictionaryService extends BaseDictionaryService {
     protected instance: string;
 
-    protected preCreate(parent?: IHierCL, isNode = false, isProtected = false, isDeleted = false): IHierCL {
+    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this._pipe.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;
 
@@ -18,7 +18,7 @@ export class TreeDictionaryService extends BaseDictionaryService {
             PARENT_DUE: null,
             ISN_NODE: _isn,
             ISN_HIGH_NODE: null,
-            IS_NODE: (isNode ? 1 : 0),
+            IS_NODE: (isLeaf ? 1 : 0),
             PROTECTED: (isProtected ? 1 : 0),
             DELETED: (isDeleted ? 1 : 0),
             CLASSIF_NAME: 'new_classif_name',
@@ -33,8 +33,8 @@ export class TreeDictionaryService extends BaseDictionaryService {
         return _res;
     };
 
-    create(data: any, parent?: any, isNode = false, isProtected = false, isDeleted = false): Promise<any> {
-        let _newRec = this.preCreate(parent, isNode, isProtected, isDeleted);
+    create(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+        let _newRec = this.preCreate(parent, isLeaf, isProtected, isDeleted);
         _newRec = this._pipe.entityHelper.prepareAdded<any>(_newRec, this.instance);
         console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data)
