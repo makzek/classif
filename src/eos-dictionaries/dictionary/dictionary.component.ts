@@ -500,7 +500,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                     path = path + bc.title + '/';
                 }
                 this._deskSrv.addRecentItem({
-                    link: this._dictSrv.getNodePath(node.id).join('/'),
+                    url: this._dictSrv.getNodePath(node.id).join('/'),
                     title: title,
                     fullTitle: path + title
                 });

@@ -372,7 +372,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
-                    link: this.selfLink,
+                    url: this.selfLink,
                     title: this.nodeName,
                     fullTitle: path
                 });

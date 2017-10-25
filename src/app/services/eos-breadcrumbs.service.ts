@@ -11,7 +11,7 @@ import { EosDesk } from '../core/eos-desk';
 
 @Injectable()
 export class EosBreadcrumbsService {
-    _breadcrumbs: IBreadcrumb[];
+    private _breadcrumbs: IBreadcrumb[];
     _currentLink: IDeskItem;
 
     _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
@@ -48,6 +48,7 @@ export class EosBreadcrumbsService {
                 url: '/desk/' + desk.id,
                 title: 'Главная', // desk.name,
                 params: null,
+                fullTitle: desk.name
             }];
 
             Promise.all(this._parseState(this._route.snapshot))
@@ -61,7 +62,7 @@ export class EosBreadcrumbsService {
                     title = title.slice(0, title.length - 1);
 
                     this._currentLink = {
-                        link: this._breadcrumbs[this._breadcrumbs.length - 1].url,
+                        url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
                         title: title,
                         fullTitle: ''
                     }
@@ -88,6 +89,7 @@ export class EosBreadcrumbsService {
                     title: _current.data.title,
                     url: currUrl,
                     params: _current.params,
+                    fullTitle: _current.data.title
                 };
 
                 let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
