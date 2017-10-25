@@ -36,13 +36,6 @@ export class BreadcrumbsComponent {
                 this.treeOpened = false;
             }
         })
-        _router.events.filter((evt: NavigationStart) => evt instanceof NavigationStart).subscribe((evt: NavigationStart) => {
-            // if active component dictionaries then...
-            if (evt.url.indexOf('/spravochniki/') === -1) {
-                this.treeOpened = false;
-                this.infoOpened = false;
-            }
-        });
     }
 
     get closeAll() {
