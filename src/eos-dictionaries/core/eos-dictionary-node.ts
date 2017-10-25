@@ -79,7 +79,7 @@ export class EosDictionaryNode {
         return showDeleted || !this.isDeleted;
     }
 
-    constructor(descriptor: RecordDescriptor, data: any, id?: any) {
+    constructor(descriptor: RecordDescriptor, data: any) {
         if (data) {
             this.marked = !!this.marked;
 
@@ -94,9 +94,11 @@ export class EosDictionaryNode {
             if (this.id === undefined && this.data[this._descriptor.keyField.key] !== undefined) {
                 this.id = this.data[this._descriptor.keyField.key] + '';
             }
+            /*
             if (this.id === undefined) {
                 this.id = '';
             }
+            */
         }
     }
 

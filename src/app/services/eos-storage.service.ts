@@ -9,23 +9,28 @@ export class EosStorageService {
     private _data: any;
 
     constructor() {
-        this._data = {};
-        for (let i = localStorage.length; i; i--) {
-            const _key = localStorage.key(i);
-            const _val = localStorage.getItem(_key);
-            try {
-                JSON.parse(_val);
-            } catch (e) {
-                console.log('error parsing', _key, _val);
-            }
+        this._data = {
+            __storage: {}
+        };
+        const _val = localStorage.getItem('eos');
+        try {
+            this._data.__storage = JSON.parse(_val);
+        } catch (e) {
+            console.log('error parsing', _val);
         }
+        if (!this._data.__storage) {
+            this._data.__storage = {};
+        }
+        Object.assign(this._data, this._data.__storage);
     }
 
     /**
      * @param key key for data
      */
     public getItem(key: string): any {
-        return this._data[key];
+        if (key && key !== '__storage') {
+            return this._data[key];
+        }
     }
 
     /**
@@ -35,14 +40,12 @@ export class EosStorageService {
      * @param saveToLocalStorage boolean data, force store data in localStorage
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
-        this._data[key] = data;
-        // console.log('set to LS', typeof data, data);
-        if (saveToLocalStorage) {
-            try {
-                const _val = JSON.stringify(data);
-                localStorage.setItem(key, _val);
-            } catch (e) {
-                console.log('error storing', key, data, e);
+        if (key && key !== '__storage') {
+            this._data[key] = data;
+            // console.log('set to LS', typeof data, data);
+            if (saveToLocalStorage) {
+                this._data.__storage[key] = data;
+                this._updateStorage();
             }
         }
     }
@@ -52,7 +55,24 @@ export class EosStorageService {
      * @param key remove data with key
      */
     public removeItem(key: string) {
-        delete this._data[key];
-        localStorage.removeItem(key);
+        if (key && key !== '__storage') {
+            if (this._data.hasOwnProperty(key)) {
+                delete this._data[key];
+            }
+            if (this._data.__storage.hasOwnProperty[key]) {
+                delete this._data.__storage[key];
+                this._updateStorage();
+            }
+        }
+    }
+
+    private _updateStorage() {
+        // todo: implement lazy update
+        try {
+            const _val = JSON.stringify(this._data.__storage);
+            localStorage.setItem('eos', _val);
+        } catch (e) {
+            console.log('error storing', this._data.__storage);
+        }
     }
 }

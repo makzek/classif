@@ -217,6 +217,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[];
         const page = this._page;
         if (this.params && this.params.userSort) {
+            console.log('sorting', this.params);
             _list = this._orderSrv.getUserOrder(this.listNodes, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list = this.listNodes;

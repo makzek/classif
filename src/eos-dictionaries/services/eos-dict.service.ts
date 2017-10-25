@@ -358,10 +358,14 @@ export class EosDictService {
     }
 
     getNodePath(node: EosDictionaryNode): string[] {
-        return [
+        const _path = [
             'spravochniki',
             this.dictionary.id,
-            node.id + '',
         ];
+
+        if (this.dictionary.root !== node) {
+            _path.push(node.id);
+        }
+        return _path;
     }
 }
