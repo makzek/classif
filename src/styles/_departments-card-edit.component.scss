@@ -19,7 +19,7 @@
 
     .checkbox {
         display: block;
-        margin-top: 3px;
+        margin-top: 8px;
         margin-bottom: 0;
 
         label {
@@ -34,7 +34,7 @@
     .alternates {
         .form-group {
             &:first-child {
-                margin-top: 20px;
+                margin-top: 30px;
             }
 
             &:last-child {
@@ -53,23 +53,19 @@
     }
 
     .form-group {
-        margin-bottom: 10px;
+        margin-bottom: 0;
 
         &:not(:first-child) {
             &.fathers-name {
                 margin-top: 0;
             }
 
-            &.email {
-                margin-top: 5px;
-            }
-
             &.full-position {
-                margin-top: 61px;
+                margin-top: 91px;
             }
 
             &.gender {
-                margin-top: 31px;
+                margin-top: 50px;
             }
         }
     }
@@ -77,8 +73,12 @@
     textarea {
         resize: none;
 
-        &.note {
-            height: 189px;
+        &.note-person {
+            height: 219px;
+        }
+
+        &.note-dep {
+            height: 90px;
         }
     }
 
@@ -116,7 +116,7 @@
 
     .gender-placeholder {
         position: absolute;
-        top: 195px;
+        top: 215px;
         left: 9px;
         width: 30px;
     }
@@ -133,7 +133,7 @@
     }
 
     .names {
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .wrapper,
@@ -147,6 +147,11 @@
 
             &:not(:first-child) {
                 margin-top: 0;
+
+                &.email,
+                &.skype {
+                    margin-top: 30px;
+                }
             }
 
             &:not(:last-child) {

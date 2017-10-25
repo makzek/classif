@@ -99,7 +99,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
-    quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['fullTitle', 'NOTE', 'sev'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
     allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
