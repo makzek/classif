@@ -26,7 +26,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
+        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: true },
@@ -34,18 +34,18 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showSandwichInBreadcrumb: true },
+                data: { showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
             }, {
                 path: 'edit',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Редактирование', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
+                data: { title: 'Редактирование', showInBreadcrumb: true, showSandwichInBreadcrumb: false, showPinInBreadcrumb: true },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Просмотр', showInBreadcrumb: true, showSandwichInBreadcrumb: false  },
+                data: { title: 'Просмотр', showInBreadcrumb: true, showSandwichInBreadcrumb: false, showPinInBreadcrumb: true },
             }],
         }, {
             path: '',
