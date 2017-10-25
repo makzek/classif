@@ -1,17 +1,27 @@
-export * from './rubricator.consts';
-export * from './department.consts';
+import { RUBRICATOR_DICT } from './dictionaries/rubricator.consts';
+import { DEPARTMENTS_DICT } from './dictionaries/department.consts';
+import { DELIVERY_DICT } from './dictionaries/delivery.consts';
+import { ADDR_CATEGORY_DICT } from './dictionaries/addr-category.consts';
+import { ORG_TYPE_DICT } from './dictionaries/org-type.consts';
+import { RESOLUTION_CATEGORY_DICT } from './dictionaries/resolution-category.consts';
+import { RESPRJ_PRIORITY_DICT } from './dictionaries/resprj-priority.consts';
+import { RESPRJ_STATUS_DICT } from './dictionaries/resprj-status.consts';
+import { SIGN_KIND_DICT } from './dictionaries/sign-kind.consts';
+import { STATUS_EXEC_DICT } from './dictionaries/status-exec.consts';
+import { STATUS_REPLY_DICT } from './dictionaries/status-reply.consts';
+import { VISA_TYPE_DICT } from './dictionaries/visa-type.consts';
 
-import { RUBRICATOR_DICT } from './rubricator.consts';
-import { DEPARTMENTS_DICT } from './department.consts';
-import { DELIVERY_DICT } from './delivery.consts';
-/*
-export const DICT_API_INSTANCES: any = {
-    'rubricator': RUBRICATOR_DICT.apiInstance,
-    'department': DEPARTMENTS_DICT.apiInstance
-};
-*/
 export const DICTIONARIES = [
-    RUBRICATOR_DICT,
     DEPARTMENTS_DICT,
-    DELIVERY_DICT
+    RUBRICATOR_DICT,
+    DELIVERY_DICT,
+    ADDR_CATEGORY_DICT,
+    ORG_TYPE_DICT,
+    RESOLUTION_CATEGORY_DICT,
+    RESPRJ_PRIORITY_DICT,
+    RESPRJ_STATUS_DICT,
+    SIGN_KIND_DICT,
+    STATUS_EXEC_DICT,
+    STATUS_REPLY_DICT,
+    VISA_TYPE_DICT,
 ];

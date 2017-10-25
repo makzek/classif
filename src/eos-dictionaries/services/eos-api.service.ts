@@ -21,7 +21,15 @@ export class EosDictApiService {
         private _deptSrv: DepartmentService,
     ) {
         this._dictionaries = {};
-        DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
+        DICTIONARIES.sort((a, b) => {
+            if (a.title > b.title) {
+                return 1;
+            } else if (a.title < b.title) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
     init(descriptor: AbstractDictionaryDescriptor) {

@@ -1,6 +1,6 @@
-import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../core/dictionary.interfaces';
-import { NOT_EMPTY_STRING } from './input-validation';
-import { SEARCH_TYPES } from './search-types';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { NOT_EMPTY_STRING } from '../input-validation';
+import { SEARCH_TYPES } from '../search-types';
 /*
 */
 export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
