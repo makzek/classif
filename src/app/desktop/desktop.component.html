@@ -14,7 +14,7 @@
             </span>
             <ul *ngIf="recentItems" class="recent-list">
                 <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="tooltip-info  word-break">
-                    <a class="special-text" [routerLink]="[link.link]">{{link.title}}</a>
+                    <a class="special-text" [routerLink]="[link.url]">{{link.title}}</a>
                 </li>
             </ul>
         </div>
@@ -43,11 +43,11 @@
         </button>
     </div>
 
-    <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.link]">
+    <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.url]">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.title}}" placement="top" containerClass="tooltip-info word-break" container="body" class="text">
+        <span [hidden]="editing(item.value)" tooltip="{{item.value.fullTitle}}" placement="top" containerClass="tooltip-info word-break" container="body" class="text">
             {{item.value.title}}
         </span>
         <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"

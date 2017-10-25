@@ -24,11 +24,7 @@ export class BreadcrumbsComponent {
         private _dictActSrv: DictionaryActionService,
         private _router: Router
     ) {
-        this._breadcrumbsSrv.breadcrumbs.subscribe((bc: IBreadcrumb[]) => {
-            if (bc) {
-                this.breadcrumbs = bc;
-            }
-        });
+        this._breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
         this._dictActSrv.action$.subscribe((action) => {
             if (action === DICTIONARY_ACTIONS.openInfo) {
                 this.infoOpened = true
@@ -40,13 +36,6 @@ export class BreadcrumbsComponent {
                 this.treeOpened = false;
             }
         })
-        _router.events.filter((evt: NavigationStart) => evt instanceof NavigationStart).subscribe((evt: NavigationStart) => {
-            // if active component dictionaries then...
-            if (evt.url.indexOf('/spravochniki/') === -1) {
-                this.treeOpened = false;
-                this.infoOpened = false;
-            }
-        });
     }
 
     get closeAll() {

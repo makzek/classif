@@ -507,13 +507,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+                const bCrumbs = this._breadcrumbsSrv.breadcrumbs;
                 let path = '';
                 for (const bc of bCrumbs) {
                     path = path + bc.title + '/';
                 }
                 this._deskSrv.addRecentItem({
-                    link: this._dictSrv.getNodePath(node.id).join('/'),
+                    url: this._dictSrv.getNodePath(node.id).join('/'),
                     title: title,
                     fullTitle: path + title
                 });

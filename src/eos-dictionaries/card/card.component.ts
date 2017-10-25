@@ -55,7 +55,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     dictionaryId: string;
     private nodeId: string;
     private _uuid: string;
-    selfLink: string;
 
     private _urlSegments: string[];
     private nodeIndex: number = -1;
@@ -146,12 +145,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _init() {
-        this.selfLink = this._router.url;
-        this.nextRoute = this.selfLink;
+        this.nextRoute = this._router.url;
         this._urlSegments = this._router.url.split('/');
-
         this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-
         this._getNode();
     }
 
@@ -361,20 +357,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _save(data: any): Promise<any> {
         console.log('save', data);
-        const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
-        let path = '';
-        for (let i = 0; i <= bCrumbs.length - 1; i++) {
-            path = path + bCrumbs[i].title + '/';
-        }
-        path = path.substring(0, path.length - 1);
-
+        const bCrumbs = this._breadcrumbsSrv.currentLink;
         return this._dictSrv.updateNode(this.node, data)
             .then((resp) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
-                    link: this.selfLink,
+                    url: bCrumbs.url,
                     title: this.nodeName,
-                    fullTitle: path
+                    fullTitle: bCrumbs.fullTitle
                 });
                 this._clearEditingCardLink();
                 return this._dictSrv.reloadNode(this.node);

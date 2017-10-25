@@ -11,8 +11,8 @@
         padding: 5px;
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 70px 48px 1fr 130px;
-        grid-template-columns: 70px 48px 1fr 130px;
+        -ms-grid-columns: 70px 48px 1fr 153px;
+        grid-template-columns: 70px 48px 1fr 153px;
         border-bottom: 1px solid transparent;
 
         &.edited {
@@ -69,6 +69,12 @@
         .action-wrapper {
             grid-column: 4;
             grid-row: 1;
+
+            .btn {
+                height: $item-height;
+                margin: -8px 0;
+                width: $item-width;
+            }
         }
 
         .move-wrapper,
@@ -98,11 +104,16 @@
         border-color: #adadad;
     }*/
     .edit-content {
-        padding: 10px 20px;
+        padding: 20px;
 
         label {
             font-weight: normal;
-            margin-bottom: 8px;
+
+            &:not(.checkbox) {
+                margin-bottom: 8px;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
         }
 
         .form-group {
@@ -111,12 +122,7 @@
             }
 
             &:not(:first-child) {
-                margin-top: 20px;
-            }
-
-            label:not(.checkbox) {
-                text-transform: uppercase;
-                white-space: nowrap;
+                margin-top: 30px;
             }
         }
 
