@@ -38,36 +38,22 @@ export class PushpinComponent {
     }
 
     pin(desk: EosDesk) {
-        const items = this._bcSrv.getBreadcrumbs();
-        if (items.length) {
-            const deskItem: IDeskItem = {
-                title: items[items.length - 1].title,
-                fullTitle: items[items.length - 1].fullTitle,
-                url: items[items.length - 1].url
-            }
-            /* tslint:disable:no-bitwise */
-            if (!~desk.references.findIndex((_ref: IDeskItem) =>  _ref.url === deskItem.url)) {
-                desk.references.push(deskItem);
-            } else {
-                this._msgSrv.addNewMessage(WARN_LINK_PIN);
-            }
+        const items = this._bcSrv.breadcrumbs;
+        let title = '';
+        for (let i = 3; i < items.length; i++) {
+            title += items[i].title + '/';
         }
-        /*
-        if (!~desk.references.findIndex((_ref) =>  _ref.url === this._link.url)) {
-            let arr = this._link.title.split('/');
-            arr = arr.slice(3, arr.length);
-            let newName = '';
-            for (const piece of arr) {
-                newName += piece + '/';
-            }
-            newName = newName.slice(0, newName.length - 1);
-            this._link.fullTitle = this._link.title;
-            this._link.title = newName;
-            desk.references.push(this._link);
-            this._deskSrv.editDesk(desk);
+        title = title.substring(0, title.length - 1);
+        const deskItem: IDeskItem = {
+            title: title,
+            fullTitle: title,
+            url: items[items.length - 1].url
         }
-        */
-
+        /* tslint:disable:no-bitwise */
+        if (!~desk.references.findIndex((_ref: IDeskItem) =>  _ref.url === deskItem.url)) {
+            desk.references.push(deskItem);
+        } else {
+            this._msgSrv.addNewMessage(WARN_LINK_PIN);
+        }
     }
-
 }

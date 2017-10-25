@@ -204,7 +204,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
     }
 
-
     private _update() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
@@ -494,7 +493,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.getBreadcrumbs();
+                const bCrumbs = this._breadcrumbsSrv.breadcrumbs;
                 let path = '';
                 for (const bc of bCrumbs) {
                     path = path + bc.title + '/';

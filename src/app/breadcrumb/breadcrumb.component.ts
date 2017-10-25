@@ -24,11 +24,7 @@ export class BreadcrumbsComponent {
         private _dictActSrv: DictionaryActionService,
         private _router: Router
     ) {
-        this._breadcrumbsSrv.breadcrumbs.subscribe((bc: IBreadcrumb[]) => {
-            if (bc) {
-                this.breadcrumbs = bc;
-            }
-        });
+        this._breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
         this._dictActSrv.action$.subscribe((action) => {
             if (action === DICTIONARY_ACTIONS.openInfo) {
                 this.infoOpened = true
