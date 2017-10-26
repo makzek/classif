@@ -88,17 +88,20 @@ export class EosDictionaryNode {
             this.data = data;
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = data[this._descriptor.parentField.key] + '';
+                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
             }
 
-            if (this.id === undefined && this.data[this._descriptor.keyField.key] !== undefined) {
-                this.id = this.data[this._descriptor.keyField.key] + '';
+            if (this.id === undefined && this._descriptor.keyField) {
+                this.id = this._keyToString(data[this._descriptor.keyField.key]);
             }
-            /*
-            if (this.id === undefined) {
-                this.id = '';
-            }
-            */
+        }
+    }
+
+    private _keyToString(value: any): string {
+        if (value !== undefined && value !== null) {
+            return value + '';
+        } else {
+            return null;
         }
     }
 
