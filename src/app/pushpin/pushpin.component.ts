@@ -46,7 +46,7 @@ export class PushpinComponent {
         title = title.substring(0, title.length - 1);
         const deskItem: IDeskItem = {
             title: title,
-            fullTitle: title,
+            fullTitle: items[items.length - 1].fullTitle,
             url: items[items.length - 1].url
         }
         /* tslint:disable:no-bitwise */
