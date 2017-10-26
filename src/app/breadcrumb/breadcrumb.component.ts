@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
@@ -22,7 +22,8 @@ export class BreadcrumbsComponent {
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _dictActSrv: DictionaryActionService,
-        private _router: Router
+        private _router: Router,
+        private _route: ActivatedRoute
     ) {
         this._breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
         this._dictActSrv.action$.subscribe((action) => {
@@ -36,6 +37,16 @@ export class BreadcrumbsComponent {
                 this.treeOpened = false;
             }
         })
+        _router.events
+        .filter((evt) => evt instanceof NavigationEnd)
+        .subscribe((evt) => {
+            let _actRoute = _route.snapshot;
+            while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+            if (!_actRoute.data.showSandwichInBreadcrumb) {
+                this.openTree(false);
+                this.openInfo(false)
+            }
+        });
     }
 
     get closeAll() {
