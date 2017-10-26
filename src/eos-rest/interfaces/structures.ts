@@ -3109,3 +3109,8 @@ export interface USERSECUR extends IEnt {
      */
     WEIGHT: number;
 }
+
+export interface SYS_PARMS {
+    DBMS: string;
+    USER_PARMS_List: USER_PARMS[];
+}

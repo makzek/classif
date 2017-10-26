@@ -15,6 +15,7 @@ export class TreeRecordDescriptor extends RecordDescriptor {
 }
 
 export class TreeDictionaryDescriptor extends DictionaryDescriptor {
+    allVisibleFields: FieldDescriptor[];
     _init(data: ITreeDictionaryDescriptor) {
         if (data.fields) {
             this.record = new TreeRecordDescriptor(this, data);

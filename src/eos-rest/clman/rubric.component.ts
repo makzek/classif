@@ -36,7 +36,7 @@ export class RubricComponent implements OnInit {
             // - поиск по критериям
             RUBRIC_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
-        }).subscribe(r => {
+        }).then(r => {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;
@@ -61,7 +61,7 @@ export class RubricComponent implements OnInit {
 
     onSave() {
         const chl = this.pip.changeList([this.currentItem]);
-        this.pip.batch(chl, '').subscribe((r) => {
+        this.pip.batch(chl, '').then((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
 
