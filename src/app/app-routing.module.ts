@@ -39,13 +39,23 @@ const routes: Routes = [{
                 path: 'edit',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Редактирование', showInBreadcrumb: true, showSandwichInBreadcrumb: false, showPinInBreadcrumb: false },
+                data: {
+                    title: 'Редактирование',
+                    showInBreadcrumb: true,
+                    showSandwichInBreadcrumb: false,
+                    showPinInBreadcrumb: true,
+                    closeStyle: true },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Просмотр', showInBreadcrumb: true, showSandwichInBreadcrumb: false, showPinInBreadcrumb: false },
+                data: {
+                    title: 'Просмотр',
+                    showInBreadcrumb: true,
+                    showSandwichInBreadcrumb: false,
+                    showPinInBreadcrumb: true,
+                    closeStyle: true },
             }],
         }, {
             path: '',
