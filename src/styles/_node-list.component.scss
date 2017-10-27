@@ -2,50 +2,68 @@
 .eos-node-list-item {
     .checkbox,
     .checkbox-inline {
-        // margin-left: 12px;
-        // margin-bottom: 7px;
-        vertical-align: middle;
+        width: $item-width;
+        line-height: 36px;
     }
+
     bs-sortable {
         width: 100%;
     }
+
     .node-list-item {
-        padding: 5px 0 5px;
+        padding: 5px 0;
         display: flex;
     }
+
     .elements {
         list-style: none;
         max-height: calc(100vh - 150px - 95px - 150px);
         overflow-y: auto;
+        overflow-x: hidden;
         padding-left: 0;
+
         &.has-parent {
             max-height: calc(100vh - 150px - 95px - 215px);
         }
+
         .child {
             cursor: pointer;
         }
-        .node-list-item {
-            padding-left: 20px;
-        }
+
         .flat-child {
             padding: 0;
         }
+
         .node-info {
             align-self: center;
             cursor: pointer;
-            margin-left: 10px;
-            margin-right: 20px;
+            width: calc(100% - 2* 48px); // checkbox and spinner
         }
+
         .code {
-            margin-right: 10px;
+            padding: 0 20px;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
         }
+
         .spinner {
             margin-top: 10px;
+            width: 48px;
+            text-align: center;
+
+            &.transparent {
+                opacity: 0;
+            }
         }
     }
+
     .list {
         border: 1px solid transparent;
         border-top: 0;
+
         &.has-spinner {
             display: flex;
             justify-content: space-around;
@@ -55,34 +73,51 @@
     }
 }
 
+.node-list-item {
+    height: $item-height;
+}
+
 .pagination-option {
     margin-top: 20px;
     height: $item-height;
     font-size: 16px;
     line-height: 24px;
     border: 1px solid transparent;
-    display: flex;
-    justify-content: space-between;
+    display: -ms-grid;
+    display: grid;// sass-lint:disable-line no-duplicate-properties
+    -ms-grid-columns: 330px 1fr 180px;
+    grid-template-columns: 330px 1fr 180px;
+
     .pagination,
     .count-select {
         display: inline-block;
         margin: 0;
     }
+
+    .pagination {
+        margin-top: -1px;
+        margin-left: -1px;
+        grid-column: 1;
+    }
+
     .count-select {
         height: $item-height;
-        width: 330px;
         border-left: 1px solid transparent;
+        grid-column: 3;
+
         .icon-btn {
             top: 7px;
             position: relative;
             margin-left: 5px;
         }
+
         .dropdown-toggle {
             height: $item-height;
             width: 100%;
             display: inline-flex;
             justify-content: space-around;
             cursor: pointer;
+
             .dropdown-toggle-text {
                 position: relative;
                 top: 5px;
@@ -90,6 +125,7 @@
             }
         }
     }
+
     .page-link {
         height: $item-height;
         width: $item-width;
@@ -97,8 +133,8 @@
         padding: 12px 16px;
         font-size: 16px;
     }
+
     .show-more {
-        margin: 0 30px;
         position: relative;
         left: -5px;
         height: $item-height;
@@ -106,12 +142,14 @@
         background: transparent;
         font-size: 16px;
         line-height: 24px;
+        grid-column: 2;
     }
-    .pagination-lg>li {
+
+    .pagination-lg > li {
         &:last-child,
         &:first-child {
-            &>a,
-            &>span {
+            & > a,
+            & > span {
                 border-radius: 0;
             }
         }
@@ -146,6 +184,7 @@
                 font-size: 14px;
                 line-height: 20px;
             }
+
             .count-select {
                 width: 170px;
             }
@@ -161,6 +200,7 @@
                 font-size: 16px;
                 line-height: 24px;
             }
+
             .count-select {
                 width: 330px;
             }

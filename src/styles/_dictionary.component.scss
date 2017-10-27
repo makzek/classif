@@ -97,6 +97,124 @@
             right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
+
+    .node-actions {
+        .selected-node {
+            border: 1px solid transparent;
+            border-bottom: 0;
+            height: $item-height;
+            font-size: 18px;
+
+            &.no-parent {
+                padding-left: 20px;
+            }
+
+            .selected-node-title {
+                line-height: $item-height;
+            }
+
+            .btn {
+                height: $item-height;
+                width: $item-width;
+            }
+        }
+
+        .first-line {
+            height: $item-height;
+            border: 1px solid transparent;
+        }
+
+        .date {
+            position: relative;
+            top: 6px;
+        }
+
+        .search {
+            width: 320px;
+
+            .input-group-addon {
+                cursor: pointer;
+
+                &.search-icon-wrapper {
+                    padding: 0 6px;
+                }
+
+                &.checkbox-icon-wrapper {
+                    padding-left: 8px;
+                }
+            }
+
+            .checkbox {
+                margin: 0 -4px -4px 0;
+            }
+        }
+
+        .search-wrapper {
+            left: auto;
+            right: 0;
+            top: 35px;
+        }
+
+        .icon {
+            margin: 5px 10px;
+            cursor: pointer;
+        }
+
+        .eos-datepicker {
+            display: inline-block;
+            width: 145px;
+            font-weight: bold;
+            position: relative;
+            top: 6px;
+
+            input {
+                border-color: transparent;
+                box-shadow: none;
+            }
+        }
+
+        .second-line {
+            border: 1px solid transparent;
+            border-top: 0;
+            width: 100%;
+            height: $item-height;
+            line-height: $item-height;
+
+            .second-line-content {
+                display: flex;
+                width: 100%;
+            }
+
+            .config-btn {
+                height: $item-height;
+                width: $item-width;
+                font-size: 24px;
+            }
+
+            .node-title {
+                display: inline-block;
+                width: 100%;
+
+                .item {
+                    display: inline-block;
+                    padding: 0 20px;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+            }
+
+            .checkbox-inline {
+                line-height: $item-height;
+                width: $item-width;
+            }
+        }
+    }
+}
+
+.creating-modal {
+    .modal-content {
+        padding: 0 20px;
+    }
 }
 
 @media (max-width: 1500px) {

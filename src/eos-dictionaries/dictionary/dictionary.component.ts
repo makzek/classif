@@ -80,6 +80,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     customFields: FieldDescriptor[] = [];
 
+    length = {};
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -197,6 +199,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
                 this.listNodes = node.children || [];
+                this._countColumnWidth();
             } else {
                 this.listNodes = [];
             }
@@ -218,6 +221,25 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
     }
 
+    private _countColumnWidth() {
+        let _totalWidth = 0;
+        this.viewFields.forEach((_f) => {
+            if (_f.length) {
+                _totalWidth += _f.length;
+            } else {
+                _totalWidth += 200;
+            }
+        });
+
+        this.viewFields.forEach((_f) => {
+            if (_f.length) {
+                this.length[_f.key] = _f.length / _totalWidth * 100;
+            } else {
+                this.length[_f.key] = 200 / _totalWidth * 100;
+            }
+        });
+    }
+
     private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
@@ -229,7 +251,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        if (this.params && this.params.userSort) {
+        if (this.params && this.params.userSort && this.listNodes[0] ) {
             _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId); // !!! Parent id err
         } else {
             _list.sort(this._orderSrv.defaultSort);

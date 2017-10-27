@@ -63,14 +63,14 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Пользовательская сортировка',
-    iconClass: 'fa fa-list',
+    iconClass: 'eos-icon eos-icon-custom-list-blue small',
     buttonClass: null
 }, {
     type: E_RECORD_ACTIONS.showDeleted,
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Отображать логически удалённые',
-    iconClass: 'eos-icon eos-icon-show-blue small',
+    iconClass: 'fa fa-eye',
     buttonClass: null
 }
    /* RECORD_ACTIONS_NAVIGATION_UP,
