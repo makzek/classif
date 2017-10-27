@@ -579,7 +579,7 @@
                     (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>
             </div>
-            <span class="checkbox">
+            <span class="checkbox card-flag">
                 <label class="checkbox"><input type="checkbox" name="CARD_FLAG"
                         [ngModel]="data['CARD_FLAG']" (ngModelChange)="change('CARD_FLAG', $event)"
                         [disabled]="!editMode">
