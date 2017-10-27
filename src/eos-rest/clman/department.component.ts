@@ -5,7 +5,6 @@ import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_C
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 //
-import { AppContext } from '../services/appContext.service';
 
 // tslint:disable-next-line:class-name
 class vmDEPARTMENT {
@@ -89,7 +88,7 @@ export class DepartmentComponent implements OnInit {
     currentListItem: DEPARTMENT;
     detailedItem: any;
 
-    constructor(private pip: PipRX, private _ctx: AppContext) { }
+    constructor(private pip: PipRX) { }
 
     ngOnInit() {
         this.getData();

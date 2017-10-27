@@ -3,7 +3,6 @@
 import { RUBRIC_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { AppContext } from '../services/appContext.service';
 
 
 
@@ -14,16 +13,16 @@ import { AppContext } from '../services/appContext.service';
 export class RubricComponent implements OnInit {
     items: RUBRIC_CL[] = [];
     currentItem: RUBRIC_CL;
-    username: string;
+    // username: string;
     // errorMessage: string;
-    constructor(private pip: PipRX, private _ctx: AppContext) { }
+    constructor(private pip: PipRX) { }
     //
     ngOnInit() {
 
     }
 
     getData() {
-        this.username = this._ctx.CurrentUser.CLASSIF_NAME;
+        // this.username = this._ctx.currentUser.CLASSIF_NAME;
         this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
             // RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
