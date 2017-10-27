@@ -115,10 +115,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.visibleNodes = [];
         this.currentState = this._dictActSrv.state;
 
-        if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-        }
+
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -214,6 +211,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        if (window.innerWidth > 1500) {
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+        }
     }
 
     ngOnDestroy() {

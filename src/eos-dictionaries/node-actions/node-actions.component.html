@@ -1,12 +1,12 @@
 <div class="eos-node-actions">
-    <span *ngFor="let item of buttons" class="visible-lg-inline-block actions">
-        <button [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
+    <span *ngFor="let item of buttons let i = index" class="visible-lg-inline-block actions">
+        <button *ngIf="item.enabled" [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
             tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
             <span class="{{item.iconClass}}" container="body"></span>
         </button>
     </span>
     <div class="btn-group" dropdown>
-        <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">
+        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">
             <span class="eos-icon eos-icon-fab-blue small"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">

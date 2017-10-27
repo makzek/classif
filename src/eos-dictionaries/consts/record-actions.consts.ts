@@ -63,7 +63,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Пользовательская сортировка',
-    iconClass: 'fa fa-list',
+    iconClass: 'eos-icon eos-icon-custom-list-blue small',
     buttonClass: null
 }, {
     type: E_RECORD_ACTIONS.showDeleted,

@@ -27,7 +27,7 @@
         </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
     <button type="button" class="btn btn-primary" (click)="modalRef.hide()" [disabled]="inProcess">Отмена</button>
+    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
   </div>
 </ng-template>
