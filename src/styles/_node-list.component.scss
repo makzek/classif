@@ -37,7 +37,7 @@
         .node-info {
             align-self: center;
             cursor: pointer;
-            width: 100%;
+            width: calc(100% - 2* 48px); // checkbox and spinner
         }
 
         .code {
