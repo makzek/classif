@@ -394,6 +394,7 @@
     }
 
     .eos-card {
+        
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
@@ -416,6 +417,9 @@
 
                 &:focus {
                     border-color: $active-field-color-main-theme;
+                }
+                &:-ms-input-placeholder {
+                    color: $primary-font-color-main-theme;
                 }
 
                 &.readonly {
