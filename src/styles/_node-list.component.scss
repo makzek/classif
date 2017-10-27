@@ -83,8 +83,10 @@
     font-size: 16px;
     line-height: 24px;
     border: 1px solid transparent;
-    display: flex;
-    justify-content: space-between;
+    display: -ms-grid;
+    display: grid;// sass-lint:disable-line no-duplicate-properties
+    -ms-grid-columns: 330px 1fr 180px;
+    grid-template-columns: 330px 1fr 180px;
 
     .pagination,
     .count-select {
@@ -92,10 +94,16 @@
         margin: 0;
     }
 
+    .pagination {
+        margin-top: -1px;
+        margin-left: -1px;
+        grid-column: 1;
+    }
+
     .count-select {
         height: $item-height;
-        width: 330px;
         border-left: 1px solid transparent;
+        grid-column: 3;
 
         .icon-btn {
             top: 7px;
@@ -127,7 +135,6 @@
     }
 
     .show-more {
-        margin: 0 30px;
         position: relative;
         left: -5px;
         height: $item-height;
@@ -135,6 +142,7 @@
         background: transparent;
         font-size: 16px;
         line-height: 24px;
+        grid-column: 2;
     }
 
     .pagination-lg > li {
