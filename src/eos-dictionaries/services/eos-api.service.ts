@@ -1,31 +1,58 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIES, DICT_API_INSTANCES } from '../consts/dictionaries.consts';
-import { DictionaryDescriptor } from '../core/dictionary-descriptor';
+import { DICTIONARIES } from '../consts/dictionaries.consts';
+import { E_DICT_TYPE } from '../core/dictionary.interfaces';
+import { AbstractDictionaryDescriptor } from '../core/abstract-dictionary-descriptor';
 
-import { RubricService, DepartmentService } from '../../eos-rest';
+import { BaseDictionaryService } from '../../eos-rest/services/base-dictionary.service';
+import { LinearDictionaryService } from '../../eos-rest/services/linear-dictionary.service';
+import { TreeDictionaryService } from '../../eos-rest/services/tree-dictionary.service';
+import { DepartmentService } from '../../eos-rest/services/department.service';
 
 @Injectable()
 export class EosDictApiService {
+    private _type: E_DICT_TYPE;
     private _dictionaries: any;
-    private _service: any;
+    private _service: BaseDictionaryService;
 
     constructor(
-        private _rubricSrv: RubricService,
+        private _linearSrv: LinearDictionaryService,
+        private _treeSrv: TreeDictionaryService,
         private _deptSrv: DepartmentService,
     ) {
         this._dictionaries = {};
-        DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
+        DICTIONARIES.sort((a, b) => {
+            if (a.title > b.title) {
+                return 1;
+            } else if (a.title < b.title) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
-    init(descriptor: DictionaryDescriptor) {
-        switch (descriptor.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                this._service = this._rubricSrv;
+    init(descriptor: AbstractDictionaryDescriptor) {
+        if (descriptor) {
+            this._type = descriptor.type;
+        } else {
+            this._type = null;
+        }
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                this._service = this._linearSrv;
+                this._linearSrv.setInstance(descriptor.apiInstance);
                 break;
-            case DICT_API_INSTANCES.department:
+
+            case E_DICT_TYPE.tree:
+                this._service = this._treeSrv;
+                this._treeSrv.setInstance(descriptor.apiInstance);
+                break;
+
+            case E_DICT_TYPE.department:
                 this._service = this._deptSrv;
                 break;
+
             default:
                 this._service = null;
         }
@@ -42,10 +69,18 @@ export class EosDictApiService {
     }
 
     getRoot(): Promise<any[]> {
-        return this.getNodeWithChildren('0.');
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service.getAll();
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                return this.getNodeWithChildren('0.');
+            default:
+                return this._noData();
+        }
     }
 
-    getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
+    getNodes(nodeId?: string, level = 0): Promise<any[]> {
         let _promise: Promise<any[]>;
         const _params = {
             DUE: (nodeId ? nodeId : '0.') + '%',

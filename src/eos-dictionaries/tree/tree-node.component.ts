@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
-import { IFieldView } from '../core/field-descriptor';
+import { IFieldView } from '../core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-tree-node',

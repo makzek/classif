@@ -3,5 +3,5 @@ import { TreeDictionaryService } from './tree-dictionary.service';
 
 @Injectable()
 export class RubricService extends TreeDictionaryService {
-    instance = 'RUBRIC_CL';
+    protected instance = 'RUBRIC_CL';
 }

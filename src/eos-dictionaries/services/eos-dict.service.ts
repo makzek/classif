@@ -5,14 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { IFieldView } from '../core/field-descriptor';
 import { SearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 
-import { RecordDescriptor } from '../core/record-descriptor';
+// import { RecordDescriptor } from '../core/record-descriptor';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
@@ -225,12 +224,12 @@ export class EosDictService {
             }
             if (node) {
                 node.isActive = true;
+                if (node.children) {
+                    this._openNode(node.children[0]);
+                }
             }
             this.selectedNode = node;
             this._selectedNode$.next(node);
-            if (node.children) {
-                this._openNode(node.children[0]);
-            }
         }
     }
 
@@ -359,10 +358,14 @@ export class EosDictService {
     }
 
     getNodePath(node: EosDictionaryNode): string[] {
-        return [
+        const _path = [
             'spravochniki',
             this.dictionary.id,
-            node.id + '',
         ];
+
+        if (this.dictionary.root !== node) {
+            _path.push(node.id);
+        }
+        return _path;
     }
 }

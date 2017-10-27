@@ -1,12 +1,19 @@
-import { DictionaryDescriptor, E_FIELD_SET, IDictionaryDescriptor } from './dictionary-descriptor';
-import { RubricatorDictionaryDescriptor /*, IRubricatorDictionaryDescriptor*/ } from './rubricator-dictionary-descriptor';
-import { DepartmentDictionaryDescriptor, IDepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
-import { DICT_API_INSTANCES } from '../consts/dictionaries.consts';
+import {
+    E_DICT_TYPE,
+    E_FIELD_SET,
+    IDictionaryDescriptor,
+    IDepartmentDictionaryDescriptor,
+    ITreeDictionaryDescriptor,
+    IFieldView
+} from './dictionary.interfaces';
+import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
+import { DictionaryDescriptor } from './dictionary-descriptor';
+import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
+import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { IFieldView } from '../core/field-descriptor';
 
 export class EosDictionary {
-    descriptor: DictionaryDescriptor;
+    descriptor: AbstractDictionaryDescriptor;
     root: EosDictionaryNode;
     private _nodes: Map<string, EosDictionaryNode>;
 
@@ -23,11 +30,14 @@ export class EosDictionary {
     }
 
     constructor(descData: IDictionaryDescriptor) {
-        switch (descData.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                this.descriptor = new RubricatorDictionaryDescriptor(descData);
+        switch (descData.dictType) {
+            case E_DICT_TYPE.linear:
+                this.descriptor = new DictionaryDescriptor(descData);
                 break;
-            case DICT_API_INSTANCES.department:
+            case E_DICT_TYPE.tree:
+                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData);
+                break;
+            case E_DICT_TYPE.department:
                 this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData);
                 break;
             default:
@@ -59,15 +69,17 @@ export class EosDictionary {
         this._nodes.forEach((_n) => {
             if (!this.root && _n.parentId === null) {
                 this.root = _n;
-                this.root.title = this.descriptor.title;
             }
         });
 
         /* fallback if root undefined */
         if (!this.root) {
-            this.root = new EosDictionaryNode(this.descriptor.record, { title: this.descriptor.title });
+            this.root = new EosDictionaryNode(this.descriptor.record, { IS_NODE: 0, POTECTED: 0 });
             this.root.children = [];
+            this._nodes.set(this.root.id, this.root);
         }
+
+        this.root.title = this.descriptor.title;
 
         this._nodes.forEach((_node) => {
             if (!_node.parent && _node !== this.root) {
@@ -97,7 +109,7 @@ export class EosDictionary {
 
     getNode(nodeId: string): EosDictionaryNode {
         const _res = this._nodes.get(nodeId);
-        /* console.log('get node', this.id, nodeId, this._nodes, _res); */
+        // console.log('get node', this.id, nodeId, this._nodes, _res);
         return _res;
     }
 

@@ -11,7 +11,7 @@ import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 
 /* todo replace with profile API */
-import { RubricService } from '../../eos-rest/services/rubric.service';
+import { TreeDictionaryService } from '../../eos-rest/services/tree-dictionary.service';
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -50,8 +50,7 @@ export class EosUserProfileService implements IUserProfile {
     constructor(
         private _router: Router,
         private _authSrv: AuthService,
-        private _rubricSrv: RubricService,
-        /* private _pipe: PipRX, */
+        private _fakeSrv: TreeDictionaryService,
         private _msgSrv: EosMessageService
     ) {
         Object.assign(this, DEFAURT_USER);
@@ -70,7 +69,8 @@ export class EosUserProfileService implements IUserProfile {
                 IS_NODE: '0'
             };
             if (!this._authPromise) {
-                this._authPromise = this._rubricSrv.getAll(_params)
+                this._fakeSrv.setInstance('RUBRIC_CL');
+                this._authPromise = this._fakeSrv.getAll(_params)
                     .then((resp) => {
                         this._isAuthorized = true;
                         this._authPromise = null;

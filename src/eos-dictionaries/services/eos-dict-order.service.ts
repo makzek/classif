@@ -14,7 +14,7 @@ export class EosDictOrderService {
 
     public setSortingMode(val: boolean) {
         val = !!val;
-        this._storageSrv.setItem(this.LOCALSTORAGEKEY, val.toString(), true);
+        this._storageSrv.setItem(this.LOCALSTORAGEKEY, val, true);
     }
 
     public getSortingMode() {

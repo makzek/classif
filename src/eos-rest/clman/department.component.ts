@@ -83,7 +83,7 @@ class vmDEPARTMENT {
     selector: 'eos-rest-department',
     templateUrl: './department.component.html'
 })
-export class DepartmentComponent  implements OnInit {
+export class DepartmentComponent implements OnInit {
     treeItems: DEPARTMENT[] = [];
     listItems: DEPARTMENT[] = [];
     currentListItem: DEPARTMENT;
@@ -118,10 +118,11 @@ export class DepartmentComponent  implements OnInit {
     onSelectListItem(cur: DEPARTMENT): void {
         this.currentListItem = cur;
         vmDEPARTMENT.Load(this.pip, cur.DUE, false)
-            .then( vm => {this.detailedItem = vm});
+            .then(vm => { this.detailedItem = vm });
     }
 
-/*    onAdd() {
+    onAdd() {
+        /*
         const tisn = this.pip.sequenceMap.GetTempISN();
         const tmp = this.pip.prepareAdded<DEPARTMENT>( {
             DUE: this.currentItem.DUE + tisn + '.',
@@ -129,16 +130,17 @@ export class DepartmentComponent  implements OnInit {
             CLASSIF_NAME: 'Добавляем?'
         }, 'DEPARTMENT');
         this.currentItem = tmp;
+        */
     }
 
     onSave() {
+        /*
         const chl = Utils.changeList([this.currentItem]);
         this.pip.batch(chl, '').subscribe((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
-
+        */
     }
-*/
 }
 
 

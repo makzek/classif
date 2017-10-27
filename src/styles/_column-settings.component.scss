@@ -10,7 +10,11 @@
     }
 
     .modal-header {
-        padding: 8px 15px;
+        padding: 15px;
+
+        h4 {
+            color: #000;
+        }
 
         .btn {
             text-transform: uppercase;
@@ -32,33 +36,24 @@
         display: flex;
     }
 
-    .arrow-wrapper {
-        flex-basis: $item-width;
+    .col {
+        width: 30%;
+    }
+
+    .driver-col {
+        width: 12.5%;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
+        align-items: center;
 
         .btn {
-            display: block;
-            width: $item-width;
-            height: $item-height;
+            display: flex;
+            height: auto;
         }
     }
 
-    .modal-content {
-        width: 800px;
-    }
-
-    .col {
-        margin: 5px;
-        flex-basis: 390px;
-
-        &:first-child {
-            margin-right: 0;
-        }
-
-        &:last-child {
-            margin-left: 0;
-        }
+    .container {
+        display: flex;
     }
 }

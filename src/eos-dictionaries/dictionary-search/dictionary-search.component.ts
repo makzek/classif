@@ -7,8 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET, IRecordModeDescription } from '../core/dictionary-descriptor';
+import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
 import { SearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
@@ -38,6 +37,8 @@ export class DictionarySearchComponent implements OnDestroy {
     hasFull: boolean;
 
     dictSubscription: Subscription;
+
+    date: Date = new Date();
 
     setTab(key: string) {
         this.currTab = key;
@@ -73,7 +74,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
                 this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
                 /* tslint:enable:no-bitwise */
-                console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
+                // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
         });
     }
@@ -98,7 +99,7 @@ export class DictionarySearchComponent implements OnDestroy {
         if (evt.keyCode === 13) {
             this.isOpenQuick = false;
             this._dictSrv.search(this.dataQuick, _settings);
-         }
+        }
     }
 
     clearQuickForm() {
@@ -119,6 +120,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        this._dictSrv.fullSearch({date: date}, this.settings);
+        if (date !== this.date) {
+            this.date = date;
+            this._dictSrv.fullSearch({ date: date }, this.settings);
+        }
     }
 }

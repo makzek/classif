@@ -1,12 +1,13 @@
-import { IDepartmentDictionaryDescriptor } from '../core/department-dictionary-descriptor';
-/* tslint:disable:max-line-length */
-import { NOT_EMPTY_STRING } from './input-validation';
-import { SEARCH_TYPES } from './search-types';
+import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { NOT_EMPTY_STRING } from '../input-validation';
+import { SEARCH_TYPES } from '../search-types';
 
+/* tslint:disable:max-line-length */
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
     apiInstance: 'DEPARTMENT',
-    title: 'Подразделения',
+    dictType: E_DICT_TYPE.department,
+    title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],
@@ -15,7 +16,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
     searchConfig: [SEARCH_TYPES.full, SEARCH_TYPES.quick, SEARCH_TYPES.dateFilter],
-    modeList: [ {
+    modeList: [{
         key: 'department',
         title: 'Подразделение',
     }, {
@@ -43,7 +44,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-    },  {
+    }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
         type: 'text',

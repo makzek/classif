@@ -133,7 +133,7 @@
                                 containerClass="tooltip-error" [isDisabled]="!editMode" placement="bottom"
                                 [isOpen]="cardForm.controls.DUTY?.invalid && cardForm.controls.DUTY?.dirty" triggers="">
                         </div>
-                        <span class="checkbox col-md-3 col-lg-3 col-xl-3">
+                        <span class="col-md-3 col-lg-3 col-xl-3">
                             <label class="checkbox"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
                                     [ngModel]="data['POST_H']">
                                 <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
@@ -154,7 +154,7 @@
                 </div>
                 <div class="form-group">
                     <label for="NOTE">{{fieldsDescription['NOTE']?.title}}</label>
-                    <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control note"  rows="5"
+                    <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control note-person"  rows="5"
                         [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                         placeholder="{{fieldsDescription['NOTE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -284,7 +284,7 @@
                             [isDisabled]="!editMode" placement="bottom" containerClass="tooltip-error"
                             [isOpen]="cardForm.controls.E_MAIL?.invalid && cardForm.controls.E_MAIL?.dirty" triggers="">
                 </div>
-                <div class="form-group">
+                <div class="form-group skype">
                     <label for="skype">{{fieldsDescription['skype']?.title}}</label>
                         <input [readonly]="!editMode" id="skype" name="skype" type="text" class="form-control"
                             [ngModel]="data['skype']" (ngModelChange)="change('skype', $event)"
@@ -579,7 +579,7 @@
                     (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>
             </div>
-            <span class="checkbox">
+            <span class="checkbox card-flag">
                 <label class="checkbox"><input type="checkbox" name="CARD_FLAG"
                         [ngModel]="data['CARD_FLAG']" (ngModelChange)="change('CARD_FLAG', $event)"
                         [disabled]="!editMode">
@@ -651,7 +651,7 @@
             </div>
             <div class="form-group">
                 <label for="NOTE_DEP">{{fieldsDescription['NOTE']?.title}}</label>
-                <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control note"  rows="5"
+                <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control note-dep"  rows="5"
                     [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                     placeholder="{{fieldsDescription['NOTE']?.title}}"
                     [ngClass]="{'readonly': !editMode }"

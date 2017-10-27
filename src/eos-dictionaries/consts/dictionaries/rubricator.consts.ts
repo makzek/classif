@@ -1,11 +1,12 @@
-import { IRubricatorDictionaryDescriptor } from '../core/rubricator-dictionary-descriptor';
-import { NOT_EMPTY_STRING } from './input-validation';
-import { SEARCH_TYPES } from './search-types';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { NOT_EMPTY_STRING } from '../input-validation';
+import { SEARCH_TYPES } from '../search-types';
 /*
 */
-export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
+export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     id: 'rubricator',
     apiInstance: 'RUBRIC_CL',
+    dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
@@ -98,7 +99,7 @@ export const RUBRICATOR_DICT: IRubricatorDictionaryDescriptor = {
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
-    quickViewFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['fullTitle', 'NOTE', 'sev'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
     allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],

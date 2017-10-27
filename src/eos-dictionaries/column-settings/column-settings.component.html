@@ -1,49 +1,36 @@
-<!--div class="eos-column-settings">
-    <button class="btn btn-primary"><span (click)="showModal()">Настроить столбцы табличного представления</span></button>
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Настройка отображения элементов справочника</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
-
-<div bsModal #modal="bs-modal" class="modal fade column-settings-modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"-->
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Настройка отображения элементов справочника</h4>
-        <div class="pull-right">
-            <button type="button" class="btn btn-primary" (click)="cancel()">
-                Отменить
-            </button>
-            <button type="button" class="btn btn-primary-full" (click)="save()">
-                Сохранить
-            </button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="col-wrapper">
-            <div class="col">
-                <span class="title">Исходный список</span>
-                <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
-                    <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)"
-                        [ngClass]="{'selected': item === selectedDictItem}"></div>
-                </div>
-            </div>
-            <div class="arrow-wrapper">
-                <span>
-                    <button class="btn btn-primary-light" (click)="addToCurrent()">
-                        <span class="eos-icon eos-icon-arrow-v-blue-right"></span>
-                    </button>
-                    <button class="btn btn-primary-light" (click)="removeToCurrent()">
-                        <span class="eos-icon eos-icon-arrow-v-blue-left"></span>
-                    </button>
-                </span>
-            </div>
-            <div class="col">
-                <span class="title">Итоговый список</span>
-                <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
-                    <div class="item" *ngFor="let item of currentFields" [innerHtml]='item.title' (click)="select(item, true)"
-                        [ngClass]="{'selected': item === selectedCurrItem}"></div>
-                </div>
+<div class="modal-body">
+    <div class="container">
+        <div class="col">
+            <span class="title">Исходный список</span>
+            <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
+                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)" [ngClass]="{'selected': item === selectedDictItem}"></div>
             </div>
         </div>
-      </div>
-    <!-- /div>
-  </div>
-</div -->
+        <div class="driver-col">
+            <span>
+                <button class="btn btn-primary-light" (click)="addToCurrent()">
+                    <span class="eos-icon eos-icon-arrow-v-blue-right"></span>
+                </button>
+                <button class="btn btn-primary-light" (click)="removeToCurrent()">
+                    <span class="eos-icon eos-icon-arrow-v-blue-left"></span>
+                </button>
+            </span>
+        </div>
+        <div class="col">
+            <span class="title">Итоговый список</span>
+            <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
+                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item.title' (click)="select(item, true)" [ngClass]="{'selected': item === selectedCurrItem}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cancel()">Отменить</button>
+    <button type="button" class="btn btn-primary-full" (click)="save()">Сохранить</button>
+</div>

@@ -5,6 +5,16 @@
         font-size: 22px;
     }
 
+    .full-search {
+        position: relative;
+        top: 3px;
+    }
+
+    .eos-icon-search-blue {
+        position: relative;
+        top: 4px;
+    }
+
     .quick-search-form {
         display: inline-block;
         width: 0;
@@ -28,7 +38,7 @@
 
     .clear-btn {
         position: absolute;
-        top: 2px;
+        top: 49px;
         right: 56px;
         height: 46px;
         width: $item-width;

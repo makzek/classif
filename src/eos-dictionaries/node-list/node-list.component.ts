@@ -13,6 +13,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 export class NodeListComponent {
     @Input() nodes: EosDictionaryNode[];
     @Input() params: any;
+    @Input() length: any;
     @Output() change: EventEmitter<any> = new EventEmitter<any>(); // changes in list
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
 

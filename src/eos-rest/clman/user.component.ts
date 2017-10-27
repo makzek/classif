@@ -4,7 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { USER_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { RubricService } from '../services/rubric.service';
 //
 import { AppContext } from '../services/appContext.service';
 

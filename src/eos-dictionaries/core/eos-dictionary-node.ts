@@ -1,5 +1,6 @@
+import { IFieldView } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
-import { FieldDescriptor, IFieldView } from './field-descriptor';
+import { FieldDescriptor } from './field-descriptor';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -41,7 +42,7 @@ export class EosDictionaryNode {
         if (this.data['PROTECTED']) {
             return false;
         }
-        return this.data['DELETED'];
+        return !!this.data['DELETED'];
 
     }
 
@@ -59,7 +60,11 @@ export class EosDictionaryNode {
     }
 
     get neighbors(): EosDictionaryNode[] {
-        return this.parent.children;
+        if (this.parent) {
+            return this.parent.children;
+        } else {
+            return null;
+        }
     }
 
     get hasSubnodes(): boolean {
@@ -74,40 +79,34 @@ export class EosDictionaryNode {
         return showDeleted || !this.isDeleted;
     }
 
-    constructor(descriptor: RecordDescriptor, data: any, id?: any) {
+    constructor(descriptor: RecordDescriptor, data: any) {
         if (data) {
             this.marked = !!this.marked;
 
             this._descriptor = descriptor;
             /* store all data from backend in .data */
             this.data = data;
-            /*
-            this._descriptor.fields.forEach((fld) => {
-                if (fld) {
-                    this.data[fld.key] = data[fld.key];
-                }
-            });
-            */
-            if (this.parentId === undefined) {
-                this.parentId = data[this._descriptor.parentField.key];
+
+            if (this.parentId === undefined && this._descriptor.parentField) {
+                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
             }
 
-            if (this.id === undefined) {
-                this.id = this.data[this._descriptor.keyField.key];
+            if (this.id === undefined && this._descriptor.keyField) {
+                this.id = this._keyToString(data[this._descriptor.keyField.key]);
             }
         }
+    }
 
-        if (id) {
-            this.id = id;
+    private _keyToString(value: any): string {
+        if (value !== undefined && value !== null) {
+            return value + '';
+        } else {
+            return null;
         }
     }
 
     updateData(nodeData: any) {
-        this._descriptor.fields.forEach((fld) => {
-            if (fld) {
-                this.data[fld.key] = nodeData[fld.key];
-            }
-        });
+        Object.assign(this.data, nodeData);
     }
 
     isChildOf(node: EosDictionaryNode): boolean {

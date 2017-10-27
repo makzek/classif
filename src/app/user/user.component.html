@@ -17,15 +17,17 @@
     <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
   </div>
   <div class="modal-body login-modal">
-        <label for="basic-url">Ваш логин</label>
-        <div class="input-group">
+        <div class="form-group">
+            <label for="basic-url">Ваш логин</label>
             <input type="text" [(ngModel)]="inputName" maxlength="255" class="form-control" id="user-name" />
         </div>
-        <label for="basic-url">Ваш пароль</label>
-        <div class="input-group">
+        <div class="form-group">
+            <label for="basic-url">Ваш пароль</label>
             <input type="text" [(ngModel)]="inputPassword" maxlength="255" class="form-control" id="password" />
         </div>
-        <button type="button" class="btn btn-default" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
-        <button type="button" class="btn btn-default" (click)="modalRef.hide()" [disabled]="inProcess">Отмена</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modalRef.hide()" [disabled]="inProcess">Отмена</button>
+    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
   </div>
 </ng-template>
