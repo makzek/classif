@@ -1,18 +1,20 @@
-<span *ngFor="let item of buttons" class="visible-lg-inline-block actions">
-    <button [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
-        tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
-        <span class="{{item.iconClass}}" container="body"></span>
-    </button>
-</span>
-<div class="btn-group" dropdown>
-    <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">
-        <span class="eos-icon eos-icon-fab-blue small"></span>
-    </button>
-    <ul *dropdownMenu class="dropdown-menu" role="menu">
-        <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
-            <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
-                <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item)">{{item.title}}</button>
-            </li>
-        </ng-template>
-    </ul>
+<div class="eos-node-actions">
+    <span *ngFor="let item of buttons" class="visible-lg-inline-block actions">
+        <button [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
+            tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
+            <span class="{{item.iconClass}}" container="body"></span>
+        </button>
+    </span>
+    <div class="btn-group" dropdown>
+        <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">
+            <span class="eos-icon eos-icon-fab-blue small"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
+                <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
+                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item)">{{item.title}}</button>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
 </div>

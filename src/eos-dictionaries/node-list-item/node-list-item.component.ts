@@ -17,6 +17,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
 export class NodeListItemComponent implements OnInit, OnDestroy {
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: any;
+    @Input('length') length: any = {};
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private viewFields: FieldDescriptor[];

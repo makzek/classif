@@ -119,7 +119,7 @@
     .block {
         background-color: $primary-color-main-theme;
         color: $primary-font-color-main-theme;
-        border-color: $border-color-main-theme;
+        border-color: $border-color-main-theme !important;
     }
 
     .special-text {
@@ -142,6 +142,13 @@
                 background: $button-color-main-theme;
                 outline: none;
             }
+        }
+    }
+
+    .btn {
+        &.active {
+            color: white;
+            background-color: $button-color-main-theme;
         }
     }
 
@@ -347,6 +354,10 @@
         .tree-wrapper,
         .opened-wrapper {
             border-color: $border-color-main-theme;
+        }
+
+        .node-actions .second-line .node-title .item.user-sort {
+            color: $primary-font-color-main-theme;
         }
     }
 

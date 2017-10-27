@@ -12,12 +12,12 @@
             </li>
         </ul>
         <ng-template #childTemplate let-item="item" let-index="index">
-            <eos-node-list-item [node]="item.value" [params]="params" (mark)="checkState()"></eos-node-list-item>
+            <eos-node-list-item [node]="item.value" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
         </ng-template>
         <!--Simple list-->
         <ul *ngIf="!params.userSort" class="elements" [ngClass]="{'has-parent': params.hasParent}">
             <li *ngFor="let item of nodes" class="child">
-                <eos-node-list-item [node]="item" [params]="params" (mark)="checkState()"></eos-node-list-item>
+                <eos-node-list-item [node]="item" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
             </li>
         </ul>
     </div>
