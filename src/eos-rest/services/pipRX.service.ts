@@ -11,6 +11,7 @@ import { Metadata } from '../core/metadata';
 import { EntityHelper } from '../core/entity-helper';
 import { ErrorService } from './error.service';
 import { PipeUtils } from '../core/pipe-utils';
+import { Cache } from '../core/cache';
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -21,6 +22,7 @@ export class PipRX extends PipeUtils {
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     public errorService = new ErrorService();
     public entityHelper: EntityHelper;
+    public cache: Cache;
 
     static criteries(cr: any) {
         return { criteries: cr };
@@ -51,6 +53,7 @@ export class PipRX extends PipeUtils {
         this._metadata = new Metadata(cfg);
         this._metadata.init();
         this.entityHelper = new EntityHelper(this._metadata);
+        this.cache = new Cache(this, this._metadata);
     }
 
     getConfig(): ApiCfg {

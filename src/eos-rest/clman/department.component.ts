@@ -19,12 +19,24 @@ class vmDEPARTMENT {
     ORGANIZ: ORGANIZ_CL;
 
     static Load(pip: PipRX, due: string, forEdit: boolean): Promise<vmDEPARTMENT> {
+        // Читаем себя, НЕ из кеша
+        const rDep = pip.read<DEPARTMENT>({ DEPARTMENT: due });
         // Здесь предсталены все запросы, которые вспомнил для подробной инофрмации о подразделении
         // в принципе ORGANIZ_CL, CABINET, USER_CL(?) можно и кешировать
 
         // загружаем от корня дерева до запрашиваемой вершины
         // поскольку органицация, картотека и чтото еще могут быть определены выше по дереву
-        const rDeps = pip.read<DEPARTMENT>({ DEPARTMENT: treeDues(due), orderby: 'DUE' });
+
+        const rParents = pip.cache.read<DEPARTMENT>({ DEPARTMENT: treeDues(parentDue(due))});
+
+        const rDeps = Promise.all([rDep, rParents])
+            .then(([dep, parents]) => {
+                parents.push(dep[0]);
+                parents.sort((a, b) => {
+                    return a.DUE.length - b.DUE.length;
+                });
+                return parents;
+            });
         // TODO: разобраться почему без прохода через промис запрос выполняется дважды
         // или Pipe для крепкости переписать на промисы
 
@@ -39,11 +51,12 @@ class vmDEPARTMENT {
             let rOrg = Promise.resolve<ORGANIZ_CL[]>([]);
             for (let i = l; i !== -1; i--) {
                 if ( d[i].DUE_LINK_ORGANIZ !== null) {
-                    rOrg = pip.read<ORGANIZ_CL>({ORGANIZ_CL: d[i].DUE_LINK_ORGANIZ});
+                    rOrg = pip.cache.read<ORGANIZ_CL>({ORGANIZ_CL: [d[i].DUE_LINK_ORGANIZ]});
                     break;
                 }
             }
-            const rCab = d[l].ISN_CABINET === null ? Promise.resolve<CABINET[]>([]) : pip.read<CABINET>({CABINET: d[l].ISN_CABINET});
+            const rCab = d[l].ISN_CABINET === null ? Promise.resolve<CABINET[]>([])
+                : pip.cache.read<CABINET>({CABINET: [d[l].ISN_CABINET]});
             return Promise.all([rPrintInfo, rOrg, rCab]);
         });
         // загружаем индекс СЭВ
@@ -96,7 +109,7 @@ export class DepartmentComponent implements OnInit {
     }
 
     getData() {
-        this.pip.read<DEPARTMENT>({
+        this.pip.cache.read<DEPARTMENT>({
             DEPARTMENT: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE'
         }).then(r => {
@@ -107,8 +120,6 @@ export class DepartmentComponent implements OnInit {
     }
 
     onSelectTreeItem(cur: DEPARTMENT): void {
-        // tslint:disable-next-line:no-debugger
-        debugger;
         this.pip.read<DEPARTMENT>({
             DEPARTMENT: PipRX.criteries({ ISN_HIGH_NODE: cur.ISN_NODE.toString() })
             , orderby: 'WEIGHT'
