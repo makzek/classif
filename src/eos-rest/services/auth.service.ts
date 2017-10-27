@@ -37,7 +37,7 @@ export class AuthService {
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         p.errorService.LostConnectionAlerted = false;
         const oSysParams = p.read<SYS_PARMS>({
-            sysParams: ALL_ROWS,
+            SysParms: ALL_ROWS,
             _moreJSON: {
                 DbDateTime: new Date(),
                 licensed: null,
@@ -45,7 +45,7 @@ export class AuthService {
             }
         });
         const oCurrentUser = p.read<USER_CL>({
-            currentUser: ALL_ROWS,
+            CurrentUser: ALL_ROWS,
             expand: 'USERDEP_List,USERSECUR_List',
             _moreJSON: { ParamsDic: null }
         });
