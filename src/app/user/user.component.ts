@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { EosUserProfileService } from '../services/eos-user-profile.service';
 // import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { SESSION_CLOSED } from '../consts/messages.consts';
+import { LoginDialogueComponent } from '../login-dialogue/login-dialogue.component';
 
 @Component({
     selector: 'eos-user',
@@ -16,7 +17,6 @@ export class UserComponent {
     inputPassword = 'tver';
     inProcess: boolean;
 
-    settings: any;
     public modalRef: BsModalRef;
 
     constructor(
@@ -25,24 +25,12 @@ export class UserComponent {
         // private _msgSrv: EosMessageService
     ) {
         this.fullname = this._profileSrv.shortName;
-        this._profileSrv.settings$.subscribe(
-            (res) => this.settings = res,
-            (err) => alert('err: ' + err)
-        );
     }
 
-    public openModal(template: TemplateRef<any>) {
-        this.modalRef = this._modalSrv.show(template);
-    }
-
-    login(): void {
-        this.inProcess = true;
-        this._profileSrv
-            .login(this.inputName, this.inputPassword)
-            .then((resp) => {
-                this.modalRef.hide();
-                this.inProcess = false;
-            });
+    public login() {
+        this.modalRef = this._modalSrv.show(LoginDialogueComponent);
+        this.modalRef.content.userName = this.inputName;
+        this.modalRef.content.userPassword = this.inputPassword;
     }
 
     logout() {
@@ -50,9 +38,5 @@ export class UserComponent {
         this._profileSrv.logout().then((resp) => {
             this.inProcess = false;
         });
-    }
-    saveSettings(): void {
-        this.modalRef.hide();
-        this._profileSrv.saveSettings(this.settings);
     }
 }

@@ -21,10 +21,7 @@ export class UserSettingsComponent {
         private _profileSrv: EosUserProfileService,
         private _modalSrv: BsModalService
     ) {
-        this._profileSrv.settings$.subscribe(
-            (res) => this.settings = res,
-            (err) => alert('err: ' + err)
-        );
+        this._profileSrv.settings$.subscribe((res) => this.settings = res);
     }
 
     public openModal(template: TemplateRef<any>) {

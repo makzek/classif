@@ -8,4 +8,8 @@ import { AuthService } from '../../eos-rest/services/auth.service'
 })
 export class LoginComponent {
     constructor(private _authSrv: AuthService) { }
+
+    loggedIn() {
+        console.log('going to desktop');
+    }
 }

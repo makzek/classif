@@ -1,6 +1,6 @@
 <span (click)="openModal(settingsWindow)" tooltip="Настройки системы" placement="bottom" container="body" containerClass="tooltip-info">Настройки системы</span>
 
-<template #settingsWindow>
+<ng-template #settingsWindow>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Настройки</h4>
     </div>
@@ -16,4 +16,4 @@
         <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
         <button class="btn btn-primary-full" (click)="saveSettings()">Сохранить настройки</button>
     </div>
-</template>
+</ng-template>
