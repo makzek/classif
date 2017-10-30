@@ -6,6 +6,8 @@ export interface IAction {
     title: string
     hint: string
     iconClass: string
+    hoverIconClass: string
+    activeIconClass: string
     buttonClass: string
 };
 

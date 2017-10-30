@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS} from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
 import { INodeListParams } from '../core/node-list.interfaces';
 import { EosDictOrderService } from '../services/eos-dict-order.service';
@@ -19,6 +19,8 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
 
     buttons: IActionButton[];
     ddButtons: IActionButton[];
+    moreButtons: IActionButton[];
+    showMore = false;
 
     private dictionary: EosDictionary;
     private _dictionarySubscription: Subscription;
@@ -44,6 +46,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     private _initButtons() {
         this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.moreButtons = MORE_RECORD_ACTIONS.map(act => this._actionToButton(act));
     }
 
     private _update() {
