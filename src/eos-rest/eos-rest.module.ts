@@ -18,7 +18,7 @@ import { ApiCfg } from './core/api-cfg';
 /* services */
 import { PipRX } from './services/pipRX.service';
 import { AuthService } from './services/auth.service';
-import { AppContext } from './services/appContext.service';
+// import { ContextService } from './services/appContext.service';
 import { DepartmentService } from './services/department.service';
 import { LinearDictionaryService } from './services/linear-dictionary.service';
 import { TreeDictionaryService } from './services/tree-dictionary.service';
@@ -45,7 +45,7 @@ import { TreeDictionaryService } from './services/tree-dictionary.service';
     providers: [
         PipRX,
         AuthService,
-        AppContext,
+        // ContextService,
         DepartmentService,
         LinearDictionaryService,
         TreeDictionaryService,

@@ -28,9 +28,8 @@ export abstract class BaseDictionaryService {
         console.warn('getAll', this.instance, params);
         return this._pipe
             .read({ [this.instance]: params, orderby: 'WEIGHT' })
-            .toPromise<any>()
             .then((data) => {
-                this._pipe.entityHelper.prepareForEdit(data);
+                this._pipe.entityHelper.prepareForEdit(<any>data);
                 return (data);
             });
     }
@@ -49,6 +48,6 @@ export abstract class BaseDictionaryService {
         Object.assign(data, updates);
         const changes = this._pipe.changeList([data]);
         // console.log('changes', changes);
-        return this._pipe.batch(changes, '').toPromise();
+        return this._pipe.batch(changes, '');
     }
 }

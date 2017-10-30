@@ -4,10 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { USER_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-//
-import { AppContext } from '../services/appContext.service';
-
-
 
 @Component({
     selector: 'eos-rest-user',
@@ -16,13 +12,11 @@ import { AppContext } from '../services/appContext.service';
 export class UserRestComponent implements OnInit {
     items: USER_CL[] = [];
     currentItem: USER_CL;
-    username: string;
     userPhotoUrl: SafeUrl;
 
     // errorMessage: string;
     constructor(
         private pip: PipRX,
-        private _ctx: AppContext,
         private _sanitizer: DomSanitizer
     ) {
         this.userPhotoUrl = this._sanitizeUrl('/assets/images/no-user.png');
@@ -37,7 +31,6 @@ export class UserRestComponent implements OnInit {
     }
 
     getData() {
-        this.username = this._ctx.CurrentUser.CLASSIF_NAME;
         this.pip.read<USER_CL>({
             // - Загрузка всех строк
             // USER_CL: ALL_ROWS, orderby: 'DUE', top: 20
@@ -50,7 +43,7 @@ export class UserRestComponent implements OnInit {
             // - поиск по критериям
             USER_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
-        }).subscribe(r => {
+        }).then(r => {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;

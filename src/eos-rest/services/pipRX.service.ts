@@ -11,6 +11,7 @@ import { Metadata } from '../core/metadata';
 import { EntityHelper } from '../core/entity-helper';
 import { ErrorService } from './error.service';
 import { PipeUtils } from '../core/pipe-utils';
+import { Cache } from '../core/cache';
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -21,6 +22,7 @@ export class PipRX extends PipeUtils {
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     public errorService = new ErrorService();
     public entityHelper: EntityHelper;
+    public cache: Cache;
 
     static criteries(cr: any) {
         return { criteries: cr };
@@ -51,6 +53,7 @@ export class PipRX extends PipeUtils {
         this._metadata = new Metadata(cfg);
         this._metadata.init();
         this.entityHelper = new EntityHelper(this._metadata);
+        this.cache = new Cache(this, this._metadata);
     }
 
     getConfig(): ApiCfg {
@@ -128,7 +131,7 @@ export class PipRX extends PipeUtils {
         return result;
     }
 
-    read<T>(req: IRequest): Observable<T[]> {
+    private _read<T>(req: IRequest): Observable<T[]> {
         const r = req as IR;
         r._et = Object.keys(req)[0];
 
@@ -139,6 +142,10 @@ export class PipRX extends PipeUtils {
         const urls = this._makeUrls(r, a, ids);
 
         return this._odataGet<T>(urls, req);
+    }
+
+    read<T>(req: IRequest): Promise<T[]> {
+        return this._read<T>(req).toPromise();
     }
 
     //
@@ -175,7 +182,7 @@ export class PipRX extends PipeUtils {
         });
     }
 
-    batch(changeSet: any[], vc: string): Observable<any> {
+    private _batch(changeSet: any[], vc: string): Observable<any> {
         if (changeSet.length === 0) {
             return Observable.of([]);
         }
@@ -204,6 +211,10 @@ export class PipRX extends PipeUtils {
                 this.errorService.httpCatch(err);
             })*/
             ;
+    }
+
+    batch(changeSet: any[], vc: string): Promise<any[]> {
+        return this._batch(changeSet, vc).toPromise();
     }
 
     private buildBatch(changeSets: any[]) {

@@ -104,3 +104,17 @@ export interface IAsk {
 export interface IR extends IRequest {
     _et: string;
 };
+
+export enum CacheLevel {
+    Entities = 1, List = 2, EntitiesAndList = 4
+}
+
+export interface ICachePolicy {
+    level?: CacheLevel
+    refresh?: CacheLevel
+
+//    expire?: Date;
+
+//    zone?: string;
+//    izolateZone?: boolean;
+}

@@ -32,7 +32,7 @@ export class DeliveryComponent implements OnInit {
 
             // - поиск по критериям
             // DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
-        }).subscribe(r => {
+        }).then(r => {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;
@@ -59,7 +59,7 @@ export class DeliveryComponent implements OnInit {
         );*/
         // потеря соединения при чтении
         this.pip.read( {ErrorMirror_GetError: PipRX.args({code: 434, msg: 'What?'})})
-        .subscribe(d => {
+        .then(d => {
                 alert('пустой результат не ошибка');
             }
         )

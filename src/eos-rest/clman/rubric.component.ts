@@ -3,7 +3,6 @@
 import { RUBRIC_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { AppContext } from '../services/appContext.service';
 
 
 
@@ -14,16 +13,16 @@ import { AppContext } from '../services/appContext.service';
 export class RubricComponent implements OnInit {
     items: RUBRIC_CL[] = [];
     currentItem: RUBRIC_CL;
-    username: string;
+    // username: string;
     // errorMessage: string;
-    constructor(private pip: PipRX, private _ctx: AppContext) { }
+    constructor(private pip: PipRX) { }
     //
     ngOnInit() {
 
     }
 
     getData() {
-        this.username = this._ctx.CurrentUser.CLASSIF_NAME;
+        // this.username = this._ctx.currentUser.CLASSIF_NAME;
         this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
             // RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
@@ -36,7 +35,7 @@ export class RubricComponent implements OnInit {
             // - поиск по критериям
             RUBRIC_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
-        }).subscribe(r => {
+        }).then(r => {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;
@@ -61,7 +60,7 @@ export class RubricComponent implements OnInit {
 
     onSave() {
         const chl = this.pip.changeList([this.currentItem]);
-        this.pip.batch(chl, '').subscribe((r) => {
+        this.pip.batch(chl, '').then((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
 

@@ -1,6 +1,12 @@
 import { IDeskItem } from './desk-item.interface';
 
-export class EosDesk {
+export interface IDesk {
+    id: string;
+    name: string;
+    references: IDeskItem[];
+}
+
+export class EosDesk implements IDesk {
     id: string;
     name: string;
     references: IDeskItem[];

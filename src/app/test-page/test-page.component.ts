@@ -50,7 +50,7 @@ export class TestPageComponent implements OnInit {
         PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
 
 
-        this.pip.batch(chl, '').subscribe(data => {
+        this.pip.batch(chl, '').then(data => {
             // alert(this.pip.sequenceMap.GetFixed(delo_blob.ISN_BLOB));
             this._messageService.addNewMessage({
                 type: 'danger',

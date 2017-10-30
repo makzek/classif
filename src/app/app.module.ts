@@ -43,6 +43,7 @@ import { AuthGuard } from './guards/eos-auth.guard';
 /* end guards */
 
 import { LoginComponent } from './login/login.component';
+import { LoginDialogueComponent } from './login-dialogue/login-dialogue.component';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { LoginComponent } from './login/login.component';
         TitleComponent,
         PushpinComponent,
         LoginComponent,
+        LoginDialogueComponent,
     ],
     imports: [
         BrowserModule,
@@ -69,6 +71,9 @@ import { LoginComponent } from './login/login.component';
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         EosDictionariesModule,
+    ],
+    entryComponents: [
+        LoginDialogueComponent,
     ],
     exports: [
         EosRestModule,

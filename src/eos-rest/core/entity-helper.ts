@@ -24,7 +24,7 @@ export class EntityHelper {
         return ent;
     }
 
-    public prepareForEdit<T extends IEnt>(it: any, typeName?: string): T {
+    public prepareForEdit<T extends IEnt>(it: T, typeName?: string): T {
         if (it === undefined) {
             if (typeName !== undefined) {
                 const e = <T>{};
