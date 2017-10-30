@@ -39,7 +39,8 @@
         <li *ngIf="deskList.length < 6" (click)="openCreateForm()">
             <a><span *ngIf="!creating" class="create">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола" [(ngModel)]="deskName" maxlength="{{maxLength}}" required
+                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                        [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
