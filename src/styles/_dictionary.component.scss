@@ -11,7 +11,7 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width + $item-width / 2;
+        width: $dictionary-block-width;
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
