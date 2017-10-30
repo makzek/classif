@@ -69,7 +69,7 @@ export class EosDeskService {
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
                     return {
-                        link: '/spravochniki/' + dictionary.id,
+                        url: '/spravochniki/' + dictionary.id,
                         title: dictionary.title,
                     };
                 });

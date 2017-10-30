@@ -1,6 +1,10 @@
 .eos-node-actions {
     height: $item-height;
 
+    .rotate {
+        transform: rotate(-90deg);
+    }
+
     .btn {
         height: $item-height;
         width: $item-width;

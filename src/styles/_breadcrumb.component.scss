@@ -10,6 +10,7 @@
         padding: 0;
         position: relative;
         top: 11px;
+        padding-left: 20px;
 
         & > li:not(:first-child)::before {
             // font-family: "Glyphicons Halflings";
@@ -60,7 +61,7 @@
 
     .right-sandwich {
         .btn {
-            margin-bottom: -20px;
+            margin-bottom: -19px;
         }
     }
 

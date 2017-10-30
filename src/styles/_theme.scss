@@ -6,7 +6,6 @@
 
 .tooltip {
     opacity: 1 !important;
-    z-index: 5;
 
     &.word-break {
         word-break: break-all;
@@ -356,8 +355,18 @@
             border-color: $border-color-main-theme;
         }
 
-        .node-actions .second-line .node-title .item.user-sort {
-            color: $primary-font-color-main-theme;
+        .node-actions {
+            .second-line .node-title .item.user-sort {
+                color: $primary-font-color-main-theme;
+            }
+
+            .selected-node .item-count {
+                border-color: $border-color-main-theme;
+
+                .bright {
+                    color: $secondary-font-color-main-theme;
+                }
+            }
         }
     }
 
