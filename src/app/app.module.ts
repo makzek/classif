@@ -29,6 +29,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { NoticeComponent } from './notice/notice.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
 import { SearchComponent } from './search/search.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 import { TestPageComponent } from './test-page/test-page.component';
 
@@ -61,6 +62,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         TestPageComponent,
         TitleComponent,
         UserComponent,
+        UserSettingsComponent,
     ],
     imports: [
         BrowserModule,
