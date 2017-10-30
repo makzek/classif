@@ -1,0 +1,25 @@
+@media (max-width: 1470px) {
+    .not-xl {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1470px) {
+    .only-xl {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 2*10px) / 2);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1640px) {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 3*10px) / 3);
+    }
+}
