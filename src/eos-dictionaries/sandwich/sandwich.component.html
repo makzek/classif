@@ -1,12 +1,6 @@
-<style>
-    .blue {
-        background: #2196f3;
-        border-radius: 0px !important;
-    }
-</style>
 <span *ngIf="show" class="eos-sandwich">
-    <button class="btn sandwich" (click)="changeState()" [ngClass]="{'blue': isWide }">
-        <span class="eos-icon small"
+    <button class="btn sandwich" (click)="changeState()" [ngClass]="{'active': isWide }">
+        <span class="icon eos-icon small"
         [ngClass]="{'rotate-left': isWide && isLeft, 'rotate-right': isWide && !isLeft, 'eos-icon-menu-white': isWide, 'eos-icon-menu-blue': !isWide}"></span>
     </button>
 </span>
