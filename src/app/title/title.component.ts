@@ -13,7 +13,7 @@ export class TitleComponent {
 
     constructor(private _deskSrv: EosDeskService) {
         this._deskSrv.selectedDesk.subscribe((link) => {
-            this.currentDesk = '/home/';
+            this.currentDesk = '/desk/';
             if (link) {
                 this.currentDesk += link.id;
             }

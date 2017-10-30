@@ -32,9 +32,9 @@
 
         .round-img {
             display: inline-block;
-            width: 40px;
-            height: 40px;
-            margin: 9px;
+            width: 50px;
+            height: 50px;
+            margin: 5px 0;
             border: 1px solid transparent;
             border-radius: 50%;
             background: darkblue;
@@ -48,6 +48,17 @@
         margin: 0;
         height: 100%;
 
+        &.left {
+            .header-item:not(:first-child) {
+                position: relative;
+                top: -27px;
+            }
+        }
+
+        &.right {
+            margin-left: 40px;
+        }
+
         .header-item {
             display: inline-block;
             height: 100%;
@@ -56,11 +67,11 @@
 
             .link-text {
                 position: relative;
-                top: -24px;
-                padding-left: 20px;
-                padding-right: 40px;
+                top: 3px;
+                padding-left: 40px;
+                padding-right: 0;
                 font-size: 18px;
-                line-height: 24px;
+                line-height: 26px;
                 cursor: pointer;
 
                 &:hover,
@@ -68,15 +79,45 @@
                     text-decoration: none;
                 }
             }
+
+            .search-btn {
+                width: $item-width;
+                height: 100%;
+                padding: 6px;
+                background-color: transparent;
+            }
+
+            &.else-dropdown {
+                .dropdown-menu {
+                    width: 250px;
+                    padding: 0;
+                    top: 45px;
+
+                    .else-item {
+                        height: $item-height;
+                        padding: 12px 20px;
+                        font-size: 18px;
+                        line-height: 26px;
+                    }
+                }
+            }
         }
     }
 }
 
-.btn {
-    border-radius: 2px !important;
-    height: 32px;
+@media (max-width: 1470px) {
+    .not-xl {
+        display: none !important;
+    }
 }
 
+@media (min-width: 1470px) {
+    .only-xl {
+        display: none !important;
+    }
+}
+
+/*
 @media (max-width: 1300px) {
     .header-wrapper {
         .header-content {
@@ -142,3 +183,4 @@
     bottom: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
 }
+*/

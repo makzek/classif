@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
@@ -67,6 +68,7 @@ import { LoginDialogueComponent } from './login-dialogue/login-dialogue.componen
         AppRoutingModule,
         HttpModule,
         Ng2BootstrapModule.forRoot(),
+        BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,

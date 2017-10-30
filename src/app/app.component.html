@@ -1,7 +1,7 @@
 <div class="main-container main-theme">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper">
-        <ul class="header-content">
+        <ul class="header-content left">
             <li class="header-item">
                 <eos-title></eos-title>
             </li>
@@ -13,11 +13,23 @@
                     <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
                 </a>
             </li>
-            <li class="header-item">
+            <li class="header-item not-xl">
                 <eos-user-settings class="link-text"></eos-user-settings>
             </li>
+            <li class="header-item else-dropdown" dropdown>
+                <span class="link-text" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem" class="else-item">MenuItem</li>
+                    <li role="menuitem" class="else-item">
+                        <eos-user-settings class="only-xl"></eos-user-settings>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        <ul class="header-content pull-right">
+        <ul class="header-content right pull-right">
+            <li class="header-item">
+                <button class="btn search-btn"><span class="eos-icon eos-icon-search-blue"></span></button>
+            </li>
             <li class="header-item">
                 <eos-notice></eos-notice>
             </li>

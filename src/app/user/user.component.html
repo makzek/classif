@@ -1,11 +1,10 @@
 <div class="eos-user" dropdown container="body" placement="left bottom">
-    <span dropdownToggle>
+    <button dropdownToggle class="user-menu-btn btn dropdown-button dropdown-toggle">
         <span class="text">{{'Пользователь' || fullname}}</span>
         <span class="round-img-wrapper">
             <span class="round-img"></span>
         </span>
-        <span class="caret"></span>
-    </span>
+    </button>
     <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li role="menuitem" class="menuitem" *ngIf="fullname">
             <a class="dropdown-item" (click)="login()">Войти</a>
