@@ -105,12 +105,28 @@
             height: $item-height;
             font-size: 18px;
 
-            &.no-parent {
-                padding-left: 20px;
+            .no-parent {
+                height: $item-height;
+                width: 15px;
+                display: inline-block;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .item-count {
+                height: $item-height;
+                width: 150px;
+                display: inline-block;
+                text-align: center;
+                vertical-align: middle;
+                padding: 15px 20px;
+                font-size: 14px;
+                line-height: 20px;
+                border-left: 1px solid transparent;
             }
 
             .selected-node-title {
-                line-height: $item-height;
+                line-height: 26px;
             }
 
             .btn {
@@ -206,6 +222,7 @@
             .checkbox-inline {
                 line-height: $item-height;
                 width: $item-width;
+                padding-right: 12px;
             }
         }
     }

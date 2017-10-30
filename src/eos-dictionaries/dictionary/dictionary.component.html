@@ -9,11 +9,15 @@
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="_selectedNode" class="block selected-node" [ngClass]="{'no-parent': !params.hasParent}">
+            <div *ngIf="_selectedNode" class="block selected-node">
                 <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
                     <span class="eos-icon eos-icon-arrow-blue-left"></span>
                 </button>
+                <div *ngIf="!params.hasParent" class="no-parent"></div>
                 <span class="selected-node-title">{{_selectedNodeText}}</span>
+                <div class="item-count pull-right">
+                    Записей: <span class="bright">{{listNodes?.length}}</span>
+                </div>
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
