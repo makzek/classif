@@ -50,8 +50,9 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     }
 
     private _update() {
-        this.buttons.forEach((btn) => this._updateButton(btn));
-        this.ddButtons.forEach((btn) => this._updateButton(btn));
+        this.buttons.forEach(btn => this._updateButton(btn));
+        this.ddButtons.forEach(btn => this._updateButton(btn));
+        this.moreButtons.forEach(btn => this._updateButton(btn));
     }
 
     private _updateButton(button: IActionButton) {
