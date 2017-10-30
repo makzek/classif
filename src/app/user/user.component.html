@@ -1,18 +1,40 @@
 <div class="eos-user" dropdown container="body" placement="left bottom">
     <span dropdownToggle>
-        <span class="text">{{'Пользователь' || fullname}}</span>
+        <span class="text">{{fullname || 'Пользователь'}}</span>
         <span class="round-img-wrapper">
             <span class="round-img"></span>
         </span>
         <span class="caret"></span>
     </span>
     <ul *dropdownMenu class="dropdown-menu" role="menu">
-        <li role="menuitem" class="menuitem" *ngIf="fullname">
+        <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
+            <a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки системы</a>
+        </li>
+        <li class="divider dropdown-divider" *ngIf="isAuthorized"></li>
+        <li role="menuitem" class="menuitem" *ngIf="!isAuthorized">
             <a class="dropdown-item" (click)="login()">Войти</a>
         </li>
-        <li class="divider dropdown-divider" *ngIf="fullname"></li>
-        <li role="menuitem" class="menuitem" *ngIf="fullname">
+        <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
             <a class="dropdown-item" (click)="logout()">Выйти</a>
         </li>
     </ul>
 </div>
+<!-- span (click)="" tooltip="Настройки системы" placement="bottom" container="body" containerClass="tooltip-info"></span-->
+
+<ng-template #settingsWindow>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Настройки</h4>
+    </div>
+    <div class="modal-body">
+        <div *ngFor="let setting of settings" class="checkbox">
+            <label>
+                <input type="checkbox" [(ngModel)]="setting.value">
+                <span></span>{{setting.name}}
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
+        <button class="btn btn-primary-full" (click)="saveSettings()">Сохранить настройки</button>
+    </div>
+</ng-template>

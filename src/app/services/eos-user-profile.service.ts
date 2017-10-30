@@ -9,9 +9,7 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
-
-/* todo replace with profile API */
-import { TreeDictionaryService } from '../../eos-rest/services/tree-dictionary.service';
+import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -20,6 +18,8 @@ export class EosUserProfileService implements IUserProfile {
     family: string;
     photoUrl?: string;
     settings: ISettingsItem[];
+    private _user: USER_CL;
+    private _params: SYS_PARMS;
 
     private _isAuthorized: boolean;
 
@@ -28,7 +28,11 @@ export class EosUserProfileService implements IUserProfile {
     private _authPromise: Promise<boolean>;
 
     get shortName(): string {
-        return [this.family, this.name.substr(0, 1), this.secondName.substr(0, 1)].join(' ');
+        if (this._user) {
+            return this._user.SURNAME_PATRON;
+        } else {
+            return null;
+        }
     }
 
     get settings$(): Observable<ISettingsItem[]> {
@@ -42,7 +46,7 @@ export class EosUserProfileService implements IUserProfile {
     isAuthorized(silent = false): boolean {
         if (!silent && !this._isAuthorized) {
             this._msgSrv.addNewMessage(AUTH_REQUIRED);
-            this._authorized$.next(this._isAuthorized);
+            // this._authorized$.next(this._isAuthorized);
         }
         return this._isAuthorized;
     }
@@ -50,7 +54,6 @@ export class EosUserProfileService implements IUserProfile {
     constructor(
         private _router: Router,
         private _authSrv: AuthService,
-        private _fakeSrv: TreeDictionaryService,
         private _msgSrv: EosMessageService
     ) {
         Object.assign(this, DEFAURT_USER);
@@ -64,50 +67,56 @@ export class EosUserProfileService implements IUserProfile {
         if (this._isAuthorized) {
             return new Promise((resp) => resp(true));
         } else {
-            const _params = {
-                DUE: '0.',
-                IS_NODE: '0'
-            };
-            if (!this._authPromise) {
-                this._fakeSrv.setInstance('RUBRIC_CL');
-                this._authPromise = this._fakeSrv.getAll(_params)
-                    .then((resp) => {
-                        this._isAuthorized = true;
-                        this._authPromise = null;
-                        return this._isAuthorized;
-                    })
-                    .catch((err: Response) => {
-                        if (err.status === 434) {
-                            this.notAuthorized();
-                        }
-                        this._authPromise = null;
-                        return this._isAuthorized;
-                    });
-            }
+            this._authPromise = this._authSrv.getContext()
+                .then((context) => {
+                    this._authPromise = null;
+                    this._setUser(context.user, context.sysParams);
+                    return this._setAuth(true);
+                })
+                .catch((err) => {
+                    this._authPromise = null;
+                    return this._setAuth(false);
+                });
             return this._authPromise;
         }
     }
 
     notAuthorized() {
         /* console.log('notAuthorized fired'); */
-        this._isAuthorized = false;
-        this._msgSrv.addNewMessage(AUTH_REQUIRED);
+        if (this._isAuthorized) {
+            this._isAuthorized = false;
+            this._msgSrv.addNewMessage(AUTH_REQUIRED);
+            this._authorized$.next(false);
+        }
+    }
+
+    private _setUser(user: USER_CL, params: SYS_PARMS) {
+        // console.log('_setUser', user, params);
+        this._user = user;
+        this._params = params;
+    }
+
+    private _setAuth(auth: boolean): boolean {
+        if (this._isAuthorized !== auth) {
+            this._isAuthorized = auth;
+            this._authorized$.next(auth);
+        }
+        return auth;
     }
 
     login(name: string, password: string): Promise<any> {
-        return this._authSrv.login(name, password).then(resp => {
-            this._isAuthorized = true;
-            this._authorized$.next(true);
-            return resp;
+        return this._authSrv.login(name, password).then((context) => {
+            // todo: fill user profile from response
+            this._setUser(context.user, context.sysParams);
+            return this._setAuth(true);
         });
     }
 
     logout(): Promise<any> {
         return this._authSrv.logout().then((resp) => {
-            this._isAuthorized = false;
-            this._authorized$.next(false);
+            this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
-            this._router.navigate(['/']);
+            this._router.navigate(['/login']);
             return resp;
         });
     }
