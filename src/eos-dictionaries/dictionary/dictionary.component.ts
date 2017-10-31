@@ -450,19 +450,19 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             });
             let str = '';
             for (const item of arr) {
-                str += '"' + item + '",';
+                str += '"' + item + '", ';
             }
-            str = str.slice(0, str.length - 1);
-            console.log(str);
+            str = str.slice(0, str.length - 2);
             if (arr.length) {
                 this._msgSrv.addNewMessage({
                     type: 'warning',
-                    title: 'Предупреждение',
-                    msg: 'Элементы ' + str + ' были логически удалены ранее',
+                    title: 'Предупреждение:',
+                    msg: 'элементы ' + str + ' были логически удалены ранее! Отметьте не удаленные элементы.',
                 });
+            } else {
+                this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
             }
         }
-        this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
     physicallyDelete(): void {
