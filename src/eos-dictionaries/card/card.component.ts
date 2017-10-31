@@ -367,7 +367,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     fullTitle: bCrumbs.fullTitle
                 });
                 this._clearEditingCardLink();
-                return this._dictSrv.reloadNode(this.node);
+                return resp;
             })
             .catch((err) => console.log('getNode error', err));
     }

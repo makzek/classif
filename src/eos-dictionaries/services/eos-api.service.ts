@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 import { AbstractDictionaryDescriptor } from '../core/abstract-dictionary-descriptor';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { BaseDictionaryService } from '../../eos-rest/services/base-dictionary.service';
 import { LinearDictionaryService } from '../../eos-rest/services/linear-dictionary.service';
@@ -71,7 +72,7 @@ export class EosDictApiService {
     getRoot(): Promise<any[]> {
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.getAll();
+                return this._service.getData();
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
                 return this.getNodeWithChildren('0.');
@@ -86,34 +87,24 @@ export class EosDictApiService {
             DUE: (nodeId ? nodeId : '0.') + '%',
         };
         if (this._service) {
-            _promise = this._service.getAll(_params);
+            _promise = this._service.getData(_params);
         } else {
             _promise = this._noData();
         }
         return _promise;
     }
 
-    getNode(nodeId: string): Promise<any> {
-
-        let _promise: Promise<any>;
-
-        const _params = {
-            DUE: nodeId || '',
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_params)
-                .then((data: any[]) => {
-                    if (data && data.length) {
-                        return data[0];
-                    } else {
-                        return null;
-                    }
-                });
-        } else {
-            _promise = this._noData();
+    getNode(nodeId: string | number): Promise<any> {
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _params = [nodeId];
+                console.log('getNode', _params);
+                return this._service.getData(_params);
+            default:
+                return this._noData();
         }
-        return _promise;
     }
 
     getNodeWithChildren(nodeId: string): Promise<any[]> {
@@ -134,19 +125,21 @@ export class EosDictApiService {
         return this._service.update(originalData, updates);
     }
 
-    getChildren(parentISN: number): Promise<any[]> {
-        let _promise: Promise<any[]>;
-
-        const _children = {
-            'ISN_HIGH_NODE': parentISN + ''
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_children)
-        } else {
-            _promise = this._noData()
+    getChildren(node: EosDictionaryNode): Promise<any[]> {
+        console.log('get children');
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service.getData();
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _id = node.originalParentId;
+                const _children = {
+                    [node._descriptor.parentField.foreignKey]: _id + ''
+                };
+                return this._service.getData(_children);
+            default:
+                return this._noData();
         }
-        return _promise;
     }
 
     private _noData(): Promise<any[]> {
@@ -154,6 +147,18 @@ export class EosDictApiService {
     }
 
     addNode(parentData: any, nodeData: any): Promise<any> {
-        return this._service.create(parentData, nodeData);
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service.create(nodeData);
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                return this._service.create(parentData, nodeData);
+            default:
+                return this._noData();
+        }
+    }
+
+    deleteNode(nodeData: any): Promise<any> {
+        return this._service.delete(nodeData);
     }
 }

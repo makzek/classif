@@ -214,8 +214,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
             if (node !== this._selectedNode) {
                 this._selectedNode = node;
-                this._updateVisibleNodes();
             }
+            this._updateVisibleNodes();
         }));
     }
 
@@ -257,12 +257,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     private _updateVisibleNodes() {
+        // console.log('_updateVisibleNodes fired');
         this.visibleNodes.forEach(item => item.marked = false);
         this.updateMarks();
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        if (this.params && this.params.userSort && this.listNodes[0] ) {
+        if (this.params && this.params.userSort && this.listNodes[0]) {
             _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId);
         } else {
             _list.sort(this._orderSrv.defaultSort);
@@ -509,12 +510,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                         if (1 !== 1) { // here must be API request for check if possible to delete
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                         } else {
-                            const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                            if (_deleteResult) {
-                                this._router.navigate(this._dictSrv.getNodePath(node.parent));
-                            } else {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
+                            this._dictSrv.physicallyDelete(node.id)
+                                .then(() => {
+                                    this._router.navigate(this._dictSrv.getNodePath(node.parent));
+                                })
+                                .catch(() => {
+                                    this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                                });
                         }
                     }
                 }
