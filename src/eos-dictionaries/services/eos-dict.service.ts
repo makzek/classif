@@ -16,6 +16,8 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
+import { IOrderBy } from '../core/sort.interface'
+
 @Injectable()
 export class EosDictService {
     /* private _dictionaries: Map<string, EosDictionary>; */
@@ -372,5 +374,9 @@ export class EosDictService {
             _path.push(node.id);
         }
         return _path;
+    }
+
+    public systemSort(orderBy: IOrderBy) {
+        this._profileSrv.addSort(this.dictionary.id, orderBy);
     }
 }

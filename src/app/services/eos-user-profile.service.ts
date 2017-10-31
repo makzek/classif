@@ -10,6 +10,7 @@ import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
+import { IOrderBy, IDictionaryOrder } from '../../eos-dictionaries/core/sort.interface'
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -123,14 +124,18 @@ export class EosUserProfileService implements IUserProfile {
 
     setSetting(key: string, value: any) {
         this._setSetting(key, value);
-        this._settings$.next(this.settings);
+        // this._settings$.next(this.settings);
         this._settings$.next(this.settings);
     }
 
     saveSettings(settings: any[]) {
         settings.forEach((item) => this._setSetting(item.id, item.value));
+        // this._settings$.next(this.settings);
         this._settings$.next(this.settings);
-        this._settings$.next(this.settings);
+    }
+
+    addSort(dictId: string, orderBy: IOrderBy) {
+        this._setSetting('sort', {dictId: orderBy});
     }
 
     private _setSetting(key: string, value: any) {
@@ -141,6 +146,7 @@ export class EosUserProfileService implements IUserProfile {
                 name: key,
                 value: value
             }
+            this.settings.push(_setting);
         } else {
             _setting.value = value;
         }

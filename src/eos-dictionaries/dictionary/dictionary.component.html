@@ -37,8 +37,14 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': this.params.userSort}"
-                            [ngStyle]="{'width.%': length[field.key]}">{{field.title}}</span>
+                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': params.userSort}"
+                            [ngStyle]="{'width.%': length[field.key]}">
+                            <span class="text" (click)="toggleSystemSort(field.key)">{{field.title}}</span>
+                            <span *ngIf="this.orderBy?.fieldKey === field.key && this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-top small"
+                                (click)="chengeSortOrder()"></span>
+                            <span *ngIf="this.orderBy?.fieldKey === field.key && !this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-bottom small"
+                                (click)="chengeSortOrder()"></span>
+                        </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
                         placement="left" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>

@@ -31,6 +31,8 @@ import {
 
 import { FieldDescriptor } from '../core/field-descriptor'
 
+import { IOrderBy } from '../core/sort.interface'
+
 import {
     DictionaryActionService,
     DICTIONARY_ACTIONS,
@@ -83,6 +85,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     customFields: FieldDescriptor[] = [];
 
     length = {};
+
+    orderBy: IOrderBy;
 
     constructor(
         private _route: ActivatedRoute,
@@ -335,6 +339,24 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
         }
     }
+
+    toggleSystemSort(fieldKey: string) {
+        this.orderBy = {
+            fieldKey: fieldKey,
+            ascend: false,
+        };
+        this._sort();
+    }
+
+    chengeSortOrder() {
+        this.orderBy.ascend = !this.orderBy.ascend;
+        this._sort();
+    }
+
+    private _sort() {
+        this._dictSrv.systemSort(this.orderBy);
+    }
+
     private _moveUp(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
 
