@@ -224,9 +224,9 @@ export class EosDictService {
             }
             if (node) {
                 node.isActive = true;
-                if (node.children) {
+                /*if (node.children) {
                     this._openNode(node.children[0]);
-                }
+                }*/
             }
             this.selectedNode = node;
             this._selectedNode$.next(node);

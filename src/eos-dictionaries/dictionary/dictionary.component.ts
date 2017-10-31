@@ -100,7 +100,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.params = {
             userSort: this._orderSrv.getSortingMode(),
             showDeleted: false,
-            hasParent: false
+            hasParent: false,
+            select: false
         };
 
         this._page = {
@@ -138,6 +139,12 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.treeNodes = [];
             }
         }));
+
+        this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
+            if (node) {
+                this.params.select = true;
+            }
+        }))
 
         this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;

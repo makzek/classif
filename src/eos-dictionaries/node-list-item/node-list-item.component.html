@@ -4,9 +4,8 @@
                 <label tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
                 containerClass="tooltip-info" container="body" placement="right"><input type="checkbox"
                             [(ngModel)]="node.marked"
-                            (change)="markNode()"
-                            ><span></span>
-        </label>
+                            (change)="markNode()"><span></span>
+                </label>
         </span>
         <span class="node-info">
             <span *ngFor="let field of viewFields" class="code" [ngStyle]="{'width.%': length[field.key]}">{{node.data[field.foreignKey]}}</span>
