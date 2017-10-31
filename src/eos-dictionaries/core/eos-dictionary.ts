@@ -11,6 +11,7 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
+import { ISearchSettings } from '../core/search-settings.interface';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -156,25 +157,25 @@ export class EosDictionary {
         return _result;
     }
 
-    /* todo: search with API */
-    search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
-        let searchResult: EosDictionaryNode[] = [];
+    getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
-        searchString = searchString.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
-        const _expr = new RegExp(searchString, 'i');
-
-        /* tslint:disable:no-bitwise */
-        this._nodes.forEach((node) => {
-            if (!!~_searchFields.findIndex((fld) => _expr.test(node.data[fld.key]))) {
-                searchResult.push(node);
+        const _criteries = _searchFields.map((fld) => {
+            const _crit: any = {
+                [fld.foreignKey]: '%' + search + '%'
+            };
+            if (this.descriptor.type !== E_DICT_TYPE.linear) {
+                if (params.onlyCurrentNode) {
+                    _crit[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
+                } else if (params.subbranches) {
+                    _crit[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
+                }
             }
+            if (!params.deleted) {
+                _crit['DELETED'] = 0;
+            }
+            return _crit;
         });
-        /* tslint:enable:no-bitwise */
-
-        if (!globalSearch) {
-            searchResult = searchResult.filter((node) => node.isChildOf(selectedNode));
-        }
-        return searchResult;
+        return _criteries;
     }
 
     /* todo: search with API */

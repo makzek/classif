@@ -18,11 +18,14 @@ export abstract class BaseDictionaryService {
     getData(params?: any, orderBy?: string): Promise<any> {
         if (params) {
             if (params.criteries) {
-                params.criteries = PipRX.criteries(params.criteries);
+                const _criteries = PipRX.criteries(params.criteries);
+                Object.assign(params, _criteries);
             }
+            // PipRX.criteries(params);
         } else {
             params = ALL_ROWS;
         }
+        console.log('getData params', params);
         return this._pipe
             .read({ [this.instance]: params, orderby: orderBy || 'WEIGHT' })
             .then((data) => {

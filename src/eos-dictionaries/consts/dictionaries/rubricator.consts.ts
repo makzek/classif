@@ -58,10 +58,6 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'ISN_HIGH_NODE',
         type: 'number'
     }, {
-        key: 'ISN_LCLASSIF',
-        title: 'ISN_CLASSIF',
-        type: 'number'
-    }, {
         key: 'ISN_NODE',
         title: 'ISN_NODE',
         type: 'number'
@@ -97,7 +93,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
-    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
     quickViewFields: ['fullTitle', 'NOTE', 'sev'],
     shortQuickViewFields: ['CLASSIF_NAME'],

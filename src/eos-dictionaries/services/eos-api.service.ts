@@ -75,23 +75,11 @@ export class EosDictApiService {
                 return this._service.getData();
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                return this.getNodeWithChildren('0.');
+                return this._service.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } })
+            // return this.getNode('0.');
             default:
                 return this._noData();
         }
-    }
-
-    getNodes(nodeId?: string, level = 0): Promise<any[]> {
-        let _promise: Promise<any[]>;
-        const _params = {
-            DUE: (nodeId ? nodeId : '0.') + '%',
-        };
-        if (this._service) {
-            _promise = this._service.getData(_params);
-        } else {
-            _promise = this._noData();
-        }
-        return _promise;
     }
 
     getNode(nodeId: string | number): Promise<any> {
@@ -100,7 +88,7 @@ export class EosDictApiService {
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
                 const _params = [nodeId];
-                console.log('getNode', _params);
+                // console.log('getNode', _params);
                 return this._service.getData(_params);
             default:
                 return this._noData();
@@ -110,8 +98,8 @@ export class EosDictApiService {
     getNodeWithChildren(nodeId: string): Promise<any[]> {
         return this.getNode(nodeId)
             .then((rootNode) => {
-                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this.getChildren(rootNode.ISN_NODE)
+                if (rootNode) {
+                    return this.getChildren(rootNode)
                         .then((nodes) => {
                             return [rootNode].concat(nodes);
                         });
@@ -126,17 +114,17 @@ export class EosDictApiService {
     }
 
     getChildren(node: EosDictionaryNode): Promise<any[]> {
-        console.log('get children');
+        // console.log('get children');
         switch (this._type) {
             case E_DICT_TYPE.linear:
                 return this._service.getData();
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                const _id = node.originalParentId;
+                const _id = node.data['ISN_NODE'];
                 const _children = {
-                    [node._descriptor.parentField.foreignKey]: _id + ''
+                    ['ISN_HIGH_NODE']: _id + ''
                 };
-                return this._service.getData(_children);
+                return this._service.getData({ criteries: _children });
             default:
                 return this._noData();
         }
@@ -160,5 +148,18 @@ export class EosDictApiService {
 
     deleteNode(nodeData: any): Promise<any> {
         return this._service.delete(nodeData);
+    }
+
+    search(criteries: any[]): Promise<any> {
+        const _search = criteries.map((critery) => {
+            return this._service.getData({ criteries: critery })
+        });
+        return Promise.all(_search)
+            .then((results) => {
+                const _res = [].concat(...results);
+                console.log('found', _res);
+                return _res;
+            });
+        // return this._noData();
     }
 }
