@@ -437,14 +437,30 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     /* darkside */
 
     deleteSelectedItems(): void {
+        const arr = [];
         const selectedNodes: string[] = [];
         if (this.listNodes) {
             this.listNodes.forEach((child) => {
                 if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.marked = false;
+                } else if (child.marked && child.isDeleted) {
+                    arr.push(child.data.CLASSIF_NAME)
                 }
             });
+            let str = '';
+            for (const item of arr) {
+                str += '"' + item + '",';
+            }
+            str = str.slice(0, str.length - 1);
+            console.log(str);
+            if (arr.length) {
+                this._msgSrv.addNewMessage({
+                    type: 'warning',
+                    title: 'Предупреждение',
+                    msg: 'Элементы ' + str + ' были логически удалены ранее',
+                });
+            }
         }
         this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
