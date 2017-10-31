@@ -24,7 +24,9 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
-    DANGER_DELETE_ELEMENT
+    DANGER_DELETE_ELEMENT,
+    WARN_LOGIC_DELETE,
+    WARN_LOGIC_DELETE_ONE
 } from '../consts/messages.consts';
 
 import { FieldDescriptor } from '../core/field-descriptor'
@@ -446,16 +448,33 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     /* darkside */
 
     deleteSelectedItems(): void {
+        const arr = [];
         const selectedNodes: string[] = [];
         if (this.listNodes) {
             this.listNodes.forEach((child) => {
                 if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.marked = false;
+                } else if (child.marked && child.isDeleted) {
+                    arr.push(child.data.CLASSIF_NAME)
                 }
             });
+            let str = '';
+            for (const item of arr) {
+                str += '"' + item + '", ';
+            }
+            str = str.slice(0, str.length - 2);
+            console.log(arr.length)
+            if (arr.length === 1) {
+                this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
+            } else if (arr.length) {
+                const WARN = Object.assign({}, WARN_LOGIC_DELETE);
+                WARN.msg = WARN.msg.replace('{{elem}}', str);
+                this._msgSrv.addNewMessage(WARN);
+            } else {
+                this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
+            }
         }
-        this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
     physicallyDelete(): void {
