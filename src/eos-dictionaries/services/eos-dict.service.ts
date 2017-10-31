@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { SearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
@@ -154,11 +154,14 @@ export class EosDictService {
                     return this.loadChildren(_node);
                 }
             } else {
-                return this._api.getNodeWithChildren(nodeId) // temp solution
-                    .then((data: any[]) => {
+                return this._api.getNode(nodeId)
+                    .then((data) => {
                         this._updateDictNodes(this.dictionary, data);
                         return this.dictionary.getNode(nodeId);
-                    });
+                    })
+                    .then((node) => {
+                        return this.loadChildren(node);
+                    })
             }
         }
     }
@@ -327,8 +330,16 @@ export class EosDictService {
             });
     }
 
-    public search(searchString: string, params: SearchSettings) {
+    public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
+        const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
         this._searchString = searchString;
+
+        return this._api.search(_criteries)
+            .then((data) => {
+                this._searchResults = data;
+                return data;
+            });
+        /*
         if (searchString.length) {
             // TODO: replace it with API query
             // this._searchResults = this.dictionary.search(searchString, globalSearch, this.selectedNode);
@@ -339,9 +350,10 @@ export class EosDictService {
             this._searchResults = [];
         }
         this._searchResults$.next(this._searchResults);
+        */
     }
 
-    public fullSearch(data: any, params: SearchSettings) {
+    public fullSearch(data: any, params: ISearchSettings) {
         // TODO: replace it with API query
         // this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
         if (!this._searchResults) {

@@ -9,7 +9,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { EosDictService } from '../services/eos-dict.service';
 import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
-import { SearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 
 @Component({
@@ -21,7 +21,7 @@ export class DictionarySearchComponent implements OnDestroy {
     dictId = '';
     fieldsDescription = {};
     data = {};
-    settings: SearchSettings;
+    settings: ISearchSettings;
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
