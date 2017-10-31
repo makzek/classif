@@ -24,7 +24,9 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
-    DANGER_DELETE_ELEMENT
+    DANGER_DELETE_ELEMENT,
+    WARN_LOGIC_DELETE,
+    WARN_LOGIC_DELETE_ONE
 } from '../consts/messages.consts';
 
 import { FieldDescriptor } from '../core/field-descriptor'
@@ -104,7 +106,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.params = {
             userSort: this._orderSrv.getSortingMode(),
             showDeleted: false,
-            hasParent: false
+            hasParent: false,
+            select: false
         };
 
         this._page = {
@@ -142,6 +145,12 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.treeNodes = [];
             }
         }));
+
+        this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
+            if (node) {
+                this.params.select = true;
+            }
+        }))
 
         this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
             this._dictActSrv.closeAll = false;
@@ -209,8 +218,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
             if (node !== this._selectedNode) {
                 this._selectedNode = node;
-                this._updateVisibleNodes();
             }
+            this._updateVisibleNodes();
         }));
     }
 
@@ -252,11 +261,14 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     private _updateVisibleNodes() {
+        // console.log('_updateVisibleNodes fired');
+        this.visibleNodes.forEach(item => item.marked = false);
+        this.updateMarks();
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        if (this.params && this.params.userSort && this.listNodes[0] ) {
-            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId); // !!! Parent id err
+        if (this.params && this.params.userSort && this.listNodes[0]) {
+            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId);
         } else {
             _list.sort(this._orderSrv.defaultSort);
         }
@@ -442,15 +454,15 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     updateMarks() {
-        this.anyMarked = this.listNodes.findIndex((node) => node.marked) > -1;
-        this.anyUnmarked = this.listNodes.findIndex((node) => !node.marked) > -1;
+        this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
+        this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
     }
 
     toggleAllMarks() {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
-        this.listNodes.forEach((node) => node.marked = this.allMarked);
+        this.visibleNodes.forEach((node) => node.marked = this.allMarked);
     }
 
     private _updateChildrenMarks(marked: boolean) {
@@ -459,16 +471,33 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     /* darkside */
 
     deleteSelectedItems(): void {
+        const arr = [];
         const selectedNodes: string[] = [];
         if (this.listNodes) {
             this.listNodes.forEach((child) => {
                 if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.marked = false;
+                } else if (child.marked && child.isDeleted) {
+                    arr.push(child.data.CLASSIF_NAME)
                 }
             });
+            let str = '';
+            for (const item of arr) {
+                str += '"' + item + '", ';
+            }
+            str = str.slice(0, str.length - 2);
+            console.log(arr.length)
+            if (arr.length === 1) {
+                this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
+            } else if (arr.length) {
+                const WARN = Object.assign({}, WARN_LOGIC_DELETE);
+                WARN.msg = WARN.msg.replace('{{elem}}', str);
+                this._msgSrv.addNewMessage(WARN);
+            } else {
+                this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
+            }
         }
-        this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
     }
 
     physicallyDelete(): void {
@@ -503,12 +532,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                         if (1 !== 1) { // here must be API request for check if possible to delete
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
                         } else {
-                            const _deleteResult = this._dictSrv.physicallyDelete(node.id);
-                            if (_deleteResult) {
-                                this._router.navigate(this._dictSrv.getNodePath(node.parent));
-                            } else {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
+                            this._dictSrv.physicallyDelete(node.id)
+                                .then(() => {
+                                    this._router.navigate(this._dictSrv.getNodePath(node.parent));
+                                })
+                                .catch(() => {
+                                    this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                                });
                         }
                     }
                 }

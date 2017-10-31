@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 
 import { environment } from '../environments/environment';
-import { APP_MODULES } from './consts/app-modules.const';
+import { APP_MODULES, APP_MODULES_DROPDOWN } from './consts/app-modules.const';
 import { EosUserProfileService } from './services/eos-user-profile.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class AppComponent {
     private _containerRef: ViewContainerRef;
 
     modules = APP_MODULES;
+    modulesDropdown = APP_MODULES_DROPDOWN;
     version: string;
     isAuthorized: boolean;
 

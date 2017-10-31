@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PipRX } from './pipRX.service';
-import { ALL_ROWS } from '../core/consts';
+import { ALL_ROWS, _ES } from '../core/consts';
 
 @Injectable()
 export abstract class BaseDictionaryService {
@@ -15,21 +15,18 @@ export abstract class BaseDictionaryService {
         this.instance = instance;
     };
 
-    getAll(params?: any): Promise<any> {
+    getData(params?: any, orderBy?: string): Promise<any> {
         if (params) {
             if (params.criteries) {
                 params.criteries = PipRX.criteries(params.criteries);
-            } else {
-                params = PipRX.criteries(params);
             }
         } else {
             params = ALL_ROWS;
         }
-        console.warn('getAll', this.instance, params);
         return this._pipe
-            .read({ [this.instance]: params, orderby: 'WEIGHT' })
+            .read({ [this.instance]: params, orderby: orderBy || 'WEIGHT' })
             .then((data) => {
-                this._pipe.entityHelper.prepareForEdit(<any>data);
+                data.forEach((item) => this._pipe.entityHelper.prepareForEdit(item));
                 return (data);
             });
     }
@@ -38,16 +35,18 @@ export abstract class BaseDictionaryService {
         return this._postChanges(originalData, updates);
     }
 
-    delete(data: any, params?: any): Promise<any> {
-        return new Promise((res, rej) => {
-            rej('not implemented');
-        });
+    delete(data: any): Promise<any> {
+        return this._postChanges(data, { _State: _ES.Deleted });
     }
 
     protected _postChanges(data: any, updates: any): Promise<any> {
         Object.assign(data, updates);
         const changes = this._pipe.changeList([data]);
         // console.log('changes', changes);
-        return this._pipe.batch(changes, '');
+        return this._pipe.batch(changes, '')
+            .then((resp) => {
+                // console.log('_postchanges resp', resp);
+                return resp;
+            });
     }
 }
