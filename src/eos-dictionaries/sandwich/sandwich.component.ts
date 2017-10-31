@@ -24,7 +24,6 @@ export class SandwichComponent {
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
                 this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
             });
-            console.log(this)
     }
 
     changeState() {

@@ -16,19 +16,24 @@ import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
 
 import { AppRoutingModule } from './app-routing.module';
-import { EosRestModule } from '../eos-rest/eos-rest.module';
-import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
+import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
+import { EosRestModule } from '../eos-rest/eos-rest.module';
+
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
-import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
-import { SearchComponent } from './search/search.component';
-import { UserComponent } from './user/user.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
-import { TitleComponent } from './title/title.component';
+import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
+import { LoginComponent } from './login/login.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { NoticeComponent } from './notice/notice.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
+import { SearchComponent } from './search/search.component';
+
+import { TestPageComponent } from './test-page/test-page.component';
+
+import { TitleComponent } from './title/title.component';
+import { UserComponent } from './user/user.component';
 
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 import { EosDeskService } from './services/eos-desk.service';
@@ -36,31 +41,26 @@ import { EosNoticeService } from './services/eos-notice.service';
 import { EosStorageService } from './services/eos-storage.service';
 import { EosUserProfileService } from './services/eos-user-profile.service';
 
-import { TestPageComponent } from './test-page/test-page.component';
-
 /* guards */
+import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
-import { AuthGuard } from './guards/eos-auth.guard';
 /* end guards */
 
-import { LoginComponent } from './login/login.component';
-import { LoginDialogueComponent } from './login-dialogue/login-dialogue.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         BreadcrumbsComponent,
-        DesktopSwitcherComponent,
-        SearchComponent,
-        UserComponent,
-        UserSettingsComponent,
-        TestPageComponent,
-        NoticeComponent,
         DesktopComponent,
-        TitleComponent,
-        PushpinComponent,
+        DesktopSwitcherComponent,
         LoginComponent,
-        LoginDialogueComponent,
+        LoginFormComponent,
+        NoticeComponent,
+        PushpinComponent,
+        SearchComponent,
+        TestPageComponent,
+        TitleComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
@@ -75,7 +75,7 @@ import { LoginDialogueComponent } from './login-dialogue/login-dialogue.componen
         EosDictionariesModule,
     ],
     entryComponents: [
-        LoginDialogueComponent,
+        LoginFormComponent,
     ],
     exports: [
         EosRestModule,
@@ -84,7 +84,8 @@ import { LoginDialogueComponent } from './login-dialogue/login-dialogue.componen
         { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        AuthGuard,
+        AuthorizedGuard,
+        UnauthorizedGuard,
         CanDeactivateGuard,
         EosBreadcrumbsService,
         EosDeskService,

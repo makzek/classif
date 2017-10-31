@@ -1,17 +1,60 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EosUserProfileService } from '../services/eos-user-profile.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { LoginFormComponent } from '../login-form/login-form.component';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-    constructor(private _profileSrv: EosUserProfileService) { }
+export class AuthorizedGuard implements CanActivate {
+    public modalRef: BsModalRef;
+
+    constructor(
+        private _profileSrv: EosUserProfileService,
+        private _router: Router,
+        private _modalSrv: BsModalService
+    ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
-        const _hasAuth = this._profileSrv.isAuthorized(true);
-        if (!_hasAuth) {
-            return this._profileSrv.checkAuth();
-        } else {
-            return _hasAuth;
-        }
+        return this._profileSrv.checkAuth()
+            .then((auth) => {
+                if (!auth) {
+                    if (!this._profileSrv.shortName) {
+                        this._router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+                    } else {
+                        this.modalRef = this._modalSrv.show(LoginFormComponent, {
+                            keyboard: false,
+                            backdrop: true,
+                            ignoreBackdropClick: true
+                        });
+                        this.modalRef.content.logged.subscribe((success) => {
+                            if (success) {
+                                this.modalRef.hide();
+                            }
+                        })
+                    }
+                }
+                return auth;
+            });
+    }
+}
+
+@Injectable()
+export class UnauthorizedGuard implements CanActivate {
+    constructor(private _profileSrv: EosUserProfileService, private _router: Router) { }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+        return this._profileSrv.checkAuth()
+            .then((auth) => {
+                if (auth) {
+                    let _returnUrl = ['desk', 'system'];
+
+                    if (route.queryParams['returnUrl']) {
+                        _returnUrl = [route.queryParams['returnUrl']]
+                    }
+                    this._router.navigate(_returnUrl);
+                }
+                return !auth;
+            });
     }
 }

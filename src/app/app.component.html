@@ -5,24 +5,20 @@
             <li class="header-item">
                 <eos-title></eos-title>
             </li>
-            <li class="header-item">
+            <li class="header-item" *ngIf="isAuthorized">
                 <eos-desktop-switcher></eos-desktop-switcher>
             </li>
-            <li *ngFor="let item of modules" class="header-item">
-                <a class="link-text" [routerLink]="item.url" routerLinkActive="active">
-                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
-                </a>
-            </li>
-            <li class="header-item not-xl">
-                <eos-user-settings class="link-text"></eos-user-settings>
-            </li>
+            <ng-container *ngIf="isAuthorized">
+                <li *ngFor="let item of modules" class="header-item">
+                    <a class="link-text" [routerLink]="item.url" routerLinkActive="active">
+                        <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                    </a>
+                </li>
+            </ng-container>
             <li class="header-item else-dropdown" dropdown>
                 <span class="link-text" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
                 <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li role="menuitem" class="else-item">MenuItem</li>
-                    <li role="menuitem" class="else-item">
-                        <eos-user-settings class="only-xl"></eos-user-settings>
-                    </li>
                 </ul>
             </li>
         </ul>
@@ -37,10 +33,10 @@
                 <eos-user></eos-user>
             </li>
         </ul>
-
     </div>
     <div class="content-wrapper">
         <eos-breadcrumb></eos-breadcrumb>
+        <!-- *ngIf="isAuthorized" -->
         <div class="messages-wrapper">
             <eos-messages></eos-messages>
         </div>

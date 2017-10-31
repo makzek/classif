@@ -53,7 +53,8 @@ export class EosDeskService {
         return this._recentItems$.asObservable();
     }
 
-    constructor(private _dictSrv: EosDictService,
+    constructor(
+        private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         /*private router: Router*/
     ) {

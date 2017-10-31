@@ -1,4 +1,5 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service'
 
@@ -6,10 +7,23 @@ import { AuthService } from '../../eos-rest/services/auth.service'
     selector: 'eos-login',
     templateUrl: './login.component.html'
 })
-export class LoginComponent {
-    constructor(private _authSrv: AuthService) { }
+export class LoginComponent implements OnInit {
+    private _returnUrl: string;
 
-    loggedIn() {
-        console.log('going to desktop');
+    constructor(
+        private _authSrv: AuthService,
+        private _router: Router,
+        private _route: ActivatedRoute,
+    ) { }
+
+    ngOnInit() {
+        this._authSrv.logout();
+        this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+    }
+
+    loggedIn(success: boolean) {
+        if (success) {
+            this._router.navigate([this._returnUrl]);
+        }
     }
 }
