@@ -24,7 +24,9 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
-    DANGER_DELETE_ELEMENT
+    DANGER_DELETE_ELEMENT,
+    WARN_LOGIC_DELETE,
+    WARN_LOGIC_DELETE_ONE
 } from '../consts/messages.consts';
 
 import { FieldDescriptor } from '../core/field-descriptor'
@@ -462,12 +464,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            if (arr.length) {
-                this._msgSrv.addNewMessage({
-                    type: 'warning',
-                    title: 'Предупреждение:',
-                    msg: 'элементы ' + str + ' были логически удалены ранее! Отметьте не удаленные элементы.',
-                });
+            console.log(arr.length)
+            if (arr.length === 1) {
+                this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
+            } else if (arr.length) {
+                const WARN = Object.assign({}, WARN_LOGIC_DELETE);
+                WARN.msg = WARN.msg.replace('{{elem}}', str);
+                this._msgSrv.addNewMessage(WARN);
             } else {
                 this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
             }
