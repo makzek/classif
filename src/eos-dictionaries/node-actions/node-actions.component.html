@@ -14,7 +14,8 @@
     </span>
 
     <span class="visible-lg-inline-block actions">
-        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info" (click)="showMore = !showMore">
+        <button class="btn btn-primary-light actions" [tooltip]="showMore ? 'Скрыть меню': 'Показать меню'"
+        placement="right" containerClass="tooltip-info" (click)="showMore = !showMore">
             <span class="eos-icon eos-icon-fab-blue small" [ngClass]="{'rotate': showMore}"></span>
         </button>
     </span>
