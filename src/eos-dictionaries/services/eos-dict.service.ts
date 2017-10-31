@@ -93,7 +93,6 @@ export class EosDictService {
             .then((authorized) => {
                 if (authorized) {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
-                        //                        this._selectRoot();
                         return this.dictionary;
                     } else {
                         this.closeDictionary();
@@ -164,7 +163,7 @@ export class EosDictService {
 
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         node.updating = true;
-        return this._api.getChildren(node.data['ISN_NODE'])
+        return this._api.getChildren(node)
             .then((data: any[]) => {
                 this._updateDictNodes(this.dictionary, data);
                 node.updating = false;
@@ -175,7 +174,7 @@ export class EosDictService {
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         node.updating = true;
-        return this._api.getNode(node.id)
+        return this._api.getNode(node.originalId)
             .then((nodeData) => {
                 node.updateData(nodeData);
                 node.updating = false;
@@ -271,18 +270,22 @@ export class EosDictService {
         return this.dictionary.root.id === nodeId;
     }
 
-    public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
-        return this._api.update(node.data, data);
+    public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        return this._api.update(node.data, data)
+            .then(() => {
+                return this.reloadNode(node);
+            });
     }
 
     public addNode(data: any): Promise<any> {
         if (this.selectedNode) {
             return this._api.addNode(this.selectedNode.data, data)
                 .then((newNodeId) => {
+                    console.log('created node', newNodeId);
                     return this.loadChildren(this.selectedNode)
                         .then(() => {
                             this._selectedNode$.next(this.selectedNode);
-                            return this.dictionary.getNode(newNodeId);
+                            return this.dictionary.getNode(newNodeId + '');
                         });
                 });
         } else {
@@ -313,11 +316,13 @@ export class EosDictService {
         return Promise.resolve(true); /* fake */
     }
 
-    public physicallyDelete(nodeId: string): boolean {
-        const _result = this.dictionary.deleteNode(nodeId, true);
-        this._dictionary$.next(this.dictionary);
-        this._selectedNode$.next(this.selectedNode);
-        return _result;
+    public physicallyDelete(nodeId: string): Promise<any> {
+        const _node = this.dictionary.getNode(nodeId);
+        return this._api.deleteNode(_node.data)
+            .then(() => {
+                this.dictionary.deleteNode(nodeId, true);
+                this._selectedNode$.next(this.selectedNode);
+            });
     }
 
     public search(searchString: string, params: SearchSettings) {

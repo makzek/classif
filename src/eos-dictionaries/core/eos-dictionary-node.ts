@@ -79,6 +79,14 @@ export class EosDictionaryNode {
         return showDeleted || !this.isDeleted;
     }
 
+    get originalId(): string | number {
+        return this._fieldValue(this._descriptor.keyField);
+    }
+
+    get originalParentId(): string | number {
+        return this._fieldValue(this._descriptor.parentField);
+    }
+
     constructor(descriptor: RecordDescriptor, data: any) {
         if (data) {
             this.marked = !!this.marked;
@@ -100,6 +108,15 @@ export class EosDictionaryNode {
     private _keyToString(value: any): string {
         if (value !== undefined && value !== null) {
             return value + '';
+        } else {
+            return null;
+        }
+    }
+
+    private _fieldValue(field: FieldDescriptor): any {
+        const _fld = field.foreignKey;
+        if (this.data) {
+            return this.data[_fld];
         } else {
             return null;
         }
