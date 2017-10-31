@@ -95,23 +95,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'WEIGHT',
         title: 'WEIGHT',
         type: 'number'
-    }, /*{
-        key: 'id',
-        type: 'string',
-        title: 'ID'
     }, {
-        key: 'code',
-        title: 'Код',
-        type: 'string',
-    }, {
-        key: 'title',
-        title: 'Заголовок',
-        type: 'text',
-    }, {
-        key: 'description',
-        title: 'Описание',
-        type: 'text'
-    }, */{
         key: 'titleRP',
         title: 'Наименование в родительном падеже (чего?)',
         type: 'text',
@@ -428,8 +412,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
-        person: ['RUBRIC_CODE', 'fio', 'NOTE'],
-        department: ['RUBRIC_CODE', 'title', 'NOTE']
+        person: ['SURNAME', 'lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'],
+        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'title', 'NOTE']
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
@@ -446,20 +430,5 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
-    /*
-    fieldGroups: [{
-        title: 'Основаная информация',
-        fields: ['lastName', 'firstName', 'fathersName', 'fio', 'shortPosition', 'fullPosition', 'gender', 'alternate', 'note',
-            'startDate', 'endDate', 'photo', 'boss', 'code', 'indexOfficial', 'SEV'],
-    }, {
-        title: 'Контактные данные',
-        fields: ['phone', 'localPhone', 'email', 'skype', 'fax', 'room'],
-    }, {
-        title: 'Дополнительная информация',
-        fields: ['shortPositionRP', 'shortPositionDP', 'shortPositionVP', 'fioDP', 'iof', 'lastNameRP', 'firstNameRP', 'fathresNameRP',
-            'lastNameDP', 'firstNameDP', 'fathresNameDP', 'lastNameVP', 'firstNameVP', 'fathresNameVP', 'lastNameTP', 'firstNameTP',
-            'fathresNameTP', 'lastNamePP', 'firstNamePP', 'fathresNamePP', 'shortPosition', 'department'],
-    }],
-    */
 };
 /* tslint:enable:max-line-length */

@@ -28,7 +28,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
-        title: 'Примечание',
+        title: 'Описание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
