@@ -88,7 +88,7 @@
                         font-size: 18px;
                         line-height: 26px;
                         &>a {
-                            padding:0;
+                            padding: 0;
                             font-size: inherit;
                             line-height: inherit;
                         }
@@ -97,4 +97,24 @@
             }
         }
     }
+}
+
+.messages-wrapper {
+    position: fixed;
+    top: 48px;
+    right: $grid-gutter-width / 2;
+    min-width: 20%;
+    max-width: 50%;
+    z-index: 1049;
+    .alert {
+        span {
+            white-space: pre-wrap;
+        }
+    }
+}
+
+.version-number {
+    position: fixed;
+    bottom: $grid-gutter-width / 2;
+    right: $grid-gutter-width / 2;
 }
