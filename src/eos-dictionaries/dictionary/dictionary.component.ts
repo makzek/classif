@@ -255,11 +255,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     private _updateVisibleNodes() {
+        this.visibleNodes.forEach(item => item.marked = false);
+        this.updateMarks();
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
         if (this.params && this.params.userSort && this.listNodes[0] ) {
-            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId); // !!! Parent id err
+            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId);
         } else {
             _list.sort(this._orderSrv.defaultSort);
         }
@@ -427,15 +429,15 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     updateMarks() {
-        this.anyMarked = this.listNodes.findIndex((node) => node.marked) > -1;
-        this.anyUnmarked = this.listNodes.findIndex((node) => !node.marked) > -1;
+        this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
+        this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
     }
 
     toggleAllMarks() {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
-        this.listNodes.forEach((node) => node.marked = this.allMarked);
+        this.visibleNodes.forEach((node) => node.marked = this.allMarked);
     }
 
     private _updateChildrenMarks(marked: boolean) {
