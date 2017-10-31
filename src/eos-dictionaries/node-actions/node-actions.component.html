@@ -1,6 +1,6 @@
 <div class="eos-node-actions">
     <span *ngFor="let item of buttons let i = index" class="visible-lg-inline-block actions">
-        <button *ngIf="item.enabled" [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
+        <button *ngIf="item.show" [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
             tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
             <span class="{{item.iconClass}}" container="body"></span>
         </button>

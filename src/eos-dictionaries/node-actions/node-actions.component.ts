@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -13,7 +13,7 @@ import { EosDictOrderService } from '../services/eos-dict-order.service';
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements OnChanges, OnDestroy {
+export class NodeActionsComponent implements DoCheck, OnDestroy {
     @Input('params') params: INodeListParams;
     @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
@@ -35,7 +35,7 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
         });
     }
 
-    ngOnChanges() {
+    ngDoCheck() {
         setTimeout(this._update(), 0);
     }
 
@@ -58,13 +58,15 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     private _updateButton(button: IActionButton) {
         let _enabled = false;
         let _active = false;
+        let _show = true;
 
         if (this.dictionary && this.params) {
             _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                 case E_RECORD_ACTIONS.moveDown:
-                    _enabled = this.params.userSort && _enabled;
+                    _enabled = this.params.select && _enabled;
+                    _show = this.params.userSort;
                     break;
                 case E_RECORD_ACTIONS.restore:
                     _enabled = this.params.showDeleted && _enabled;
@@ -76,8 +78,12 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
                     _active = this.params.userSort;
                     this._orderSrv.setSortingMode(_active);
                     break;
+                case E_RECORD_ACTIONS.edit:
+                    _enabled = this.params.select && _enabled;
+                    break;
             }
         }
+        button.show = _show;
         button.enabled = _enabled;
         button.isActive = _active;
     }
@@ -85,7 +91,8 @@ export class NodeActionsComponent implements OnChanges, OnDestroy {
     private _actionToButton(action: IAction): IActionButton {
         const _btn = Object.assign({
             isActive: false,
-            enabled: false
+            enabled: false,
+            show: false
         }, action);
         this._updateButton(_btn);
         return _btn;
