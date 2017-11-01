@@ -487,7 +487,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            console.log(arr.length)
             if (arr.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
             } else if (arr.length) {
