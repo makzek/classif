@@ -574,7 +574,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         })
     }
 
-    create(hide = true) {
+    public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 console.log('created node', node);
@@ -582,15 +582,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.breadcrumbs;
-                let path = '';
-                for (const bc of bCrumbs) {
-                    path = path + bc.title + '/';
-                }
                 this._deskSrv.addRecentItem({
-                    url: this._dictSrv.getNodePath(node.id).join('/'),
+                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/view',
                     title: title,
-                    fullTitle: path + title
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME
                 });
                 if (hide) {
                     this.creatingModal.hide();
