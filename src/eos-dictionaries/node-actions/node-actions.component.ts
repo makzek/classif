@@ -69,7 +69,7 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
                     _show = this.params.userSort;
                     break;
                 case E_RECORD_ACTIONS.restore:
-                    _enabled = this.params.showDeleted && _enabled;
+                    _enabled = this.params.showDeleted || _enabled;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
                     _active = this.params.showDeleted;
