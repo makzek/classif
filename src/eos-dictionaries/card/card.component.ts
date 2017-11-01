@@ -291,6 +291,24 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._openNode(_node);
     }
 
+    disManager(mod: boolean, tooltip: any): boolean {
+        if (mod) {
+            if (this.isFirst || !this.node.parent) {
+                tooltip.hide()
+                return true
+            } else {
+                return false
+            }
+        } else {
+            if (this.isLast || !this.node.parent) {
+                tooltip.hide()
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
     private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
         if (node) {
             this.goTo(this._makeUrl(node.id, forceMode));
