@@ -86,7 +86,7 @@
     display: -ms-grid;
     display: grid;// sass-lint:disable-line no-duplicate-properties
     -ms-grid-columns: 330px 1fr 180px;
-    grid-template-columns: 330px 1fr 180px;
+    grid-template-columns: 330px 1fr 220px;
 
     .pagination,
     .count-select {
@@ -103,12 +103,20 @@
     .count-select {
         height: $item-height;
         border-left: 1px solid transparent;
+        border-color: $border-color-main-theme;
         grid-column: 3;
 
+        .drop-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .icon-btn {
-            top: 7px;
+            padding: 12px;
             position: relative;
-            margin-left: 5px;
         }
 
         .dropdown-toggle {
@@ -120,8 +128,7 @@
 
             .dropdown-toggle-text {
                 position: relative;
-                top: 5px;
-                margin-left: 8px;
+                padding: 12px 0 12px 20px;
             }
         }
     }
@@ -155,7 +162,7 @@
         }
     }
 }
-
+/*
 @media (max-width: 1700px) {
     .eos-node-list {
         .pagination-option {
@@ -206,7 +213,7 @@
             }
         }
     }
-}
+}*/
 
 .create-new-node {
     &.modal-body {
