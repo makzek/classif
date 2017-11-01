@@ -99,7 +99,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
-        /* remove unused */
         private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
     ) {
@@ -121,8 +120,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.listNodes = [];
         this.visibleNodes = [];
         this.currentState = this._dictActSrv.state;
-
-
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -334,9 +331,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             case E_RECORD_ACTIONS.add:
                 this._create();
                 break;
-            /*
-            // case E_RECORD_ACTIONS.restore: {
-            */
+
+            case E_RECORD_ACTIONS.restore:
+                this._restoreItems();
+                break;
             default:
                 console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
         }
@@ -434,7 +432,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }
     }
 
-    private _toggleDeleted() {
+    private _toggleDeleted(): void {
         this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
         if (!this.params.showDeleted) {
             // Fall checkbox with deleted elements
@@ -455,13 +453,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }
     }
 
-    updateMarks() {
+    updateMarks(): void {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
     }
 
-    toggleAllMarks() {
+    toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
@@ -489,7 +487,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            console.log(arr.length)
             if (arr.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
             } else if (arr.length) {
@@ -502,7 +499,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }
     }
 
-    physicallyDelete(): void {
+    public physicallyDelete(): void {
         if (this.listNodes) {
             let list = '', j = 0;
             for (const node of this.listNodes) {
@@ -576,7 +573,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         })
     }
 
-    create(hide = true) {
+    public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 console.log('created node', node);
@@ -584,15 +581,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.breadcrumbs;
-                let path = '';
-                for (const bc of bCrumbs) {
-                    path = path + bc.title + '/';
-                }
                 this._deskSrv.addRecentItem({
-                    url: this._dictSrv.getNodePath(node.id).join('/'),
+                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/view',
                     title: title,
-                    fullTitle: path + title
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME
                 });
                 if (hide) {
                     this.creatingModal.hide();
@@ -604,6 +596,16 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    private _restoreItems(): void {
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) {
+                this._dictSrv.restoreItem(node);
+            }
+        });
+        this.anyMarked = false;
+        this.allMarked = false;
     }
 
     public resize(): void {
