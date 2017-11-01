@@ -32,7 +32,7 @@ export class EosDictService {
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
-    private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
+    // private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
 
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
@@ -48,7 +48,7 @@ export class EosDictService {
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
-        this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
+        // this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
     }
 
     /* Observable dictionary for subscribing on updates in components */
@@ -73,9 +73,11 @@ export class EosDictService {
         return this._openedNode$.asObservable();
     }
 
+    /*
     get searchResults$(): Observable<EosDictionaryNode[]> {
         return this._searchResults$.asObservable();
     }
+    */
 
     public getDictionariesList(): Promise<any> {
         return new Promise((res) => {
@@ -308,7 +310,7 @@ export class EosDictService {
         }
     }
 
-    public deleteSelectedNodes(dictionaryId: string, nodes: string[]): Promise<any> {
+    public deleteMarkedNodes(dictionaryId: string, nodes: string[]): Promise<any> {
         nodes.forEach((nodeId) => {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => this._deleteNode(node));
@@ -331,11 +333,7 @@ export class EosDictService {
         const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
         this._searchString = searchString;
 
-        return this._api.search(_criteries)
-            .then((data) => {
-                this._searchResults = data;
-                return data;
-            });
+        return this._search(_criteries);
         /*
         if (searchString.length) {
             // TODO: replace it with API query
@@ -351,12 +349,31 @@ export class EosDictService {
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
+        const critery = this.dictionary.getFullsearchCriteries(data, params, this.selectedNode);
+        console.log('full search', critery);
+        return this._search([critery]);
+        /*
         // TODO: replace it with API query
         // this._searchResults = this.dictionary.fullSearch(queries, searchInDeleted);
         if (!this._searchResults) {
             this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
         }
-        this._searchResults$.next(this._searchResults);
+        // this._searchResults$.next(this._searchResults);
+        */
+    }
+
+
+    private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
+        return this._api.search(criteries)
+            .then((data: any[]) => {
+                this._searchResults = [];
+                if (!data || data.length < 1) {
+                    this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
+                } else {
+                    this._searchResults = data.map((item) => new EosDictionaryNode(this.dictionary.descriptor.record, item))
+                }
+                return this._searchResults;
+            });
     }
 
     public restoreItem(node: EosDictionaryNode) {

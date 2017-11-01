@@ -157,25 +157,41 @@ export class EosDictionary {
         return _result;
     }
 
-    getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
+    getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
                 [fld.foreignKey]: '%' + search + '%'
             };
-            if (this.descriptor.type !== E_DICT_TYPE.linear) {
-                if (params.onlyCurrentNode) {
-                    _crit[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
-                } else if (params.subbranches) {
-                    _crit[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
-                }
-            }
-            if (!params.deleted) {
-                _crit['DELETED'] = 0;
-            }
+            this._extendCritery(_crit, params, selectedNode);
             return _crit;
         });
         return _criteries;
+    }
+
+    getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
+        const critery = {};
+        const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
+        fields.forEach((fld) => {
+            if (data[fld.key]) {
+                critery[fld.foreignKey] = '%' + data[fld.key] + '%';
+            }
+        })
+        this._extendCritery(critery, params, selectedNode);
+        return critery;
+    }
+
+    private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
+        if (this.descriptor.type !== E_DICT_TYPE.linear) {
+            if (params.onlyCurrentNode) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
+            } else if (params.subbranches) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
+            }
+        }
+        if (!params.deleted) {
+            critery['DELETED'] = 0;
+        }
     }
 
     /* todo: search with API */

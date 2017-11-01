@@ -494,7 +494,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
+                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes);
             }
         }
     }
