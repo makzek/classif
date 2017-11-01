@@ -115,18 +115,15 @@ export class EosDictService {
                 .then((descData: any) => {
                     _dictionary = new EosDictionary(descData);
                     this._api.init(_dictionary.descriptor);
+                    this.dictionary = _dictionary;
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
-                    if (data && data.length && _dictionary) {
-                        _dictionary.init(data);
-                        this.dictionary = _dictionary;
-                        this._dictionary$.next(this.dictionary);
-                        // this._selectRoot();
-                    } else {
-                        this.closeDictionary();
+                    if (data && data.length) {
+                        this.dictionary.init(data);
                     }
                     this._mDictionaryPromise.delete(dictionaryId);
+                    this._dictionary$.next(this.dictionary);
                     return this.dictionary;
                 })
                 .catch((err: Response) => {

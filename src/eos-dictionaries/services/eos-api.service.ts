@@ -72,11 +72,13 @@ export class EosDictApiService {
     getRoot(): Promise<any[]> {
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.getData();
+                return this._service.getData()
+                    .catch((err) => this._errHandler(err));
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                return this._service.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } })
-            // return this.getNode('0.');
+                return this._service
+                    .getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } })
+                    .catch((err) => this._errHandler(err));
             default:
                 return this._noData();
         }
@@ -88,8 +90,9 @@ export class EosDictApiService {
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
                 const _params = [nodeId];
-                // console.log('getNode', _params);
-                return this._service.getData(_params);
+                return this._service
+                    .getData(_params)
+                    .catch((err) => this._errHandler(err));
             default:
                 return this._noData();
         }
@@ -106,60 +109,75 @@ export class EosDictApiService {
                 } else {
                     return [rootNode];
                 }
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     update(originalData: any, updates: any): Promise<any> {
-        return this._service.update(originalData, updates);
+        return this._service
+            .update(originalData, updates)
+            .catch((err) => this._errHandler(err));
     }
 
     getChildren(node: EosDictionaryNode): Promise<any[]> {
         // console.log('get children');
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.getData();
+                return this._service
+                    .getData()
+                    .catch((err) => this._errHandler(err));
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
                 const _id = node.data['ISN_NODE'];
                 const _children = {
                     ['ISN_HIGH_NODE']: _id + ''
                 };
-                return this._service.getData({ criteries: _children });
+                return this._service
+                    .getData({ criteries: _children })
+                    .catch((err) => this._errHandler(err));
             default:
                 return this._noData();
         }
-    }
-
-    private _noData(): Promise<any[]> {
-        return new Promise((res, rej) => res([]));
     }
 
     addNode(parentData: any, nodeData: any): Promise<any> {
+        let _promise: Promise<any>;
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.create(nodeData);
+                _promise = this._service.create(nodeData);
+                break;
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                return this._service.create(parentData, nodeData);
+                _promise = this._service.create(parentData, nodeData);
+                break;
             default:
-                return this._noData();
+                _promise = this._noData();
         }
+        return _promise.catch((err) => this._errHandler(err));
     }
 
     deleteNode(nodeData: any): Promise<any> {
-        return this._service.delete(nodeData);
+        return this._service.delete(nodeData)
+            .catch((err) => this._errHandler(err));
     }
 
     search(criteries: any[]): Promise<any> {
-        const _search = criteries.map((critery) => {
-            return this._service.getData({ criteries: critery })
-        });
+        const _search = criteries.map((critery) => this._service.getData({ criteries: critery }));
         return Promise.all(_search)
             .then((results) => {
                 const _res = [].concat(...results);
                 console.log('found', _res);
                 return _res;
-            });
-        // return this._noData();
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
+    private _noData(): Promise<any[]> {
+        return Promise.resolve(null);
+    }
+
+    private _errHandler(err: any) {
+        console.log('API error', err);
+        return this._noData();
     }
 }

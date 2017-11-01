@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { EosUserProfileService } from '../services/eos-user-profile.service';
+import { AUTH_REQUIRED } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-login-form',
@@ -11,6 +12,7 @@ export class LoginFormComponent {
     userPassword: string;
     lockUser: boolean;
     inProcess: boolean;
+    errorMessage: string;
     @Output() logged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(
@@ -24,11 +26,20 @@ export class LoginFormComponent {
 
     login(): void {
         this.inProcess = true;
+        this.errorMessage = null;
         this._profileSrv
             .login(this.userName, this.userPassword)
-            .then((resp) => {
+            .then((logged) => {
                 this.inProcess = false;
-                this.logged.emit(resp);
+                if (logged) {
+                    this.logged.emit(logged);
+                } else {
+                    this.errorMessage = AUTH_REQUIRED.title;
+                }
+            })
+            .catch((err) => {
+                this.inProcess = false;
+                this.errorMessage = AUTH_REQUIRED.title;
             });
     }
 

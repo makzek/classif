@@ -256,7 +256,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
-                .then(() => this._dictSrv.selectNode(this._nodeId));
+                .then((resp) => {
+                    this._dictSrv.selectNode(this._nodeId)
+                });
         }
     }
 

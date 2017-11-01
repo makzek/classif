@@ -65,9 +65,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     checkAuth(): Promise<boolean> {
-        if (this._isAuthorized) {
-            return new Promise((resp) => resp(true));
-        } else {
+        if (!this._isAuthorized) {
             this._authPromise = this._authSrv.getContext()
                 .then((context) => {
                     this._authPromise = null;
@@ -79,16 +77,15 @@ export class EosUserProfileService implements IUserProfile {
                     return this._setAuth(false);
                 });
             return this._authPromise;
+        } else {
+            return Promise.resolve(this._isAuthorized);
         }
     }
 
-    notAuthorized() {
+    notAuthorized(): boolean {
         /* console.log('notAuthorized fired'); */
-        if (this._isAuthorized) {
-            this._isAuthorized = false;
-            this._msgSrv.addNewMessage(AUTH_REQUIRED);
-            this._authorized$.next(false);
-        }
+        this._msgSrv.addNewMessage(AUTH_REQUIRED);
+        return this._setAuth(false);
     }
 
     private _setUser(user: USER_CL, params: SYS_PARMS) {
@@ -110,7 +107,10 @@ export class EosUserProfileService implements IUserProfile {
             // todo: fill user profile from response
             this._setUser(context.user, context.sysParams);
             return this._setAuth(true);
-        });
+        })
+            .catch((err) => {
+                return this.notAuthorized();
+            });
     }
 
     logout(): Promise<any> {
@@ -135,7 +135,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     addSort(dictId: string, orderBy: IOrderBy) {
-        this._setSetting('sort', {dictId: orderBy});
+        this._setSetting('sort', { dictId: orderBy });
     }
 
     private _setSetting(key: string, value: any) {
