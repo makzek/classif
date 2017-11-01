@@ -27,8 +27,12 @@ export class TreeNodeComponent implements OnInit {
 
     onExpand(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
-        this._dictSrv.expandNode(this.node.id)
-            .then((node) => node.isExpanded = !node.isExpanded);
+        if (this.node.isExpanded) {
+            this.node.isExpanded = false;
+        } else {
+            this._dictSrv.expandNode(this.node.id)
+                .then((node) => node.isExpanded = true);
+        }
     }
 
     onSelect(evt: Event, isDeleted: boolean) {

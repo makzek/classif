@@ -56,7 +56,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     public dictionaryId: string;
 
     public params: INodeListParams;
-    public _selectedNode: EosDictionaryNode;
+    public selectedNode: EosDictionaryNode;
     public _selectedNodeText: string;
     private _nodeId: string;
 
@@ -213,8 +213,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             } else {
                 this.listNodes = [];
             }
-            if (node !== this._selectedNode) {
-                this._selectedNode = node;
+            if (node !== this.selectedNode) {
+                this.selectedNode = node;
             }
             this._updateVisibleNodes();
         }));
@@ -426,8 +426,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     goUp() {
-        if (this._selectedNode && this._selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
+        if (this.selectedNode && this.selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
             this._router.navigate(path);
         }
     }
@@ -448,7 +448,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleUserSort(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        if (this._selectedNode) {
+        if (this.selectedNode) {
             this._updateVisibleNodes();
         }
     }
@@ -556,7 +556,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _create() {
         this._clearForm();
-        this.fieldsDescription = this._selectedNode.getEditFieldsDescription();
+        this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
     }
 
