@@ -343,7 +343,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _askForSaving(): Promise<boolean> {
         if (this._changed) {
             return this._confirmSrv.confirm(Object.assign({}, CONFIRM_SAVE_ON_LEAVE,
-                {confirmDisabled: !this._changed || this.disableSave }))
+                {confirmDisabled: this.disableSave }))
                 .then((doSave) => {
                     if (doSave) {
                         return this._save(this.nodeData)
