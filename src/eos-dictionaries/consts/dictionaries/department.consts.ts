@@ -49,7 +49,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Полное наименование подразделения',
         type: 'text',
         foreignKey: 'fullTitle',
-        length: 248,
+        length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'NOTE',
@@ -156,7 +156,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
-        length: 248,
+        length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fio',
@@ -181,19 +181,19 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Фамилия',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
-        length: 248,
+        length: 60,
     }, {
         key: 'firstName',
         title: 'Имя',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
-        length: 248,
+        length: 60,
     }, {
         key: 'fathersName',
         title: 'Отчество',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
-        length: 248,
+        length: 60,
     }, {
         // key: 'indexOfficial',
         key: 'indexPerson',

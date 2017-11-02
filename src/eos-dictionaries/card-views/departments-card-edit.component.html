@@ -129,24 +129,21 @@
                 </div>
                 <div class="form-group">
                     <label for="DUTY">{{fieldsDescription['DUTY']?.title}}</label>
-                    <div class="row">
-                        <div class="col-md-9 col-lg-9 col-xl-9">
-                            <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control"
-                                [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
-                                placeholder="{{fieldsDescription['DUTY']?.title}}"
-                                [ngClass]="{'readonly': !editMode }"
-                                (focus)="focus('DUTY')" (blur)="blur()"
-                                required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
-                                tooltip="Обязательное поле. Максимальная длина {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
-                                containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right"
-                                [isOpen]="cardForm.controls.DUTY?.invalid && cardForm.controls.DUTY?.dirty && focusedField === 'DUTY'" triggers="">
-                        </div>
-                        <span class="col-md-3 col-lg-3 col-xl-3">
-                            <label class="checkbox"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
-                                    [ngModel]="data['POST_H']">
-                                <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
-                            </label>
-                        </span>
+                    <div class="row-wrapper">
+                        <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control duty"
+                            [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
+                            placeholder="{{fieldsDescription['DUTY']?.title}}"
+                            [ngClass]="{'readonly': !editMode }"
+                            (focus)="focus('DUTY')" (blur)="blur()"
+                            required maxlength="{{fieldsDescription['DUTY']?.length}}" [pattern]="fieldsDescription['DUTY']?.pattern"
+                            tooltip="Обязательное поле. Максимальная длина {{fieldsDescription['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                            containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right"
+                            [isOpen]="cardForm.controls.DUTY?.invalid && cardForm.controls.DUTY?.dirty && focusedField === 'DUTY'" triggers="">
+          
+                        <label class="checkbox boss"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
+                            [ngModel]="data['POST_H']">
+                            <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
+                        </label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -194,7 +191,9 @@
                             [ngModel]="alternate.name"
                             placeholder="Исполнитель моих обязанностей"
                             [ngClass]="{'readonly': !editMode }">
-                        <i [hidden]="!editMode" class="fa fa-user-plus special-text user-icon" aria-hidden="true"></i>
+                        <button class="btn btn-primary-light person-list-btn">
+                            <i [hidden]="!editMode" class="fa fa-user-plus special-text user-icon" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -213,19 +212,19 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
+                            [readonly]="true" class="readonly" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_END_DATE">окончание действия</label>
                         <eos-datepicker [placeholder]="'окончание действия'" [value]="data['alternates'][0].END_DATE"
-                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
+                            [readonly]="true" class="readonly" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
                         <label for="fullPosition">Исполняю обязанности</label>
-                        <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control"
+                        <input id="fullPosition" name="alternate.name" type="text" class="form-control readonly"
                             [ngModel]="data['alternates'][0].name"
                             placeholder="Исполняет мои обязанности"
-                            [ngClass]="{'readonly': !editMode }">
+                            readonly>
                     </div>
                 </div>
             </div>

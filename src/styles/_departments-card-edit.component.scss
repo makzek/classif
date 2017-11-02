@@ -10,7 +10,6 @@
         width: 100%;
         font-weight: 700;
         font-size: 17px;
-        margin-bottom: 10px;
 
         &:not(.first) {
             margin-top: 50px;
@@ -27,7 +26,7 @@
         }
 
         input[type="checkbox"] + span {
-            margin-right: 5px;
+            margin-right: 12px;
         }
 
         &.card-flag {
@@ -48,10 +47,12 @@
                 }
             }
 
-            .user-icon {
+            .person-list-btn {
                 position: absolute;
-                right: 25px;
-                top: 35px;
+                right: 20px;
+                top: 29px;
+                height: 32px;
+                width: 32px;
             }
         }
     }
@@ -71,6 +72,14 @@
             &.gender {
                 margin-top: 50px;
             }
+        }
+
+        .duty {
+            margin-right: 40px;
+        }
+
+        .boss {
+            width: 153px;
         }
     }
 
@@ -109,7 +118,7 @@
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
-        margin-left: 24px;
+        margin: 0 24px;
 
         .photo-uploader {
             position: absolute;
