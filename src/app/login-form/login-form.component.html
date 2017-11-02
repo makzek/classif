@@ -10,6 +10,7 @@
         <label for="basic-url">Ваш пароль</label>
         <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control" id="password" required/>
     </div>
+    <p class="text-danger">{{errorMessage}}</p>
 </div>
 <div class="modal-footer">
     <!-- button type="button" class="btn btn-primary" (click)="cancel()" [disabled]="inProcess">Отмена</button -->

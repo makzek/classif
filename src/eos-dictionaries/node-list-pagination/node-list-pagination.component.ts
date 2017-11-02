@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 export interface IListPage {
     start: number;
@@ -18,8 +19,14 @@ const PAGES: IPageLength[] = [{
     title: '20',
     value: 20
 }, {
-    title: '30',
+    title: '40',
     value: 30
+}, {
+    title: '100',
+    value: 100
+}, {
+    title: '200',
+    value: 200
 }];
 
 @Component({
@@ -37,20 +44,29 @@ export class NodeListPaginationComponent {
 
     private _dropStartPage = true;
 
-    constructor() {
-        this.pageLength = this.pages[0];
+    constructor(
+        private _storageSrv: EosStorageService
+    ) {
+        const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
+        if (PAGE_SETTING) {
+            this.pageLength = PAGE_SETTING
+        } else {
+            this.pageLength = this.pages[0];
+            this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
+        }
         this.page = {
             start: 1,
             current: 1,
             length: this.pageLength.value
-        };
+        }
     }
 
     setPageLength(length: IPageLength) {
-        this.pageLength = length;
+        this.pageLength = length
         this.page.current = this.page.start
-        this.page.length = length.value;
-        this.change.emit(this.page);
+        this.page.length = length.value
+        this.change.emit(this.page)
+        this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
     }
 
     showMore() {

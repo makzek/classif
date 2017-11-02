@@ -56,7 +56,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     public dictionaryId: string;
 
     public params: INodeListParams;
-    public _selectedNode: EosDictionaryNode;
+    public selectedNode: EosDictionaryNode;
     public _selectedNodeText: string;
     private _nodeId: string;
 
@@ -99,7 +99,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
-        /* remove unused */
         private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
     ) {
@@ -121,8 +120,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this.listNodes = [];
         this.visibleNodes = [];
         this.currentState = this._dictActSrv.state;
-
-
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -216,8 +213,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             } else {
                 this.listNodes = [];
             }
-            if (node !== this._selectedNode) {
-                this._selectedNode = node;
+            if (node !== this.selectedNode) {
+                this.selectedNode = node;
             }
             this._updateVisibleNodes();
         }));
@@ -256,7 +253,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
-                .then(() => this._dictSrv.selectNode(this._nodeId));
+                .then((resp) => {
+                    this._dictSrv.selectNode(this._nodeId)
+                });
         }
     }
 
@@ -332,9 +331,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             case E_RECORD_ACTIONS.add:
                 this._create();
                 break;
-            /*
-            // case E_RECORD_ACTIONS.restore: {
-            */
+
+            case E_RECORD_ACTIONS.restore:
+                this._restoreItems();
+                break;
             default:
                 console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
         }
@@ -426,13 +426,13 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     goUp() {
-        if (this._selectedNode && this._selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this._selectedNode.parent);
+        if (this.selectedNode && this.selectedNode.parent) {
+            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
             this._router.navigate(path);
         }
     }
 
-    private _toggleDeleted() {
+    private _toggleDeleted(): void {
         this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
         if (!this.params.showDeleted) {
             // Fall checkbox with deleted elements
@@ -448,18 +448,18 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleUserSort(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        if (this._selectedNode) {
+        if (this.selectedNode) {
             this._updateVisibleNodes();
         }
     }
 
-    updateMarks() {
+    updateMarks(): void {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
     }
 
-    toggleAllMarks() {
+    toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
@@ -487,7 +487,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            console.log(arr.length)
             if (arr.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
             } else if (arr.length) {
@@ -495,12 +494,12 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteSelectedNodes(this.dictionaryId, selectedNodes);
+                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes);
             }
         }
     }
 
-    physicallyDelete(): void {
+    public physicallyDelete(): void {
         if (this.listNodes) {
             let list = '', j = 0;
             for (const node of this.listNodes) {
@@ -557,7 +556,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _create() {
         this._clearForm();
-        this.fieldsDescription = this._selectedNode.getEditFieldsDescription();
+        this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
     }
 
@@ -574,7 +573,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         })
     }
 
-    create(hide = true) {
+    public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 console.log('created node', node);
@@ -582,15 +581,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData[_f.key];
                 });
-                const bCrumbs = this._breadcrumbsSrv.breadcrumbs;
-                let path = '';
-                for (const bc of bCrumbs) {
-                    path = path + bc.title + '/';
-                }
                 this._deskSrv.addRecentItem({
-                    url: this._dictSrv.getNodePath(node.id).join('/'),
+                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/view',
                     title: title,
-                    fullTitle: path + title
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME
                 });
                 if (hide) {
                     this.creatingModal.hide();
@@ -602,6 +596,16 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    private _restoreItems(): void {
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) {
+                this._dictSrv.restoreItem(node);
+            }
+        });
+        this.anyMarked = false;
+        this.allMarked = false;
     }
 
     public resize(): void {

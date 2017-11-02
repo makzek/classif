@@ -51,6 +51,24 @@ export const RECORD_ACTIONS: IAction[] = [{
     hoverIconClass: 'eos-icon eos-icon-bin-dark-blue small',
     buttonClass: null
 }, {
+    type: E_RECORD_ACTIONS.showDeleted,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Отображать логически удалённые',
+    iconClass: 'fa fa-eye',
+    activeIconClass: '',
+    hoverIconClass: '',
+    buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.userOrder,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Пользовательская сортировка',
+    iconClass: 'eos-icon eos-icon-custom-list-blue small',
+    activeIconClass: 'eos-icon eos-icon-custom-list-dark-blue small',
+    hoverIconClass: 'eos-icon eos-icon-custom-list-white small',
+    buttonClass: null
+}, {
     type: E_RECORD_ACTIONS.moveUp,
     group: E_ACTION_GROUPS.item,
     title: null,
@@ -67,24 +85,6 @@ export const RECORD_ACTIONS: IAction[] = [{
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-arrow-v-dark-blue-bottom small',
-    buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.userOrder,
-    group: E_ACTION_GROUPS.group,
-    title: null,
-    hint: 'Пользовательская сортировка',
-    iconClass: 'eos-icon eos-icon-custom-list-blue small',
-    activeIconClass: 'eos-icon eos-icon-custom-list-dark-blue small',
-    hoverIconClass: 'eos-icon eos-icon-custom-list-white small',
-    buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.showDeleted,
-    group: E_ACTION_GROUPS.group,
-    title: null,
-    hint: 'Отображать логически удалённые',
-    iconClass: 'fa fa-eye',
-    activeIconClass: '',
-    hoverIconClass: '',
     buttonClass: null
 },
    /* RECORD_ACTIONS_NAVIGATION_UP,

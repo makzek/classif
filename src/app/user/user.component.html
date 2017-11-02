@@ -11,7 +11,7 @@
         </li>
         <li class="divider dropdown-divider" *ngIf="isAuthorized"></li>
         <li role="menuitem" class="menuitem" *ngIf="!isAuthorized">
-            <a class="dropdown-item" (click)="login()">Войти</a>
+            <a class="dropdown-item" routerLink="login">Войти</a>
         </li>
         <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
             <a class="dropdown-item" (click)="logout()">Выйти</a>

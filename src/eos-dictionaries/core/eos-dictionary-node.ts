@@ -67,6 +67,10 @@ export class EosDictionaryNode {
         }
     }
 
+    get expandable(): boolean {
+        return this.hasSubnodes && this.children && this.children.length > 0;
+    }
+
     get hasSubnodes(): boolean {
         return (this.data['IS_NODE'] !== undefined && this.data['IS_NODE'] === 0);
     }
