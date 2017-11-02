@@ -1,11 +1,11 @@
-<div class="eos-user" dropdown container="body" placement="left bottom">
+<div class="eos-user" dropdown container="body" placement="right bottom">
     <button dropdownToggle class="user-menu-btn btn dropdown-button dropdown-toggle">
         <span class="text">{{fullname || 'Пользователь'}}</span>
         <span class="round-img-wrapper">
             <span class="round-img"></span>
         </span>
     </button>
-    <ul *dropdownMenu class="dropdown-menu" role="menu">
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
         <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
             <a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки системы</a>
         </li>

@@ -1,15 +1,6 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-/*
-import {
-    RUBRIC_CODE_LENGTH,
-    RUBRIC_TITLE_LENGTH,
-    DESCRIPTION_LENGTH,
-    NOTE_LENGTH, SEV_LENGTH,
-    DEPARTMENT_TITLE_LENGTH,
-    SURNAME_LENGTH
-} from '../consts/input-validation';
-*/
+
 @Component({
     selector: 'eos-card-edit',
     templateUrl: 'card-edit.component.html'
