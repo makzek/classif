@@ -147,7 +147,8 @@ const commonMeta =
             properties: {
                 ISN_CABINET: _t.i,
                 DUE: _t.s,
-                CABINET_NAME: _t.s
+                CABINET_NAME: _t.s,
+                FULLNAME: _t.s
             },
             readonly: [
 
@@ -402,7 +403,10 @@ const commonMeta =
                 DUE_LINK_ORGANIZ: _t.s,
                 ISN_PHOTO: _t.i,
                 WDUE: _t.s,
-                NOTE: _t.s
+                NOTE: _t.s,
+                FULLNAME: _t.s,
+                CODE: _t.s,
+                SKYPE: _t.s
             },
             readonly: [
 
@@ -502,7 +506,9 @@ const commonMeta =
                 ACCESS_MODE: _t.i,
                 ACCESS_MODE_FIXED: _t.i,
                 INITIATIVE_RESOLUTION: _t.i,
-                NOTE: _t.s
+                NOTE: _t.s,
+                FULLNAME: _t.s,
+                CODE: _t.s
             },
             readonly: [
 
@@ -955,7 +961,8 @@ const commonMeta =
                     INS_DATE: _T.d,
                     UPD_DATE: _T.d,
                     INS_WHO: _T.i,
-                    UPD_WHO: _T.i
+                    UPD_WHO: _T.i,
+                    FULLNAME: _T.s
                 },
                 readonly: [
                     'INS_DATE',
@@ -1544,6 +1551,33 @@ const commonMeta =
             relations: [
                 { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' }
             ] },
+        USER_VIEW: { pk: 'ISN_USER',
+            properties: {
+                ISN_USER: _t.i,
+                ISN_VIEW: _t.i,
+                WEIGHT: _t.i,
+                SRCH_KIND_NAME: _t.s
+            },
+            readonly: [
+
+            ],
+            relations: [
+                { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_USER', tf: 'ISN_LCLASSIF' }
+            ] },
+        USER_REQUEST: { pk: 'ISN_USER',
+            properties: {
+                ISN_USER: _t.i,
+                ISN_REQUEST: _t.i,
+                WEIGHT: _t.i,
+                PARAMS: _t.s,
+                SRCH_KIND_NAME: _t.s
+            },
+            readonly: [
+
+            ],
+            relations: [
+                { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_USER', tf: 'ISN_LCLASSIF' }
+            ] },
         USERCARD: { pk: 'ISN_LCLASSIF',
             properties: {
                 ISN_LCLASSIF: _t.i,
@@ -1595,7 +1629,9 @@ const commonMeta =
                 DELETED: _t.i,
                 IS_NODE: _t.i,
                 NOTE: _t.s,
-                WEIGHT: _t.i
+                WEIGHT: _t.i,
+                IS_FINAL: _t.i,
+                STATUS: _t.s
             },
             readonly: [
 
