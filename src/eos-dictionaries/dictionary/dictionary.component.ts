@@ -284,7 +284,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     pageChanged(page: IListPage) {
-        console.log('Изменилась страница')
         this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
