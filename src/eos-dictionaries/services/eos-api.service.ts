@@ -148,7 +148,7 @@ export class EosDictApiService {
                 break;
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                _promise = this._service.create(parentData, nodeData);
+                _promise = this._service.create(nodeData, parentData);
                 break;
             default:
                 _promise = this._noData();

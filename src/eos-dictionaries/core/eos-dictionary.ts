@@ -190,7 +190,7 @@ export class EosDictionary {
             }
         }
         if (!params.deleted) {
-            critery['DELETED'] = 0;
+            critery['DELETED'] = '0';
         }
     }
 

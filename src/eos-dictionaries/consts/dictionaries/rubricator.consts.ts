@@ -93,8 +93,8 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
-    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-    fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
+    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
+    fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE', 'fullTitle'*/],
     quickViewFields: ['fullTitle', 'NOTE', 'sev'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],

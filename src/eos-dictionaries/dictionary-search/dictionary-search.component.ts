@@ -58,6 +58,12 @@ export class DictionarySearchComponent implements OnDestroy {
     constructor(
         private _dictSrv: EosDictService,
     ) {
+        this.settings = {
+            onlyCurrentNode: false,
+            subbranches: false,
+            deleted: false
+        };
+
         this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
@@ -122,7 +128,7 @@ export class DictionarySearchComponent implements OnDestroy {
     dateFilter(date: Date) {
         if (date !== this.date) {
             this.date = date;
-            this._dictSrv.fullSearch({ date: date }, this.settings);
+            /* this._dictSrv.fullSearch({ date: date }, this.settings); */
         }
     }
 }
