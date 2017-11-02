@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
@@ -15,19 +16,24 @@ import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
 
 import { AppRoutingModule } from './app-routing.module';
-import { EosRestModule } from '../eos-rest/eos-rest.module';
-import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
+import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
+import { EosRestModule } from '../eos-rest/eos-rest.module';
+
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
-import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
-import { SearchComponent } from './search/search.component';
-import { UserComponent } from './user/user.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
-import { TitleComponent } from './title/title.component';
+import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
+import { LoginComponent } from './login/login.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { NoticeComponent } from './notice/notice.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
+import { SearchComponent } from './search/search.component';
+
+import { TestPageComponent } from './test-page/test-page.component';
+
+import { TitleComponent } from './title/title.component';
+import { UserComponent } from './user/user.component';
 
 import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
 import { EosDeskService } from './services/eos-desk.service';
@@ -35,29 +41,26 @@ import { EosNoticeService } from './services/eos-notice.service';
 import { EosStorageService } from './services/eos-storage.service';
 import { EosUserProfileService } from './services/eos-user-profile.service';
 
-import { TestPageComponent } from './test-page/test-page.component';
-
 /* guards */
+import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
-import { AuthGuard } from './guards/eos-auth.guard';
 /* end guards */
 
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         BreadcrumbsComponent,
-        DesktopSwitcherComponent,
-        SearchComponent,
-        UserComponent,
-        UserSettingsComponent,
-        TestPageComponent,
-        NoticeComponent,
         DesktopComponent,
-        TitleComponent,
-        PushpinComponent,
+        DesktopSwitcherComponent,
         LoginComponent,
+        LoginFormComponent,
+        NoticeComponent,
+        PushpinComponent,
+        SearchComponent,
+        TestPageComponent,
+        TitleComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
@@ -65,10 +68,14 @@ import { LoginComponent } from './login/login.component';
         AppRoutingModule,
         HttpModule,
         Ng2BootstrapModule.forRoot(),
+        BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         EosDictionariesModule,
+    ],
+    entryComponents: [
+        LoginFormComponent,
     ],
     exports: [
         EosRestModule,
@@ -77,7 +84,8 @@ import { LoginComponent } from './login/login.component';
         { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        AuthGuard,
+        AuthorizedGuard,
+        UnauthorizedGuard,
         CanDeactivateGuard,
         EosBreadcrumbsService,
         EosDeskService,

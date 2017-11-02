@@ -9,5 +9,5 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="cancel()">{{cancelTitle}}</button>
-    <button type="button" class="btn btn-primary-full" (click)="confirm()">{{okTitle}}</button>
+    <button type="button" class="btn btn-primary-full" [disabled]="confirmDisabled" (click)="confirm()">{{okTitle}}</button>
 </div>

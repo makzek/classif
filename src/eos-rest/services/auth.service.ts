@@ -9,7 +9,6 @@ import { ALL_ROWS } from '../core/consts';
 
 @Injectable()
 export class AuthService {
-
     private _cfg: ApiCfg;
 
     constructor(private _http: Http, private _pipe: PipRX) {
@@ -33,7 +32,7 @@ export class AuthService {
         return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
     }
 
-    getContext(): Promise<any> {
+    getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS}> {
         const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         p.errorService.LostConnectionAlerted = false;
@@ -54,8 +53,8 @@ export class AuthService {
         return Promise.all([oSysParams, oCurrentUser])
             .then(([sysParams, currentUser]) => {
                 return {
-                    user: currentUser[0],
-                    sysParams: sysParams[0]
+                    user: <USER_CL>currentUser[0],
+                    sysParams: <SYS_PARMS>sysParams[0]
                 };
             })
             /*

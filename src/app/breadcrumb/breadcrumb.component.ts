@@ -38,15 +38,15 @@ export class BreadcrumbsComponent {
             }
         })
         _router.events
-        .filter((evt) => evt instanceof NavigationEnd)
-        .subscribe((evt) => {
-            let _actRoute = _route.snapshot;
-            while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-            if (!_actRoute.data.showSandwichInBreadcrumb) {
-                this.openTree(false);
-                this.openInfo(false)
-            }
-        });
+            .filter((evt) => evt instanceof NavigationEnd)
+            .subscribe((evt) => {
+                let _actRoute = _route.snapshot;
+                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+                if (!_actRoute.data.showSandwichInBreadcrumb) {
+                    this.openTree(false);
+                    this.openInfo(false)
+                }
+            });
     }
 
     get closeAll() {

@@ -22,7 +22,7 @@
     <div>
         <div class="checkbox-inline">
             <label>
-                <input type="checkbox" [(ngModel)]="searchInDeleted">
+                <input type="checkbox" [(ngModel)]="settings.deleted">
                 <span></span>Учитывать логически удаленные</label>
         </div>
         <div *ngIf="loading" class="spinner-wrapper">

@@ -291,6 +291,24 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._openNode(_node);
     }
 
+    disManager(mod: boolean, tooltip: any): boolean {
+        if (mod) {
+            if (this.isFirst || !this.node.parent) {
+                tooltip.hide()
+                return true
+            } else {
+                return false
+            }
+        } else {
+            if (this.isLast || !this.node.parent) {
+                tooltip.hide()
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
     private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
         if (node) {
             this.goTo(this._makeUrl(node.id, forceMode));
@@ -324,7 +342,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _askForSaving(): Promise<boolean> {
         if (this._changed) {
-            return this._confirmSrv.confirm(CONFIRM_SAVE_ON_LEAVE)
+            return this._confirmSrv.confirm(Object.assign({}, CONFIRM_SAVE_ON_LEAVE,
+                {confirmDisabled: this.disableSave }))
                 .then((doSave) => {
                     if (doSave) {
                         return this._save(this.nodeData)
@@ -367,7 +386,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     fullTitle: bCrumbs.fullTitle
                 });
                 this._clearEditingCardLink();
-                return this._dictSrv.reloadNode(this.node);
+                return resp;
             })
             .catch((err) => console.log('getNode error', err));
     }
@@ -392,6 +411,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
+            console.log('this.nodeId', this.nodeId);
             this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }

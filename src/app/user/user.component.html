@@ -1,33 +1,41 @@
-<div class="eos-user" dropdown container="body" placement="left bottom">
-  <span dropdownToggle>
-        <span class="text">{{'Пользователь' || fullname}}</span>
-        <span class="round-img-wrapper"><span class="round-img"></span></span>
-        <span class="caret"></span>
-  </span>
-  <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="openModal(loginWindow)">Войти</a></li>
-    <li class="divider dropdown-divider" *ngIf="fullname"></li>
-    <li role="menuitem" class="menuitem" *ngIf="fullname"><a class="dropdown-item" (click)="logout()">Выйти</a>
-    </li>
-  </ul>
+<div class="eos-user text-right" dropdown container="body" placement="right bottom">
+    <button dropdownToggle class="user-menu-btn btn dropdown-button dropdown-toggle">
+        <span class="pull-right">
+            <span class="text">{{fullname || 'Пользователь'}}</span>
+            <span class="round-img-wrapper">
+                <span class="round-img"></span>
+            </span>
+        </span>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+        <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
+            <a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки системы</a>
+        </li>
+        <li class="divider dropdown-divider" *ngIf="isAuthorized"></li>
+        <li role="menuitem" class="menuitem" *ngIf="!isAuthorized">
+            <a class="dropdown-item" routerLink="login">Войти</a>
+        </li>
+        <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
+            <a class="dropdown-item" (click)="logout()">Выйти</a>
+        </li>
+    </ul>
 </div>
+<!-- span (click)="" tooltip="Настройки системы" placement="bottom" container="body" containerClass="tooltip-info"></span-->
 
-<ng-template #loginWindow>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
-  </div>
-  <div class="modal-body login-modal">
-        <div class="form-group">
-            <label for="basic-url">Ваш логин</label>
-            <input type="text" [(ngModel)]="inputName" maxlength="255" class="form-control" id="user-name" />
+<ng-template #settingsWindow>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Настройки</h4>
+    </div>
+    <div class="modal-body">
+        <div *ngFor="let setting of settings" class="checkbox">
+            <label>
+                <input type="checkbox" [(ngModel)]="setting.value">
+                <span></span>{{setting.name}}
+            </label>
         </div>
-        <div class="form-group">
-            <label for="basic-url">Ваш пароль</label>
-            <input type="text" [(ngModel)]="inputPassword" maxlength="255" class="form-control" id="password" />
-        </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="modalRef.hide()" [disabled]="inProcess">Отмена</button>
-    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!inputName || !inputPassword || inProcess">Войти</button>
-  </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
+        <button class="btn btn-primary-full" (click)="saveSettings()">Сохранить настройки</button>
+    </div>
 </ng-template>

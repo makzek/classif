@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -14,7 +14,7 @@ import { FieldDescriptor } from '../core/field-descriptor';
     selector: 'eos-node-list-item',
     templateUrl: 'node-list-item.component.html'
 })
-export class NodeListItemComponent implements OnInit, OnDestroy {
+export class NodeListItemComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: any;
     @Input('length') length: any = {};
@@ -32,8 +32,6 @@ export class NodeListItemComponent implements OnInit, OnDestroy {
         this.viewFields = this.node.getListView();
     }
 
-    ngOnDestroy() {}
-
     selectNode(): void {
         if (!this.node.isDeleted && this.node.id !== '') {
             this._dictSrv.openNode(this.node.id);
@@ -42,20 +40,6 @@ export class NodeListItemComponent implements OnInit, OnDestroy {
 
     markNode() {
         this.mark.emit(this.node.marked);
-        /*
-        console.log(this.node);
-        if (this.node.marked && !this.node.children) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markAllChildren);
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else if (this.node.marked === false && !this.node.children) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkAllChildren);
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        } else if (this.node.marked) {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRoot);
-        } else {
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRoot);
-        }
-        */
     }
 
     viewNode() {

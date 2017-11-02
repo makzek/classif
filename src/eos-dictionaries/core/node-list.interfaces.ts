@@ -3,4 +3,5 @@ export interface INodeListParams {
     userSort?: boolean;
     hasParent?: boolean;
     showCheckbox?: boolean;
+    select: boolean;
 };

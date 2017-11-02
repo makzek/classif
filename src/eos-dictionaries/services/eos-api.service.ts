@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 import { AbstractDictionaryDescriptor } from '../core/abstract-dictionary-descriptor';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { BaseDictionaryService } from '../../eos-rest/services/base-dictionary.service';
 import { LinearDictionaryService } from '../../eos-rest/services/linear-dictionary.service';
@@ -71,89 +72,112 @@ export class EosDictApiService {
     getRoot(): Promise<any[]> {
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.getAll();
+                return this._service.getData()
+                    .catch((err) => this._errHandler(err));
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                return this.getNodeWithChildren('0.');
+                return this._service
+                    .getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } })
+                    .catch((err) => this._errHandler(err));
             default:
                 return this._noData();
         }
     }
 
-    getNodes(nodeId?: string, level = 0): Promise<any[]> {
-        let _promise: Promise<any[]>;
-        const _params = {
-            DUE: (nodeId ? nodeId : '0.') + '%',
-        };
-        if (this._service) {
-            _promise = this._service.getAll(_params);
-        } else {
-            _promise = this._noData();
+    getNode(nodeId: string | number): Promise<any> {
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _params = [nodeId];
+                return this._service
+                    .getData(_params)
+                    .catch((err) => this._errHandler(err));
+            default:
+                return this._noData();
         }
-        return _promise;
-    }
-
-    getNode(nodeId: string): Promise<any> {
-
-        let _promise: Promise<any>;
-
-        const _params = {
-            DUE: nodeId || '',
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_params)
-                .then((data: any[]) => {
-                    if (data && data.length) {
-                        return data[0];
-                    } else {
-                        return null;
-                    }
-                });
-        } else {
-            _promise = this._noData();
-        }
-        return _promise;
     }
 
     getNodeWithChildren(nodeId: string): Promise<any[]> {
         return this.getNode(nodeId)
             .then((rootNode) => {
-                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this.getChildren(rootNode.ISN_NODE)
+                if (rootNode) {
+                    return this.getChildren(rootNode)
                         .then((nodes) => {
                             return [rootNode].concat(nodes);
                         });
                 } else {
                     return [rootNode];
                 }
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     update(originalData: any, updates: any): Promise<any> {
-        return this._service.update(originalData, updates);
+        return this._service
+            .update(originalData, updates)
+            .catch((err) => this._errHandler(err));
     }
 
-    getChildren(parentISN: number): Promise<any[]> {
-        let _promise: Promise<any[]>;
-
-        const _children = {
-            'ISN_HIGH_NODE': parentISN + ''
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_children)
-        } else {
-            _promise = this._noData()
+    getChildren(node: EosDictionaryNode): Promise<any[]> {
+        // console.log('get children');
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service
+                    .getData()
+                    .catch((err) => this._errHandler(err));
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _id = node.data['ISN_NODE'];
+                const _children = {
+                    ['ISN_HIGH_NODE']: _id + ''
+                };
+                return this._service
+                    .getData({ criteries: _children })
+                    .catch((err) => this._errHandler(err));
+            default:
+                return this._noData();
         }
-        return _promise;
-    }
-
-    private _noData(): Promise<any[]> {
-        return new Promise((res, rej) => res([]));
     }
 
     addNode(parentData: any, nodeData: any): Promise<any> {
-        return this._service.create(parentData, nodeData);
+        let _promise: Promise<any>;
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                _promise = this._service.create(nodeData);
+                break;
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                _promise = this._service.create(nodeData, parentData);
+                break;
+            default:
+                _promise = this._noData();
+        }
+        return _promise.catch((err) => this._errHandler(err));
+    }
+
+    deleteNode(nodeData: any): Promise<any> {
+        return this._service.delete(nodeData)
+            .catch((err) => this._errHandler(err));
+    }
+
+    search(criteries: any[]): Promise<any> {
+        const _search = criteries.map((critery) => this._service.getData({ criteries: critery }));
+        return Promise.all(_search)
+            .then((results) => {
+                const _res = [].concat(...results);
+                console.log('found', _res);
+                return _res;
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
+    private _noData(): Promise<any[]> {
+        return Promise.resolve(null);
+    }
+
+    private _errHandler(err: any) {
+        console.log('API error', err);
+        return this._noData();
     }
 }

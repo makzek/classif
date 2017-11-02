@@ -73,7 +73,8 @@ export class DesktopSwitcherComponent {
     }
 
     openCreateForm() {
-        if (this._moreThenOneEdited()) {
+        console.log('mre', this._moreThenOneEdited());
+        if (this._moreThenOneEdited() && !this.creating) {
             this._msgSrv.addNewMessage(WARN_DESK_CREATING);
         } else {
             this.creating = true;

@@ -29,7 +29,7 @@ export class ErrorService /*implements IErrorService*/ {
                     this.defaultErrorHandler(err.http);
             }
         } else if (err.isLogicException) {
-            alert(err.message);
+            console.log('rest error handler', err.message);
         } else if (err.odataErrors) {
             return this.odataErrorsHandler(err);
         }
@@ -50,7 +50,7 @@ export class ErrorService /*implements IErrorService*/ {
             }
         }
         if (logic !== '') {
-            alert(logic);
+            console.log('odata error', logic);
         }
         return Observable.throw(err);
     }
@@ -71,7 +71,7 @@ export class ErrorService /*implements IErrorService*/ {
             // 	return;
         }
         // LogicException показываем как alert?
-        alert(e.message);
+        console.log('rest logic error', e.message);
     }
     // //для переопределения на конкретной pm, для вывода более конкретного сообщения
     // InvalidRefErrorHandler = (e, etn, isn) => false;
@@ -99,7 +99,7 @@ export class ErrorService /*implements IErrorService*/ {
     }
 
     WriteErrorHtml(message, stacktrace?) {
-        alert(message + ' ' + stacktrace);
+        console.log('rest error', message + ' ' + stacktrace);
     }
 }
 

@@ -9,11 +9,19 @@
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="_selectedNode" class="block selected-node" [ngClass]="{'no-parent': !params.hasParent}">
-                <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
-                    <span class="eos-icon eos-icon-arrow-blue-left"></span>
-                </button>
+            <div *ngIf="selectedNode" class="block selected-node">
+                <div class="go-top-wrapper">
+                    <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
+                        <span class="eos-icon eos-icon-arrow-blue-left"></span>
+                    </button>
+                </div>
                 <span class="selected-node-title">{{_selectedNodeText}}</span>
+                <div class="item-count pull-right">
+                    <span class="item-count-content">
+                        Записей:
+                        <span class="bright">{{listNodes?.length}}</span>
+                    </span>
+                </div>
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
@@ -33,16 +41,28 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': this.params.userSort}"
-                            [ngStyle]="{'width.%': length[field.key]}">{{field.title}}</span>
+                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
+                            <span class="text" (click)="toggleSystemSort(field.key)">{{field.title}}</span>
+                            <span *ngIf="this.orderBy?.fieldKey === field.key && this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-top small"
+                                (click)="chengeSortOrder()"></span>
+                            <span *ngIf="this.orderBy?.fieldKey === field.key && !this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-bottom small"
+                                (click)="chengeSortOrder()"></span>
+                        </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
-                        placement="left" (click)="_configColumns()"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                        placement="left" (click)="_configColumns()">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
-        <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
-        <eos-node-list-pagination [total]="listNodes?.length" (change)="pageChanged($event)"></eos-node-list-pagination>
+        <p *ngIf="selectedNode?.updating" class="text-center">
+            <eos-spinner size="lg"></eos-spinner>
+        </p>
+        <ng-container *ngIf="!selectedNode?.updating">
+            <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
+            <eos-node-list-pagination [total]="listNodes?.length" (change)="pageChanged($event)"></eos-node-list-pagination>
+        </ng-container>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
         <eos-node-info (action)=doAction($event)></eos-node-info>
@@ -57,7 +77,7 @@
         </button>
     </div>
     <div class="create-new-node modal-body">
-        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)" ></eos-card-edit>
+        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"></eos-card-edit>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>

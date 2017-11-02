@@ -67,6 +67,10 @@ export class EosDictionaryNode {
         }
     }
 
+    get expandable(): boolean {
+        return this.hasSubnodes && this.children && this.children.length > 0;
+    }
+
     get hasSubnodes(): boolean {
         return (this.data['IS_NODE'] !== undefined && this.data['IS_NODE'] === 0);
     }
@@ -77,6 +81,14 @@ export class EosDictionaryNode {
 
     isVisible(showDeleted: boolean): boolean {
         return showDeleted || !this.isDeleted;
+    }
+
+    get originalId(): string | number {
+        return this._fieldValue(this._descriptor.keyField);
+    }
+
+    get originalParentId(): string | number {
+        return this._fieldValue(this._descriptor.parentField);
     }
 
     constructor(descriptor: RecordDescriptor, data: any) {
@@ -100,6 +112,15 @@ export class EosDictionaryNode {
     private _keyToString(value: any): string {
         if (value !== undefined && value !== null) {
             return value + '';
+        } else {
+            return null;
+        }
+    }
+
+    private _fieldValue(field: FieldDescriptor): any {
+        const _fld = field.foreignKey;
+        if (this.data) {
+            return this.data[_fld];
         } else {
             return null;
         }

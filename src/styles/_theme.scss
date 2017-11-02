@@ -6,7 +6,6 @@
 
 .tooltip {
     opacity: 1 !important;
-    z-index: 5;
 
     &.word-break {
         word-break: break-all;
@@ -114,6 +113,11 @@
     }
 }
 
+.ng-invalid.ng-dirty {
+    border-color: $invalid-color-main-theme;
+    outline-color: $invalid-color-main-theme;
+}
+
 .main-theme {
     // general
     .block {
@@ -161,16 +165,6 @@
             width: $item-width;
             color: $button-color-main-theme;
         }*/
-
-    .ng-invalid {
-        border-color: $invalid-color-main-theme;
-        outline-color: $invalid-color-main-theme;
-    }
-
-    .ng-valid {
-        border-color: $valid-color-main-theme;
-        outline-color: $valid-color-main-theme;
-    }
 
     .pagination {
         & > li {
@@ -356,8 +350,18 @@
             border-color: $border-color-main-theme;
         }
 
-        .node-actions .second-line .node-title .item.user-sort {
-            color: $primary-font-color-main-theme;
+        .node-actions {
+            .second-line .node-title .item.user-sort {
+                color: $primary-font-color-main-theme;
+            }
+
+            .selected-node .item-count {
+                border-color: $border-color-main-theme;
+
+                .bright {
+                    color: $secondary-font-color-main-theme;
+                }
+            }
         }
     }
 
@@ -394,6 +398,7 @@
     }
 
     .eos-card {
+        
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
@@ -416,6 +421,9 @@
 
                 &:focus {
                     border-color: $active-field-color-main-theme;
+                }
+                &:-ms-input-placeholder {
+                    color: $primary-font-color-main-theme;
                 }
 
                 &.readonly {

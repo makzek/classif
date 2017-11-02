@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
+</div>
+<div class="modal-body login-modal">
+    <div class="form-group">
+        <label for="basic-url">Ваш логин</label>
+        <input type="text" [(ngModel)]="userName" maxlength="64" class="form-control" id="user-name" required/>
+    </div>
+    <div class="form-group">
+        <label for="basic-url">Ваш пароль</label>
+        <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control" id="password" required/>
+    </div>
+    <p class="text-danger">{{errorMessage}}</p>
+</div>
+<div class="modal-footer">
+    <!-- button type="button" class="btn btn-primary" (click)="cancel()" [disabled]="inProcess">Отмена</button -->
+    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!userName || !userPassword || inProcess">Войти</button>
+</div>

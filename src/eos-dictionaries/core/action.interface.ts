@@ -6,10 +6,13 @@ export interface IAction {
     title: string
     hint: string
     iconClass: string
+    hoverIconClass: string
+    activeIconClass: string
     buttonClass: string
 };
 
 export interface IActionButton extends IAction {
-    isActive: boolean;
-    enabled: boolean;
+    isActive: boolean
+    enabled: boolean
+    show: boolean
 }

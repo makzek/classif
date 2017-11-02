@@ -11,6 +11,7 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
+import { ISearchSettings } from '../core/search-settings.interface';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -156,25 +157,41 @@ export class EosDictionary {
         return _result;
     }
 
-    /* todo: search with API */
-    search(searchString: string, globalSearch: boolean, selectedNode?: EosDictionaryNode): EosDictionaryNode[] {
-        let searchResult: EosDictionaryNode[] = [];
+    getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
-        searchString = searchString.replace(/[*+.?^${}()|[\]\\]/g, '\\$&');
-        const _expr = new RegExp(searchString, 'i');
-
-        /* tslint:disable:no-bitwise */
-        this._nodes.forEach((node) => {
-            if (!!~_searchFields.findIndex((fld) => _expr.test(node.data[fld.key]))) {
-                searchResult.push(node);
-            }
+        const _criteries = _searchFields.map((fld) => {
+            const _crit: any = {
+                [fld.foreignKey]: '%' + search + '%'
+            };
+            this._extendCritery(_crit, params, selectedNode);
+            return _crit;
         });
-        /* tslint:enable:no-bitwise */
+        return _criteries;
+    }
 
-        if (!globalSearch) {
-            searchResult = searchResult.filter((node) => node.isChildOf(selectedNode));
+    getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
+        const critery = {};
+        const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
+        fields.forEach((fld) => {
+            if (data[fld.key]) {
+                critery[fld.foreignKey] = '%' + data[fld.key] + '%';
+            }
+        })
+        this._extendCritery(critery, params, selectedNode);
+        return critery;
+    }
+
+    private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
+        if (this.descriptor.type !== E_DICT_TYPE.linear) {
+            if (params.onlyCurrentNode) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
+            } else if (params.subbranches) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
+            }
         }
-        return searchResult;
+        if (!params.deleted) {
+            critery['DELETED'] = '0';
+        }
     }
 
     /* todo: search with API */

@@ -14,6 +14,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     private _subscrChanges: Subscription;
 
     tooltipText = '';
+    focusedField: string;
 
     keys(data: Object): string[] {
         return Object.keys(data);
@@ -36,6 +37,15 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     change(fldKey: string, value: string) {
         this.data[fldKey] = value;
         this.onChange.emit(this.data);
+    }
+
+
+    focus(name: string) {
+        this.focusedField = name;
+    }
+
+    blur() {
+        this.focusedField = null;
     }
 
     /* clean(field: string, value: string) {

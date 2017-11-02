@@ -11,7 +11,7 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width + $item-width / 2;
+        width: $dictionary-block-width;
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
@@ -102,20 +102,44 @@
         .selected-node {
             border: 1px solid transparent;
             border-bottom: 0;
-            height: $item-height;
+            min-height: $item-height;
             font-size: 18px;
+            display: -ms-grid;
+            display: grid;// sass-lint:disable-line no-duplicate-properties
+            -ms-grid-columns:  48px 1fr 150px;
+            grid-template-columns: 48px 1fr 150px;
 
-            &.no-parent {
-                padding-left: 20px;
+            .item-count {
+                height: 100%;
+                width: 150px;
+                display: inline-block;
+                text-align: center;
+                font-size: 14px;
+                line-height: 20px;
+                border-left: 1px solid transparent;
+                grid-column: 3;
             }
 
             .selected-node-title {
-                line-height: $item-height;
+                line-height: 26px;
+                grid-column: 2;
             }
 
             .btn {
                 height: $item-height;
                 width: $item-width;
+            }
+
+            .go-top-wrapper,
+            .item-count,
+            .selected-node-title {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+
+            .go-top-wrapper {
+                grid-column: 1;
             }
         }
 
@@ -200,12 +224,23 @@
                     padding: 0 20px;
                     font-size: 16px;
                     line-height: 24px;
+                    white-space: nowrap;
+
+                    .text {
+                        cursor: pointer;
+                    }
+
+                    .icon {
+                        margin: 0;
+                        vertical-align: sub;
+                    }
                 }
             }
 
             .checkbox-inline {
                 line-height: $item-height;
                 width: $item-width;
+                padding-right: 12px;
             }
         }
     }

@@ -53,7 +53,8 @@ export class EosDeskService {
         return this._recentItems$.asObservable();
     }
 
-    constructor(private _dictSrv: EosDictService,
+    constructor(
+        private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         /*private router: Router*/
     ) {
@@ -68,7 +69,7 @@ export class EosDeskService {
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
                     return {
-                        link: '/spravochniki/' + dictionary.id,
+                        url: '/spravochniki/' + dictionary.id,
                         title: dictionary.title,
                     };
                 });
@@ -106,6 +107,7 @@ export class EosDeskService {
     }
 
     addRecentItem(link: IDeskItem): void {
+        console.log(link)
         this._recentItems.push(link);
         if (this._recentItems.length > 10) {
             this._recentItems.shift();
