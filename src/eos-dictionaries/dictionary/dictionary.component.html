@@ -14,8 +14,8 @@
                     <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
                     </button>
+                    <div *ngIf="!params.hasParent" class="no-parent"></div>
                 </div>
-                <div *ngIf="!params.hasParent" class="no-parent"></div>
                 <span class="selected-node-title">{{_selectedNodeText}}</span>
                 <div class="item-count pull-right">
                     <span class="item-count-content">
