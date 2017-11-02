@@ -38,13 +38,13 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         title: 'Вес',
         type: 'number'
     }, {
-        key: 'final',
+        key: 'IS_FINAL',
         type: 'boolean',
         title: 'Признак финальной визы',
     }, {
-        key: 'status',
-        type: 'enum',
+        key: 'STATUS',
+        type: 'string',
         title: 'Статус визы',
     }],
-    quickViewFields: ['CLASSIF_NAME', 'final', 'status', 'NOTE'],
+    quickViewFields: ['CLASSIF_NAME', 'IS_FINAL', 'STATUS', 'NOTE'],
 });
