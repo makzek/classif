@@ -6,6 +6,7 @@ export interface IConfirmWindow {
     body: string;
     okTitle: string;
     cancelTitle: string;
+    confirmDisabled?: boolean;
 }
 
 export interface IConfirmWindowContent extends IConfirmWindow {
@@ -20,6 +21,7 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
     body: string;
     okTitle: string;
     cancelTitle: string;
+    confirmDisabled: boolean;
 
     readonly confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
