@@ -110,14 +110,13 @@ export class EosDictService {
     }
 
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        let _p = this._mDictionaryPromise.get(dictionaryId);
+        let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            let _dictionary = null;
-            _p = <Promise<EosDictionary>>this._api.getDictionaryDescriptorData(dictionaryId)
+            this.dictionary = null;
+            _p = this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
-                    _dictionary = new EosDictionary(descData);
-                    this._api.init(_dictionary.descriptor);
-                    this.dictionary = _dictionary;
+                    this.dictionary = new EosDictionary(descData);
+                    this._api.init(this.dictionary.descriptor);
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
@@ -131,7 +130,7 @@ export class EosDictService {
                 .catch((err: Response) => {
                     this.closeDictionary();
                     this._mDictionaryPromise.delete(dictionaryId);
-                    Promise.reject(err);
+                    return null;
                 });
             this._mDictionaryPromise.set(dictionaryId, _p);
         }
@@ -166,6 +165,7 @@ export class EosDictService {
     }
 
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        console.log('loadChildren for', node.id);
         node.updating = true;
         return this._api.getChildren(node)
             .then((data: any[]) => {
