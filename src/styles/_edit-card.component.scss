@@ -8,16 +8,16 @@
 
     .edit-header {
         min-height: $item-height;
-        padding: 5px;
+        padding:  0;
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 70px 48px 1fr 153px;
-        grid-template-columns: 70px 48px 1fr 153px;
+        -ms-grid-columns: 100px 48px 1fr 153px;
+        grid-template-columns: 100px 48px 1fr 153px;
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 0 48px 1fr 172px;
-            grid-template-columns: 0 48px 1fr 172px;
+            -ms-grid-columns: 0 48px 1fr 195px;
+            grid-template-columns: 0 48px 1fr 195px;
         }
 
         .btn {
@@ -53,6 +53,11 @@
         .move-wrapper {
             grid-column: 1;
             grid-row: 1;
+
+            .btn {
+                height: $item-height;
+                width: $item-width;
+            }
         }
 
         .name-wrapper {
@@ -64,6 +69,10 @@
         .buttons-wrapper {
             grid-column: 4;
             grid-row: 1;
+
+            .btn {
+                text-transform: uppercase;
+            }
         }
 
         .action-wrapper {
