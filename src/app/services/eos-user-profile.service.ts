@@ -115,6 +115,8 @@ export class EosUserProfileService implements IUserProfile {
 
     logout(): Promise<any> {
         return this._authSrv.logout().then((resp) => {
+            this._user = null;
+            this._params = null;
             this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
             this._router.navigate(['/login']);
