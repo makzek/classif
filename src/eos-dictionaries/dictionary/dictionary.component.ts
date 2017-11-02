@@ -582,9 +582,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                     title += this.nodeData[_f.key];
                 });
                 this._deskSrv.addRecentItem({
-                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/view',
+                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                     title: title,
-                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME + '/Редактирование'
                 });
                 if (hide) {
                     this.creatingModal.hide();
