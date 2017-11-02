@@ -410,6 +410,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
+            console.log('this.nodeId', this.nodeId);
             this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }

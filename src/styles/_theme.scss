@@ -113,6 +113,11 @@
     }
 }
 
+.ng-invalid.ng-dirty {
+    border-color: $invalid-color-main-theme;
+    outline-color: $invalid-color-main-theme;
+}
+
 .main-theme {
     // general
     .block {
@@ -160,16 +165,6 @@
             width: $item-width;
             color: $button-color-main-theme;
         }*/
-
-    .ng-invalid {
-        border-color: $invalid-color-main-theme;
-        outline-color: $invalid-color-main-theme;
-    }
-
-    .ng-valid {
-        border-color: $valid-color-main-theme;
-        outline-color: $valid-color-main-theme;
-    }
 
     .pagination {
         & > li {
