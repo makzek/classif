@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
 export interface IListPage {
@@ -33,7 +33,7 @@ const PAGES: IPageLength[] = [{
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent {
+export class NodeListPaginationComponent implements OnInit {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
@@ -46,18 +46,20 @@ export class NodeListPaginationComponent {
 
     constructor(
         private _storageSrv: EosStorageService
-    ) {
-        const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
-        if (PAGE_SETTING) {
-            this.pageLength = PAGE_SETTING
-        } else {
-            this.pageLength = this.pages[0];
-            this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
-        }
+    ) { }
+
+    ngOnInit() {
+        this.pageLength = this.pages[0];
         this.page = {
             start: 1,
             current: 1,
             length: this.pageLength.value
+        }
+        const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
+        if (PAGE_SETTING) {
+            this.setPageLength(PAGE_SETTING)
+        } else {
+            this.setPageLength(this.pages[0])
         }
     }
 
