@@ -109,14 +109,6 @@
             -ms-grid-columns:  48px 1fr 150px;
             grid-template-columns: 48px 1fr 150px;
 
-            .no-parent {
-                height: $item-height;
-                width: 15px;
-                display: inline-block;
-                text-align: center;
-                vertical-align: middle;
-            }
-
             .item-count {
                 height: 100%;
                 width: 150px;
