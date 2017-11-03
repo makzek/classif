@@ -60,11 +60,11 @@ export class EosDictApiService {
     }
 
     getDictionaryDescriptorData(dictionaryId: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return Promise.resolve().then(() => {
             if (this._dictionaries[dictionaryId]) {
-                resolve(this._dictionaries[dictionaryId]);
+                return this._dictionaries[dictionaryId];
             } else {
-                reject('Dictionary descriptor data for "' + dictionaryId + '" not found');
+                throw new Error('Dictionary descriptor data for "' + dictionaryId + '" not found');
             }
         });
     }
