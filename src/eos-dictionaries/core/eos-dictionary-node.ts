@@ -40,7 +40,7 @@ export class EosDictionaryNode {
      * */
     updating: boolean;
 
-    get children(): EosDictionaryNode[]{
+    get children(): EosDictionaryNode[] {
         console.log('get children');
         return this._dictionary.order(this._children, this.parentId);
     }
@@ -113,6 +113,8 @@ export class EosDictionaryNode {
             if (this.parentId === undefined && this._descriptor.parentField) {
                 this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
             }
+
+            console.log('constr node', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
                 this.id = this._keyToString(data[this._descriptor.keyField.key]);

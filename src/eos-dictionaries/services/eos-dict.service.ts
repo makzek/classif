@@ -406,20 +406,27 @@ export class EosDictService {
         return _path;
     }
 
-    public systemSort(orderBy: IOrderBy) {
-        this._profileSrv.addSort(this.dictionary.id, orderBy);
-        this.dictionary.orderBy = orderBy;
+    public order(orderBy: IOrderBy, userOrder: boolean, list: EosDictionaryNode[]) {
+        if (this.dictionary) {
+            this._profileSrv.addSort(this.dictionary.id, orderBy);
+            this.dictionary.orderBy = orderBy;
+            this.dictionary.userOrder = userOrder;
+            if (userOrder) {
+                this.dictionary.orderedArray = this.getUserOrder(list);
+            }
+            this._selectedNode$.next(this.selectedNode);
+        }
     }
 
-    public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
-        const order: string[] = [];
+    public generateOrder(sortedList: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        const order: EosDictionaryNode[] = [];
         for (const item of sortedList) {
-            order.push(item.id);
+            order.push(item);
         }
         // this.dictionary.orderedArray = order;
-        this._storageSrv.setItem(ID + this.ORDER_NAME, order, true);
+        return order;
     }
-/*
+
     private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
         const order: string[] = this._storageSrv.getItem(ID + this.ORDER_NAME);
         const sortableList: EosDictionaryNode[] = [];
@@ -440,17 +447,18 @@ export class EosDictService {
         return sortableList;
     }
 
-    public getUserOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
-        if (!ID) {
-            console.warn('ID is undifined!')
-            return;
+    public getUserOrder(list: EosDictionaryNode[]): { [parentId: string]: EosDictionaryNode[] } {
+        const _currentSort = this._storageSrv.getItem(this.dictionary.id + this.ORDER_NAME)
+        if (!_currentSort) {
+            this._storageSrv.setItem(this.dictionary.id + this.ORDER_NAME, {}, true);
         }
-        if (this._storageSrv.getItem(ID + this.ORDER_NAME)) {
-            const sortableList: EosDictionaryNode[] = this.restoreOrder(list, ID);
-            return sortableList;
+        if (_currentSort[list[0].parentId]) {
+            _currentSort[list[0].parentId] = this.restoreOrder(list, list[0].parentId)
+            return _currentSort;
         } else {
-            this.generateOrder(list, ID);
-            return list;
+            _currentSort[list[0].parentId] = this.generateOrder(list, list[0].parentId);
+            return _currentSort;
         }
-    }*/
+
+    }
 }

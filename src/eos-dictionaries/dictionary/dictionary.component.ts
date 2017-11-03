@@ -266,6 +266,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
+        this._dictSrv.order( this.orderBy, this.params.userSort, _list );
+
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
         }
@@ -339,16 +341,12 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             fieldKey: fieldKey,
             ascend: false,
         };
-        this._sort();
+        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
     }
 
     chengeSortOrder() {
         this.orderBy.ascend = !this.orderBy.ascend;
-        this._sort();
-    }
-
-    private _sort() {
-        this._dictSrv.systemSort(this.orderBy);
+        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
     }
 
     private _moveUp(): void {
@@ -442,6 +440,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     private _toggleUserSort(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
+        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
         if (this.selectedNode) {
             this._updateVisibleNodes();
         }
