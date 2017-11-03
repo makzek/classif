@@ -49,7 +49,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     editFields: ['CLASSIF_NAME', 'NOTE'],
     searchFields: ['CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['CLASSIF_NAME', 'NOTE'],
-    quickViewFields: ['CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['NOTE'], // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
     allVisibleFields: ['CLASSIF_NAME', 'NOTE'],

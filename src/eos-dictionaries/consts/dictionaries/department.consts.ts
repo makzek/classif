@@ -412,12 +412,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
-        person: ['SURNAME', 'lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'],
-        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'title', 'NOTE']
+        person: ['lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'], // SURNAME is in shortQuickViewFields
+        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'NOTE'] // title is in shortQuickViewFields
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
-        person: ['fio'],
+        person: ['SURNAME'],
         department: ['title']
     },
     editFields: { // TODO: remove IS_NODE!!!

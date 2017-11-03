@@ -46,5 +46,5 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: 'string',
         title: 'Статус визы',
     }],
-    quickViewFields: ['CLASSIF_NAME', 'IS_FINAL', 'STATUS', 'NOTE'],
+    quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
 });
