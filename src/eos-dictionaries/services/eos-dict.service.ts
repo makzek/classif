@@ -408,7 +408,7 @@ export class EosDictService {
 
     public systemSort(orderBy: IOrderBy) {
         this._profileSrv.addSort(this.dictionary.id, orderBy);
-        // this.dictionary.sort(orderBy);
+        this.dictionary.orderBy = orderBy;
     }
 
     public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
@@ -416,9 +416,10 @@ export class EosDictService {
         for (const item of sortedList) {
             order.push(item.id);
         }
+        // this.dictionary.orderedArray = order;
         this._storageSrv.setItem(ID + this.ORDER_NAME, order, true);
     }
-
+/*
     private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
         const order: string[] = this._storageSrv.getItem(ID + this.ORDER_NAME);
         const sortableList: EosDictionaryNode[] = [];
@@ -451,5 +452,5 @@ export class EosDictService {
             this.generateOrder(list, ID);
             return list;
         }
-    }
+    }*/
 }

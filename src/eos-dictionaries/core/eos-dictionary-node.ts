@@ -41,6 +41,7 @@ export class EosDictionaryNode {
     updating: boolean;
 
     get children(): EosDictionaryNode[]{
+        console.log('get children');
         return this._dictionary.order(this._children, this.parentId);
     }
 

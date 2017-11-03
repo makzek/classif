@@ -21,8 +21,8 @@ export class EosDictionary {
     private _nodes: Map<string, EosDictionaryNode>;
 
     private _orderBy: IOrderBy;
-
     private _userOrder: boolean;
+    private _orderedArray: EosDictionaryNode[];
 
     set orderBy(orderBy: IOrderBy) {
         this._orderBy = orderBy;
@@ -48,6 +48,14 @@ export class EosDictionary {
         this._userOrder = userOrder;
     }
 
+    get orderedArray(): EosDictionaryNode[] {
+        return this._orderedArray;
+    }
+
+    set orderedArray(order: EosDictionaryNode[]) {
+        this._orderedArray = order;
+    }
+
     constructor(descData: IDictionaryDescriptor) {
         switch (descData.dictType) {
             case E_DICT_TYPE.linear:
@@ -65,7 +73,7 @@ export class EosDictionary {
 
         this._nodes = new Map<string, EosDictionaryNode>();
 
-
+        console.log('constr');
         this._orderBy = {
             ascend: true,
             fieldKey: 'WEIGHT'
@@ -254,29 +262,28 @@ export class EosDictionary {
     }
 
     private _order(nodes: EosDictionaryNode[], parentId?: string) {
-        if (this.userOrder && parentId) {
-            return this.getUserOrder(nodes, parentId);
+        if (this._userOrder && parentId) {
+            return this._orderedArray;
         } else {
-            return nodes.sort(this._systemSort);
+            return this._systemSort(nodes);
         }
     }
 
-    /**
-     * Sorting on the field CLASSIF_NAME, use it method as parameter in to Array.sort()
-     * @param a Element a
-     * @param b Element b
-     */
-    private _systemSort(a: EosDictionaryNode, b: EosDictionaryNode) {
-        if (a.data[this._orderBy.fieldKey] > b.data[this._orderBy.fieldKey]) {
-            return this._orderBy.ascend ? 1 : -1;
-        }
-        if (a.data[this._orderBy.fieldKey] < b.data[this._orderBy.fieldKey]) {
-            return this._orderBy.ascend ? -1 : 1;
-        }
-        if (a.data[this._orderBy.fieldKey] === b.data[this._orderBy.fieldKey]) {
-            return 0;
-        }
+    private _systemSort(array: EosDictionaryNode[]) {
+        const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
+        return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
+            if (a.data[_orderBy.fieldKey] > b.data[_orderBy.fieldKey]) {
+                return _orderBy.ascend ? 1 : -1;
+            }
+            if (a.data[_orderBy.fieldKey] < b.data[_orderBy.fieldKey]) {
+                return _orderBy.ascend ? -1 : 1;
+            }
+            if (a.data[_orderBy.fieldKey] === b.data[_orderBy.fieldKey]) {
+                return 0;
+            }
+        });
     }
+
 /*
     public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
         const order: string[] = [];
