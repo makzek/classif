@@ -52,7 +52,7 @@ export class EosDictionary {
         this._nodes.clear();
 
         /* add nodes */
-        this.updateNodes(data);
+        this.updateNodes(data, true);
     }
 
     private _updateTree() {

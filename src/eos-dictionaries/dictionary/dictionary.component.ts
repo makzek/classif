@@ -135,8 +135,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this.dictionaryId = dictionary.id;
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
+                    this.treeNodes = [dictionary.root];
                 }
-                this.treeNodes = [dictionary.root];
                 this.params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
             } else {
                 this.treeNodes = [];
@@ -260,7 +260,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     private _updateVisibleNodes() {
-        // console.log('_updateVisibleNodes fired');
+        console.log('_updateVisibleNodes fired');
         this.visibleNodes.forEach(item => item.marked = false);
         this.updateMarks();
         let _list: EosDictionaryNode[] = this.listNodes;
@@ -615,6 +615,14 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         } else {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+        }
+    }
+
+    searchResult(nodes: EosDictionaryNode[]) {
+        console.log('searchresult', nodes);
+        if (nodes && nodes.length) {
+            this.listNodes = nodes;
+            this._updateVisibleNodes();
         }
     }
 }

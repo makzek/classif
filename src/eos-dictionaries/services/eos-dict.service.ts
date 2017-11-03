@@ -117,6 +117,7 @@ export class EosDictService {
                 .then((descData: any) => {
                     this.dictionary = new EosDictionary(descData);
                     this._api.init(this.dictionary.descriptor);
+                    console.log('init root nodes');
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
@@ -125,6 +126,7 @@ export class EosDictService {
                     }
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this.dictionary);
+                    console.log('dictionary ready');
                     return this.dictionary;
                 })
                 .catch((err: Response) => {
@@ -142,7 +144,8 @@ export class EosDictService {
             .then(() => this._getNode(nodeId));
     }
 
-    private _getNode(nodeId): Promise<EosDictionaryNode> {
+    private _getNode(nodeId: string): Promise<EosDictionaryNode> {
+        console.log('get node', nodeId);
         if (this.dictionary) {
             const _node = this.dictionary.getNode(nodeId);
             if (_node) {
@@ -190,9 +193,11 @@ export class EosDictService {
         return this.getNode(this.dictionary.id, nodeId);
     }
 
-    private _updateDictNodes(data: any[], updateTree = false) {
+    private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
         if (data && data.length) {
-            this.dictionary.updateNodes(data, updateTree = false);
+            return this.dictionary.updateNodes(data, updateTree);
+        } else {
+            return null;
         }
     }
 
@@ -362,13 +367,14 @@ export class EosDictService {
 
 
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
+        this._openNode(null);
         return this._api.search(criteries)
             .then((data: any[]) => {
                 this._searchResults = [];
                 if (!data || data.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this._searchResults = data.map((item) => new EosDictionaryNode(this.dictionary.descriptor.record, item))
+                    this._searchResults = this.dictionary.updateNodes(data, false);
                 }
                 return this._searchResults;
             });
