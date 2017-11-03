@@ -32,6 +32,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ID',
         length: 248,
     }, {
+        key: 'PARENT_DUE',
+        type: 'string',
+        title: 'Parent ID',
+        length: 248,
+    }, {
         key: 'RUBRIC_CODE',
         title: 'Код',
         type: 'string',
@@ -399,7 +404,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
     listFields: {
         person: ['RUBRIC_CODE', 'fio'],
         department: ['RUBRIC_CODE', 'title']

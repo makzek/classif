@@ -162,7 +162,10 @@ export class EosDictApiService {
     }
 
     search(criteries: any[]): Promise<any> {
+        console.log('search critery', criteries);
+
         const _search = criteries.map((critery) => this._service.getData({ criteries: critery }));
+
         return Promise.all(_search)
             .then((results) => {
                 const _res = [].concat(...results);
