@@ -1,14 +1,16 @@
 import { IFieldView } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
+import { EosDictionary } from './eos-dictionary';
 
 export class EosDictionaryNode {
     readonly id: any;
     /* made public for a while */
     public _descriptor: RecordDescriptor;
+    private _dictionary: EosDictionary;
     parentId?: string;
     parent?: EosDictionaryNode;
-    children?: EosDictionaryNode[];
+    private _children?: EosDictionaryNode[];
     isExpanded?: boolean;
 
     /**
@@ -38,6 +40,14 @@ export class EosDictionaryNode {
      * */
     updating: boolean;
 
+    get children(): EosDictionaryNode[]{
+        return this._dictionary.order(this._children, this.parentId);
+    }
+
+    set children(nodes: EosDictionaryNode[]){
+        this._children = nodes;
+    }
+
     get isDeleted(): boolean {
         if (this.data['PROTECTED']) {
             return false;
@@ -61,14 +71,14 @@ export class EosDictionaryNode {
 
     get neighbors(): EosDictionaryNode[] {
         if (this.parent) {
-            return this.parent.children;
+            return this.parent._children;
         } else {
             return null;
         }
     }
 
     get expandable(): boolean {
-        return this.hasSubnodes && this.children && this.children.length > 0;
+        return this.hasSubnodes && this._children && this._children.length > 0;
     }
 
     get hasSubnodes(): boolean {
@@ -76,7 +86,7 @@ export class EosDictionaryNode {
     }
 
     get loaded(): boolean {
-        return !this.hasSubnodes || this.children !== undefined;
+        return !this.hasSubnodes || this._children !== undefined;
     }
 
     isVisible(showDeleted: boolean): boolean {
@@ -91,11 +101,11 @@ export class EosDictionaryNode {
         return this._fieldValue(this._descriptor.parentField);
     }
 
-    constructor(descriptor: RecordDescriptor, data: any) {
+    constructor(dictionary: EosDictionary, data: any) {
         if (data) {
             this.marked = !!this.marked;
-
-            this._descriptor = descriptor;
+            this._dictionary = dictionary;
+            this._descriptor = dictionary.descriptor.record;
             /* store all data from backend in .data */
             this.data = data;
 
@@ -143,14 +153,14 @@ export class EosDictionaryNode {
     }
 
     deleteChild(node: EosDictionaryNode) {
-        if (this.children && this.children.length > 0) {
-            this.children = this.children.filter((chld) => chld.id !== node.id);
+        if (this._children && this._children.length > 0) {
+            this._children = this._children.filter((chld) => chld.id !== node.id);
         }
     }
 
     delete(hard = false) { // TODO: check maybe this is unused
         if (hard) {
-            if ((!this.children || this.children.length < 1) && this.parent) {
+            if ((!this._children || this._children.length < 1) && this.parent) {
                 this.parent.deleteChild(this);
                 this.isDeleted = true;
             }
@@ -166,12 +176,12 @@ export class EosDictionaryNode {
             node.parent = null;
         }
 
-        if (!this.children) {
-            this.children = [];
+        if (!this._children) {
+            this._children = [];
         }
         /* tslint:disable:no-bitwise */
-        if (!~this.children.findIndex((chld) => chld.id === node.id)) {
-            this.children.push(node);
+        if (!~this._children.findIndex((chld) => chld.id === node.id)) {
+            this._children.push(node);
             node.parent = this;
         }
         /* tslint:enable:no-bitwise */

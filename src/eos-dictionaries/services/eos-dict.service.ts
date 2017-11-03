@@ -17,6 +17,7 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 import { IOrderBy } from '../core/sort.interface'
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 @Injectable()
 export class EosDictService {
@@ -37,10 +38,13 @@ export class EosDictService {
     private _listPromise: Promise<any>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
 
+    private ORDER_NAME = '-ORDER';
+
     constructor(
         private _api: EosDictApiService,
         private _msgSrv: EosMessageService,
-        private _profileSrv: EosUserProfileService
+        private _profileSrv: EosUserProfileService,
+        private _storageSrv: EosStorageService,
     ) {
         /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
@@ -370,7 +374,7 @@ export class EosDictService {
                 if (!data || data.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this._searchResults = data.map((item) => new EosDictionaryNode(this.dictionary.descriptor.record, item))
+                    this._searchResults = data.map((item) => new EosDictionaryNode(this.dictionary, item))
                 }
                 return this._searchResults;
             });
@@ -404,5 +408,48 @@ export class EosDictService {
 
     public systemSort(orderBy: IOrderBy) {
         this._profileSrv.addSort(this.dictionary.id, orderBy);
+        // this.dictionary.sort(orderBy);
+    }
+
+    public generateOrder(sortedList: EosDictionaryNode[], ID: string) {
+        const order: string[] = [];
+        for (const item of sortedList) {
+            order.push(item.id);
+        }
+        this._storageSrv.setItem(ID + this.ORDER_NAME, order, true);
+    }
+
+    private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        const order: string[] = this._storageSrv.getItem(ID + this.ORDER_NAME);
+        const sortableList: EosDictionaryNode[] = [];
+        for (const id of order) {
+            for (const notSortedItem of list) {
+                if (notSortedItem.id === id) {
+                    sortableList.push(notSortedItem);
+                    break;
+                }
+            }
+        }
+        for (const item of list) {
+            const index = sortableList.indexOf(item);
+            if (index === -1) {
+                sortableList.push(item);
+            }
+        }
+        return sortableList;
+    }
+
+    public getUserOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        if (!ID) {
+            console.warn('ID is undifined!')
+            return;
+        }
+        if (this._storageSrv.getItem(ID + this.ORDER_NAME)) {
+            const sortableList: EosDictionaryNode[] = this.restoreOrder(list, ID);
+            return sortableList;
+        } else {
+            this.generateOrder(list, ID);
+            return list;
+        }
     }
 }
