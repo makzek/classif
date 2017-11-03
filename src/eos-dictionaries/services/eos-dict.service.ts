@@ -155,7 +155,7 @@ export class EosDictService {
             } else {
                 return this._api.getNode(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(this.dictionary, data);
+                        this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
                     })
                     .then((node) => {
@@ -169,7 +169,7 @@ export class EosDictService {
         node.updating = true;
         return this._api.getChildren(node)
             .then((data: any[]) => {
-                this._updateDictNodes(this.dictionary, data);
+                this._updateDictNodes(data, true);
                 node.updating = false;
                 return this.dictionary.getNode(node.id);
             });
@@ -190,9 +190,9 @@ export class EosDictService {
         return this.getNode(this.dictionary.id, nodeId);
     }
 
-    private _updateDictNodes(dict: EosDictionary, data: any[]) {
+    private _updateDictNodes(data: any[], updateTree = false) {
         if (data && data.length) {
-            dict.updateNodes(data);
+            this.dictionary.updateNodes(data, updateTree = false);
         }
     }
 
@@ -227,10 +227,8 @@ export class EosDictService {
             }
             if (node) {
                 node.isActive = true;
-                /*if (node.children) {
-                    this._openNode(node.children[0]);
-                }*/
             }
+            this._openNode(null);
             this.selectedNode = node;
             this._selectedNode$.next(node);
         }
@@ -271,7 +269,7 @@ export class EosDictService {
     }
 
     public isRoot(nodeId: string): boolean {
-        return this.dictionary.root.id === nodeId;
+        return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
