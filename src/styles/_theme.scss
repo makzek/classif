@@ -113,9 +113,13 @@
     }
 }
 
-.ng-invalid.ng-dirty {
-    border-color: $invalid-color-main-theme;
-    outline-color: $invalid-color-main-theme;
+input,
+textarea {
+    &.ng-invalid.ng-dirty {
+        border-color: $invalid-color-main-theme !important;
+        outline: $invalid-color-main-theme solid 1px !important;
+        outline-offset: 0!important;
+    }
 }
 
 .main-theme {
@@ -398,7 +402,6 @@
     }
 
     .eos-card {
-        
         background: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
@@ -408,34 +411,32 @@
             color: $secondary-font-color-main-theme;
             border-color: $border-color-main-theme;
         }
+    }
 
-        .edit-content {
-            label {
-                color: $unimportant-info-color-main-theme;
+    .edit-content {
+        label {
+            color: $unimportant-info-color-main-theme;
+        }
+
+        .form-control {
+            color: $secondary-font-color-main-theme;
+            background-color: $secondary-color-main-theme;
+            border-color: $border-color-main-theme;
+
+            &:focus {
+                border-color: $active-field-color-main-theme;
             }
 
-            .form-control {
-                color: $secondary-font-color-main-theme;
-                background-color: $secondary-color-main-theme;
-                border-color: $border-color-main-theme;
+            &:-ms-input-placeholder {
+                color: $primary-font-color-main-theme;
+            }
+
+            &.readonly {
+                background-color: transparent;
+                border-color: transparent;
 
                 &:focus {
-                    border-color: $active-field-color-main-theme;
-                }
-                &:-ms-input-placeholder {
-                    color: $primary-font-color-main-theme;
-                }
-
-                &.readonly {
-                    background-color: transparent;
                     border-color: transparent;
-                    &:focus {
-                        border-color: transparent;
-                    }
-                }
-
-                &.ng-invalid {
-                    border-color: $invalid-color-main-theme;
                 }
             }
         }
