@@ -37,7 +37,11 @@ export class NodeListPaginationComponent implements OnInit {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
-
+    @Output() changePage: EventEmitter<number> = new EventEmitter<number>();
+    // NEW CODE
+    public current = 1;
+    public pagess = []
+    //
     readonly pages = PAGES;
     page: IListPage;
     pageLength: IPageLength;
@@ -49,6 +53,7 @@ export class NodeListPaginationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.generatePages();
         this.pageLength = this.pages[0];
         this.page = {
             start: 1,
@@ -84,5 +89,17 @@ export class NodeListPaginationComponent implements OnInit {
         this.page.current = event.page;
         this._dropStartPage = true;
         this.change.emit(this.page);
+    }
+
+    // NEW CODE
+    showPage(page: number) {
+        this.changePage.emit(page);
+    }
+
+    generatePages() {
+        for (let i = this.total - 3; i <= this.total; i++) {
+            this.pagess.push(i);
+        }
+
     }
 }

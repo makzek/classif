@@ -1,8 +1,15 @@
 <div class="pagination-option block">
-    <pagination class="pagination" pageBtnClass="pagination-btn" (pageChanged)="pageChanged($event)" [totalItems]="total" [itemsPerPage]="pageLength.value"
-        [maxSize]="5" [rotate]="true" [ngModel]="page.current" class="pagination-lg" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
-    <button class="btn show-more special-text" [disabled]="page.current*page.length >= total" (click)="showMore()">Показывать еще</button>
+    <div class="pagintaion">
+        <button class="pag-btn prev" (click)="showPrev()"></button>
+        <button class="pag-btn first" (click)="showPage(1)">1</button>
+        <div *ngFor="let page of pagess">
+            <button class="pag-btn" (click)="showPage(page)">{{page}}</button>
+         </div>
+        <button class="pag-btn last" (click)="showPage()">{{total}}</button>
+        <button class="pag-btn next" (click)="showNext()"></button>
+    </div>
 
+    <button class="btn show-more special-text" [disabled]="page.current*page.length >= total" (click)="showMore()">Показывать еще</button>
     <div class="btn-group count-select" dropdown container="body">
         <span type="button" class="dropdown-toggle special-text" dropdownToggle>
             <span class="dropdown-toggle-text">Показывать по {{pageLength.title}}</span>
