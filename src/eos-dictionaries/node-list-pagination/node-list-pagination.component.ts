@@ -40,28 +40,29 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         } else {
             this.setPageLength(this.pages[0])
         }
-        this.generatePages();
+        this._generatePages();
     }
 
     ngDoCheck() {
-        this.generatePages();
+        this._generatePages();
     }
 
-    setPageLength(length: IPageLength) {
+    public setPageLength(length: IPageLength) {
         this.pageLength = length
         this.page.current = this.page.start
         this.page.length = length.value
         this.change.emit(this.page)
         this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
-        this.generatePages()
+        this._generatePages()
     }
 
-    showMore() {
+    public showMore() {
         this._dropStartPage = false;
         this.page.current++;
+        this.config.current++;
     }
 
-    pageChanged(event: any): void {
+    public pageChanged(event: any): void {
         console.log('pageChanged');
         if (this._dropStartPage) {
             this.page.start = event.page;
@@ -72,14 +73,14 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
     }
 
     // NEW CODE
-    showPage(page: number, i?: number) {
+    public showPage(page: number) {
         this.config.current = page;
         this.page.start = page
         this.page.current = page;
         this.change.emit(this.page);
     }
 
-    generatePages() {
+    private _generatePages() {
         console.warn(this.total + ' all elements')
         if (this.total % this.pageLength.value === 0) {
             this.config.last = (this.total / this.pageLength.value);
@@ -87,13 +88,13 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
             this.config.last = Math.floor(this.total / this.pageLength.value) + 1;
         }
         console.log(this.config.last + ' all page')
+        this.config.pages = []
         for (let i = 1, j = 0; i <= this.config.last; i++, j++) {
             this.config.pages[j] = i;
         }
-        console.log(this.config.pages)
     }
 
-    visible(i: number): boolean {
+    public visible(i: number): boolean {
         if (i === 0 || i === this.config.last - 1) {
             return false;
         } else if (this.config.current === 1 && i < this.config.current + 3) {
