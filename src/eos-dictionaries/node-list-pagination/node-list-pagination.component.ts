@@ -1,22 +1,23 @@
-import { Component, Input, Output, EventEmitter, OnInit, DoCheck } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { ActivatedRoute, Router } from '@angular/router'
 import { IListPage, PaginationConfig, IPageLength, PAGES} from './pagination-config.interface';
 
 @Component({
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent implements OnInit, DoCheck {
+export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
-    // NEW CODE
+
     public config: PaginationConfig = {
         current: 1,
         last: 1,
         pages: []
     }
-    //
+    sub;
     readonly pages = PAGES;
     page: IListPage;
     pageLength: IPageLength;
@@ -24,7 +25,9 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
     private _dropStartPage = true;
 
     constructor(
-        private _storageSrv: EosStorageService
+        private _storageSrv: EosStorageService,
+        private _route: ActivatedRoute,
+        private _router: Router
     ) { }
 
     ngOnInit() {
@@ -36,11 +39,29 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         }
         const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
         if (PAGE_SETTING) {
-            this.setPageLength(PAGE_SETTING)
+            this.pageLength = PAGE_SETTING
+            this.page.current = this.page.start
+            this.page.length = PAGE_SETTING.value
+            this.change.emit(this.page)
+            this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
         } else {
+            this.pageLength = this.pages[0]
+            this.page.current = this.page.start
+            this.page.length = this.pages[0].value
+            this.change.emit(this.page)
+            this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
             this.setPageLength(this.pages[0])
         }
+        this.sub = this._route.queryParams.subscribe(params => {
+            this.config.current = Number.parseInt(params.page);
+            this.pageLength.value = Number.parseInt(params.items);
+            console.log(params);
+        });
         this._generatePages();
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     ngDoCheck() {
@@ -53,6 +74,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         this.page.length = length.value
         this.change.emit(this.page)
         this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
+        this._router.navigate([], {queryParams: {page: this.config.current, items: this.pageLength.value}})
         this._generatePages()
     }
 
@@ -72,22 +94,21 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         this.change.emit(this.page);
     }
 
-    // NEW CODE
     public showPage(page: number) {
         this.config.current = page;
         this.page.start = page
         this.page.current = page;
         this.change.emit(this.page);
+        this._router.navigate([], {queryParams: {page: this.config.current, items: this.pageLength.value}})
     }
 
     private _generatePages() {
-        console.warn(this.total + ' all elements')
+        // console.warn(this.total + ' all elements')
         if (this.total % this.pageLength.value === 0) {
             this.config.last = (this.total / this.pageLength.value);
         } else {
             this.config.last = Math.floor(this.total / this.pageLength.value) + 1;
         }
-        console.log(this.config.last + ' all page')
         this.config.pages = []
         for (let i = 1, j = 0; i <= this.config.last; i++, j++) {
             this.config.pages[j] = i;

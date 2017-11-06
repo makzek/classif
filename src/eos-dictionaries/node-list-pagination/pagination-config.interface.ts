@@ -15,10 +15,7 @@ export interface IPageLength {
     value: number;
 }
 
-export const PAGES: IPageLength[] = [{
-    title: '5',
-    value: 5
-},
+export const PAGES: IPageLength[] = [
 {
     title: '10',
     value: 10
