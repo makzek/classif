@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, DoCheck } from '@angular/core';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 
 export interface IListPage {
@@ -33,13 +33,16 @@ const PAGES: IPageLength[] = [{
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent implements OnInit {
+export class NodeListPaginationComponent implements OnInit, DoCheck {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
     @Output() changePage: EventEmitter<number> = new EventEmitter<number>();
     // NEW CODE
     public current = 1;
+    public first = 1;
+    public last: number;
+    public pageCount: number;
     public pagess = []
     //
     readonly pages = PAGES;
@@ -53,7 +56,6 @@ export class NodeListPaginationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.generatePages();
         this.pageLength = this.pages[0];
         this.page = {
             start: 1,
@@ -66,6 +68,10 @@ export class NodeListPaginationComponent implements OnInit {
         } else {
             this.setPageLength(this.pages[0])
         }
+        this.generatePages();
+    }
+    ngDoCheck() {
+        this.generatePages();
     }
 
     setPageLength(length: IPageLength) {
@@ -93,13 +99,24 @@ export class NodeListPaginationComponent implements OnInit {
 
     // NEW CODE
     showPage(page: number) {
+        this.current = page;
         this.changePage.emit(page);
     }
 
     generatePages() {
-        for (let i = this.total - 3; i <= this.total; i++) {
-            this.pagess.push(i);
+        console.log(this.total + ' all elements')
+        if (this.total % this.pageLength.value === 0) {
+            this.pageCount = (this.total / this.pageLength.value);
+        } else {
+            this.pageCount = Math.floor(this.total / this.pageLength.value) + 1;
         }
-
+        this.last = this.pageCount;
+        console.log(this.pageCount + ' all page')
+        if (this.pageCount > 3) {
+            for (let i = this.pageCount - 3, j = 0; i < this.pageCount; i++, j++) {
+                this.pagess[j] = i;
+            }
+        }
+        console.log(this.pagess)
     }
 }

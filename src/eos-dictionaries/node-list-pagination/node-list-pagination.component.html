@@ -1,12 +1,12 @@
 <div class="pagination-option block">
     <div class="pagintaion">
-        <button class="pag-btn prev" (click)="showPrev()"></button>
-        <button class="pag-btn first" (click)="showPage(1)">1</button>
+        <button class="pag-btn prev inactive" [disabled]="current == 1" (click)="showPage(current - 1)"></button>
+        <button class="pag-btn first" [ngClass]="{'active': current === 1, 'inactive': current !== 1}" (click)="showPage(1)">1</button>
         <div *ngFor="let page of pagess">
-            <button class="pag-btn" (click)="showPage(page)">{{page}}</button>
+            <button class="pag-btn" [ngClass]="{'active': current === page, 'inactive': current !== page}" (click)="showPage(page)">{{page}}</button>
          </div>
-        <button class="pag-btn last" (click)="showPage()">{{total}}</button>
-        <button class="pag-btn next" (click)="showNext()"></button>
+        <button *ngIf="pageCount > 1" class="pag-btn last" [ngClass]="{'active': current === last, 'inactive': current !== last}" (click)="showPage(last)">{{last}}</button>
+        <button class="pag-btn next inactive" [disabled]="current === last" (click)="showPage(current + 1)"></button>
     </div>
 
     <button class="btn show-more special-text" [disabled]="page.current*page.length >= total" (click)="showMore()">Показывать еще</button>
