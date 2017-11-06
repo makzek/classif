@@ -40,7 +40,7 @@ import {
 } from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
-import { IListPage } from '../node-list-pagination/node-list-pagination.component';
+import { IListPage } from '../node-list-pagination/pagination-config.interface';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 

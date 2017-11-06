@@ -1,33 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, DoCheck } from '@angular/core';
 import { EosStorageService } from '../../app/services/eos-storage.service';
-
-export interface IListPage {
-    start: number;
-    current: number;
-    length: number;
-};
-
-interface IPageLength {
-    title: string;
-    value: number;
-}
-
-const PAGES: IPageLength[] = [{
-    title: '10',
-    value: 10
-}, {
-    title: '20',
-    value: 20
-}, {
-    title: '40',
-    value: 30
-}, {
-    title: '100',
-    value: 100
-}, {
-    title: '200',
-    value: 200
-}];
+import { IListPage, PaginationConfig, IPageLength, PAGES} from './pagination-config.interface';
 
 @Component({
     selector: 'eos-node-list-pagination',
@@ -37,13 +10,12 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
     @Input() position: any;
     @Input() total: number;
     @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
-    @Output() changePage: EventEmitter<number> = new EventEmitter<number>();
     // NEW CODE
-    public current = 1;
-    public first = 1;
-    public last: number;
-    public pageCount: number;
-    public pagess = []
+    public config: PaginationConfig = {
+        current: 1,
+        last: 1,
+        pages: []
+    }
     //
     readonly pages = PAGES;
     page: IListPage;
@@ -70,6 +42,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         }
         this.generatePages();
     }
+
     ngDoCheck() {
         this.generatePages();
     }
@@ -80,6 +53,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
         this.page.length = length.value
         this.change.emit(this.page)
         this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
+        this.generatePages()
     }
 
     showMore() {
@@ -98,25 +72,38 @@ export class NodeListPaginationComponent implements OnInit, DoCheck {
     }
 
     // NEW CODE
-    showPage(page: number) {
-        this.current = page;
-        this.changePage.emit(page);
+    showPage(page: number, i?: number) {
+        this.config.current = page;
+        this.page.start = page
+        this.page.current = page;
+        this.change.emit(this.page);
     }
 
     generatePages() {
-        console.log(this.total + ' all elements')
+        console.warn(this.total + ' all elements')
         if (this.total % this.pageLength.value === 0) {
-            this.pageCount = (this.total / this.pageLength.value);
+            this.config.last = (this.total / this.pageLength.value);
         } else {
-            this.pageCount = Math.floor(this.total / this.pageLength.value) + 1;
+            this.config.last = Math.floor(this.total / this.pageLength.value) + 1;
         }
-        this.last = this.pageCount;
-        console.log(this.pageCount + ' all page')
-        if (this.pageCount > 3) {
-            for (let i = this.pageCount - 3, j = 0; i < this.pageCount; i++, j++) {
-                this.pagess[j] = i;
-            }
+        console.log(this.config.last + ' all page')
+        for (let i = 1, j = 0; i <= this.config.last; i++, j++) {
+            this.config.pages[j] = i;
         }
-        console.log(this.pagess)
+        console.log(this.config.pages)
+    }
+
+    visible(i: number): boolean {
+        if (i === 0 || i === this.config.last - 1) {
+            return false;
+        } else if (this.config.current === 1 && i < this.config.current + 3) {
+            return true;
+        } else if (this.config.current === 2 && i < this.config.current + 2) {
+            return true;
+        } else if (this.config.current > 2 && i >= this.config.current - 2 && i <= this.config.current) {
+            return true;
+        } else if (this.config.current >= this.config.last - 2 && i >= this.config.last - 4) {
+            return true;
+        }
     }
 }
