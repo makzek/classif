@@ -113,7 +113,7 @@ export class EosDictionaryNode {
                 this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
             }
 
-            console.log('constr node', this.parentId);
+            // console.log('constructing node with parent', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
                 this.id = this._keyToString(data[this._descriptor.keyField.key]);

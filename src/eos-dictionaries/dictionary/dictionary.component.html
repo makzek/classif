@@ -61,7 +61,7 @@
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
             <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
-            <eos-node-list-pagination [total]="listNodes?.length"></eos-node-list-pagination>
+            <eos-node-list-pagination [total]="listNodes?.length" (pageChanged)="pageChanged($event)"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">

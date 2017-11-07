@@ -2,15 +2,15 @@
     <div class="pagintaion">
         <button class="pag-btn prev inactive" [disabled]="config.current === 1"
         (click)="showPage(config.current - 1)">&lsaquo;</button>
-        <button class="pag-btn first" [ngClass]="{'active': config.current === 1, 'inactive': config.current !== 1}"
+        <!--button class="pag-btn first" [ngClass]="{'active': config.current === 1, 'inactive': config.current !== 1}"
         (click)="showPage(1)">1</button>
-        <div *ngFor="let page of config.pages let i = index">
-            <button class="pag-btn" [ngClass]="{'active': config.current === page, 'inactive': config.current !== page}"
-            (click)="showPage(page)" *ngIf="visible(i)">{{page}}</button>
-        </div>
-        <button class="pag-btn last" [ngClass]="{'active': config.current === config.pageCount, 'inactive': config.current !== config.pageCount}"
-        (click)="showPage(config.pageCount)" *ngIf="config.pageCount > 1">{{config.pageCount}}</button>
-        <button class="pag-btn next inactive" [disabled]="config.current === config.pageCount"
+        <div -->
+            <button *ngFor="let page of pages let i = index" class="pag-btn" [ngClass]="{'active': config.current === page, 'inactive': config.current !== page}"
+            (click)="showPage(page)">{{page}}</button>
+        <!--/div>
+        <!--button class="pag-btn last" [ngClass]="{'active': config.current === pageCount, 'inactive': config.current !== pageCount}"
+        (click)="showPage(pageCount)" *ngIf="pageCount > 1">{{pageCount}}</button-->
+        <button class="pag-btn next inactive" [disabled]="config.current === pageCount"
         (click)="showPage(config.current + 1)">&rsaquo;</button>
     </div>
 
@@ -23,7 +23,7 @@
             </div>
         </span>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem" *ngFor="let item of pages">
+            <li role="menuitem" *ngFor="let item of pageLengths">
                 <a class="dropdown-item" (click)="setPageLength(item.value)">{{item.title}}</a>
             </li>
         </ul>

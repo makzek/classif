@@ -425,7 +425,7 @@ export class EosDictService {
 
     // temporary
     get userOrdered(): boolean {
-        return this.dictionary.userOrdered;
+        return this.dictionary && this.dictionary.userOrdered;
     }
 
     private _reorder() {

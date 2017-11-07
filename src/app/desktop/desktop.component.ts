@@ -17,11 +17,6 @@ export class DesktopComponent implements OnDestroy {
     referencesList: IDeskItem[];
     recentItems: IDeskItem[];
     deskId: string;
-    params = {
-        length: 10,
-        page: 1,
-        start: 1
-    }
 
     historyToLeft = false;
 
@@ -65,7 +60,6 @@ export class DesktopComponent implements OnDestroy {
                 _deskSrv.setSelectedDesk(link.path);
             }
         );
-        this.params.length = _storageSrv.getItem('PAGE_SETTING');
     }
 
     ngOnDestroy() {

@@ -7,7 +7,6 @@ import { E_RECORD_ACTIONS } from '../core/record-action';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS} from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
 import { INodeListParams } from '../core/node-list.interfaces';
-import { EosDictOrderService } from '../services/eos-dict-order.service';
 
 @Component({
     selector: 'eos-node-actions',
@@ -25,9 +24,7 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
     private dictionary: EosDictionary;
     private _dictionarySubscription: Subscription;
 
-    constructor(_dictSrv: EosDictService,
-        private _orderSrv: EosDictOrderService
-    ) {
+    constructor(_dictSrv: EosDictService) {
         this._initButtons();
         this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
             this.dictionary = dict;
@@ -76,7 +73,6 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
                     break;
                 case E_RECORD_ACTIONS.userOrder:
                     _active = this.params.userSort;
-                    this._orderSrv.setSortingMode(_active);
                     break;
                 case E_RECORD_ACTIONS.edit:
                     _enabled = this.params.select && _enabled;
