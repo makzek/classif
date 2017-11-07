@@ -17,7 +17,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
         last: 1,
         pages: []
     }
-    sub;
+    private _routerSub;
     readonly pages = PAGES;
     page: IListPage;
     pageLength: IPageLength;
@@ -43,7 +43,6 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
             this.page.current = this.page.start
             this.page.length = PAGE_SETTING.value
             this.change.emit(this.page)
-            this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
         } else {
             this.pageLength = this.pages[0]
             this.page.current = this.page.start
@@ -52,7 +51,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
             this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
             this.setPageLength(this.pages[0])
         }
-        this.sub = this._route.queryParams.subscribe(params => {
+        this._routerSub = this._route.queryParams.subscribe(params => {
             if (params.page && params.items) {
                 this.config.current = Number.parseInt(params.page);
                 this.pageLength.value = Number.parseInt(params.items);
@@ -65,7 +64,7 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this._routerSub.unsubscribe();
     }
 
     ngDoCheck() {
@@ -88,16 +87,6 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
         this.config.current++;
     }
 
-    public pageChanged(event: any): void {
-        console.log('pageChanged');
-        if (this._dropStartPage) {
-            this.page.start = event.page;
-        }
-        this.page.current = event.page;
-        this._dropStartPage = true;
-        this.change.emit(this.page);
-    }
-
     public showPage(page: number) {
         this.config.current = page;
         this.page.start = page
@@ -107,7 +96,6 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
     }
 
     private _generatePages() {
-        // console.warn(this.total + ' all elements')
         if (this.total % this.pageLength.value === 0) {
             this.config.last = (this.total / this.pageLength.value);
         } else {

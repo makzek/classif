@@ -221,10 +221,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit() {
-        if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-        }
+        this.resize();
     }
 
     ngOnDestroy() {
