@@ -13,7 +13,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
     templateUrl: 'pushpin.component.html',
 })
 export class PushpinComponent {
-    private _show = false;
+    public _show = false;
     private deskList: EosDesk[];
     @Input() infoOpened: boolean;
     private openStyle = '350px';
