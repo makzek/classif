@@ -83,7 +83,7 @@ export class EosDictionary {
         this._nodes.clear();
 
         /* add nodes */
-        this.updateNodes(data);
+        this.updateNodes(data, true);
     }
 
     private _updateTree() {
@@ -120,7 +120,8 @@ export class EosDictionary {
         });
     }
 
-    updateNodes(data: any[]) {
+    updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
+        const _nodes: EosDictionaryNode[] = [];
         data.forEach((nodeData) => {
             if (nodeData) {
                 const nodeId = nodeData[this.descriptor.record.keyField.key];
@@ -131,12 +132,15 @@ export class EosDictionary {
                     _node = new EosDictionaryNode(this, nodeData);
                     this._nodes.set(_node.id, _node);
                 }
+                _nodes.push(_node);
             } else {
                 console.log('no data');
             }
         });
-
-        this._updateTree();
+        if (updateTree) {
+            this._updateTree();
+        }
+        return _nodes;
     }
 
     getNode(nodeId: string): EosDictionaryNode {

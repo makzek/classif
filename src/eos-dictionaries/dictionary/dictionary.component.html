@@ -28,7 +28,7 @@
                     <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
-                    <eos-dictionary-search></eos-dictionary-search>
+                    <eos-dictionary-search (searchResult)="searchResult($event)"></eos-dictionary-search>
                 </div>
             </div>
             <div class="second-line block special-text">

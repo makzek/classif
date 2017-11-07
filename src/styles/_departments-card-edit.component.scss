@@ -70,7 +70,8 @@
             }
 
             &.gender {
-                margin-top: 50px;
+                margin-top: 44px;
+                position: relative;
             }
         }
 
@@ -87,7 +88,7 @@
         resize: none;
 
         &.note-person {
-            height: 219px;
+            height: 212px;
         }
 
         &.note-dep {
@@ -129,7 +130,7 @@
 
     .gender-placeholder {
         position: absolute;
-        top: 215px;
+        top: 30px;
         left: 9px;
         width: 30px;
     }
@@ -207,7 +208,6 @@
     .col-1 {
         width: 178px;
         margin-right: 40px;
-        position: relative;
     }
 
     .col-2 {

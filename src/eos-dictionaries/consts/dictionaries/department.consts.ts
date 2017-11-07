@@ -32,6 +32,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ID',
         length: 248,
     }, {
+        key: 'PARENT_DUE',
+        type: 'string',
+        title: 'Parent ID',
+        length: 248,
+    }, {
         key: 'RUBRIC_CODE',
         title: 'Код',
         type: 'string',
@@ -399,7 +404,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
     listFields: {
         person: ['RUBRIC_CODE', 'fio'],
         department: ['RUBRIC_CODE', 'title']
@@ -412,12 +417,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
-        person: ['SURNAME', 'lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'],
-        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'title', 'NOTE']
+        person: ['lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'], // SURNAME is in shortQuickViewFields
+        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'NOTE'] // title is in shortQuickViewFields
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
-        person: ['fio'],
+        person: ['SURNAME'],
         department: ['title']
     },
     editFields: { // TODO: remove IS_NODE!!!

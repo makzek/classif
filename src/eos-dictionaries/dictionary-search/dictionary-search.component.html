@@ -20,10 +20,31 @@
         <span class="pull-left title">Область поиска</span>
     </div>
     <div>
-        <div class="checkbox-inline">
-            <label>
-                <input type="checkbox" [(ngModel)]="settings.deleted">
-                <span></span>Учитывать логически удаленные</label>
+        <div class="row full-search-settings-container">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="search-area" [value]="false" [(ngModel)]="settings.onlyCurrentNode">
+                        <span></span>Во всём справочнике</label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="search-area" [value]="true" [(ngModel)]="settings.onlyCurrentNode">
+                        <span></span>В текущей ветке</label>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-8 col-xl-8">
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="settings.deleted">
+                        <span></span>Учитывать логически удаленные</label>
+                </div>
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="settings.subbranches">
+                        <span></span>Учитывать подчинённые ветки</label>
+                </div>
+            </div>
         </div>
         <div *ngIf="loading" class="spinner-wrapper">
             <eos-spinner size="md"></eos-spinner>

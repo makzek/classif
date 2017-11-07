@@ -2,7 +2,7 @@ import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { IFieldView } from '../core/dictionary.interfaces';
+import { IFieldView, E_FIELD_TYPE } from '../core/dictionary.interfaces';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
@@ -18,6 +18,7 @@ export class NodeInfoComponent implements OnDestroy {
     actionEdit = RECORD_ACTIONS_EDIT;
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
+    fieldTypes = E_FIELD_TYPE;
 
     private _openedNodeSubscription: Subscription;
 

@@ -9,6 +9,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { EosDictService } from '../services/eos-dict.service';
 import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { ISearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 
@@ -18,6 +19,9 @@ import { SEARCH_TYPES } from '../consts/search-types';
 })
 
 export class DictionarySearchComponent implements OnDestroy {
+    @Output() searchResult: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>();
+    @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
+
     dictId = '';
     fieldsDescription = {};
     data = {};
@@ -104,7 +108,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
         if (evt.keyCode === 13) {
             this.isOpenQuick = false;
-            this._dictSrv.search(this.dataQuick, _settings);
+            this._dictSrv.search(this.dataQuick, _settings)
+                .then((nodes) => this.searchResult.emit(nodes));
         }
     }
 
@@ -114,7 +119,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
     fullSearch() {
         this.searchPop.hide();
-        this._dictSrv.fullSearch(this.data, this.settings);
+        this._dictSrv.fullSearch(this.data, this.settings)
+            .then((nodes) => this.searchResult.emit(nodes));
     }
 
     clearForm() {

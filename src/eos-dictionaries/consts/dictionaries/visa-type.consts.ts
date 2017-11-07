@@ -20,7 +20,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
-        title: 'Описание',
+        title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
@@ -46,5 +46,5 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: 'string',
         title: 'Статус визы',
     }],
-    quickViewFields: ['CLASSIF_NAME', 'IS_FINAL', 'STATUS', 'NOTE'],
+    quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
 });

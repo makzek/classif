@@ -42,7 +42,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
-        title: 'Комментарий',
+        title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,

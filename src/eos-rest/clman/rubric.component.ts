@@ -1,28 +1,20 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
 import { RUBRIC_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 
-
-
 @Component({
     selector: 'eos-rest-rubric',
     templateUrl: './rubric.component.html'
 })
-export class RubricComponent implements OnInit {
+export class RubricComponent {
     items: RUBRIC_CL[] = [];
     currentItem: RUBRIC_CL;
-    // username: string;
     // errorMessage: string;
     constructor(private pip: PipRX) { }
-    //
-    ngOnInit() {
-
-    }
 
     getData() {
-        // this.username = this._ctx.currentUser.CLASSIF_NAME;
         this.pip.read<RUBRIC_CL>({
             // - Загрузка всех строк
             // RUBRIC_CL: ALL_ROWS, orderby: 'DUE', top: 20
