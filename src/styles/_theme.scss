@@ -415,7 +415,11 @@ textarea {
 
     .edit-content {
         label {
-            color: $unimportant-info-color-main-theme;
+            color: $primary-font-color-main-theme;
+
+            &.readonly {
+                color: $unimportant-info-color-main-theme;
+            }
         }
 
         .form-control {
