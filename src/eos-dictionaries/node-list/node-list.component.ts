@@ -34,21 +34,21 @@ export class NodeListComponent {
             before = this.sortableNodes.length - 1;
         }
         */
-        if (this.nodes.length) {
+        if (this.nodes && this.nodes.length) {
             /*
             for (let i = from, j = 0; i <= before; i++ , j++) {
                 this.sortableNodes[i] = this.nodeListPerPage[j];
             }
             */
             // Генерируем порядок
-            this._dictSrv.generateOrder(this.nodes, this.nodes[0].parentId);
+            this._dictSrv.setUserOrder(this.nodes);
         }
     }
 
     writeValues(nodes: EosDictionaryNode[]) {
         if (nodes && nodes.length) {
             this.sortableComponent.writeValue(nodes);
-            this._dictSrv.generateOrder(nodes, nodes[0].parentId);
+            this._dictSrv.setUserOrder(nodes);
         }
     }
 

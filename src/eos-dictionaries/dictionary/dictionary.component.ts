@@ -103,7 +103,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         private _confirmSrv: ConfirmWindowService,
     ) {
         this.params = {
-            userSort: this._orderSrv.getSortingMode(),
+            userSort: false,
             showDeleted: false,
             hasParent: false,
             select: false
@@ -254,6 +254,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
                 .then((resp) => {
+                    Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered }); // todo: re-factor this ugly solution
                     this._dictSrv.selectNode(this._nodeId)
                 });
         }
@@ -266,7 +267,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        this._dictSrv.order( this.orderBy, this.params.userSort, _list );
+        // todo: make sure in reordering
+        // this._dictSrv.order( this.orderBy, this.params.userSort, _list );
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
@@ -305,7 +307,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
-                this._toggleUserSort();
+                this._toggleUserOrder();
                 break;
 
             case E_RECORD_ACTIONS.moveUp:
@@ -332,21 +334,21 @@ export class DictionaryComponent implements OnDestroy, OnInit {
                 this._restoreItems();
                 break;
             default:
-                console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
+                console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
     }
 
-    toggleSystemSort(fieldKey: string) {
+    orderByField(fieldKey: string) {
         this.orderBy = {
             fieldKey: fieldKey,
-            ascend: false,
+            ascend: true,
         };
-        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
+        this._dictSrv.orderBy(this.orderBy);
     }
 
-    chengeSortOrder() {
+    toggleOrderDirection() {
         this.orderBy.ascend = !this.orderBy.ascend;
-        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
+        this._dictSrv.orderBy(this.orderBy);
     }
 
     private _moveUp(): void {
@@ -438,9 +440,9 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         this._updateVisibleNodes();
     }
 
-    private _toggleUserSort(): void {
+    private _toggleUserOrder(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        this._dictSrv.order( this.orderBy, this.params.userSort, this.listNodes);
+        this._dictSrv.toggleUserOrder();
         if (this.selectedNode) {
             this._updateVisibleNodes();
         }

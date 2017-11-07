@@ -136,10 +136,6 @@ export class EosUserProfileService implements IUserProfile {
         this._settings$.next(this.settings);
     }
 
-    addSort(dictId: string, orderBy: IOrderBy) {
-        this._setSetting('sort', { dictId: orderBy });
-    }
-
     private _setSetting(key: string, value: any) {
         let _setting = this.settings.find((item) => item.id === key);
         if (!_setting) {
