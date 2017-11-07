@@ -55,8 +55,8 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.group,
     title: null,
     hint: 'Отображать логически удалённые',
-    iconClass: 'fa fa-eye',
-    activeIconClass: '',
+    iconClass: 'eos-icon eos-icon-show-blue small',
+    activeIconClass: 'eos-icon eos-icon-show-white small',
     hoverIconClass: '',
     buttonClass: null
 }, {
@@ -65,7 +65,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: null,
     hint: 'Пользовательская сортировка',
     iconClass: 'eos-icon eos-icon-custom-list-blue small',
-    activeIconClass: 'eos-icon eos-icon-custom-list-dark-blue small',
+    activeIconClass: 'eos-icon eos-icon-custom-list-white small',
     hoverIconClass: 'eos-icon eos-icon-custom-list-white small',
     buttonClass: null
 }, {

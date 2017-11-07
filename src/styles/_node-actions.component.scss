@@ -8,6 +8,12 @@
     .btn {
         height: $item-height;
         width: $item-width;
+
+       /* &.active {
+            .eos-icon-custom-list-blue {
+                background-image: url("../assets/icons/Custom-List-White.svg");
+            }
+        }*/
     }
 }
 

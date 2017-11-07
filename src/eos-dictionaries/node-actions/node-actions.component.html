@@ -2,14 +2,16 @@
     <span *ngFor="let item of buttons let i = index" class="visible-lg-inline-block actions">
         <button *ngIf="item.show" [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
             tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
-            <span class="{{item.iconClass}}" container="body"></span>
+            <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
+            <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
         </button>
     </span>
 
     <span *ngFor="let item of moreButtons let i = index" class="visible-lg-inline-block actions">
         <button *ngIf="showMore" [disabled]="!item.enabled" class="btn btn-primary-light {{action.buttonClass}}" [ngClass]="{active: item.isActive}"
             tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
-            <span class="{{item.iconClass}}" container="body"></span>
+            <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
+            <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
         </button>
     </span>
 
