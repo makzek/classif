@@ -59,7 +59,7 @@
 
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            left: $dictionary-block-width;
             right: $grid-gutter-width / 2;
         }
     }
@@ -93,7 +93,7 @@
 
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            left: $dictionary-block-width;
             right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
