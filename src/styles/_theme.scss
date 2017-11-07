@@ -122,6 +122,10 @@ textarea {
     }
 }
 
+.full-search-settings-container {
+    border-color: $border-color-main-theme;
+}
+
 .main-theme {
     // general
     .block {
@@ -465,7 +469,7 @@ textarea {
 
     .full-search-form {
         label {
-            color: $unimportant-info-color-main-theme;
+            color: $primary-font-color-main-theme;
         }
 
         .form-control.ng-valid {
@@ -483,7 +487,7 @@ textarea {
     .eos-departments-card-edit {
         .block-title {
             border-color: $border-color-main-theme;
-            color: $unimportant-info-color-main-theme;
+            color: $primary-font-color-main-theme;
         }
     }
 }

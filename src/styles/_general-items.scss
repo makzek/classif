@@ -1,4 +1,5 @@
-.checkbox-inline {
+.checkbox-inline,
+.radio-inline {
     padding-left: 12px;
     line-height: 24px;
 }
@@ -42,6 +43,35 @@
         margin: 0;
     }
 }
+
+.radio-inline,
+.radio {
+    input[type="radio"] {
+        opacity: 0;
+        cursor: pointer;
+        margin-left: 0;
+
+        &:checked + span {
+            background-image: url("../assets/icons/Radio-V-Blue.svg");
+        }
+
+        & + span {
+            margin-right: 6px;
+            margin-bottom: -7px;
+            display: inline-block;
+            height: 24px;
+            width: 24px;
+            line-height: 2px;
+            background-size: cover;
+            background-image: url("../assets/icons/Radio-Blue.svg");
+        }
+    }
+
+    label {
+        margin: 0;
+    }
+}
+
 
 .group-checkbox {
     input[type="checkbox"] {

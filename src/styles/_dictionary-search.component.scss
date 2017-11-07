@@ -72,12 +72,6 @@
     }
 }
 
-/* .search-modal {
-    .input-group,
-    .intro-text {
-        margin-bottom: 20px;
-    }
-}*/
 
 .full-search-popover {
     right: 0;
@@ -87,7 +81,7 @@
     border-radius: 0;
 
     .popover-arrow.arrow {
-        right: 75px !important;
+        right: 68px !important;
         left: auto !important;
     }
 
@@ -124,6 +118,23 @@
     .title {
         margin: 0;
         line-height: 14px;
+    }
+}
+
+.full-search-settings-container {
+    border-bottom: 1px solid transparent;
+    margin: 0 0 20px;
+    padding-top: 30px;
+
+    .radio-inline,
+    .checkbox-inline {
+        height: 48px;
+        vertical-align: middle;
+    }
+
+    .radio-inline + .radio-inline,
+    .checkbox-inline + .checkbox-inline {
+        margin-left: 0;
     }
 }
 
