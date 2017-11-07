@@ -1,14 +1,10 @@
 export interface PaginationConfig {
-    last: number;
+    start: number;
+    length: number;
     current: number;
+    pageCount: number;
     pages: Array<number>;
 }
-
-export interface IListPage {
-    start: number;
-    current: number;
-    length: number;
-};
 
 export interface IPageLength {
     title: string;
@@ -24,7 +20,7 @@ export const PAGES: IPageLength[] = [
     value: 20
 }, {
     title: '40',
-    value: 30
+    value: 40
 }, {
     title: '100',
     value: 100
