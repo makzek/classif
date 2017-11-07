@@ -22,7 +22,7 @@ export class NodeInfoComponent implements OnDestroy {
 
     private _openedNodeSubscription: Subscription;
 
-    updating: boolean;
+    updating = false;
 
     constructor(private _dictSrv: EosDictService) {
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {

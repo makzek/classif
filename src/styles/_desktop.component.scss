@@ -39,7 +39,7 @@
             border-radius: 0;
 
             &.edited {
-                padding: 32px 53px 32px 5px;
+                padding: 32px 80px 32px 5px;
                 flex-direction: column;
                 display: flex;
                 justify-content: space-around;
@@ -73,9 +73,15 @@
             top: 10px;
             right: 10px;
             background-color: transparent;
+            width: 32px;
+            height: 32px;
 
             &.lefter {
-                right: 30px;
+                right: 42px;
+            }
+
+            &.leftest {
+                right: 74px;
             }
         }
 
@@ -152,6 +158,8 @@
         display: grid;// sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 1fr (2 * ($desktop-link-size + $desktop-link-margin));
         grid-template-columns: 1fr (2 * ($desktop-link-size + $desktop-link-margin));
+        overflow-y: auto;
+        max-height: calc(100vh - 150px);
 
         &.reverse {
             -ms-grid-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
@@ -28,6 +28,7 @@ import {
     WARN_LOGIC_DELETE,
     WARN_LOGIC_DELETE_ONE
 } from '../consts/messages.consts';
+import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
 import { FieldDescriptor } from '../core/field-descriptor'
 
@@ -40,14 +41,20 @@ import {
 } from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
-import { IListPage } from '../node-list-pagination/node-list-pagination.component';
+import { PaginationConfig } from '../node-list-pagination/pagination-config.interface';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+
+interface Page {
+    current: number;
+    start: number;
+    length: number;
+}
 
 @Component({
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy, OnInit {
+export class DictionaryComponent implements OnDestroy {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
@@ -63,8 +70,7 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property
-
-    private _page: IListPage;
+    _page: Page;
 
     currentState: number;
     readonly states = DICTIONARY_STATES;
@@ -88,6 +94,8 @@ export class DictionaryComponent implements OnDestroy, OnInit {
 
     orderBy: IOrderBy;
 
+    treeIsBlocked = false;
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -109,12 +117,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             select: false
         };
 
-        this._page = {
-            start: 1,
-            current: 1,
-            length: 10
-        }
-
         this._subscriptions = [];
         this.treeNodes = [];
         this.listNodes = [];
@@ -129,10 +131,27 @@ export class DictionaryComponent implements OnDestroy, OnInit {
             }
         }));
 
+        this._subscriptions.push(this._route.queryParams.subscribe((params) => {
+            if (params) {
+                const page: Page = {
+                    current: Number.parseInt(params.page),
+                    length : Number.parseInt(params.length),
+                    start  : Number.parseInt(params.start)
+                }
+                this.pageChanged(page);
+            }
+        }));
+
         this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
+                this.resize();
+                if (this.dictionary.descriptor.type === E_DICT_TYPE.linear) {
+                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.blockTree);
+                } else {
+                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.unblockTree);
+                }
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                     this.treeNodes = [dictionary.root];
@@ -220,13 +239,6 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         }));
     }
 
-    ngOnInit() {
-        if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-        }
-    }
-
     ngOnDestroy() {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
     }
@@ -279,9 +291,10 @@ export class DictionaryComponent implements OnDestroy, OnInit {
         } else {
             this.visibleNodes = _list;
         }
+        this.updateMarks();
     }
 
-    pageChanged(page: IListPage) {
+    pageChanged(page: Page) {
         this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
@@ -606,7 +619,11 @@ export class DictionaryComponent implements OnDestroy, OnInit {
     public resize(): void {
         if (window.innerWidth > 1500) {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+            if (this.dictionary) {
+                if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
+                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+                }
+            }
         } else {
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
             this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);

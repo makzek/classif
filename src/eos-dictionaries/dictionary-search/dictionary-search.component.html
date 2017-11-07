@@ -6,7 +6,8 @@
     <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull }" class="btn btn-primary-light search-btn" [popover]="searchModal"
         containerClass="full-search-popover" placement="bottom" #pop="bs-popover"
         (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false" (click)="isOpenQuick = false">
-        <i class="fa fa-filter" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
+        <i [hidden]="isOpenFull" class="eos-icon eos-icon-filter-blue small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
+        <i [hidden]="!isOpenFull" class="eos-icon eos-icon-filter-white small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
     <input type="text" class="form-control quick-search-form" [ngClass]="{'opened': isOpenQuick}" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
     <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()"><span class="eos-icon eos-icon-close-blue"></span></button>

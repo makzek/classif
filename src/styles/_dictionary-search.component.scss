@@ -46,10 +46,18 @@
         background-color: transparent;
     }
 
-    .search-btn {
-        position: relative;
-        height: 48px;
-        width: 48px;
+    .btn {
+        &.search-btn {
+            position: relative;
+            height: 48px;
+            width: 48px;
+            top: -2px;
+            padding: 10px 6px;
+        }
+
+        &.quick-search-btn {
+            top: -1px;
+        }
     }
 
     .date-filter-wrapper {

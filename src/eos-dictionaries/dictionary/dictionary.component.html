@@ -61,7 +61,7 @@
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
             <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
-            <eos-node-list-pagination [total]="listNodes?.length" (change)="pageChanged($event)"></eos-node-list-pagination>
+            <eos-node-list-pagination [total]="listNodes?.length"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
@@ -80,9 +80,9 @@
         <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"></eos-card-edit>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
         <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create(false)">Добавить ещё</button>
         <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create()">Добавить</button>
+        <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
 
     </div>
 </ng-template>

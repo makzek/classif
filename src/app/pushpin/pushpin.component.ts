@@ -40,7 +40,7 @@ export class PushpinComponent {
     pin(desk: EosDesk) {
         const items = this._bcSrv.breadcrumbs;
         let title = '';
-        for (let i = 3; i < items.length; i++) {
+        for (let i = 2; i < items.length; i++) {
             title += items[i].title + '/';
         }
         title = title.substring(0, title.length - 1);
