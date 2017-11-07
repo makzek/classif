@@ -53,9 +53,13 @@ export class NodeListPaginationComponent implements OnInit, DoCheck, OnDestroy {
             this.setPageLength(this.pages[0])
         }
         this.sub = this._route.queryParams.subscribe(params => {
-            this.config.current = Number.parseInt(params.page);
-            this.pageLength.value = Number.parseInt(params.items);
-            console.log(params);
+            if (params.page && params.items) {
+                this.config.current = Number.parseInt(params.page);
+                this.pageLength.value = Number.parseInt(params.items);
+                this._router.navigate([], {queryParams: {page: this.config.current, items: this.pageLength.value}})
+            } else {
+                this._router.navigate([], {queryParams: {page: this.config.current, items: this.pageLength.value}})
+            }
         });
         this._generatePages();
     }
