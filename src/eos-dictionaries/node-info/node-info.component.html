@@ -13,7 +13,7 @@
         </button>
     </span>
     <div class="opened-node-wrapper">
-        <div *ngIf="(!viewFields && !shortViewFields) || updating" class="no-data full-info">
+        <div *ngIf="updating" class="no-data full-info">
             <eos-spinner [size]="'lg'"></eos-spinner>
         </div>
 
