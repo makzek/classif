@@ -41,7 +41,6 @@ export class DesktopSwitcherComponent {
     }
 
     constructor(private _deskSrv: EosDeskService,
-        // private _router: Router,
         private _msgSrv: EosMessageService,
         private _confirmSrv: ConfirmWindowService,
         private _router: Router
@@ -73,10 +72,9 @@ export class DesktopSwitcherComponent {
     }
 
     openCreateForm() {
-        console.log('mre', this._moreThenOneEdited());
         if (this._moreThenOneEdited() && !this.creating) {
             this._msgSrv.addNewMessage(WARN_DESK_CREATING);
-        } else {
+        } else if (!this.creating) {
             this.creating = true;
             this.deskName = this._generateNewDeskName();
         }
@@ -104,32 +102,19 @@ export class DesktopSwitcherComponent {
         }
         desk.edited = false;
         /* todo: re-factor it to inline validation messages */
-        const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
-        /*if (_tempDeskName === '') {
-            const errPartTitle = desk.id ? 'редактирования' : 'создания';
-            this._msgSrv.addNewMessage({
-                type: 'warning',
-                title: 'Ошибка ' + errPartTitle + ' рабочего стола:',
-                msg: 'нельзя ввести пустое имя рабочего стола'
-            });
-            if (desk.id) {
-                this.cancelEdit(desk);
-            } else {
-                this.cancelCreating();
-            }
-        } else {*/
-            desk.name = _tempDeskName;
-            if (desk.id) {
-                this._deskSrv.editDesk(desk);
-            } else {
-                this._deskSrv.createDesk(desk);
-            }
-        // }
+        // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
+        // const _tempDeskName = this.deskName;
+        desk.name = this.deskName;
+        if (desk.id) {
+            this._deskSrv.editDesk(desk);
+        } else {
+            this._deskSrv.createDesk(desk);
+        }
         this.deskName = '';
     }
 
-    create($evt: Event) {
-        $evt.stopPropagation();
+    create(evt: Event) {
+        evt.stopPropagation();
         /* todo: re-factor it to inline validation messages */
         if (this._desktopExisted(this.deskName)) {
             this.deskName = this._generateNewDeskName();
