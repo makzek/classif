@@ -129,19 +129,7 @@ export class DictionaryComponent implements OnDestroy {
                 this._selectNode();
             }
         }));
-        /*
-        this._subscriptions.push(this._route.queryParams.subscribe((params) => {
-            console.log(params);
-            if (params && params) {
-                const page: Page = {
-                    current: Number.parseInt(params.page),
-                    length: Number.parseInt(params.length),
-                    start: Number.parseInt(params.start)
-                }
-                this.pageChanged(page);
-            }
-        }));
-        */
+
         this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this.dictionary = dictionary;
@@ -176,9 +164,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.full:
                             this.currentState = DICTIONARY_STATES.info;
+                            this._dictActSrv.state = DICTIONARY_STATES.info;
                             break;
                         case DICTIONARY_STATES.tree:
                             this.currentState = DICTIONARY_STATES.selected;
+                            this._dictActSrv.state = DICTIONARY_STATES.selected;
                             break;
                     }
                     break;
@@ -186,9 +176,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.info:
                             this.currentState = DICTIONARY_STATES.full;
+                            this._dictActSrv.state = DICTIONARY_STATES.full;
                             break;
                         case DICTIONARY_STATES.selected:
                             this.currentState = DICTIONARY_STATES.tree;
+                            this._dictActSrv.state = DICTIONARY_STATES.tree;
                             break;
                     }
                     break;
@@ -196,9 +188,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.full:
                             this.currentState = DICTIONARY_STATES.tree;
+                            this._dictActSrv.state = DICTIONARY_STATES.tree;
                             break;
                         case DICTIONARY_STATES.info:
                             this.currentState = DICTIONARY_STATES.selected;
+                            this._dictActSrv.state = DICTIONARY_STATES.selected;
                             break;
                     }
                     break;
@@ -206,11 +200,15 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.tree:
                             this.currentState = DICTIONARY_STATES.full;
+                            this._dictActSrv.state = DICTIONARY_STATES.full;
                             break;
                         case DICTIONARY_STATES.selected:
                             this.currentState = DICTIONARY_STATES.info;
+                            this._dictActSrv.state = DICTIONARY_STATES.info;
                             break;
                     }
+                    break;
+                default:
                     break;
             }
         }));
@@ -276,11 +274,12 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired');
-        this.visibleNodes.forEach(item => item.marked = false);
-        this.updateMarks();
+        // console.log('_updateVisibleNodes fired');
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
+
+        this.visibleNodes.forEach(item => item.marked = false);
+        this.updateMarks();
 
         // todo: make sure in reordering
         // this._dictSrv.order( this.orderBy, this.params.userSort, _list );
@@ -294,11 +293,11 @@ export class DictionaryComponent implements OnDestroy {
         } else {
             this.visibleNodes = _list;
         }
-        this.updateMarks();
+        // this.updateMarks();
     }
 
     pageChanged(page: IPaginationConfig) {
-        console.log('page changed', page);
+        // console.log('page changed', page);
         this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
@@ -621,7 +620,9 @@ export class DictionaryComponent implements OnDestroy {
 
     public resize(): void {
         if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            if (this.currentState !== DICTIONARY_STATES.tree) {
+                this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            }
             if (this.dictionary) {
                 if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
                     this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);

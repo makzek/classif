@@ -2,7 +2,6 @@
     .sortable-wrapper {
         display: flex;
         flex-wrap: wrap;
-        width: calc(100vw - 300px - 40px);
 
         .icon-btn {
             cursor: pointer;
@@ -160,6 +159,7 @@
         grid-template-columns: 1fr (2 * ($desktop-link-size + $desktop-link-margin));
         overflow-y: auto;
         max-height: calc(100vh - 150px);
+        margin-right: -10px;
 
         &.reverse {
             -ms-grid-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
