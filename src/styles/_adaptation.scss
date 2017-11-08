@@ -26,6 +26,14 @@
 
 // For IE, Edge
 @media screen\0  {
+    .eos-dictionary .node-actions .selected-node .go-top-wrapper {
+        height: $item-height;
+    }
+
+    .eos-dictionary-search .clear-btn {
+        top: 29px;
+    }
+    
     .eos-desktop .sortable-item,
     .eos-dictionaries .dictionary {
         flex-basis: calc((100% - 4*12px) / 4);
