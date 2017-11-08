@@ -40,9 +40,10 @@ import {
 } from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
-import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
+import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -112,7 +113,7 @@ export class DictionaryComponent implements OnDestroy {
         this._page = {
             start: 1,
             current: 1,
-            length: 1
+            length: _storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
         }
 
         this._subscriptions = [];
@@ -236,7 +237,7 @@ export class DictionaryComponent implements OnDestroy {
             }
             if (this.listNodes !== nodes) {
                 this.listNodes = nodes;
-                // this._updateVisibleNodes();
+                this._updateVisibleNodes();
             }
         }));
     }
@@ -412,7 +413,6 @@ export class DictionaryComponent implements OnDestroy {
         /*
         if (_idx < 0) {
             _idx = 0;
-        }
         */
 
         if (backward) {

@@ -34,11 +34,23 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
         this.config.length = pageLength.value;
 
         this._routerSub = this._route.queryParams.subscribe(params => {
-            this.config.length = this._getPage(this._positive(params.length)).value;
-            this.config.current = this._positive(params.page);
-            this.config.start = this._positive(params.start);
-            this.pageChanged.emit(this.config);
-            this._update();
+            let update = false;
+            if (params.length) {
+                this.config.length = this._getPage(this._positive(params.length)).value;
+                update = true;
+            }
+            if (params.page) {
+                this.config.current = this._positive(params.page);
+                update = true;
+            }
+            if (params.start) {
+                this.config.start = this._positive(params.start);
+                update = true;
+            }
+            if (update) {
+                this.pageChanged.emit(this.config);
+                this._update();
+            }
         });
     }
 
@@ -55,8 +67,8 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
     }
 
     ngOnInit() {
-        this.pageChanged.emit(this.config);
         this._update();
+        this.pageChanged.emit(this.config);
     }
 
     ngOnChanges() {
