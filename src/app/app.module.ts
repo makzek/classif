@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
@@ -67,9 +66,9 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         FormsModule,
         AppRoutingModule,
         HttpModule,
-        Ng2BootstrapModule.forRoot(),
         BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
+        TooltipModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         EosDictionariesModule,
