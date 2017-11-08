@@ -35,7 +35,6 @@ import { ColumnSettingsComponent } from './column-settings/column-settings.compo
 /* services */
 import { DictionaryActionService } from './dictionary/dictionary-action.service';
 import { EosDictApiService } from './services/eos-api.service';
-import { EosDictOrderService } from './services/eos-dict-order.service';
 import { EosDictService } from './services/eos-dict.service';
 
 @NgModule({
@@ -84,7 +83,6 @@ import { EosDictService } from './services/eos-dict.service';
     providers: [
         EosDictApiService,
         EosDictService,
-        EosDictOrderService,
         DictionaryActionService,
     ],
 })

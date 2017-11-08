@@ -9,11 +9,6 @@ import { EosStorageService } from '../../app/services/eos-storage.service';
 })
 export class DictionariesComponent {
     dictionariesList: { id: string, title: string }[];
-    params = {
-        length: 10,
-        page: 1,
-        start: 1
-    };
 
     constructor(
         private _dictSrv: EosDictService,
@@ -26,6 +21,5 @@ export class DictionariesComponent {
             .then((list) => {
                 this.dictionariesList = list;
             });
-        this.params.length = _storageSrv.getItem('PAGE_SETTING');
     }
 }

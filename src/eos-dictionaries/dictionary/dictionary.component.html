@@ -42,11 +42,11 @@
                     </span>
                     <span class="node-title">
                         <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
-                            <span class="text" (click)="toggleSystemSort(field.key)">{{field.title}}</span>
+                            <span class="text" (click)="orderByField(field.key)">{{field.title}}</span>
                             <span *ngIf="this.orderBy?.fieldKey === field.key && this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-top small"
-                                (click)="chengeSortOrder()"></span>
+                                (click)="toggleOrderDirection()"></span>
                             <span *ngIf="this.orderBy?.fieldKey === field.key && !this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-bottom small"
-                                (click)="chengeSortOrder()"></span>
+                                (click)="toggleOrderDirection()"></span>
                         </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
@@ -61,7 +61,7 @@
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
             <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
-            <eos-node-list-pagination [total]="listNodes?.length"></eos-node-list-pagination>
+            <eos-node-list-pagination [total]="listNodes?.length" (pageChanged)="pageChanged($event)"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">

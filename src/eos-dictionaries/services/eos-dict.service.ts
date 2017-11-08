@@ -10,13 +10,14 @@ import { ISearchSettings } from '../core/search-settings.interface';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
-
+import { LS_USE_USER_ORDER } from '../consts/common';
 // import { RecordDescriptor } from '../core/record-descriptor';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 
 import { IOrderBy } from '../core/sort.interface'
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 @Injectable()
 export class EosDictService {
@@ -40,7 +41,8 @@ export class EosDictService {
     constructor(
         private _api: EosDictApiService,
         private _msgSrv: EosMessageService,
-        private _profileSrv: EosUserProfileService
+        private _profileSrv: EosUserProfileService,
+        private _storageSrv: EosStorageService,
     ) {
         /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
@@ -117,16 +119,16 @@ export class EosDictService {
                 .then((descData: any) => {
                     this.dictionary = new EosDictionary(descData);
                     this._api.init(this.dictionary.descriptor);
-                    console.log('init root nodes');
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
                     if (data && data.length) {
                         this.dictionary.init(data);
                     }
+                    this.dictionary.userOrder = this._storageSrv.getUserOrder(this.dictionary.id);
+                    this.dictionary.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this.dictionary);
-                    console.log('dictionary ready');
                     return this.dictionary;
                 })
                 .catch((err: Response) => {
@@ -406,7 +408,47 @@ export class EosDictService {
         return _path;
     }
 
-    public systemSort(orderBy: IOrderBy) {
-        this._profileSrv.addSort(this.dictionary.id, orderBy);
+    public orderBy(orderBy: IOrderBy) {
+        if (this.dictionary) {
+            this.dictionary.orderBy = orderBy;
+            this._reorder();
+        }
+    }
+
+    public toggleUserOrder() {
+        if (this.dictionary) {
+            this.dictionary.userOrdered = !this.dictionary.userOrdered;
+            this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
+            this._reorder();
+        }
+    }
+
+    // temporary
+    get userOrdered(): boolean {
+        return this.dictionary && this.dictionary.userOrdered;
+    }
+
+    private _reorder() {
+        if (this.dictionary) {
+            this.dictionary.reorder();
+            this._selectedNode$.next(this.selectedNode);
+        }
+    }
+
+    setUserOrder(nodes: EosDictionaryNode[]) {
+        const _order = nodes.map((node) => node.id);
+        if (this.dictionary && this.selectedNode) {
+            this._storageSrv.setUserOrder(this.dictionary.id, this.selectedNode.id, _order);
+            this.dictionary.setNodeUserOrder(this.selectedNode.id, _order);
+        }
+    }
+
+    public generateOrder(sortedList: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
+        const order: EosDictionaryNode[] = [];
+        for (const item of sortedList) {
+            order.push(item);
+        }
+        // this.dictionary.orderedArray = order;
+        return order;
     }
 }

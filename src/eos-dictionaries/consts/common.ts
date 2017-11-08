@@ -2,6 +2,7 @@ import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary.interface
 import { SEARCH_TYPES } from './search-types';
 
 export const LS_EDIT_CARD = 'lastEditedCard';
+export const LS_USE_USER_ORDER = 'useUserOrder';
 
 /* tslint:disable:max-line-length */
 

@@ -12,7 +12,6 @@ import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.servic
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDictOrderService } from '../services/eos-dict-order.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
@@ -41,15 +40,9 @@ import {
 } from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
-import { PaginationConfig } from '../node-list-pagination/pagination-config.interface';
+import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
-
-interface Page {
-    current: number;
-    start: number;
-    length: number;
-}
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -70,7 +63,7 @@ export class DictionaryComponent implements OnDestroy {
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property
-    _page: Page;
+    _page: IPaginationConfig;
 
     currentState: number;
     readonly states = DICTIONARY_STATES;
@@ -103,7 +96,6 @@ export class DictionaryComponent implements OnDestroy {
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
-        private _orderSrv: EosDictOrderService,
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
@@ -111,11 +103,17 @@ export class DictionaryComponent implements OnDestroy {
         private _confirmSrv: ConfirmWindowService,
     ) {
         this.params = {
-            userSort: this._orderSrv.getSortingMode(),
+            userSort: false,
             showDeleted: false,
             hasParent: false,
             select: false
         };
+
+        this._page = {
+            start: 1,
+            current: 1,
+            length: 1
+        }
 
         this._subscriptions = [];
         this.treeNodes = [];
@@ -130,18 +128,19 @@ export class DictionaryComponent implements OnDestroy {
                 this._selectNode();
             }
         }));
-
+        /*
         this._subscriptions.push(this._route.queryParams.subscribe((params) => {
-            if (params) {
+            console.log(params);
+            if (params && params) {
                 const page: Page = {
                     current: Number.parseInt(params.page),
-                    length : Number.parseInt(params.length),
-                    start  : Number.parseInt(params.start)
+                    length: Number.parseInt(params.length),
+                    start: Number.parseInt(params.start)
                 }
                 this.pageChanged(page);
             }
         }));
-
+        */
         this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this.dictionary = dictionary;
@@ -223,19 +222,22 @@ export class DictionaryComponent implements OnDestroy {
         );
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
+            let nodes = [];
             if (node) {
                 this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                 this.viewFields = node.getListView();
                 this.params.hasParent = !!node.parent;
-                this.listNodes = node.children || [];
+                nodes = node.children || [];
                 this._countColumnWidth();
-            } else {
-                this.listNodes = [];
             }
+
             if (node !== this.selectedNode) {
                 this.selectedNode = node;
             }
-            this._updateVisibleNodes();
+            if (this.listNodes !== nodes) {
+                this.listNodes = nodes;
+                // this._updateVisibleNodes();
+            }
         }));
     }
 
@@ -266,6 +268,7 @@ export class DictionaryComponent implements OnDestroy {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
                 .then((resp) => {
+                    Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered }); // todo: re-factor this ugly solution
                     this._dictSrv.selectNode(this._nodeId)
                 });
         }
@@ -278,11 +281,8 @@ export class DictionaryComponent implements OnDestroy {
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        if (this.params && this.params.userSort && this.listNodes[0]) {
-            _list = this._orderSrv.getUserOrder(_list, this.listNodes[0].parentId);
-        } else {
-            _list.sort(this._orderSrv.defaultSort);
-        }
+        // todo: make sure in reordering
+        // this._dictSrv.order( this.orderBy, this.params.userSort, _list );
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
@@ -296,7 +296,8 @@ export class DictionaryComponent implements OnDestroy {
         this.updateMarks();
     }
 
-    pageChanged(page: Page) {
+    pageChanged(page: IPaginationConfig) {
+        console.log('page changed', page);
         this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
@@ -322,7 +323,7 @@ export class DictionaryComponent implements OnDestroy {
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
-                this._toggleUserSort();
+                this._toggleUserOrder();
                 break;
 
             case E_RECORD_ACTIONS.moveUp:
@@ -349,25 +350,21 @@ export class DictionaryComponent implements OnDestroy {
                 this._restoreItems();
                 break;
             default:
-                console.log('alarmaaaa!!! unhandled', E_RECORD_ACTIONS[action]);
+                console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
     }
 
-    toggleSystemSort(fieldKey: string) {
+    orderByField(fieldKey: string) {
         this.orderBy = {
             fieldKey: fieldKey,
-            ascend: false,
+            ascend: true,
         };
-        this._sort();
+        this._dictSrv.orderBy(this.orderBy);
     }
 
-    chengeSortOrder() {
+    toggleOrderDirection() {
         this.orderBy.ascend = !this.orderBy.ascend;
-        this._sort();
-    }
-
-    private _sort() {
-        this._dictSrv.systemSort(this.orderBy);
+        this._dictSrv.orderBy(this.orderBy);
     }
 
     private _moveUp(): void {
@@ -459,8 +456,9 @@ export class DictionaryComponent implements OnDestroy {
         this._updateVisibleNodes();
     }
 
-    private _toggleUserSort(): void {
+    private _toggleUserOrder(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
+        this._dictSrv.toggleUserOrder();
         if (this.selectedNode) {
             this._updateVisibleNodes();
         }

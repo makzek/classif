@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core
 
 import { SortableComponent } from 'ngx-bootstrap';
 
-import { EosDictOrderService } from '../services/eos-dict-order.service';
+import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
@@ -18,7 +18,7 @@ export class NodeListComponent {
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
 
     constructor(
-        private _orderSrv: EosDictOrderService,
+        private _dictSrv: EosDictService,
     ) { }
 
     checkState() {
@@ -34,21 +34,21 @@ export class NodeListComponent {
             before = this.sortableNodes.length - 1;
         }
         */
-        if (this.nodes.length) {
+        if (this.nodes && this.nodes.length) {
             /*
             for (let i = from, j = 0; i <= before; i++ , j++) {
                 this.sortableNodes[i] = this.nodeListPerPage[j];
             }
             */
             // Генерируем порядок
-            this._orderSrv.generateOrder(this.nodes, this.nodes[0].parentId);
+            this._dictSrv.setUserOrder(this.nodes);
         }
     }
 
     writeValues(nodes: EosDictionaryNode[]) {
         if (nodes && nodes.length) {
             this.sortableComponent.writeValue(nodes);
-            this._orderSrv.generateOrder(nodes, nodes[0].parentId);
+            this._dictSrv.setUserOrder(nodes);
         }
     }
 

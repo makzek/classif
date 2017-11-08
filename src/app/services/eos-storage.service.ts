@@ -72,7 +72,32 @@ export class EosStorageService {
             const _val = JSON.stringify(this._data.__storage);
             localStorage.setItem('eos', _val);
         } catch (e) {
-            console.log('error storing', this._data.__storage);
+            console.log('error storing', e, this._data.__storage);
         }
+    }
+
+    public setUserOrder(dictionary: string, node: string, ids: string[]) {
+        if (!this._data.userOrder) {
+            this._data.userOrder = {};
+        }
+        const userOrder = this._data.userOrder;
+
+        if (!userOrder[dictionary]) {
+            userOrder[dictionary] = {};
+        }
+
+        const dictionaryOrder = userOrder[dictionary];
+        dictionaryOrder[node] = ids;
+        this._data.__storage.userOrder = userOrder;
+        this._updateStorage();
+    }
+
+    public getUserOrder(dictionary: string): string[] {
+        if (this._data.userOrder) {
+            if (this._data.userOrder[dictionary]) {
+                return this._data.userOrder[dictionary];
+            }
+        }
+        return null;
     }
 }

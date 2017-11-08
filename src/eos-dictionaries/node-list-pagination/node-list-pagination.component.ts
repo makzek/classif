@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EosStorageService } from '../../app/services/eos-storage.service';
-import { ActivatedRoute, Router } from '@angular/router'
-import { PaginationConfig, IPageLength, PAGES} from './pagination-config.interface';
+import { IPaginationConfig, IPageLength } from './node-list-pagination.interfaces';
+import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
 
 @Component({
     selector: 'eos-node-list-pagination',
@@ -9,49 +10,57 @@ import { PaginationConfig, IPageLength, PAGES} from './pagination-config.interfa
 })
 export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges {
     @Input() total: number;
+    @Output() pageChanged: EventEmitter<IPaginationConfig> = new EventEmitter<IPaginationConfig>();
 
     private _routerSub;
-    readonly pages = PAGES;
-    public config: PaginationConfig = {
+    readonly pageLengths = PAGES;
+
+    public config: IPaginationConfig = {
         start: 1,
         current: 1,
         length: 10,
-        pageCount: 1,
-        pages: []
     }
+
+    pageCount = 1;
+    pages: number[] = [];
 
     constructor(
         private _storageSrv: EosStorageService,
         private _route: ActivatedRoute,
         private _router: Router
     ) {
-        const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
-        if (PAGE_SETTING) {
-            this.config.current = this.config.start
-            this.config.length = PAGE_SETTING
-        } else {
-            this.config.current = this.config.start
-            this._storageSrv.setItem('PAGE_SETTING', this.pages[0], true)
-        }
+        const pageLength = this._getPage(this._storageSrv.getItem(LS_PAGE_LENGTH) || 1);
+
+        this.config.length = pageLength.value;
+
         this._routerSub = this._route.queryParams.subscribe(params => {
-            if (params.length && params.page && params.start) {
-                this.config.length  = Number.parseInt(params.length)
-                this.config.current = Number.parseInt(params.page)
-                this.config.start   = Number.parseInt(params.start)
-                this._getPageCount();
-                this._generatePages();
-            }
+            this.config.length = this._getPage(this._positive(params.length)).value;
+            this.config.current = this._positive(params.page);
+            this.config.start = this._positive(params.start);
+            this.pageChanged.emit(this.config);
+            this._update();
         });
-     }
+    }
+
+    private _positive(val: any): number {
+        let res = val * 1 || 1;
+        if (res < 1) {
+            res = 1;
+        }
+        return Math.floor(res);
+    }
+
+    private _getPage(length: number) {
+        return PAGES.find((item) => item.value >= length) || PAGES[0];
+    }
 
     ngOnInit() {
-        this._getPageCount();
-        this._generatePages();
+        this.pageChanged.emit(this.config);
+        this._update();
     }
 
     ngOnChanges() {
-        this._getPageCount();
-        this._generatePages();
+        this._update();
     }
 
     ngOnDestroy() {
@@ -59,54 +68,56 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
     }
 
     public setPageLength(length: number): void {
-        this.config.length = length
-        this._storageSrv.setItem('PAGE_SETTING', this.config.length, true)
-        this._router.navigate([], {queryParams: {
-            page: this.config.current,
-            length: this.config.length,
-            start: this.config.start
-        }})
-        this._getPageCount();
-        this._generatePages()
+        this._storageSrv.setItem(LS_PAGE_LENGTH, length, true)
+        this._router.navigate([], {
+            queryParams: {
+                page: this.config.current,
+                length: length,
+                start: this.config.start
+            }
+        })
     }
 
     public showMore() {
-        this.config.current++;
-        this._router.navigate([], {queryParams: {
-            page: this.config.current,
-            length: this.config.length,
-            start: this.config.start
-        }})
+        this._router.navigate([], {
+            queryParams: {
+                page: this.config.current + 1,
+                length: this.config.length,
+                start: this.config.start
+            }
+        })
     }
 
     public showPage(page: number): void {
-        this.config.current = page;
-        this.config.start = page
-        this.config.current = page;
-        this._router.navigate([], {queryParams: {
-            page: this.config.current,
-            length: this.config.length,
-            start: this.config.start
-        }})
-    }
-
-    private _generatePages(): void {
-        this.config.pages = []
-        for (let i = 1, j = 0; i <= this.config.pageCount; i++, j++) {
-            this.config.pages[j] = i;
+        if (page !== this.config.current) {
+            this._router.navigate([], {
+                queryParams: {
+                    page: page,
+                    length: this.config.length,
+                    start: page
+                }
+            })
         }
     }
 
-    private _getPageCount(): void {
-        if (this.total % this.config.length === 0) {
-            this.config.pageCount = this.total / this.config.length;
-        } else {
-            this.config.pageCount = Math.floor(this.total / this.config.length) + 1;
+    private _update() {
+        if (this.total) {
+            this.pageCount = Math.ceil(this.total / this.config.length);
+            console.warn('pageCount', this.pageCount);
+            this.pages = [];
+            for (let i = 1, j = 0; i <= this.pageCount; i++ , j++) {
+                if (this.visible(i)) {
+                    this.pages.push(i);
+                }
+            }
         }
     }
 
-    public visible(i: number): boolean {
-        if (i === 0 || i === this.config.pageCount - 1) {
+    private visible(i: number): boolean {
+        return i === 1 || i === this.pageCount ||
+            (i > this.config.current - 2 && i < this.config.current + 2);
+        /*
+        if (i === 0 || i === this.pageCount - 1) {
             return false;
         } else if (this.config.current === 1 && i < this.config.current + 3) {
             return true;
@@ -114,8 +125,9 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
             return true;
         } else if (this.config.current > 2 && i >= this.config.current - 2 && i <= this.config.current) {
             return true;
-        } else if (this.config.current >= this.config.pageCount - 2 && i >= this.config.pageCount - 4) {
+        } else if (this.config.current >= this.pageCount - 2 && i >= this.pageCount - 4) {
             return true;
         }
+        */
     }
 }
