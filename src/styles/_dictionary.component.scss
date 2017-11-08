@@ -11,7 +11,7 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width;
+        width: 425px;
         overflow-y: auto;
         border-right: 1px solid transparent;
         transform: translateX(-24px);
@@ -93,7 +93,7 @@
 
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $dictionary-block-width;
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
             right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
