@@ -6,7 +6,7 @@ import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/conf
 import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';

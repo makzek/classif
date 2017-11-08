@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule} from '@angular/core';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { MessagesComponent } from './messages/messages.component';
 import { EosMessageService } from './services/eos-message.service';
@@ -28,8 +30,10 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     imports: [
         BrowserModule,
         FormsModule,
-        Ng2BootstrapModule.forRoot(),
         BsDatepickerModule.forRoot(),
+        TooltipModule.forRoot(),
+        AlertModule.forRoot(),
+        ModalModule.forRoot(),
     ],
     exports: [
         ConfirmWindowComponent,

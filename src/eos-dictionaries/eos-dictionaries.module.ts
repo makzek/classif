@@ -3,9 +3,12 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+
 import { DragulaModule } from 'ng2-dragula';
 
 import { APP_CONFIG } from '../app/app.config';
@@ -67,11 +70,13 @@ import { EosDictService } from './services/eos-dict.service';
         HttpModule,
         AppRoutingModule,
         /* AppModule, */
-        Ng2BootstrapModule.forRoot(),
         SortableModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         DatepickerModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        PopoverModule.forRoot(),
         DragulaModule,
     ],
     exports: [
