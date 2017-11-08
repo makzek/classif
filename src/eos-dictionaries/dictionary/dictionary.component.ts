@@ -129,19 +129,7 @@ export class DictionaryComponent implements OnDestroy {
                 this._selectNode();
             }
         }));
-        /*
-        this._subscriptions.push(this._route.queryParams.subscribe((params) => {
-            console.log(params);
-            if (params && params) {
-                const page: Page = {
-                    current: Number.parseInt(params.page),
-                    length: Number.parseInt(params.length),
-                    start: Number.parseInt(params.start)
-                }
-                this.pageChanged(page);
-            }
-        }));
-        */
+
         this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
             if (dictionary) {
                 this.dictionary = dictionary;
@@ -276,11 +264,12 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired');
-        this.visibleNodes.forEach(item => item.marked = false);
-        this.updateMarks();
+        // console.log('_updateVisibleNodes fired');
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
+
+        this.visibleNodes.forEach(item => item.marked = false);
+        this.updateMarks();
 
         // todo: make sure in reordering
         // this._dictSrv.order( this.orderBy, this.params.userSort, _list );
@@ -294,11 +283,11 @@ export class DictionaryComponent implements OnDestroy {
         } else {
             this.visibleNodes = _list;
         }
-        this.updateMarks();
+        // this.updateMarks();
     }
 
     pageChanged(page: IPaginationConfig) {
-        console.log('page changed', page);
+        // console.log('page changed', page);
         this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();

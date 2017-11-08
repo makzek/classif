@@ -14,6 +14,7 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
 
     private _routerSub;
     readonly pageLengths = PAGES;
+    private readonly _buttonsTotal = 5;
 
     public config: IPaginationConfig = {
         start: 1,
@@ -114,32 +115,24 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
 
     private _update() {
         if (this.total) {
-            this.pageCount = Math.ceil(this.total / this.config.length);
-            console.warn('pageCount', this.pageCount);
+            const total = Math.ceil(this.total / this.config.length);
+            const firstSet = this._buttonsTotal - this.config.current;
+            const lastSet = total - this._buttonsTotal + 1;
+            const middleSet = this._buttonsTotal - 3;
+
+            this.pageCount = total;
             this.pages = [];
-            for (let i = 1, j = 0; i <= this.pageCount; i++ , j++) {
-                if (this.visible(i)) {
+            for (let i = 1; i <= this.pageCount; i++) {
+                if (
+                    i === 1 || i === this.pageCount || // first & last pages
+                    (1 < firstSet && i < this._buttonsTotal) || // first 4 pages
+                    (1 < this.config.current - lastSet && i - lastSet > 0) || // last 4 pages
+                    (middleSet > this.config.current - i && i - this.config.current < middleSet)  // middle pages
+                ) {
                     this.pages.push(i);
                 }
             }
         }
     }
 
-    private visible(i: number): boolean {
-        return i === 1 || i === this.pageCount ||
-            (i > this.config.current - 2 && i < this.config.current + 2);
-        /*
-        if (i === 0 || i === this.pageCount - 1) {
-            return false;
-        } else if (this.config.current === 1 && i < this.config.current + 3) {
-            return true;
-        } else if (this.config.current === 2 && i < this.config.current + 2) {
-            return true;
-        } else if (this.config.current > 2 && i >= this.config.current - 2 && i <= this.config.current) {
-            return true;
-        } else if (this.config.current >= this.pageCount - 2 && i >= this.pageCount - 4) {
-            return true;
-        }
-        */
-    }
 }
