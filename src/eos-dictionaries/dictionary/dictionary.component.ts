@@ -64,6 +64,7 @@ export class DictionaryComponent implements OnDestroy {
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property
+    filteredNodes: EosDictionaryNode[];
     _page: IPaginationConfig;
 
     currentState: number;
@@ -134,6 +135,7 @@ export class DictionaryComponent implements OnDestroy {
             if (dictionary) {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
+                this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                 this.resize();
                 if (this.dictionary.descriptor.type === E_DICT_TYPE.linear) {
                     this._dictActSrv.emitAction(DICTIONARY_ACTIONS.blockTree);
@@ -225,8 +227,8 @@ export class DictionaryComponent implements OnDestroy {
             }
             if (this.listNodes !== nodes) {
                 this.listNodes = nodes;
-                this._updateVisibleNodes();
             }
+            this._updateVisibleNodes();
         }));
     }
 
@@ -256,8 +258,9 @@ export class DictionaryComponent implements OnDestroy {
     private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
-                .then((resp) => {
-                    Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered }); // todo: re-factor this ugly solution
+                .then((dictionary) => {
+                    // todo: re-factor this ugly solution
+                    this.params = Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered });
                     this._dictSrv.selectNode(this._nodeId)
                 });
         }
@@ -271,12 +274,11 @@ export class DictionaryComponent implements OnDestroy {
         this.visibleNodes.forEach(item => item.marked = false);
         this.updateMarks();
 
-        // todo: make sure in reordering
-        // this._dictSrv.order( this.orderBy, this.params.userSort, _list );
-
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
         }
+
+        this.filteredNodes = _list;
 
         if (page) {
             this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
@@ -345,16 +347,19 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     orderByField(fieldKey: string) {
-        this.orderBy = {
-            fieldKey: fieldKey,
-            ascend: true,
-        };
+        if (!this.orderBy || this.orderBy.fieldKey !== fieldKey) {
+            this.orderBy = {
+                fieldKey: fieldKey,
+                ascend: true,
+            };
+        } else {
+            this.orderBy.ascend = !this.orderBy.ascend;
+        }
         this._dictSrv.orderBy(this.orderBy);
     }
 
-    toggleOrderDirection() {
-        this.orderBy.ascend = !this.orderBy.ascend;
-        this._dictSrv.orderBy(this.orderBy);
+    userOrdered(nodes: EosDictionaryNode[]) {
+        this._dictSrv.setUserOrder(nodes, this.listNodes);
     }
 
     private _moveUp(): void {
@@ -365,16 +370,18 @@ export class DictionaryComponent implements OnDestroy {
             this.visibleNodes[_idx - 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
             this.nodeListComponent.writeValues(this.visibleNodes);
+            this.userOrdered(this.visibleNodes);
         }
     }
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx > 0) {
+        if (_idx < this._page.current * this._page.length) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
             this.nodeListComponent.writeValues(this.visibleNodes);
+            this.userOrdered(this.visibleNodes);
         }
     }
 
@@ -399,10 +406,6 @@ export class DictionaryComponent implements OnDestroy {
 
     private _openNodeNavigate(backward = false): void {
         let _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        /*
-        if (_idx < 0) {
-            _idx = 0;
-        */
 
         if (backward) {
             if (_idx > -1) {
