@@ -320,7 +320,7 @@ export class EosDictService {
             this.getNode(dictionaryId, nodeId)
                 .then((node) => this._deleteNode(node));
         });
-        this._dictionary$.next(this.dictionary);
+        // this._dictionary$.next(this.dictionary);
         this._selectedNode$.next(this.selectedNode);
         return Promise.resolve(true); /* fake */
     }

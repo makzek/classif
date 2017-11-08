@@ -166,9 +166,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.full:
                             this.currentState = DICTIONARY_STATES.info;
+                            this._dictActSrv.state = DICTIONARY_STATES.info;
                             break;
                         case DICTIONARY_STATES.tree:
                             this.currentState = DICTIONARY_STATES.selected;
+                            this._dictActSrv.state = DICTIONARY_STATES.selected;
                             break;
                     }
                     break;
@@ -176,9 +178,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.info:
                             this.currentState = DICTIONARY_STATES.full;
+                            this._dictActSrv.state = DICTIONARY_STATES.full;
                             break;
                         case DICTIONARY_STATES.selected:
                             this.currentState = DICTIONARY_STATES.tree;
+                            this._dictActSrv.state = DICTIONARY_STATES.tree;
                             break;
                     }
                     break;
@@ -186,9 +190,11 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.full:
                             this.currentState = DICTIONARY_STATES.tree;
+                            this._dictActSrv.state = DICTIONARY_STATES.tree;
                             break;
                         case DICTIONARY_STATES.info:
                             this.currentState = DICTIONARY_STATES.selected;
+                            this._dictActSrv.state = DICTIONARY_STATES.selected;
                             break;
                     }
                     break;
@@ -196,11 +202,15 @@ export class DictionaryComponent implements OnDestroy {
                     switch (this.currentState) {
                         case DICTIONARY_STATES.tree:
                             this.currentState = DICTIONARY_STATES.full;
+                            this._dictActSrv.state = DICTIONARY_STATES.full;
                             break;
                         case DICTIONARY_STATES.selected:
                             this.currentState = DICTIONARY_STATES.info;
+                            this._dictActSrv.state = DICTIONARY_STATES.info;
                             break;
                     }
+                    break;
+                default:
                     break;
             }
         }));
@@ -613,7 +623,9 @@ export class DictionaryComponent implements OnDestroy {
 
     public resize(): void {
         if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            if (this.currentState !== DICTIONARY_STATES.tree) {
+                this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            }
             if (this.dictionary) {
                 if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
                     this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
