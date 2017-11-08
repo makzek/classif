@@ -42,7 +42,7 @@ export class EosStorageService {
     public setItem(key: string, data: any, saveToLocalStorage = false) {
         if (key && key !== '__storage' && key !== 'userOrder') {
             this._data[key] = data;
-            console.log('set to LS', key, typeof data, data);
+            // console.log('set to LS', key, typeof data, data);
             if (saveToLocalStorage) {
                 this._data.__storage[key] = data;
                 this._updateStorage();
