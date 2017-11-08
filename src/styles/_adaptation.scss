@@ -23,3 +23,26 @@
         flex-basis: calc((100% - 3*10px) / 3);
     }
 }
+
+
+// For IE, Edge
+@media screen\0 {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 4*12px) / 4);
+    }
+}
+
+@media (max-width: 1280px) and (screen\0) {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 2*12px) / 2);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1640px) and (screen\0) {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 3*12px) / 3);
+    }
+}
