@@ -4,10 +4,14 @@
         bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig"
         [bsValue]="value" placement="{{placement}}"
         (bsValueChange)="emitChange($event)"
-        [ngClass]="{'readonly': readonly }"
+        [ngClass]="{'hidden': readonly}"
         (click)="measureDistance()"
         [minDate]="bsConfig.minDate"
         [maxDate]="bsConfig.maxDate"
         [isDisabled]="isDisabled">
-    <!--<span *ngIf="!readonly" class="eos-icon eos-icon-calendar-blue small icon" (click)="openOnButton()"></span>--> 
+    <input class="form-control stub" 
+        value="{{value | date:'dd.MM.yyyy'}}" 
+        readonly 
+        [ngClass]="{'hidden': !readonly}"
+        placeholder="{{placeholder}}">
 </div>

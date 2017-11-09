@@ -483,6 +483,17 @@ textarea {
         }
     }
 
+    .eos-datepicker {
+        input.stub {
+            border-color: transparent;
+            background-color: transparent;
+
+            &:focus {
+                border-color: transparent;
+            }
+        }
+    }
+
     // spacial templates
     .eos-departments-card-edit {
         .block-title {
