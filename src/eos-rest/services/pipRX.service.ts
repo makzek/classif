@@ -12,6 +12,7 @@ import { EntityHelper } from '../core/entity-helper';
 import { ErrorService } from './error.service';
 import { PipeUtils } from '../core/pipe-utils';
 import { Cache } from '../core/cache';
+import { RestError } from '../core/rest-error';
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -20,7 +21,8 @@ export class PipRX extends PipeUtils {
 
     public sequenceMap: SequenceMap = new SequenceMap();
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
-    public errorService = new ErrorService();
+    // @igiware: using RestError instead
+    // public errorService = new ErrorService();
     public entityHelper: EntityHelper;
     public cache: Cache;
 
@@ -164,16 +166,14 @@ export class PipRX extends PipeUtils {
                     try {
                         return this.nativeParser(r.json());
                     } catch (e) {
-                        return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
+                        throw new RestError({ odataErrors: [e], _request: req, _response: r });
+                        // return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
                 })
-                /*
                 .catch((err, caught) => {
-                    this.errorService.errorHandler({ http: err, _request: req });
+                    Observable.throw(new RestError({ http: err, _request: req }));
                     return [];
-                })
-                */
-                ;
+                });
         });
 
         return rl.reduce((acc: T[], v: T[]) => {
@@ -203,14 +203,15 @@ export class PipRX extends PipeUtils {
                 const answer: any[] = [];
                 const e = this.parseBatchResponse(r, answer);
                 if (e) {
-                    return this.errorService.errorHandler({ odataErrors: e });
+                    Observable.throw(new RestError({ odataErrors: e }));
+                    // return this.errorService.errorHandler({ odataErrors: e });
                 }
                 return answer;
-            }) /*
+            })
             .catch((err, caught) => {
-                this.errorService.httpCatch(err);
-            })*/
-            ;
+                return Observable.throw(new RestError({http: err}));
+                // this.errorService.httpCatch(err);
+            });
     }
 
     batch(changeSet: any[], vc: string): Promise<any[]> {
