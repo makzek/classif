@@ -91,6 +91,8 @@ export class DictionaryComponent implements OnDestroy {
 
     treeIsBlocked = false;
 
+    private _updating = false;
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -277,12 +279,8 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _updateVisibleNodes() {
-        // console.log('_updateVisibleNodes fired');
+        console.log('_updateVisibleNodes fired', this._page);
         let _list: EosDictionaryNode[] = this.listNodes;
-        const page = this._page;
-
-        this.visibleNodes.forEach(item => item.marked = false);
-        this.updateMarks();
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
@@ -290,17 +288,23 @@ export class DictionaryComponent implements OnDestroy {
 
         this.filteredNodes = _list;
 
-        if (page) {
-            this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
+        if (this._page) {
+            this.visibleNodes = _list.slice((this._page.start - 1) * this._page.length, this._page.current * this._page.length);
         } else {
             this.visibleNodes = _list;
         }
-        // this.updateMarks();
+        this._updating = false;
+        this.updateMarks();
+
     }
 
     pageChanged(page: IPaginationConfig) {
-        // console.log('page changed', page);
+        console.log('page changed', page);
         this._page = page;
+        /*
+        this.listNodes.forEach((node) => node.marked = false);
+        this.allMarked = false;
+        */
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
         }

@@ -68,7 +68,7 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
     }
 
     ngOnInit() {
-        this._update();
+        // this._update();
         this.pageChanged.emit(this.config);
     }
 

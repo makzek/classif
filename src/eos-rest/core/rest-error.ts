@@ -76,6 +76,8 @@ export class RestError implements IRestError {
                 logic += e.message + '\n';
             } else {
                 console.log('non logic odata error', e);
+                this.message = e.message;
+                return;
                 // this.WriteErrorHtml(e.message, e.stacktrace);
             }
         }
