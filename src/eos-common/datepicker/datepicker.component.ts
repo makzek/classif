@@ -10,7 +10,7 @@ defineLocale('ru', ru);
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() value: Date;
-    @Input() readonly = false;
+    @Input() readonly;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
