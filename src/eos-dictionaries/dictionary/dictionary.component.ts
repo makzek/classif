@@ -629,6 +629,10 @@ export class DictionaryComponent implements OnDestroy {
             if (this.dictionary) {
                 if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
                     this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+                } else {
+                    if (this.currentState === DICTIONARY_STATES.full || this.currentState === DICTIONARY_STATES.tree) {
+                        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
+                    }
                 }
             }
         } else {
