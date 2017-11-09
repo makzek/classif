@@ -91,6 +91,8 @@ export class DictionaryComponent implements OnDestroy {
 
     treeIsBlocked = false;
 
+    dictTypes = E_DICT_TYPE;
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
