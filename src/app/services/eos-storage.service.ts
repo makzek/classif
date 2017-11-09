@@ -28,7 +28,7 @@ export class EosStorageService {
      * @param key key for data
      */
     public getItem(key: string): any {
-        if (key && key !== '__storage') {
+        if (key && key !== '__storage' && key !== 'userOrder') {
             return this._data[key];
         }
     }
@@ -40,9 +40,9 @@ export class EosStorageService {
      * @param saveToLocalStorage boolean data, force store data in localStorage
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
-        if (key && key !== '__storage') {
+        if (key && key !== '__storage' && key !== 'userOrder') {
             this._data[key] = data;
-            // console.log('set to LS', typeof data, data);
+            // console.log('set to LS', key, typeof data, data);
             if (saveToLocalStorage) {
                 this._data.__storage[key] = data;
                 this._updateStorage();
