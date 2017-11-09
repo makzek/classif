@@ -20,13 +20,13 @@
         width: 0;
         padding: 6px 0;
         border-radius: 0;
-        height: 45px;
+        height: 46px;
         border: 0;
         transition: 300ms ease-in-out;
         position: relative;
 
         &.opened {
-            width: 476px;
+            width: 428px;
             padding: 6px 12px 6px 20px;
             border-left: 1px solid grey;
         }
@@ -44,6 +44,8 @@
         width: $item-width;
         border: 0;
         background-color: transparent;
+        padding: 8px;
+        margin-right: -8px;
     }
 
     .btn {
