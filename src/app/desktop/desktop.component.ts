@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 import { IDeskItem } from '../core/desk-item.interface';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
@@ -32,7 +33,8 @@ export class DesktopComponent implements OnDestroy {
         private _deskSrv: EosDeskService,
         private _router: Router,
         private _route: ActivatedRoute,
-        private _confirmSrv: ConfirmWindowService
+        private _confirmSrv: ConfirmWindowService,
+        private _storageSrv: EosStorageService
     ) {
         this.referencesList = [];
         this._routerSubscription = this._router.events

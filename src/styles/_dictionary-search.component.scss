@@ -20,13 +20,13 @@
         width: 0;
         padding: 6px 0;
         border-radius: 0;
-        height: 45px;
+        height: 46px;
         border: 0;
         transition: 300ms ease-in-out;
         position: relative;
 
         &.opened {
-            width: 476px;
+            width: 428px;
             padding: 6px 12px 6px 20px;
             border-left: 1px solid grey;
         }
@@ -44,12 +44,23 @@
         width: $item-width;
         border: 0;
         background-color: transparent;
+        padding: 8px;
+        margin-right: -8px;
     }
 
-    .search-btn {
-        position: relative;
-        height: 48px;
-        width: 48px;
+    .btn {
+        &.search-btn {
+            position: relative;
+            height: 48px;
+            width: 48px;
+            top: -2px;
+            padding: 10px 6px;
+        }
+
+        &.quick-search-btn {
+            top: -1px;
+            margin-left: -7px;
+        }
     }
 
     .date-filter-wrapper {
@@ -72,12 +83,6 @@
     }
 }
 
-/* .search-modal {
-    .input-group,
-    .intro-text {
-        margin-bottom: 20px;
-    }
-}*/
 
 .full-search-popover {
     right: 0;
@@ -87,7 +92,7 @@
     border-radius: 0;
 
     .popover-arrow.arrow {
-        right: 75px !important;
+        right: 61px !important;
         left: auto !important;
     }
 
@@ -98,6 +103,10 @@
     .spinner-wrapper {
         text-align: center;
         padding: 10px;
+    }
+
+    .checkbox-inline input[type="checkbox"] + span {
+        margin-right: 12px;
     }
 }
 
@@ -127,8 +136,46 @@
     }
 }
 
+.full-search-settings-container {
+    border-bottom: 1px solid transparent;
+    margin: 0;
+    padding-top: 30px;
+    display: flex;
+
+    .radio-inline,
+    .checkbox-inline {
+        height: 32px;
+        padding: 5px 0;
+        margin-bottom: 20px;
+    }
+
+    .radio-inline + .radio-inline,
+    .checkbox-inline + .checkbox-inline {
+        margin-left: 0;
+    }
+
+    .checkbox-inline,
+    .radio-inline {
+        padding-left: 0;
+    }
+
+    .col-1 {
+        width: 190px;
+        margin-right: 40px;
+        margin-left: 20px;
+    }
+
+    .col-2 {
+        width: 300px;
+    }
+}
+
 .full-search-form {
     padding: 0 20px;
+
+    .tabs-wrapper {
+        margin: 0 -20px -10px;
+    }
 
     label {
         text-transform: uppercase;
@@ -139,6 +186,18 @@
 
     .form-control {
         border-radius: 0;
+        height: 32px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    .no-top-margin {
+        .form-group {
+            margin-top: 10px;
+        }
     }
 
 }

@@ -75,42 +75,19 @@
     .create {
         cursor: pointer;
     }
-}
 
-/*
-@media (max-width: 1450px) {
-    .eos-desktop-switcher {
-        .dropdown-button {
-            .selected-desktop {
-                max-width: 150px;
+    .creating-btns {
+        .btn {
+            height: 34px;
+
+            &:first-child {
+                border-radius: 0 !important;
+            }
+
+            &:last-child {
+                border-bottom-left-radius: 0 !important;
+                border-top-left-radius: 0 !important;
             }
         }
     }
 }
-
-@media (max-width: 1380px) {
-    .eos-desktop-switcher {
-        .dropdown-button {
-            .selected-desktop {
-                max-width: 70px;
-            }
-
-            .btn-icon {
-                padding-left: 6px;
-                padding-right: 6px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1280px) {
-    .eos-desktop-switcher {
-        .dropdown-button {
-            font-size: 12px;
-            line-height: 18px;
-            padding-left: 5px;
-            padding-right: 0;
-        }
-    }
-}
-*/

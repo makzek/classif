@@ -15,12 +15,14 @@ import { ModeFieldSet } from './record-mode';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
+    parentField: FieldDescriptor;
     modeField: FieldDescriptor;
     modeList: IRecordModeDescription[];
 
     constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
         super(dictionary, data);
         this.dictionary = dictionary;
+        this._setCustomField('parentField', data);
         this.modeField = this.fieldsMap.get(data.modeField);
         if (!this.modeField) {
             throw new Error('No field decribed for "' + data.modeField + '"');

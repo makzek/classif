@@ -1,88 +1,138 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EosStorageService } from '../../app/services/eos-storage.service';
-
-export interface IListPage {
-    start: number;
-    current: number;
-    length: number;
-};
-
-interface IPageLength {
-    title: string;
-    value: number;
-}
-
-const PAGES: IPageLength[] = [{
-    title: '10',
-    value: 10
-}, {
-    title: '20',
-    value: 20
-}, {
-    title: '40',
-    value: 30
-}, {
-    title: '100',
-    value: 100
-}, {
-    title: '200',
-    value: 200
-}];
+import { IPaginationConfig, IPageLength } from './node-list-pagination.interfaces';
+import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
 
 @Component({
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent implements OnInit {
-    @Input() position: any;
+export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges {
     @Input() total: number;
-    @Output() change: EventEmitter<IListPage> = new EventEmitter<IListPage>();
+    @Output() pageChanged: EventEmitter<IPaginationConfig> = new EventEmitter<IPaginationConfig>();
 
-    readonly pages = PAGES;
-    page: IListPage;
-    pageLength: IPageLength;
+    private _routerSub;
+    readonly pageLengths = PAGES;
+    private readonly _buttonsTotal = 5;
 
-    private _dropStartPage = true;
+    public config: IPaginationConfig = {
+        start: 1,
+        current: 1,
+        length: 10,
+    }
+
+    pageCount = 1;
+    pages: number[] = [];
 
     constructor(
-        private _storageSrv: EosStorageService
-    ) { }
+        private _storageSrv: EosStorageService,
+        private _route: ActivatedRoute,
+        private _router: Router
+    ) {
+        const pageLength = this._getPage(this._storageSrv.getItem(LS_PAGE_LENGTH) || 1);
+
+        this.config.length = pageLength.value;
+
+        this._routerSub = this._route.queryParams.subscribe(params => {
+            let update = false;
+            if (params.length) {
+                this.config.length = this._getPage(this._positive(params.length)).value;
+                update = true;
+            }
+            if (params.page) {
+                this.config.current = this._positive(params.page);
+                update = true;
+            }
+            if (params.start) {
+                this.config.start = this._positive(params.start);
+                update = true;
+            }
+            if (update) {
+                this.pageChanged.emit(this.config);
+                this._update();
+            }
+        });
+    }
+
+    private _positive(val: any): number {
+        let res = val * 1 || 1;
+        if (res < 1) {
+            res = 1;
+        }
+        return Math.floor(res);
+    }
+
+    private _getPage(length: number) {
+        return PAGES.find((item) => item.value >= length) || PAGES[0];
+    }
 
     ngOnInit() {
-        this.pageLength = this.pages[0];
-        this.page = {
-            start: 1,
-            current: 1,
-            length: this.pageLength.value
-        }
-        const PAGE_SETTING = this._storageSrv.getItem('PAGE_SETTING')
-        if (PAGE_SETTING) {
-            this.setPageLength(PAGE_SETTING)
-        } else {
-            this.setPageLength(this.pages[0])
+        this._update();
+        this.pageChanged.emit(this.config);
+    }
+
+    ngOnChanges() {
+        this._update();
+    }
+
+    ngOnDestroy() {
+        this._routerSub.unsubscribe();
+    }
+
+    public setPageLength(length: number): void {
+        this._storageSrv.setItem(LS_PAGE_LENGTH, length, true)
+        this._router.navigate([], {
+            queryParams: {
+                page: this.config.current,
+                length: length,
+                start: this.config.start
+            }
+        })
+    }
+
+    public showMore() {
+        this._router.navigate([], {
+            queryParams: {
+                page: this.config.current + 1,
+                length: this.config.length,
+                start: this.config.start
+            }
+        })
+    }
+
+    public showPage(page: number): void {
+        if (page !== this.config.current) {
+            this._router.navigate([], {
+                queryParams: {
+                    page: page,
+                    length: this.config.length,
+                    start: page
+                }
+            })
         }
     }
 
-    setPageLength(length: IPageLength) {
-        this.pageLength = length
-        this.page.current = this.page.start
-        this.page.length = length.value
-        this.change.emit(this.page)
-        this._storageSrv.setItem('PAGE_SETTING', this.pageLength, true)
-    }
+    private _update() {
+        if (this.total) {
+            const total = Math.ceil(this.total / this.config.length);
+            const firstSet = this._buttonsTotal - this.config.current;
+            const lastSet = total - this._buttonsTotal + 1;
+            const middleSet = this._buttonsTotal - 3;
 
-    showMore() {
-        this._dropStartPage = false;
-        this.page.current++;
-    }
-
-    pageChanged(event: any): void {
-        console.log('pageChanged');
-        if (this._dropStartPage) {
-            this.page.start = event.page;
+            this.pageCount = total;
+            this.pages = [];
+            for (let i = 1; i <= this.pageCount; i++) {
+                if (
+                    i === 1 || i === this.pageCount || // first & last pages
+                    (1 < firstSet && i < this._buttonsTotal) || // first 4 pages
+                    (1 < this.config.current - lastSet && i - lastSet > 0) || // last 4 pages
+                    (middleSet > this.config.current - i && i - this.config.current < middleSet)  // middle pages
+                ) {
+                    this.pages.push(i);
+                }
+            }
         }
-        this.page.current = event.page;
-        this._dropStartPage = true;
-        this.change.emit(this.page);
     }
+
 }

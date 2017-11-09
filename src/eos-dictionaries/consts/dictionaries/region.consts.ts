@@ -86,7 +86,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
     searchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
-    quickViewFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['CODE', 'NOTE', 'COD_OKATO'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
     allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],

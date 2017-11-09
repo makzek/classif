@@ -28,7 +28,7 @@ export class EosStorageService {
      * @param key key for data
      */
     public getItem(key: string): any {
-        if (key && key !== '__storage') {
+        if (key && key !== '__storage' && key !== 'userOrder') {
             return this._data[key];
         }
     }
@@ -40,9 +40,9 @@ export class EosStorageService {
      * @param saveToLocalStorage boolean data, force store data in localStorage
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
-        if (key && key !== '__storage') {
+        if (key && key !== '__storage' && key !== 'userOrder') {
             this._data[key] = data;
-            // console.log('set to LS', typeof data, data);
+            // console.log('set to LS', key, typeof data, data);
             if (saveToLocalStorage) {
                 this._data.__storage[key] = data;
                 this._updateStorage();
@@ -72,7 +72,32 @@ export class EosStorageService {
             const _val = JSON.stringify(this._data.__storage);
             localStorage.setItem('eos', _val);
         } catch (e) {
-            console.log('error storing', this._data.__storage);
+            console.log('error storing', e, this._data.__storage);
         }
+    }
+
+    public setUserOrder(dictionary: string, node: string, ids: string[]) {
+        if (!this._data.userOrder) {
+            this._data.userOrder = {};
+        }
+        const userOrder = this._data.userOrder;
+
+        if (!userOrder[dictionary]) {
+            userOrder[dictionary] = {};
+        }
+
+        const dictionaryOrder = userOrder[dictionary];
+        dictionaryOrder[node] = ids;
+        this._data.__storage.userOrder = userOrder;
+        this._updateStorage();
+    }
+
+    public getUserOrder(dictionary: string): string[] {
+        if (this._data.userOrder) {
+            if (this._data.userOrder[dictionary]) {
+                return this._data.userOrder[dictionary];
+            }
+        }
+        return null;
     }
 }

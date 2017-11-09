@@ -21,11 +21,7 @@ export class ConfirmWindowService {
                 }
             })
             _wnd.confirmEvt.subscribe((confirm: boolean) => {
-                if (confirm !== undefined) {
-                    res(confirm);
-                } else {
-                    res(false)
-                }
+                res(confirm);
             });
         })
     }

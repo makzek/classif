@@ -1,5 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 export interface IConfirmWindow {
     title: string;
@@ -25,7 +26,11 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
 
     readonly confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(public modalRef: BsModalRef) { }
+    constructor(public modalRef: BsModalRef, private modalService: BsModalService) {
+        this.modalService.onHide.subscribe((evt) => {
+            this.confirmEvt.emit(undefined);
+        });
+    }
 
     confirm() {
         this.confirmEvt.emit(true);

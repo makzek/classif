@@ -7,6 +7,8 @@ export enum DICTIONARY_ACTIONS {
     openTree,
     closeInfo,
     openInfo,
+    blockTree,
+    unblockTree,
 }
 
 export enum DICTIONARY_STATES {

@@ -115,6 +115,8 @@ export class EosUserProfileService implements IUserProfile {
 
     logout(): Promise<any> {
         return this._authSrv.logout().then((resp) => {
+            this._user = null;
+            this._params = null;
             this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
             this._router.navigate(['/login']);
@@ -132,10 +134,6 @@ export class EosUserProfileService implements IUserProfile {
         settings.forEach((item) => this._setSetting(item.id, item.value));
         // this._settings$.next(this.settings);
         this._settings$.next(this.settings);
-    }
-
-    addSort(dictId: string, orderBy: IOrderBy) {
-        this._setSetting('sort', { dictId: orderBy });
     }
 
     private _setSetting(key: string, value: any) {

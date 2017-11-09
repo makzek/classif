@@ -28,7 +28,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
-        title: 'Описание',
+        title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
@@ -49,7 +49,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     editFields: ['CLASSIF_NAME', 'NOTE'],
     searchFields: ['CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['CLASSIF_NAME', 'NOTE'],
-    quickViewFields: ['CLASSIF_NAME', 'NOTE'],
+    quickViewFields: ['NOTE'], // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
     allVisibleFields: ['CLASSIF_NAME', 'NOTE'],

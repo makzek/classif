@@ -18,6 +18,7 @@ export class BreadcrumbsComponent {
     treeOpened = false;
     infoOpened = false;
     isDictionaryPage = false;
+    treeIsBlocked = false;
 
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
@@ -35,6 +36,10 @@ export class BreadcrumbsComponent {
                 this.treeOpened = true;
             } else if (action === DICTIONARY_ACTIONS.closeTree) {
                 this.treeOpened = false;
+            } else if (action === DICTIONARY_ACTIONS.blockTree) {
+                this.treeIsBlocked = true;
+            } else if (action === DICTIONARY_ACTIONS.unblockTree) {
+                this.treeIsBlocked = false;
             }
         })
         _router.events

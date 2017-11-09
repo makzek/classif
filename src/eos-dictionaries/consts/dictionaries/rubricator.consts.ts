@@ -38,7 +38,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'NOTE',
-        title: 'Описание',
+        title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
@@ -95,7 +95,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE', 'fullTitle'*/],
-    quickViewFields: ['fullTitle', 'NOTE', 'sev'],
+    quickViewFields: ['fullTitle', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
     allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],

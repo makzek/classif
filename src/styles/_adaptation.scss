@@ -23,3 +23,47 @@
         flex-basis: calc((100% - 3*10px) / 3);
     }
 }
+
+// For IE, Edge
+@media screen\0  {
+    .eos-dictionary .node-actions .selected-node .go-top-wrapper {
+        height: $item-height;
+    }
+
+    .eos-desktop .desktop-wrapper {
+        height: calc(100vh - 150px);
+    }
+    
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 4*12px) / 4);
+    }
+
+    @media (max-width: 1640px) {
+        .eos-desktop .sortable-item,
+        .eos-dictionaries .dictionary {
+            flex-basis: calc((100% - 3*13px) / 3);
+        }
+    }
+
+    @media (max-width: 1280px) {
+        .eos-desktop .sortable-item,
+        .eos-dictionaries .dictionary {
+            flex-basis: calc((100% - 2*12px) / 2);
+        }
+    }
+
+    input,
+    textarea {
+        &.ng-invalid.ng-dirty {
+            border-color: $active-field-color-main-theme !important;
+            outline: none !important;
+
+            &.ng-touched {
+                border-color: $invalid-color-main-theme !important;
+                outline: $invalid-color-main-theme solid 1px !important;
+                outline-offset: 0!important;
+            }
+        }
+    }
+}
