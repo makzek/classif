@@ -498,7 +498,6 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя параметров систем оповещения и уведомления
      */
     NTFY_USER_EMAIL_List: NTFY_USER_EMAIL[];
-    
     /**
      * список используемых для этого пользователя полей стандартного ввода
      */
@@ -538,7 +537,7 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя сохраненных запросов
      */
     USER_REQUEST_List: USER_REQUEST[];
-    
+
     /**
      * список используемых для этого пользователя картотечных прав
      */
@@ -1385,7 +1384,7 @@ export interface CABINET extends IEnt {
     /**
      * Имя кабинета
      */
-    CABINET_NAME: string; 
+    CABINET_NAME: string;
     /**
     * Полное наименование
     */
@@ -2954,7 +2953,7 @@ export interface TEMP_RC extends IEnt {
     INS_DATE: number;
 
     /**
-     * список используемых для временной РК файлов 
+     * список используемых для временной РК файлов
      */
     REF_FILE_List: REF_FILE[];
 
@@ -2986,7 +2985,7 @@ export interface USER_AUDIT extends IEnt {
     EVENT_KIND: number;
 
     /**
-     * список используемых для временной РК файлов 
+     * список используемых для временной РК файлов
      */
     REF_FILE_List: REF_FILE[];
 }
@@ -3202,4 +3201,9 @@ export interface USER_REQUEST extends IEnt {
      * Тип списка
      */
     SRCH_KIND_NAME: string;
+}
+
+export interface SYS_PARMS {
+    dbms: string;
+    USER_PARMS_List: USER_PARMS[];
 }
