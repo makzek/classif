@@ -59,7 +59,7 @@
 
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $dictionary-block-width;
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
             right: $grid-gutter-width / 2;
         }
     }
