@@ -242,6 +242,10 @@ export class DictionaryComponent implements OnDestroy {
         }));
 
         this._subscriptions.push(this._route.queryParams.subscribe(params => {
+            const lastStage = this._page.current;
+            if (this._page.current !== 1) {
+                this._cleanCheck();
+            }
             let update = false;
             if (params.length) {
                 this._page.length = this._getPage(this._positive(params.length)).value;
@@ -256,6 +260,9 @@ export class DictionaryComponent implements OnDestroy {
                 update = true;
             }
             if (update) {
+                if (lastStage !== this._page.current) {
+                    this._cleanCheck();
+                }
                 this._updateVisibleNodes();
             }
         }));
@@ -307,6 +314,10 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
+    private _cleanCheck() {
+        this.visibleNodes.forEach(item => item.marked = false)
+    }
+
     private _updateVisibleNodes() {
         console.log('_updateVisibleNodes fired');
 
@@ -318,7 +329,6 @@ export class DictionaryComponent implements OnDestroy {
         }
 
         this.filteredNodes = _list;
-
         if (page) {
             this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
         } else {
