@@ -47,7 +47,8 @@
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.fullTitle}}" placement="top" containerClass="tooltip-info word-break" container="body" class="text">
+        <span [hidden]="editing(item.value)" tooltip="{{deskId === 'system' ? item.value.title : item.value.fullTitle}}"
+         placement="top" containerClass="tooltip-info word-break" container="body" class="text">
             {{item.value.title}}
         </span>
         <!--<button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"
