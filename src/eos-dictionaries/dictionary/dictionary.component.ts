@@ -240,6 +240,37 @@ export class DictionaryComponent implements OnDestroy {
             }
             this._updateVisibleNodes();
         }));
+
+        this._subscriptions.push(this._route.queryParams.subscribe(params => {
+            let update = false;
+            if (params.length) {
+                this._page.length = this._getPage(this._positive(params.length)).value;
+                update = true;
+            }
+            if (params.page) {
+                this._page.current = this._positive(params.page);
+                update = true;
+            }
+            if (params.start) {
+                this._page.start = this._positive(params.start);
+                update = true;
+            }
+            if (update) {
+                this.pageChanged()
+            }
+        }));
+    }
+
+    private _getPage(length: number) {
+        return PAGES.find((item) => item.value >= length) || PAGES[0];
+    }
+
+    private _positive(val: any): number {
+        let res = val * 1 || 1;
+        if (res < 1) {
+            res = 1;
+        }
+        return Math.floor(res);
     }
 
     ngOnDestroy() {
@@ -295,12 +326,11 @@ export class DictionaryComponent implements OnDestroy {
         } else {
             this.visibleNodes = _list;
         }
-        // this.updateMarks();
+        this.updateMarks();
     }
 
-    pageChanged(page: IPaginationConfig) {
+    pageChanged() {
         // console.log('page changed', page);
-        this._page = page;
         if (this.listNodes[0]) {
             this._updateVisibleNodes();
         }
