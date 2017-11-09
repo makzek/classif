@@ -90,7 +90,7 @@
     border-radius: 0;
 
     .popover-arrow.arrow {
-        right: 68px !important;
+        right: 61px !important;
         left: auto !important;
     }
 
@@ -101,6 +101,10 @@
     .spinner-wrapper {
         text-align: center;
         padding: 10px;
+    }
+
+    .checkbox-inline input[type="checkbox"] + span {
+        margin-right: 12px;
     }
 }
 
@@ -132,23 +136,44 @@
 
 .full-search-settings-container {
     border-bottom: 1px solid transparent;
-    margin: 0 0 20px;
+    margin: 0;
     padding-top: 30px;
+    display: flex;
 
     .radio-inline,
     .checkbox-inline {
-        height: 48px;
-        vertical-align: middle;
+        height: 32px;
+        padding: 5px 0;
+        margin-bottom: 20px;
     }
 
     .radio-inline + .radio-inline,
     .checkbox-inline + .checkbox-inline {
         margin-left: 0;
     }
+
+    .checkbox-inline,
+    .radio-inline {
+        padding-left: 0;
+    }
+
+    .col-1 {
+        width: 190px;
+        margin-right: 40px;
+        margin-left: 20px;
+    }
+
+    .col-2 {
+        width: 300px;
+    }
 }
 
 .full-search-form {
     padding: 0 20px;
+
+    .tabs-wrapper {
+        margin: 0 -20px -10px;
+    }
 
     label {
         text-transform: uppercase;
@@ -159,6 +184,18 @@
 
     .form-control {
         border-radius: 0;
+        height: 32px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    .no-top-margin {
+        .form-group {
+            margin-top: 10px;
+        }
     }
 
 }

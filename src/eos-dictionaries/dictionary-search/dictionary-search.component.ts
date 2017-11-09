@@ -49,11 +49,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     get noSearchData(): boolean {
-        if (this.searchForm) {
-            for (const _field in this.searchForm.value) {
-                if (this.searchForm.value[_field] && this.searchForm.value[_field] !== '') {
-                    return false;
-                }
+        for (const _field in this.data) {
+            if (this.data[_field] !== '') {
+                return false;
             }
         }
         return true;
