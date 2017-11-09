@@ -256,7 +256,7 @@ export class DictionaryComponent implements OnDestroy {
                 update = true;
             }
             if (update) {
-                this.pageChanged()
+                this._updateVisibleNodes();
             }
         }));
     }
@@ -308,12 +308,10 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _updateVisibleNodes() {
-        // console.log('_updateVisibleNodes fired');
+        console.log('_updateVisibleNodes fired');
+
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
-
-        this.visibleNodes.forEach(item => item.marked = false);
-        this.updateMarks();
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
@@ -327,13 +325,6 @@ export class DictionaryComponent implements OnDestroy {
             this.visibleNodes = _list;
         }
         this.updateMarks();
-    }
-
-    pageChanged() {
-        // console.log('page changed', page);
-        if (this.listNodes[0]) {
-            this._updateVisibleNodes();
-        }
     }
 
     doAction(action: E_RECORD_ACTIONS) {
