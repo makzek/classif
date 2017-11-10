@@ -1,13 +1,13 @@
-<div class="eos-dictionary" [ngClass]="{'full': currentState === states.full ,
-        'only-selected': currentState === states.selected,
-        'info': currentState === states.info,
-        'tree': currentState === states.tree}" (window:resize)="resize()">
-    <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
-        'has-spinner': !treeNodes.length }" [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
+<div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
+        'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
+        'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1] && hideTree,
+        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()">
+    <div class="tree-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree, 'has-spinner': !treeNodes.length }"
+        [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
         <eos-tree *ngIf="treeNodes.length" [nodes]="treeNodes" [showDeleted]="params.showDeleted"></eos-tree>
     </div>
-    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
+    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
             <div *ngIf="selectedNode" class="block selected-node">
                 <div class="go-top-wrapper">
@@ -63,7 +63,7 @@
             <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page"></eos-node-list-pagination>
         </ng-container>
     </div>
-    <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
+    <div class="opened-wrapper" [ngClass]="{'open-info': currentState[1]}">
         <eos-node-info (action)=doAction($event)></eos-node-info>
     </div>
 </div>

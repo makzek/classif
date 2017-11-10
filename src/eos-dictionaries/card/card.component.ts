@@ -14,7 +14,6 @@ import { EosUserProfileService } from '../../app/services/eos-user-profile.servi
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
 
 import { RECENT_URL } from '../../app/consts/common.consts';
 
@@ -121,8 +120,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _dictActSrv: DictionaryActionService
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
@@ -240,8 +238,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.goTo(url);
         }
         if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);*/
         }
     }
 

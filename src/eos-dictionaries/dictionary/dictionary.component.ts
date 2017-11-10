@@ -16,6 +16,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosSandwichService } from '../services/eos-sandwich.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -33,11 +34,6 @@ import { FieldDescriptor } from '../core/field-descriptor'
 
 import { IOrderBy } from '../core/sort.interface'
 
-import {
-    DictionaryActionService,
-    DICTIONARY_ACTIONS,
-    DICTIONARY_STATES
-} from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
@@ -67,8 +63,8 @@ export class DictionaryComponent implements OnDestroy {
     filteredNodes: EosDictionaryNode[];
     _page: IPaginationConfig;
 
-    currentState: number;
-    readonly states = DICTIONARY_STATES;
+    currentState: boolean[];
+    // readonly states = DICTIONARY_STATES;
 
     private _subscriptions: Subscription[];
 
@@ -103,8 +99,8 @@ export class DictionaryComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
-        private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
+        private _sandwichSrv: EosSandwichService,
     ) {
         this.params = {
             userSort: false,
@@ -123,7 +119,9 @@ export class DictionaryComponent implements OnDestroy {
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
-        this.currentState = this._dictActSrv.state;
+        this._subscriptions.push(this._sandwichSrv.currentDictState$.subscribe((state) => {
+            this.currentState = state;
+        }));
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -138,12 +136,6 @@ export class DictionaryComponent implements OnDestroy {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
                 this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
-                this.resize();
-                if (this.dictionary.descriptor.type === E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.blockTree);
-                } else {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.unblockTree);
-                }
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                     this.treeNodes = [dictionary.root];
@@ -157,63 +149,6 @@ export class DictionaryComponent implements OnDestroy {
         this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
             if (node) {
                 this.params.select = true;
-            }
-        }))
-
-        this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
-            this._dictActSrv.closeAll = false;
-            switch (action) {
-                // TODO: try to find more simple solition
-                case DICTIONARY_ACTIONS.closeTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.closeInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                    }
-                    break;
-                default:
-                    break;
             }
         }));
 
@@ -284,6 +219,10 @@ export class DictionaryComponent implements OnDestroy {
 
     ngOnDestroy() {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
+
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
     }
 
     private _countColumnWidth() {
@@ -464,9 +403,8 @@ export class DictionaryComponent implements OnDestroy {
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.closeAll = true;
+            this._sandwichSrv.changeDictState(false, false);
+            this._sandwichSrv.changeDictState(false, true);
         }
     }
 
@@ -655,23 +593,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     public resize(): void {
-        if (window.innerWidth > 1500) {
-            if (this.currentState !== DICTIONARY_STATES.tree) {
-                this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            }
-            if (this.dictionary) {
-                if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-                } else {
-                    if (this.currentState === DICTIONARY_STATES.full || this.currentState === DICTIONARY_STATES.tree) {
-                        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-                    }
-                }
-            }
-        } else {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-        }
+        this._sandwichSrv.resize();
     }
 
     searchResult(nodes: EosDictionaryNode[]) {
