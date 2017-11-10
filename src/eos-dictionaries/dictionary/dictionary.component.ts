@@ -244,10 +244,8 @@ export class DictionaryComponent implements OnDestroy {
         }));
 
         this._subscriptions.push(this._route.queryParams.subscribe(params => {
-            console.log(params);
             const lastStage = this._page.current;
             if (params.page !== 1) {
-                console.log('!!')
                 this._cleanCheck();
             }
             let update = false;

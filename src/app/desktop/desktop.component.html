@@ -10,7 +10,8 @@
                 <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true"
                     tooltip="Переместить влево" containerClass="tooltip-info"></span>
                 <span class="recent-title">История:</span>
-                <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
+                <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false"
+                    tooltip="Переместить вправо" containerClass="tooltip-info"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
                 <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="tooltip-info  word-break">

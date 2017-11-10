@@ -380,14 +380,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _save(data: any): Promise<any> {
         console.log('save', data);
-        const bCrumbs = this._breadcrumbsSrv.currentLink;
         return this._dictSrv.updateNode(this.node, data)
-            .then((resp) => {
+            .then((resp: EosDictionaryNode) => {
+                console.log(resp.data.CLASSIF_NAME)
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
-                    url: bCrumbs.url,
-                    title: this.nodeName,
-                    fullTitle: bCrumbs.fullTitle
+                    url: this._router.url,
+                    title: resp.data.CLASSIF_NAME,
+                    fullTitle: resp.data.CLASSIF_NAME + ' - Редактирование'
                 });
                 this._clearEditingCardLink();
                 return resp;
