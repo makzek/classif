@@ -38,22 +38,6 @@ export class PushpinComponent {
     }
 
     pin(desk: EosDesk) {
-        const items = this._bcSrv.breadcrumbs;
-        let title = '';
-        for (let i = 2; i < items.length; i++) {
-            title += items[i].title + '/';
-        }
-        title = title.substring(0, title.length - 1);
-        const deskItem: IDeskItem = {
-            title: title,
-            fullTitle: items[items.length - 1].fullTitle,
-            url: items[items.length - 1].url
-        }
-        /* tslint:disable:no-bitwise */
-        if (!~desk.references.findIndex((_ref: IDeskItem) =>  _ref.url === deskItem.url)) {
-            desk.references.push(deskItem);
-        } else {
-            this._msgSrv.addNewMessage(WARN_LINK_PIN);
-        }
+        if (!this._deskSrv.addNewItemToDesk(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
     }
 }

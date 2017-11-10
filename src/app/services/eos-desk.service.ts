@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { EosDictionaryNode } from '../../eos-dictionaries/core/eos-dictionary-node';
+import { EosDictionary } from '../../eos-dictionaries/core/eos-dictionary';
 // import {Subject} from 'rxjs/Subject';
 
-// import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
-import { EosDesk } from '../core/eos-desk';
+import { EosDesk, IDesk } from '../core/eos-desk';
 
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
@@ -56,7 +58,8 @@ export class EosDeskService {
     constructor(
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
-        /*private router: Router*/
+        private _route: ActivatedRoute,
+        private _router: Router
     ) {
         this._desksList = DEFAULT_DESKS;
 
@@ -82,6 +85,44 @@ export class EosDeskService {
             });
 
         this._recentItems = [];
+    }
+
+    public addNewItemToDesk(desk: IDesk) {
+        const item: IDeskItem = {
+            title: null,
+            fullTitle: null,
+            url: this._router.url
+        }
+        const segments = this._router.url.split('/');
+        if (segments.length === 3) {
+            this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
+                item.fullTitle = dictionary.title;
+                item.title = dictionary.title;
+            })
+        } else if (segments.length === 4) {
+            this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
+                item.fullTitle = node.data.CLASSIF_NAME;
+                item.title = node.data.CLASSIF_NAME;
+            })
+        } else if (segments.length === 5) {
+            this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
+                if (segments[4] === 'view') {
+                    item.fullTitle = node.data.CLASSIF_NAME + ' - Просмотр';
+                    item.title = node.data.CLASSIF_NAME + ' - Просмотр';
+                } else if (segments[4] === 'edit') {
+                    item.fullTitle = node.data.CLASSIF_NAME + ' - Редактирование';
+                    item.title = node.data.CLASSIF_NAME + ' - Редактирование';
+                }
+            })
+        }
+        /* tslint:disable */
+        if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
+            desk.references.push(item);
+            return true;
+        } else {
+            return false;
+        }
+        /*tslint:enable*/
     }
 
     /* getDesk(id: string): Promise<EosDesk> {
