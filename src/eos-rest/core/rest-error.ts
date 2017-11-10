@@ -1,16 +1,19 @@
-export interface IRestError {
-    code: string;
-    message: string;
-}
-
-export class RestError implements IRestError {
-    code: string;
+export class RestError {
+    code: number;
     message: string;
 
     constructor(error: any) {
+        /*
+        super();
+        // Set the prototype explicitly.
+        Object.setPrototypeOf(this, RestError.prototype);
+        */
         if (error.http) {
-            this.code = error.http.status + '';
+            this.code = error.http.status;
             switch (error.http.status) {
+                case 0:
+                    this.message = 'Ошибка соединения';
+                    break;
                 case 434:
                     this.message = 'Ошибка авторизации';
                     break;
@@ -21,28 +24,32 @@ export class RestError implements IRestError {
                     this._defaultErrorHandler(error.http);
             }
         } else if (error.isLogicException) {
-            this.code = '1000';
+            this.code = 1000;
             this.message = error.message;
         } else if (error.odataErrors) {
-            this.code = '2000';
+            this.code = 2000;
             this._odataErrorsHandler(error);
         }
     }
-    private _defaultErrorHandler(e) {
-        let message = e.message || '';
-        const error = e.data['odata.error'] || e.data['error'];
-        message = error.message ? error.message.value : message;
 
-        if (error.innererror && error.innererror.type === 'Eos.Delo.Exceptions.LogicException') {
-            let data = error['logicException.data'];
-            if (data) {
-                data = JSON.parse(data);
+    private _defaultErrorHandler(e: any) {
+        console.log('http error', e);
+        let message = e.message || '';
+        if (e.data) {
+            const error = e.data['odata.error'] || e.data['error'];
+            message = error.message ? error.message.value : message;
+
+            if (error.innererror && error.innererror.type === 'Eos.Delo.Exceptions.LogicException') {
+                let data = error['logicException.data'];
+                if (data) {
+                    data = JSON.parse(data);
+                }
+                this._defaultLogicExceptionHandler(error.innererror, data);
+                return;
+            } else if (error.innererror) {
+                this.message = error.innererror.message;
+                return;
             }
-            this._defaultLogicExceptionHandler(error.innererror, data);
-            return;
-        } else if (error.innererror) {
-            this.message = error.innererror.message;
-            return;
         }
         if (e.statusCode) {
             this.message = message;
@@ -75,7 +82,7 @@ export class RestError implements IRestError {
             if (e.type === 'Eos.Delo.Exceptions.LogicException') {
                 logic += e.message + '\n';
             } else {
-                console.log('non logic odata error', e);
+                // console.log('non logic odata error', e);
                 this.message = e.message;
                 return;
                 // this.WriteErrorHtml(e.message, e.stacktrace);
