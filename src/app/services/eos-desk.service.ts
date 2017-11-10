@@ -23,7 +23,7 @@ const DEFAULT_DESKS: EosDesk[] = [{
     references: [{
         url: '/spravochniki/rubricator',
         title: 'Рубрикатор',
-        fullTitle: 'Главная/Справочники/Рубрикатор'
+        fullTitle: 'Рубрикатор'
     }],
     edited: false,
 }, {
@@ -148,7 +148,6 @@ export class EosDeskService {
     }
 
     addRecentItem(link: IDeskItem): void {
-        console.log(link)
         this._recentItems.push(link);
         if (this._recentItems.length > 10) {
             this._recentItems.shift();

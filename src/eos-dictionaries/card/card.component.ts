@@ -379,10 +379,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
-        console.log('save', data);
+        // console.log('save', data);
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
-                console.log(resp.data.CLASSIF_NAME)
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
