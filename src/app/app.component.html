@@ -15,7 +15,9 @@
                     </a>
                 </li>
                 <li class="header-item else-dropdown" dropdown>
-                    <span class="link-text" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
+                    <span class="link-text" dropdownToggle>
+                        <span tooltip="Ещё" container="body" placement="bottom" containerClass="tooltip-info">Ещё</span>
+                    </span>
                     <ul *dropdownMenu class="dropdown-menu" role="menu">
                         <li *ngFor="let item of modulesDropdown" class="else-item">
                             <a [routerLink]="item.url" routerLinkActive="active">
