@@ -113,12 +113,40 @@
     }
 }
 
-input,
-textarea {
+.form-control {
+    color: $secondary-font-color-main-theme;
+    background-color: $secondary-color-main-theme;
+    border-color: $border-color-main-theme;
+
+    &.light {
+        background-color: $primary-color-main-theme;
+    }
+
+    &:focus {
+        border-color: $active-field-color-main-theme;
+    }
+
+    &:-ms-input-placeholder {
+        color: $primary-font-color-main-theme;
+    }
+
     &.ng-invalid.ng-dirty {
         border-color: $invalid-color-main-theme !important;
         outline: $invalid-color-main-theme solid 1px !important;
         outline-offset: 0 !important;
+    }
+
+    &.ng-valid {
+        border-color: $border-color-main-theme !important;
+    }
+
+    &.readonly {
+        border-color: transparent !important;
+        background-color: transparent;
+
+        &:focus {
+            border-color: transparent;
+        }
     }
 }
 
@@ -236,20 +264,6 @@ textarea {
         }
     }
 
-    .eos-dictionary {
-        .node-actions {
-            .second-line .node-title .item.user-sort {
-                color: $primary-font-color-main-theme;
-            }
-
-            .selected-node .item-count {
-                .bright {
-                    color: $secondary-font-color-main-theme;
-                }
-            }
-        }
-    }
-
     .eos-desktop-switcher {
         color: $primary-font-color-main-theme;
 
@@ -269,54 +283,6 @@ textarea {
 
         .dropdown-button {
             color: $primary-font-color-main-theme;
-        }
-    }
-
-    .edit-content {
-        .form-control {
-            color: $secondary-font-color-main-theme;
-            background-color: $secondary-color-main-theme;
-            border-color: $border-color-main-theme;
-
-            &:focus {
-                border-color: $active-field-color-main-theme;
-            }
-
-            &:-ms-input-placeholder {
-                color: $primary-font-color-main-theme;
-            }
-
-            &.readonly {
-                background-color: transparent;
-                border-color: transparent;
-
-                &:focus {
-                    border-color: transparent;
-                }
-            }
-        }
-    }
-
-    .search-wrapper {
-        .ng-valid {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .full-search-form {
-        .form-control.ng-valid {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .eos-datepicker {
-        input.stub {
-            border-color: transparent;
-            background-color: transparent;
-
-            &:focus {
-                border-color: transparent;
-            }
         }
     }
 }

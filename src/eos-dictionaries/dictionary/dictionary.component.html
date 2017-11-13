@@ -19,7 +19,7 @@
                 <div class="item-count pull-right usual-border">
                     <span class="item-count-content">
                         Записей:
-                        <span class="bright">{{filteredNodes?.length}}</span>
+                        <span class="secondary-text">{{filteredNodes?.length}}</span>
                     </span>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
+                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'primary-text': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
                             <span class="text" *ngIf="!params.userSort" (click)="orderByField(field.key)">{{field.title}}
                                 <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small" [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
