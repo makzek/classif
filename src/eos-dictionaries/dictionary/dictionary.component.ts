@@ -26,7 +26,8 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
-    WARN_LOGIC_DELETE_ONE
+    WARN_LOGIC_DELETE_ONE,
+    DANGER_HAVE_NO_ELEMENTS
 } from '../consts/messages.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
@@ -464,7 +465,9 @@ export class DictionaryComponent implements OnDestroy {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            if (arr.length === 1) {
+            if (arr.length === 0) {
+                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
+            } else if (arr.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
             } else if (arr.length) {
                 const WARN = Object.assign({}, WARN_LOGIC_DELETE);
@@ -487,6 +490,7 @@ export class DictionaryComponent implements OnDestroy {
             }
             list = list.slice(0, list.length - 2);
             if (j === 0) {
+                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
                 return;
             } else if (j === 1) {
                 const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
