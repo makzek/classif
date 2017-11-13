@@ -368,7 +368,7 @@ export class DictionaryComponent implements OnDestroy {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length) {
+        if (_idx < this._page.current * this._page.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
