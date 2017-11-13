@@ -110,11 +110,7 @@ export class DictionaryComponent implements OnDestroy {
             select: false
         };
 
-        this._page = {
-            start: 1,
-            current: 1,
-            length: _storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
-        }
+        this._initPage();
 
         this._subscriptions = [];
         this.treeNodes = [];
@@ -173,10 +169,9 @@ export class DictionaryComponent implements OnDestroy {
         }));
 
         this._subscriptions.push(this._route.queryParams.subscribe(params => {
-            const lastStage = this._page.current;
-            if (params.page !== 1) {
-                this._cleanCheck();
-            }
+            this._initPage();
+            const _page = Object.assign({}, this._page);
+
             let update = false;
             if (params.length) {
                 this._page.length = this._getPage(this._positive(params.length)).value;
@@ -190,13 +185,22 @@ export class DictionaryComponent implements OnDestroy {
                 this._page.start = this._positive(params.start);
                 update = true;
             }
+
             if (update) {
-                if (lastStage !== this._page.current) {
+                if (_page.start !== this._page.start) {
                     this._cleanCheck();
                 }
                 this._updateVisibleNodes();
             }
         }));
+    }
+
+    private _initPage() {
+        this._page = {
+            start: 1,
+            current: 1,
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
+        }
     }
 
     private _getPage(length: number) {
@@ -250,7 +254,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _cleanCheck() {
-        this.visibleNodes.forEach(item => item.marked = false)
+        this.filteredNodes.forEach(item => item.marked = false);
     }
 
     private _updateVisibleNodes() {

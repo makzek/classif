@@ -233,6 +233,9 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             if (this.selectedNode) {
+                if (this.selectedNode.hasSubnodes) {
+                    this.selectedNode.children.forEach((child) => child.marked = false);
+                }
                 this.selectedNode.isActive = false;
             }
             if (node) {
@@ -402,7 +405,7 @@ export class EosDictService {
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
             node.children.forEach((subNode) => {
-                 this._restoreItem(subNode);
+                this._restoreItem(subNode);
             });
         }
     }
