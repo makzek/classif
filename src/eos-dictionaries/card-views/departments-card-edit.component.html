@@ -1,9 +1,9 @@
 <div class="eos-departments-card-edit edit-content">
     <form #cardForm="ngForm">
     <div [hidden]="!data['IS_NODE']">
-        <div class="tabs-wrapper">
+        <div class="tabs-wrapper usual-border">
             <ul class="tabs">
-                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active': i === currTab}"
+                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border': i === currTab}"
                     (click)="setTab(i)">
                     <span class="tab-title">{{tab}}</span>
                 </li>
@@ -16,7 +16,7 @@
                     <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
                 </div>
                 <div class="form-group gender">
-                    <label [ngClass]="{'readonly': !editMode }" for="gender">{{fieldsDescription['gender']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="gender">{{fieldsDescription['gender']?.title}}</label>
                     <select *ngIf="editMode" name="gender" id="gender" class="form-control gender-select"
                         [ngModel]="data['gender']" (ngModelChange)="change('gender', $event)"
                         [ngClass]="{'readonly': !editMode }">
@@ -26,7 +26,7 @@
                         [ngClass]="{'gender-placeholder': editMode }" placeholder="{{fieldsDescription['gender']?.title}}" />
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
                     <input [readonly]="!editMode" id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control"
                         [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                         placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
@@ -39,7 +39,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="indexPerson">{{fieldsDescription['indexPerson']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexPerson">{{fieldsDescription['indexPerson']?.title}}</label>
                     <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control"
                         [ngModel]="data['DEPARTMENT_INDEX']" (ngModelChange)="change('DEPARTMENT_INDEX', $event)"
                         placeholder="{{fieldsDescription['indexPerson']?.title}}"
@@ -51,7 +51,7 @@
                         [isOpen]="cardForm.controls.indexPerson?.invalid && cardForm.controls.indexPerson?.dirty && focusedField === 'DEPARTMENT_INDEX'" triggers="">
                 </div>
                 <div class="form-group sev">
-                    <label [ngClass]="{'readonly': !editMode }" for="SEV">{{fieldsDescription['SEV']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV">{{fieldsDescription['SEV']?.title}}</label>
                     <input [readonly]="!editMode" id="SEV" name="SEV" type="text" class="form-control"
                         [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                         placeholder="{{fieldsDescription['SEV']?.title}}"
@@ -63,13 +63,13 @@
                         [isOpen]="cardForm.controls.SEV?.invalid && cardForm.controls.SEV?.dirty && focusedField === 'SEV'" triggers="">
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
                     <eos-datepicker [placeholder]="fieldsDescription['START_DATE']?.title" [value]="data['START_DATE']"
                         (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                         placement="top"></eos-datepicker>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
                     <eos-datepicker [placeholder]="fieldsDescription['END_DATE']?.title" [value]="data['END_DATE']"
                         (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                         placement="top"></eos-datepicker>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-2">
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastName">{{fieldsDescription['lastName']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastName">{{fieldsDescription['lastName']?.title}}</label>
                     <input [readonly]="!editMode" id="lastName" name="lastName" type="text" class="form-control"
                         [ngModel]="data['lastName']" (ngModelChange)="change('lastName', $event)"
                         placeholder="{{fieldsDescription['lastName']?.title}}"
@@ -90,7 +90,7 @@
                 </div>
                 <div class="names row-wrapper">
                     <div class="form-group first-name">
-                        <label [ngClass]="{'readonly': !editMode }" for="firstName">{{fieldsDescription['firstName']?.title}}</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="firstName">{{fieldsDescription['firstName']?.title}}</label>
                         <input [readonly]="!editMode" id="firstName" name="firstName" type="text" class="form-control"
                             [ngModel]="data['firstName']" (ngModelChange)="change('firstName', $event)"
                             placeholder="{{fieldsDescription['firstName']?.title}}"
@@ -102,7 +102,7 @@
                             [isOpen]="cardForm.controls.firstName?.invalid && cardForm.controls.firstName?.dirty && focusedField === 'firstName'" triggers="">
                     </div>
                     <div class="form-group fathers-name">
-                        <label [ngClass]="{'readonly': !editMode }" for="fathersName">{{fieldsDescription['fathersName']?.title}}</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fathersName">{{fieldsDescription['fathersName']?.title}}</label>
                         <input [readonly]="!editMode" id="fathersName" name="fathersName" type="text" class="form-control"
                             [ngModel]="data['fathersName']" (ngModelChange)="change('fathersName', $event)"
                             placeholder="{{fieldsDescription['fathersName']?.title}}"
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="SURNAME">{{fieldsDescription['SURNAME']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SURNAME">{{fieldsDescription['SURNAME']?.title}}</label>
                     <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control"
                         [ngModel]="data['SURNAME']" (ngModelChange)="change('SURNAME', $event)"
                         placeholder="{{fieldsDescription['SURNAME']?.title}}"
@@ -128,7 +128,7 @@
                         [isOpen]="cardForm.controls.SURNAME?.invalid && cardForm.controls.SURNAME?.dirty && focusedField === 'SURNAME'" triggers="">
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="DUTY">{{fieldsDescription['DUTY']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY">{{fieldsDescription['DUTY']?.title}}</label>
                     <div class="row-wrapper">
                         <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control duty"
                             [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
@@ -140,14 +140,14 @@
                             containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right"
                             [isOpen]="cardForm.controls.DUTY?.invalid && cardForm.controls.DUTY?.dirty && focusedField === 'DUTY'" triggers="">
           
-                        <label [ngClass]="{'readonly': !editMode }" class="checkbox boss"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss"><input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode"
                             [ngModel]="data['POST_H']">
                             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="fullPosition">{{fieldsDescription['fullPosition']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">{{fieldsDescription['fullPosition']?.title}}</label>
                     <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control"
                         [ngModel]="data['fullPosition']" (ngModelChange)="change('fullPosition', $event)"
                         placeholder="{{fieldsDescription['fullPosition']?.title}}"
@@ -159,7 +159,7 @@
                         [isOpen]="cardForm.controls.fullPosition?.invalid && cardForm.controls.fullPosition?.dirty && focusedField === 'fullPosition'" triggers="">
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="NOTE">{{fieldsDescription['NOTE']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NOTE">{{fieldsDescription['NOTE']?.title}}</label>
                     <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control note-person"  rows="5"
                         [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                         placeholder="{{fieldsDescription['NOTE']?.title}}"
@@ -173,26 +173,26 @@
             </div>
             </div>
             <div>
-                <span class="block-title">Исполнитель моих обязанностей</span>
+                <span class="block-title usual-border primary-text">Исполнитель моих обязанностей</span>
                 <div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="alternate_START_DATE">Начало действия</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_START_DATE">Начало действия</label>
                         <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
                             [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="alternate_END_DATE">Окончание действия</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_END_DATE">Окончание действия</label>
                         <eos-datepicker [placeholder]="'Окончание действия'" [value]="alternate.END_DATE"
                             [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="fullPosition">Исполнитель моих обязанностей</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Исполнитель моих обязанностей</label>
                         <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control"
                             [ngModel]="alternate.name"
                             placeholder="Исполнитель моих обязанностей"
                             [ngClass]="{'readonly': !editMode }">
                         <button class="btn btn-primary-light person-list-btn">
-                            <i [hidden]="!editMode" class="fa fa-user-plus special-text user-icon" aria-hidden="true"></i>
+                            <i [hidden]="!editMode" class="fa fa-user-plus selected-text user-icon" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                 </div>
             </div>
             <div>
-                <span class="block-title">Исполняю обязанности</span>
+                <span class="block-title usual-border primary-text">Исполняю обязанности</span>
                 <div class="row alternates">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
@@ -232,7 +232,7 @@
         <div *ngIf="currTab === 1">
             <div class="row-wrapper">
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="NUM_CAB">{{fieldsDescription['NUM_CAB']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NUM_CAB">{{fieldsDescription['NUM_CAB']?.title}}</label>
                     <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control"
                         [ngModel]="data['NUM_CAB']" (ngModelChange)="change('NUM_CAB', $event)"
                         placeholder="{{fieldsDescription['NUM_CAB']?.title}}"
@@ -245,7 +245,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="PHONE">{{fieldsDescription['PHONE']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE">{{fieldsDescription['PHONE']?.title}}</label>
                     <input [readonly]="!editMode" id="PHONE" name="PHONE" type="text" class="form-control"
                         [ngModel]="data['PHONE']" (ngModelChange)="change('PHONE', $event)"
                         placeholder="{{fieldsDescription['PHONE']?.title}}"
@@ -258,7 +258,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="PHONE_LOCAL">{{fieldsDescription['PHONE_LOCAL']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE_LOCAL">{{fieldsDescription['PHONE_LOCAL']?.title}}</label>
                     <input [readonly]="!editMode" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control"
                         [ngModel]="data['PHONE_LOCAL']" (ngModelChange)="change('PHONE_LOCAL', $event)"
                         placeholder="{{fieldsDescription['PHONE_LOCAL']?.title}}"
@@ -271,7 +271,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="FAX">{{fieldsDescription['FAX']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="FAX">{{fieldsDescription['FAX']?.title}}</label>
                     <input [readonly]="!editMode" id="FAX" name="FAX" type="text" class="form-control"
                         [ngModel]="data['FAX']" (ngModelChange)="change('FAX', $event)"
                         placeholder="{{fieldsDescription['FAX']?.title}}"
@@ -287,7 +287,7 @@
             <div class="email-wrapper row-wrapper">
                 <div class="form-group"></div>
                 <div class="form-group email">
-                    <label [ngClass]="{'readonly': !editMode }" for="E_MAIL">{{fieldsDescription['E_MAIL']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="E_MAIL">{{fieldsDescription['E_MAIL']?.title}}</label>
                         <input [readonly]="!editMode" id="E_MAIL" name="E_MAIL" type="text" class="form-control"
                             [ngModel]="data['E_MAIL']" (ngModelChange)="change('E_MAIL', $event)"
                             placeholder="{{fieldsDescription['E_MAIL']?.title}}"
@@ -299,7 +299,7 @@
                             [isOpen]="cardForm.controls.E_MAIL?.invalid && cardForm.controls.E_MAIL?.dirty && focusedField === 'E_MAIL'" triggers="">
                 </div>
                 <div class="form-group skype">
-                    <label [ngClass]="{'readonly': !editMode }" for="skype">{{fieldsDescription['skype']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="skype">{{fieldsDescription['skype']?.title}}</label>
                         <input [readonly]="!editMode" id="skype" name="skype" type="text" class="form-control"
                             [ngModel]="data['skype']" (ngModelChange)="change('skype', $event)"
                             placeholder="{{fieldsDescription['skype']?.title}}"
@@ -314,9 +314,9 @@
         </div>
 
         <div *ngIf="currTab === 2">
-                <span class="block-title first">Склонение должности</span>
+                <span class="block-title first usual-border primary-text">Склонение должности</span>
                     <div class="form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="shortPositionRP">{{fieldsDescription['shortPositionRP']?.title}}</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionRP">{{fieldsDescription['shortPositionRP']?.title}}</label>
                         <input [readonly]="!editMode" id="shortPositionRP" name="shortPositionRP" type="text" class="form-control"
                             [ngModel]="data['shortPositionRP']" (ngModelChange)="change('shortPositionRP', $event)"
                             placeholder="{{fieldsDescription['shortPositionRP']?.title}}"
@@ -329,7 +329,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="shortPositionDP">{{fieldsDescription['shortPositionDP']?.title}}</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionDP">{{fieldsDescription['shortPositionDP']?.title}}</label>
                         <input [readonly]="!editMode"  id="shortPositionDP" name="shortPositionDP" type="text" class="form-control"
                             [ngModel]="data['shortPositionDP']" (ngModelChange)="change('shortPositionDP', $event)"
                             placeholder="{{fieldsDescription['shortPositionDP']?.title}}"
@@ -342,7 +342,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label [ngClass]="{'readonly': !editMode }" for="shortPositionVP">{{fieldsDescription['shortPositionVP']?.title}}</label>
+                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionVP">{{fieldsDescription['shortPositionVP']?.title}}</label>
                         <input [readonly]="!editMode"  id="shortPositionVP" name="shortPositionVP" type="text" class="form-control"
                             [ngModel]="data['shortPositionVP']" (ngModelChange)="change('shortPositionVP', $event)"
                             placeholder="{{fieldsDescription['shortPositionVP']?.title}}"
@@ -354,9 +354,9 @@
                             [isOpen]="cardForm.controls.shortPositionVP?.invalid && cardForm.controls.shortPositionVP?.dirty && focusedField === 'shortPositionVP'" triggers="">
                     </div>
 
-                <span class="block-title">Склонение фамилии, имени, отчества</span>
+                <span class="block-title usual-border primary-text">Склонение фамилии, имени, отчества</span>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="fioDP">{{fieldsDescription['fioDP']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fioDP">{{fieldsDescription['fioDP']?.title}}</label>
                     <input [readonly]="!editMode"  id="fioDP" name="fioDP" type="text" class="form-control"
                         [ngModel]="data['fioDP']" (ngModelChange)="change('fioDP', $event)"
                         placeholder="{{fieldsDescription['fioDP']?.title}}"
@@ -368,7 +368,7 @@
                         [isOpen]="cardForm.controls.fioDP?.invalid && cardForm.controls.fioDP?.dirty && focusedField === 'fioDP'" triggers="">
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="iofDP">{{fieldsDescription['iofDP']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="iofDP">{{fieldsDescription['iofDP']?.title}}</label>
                     <input [readonly]="!editMode"  id="iofDP" name="iofDP" type="text" class="form-control"
                         [ngModel]="data['iofDP']" (ngModelChange)="change('iofDP', $event)"
                         placeholder="{{fieldsDescription['iofDP']?.title}}"
@@ -381,7 +381,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastNameRP">Родительный падеж (кого?)</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameRP">Родительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameRP" name="lastNameRP" type="text" class="form-control"
                             [ngModel]="data['lastNameRP']" (ngModelChange)="change('lastNameRP', $event)"
@@ -413,7 +413,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastNameDP">Дательный падеж (кому?)</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameDP">Дательный падеж (кому?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameDP" name="lastNameDP" type="text" class="form-control"
                             [ngModel]="data['lastNameDP']" (ngModelChange)="change('lastNameDP', $event)"
@@ -445,7 +445,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastNameVP">Винительный падеж (кого?)</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameVP">Винительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameVP" name="lastNameVP" type="text" class="form-control"
                             [ngModel]="data['lastNameVP']" (ngModelChange)="change('lastNameVP', $event)"
@@ -477,7 +477,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastNameTP">Творительный падеж (кем?)</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameTP">Творительный падеж (кем?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNameTP" name="lastNameTP" type="text" class="form-control"
                             [ngModel]="data['lastNameTP']" (ngModelChange)="change('lastNameTP', $event)"
@@ -509,7 +509,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="lastNamePP">Предложный падеж (о ком?)</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNamePP">Предложный падеж (о ком?)</label>
                     <div class="row-wrapper declination-wrapper">
                         <input [readonly]="!editMode" id="lastNamePP" name="lastNamePP" type="text" class="form-control"
                             [ngModel]="data['lastNamePP']" (ngModelChange)="change('lastNamePP', $event)"
@@ -540,9 +540,9 @@
                             [isOpen]="cardForm.controls.fathersNamePP?.invalid && bottom.controls.fathersNamePP?.dirty && focusedField === 'fathersNamePP'" triggers="">
                     </div>
                 </div>
-                <span class="block-title">Данные для формирования поручений</span>
+                <span class="block-title usual-border primary-text">Данные для формирования поручений</span>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="shortPosition">{{fieldsDescription['DUTY']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPosition">{{fieldsDescription['DUTY']?.title}}</label>
                     <input [readonly]="!editMode" id="shortPosition" name="shortPosition" type="text" class="form-control"
                         [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
                         placeholder="{{fieldsDescription['DUTY']?.title}}"
@@ -555,7 +555,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label [ngClass]="{'readonly': !editMode }" for="department">{{fieldsDescription['department']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="department">{{fieldsDescription['department']?.title}}</label>
                     <input [readonly]="!editMode"  id="department" name="department" type="text" class="form-control"
                         [ngModel]="data['department']" (ngModelChange)="change('department', $event)"
                         placeholder="{{fieldsDescription['department']?.title}}"
@@ -571,7 +571,7 @@
     <div *ngIf="!data['IS_NODE']" class="wrapper">
         <div class="col-1">
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
                 <input [readonly]="!editMode" id="RUBRIC_CODE_DEP" name="RUBRIC_CODE_DEP" type="text" class="form-control"
                     [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                     placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
@@ -584,7 +584,7 @@
 
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
                 <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control"
                     [ngModel]="data['INDEX']" (ngModelChange)="change('INDEX', $event)"
                     placeholder="{{fieldsDescription['indexDep']?.title}}"
@@ -596,7 +596,7 @@
                     [isOpen]="cardForm.controls.indexDep?.invalid && cardForm.controls.indexDep?.dirty && focusedField === 'indexDep'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="SEV_DEP">{{fieldsDescription['SEV']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV_DEP">{{fieldsDescription['SEV']?.title}}</label>
                 <input [readonly]="!editMode" id="SEV_DEP" name="SEV_DEP" type="text" class="form-control"
                     [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                     placeholder="{{fieldsDescription['SEV']?.title}}"
@@ -608,19 +608,19 @@
                     [isOpen]="cardForm.controls.SEV_DEP?.invalid && cardForm.controls.SEV_DEP?.dirty && focusedField === 'SEV_DEP'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="START_DATE">{{fieldsDescription['START_DATE']?.title}}</label>
                 <eos-datepicker [placeholder]="fieldsDescription['START_DATE']?.title" [value]="data['START_DATE']"
                     (change)="change('START_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="END_DATE">{{fieldsDescription['END_DATE']?.title}}</label>
                 <eos-datepicker [placeholder]="fieldsDescription['END_DATE']?.title" [value]="data['END_DATE']"
                     (change)="change('END_DATE', $event)" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>
             </div>
             <span class="checkbox card-flag">
-                <label [ngClass]="{'readonly': !editMode }" class="checkbox"><input type="checkbox" name="CARD_FLAG"
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox"><input type="checkbox" name="CARD_FLAG"
                         [ngModel]="data['CARD_FLAG']" (ngModelChange)="change('CARD_FLAG', $event)"
                         [disabled]="!editMode">
                     <span></span>
@@ -629,7 +629,7 @@
         </div>
         <div class="col-2">
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="CLASSIF_NAME_DEP">{{fieldsDescription['title']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CLASSIF_NAME_DEP">{{fieldsDescription['title']?.title}}</label>
                 <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control"
                     [ngModel]="data['CLASSIF_NAME']" (ngModelChange)="change('CLASSIF_NAME', $event)"
                     placeholder="{{fieldsDescription['title']?.title}}"
@@ -641,13 +641,13 @@
                     [isOpen]="cardForm.controls.CLASSIF_NAME_DEP?.invalid && cardForm.controls.CLASSIF_NAME_DEP?.dirty && focusedField === 'CLASSIF_NAME_DEP'" triggers="">
             </div>
             <span class="checkbox">
-                <label [ngClass]="{'readonly': !editMode }" class="checkbox"><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox"><input type="checkbox" name="notInPositionTitle" (ngModelChange)="change('notInPositionTitle', $event)" [disabled]="!editMode"
                         [ngModel]="data['notInPositionTitle']">
                     <span></span>
                     {{fieldsDescription['notInPositionTitle']?.title}}</label>
             </span>
             <div class="form-group full-position">
-                    <label [ngClass]="{'readonly': !editMode }" for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
                     <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control"
                         [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)"
                         placeholder="{{fieldsDescription['fullTitle']?.title}}"
@@ -659,7 +659,7 @@
                         [isOpen]="cardForm.controls.fullTitle?.invalid && cardForm.controls.fullTitle?.dirty && focusedField === 'fullTitle'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="titleRP">{{fieldsDescription['titleRP']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="titleRP">{{fieldsDescription['titleRP']?.title}}</label>
                 <input [readonly]="!editMode" id="titleRP" name="titleRP" type="text" class="form-control"
                     [ngModel]="data['titleRP']" (ngModelChange)="change('titleRP', $event)"
                     placeholder="{{fieldsDescription['titleRP']?.title}}"
@@ -671,7 +671,7 @@
                     [isOpen]="cardForm.controls.titleRP?.invalid && cardForm.controls.titleRP?.dirty && focusedField === 'titleRP'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="DUE_LINK_ORGANIZ">{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUE_LINK_ORGANIZ">{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}</label>
                 <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control"
                     [ngModel]="data['DUE_LINK_ORGANIZ']" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)"
                     placeholder="{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}"
@@ -683,7 +683,7 @@
                     [isOpen]="cardForm.controls.DUE_LINK_ORGANIZ?.invalid && cardForm.controls.DUE_LINK_ORGANIZ?.dirty && focusedField === 'DUE_LINK_ORGANIZ'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="CARD_NAME">{{fieldsDescription['CARD_NAME']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CARD_NAME">{{fieldsDescription['CARD_NAME']?.title}}</label>
                 <input [readonly]="!editMode" id="CARD_NAME" name="CARD_NAME" type="text" class="form-control"
                     [ngModel]="data['CARD_NAME']" (ngModelChange)="change('CARD_NAME', $event)"
                     placeholder="{{fieldsDescription['CARD_NAME']?.title}}"
@@ -695,7 +695,7 @@
                     [isOpen]="cardForm.controls.CARD_NAME?.invalid && cardForm.controls.CARD_NAME?.dirty && focusedField === 'CARD_NAME'" triggers="">
             </div>
             <div class="form-group">
-                <label [ngClass]="{'readonly': !editMode }" for="NOTE_DEP">{{fieldsDescription['NOTE']?.title}}</label>
+                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NOTE_DEP">{{fieldsDescription['NOTE']?.title}}</label>
                 <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control note-dep"  rows="5"
                     [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                     placeholder="{{fieldsDescription['NOTE']?.title}}"

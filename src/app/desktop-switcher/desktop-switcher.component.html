@@ -1,6 +1,6 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.hide()" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
-    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
+    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border">
         <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom"
             [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
             containerClass="tooltip-info" container="body">
@@ -41,7 +41,7 @@
         </li>
         <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
         <li *ngIf="deskList.length < 6" (click)="openCreateForm()">
-            <a><span *ngIf="!creating" class="create">Создать рабочий стол</span>
+            <a><span *ngIf="!creating" class="create primary-text">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
                     <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
                         [(ngModel)]="deskName" maxlength="{{maxLength}}" required

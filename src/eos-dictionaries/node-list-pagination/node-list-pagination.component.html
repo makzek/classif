@@ -5,18 +5,18 @@
         <!--button class="pag-btn first" [ngClass]="{'active': config.current === 1, 'inactive': config.current !== 1}"
         (click)="showPage(1)">1</button>
         <div -->
-            <button *ngFor="let page of pages let i = index" class="pag-btn" [ngClass]="{'active': config.current === page, 'inactive': config.current !== page}"
+            <button *ngFor="let page of pages let i = index" class="pag-btn" [ngClass]="{'btn-primary-full': config.current === page, 'inactive': config.current !== page}"
             (click)="showPage(page)">{{page}}</button>
         <!--/div>
-        <!--button class="pag-btn last" [ngClass]="{'active': config.current === pageCount, 'inactive': config.current !== pageCount}"
+        button class="pag-btn last" [ngClass]="{'active': config.current === pageCount, 'inactive': config.current !== pageCount}"
         (click)="showPage(pageCount)" *ngIf="pageCount > 1">{{pageCount}}</button-->
         <button class="pag-btn next inactive" [disabled]="config.current === pageCount"
         (click)="showPage(config.current + 1)">&rsaquo;</button>
     </div>
 
-    <button class="btn show-more special-text" [disabled]="config.current*config.length >= total" (click)="showMore()">Показывать еще</button>
-    <div class="btn-group count-select" dropdown container="body">
-        <span type="button" class="dropdown-toggle special-text" dropdownToggle>
+    <button class="btn show-more selected-text" [disabled]="config.current*config.length >= total" (click)="showMore()">Показывать еще</button>
+    <div class="btn-group count-select usual-border" dropdown container="body">
+        <span type="button" class="dropdown-toggle selected-text" dropdownToggle>
             <span class="dropdown-toggle-text">Показывать по {{config.length}}</span>
             <div class="drop-btn">
                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>

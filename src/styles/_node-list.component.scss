@@ -104,12 +104,6 @@
         border: 1px solid #ddd;
     }
 
-    .active {
-        background: #2196f3;
-        color: #fff;
-        border: 1px solid #2196f3;
-    }
-
     .inactive:hover {
         background: #e6e6e6;
         border: 1px solid #ddd;
@@ -137,8 +131,8 @@
 
     .count-select {
         height: $item-height;
-        border-left: 1px solid transparent;
-        border-color: $border-color-main-theme;
+        border-left-width: 1px;
+        border-left-style: solid;
         grid-column: 3;
 
         .drop-btn {
@@ -197,58 +191,6 @@
         }
     }
 }
-/*
-@media (max-width: 1700px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 280px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1650px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 230px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1580px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 14px;
-                line-height: 20px;
-            }
-
-            .count-select {
-                width: 170px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1500px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 16px;
-                line-height: 24px;
-            }
-
-            .count-select {
-                width: 330px;
-            }
-        }
-    }
-}*/
 
 .create-new-node {
     &.modal-body {
