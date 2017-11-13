@@ -46,6 +46,12 @@ export const DANGER_NAVIGATE_TO_DELETED_ERROR: IMessage = {
     /* tslint:enable:max-line-length */
 };
 
+export const DANGER_HAVE_NO_ELEMENTS: IMessage = {
+    type: 'warning',
+    title: 'Элементы не выбраны!',
+    msg: 'Удалять нечего.'
+}
+
 export const INFO_NOTHING_CHANGES: IMessage = {
     type: 'info',
     title: 'Информация о сохранении изменений: ',
