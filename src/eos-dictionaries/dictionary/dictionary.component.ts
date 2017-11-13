@@ -152,13 +152,6 @@ export class DictionaryComponent implements OnDestroy {
             }
         }));
 
-        this._subscriptions.push(this._profileSrv.settings$
-            .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
-            .subscribe((s) => {
-                this.params.showDeleted = s;
-            })
-        );
-
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             let nodes = [];
             if (node) {
