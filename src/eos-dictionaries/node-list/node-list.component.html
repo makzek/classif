@@ -3,9 +3,9 @@
         <p *ngIf="!nodes?.length" class="text-center text-info">Нет записей.</p>
         <ng-container *ngIf="nodes?.length">
             <!--Sortable list-->
-            <ul *ngIf="params.userSort && nodes?.length" class="elements" [ngClass]="{'has-parent': params.hasParent}">
+            <ul *ngIf="params.userSort && nodes?.length" class="elements secondary-text" [ngClass]="{'has-parent': params.hasParent}">
                 <li class="child">
-                    <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlight': node.isSelected}" itemActiveClass="sortable-item-active"
+                    <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
                         placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
                     </bs-sortable>
                 </li>
@@ -14,7 +14,7 @@
                 <eos-node-list-item [node]="item.value" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userSort && nodes?.length" class="elements" [ngClass]="{'has-parent': params.hasParent}">
+            <ul *ngIf="!params.userSort && nodes?.length" class="elements secondary-text" [ngClass]="{'has-parent': params.hasParent}">
                 <li *ngFor="let item of nodes" class="child">
                     <eos-node-list-item [node]="item" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
                 </li>

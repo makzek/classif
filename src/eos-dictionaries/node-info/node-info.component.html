@@ -1,5 +1,5 @@
 <div class="eos-opened-node">
-    <span class="opened-node-actions pull-right">
+    <span class="opened-node-actions pull-right usual-border">
         <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}"
             containerClass="tooltip-info">
             <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
@@ -13,7 +13,7 @@
         </button>
     </span>
     <div class="opened-node-wrapper">
-        <div *ngIf="updating" class="no-data full-info">
+        <div *ngIf="updating" class="no-data full-info usual-border">
             <eos-spinner [size]="'lg'"></eos-spinner>
         </div>
 
@@ -23,16 +23,16 @@
             </span>
         </div>
 
-        <div *ngIf="viewFields" [hidden]="hideFull" class="full-info">
+        <div *ngIf="viewFields" [hidden]="hideFull" class="full-info usual-border">
             <div *ngFor="let field of viewFields" class="field">
                 <span *ngIf="field.type === fieldTypes.boolean;then checkboxField else textField"></span>
                 <ng-template #checkboxField>
-                    <label class="checkbox field-title"><input type="checkbox" value="{{field.value}}" disabled>
+                    <label class="checkbox field-title unimportant-text"><input type="checkbox" value="{{field.value}}" disabled>
                         <span></span>
                         {{field.title}}</label>
                 </ng-template>
                 <ng-template #textField>
-                    <span class="field-title">{{field.title}}</span>
+                    <span class="field-title unimportant-text">{{field.title}}</span>
                     <br>
                     <span class="field-value">{{field.value}}</span>
                 </ng-template>

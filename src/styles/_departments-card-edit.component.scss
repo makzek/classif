@@ -3,7 +3,8 @@
     overflow-x: hidden;
 
     .block-title {
-        border-bottom: 1px solid transparent;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
         display: inline-block;
         height: 38px;
         line-height: 38px;

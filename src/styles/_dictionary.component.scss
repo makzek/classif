@@ -13,7 +13,8 @@
         height: calc(100vh - 108px);
         width: 400px;
         overflow-y: auto;
-        border-right: 1px solid transparent;
+        border-right-width: 1px;
+        border-right-style: solid;
         transform: translateX(-24px);
 
         &.has-spinner {
@@ -26,7 +27,8 @@
     .opened-wrapper {
         height: calc(100vh - 60px);
         width: $dictionary-block-width;
-        border-left: 1px solid transparent;
+        border-left-width: 1px;
+        border-left-style: solid;
         z-index: 3;
     }
 
@@ -116,7 +118,8 @@
                 text-align: center;
                 font-size: 14px;
                 line-height: 20px;
-                border-left: 1px solid transparent;
+                border-left-width: 1px;
+                border-left-style: solid;
                 grid-column: 3;
             }
 

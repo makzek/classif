@@ -75,8 +75,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     showDeleted = false;
     disableSave = false;
 
-    // private _actionSubscription: Subscription;
-    private _profileSubscription: Subscription;
     private _dictionarySubscription: Subscription;
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
@@ -129,10 +127,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
             this._init();
-        });
-
-        this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
     }
 
@@ -222,7 +216,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._profileSubscription.unsubscribe();
         if (this.editMode) {
             this._clearEditingCardLink();
         }

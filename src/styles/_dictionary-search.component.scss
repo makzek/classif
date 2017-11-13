@@ -19,7 +19,6 @@
         display: inline-block;
         width: 0;
         padding: 6px 0;
-        border-radius: 0;
         height: 46px;
         border: 0;
         transition: 300ms ease-in-out;
@@ -28,7 +27,9 @@
         &.opened {
             width: 428px;
             padding: 6px 12px 6px 20px;
-            border-left: 1px solid grey;
+            border-left-width: 1px;
+            border-left-style: solid;
+            border-radius: 0;
         }
 
         &.hidden {
@@ -112,7 +113,8 @@
 
 .full-search-bottom {
     height: $item-height;
-    border-top: 1px solid transparent;
+    border-top-width: 1px;
+    border-top-style: solid;
     padding: 8px 20px;
 
     .btn {
@@ -124,7 +126,8 @@
 }
 
 .full-search-top {
-    border-bottom: 1px solid transparent;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     padding-top: 20px;
     padding-bottom: 8px;
     margin: 0 20px;
@@ -137,7 +140,8 @@
 }
 
 .full-search-settings-container {
-    border-bottom: 1px solid transparent;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     margin: 0;
     padding-top: 30px;
     display: flex;
