@@ -71,14 +71,8 @@
     border-color: $border-color-main-theme;
     color: $primary-font-color-main-theme;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: $border-color-main-theme;
-    }
-
-    &:disabled {
-        &:hover {
-            background-color: $primary-color-main-theme;
-        }
     }
 }
 
