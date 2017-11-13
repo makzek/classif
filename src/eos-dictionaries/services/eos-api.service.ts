@@ -72,13 +72,11 @@ export class EosDictApiService {
     getRoot(): Promise<any[]> {
         switch (this._type) {
             case E_DICT_TYPE.linear:
-                return this._service.getData()
-                    .catch((err) => this._errHandler(err));
+                return this._service.getData().catch((err) => this._errHandler(err));
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
                 return this._service
-                    .getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } })
-                    .catch((err) => this._errHandler(err));
+                    .getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }).catch((err) => this._errHandler(err));
             default:
                 return this._noData();
         }
@@ -181,6 +179,7 @@ export class EosDictApiService {
 
     private _errHandler(err: any) {
         console.log('API error', err);
-        return this._noData();
+        return Promise.reject(err.message);
+        // return this._noData();
     }
 }

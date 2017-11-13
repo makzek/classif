@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { EosMessageService } from '../services/eos-message.service';
 import { IMessage } from '../core/message.interface';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'eos-messages',
     templateUrl: 'messages.component.html',
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnDestroy {
     messages: IMessage[];
+    private _subscription: Subscription;
 
     constructor(private _msgSrv: EosMessageService) {
-        _msgSrv.messages$.subscribe((messages) => this.messages = messages);
+        this._subscription = _msgSrv.messages$.subscribe((messages) => this.messages = messages);
     }
 
     onClose(message: IMessage) {
         this._msgSrv.removeMessage(message);
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 }

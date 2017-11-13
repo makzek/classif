@@ -114,7 +114,7 @@
     right: $grid-gutter-width / 2;
     min-width: 20%;
     max-width: 50%;
-    z-index: 1049;
+    z-index: 1052;
 
     .alert {
         span {
@@ -127,4 +127,8 @@
     position: fixed;
     bottom: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
+}
+
+.btn-transparent {
+    background-color: transparent;
 }
