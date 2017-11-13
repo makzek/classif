@@ -370,9 +370,12 @@ export class EosDictService {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
         // Object.assign(node, { ...node, isDeleted: false });
-        this.updateNode(node, { DELETED: 0 }).then((res) => {
-            this.reloadNode(node);
-        });
+        this.updateNode(node, { DELETED: 0 })
+            .then((res) => {
+                return this.reloadNode(node);
+            });
+
+        // WTF?????
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
             let delChld: boolean;
@@ -402,7 +405,7 @@ export class EosDictService {
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
             node.children.forEach((subNode) => {
-                 this._restoreItem(subNode);
+                this._restoreItem(subNode);
             });
         }
     }
@@ -477,5 +480,16 @@ export class EosDictService {
             this._reorder();
             this._storageSrv.setUserOrder(this.dictionary.id, this.selectedNode.id, _order);
         }
+    }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
+        return null;
     }
 }
