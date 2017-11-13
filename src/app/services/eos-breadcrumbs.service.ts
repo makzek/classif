@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
