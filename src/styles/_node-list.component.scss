@@ -38,6 +38,7 @@
             align-self: center;
             cursor: pointer;
             width: calc(100% - 2* 48px); // checkbox and spinner
+       
         }
 
         .code {
@@ -79,54 +80,33 @@
 
 .pagination-option {
     margin-top: 20px;
-    height: $item-height;
-    font-size: 16px;
-    line-height: 24px;
     border: 1px solid transparent;
     display: -ms-grid;
-    display: grid;// sass-lint:disable-line no-duplicate-properties
+    display: grid; // sass-lint:disable-line no-duplicate-properties
     -ms-grid-columns: 330px 1fr 220px;
     grid-template-columns: 330px 1fr 220px;
-    
-    .pagintaion {
+
+    .pagination {
         display: flex;
-    }
-
-    .pag-btn {
-        display: flex;
-        width: 48px;
-        height: 48px;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #ddd;
-    }
-
-    .inactive:hover {
-        background: #e6e6e6;
-        border: 1px solid #ddd;
-    }
-
-    .pag-btn:disabled {
-        cursor: not-allowed;
-    }
-
-    .pag-btn:disabled:hover {
-        background: #fff;
-    }
-
-    .pagination,
-    .count-select {
-        display: inline-block;
         margin: 0;
     }
 
-    .pagination {
-        margin-top: -1px;
-        margin-left: -1px;
-        grid-column: 1;
+    .pag-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+        border-width: 0;
+        border-right-width: 1px;
+        border-right-style: solid;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            border-width: 1px;
+            border-style: solid;
+        }
     }
 
     .count-select {
@@ -134,6 +114,8 @@
         border-left-width: 1px;
         border-left-style: solid;
         grid-column: 3;
+        display: inline-block;
+        margin: 0;
 
         .drop-btn {
             width: 48px;

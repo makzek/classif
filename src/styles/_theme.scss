@@ -1,24 +1,4 @@
-.modal-body {
-    label {
-        color: $primary-font-color-main-theme;
-    }
-}
-
-.tooltip {
-    opacity: 1 !important;
-
-    &.word-break {
-        word-break: break-all;
-    }
-
-    .tooltip-inner {
-        color: #333333;
-        border-radius: 4px;
-        background-color: white;
-        box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
-    }
-}
-
+/*
 .column-settings-modal {
     color: $unimportant-info-color-main-theme;
 
@@ -40,9 +20,11 @@
         background-color: transparent;
     }
 }
+*/
 
+// THEME BUT USE IN MODAL/TOOLTIPS/ECT
 .btn-primary {
-    border: 2px solid $button-color-main-theme !important;
+    border-color: $button-color-main-theme !important;
     color: $button-color-main-theme !important;
     background: white !important;
     padding: 0 4px;
@@ -54,7 +36,7 @@
 }
 
 .btn-primary-full {
-    border: 2px solid $button-color-main-theme !important;
+    border-color: $button-color-main-theme !important;
     background-color: $button-color-main-theme !important;
     color: white !important;
     padding: 0 4px;
@@ -62,6 +44,63 @@
     &:hover {
         border-color: $button-color-hover-main-theme !important;
         background: $button-color-hover-main-theme !important;
+    }
+}
+
+.btn-primary-light {
+    background-color: transparent;
+    color: $button-color-main-theme;
+    border-color: transparent;
+    padding: 1px 6px;
+
+    &:hover {
+        color: $button-color-hover-main-theme;
+    }
+
+    &.search-btn {
+        &.opened {
+            color: $primary-color-main-theme;
+            background: $button-color-main-theme;
+            outline: none;
+        }
+    }
+}
+
+.btn-default {
+    background-color: $primary-color-main-theme;
+    border-color: $border-color-main-theme;
+    color: $primary-font-color-main-theme;
+
+    &:hover {
+        background-color: $border-color-main-theme;
+    }
+
+    &:disabled {
+        &:hover {
+            background-color: $primary-color-main-theme;
+        }
+    }
+}
+
+.btn {
+    &.active {
+        color: $primary-color-main-theme;
+        background-color: $button-color-main-theme;
+    }
+}
+
+.tooltip {
+    opacity: 1 !important;
+
+    &.word-break {
+        word-break: break-all;
+    }
+
+    .tooltip-inner {
+        color: #333333;
+        border-radius: 4px;
+        background-color: $primary-color-main-theme;
+        box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
     }
 }
 
@@ -151,7 +190,6 @@
 }
 
 .main-theme {
-    // general
     .block {
         background-color: $block-color-main-theme;
         color: $primary-font-color-main-theme;
@@ -182,32 +220,6 @@
 
     .unimportant-text {
         color: $unimportant-info-color-main-theme;
-    }
-
-    .btn-primary-light {
-        background-color: transparent;
-        color: $button-color-main-theme;
-        border-color: transparent;
-        padding: 1px 6px;
-
-        &:hover {
-            color: $button-color-hover-main-theme;
-        }
-
-        &.search-btn {
-            &.opened {
-                color: white;
-                background: $button-color-main-theme;
-                outline: none;
-            }
-        }
-    }
-
-    .btn {
-        &.active {
-            color: white;
-            background-color: $button-color-main-theme;
-        }
     }
 
     .active {
@@ -248,41 +260,27 @@
     &.main-container {
         background-color: $secondary-color-main-theme;
         color: $primary-font-color-main-theme;
-
-        .header-wrapper {
-            background-color: $block-color-main-theme;
-        }
     }
 
     .content-wrapper {
         background: $secondary-color-main-theme;
     }
 
-    .eos-breadcrumb {
-        .breadcrumb > li::before {
-            color: $button-color-main-theme;
-        }
+    .breadcrumb > li::before {
+        color: $button-color-main-theme;
     }
 
-    .eos-desktop-switcher {
-        color: $primary-font-color-main-theme;
-
-        .menuitem {
-            a {
-                color: $primary-font-color-main-theme;
-            }
-
-            &:hover {
-                background-color: $secondary-color-main-theme;
-            }
-
-            &:active {
-                background-color: $secondary-color-main-theme;
-            }
+    .menuitem {
+        a {
+            color: $primary-font-color-main-theme;
         }
 
-        .dropdown-button {
-            color: $primary-font-color-main-theme;
+        &:hover {
+            background-color: $secondary-color-main-theme;
+        }
+
+        &:active {
+            background-color: $secondary-color-main-theme;
         }
     }
 }

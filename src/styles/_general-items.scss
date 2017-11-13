@@ -145,3 +145,9 @@ input[type=text]::-ms-clear {
     border-radius: 2px !important;
     height: 32px;
 }
+
+.btn-primary,
+.btn-primary-full {
+    border-style: solid;
+    border-width: 2px;
+}
