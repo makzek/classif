@@ -70,6 +70,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _mode: EDIT_CARD_MODES;
     editMode: boolean;
 
+    selfLink = null;
+
     showDeleted = false;
     disableSave = false;
 
@@ -122,6 +124,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _router: Router,
         private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
+        this.selfLink = this._router.url;
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
