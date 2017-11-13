@@ -248,8 +248,9 @@ export class DictionaryComponent implements OnDestroy {
                 .then((dictionary) => {
                     // todo: re-factor this ugly solution
                     this.params = Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered });
-                    this._dictSrv.selectNode(this._nodeId)
-                });
+                    this._dictSrv.selectNode(this._nodeId);
+                })
+                .catch((err) => this._errHandler(err));
         }
     }
 
@@ -475,7 +476,8 @@ export class DictionaryComponent implements OnDestroy {
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes);
+                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
+                    .catch((err) => this._errHandler(err));
             }
         }
     }
@@ -571,7 +573,8 @@ export class DictionaryComponent implements OnDestroy {
                     this.creatingModal.hide();
                 }
                 this._clearForm();
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     cancelCreate() {
@@ -599,5 +602,15 @@ export class DictionaryComponent implements OnDestroy {
             this.listNodes = nodes;
             this._updateVisibleNodes();
         }
+    }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
     }
 }
