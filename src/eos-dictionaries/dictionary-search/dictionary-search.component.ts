@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -49,11 +49,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     get noSearchData(): boolean {
-        if (this.searchForm) {
-            for (const _field in this.searchForm.value) {
-                if (this.searchForm.value[_field] && this.searchForm.value[_field] !== '') {
-                    return false;
-                }
+        for (const _field in this.data) {
+            if (this.data[_field] !== '') {
+                return false;
             }
         }
         return true;

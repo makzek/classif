@@ -10,7 +10,7 @@ defineLocale('ru', ru);
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() value: Date;
-    @Input() readonly = false;
+    @Input() readonly;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
@@ -30,6 +30,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             containerClass: 'theme-dark-blue',
             dateInputFormat: 'DD.MM.YYYY',
             isDisabled: true,
+            minDate: new Date('01.01.1900'),
+            maxDate: new Date('12.31.2100'),
         };
     }
 

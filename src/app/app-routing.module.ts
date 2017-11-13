@@ -30,7 +30,7 @@ const routes: Routes = [{
         data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'Запись', showInBreadcrumb: true },
+            data: { title: 'Запись', showInBreadcrumb: false },
             children: [{
                 path: '',
                 component: DictionaryComponent,
@@ -42,7 +42,7 @@ const routes: Routes = [{
                 component: CardComponent,
                 data: {
                     title: 'Редактирование',
-                    showInBreadcrumb: true,
+                    showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
                     showPinInBreadcrumb: true,
                     closeStyle: true
@@ -54,7 +54,7 @@ const routes: Routes = [{
                 component: CardComponent,
                 data: {
                     title: 'Просмотр',
-                    showInBreadcrumb: true,
+                    showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
                     showPinInBreadcrumb: true,
                     closeStyle: true

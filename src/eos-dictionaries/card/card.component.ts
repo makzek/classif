@@ -14,7 +14,6 @@ import { EosUserProfileService } from '../../app/services/eos-user-profile.servi
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
 
 import { RECENT_URL } from '../../app/consts/common.consts';
 
@@ -71,11 +70,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _mode: EDIT_CARD_MODES;
     editMode: boolean;
 
+    selfLink = null;
+
     showDeleted = false;
     disableSave = false;
 
-    // private _actionSubscription: Subscription;
-    private _profileSubscription: Subscription;
     private _dictionarySubscription: Subscription;
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
@@ -121,17 +120,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _dictActSrv: DictionaryActionService
+        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
+        this.selfLink = this._router.url;
         this._route.params.subscribe((params) => {
             this.dictionaryId = params.dictionaryId;
             this.nodeId = params.nodeId;
             this._init();
-        });
-
-        this._profileSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
         });
     }
 
@@ -221,7 +216,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._profileSubscription.unsubscribe();
         if (this.editMode) {
             this._clearEditingCardLink();
         }
@@ -240,8 +234,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.goTo(url);
         }
         if (window.innerWidth > 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
+            /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
+            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);*/
         }
     }
 
@@ -379,20 +373,33 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
-        console.log('save', data);
-        const bCrumbs = this._breadcrumbsSrv.currentLink;
+        // console.log('save', data);
         return this._dictSrv.updateNode(this.node, data)
-            .then((resp) => {
+            .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                const fullTitle = this._fullTitle(resp);
                 this._deskSrv.addRecentItem({
-                    url: bCrumbs.url,
-                    title: this.nodeName,
-                    fullTitle: bCrumbs.fullTitle
+                    url: this._router.url,
+                    title: resp.data.CLASSIF_NAME,
+                    fullTitle: fullTitle + ' - Редактирование'
                 });
                 this._clearEditingCardLink();
                 return resp;
             })
             .catch((err) => console.log('getNode error', err));
+    }
+
+    private _fullTitle(node: EosDictionaryNode) {
+        let parent = node.parent;
+        let arr = [node.data.CLASSIF_NAME];
+        while (parent.parent) {
+            arr.push(parent.data.CLASSIF_NAME);
+            parent = parent.parent;
+        }
+        arr.push(parent.data.RUBRIC_CODE);
+        arr = arr.reverse();
+        const fullTItle = arr.join('/');
+        return fullTItle;
     }
 
     private _reset(): void {

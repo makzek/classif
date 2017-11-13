@@ -6,7 +6,7 @@ import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/conf
 import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
@@ -16,6 +16,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosSandwichService } from '../services/eos-sandwich.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -33,11 +34,6 @@ import { FieldDescriptor } from '../core/field-descriptor'
 
 import { IOrderBy } from '../core/sort.interface'
 
-import {
-    DictionaryActionService,
-    DICTIONARY_ACTIONS,
-    DICTIONARY_STATES
-} from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
@@ -67,8 +63,8 @@ export class DictionaryComponent implements OnDestroy {
     filteredNodes: EosDictionaryNode[];
     _page: IPaginationConfig;
 
-    currentState: number;
-    readonly states = DICTIONARY_STATES;
+    currentState: boolean[];
+    // readonly states = DICTIONARY_STATES;
 
     private _subscriptions: Subscription[];
 
@@ -92,6 +88,7 @@ export class DictionaryComponent implements OnDestroy {
     treeIsBlocked = false;
 
     private _updating = false;
+    dictTypes = E_DICT_TYPE;
 
     constructor(
         private _route: ActivatedRoute,
@@ -103,8 +100,8 @@ export class DictionaryComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
-        private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
+        private _sandwichSrv: EosSandwichService,
     ) {
         this.params = {
             userSort: false,
@@ -123,7 +120,9 @@ export class DictionaryComponent implements OnDestroy {
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
-        this.currentState = this._dictActSrv.state;
+        this._subscriptions.push(this._sandwichSrv.currentDictState$.subscribe((state) => {
+            this.currentState = state;
+        }));
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -138,12 +137,6 @@ export class DictionaryComponent implements OnDestroy {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
                 this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
-                this.resize();
-                if (this.dictionary.descriptor.type === E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.blockTree);
-                } else {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.unblockTree);
-                }
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                     this.treeNodes = [dictionary.root];
@@ -158,71 +151,7 @@ export class DictionaryComponent implements OnDestroy {
             if (node) {
                 this.params.select = true;
             }
-        }))
-
-        this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
-            this._dictActSrv.closeAll = false;
-            switch (action) {
-                // TODO: try to find more simple solition
-                case DICTIONARY_ACTIONS.closeTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.closeInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
         }));
-
-        this._subscriptions.push(this._profileSrv.settings$
-            .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
-            .subscribe((s) => {
-                this.params.showDeleted = s;
-            })
-        );
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             let nodes = [];
@@ -242,10 +171,52 @@ export class DictionaryComponent implements OnDestroy {
             }
             this._updateVisibleNodes();
         }));
+
+        this._subscriptions.push(this._route.queryParams.subscribe(params => {
+            const lastStage = this._page.current;
+            if (params.page !== 1) {
+                this._cleanCheck();
+            }
+            let update = false;
+            if (params.length) {
+                this._page.length = this._getPage(this._positive(params.length)).value;
+                update = true;
+            }
+            if (params.page) {
+                this._page.current = this._positive(params.page);
+                update = true;
+            }
+            if (params.start) {
+                this._page.start = this._positive(params.start);
+                update = true;
+            }
+            if (update) {
+                if (lastStage !== this._page.current) {
+                    this._cleanCheck();
+                }
+                this._updateVisibleNodes();
+            }
+        }));
+    }
+
+    private _getPage(length: number) {
+        return PAGES.find((item) => item.value >= length) || PAGES[0];
+    }
+
+    private _positive(val: any): number {
+        let res = val * 1 || 1;
+        if (res < 1) {
+            res = 1;
+        }
+        return Math.floor(res);
     }
 
     ngOnDestroy() {
         this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
+
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
     }
 
     private _countColumnWidth() {
@@ -278,36 +249,26 @@ export class DictionaryComponent implements OnDestroy {
         }
     }
 
+    private _cleanCheck() {
+        this.visibleNodes.forEach(item => item.marked = false)
+    }
+
     private _updateVisibleNodes() {
         console.log('_updateVisibleNodes fired', this._page);
         let _list: EosDictionaryNode[] = this.listNodes;
+        const page = this._page;
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
         }
 
         this.filteredNodes = _list;
-
-        if (this._page) {
-            this.visibleNodes = _list.slice((this._page.start - 1) * this._page.length, this._page.current * this._page.length);
+        if (page) {
+            this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
         } else {
             this.visibleNodes = _list;
         }
-        this._updating = false;
         this.updateMarks();
-
-    }
-
-    pageChanged(page: IPaginationConfig) {
-        console.log('page changed', page);
-        this._page = page;
-        /*
-        this.listNodes.forEach((node) => node.marked = false);
-        this.allMarked = false;
-        */
-        if (this.listNodes[0]) {
-            this._updateVisibleNodes();
-        }
     }
 
     doAction(action: E_RECORD_ACTIONS) {
@@ -435,9 +396,8 @@ export class DictionaryComponent implements OnDestroy {
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.closeAll = true;
+            this._sandwichSrv.changeDictState(false, false);
+            this._sandwichSrv.changeDictState(false, true);
         }
     }
 
@@ -626,19 +586,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     public resize(): void {
-        if (window.innerWidth > 1500) {
-            if (this.currentState !== DICTIONARY_STATES.tree) {
-                this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            }
-            if (this.dictionary) {
-                if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-                }
-            }
-        } else {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-        }
+        this._sandwichSrv.resize();
     }
 
     searchResult(nodes: EosDictionaryNode[]) {

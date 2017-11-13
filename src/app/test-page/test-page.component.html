@@ -12,4 +12,4 @@
         <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
 </div>
 
-<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" (change)="change($event)"></eos-datepicker>
+<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" [readonly]="false" (change)="change($event)"></eos-datepicker>

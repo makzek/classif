@@ -49,7 +49,7 @@
                 top: -6px;
                 left: -6px;
                 display: inline-block;
-                width: calc(100% - 160px);
+                width: calc(100% - 120px);
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
@@ -112,7 +112,8 @@
         padding: 0;
         grid-column: 2;
         grid-row: 1;
-        border: 1px solid transparent;
+        border-width: 1px;
+        border-style: solid;
         text-align: center;
         font-size: 18px;
         line-height: 26px;
@@ -125,7 +126,8 @@
         .recent-title-wrapper {
             padding: 10px;
             display: inline-block;
-            border-bottom: 1px solid transparent;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
             width: 100%;
 
             .recent-title {
@@ -139,13 +141,14 @@
             padding: 0;
 
             .recent-item {
-                border-bottom: 1px solid transparent;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 10px;
 
 
-                a.special-text {
+                a.link-text {
                     white-space: nowrap;
                 }
             }

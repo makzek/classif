@@ -1,4 +1,4 @@
-<span *ngIf="show" class="eos-sandwich">
+<span *ngIf="show && (!hideTree || !isLeft)" class="eos-sandwich">
     <button class="btn sandwich" (click)="changeState()" [ngClass]="{'active': isWide }">
         <span class="icon eos-icon small"
         [ngClass]="{'rotate-left': isWide && isLeft, 'rotate-right': isWide && !isLeft, 'eos-icon-menu-white': isWide, 'eos-icon-menu-blue': !isWide}"></span>

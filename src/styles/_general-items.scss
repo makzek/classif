@@ -56,7 +56,7 @@
         }
 
         & + span {
-            margin-right: 6px;
+            margin-right: 12px;
             margin-bottom: -7px;
             display: inline-block;
             height: 24px;
@@ -99,7 +99,7 @@
     cursor: pointer;
 }
 
-.input-cleaner {
+/*.input-cleaner {
     float: right;
     margin-top: -34px;
     background-color: transparent;
@@ -109,7 +109,7 @@
 input[type=text]::-ms-clear {
     display: none;
 }
-
+*/
 .form-control {
     &:focus {
         box-shadow: none;
@@ -120,7 +120,8 @@ input[type=text]::-ms-clear {
     width: 800px;
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid transparent;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     margin: -21px -20px 20px;
 }
 

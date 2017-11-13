@@ -14,7 +14,8 @@
     }
 
     .full-info {
-        border-top: 1px solid transparent;
+        border-top-width: 1px;
+        border-top-style: solid;
         padding: 20px;
         padding-top: 0;
 
@@ -49,7 +50,8 @@
         position: relative;
         height: $breadcrumbs-height;
         width: 400px;
-        border-bottom: 1px solid transparent;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
 
         .icon-btn {
             position: absolute;

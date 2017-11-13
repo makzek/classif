@@ -52,4 +52,18 @@
             flex-basis: calc((100% - 2*12px) / 2);
         }
     }
+
+    input,
+    textarea {
+        &.ng-invalid.ng-dirty {
+            border-color: $disabled-color-main-theme !important;
+            outline: none !important;
+
+            &.ng-touched {
+                border-color: $invalid-color-main-theme !important;
+                outline: $invalid-color-main-theme solid 1px !important;
+                outline-offset: 0!important;
+            }
+        }
+    }
 }
