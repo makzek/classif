@@ -381,15 +381,29 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                const fullTitle = this._fullTitle(resp);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
                     title: resp.data.CLASSIF_NAME,
-                    fullTitle: resp.data.CLASSIF_NAME + ' - Редактирование'
+                    fullTitle: fullTitle + ' - Редактирование'
                 });
                 this._clearEditingCardLink();
                 return resp;
             })
             .catch((err) => console.log('getNode error', err));
+    }
+
+    private _fullTitle(node: EosDictionaryNode) {
+        let parent = node.parent;
+        let arr = [node.data.CLASSIF_NAME];
+        while (parent.parent) {
+            arr.push(parent.data.CLASSIF_NAME);
+            parent = parent.parent;
+        }
+        arr.push(parent.data.RUBRIC_CODE);
+        arr = arr.reverse();
+        const fullTItle = arr.join('/');
+        return fullTItle;
     }
 
     private _reset(): void {
