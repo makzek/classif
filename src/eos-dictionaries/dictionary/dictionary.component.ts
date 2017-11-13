@@ -87,6 +87,7 @@ export class DictionaryComponent implements OnDestroy {
 
     treeIsBlocked = false;
 
+    private _updating = false;
     dictTypes = E_DICT_TYPE;
 
     constructor(
@@ -253,8 +254,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired');
-
+        console.log('_updateVisibleNodes fired', this._page);
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
