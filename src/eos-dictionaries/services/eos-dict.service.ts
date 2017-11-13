@@ -14,6 +14,8 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 
 @Injectable()
 export class EosDictService {
@@ -38,6 +40,7 @@ export class EosDictService {
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
+        private _confirmSrv: ConfirmWindowService,
     ) {
         /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
@@ -372,9 +375,38 @@ export class EosDictService {
         });
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
-            node.children.forEach((subNode) => this.restoreItem(subNode));
+            let delChld: boolean;
+            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+            _confrm.body = _confrm.body.replace('{{name}}', node.data['CLASSIF_NAME']);
+
+            this._confirmSrv
+                .confirm(_confrm)
+                .then((confirmed: boolean) => {
+                    delChld = confirmed;
+                    if (delChld) {
+                        node.children.forEach((subNode) => {
+                            this._restoreItem(subNode);
+                        });
+                    }
+                }).catch();
         }
     }
+
+    private _restoreItem(node: EosDictionaryNode) {
+        if (node.parent && node.parent.isDeleted) {
+            this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
+        }
+        this.updateNode(node, { DELETED: 0 }).then((res) => {
+            this.reloadNode(node);
+        });
+        Object.assign(node, { ...node, marked: false });
+        if (node.children) {
+            node.children.forEach((subNode) => {
+                 this._restoreItem(subNode);
+            });
+        }
+    }
+
 
     getNodePath(node: EosDictionaryNode): string[] {
         const _path = [
