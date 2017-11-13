@@ -88,7 +88,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     @HostListener('window:beforeunload', ['$event'])
     private _canWndUnload(evt: BeforeUnloadEvent): any {
-
         if (this.editMode) {
             /* clean link on close or reload */
             /* cann't handle user answer */
@@ -337,15 +336,19 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _askForSaving(): Promise<boolean> {
         if (this._changed) {
             return this._confirmSrv.confirm(Object.assign({}, CONFIRM_SAVE_ON_LEAVE,
-                {confirmDisabled: this.disableSave }))
+                { confirmDisabled: this.disableSave }))
                 .then((doSave) => {
                     if (doSave == null) {
                         return false;
                     } else {
                         if (doSave) {
                             return this._save(this.nodeData)
-                                .then(() => {
-                                    return true;
+                                .then((node) => {
+                                    if (node) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
                                 });
                         } else {
                             this._reset();
@@ -365,11 +368,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     save(): void {
         this._save(this.nodeData)
-        .then((node) => {
-            this._initNodeData(node);
-            this._setOriginalData();
-            this.cancel();
-        });
+            .then((node) => {
+                if (node) {
+                    this._initNodeData(node);
+                    this._setOriginalData();
+                    this.cancel();
+                }
+            });
     }
 
     private _save(data: any): Promise<any> {
@@ -386,7 +391,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 this._clearEditingCardLink();
                 return resp;
             })
-            .catch((err) => console.log('getNode error', err));
+            .catch((err) => this._errHandler(err));
     }
 
     private _fullTitle(node: EosDictionaryNode) {
@@ -442,4 +447,16 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
         */
     }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
+        return null;
+    }
+
 }

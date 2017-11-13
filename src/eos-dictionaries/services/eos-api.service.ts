@@ -179,7 +179,7 @@ export class EosDictApiService {
 
     private _errHandler(err: any) {
         console.log('API error', err);
-        return Promise.reject(err);
+        return Promise.reject(err.message);
         // return this._noData();
     }
 }

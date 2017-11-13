@@ -110,11 +110,7 @@ export class DictionaryComponent implements OnDestroy {
             select: false
         };
 
-        this._page = {
-            start: 1,
-            current: 1,
-            length: _storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
-        }
+        this._initPage();
 
         this._subscriptions = [];
         this.treeNodes = [];
@@ -151,6 +147,18 @@ export class DictionaryComponent implements OnDestroy {
             if (node) {
                 this.params.select = true;
             }
+            const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
+            if (_openedIndex % this._page.length === 0) {
+                this.params.notFirst = false;
+            } else {
+                this.params.notFirst = true;
+            }
+
+            if (_openedIndex % this._page.length === this._page.length - 1) {
+                this.params.notLast = false;
+            } else {
+                this.params.notLast = true;
+            }
         }));
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
@@ -173,10 +181,9 @@ export class DictionaryComponent implements OnDestroy {
         }));
 
         this._subscriptions.push(this._route.queryParams.subscribe(params => {
-            const lastStage = this._page.current;
-            if (params.page !== 1) {
-                this._cleanCheck();
-            }
+            this._initPage();
+            const _page = Object.assign({}, this._page);
+
             let update = false;
             if (params.length) {
                 this._page.length = this._getPage(this._positive(params.length)).value;
@@ -190,13 +197,22 @@ export class DictionaryComponent implements OnDestroy {
                 this._page.start = this._positive(params.start);
                 update = true;
             }
+
             if (update) {
-                if (lastStage !== this._page.current) {
+                if (_page.start !== this._page.start) {
                     this._cleanCheck();
                 }
                 this._updateVisibleNodes();
             }
         }));
+    }
+
+    private _initPage() {
+        this._page = {
+            start: 1,
+            current: 1,
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
+        }
     }
 
     private _getPage(length: number) {
@@ -244,13 +260,14 @@ export class DictionaryComponent implements OnDestroy {
                 .then((dictionary) => {
                     // todo: re-factor this ugly solution
                     this.params = Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered });
-                    this._dictSrv.selectNode(this._nodeId)
-                });
+                    this._dictSrv.selectNode(this._nodeId);
+                })
+                .catch((err) => this._errHandler(err));
         }
     }
 
     private _cleanCheck() {
-        this.visibleNodes.forEach(item => item.marked = false)
+        this.filteredNodes.forEach(item => item.marked = false);
     }
 
     private _updateVisibleNodes() {
@@ -351,7 +368,7 @@ export class DictionaryComponent implements OnDestroy {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length) {
+        if (_idx < this._page.current * this._page.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
@@ -471,7 +488,8 @@ export class DictionaryComponent implements OnDestroy {
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes);
+                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
+                    .catch((err) => this._errHandler(err));
             }
         }
     }
@@ -567,7 +585,8 @@ export class DictionaryComponent implements OnDestroy {
                     this.creatingModal.hide();
                 }
                 this._clearForm();
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     cancelCreate() {
@@ -595,5 +614,15 @@ export class DictionaryComponent implements OnDestroy {
             this.listNodes = nodes;
             this._updateVisibleNodes();
         }
+    }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
     }
 }

@@ -65,7 +65,7 @@ export class NodeListPaginationComponent implements OnInit, OnChanges {
     }
 
     private _update() {
-        if (this.total) {
+        if (this.total && this.config) {
             const total = Math.ceil(this.total / this.config.length);
             const firstSet = this._buttonsTotal - this.config.current;
             const lastSet = total - this._buttonsTotal + 1;
