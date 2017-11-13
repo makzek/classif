@@ -20,6 +20,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
 
     private _handler;
 
+    isDisabled = false;
+
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
 

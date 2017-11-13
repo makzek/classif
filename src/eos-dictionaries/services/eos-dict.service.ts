@@ -413,6 +413,9 @@ export class EosDictService {
         }
     }
 
+    filter(params: any): Promise<any> {
+        return Promise.reject('not implemeted')
+    }
 
     getNodePath(node: EosDictionaryNode): string[] {
         const _path = [
