@@ -61,11 +61,11 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
             _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
-                    _enabled = _enabled && this.params.select && this.params.notFirst;
+                    _enabled = _enabled && this.params.select;
                     _show = this.params.userSort;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
-                    _enabled = _enabled && this.params.select && this.params.notLast;
+                    _enabled = _enabled && this.params.select;
                     _show = this.params.userSort;
                     break;
                 case E_RECORD_ACTIONS.restore:
