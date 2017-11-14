@@ -88,7 +88,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     @HostListener('window:beforeunload', ['$event'])
     private _canWndUnload(evt: BeforeUnloadEvent): any {
-
         if (this.editMode) {
             /* clean link on close or reload */
             /* cann't handle user answer */
