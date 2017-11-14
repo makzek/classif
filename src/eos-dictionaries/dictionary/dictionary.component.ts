@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
@@ -45,9 +45,11 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 @Component({
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy {
+export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
+
+    @ViewChild('tree') treeEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -87,6 +89,7 @@ export class DictionaryComponent implements OnDestroy {
     orderBy: IOrderBy;
 
     treeIsBlocked = false;
+    _treeScrollTop = 0;
 
     private _updating = false;
     dictTypes = E_DICT_TYPE;
@@ -229,7 +232,17 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        this._sandwichSrv.treeScrollTop = this._treeScrollTop;
         this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
+
+    ngAfterViewInit() {
+        this._treeScrollTop = this._sandwichSrv.treeScrollTop;
+        this.treeEl.nativeElement.scrollTop = this._treeScrollTop;
+    }
+
+    ngDoCheck() {
+        this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
     }
 
     get hideTree() {
