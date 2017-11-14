@@ -146,18 +146,18 @@ export class DictionaryComponent implements OnDestroy {
         this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
             if (node) {
                 this.params.select = true;
-            }
-            const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
-            if (_openedIndex % this._page.length === 0) {
-                this.params.notFirst = false;
-            } else {
-                this.params.notFirst = true;
-            }
+                const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
+                if (_openedIndex % this._page.length === 0) {
+                    this.params.notFirst = false;
+                } else {
+                    this.params.notFirst = true;
+                }
 
-            if (_openedIndex % this._page.length === this._page.length - 1) {
-                this.params.notLast = false;
-            } else {
-                this.params.notLast = true;
+                if (_openedIndex % this._page.length === this._page.length - 1) {
+                    this.params.notLast = false;
+                } else {
+                    this.params.notLast = true;
+                }
             }
         }));
 
