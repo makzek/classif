@@ -1,7 +1,12 @@
 ﻿import { Injectable, Optional } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/reduce';
 
 import { ApiCfg } from '../core/api-cfg';
 import { ALL_ROWS, HTTP_OPTIONS, BATCH_BOUNDARY, CHANGESET_BOUNDARY } from '../core/consts';
@@ -12,6 +17,7 @@ import { EntityHelper } from '../core/entity-helper';
 import { ErrorService } from './error.service';
 import { PipeUtils } from '../core/pipe-utils';
 import { Cache } from '../core/cache';
+import { RestError } from '../core/rest-error';
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -20,7 +26,8 @@ export class PipRX extends PipeUtils {
 
     public sequenceMap: SequenceMap = new SequenceMap();
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
-    public errorService = new ErrorService();
+    // @igiware: using RestError instead
+    // public errorService = new ErrorService();
     public entityHelper: EntityHelper;
     public cache: Cache;
 
@@ -164,16 +171,21 @@ export class PipRX extends PipeUtils {
                     try {
                         return this.nativeParser(r.json());
                     } catch (e) {
-                        return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
+                        throw new RestError({ odataErrors: [e], _request: req, _response: r });
+                        // return this.errorService.errorHandler({ odataErrors: [e], _request: req, _response: r });
                     }
                 })
+                .catch(this.httpErrorHandler);
                 /*
-                .catch((err, caught) => {
-                    this.errorService.errorHandler({ http: err, _request: req });
-                    return [];
-                })
+                (err, caught) => {
+                    if (err instanceof RestError) {
+                        return Observable.throw(err);
+                    } else {
+                        return Observable.throw(new RestError({ http: err, _request: req }));
+                    }
+                    // return [];
+                });
                 */
-                ;
         });
 
         return rl.reduce((acc: T[], v: T[]) => {
@@ -203,14 +215,12 @@ export class PipRX extends PipeUtils {
                 const answer: any[] = [];
                 const e = this.parseBatchResponse(r, answer);
                 if (e) {
-                    return this.errorService.errorHandler({ odataErrors: e });
+                    throw new RestError({ odataErrors: e });
+                    // return this.errorService.errorHandler({ odataErrors: e });
                 }
                 return answer;
-            }) /*
-            .catch((err, caught) => {
-                this.errorService.httpCatch(err);
-            })*/
-            ;
+            })
+            .catch(this.httpErrorHandler);
     }
 
     batch(changeSet: any[], vc: string): Promise<any[]> {
@@ -262,12 +272,19 @@ export class PipRX extends PipeUtils {
                 answer.push(d);
                 const e = d['odata.error'];
                 if (e) { allErr.push(e); }
-                console.log(d);
+                // console.log(d);
                 this.sequenceMap.FixMapItem(d);
             }
         }
         if (allErr.length !== 0) {
             return allErr;
+        }
+    }
+    private httpErrorHandler(error) {
+        if (error instanceof RestError) {
+            return Observable.throw(error);
+        } else {
+            return Observable.throw(new RestError({ http: error }));
         }
     }
 }

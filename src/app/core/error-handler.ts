@@ -6,13 +6,12 @@ export class EosErrorHandler implements ErrorHandler {
 
     constructor(private _msgSrv: EosMessageService) { }
 
-    handleError(err: any) {
-
-        console.error('Unhandled error', err);
+    handleError(error: Error) {
+        console.log('Unhandled error', error);
         try {
             this._msgSrv.addNewMessage({
                 type: 'danger',
-                title: 'Application error!',
+                title: 'Ошибка приложения!',
                 msg: ''
             });
         } catch (e) {

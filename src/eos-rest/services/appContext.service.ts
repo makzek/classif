@@ -24,7 +24,7 @@ export class AppContext {
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         // @igiware: потенциальная ошибка, тк PipeRX - singleton, параллельный запрос данных пропустит ошибку,
         //           как и последующие дальнейшие запросы
-        p.errorService.LostConnectionAlerted = false;
+        // p.errorService.LostConnectionAlerted = false;
 
         const oSysParams = p.read<SYS_PARMS>({
             SysParms: ALL_ROWS,

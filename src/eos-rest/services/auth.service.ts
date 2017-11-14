@@ -35,7 +35,8 @@ export class AuthService {
     getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS}> {
         const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
-        p.errorService.LostConnectionAlerted = false;
+        // p.errorService.LostConnectionAlerted = false;
+
         const oSysParams = p.read<SYS_PARMS>({
             SysParms: ALL_ROWS,
             _moreJSON: {

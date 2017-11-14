@@ -3,6 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -77,6 +78,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
+        BsDropdownModule.forRoot(),
         DragulaModule,
     ],
     exports: [
