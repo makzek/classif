@@ -1,6 +1,6 @@
 <div class="eos-dictionary-search">
     <div [ngClass]="{'hidden': !hasDate}" class="date-filter-wrapper">
-        <span class="date">Состояние на </span>
+        <span class="date">Состояние на: </span>
         <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [readonly]="false"></eos-datepicker>
     </div>
     <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
