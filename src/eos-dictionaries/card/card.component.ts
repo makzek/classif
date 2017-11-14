@@ -231,6 +231,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         const url = this._storageSrv.getItem(RECENT_URL);
         if (url) {
             this.goTo(url);
+        } else {
+            const urlSegments = this._router.url.split('/');
+            let dictSegments = urlSegments[3].split('.');
+            dictSegments = dictSegments.slice(0, dictSegments.length - 2);
+            urlSegments[3] = dictSegments.join('.') + '.';
+            urlSegments.length--;
+            const backUrl = urlSegments.join('/');
+            this.goTo(backUrl);
         }
         if (window.innerWidth > 1500) {
             /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
