@@ -1,6 +1,6 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.hide()" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
-    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border">
+    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border m-font">
         <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom"
             [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
             containerClass="tooltip-info" container="body">

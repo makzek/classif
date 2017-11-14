@@ -3,10 +3,11 @@
     border: 1px solid transparent;
     display: -ms-grid;
     display: grid; // sass-lint:disable-line no-duplicate-properties
-    -ms-grid-columns: 330px 1fr 220px;
-    grid-template-columns: 330px 1fr 220px;
-    line-height: 24px;
-    font-size: 16px;
+    -ms-grid-columns: 330px 1fr 180px;
+    grid-template-columns: 330px 1fr 180px;
+    position: fixed;
+    bottom: 60px;
+    width: calc(100vw - 40px);
 
     .pagination {
         display: flex;
@@ -54,6 +55,7 @@
         .icon-btn {
             padding: 12px;
             position: relative;
+            margin-left: 4px;
         }
 
         .dropdown-toggle {
@@ -70,22 +72,12 @@
         }
     }
 
-    .page-link {
-        height: $item-height;
-        width: $item-width;
-        text-align: center;
-        padding: 12px 16px;
-        font-size: 16px;
-    }
-
     .show-more {
         position: relative;
         left: -5px;
         height: $item-height;
         padding: 0 10px;
         background: transparent;
-        font-size: 16px;
-        line-height: 24px;
         grid-column: 2;
     }
 

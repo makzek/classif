@@ -67,8 +67,6 @@
                 top: 3px;
                 padding-left: 40px;
                 padding-right: 0;
-                font-size: 18px;
-                line-height: 26px;
                 cursor: pointer;
 
                 &:hover,
@@ -93,8 +91,6 @@
                     .else-item {
                         height: $item-height;
                         padding: 12px 20px;
-                        font-size: 18px;
-                        line-height: 26px;
 
                         & > a {
                             padding: 0;

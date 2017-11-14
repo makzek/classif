@@ -9,14 +9,14 @@
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="selectedNode" class="block selected-node">
+            <div *ngIf="selectedNode" class="block selected-node xl-font">
                 <div class="go-top-wrapper">
                     <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
                     </button>
                 </div>
-                <span class="selected-node-title">{{_selectedNodeText}}</span>
-                <div class="item-count pull-right usual-border">
+                <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
+                <div class="item-count pull-right usual-border m-font">
                     <span class="item-count-content">
                         Записей:
                         <span class="secondary-text">{{filteredNodes?.length}}</span>
@@ -41,7 +41,7 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item" [ngClass]="{'primary-text': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngClass]="{'primary-text': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
                             <span class="text" *ngIf="!params.userSort" (click)="orderByField(field.key)">{{field.title}}
                                 <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small" [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>

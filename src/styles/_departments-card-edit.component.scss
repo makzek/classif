@@ -7,10 +7,9 @@
         border-bottom-style: solid;
         display: inline-block;
         height: 38px;
-        line-height: 38px;
         width: 100%;
         font-weight: 700;
-        font-size: 17px;
+        padding-top: 8px;
 
         &:not(.first) {
             margin-top: 50px;

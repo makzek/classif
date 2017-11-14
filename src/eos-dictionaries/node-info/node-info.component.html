@@ -17,7 +17,7 @@
             <eos-spinner [size]="'lg'"></eos-spinner>
         </div>
 
-        <div *ngIf="shortViewFields" class="short-info">
+        <div *ngIf="shortViewFields" class="short-info l-font">
             <span *ngFor="let field of shortViewFields">
                 {{field.value}}
             </span>
@@ -27,14 +27,14 @@
             <div *ngFor="let field of viewFields" class="field">
                 <span *ngIf="field.type === fieldTypes.boolean;then checkboxField else textField"></span>
                 <ng-template #checkboxField>
-                    <label class="checkbox field-title unimportant-text"><input type="checkbox" value="{{field.value}}" disabled>
+                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" value="{{field.value}}" disabled>
                         <span></span>
                         {{field.title}}</label>
                 </ng-template>
                 <ng-template #textField>
-                    <span class="field-title unimportant-text">{{field.title}}</span>
+                    <span class="field-title unimportant-text s-font">{{field.title}}</span>
                     <br>
-                    <span class="field-value">{{field.value}}</span>
+                    <span class="field-value m-font">{{field.value}}</span>
                 </ng-template>
             </div>
         </div>
