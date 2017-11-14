@@ -5,6 +5,8 @@
     display: grid; // sass-lint:disable-line no-duplicate-properties
     -ms-grid-columns: 330px 1fr 220px;
     grid-template-columns: 330px 1fr 220px;
+    line-height: 24px;
+    font-size: 16px;
 
     .pagination {
         display: flex;
@@ -19,7 +21,6 @@
     .pag-btn {
         width: 48px;
         height: 48px;
-        font-size: 16px;
         border-width: 0;
         border-right-width: 1px;
         border-right-style: solid;
