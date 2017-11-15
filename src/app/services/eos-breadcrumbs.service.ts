@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
@@ -43,21 +45,18 @@ export class EosBreadcrumbsService {
     }
 
     public makeBreadCrumbs(desk: EosDesk) {
-        this._breadcrumbs = [{
-            url: '/desk/' + desk.id,
-            title: 'Главная',
-            fullTitle: desk.name,
-            params: null
-        }];
+        this._breadcrumbs = [];
         Promise.all(this._parseState(this._route.snapshot))
             .then((breadcrumbs) => {
                 // 55: Убрать без title (!?) routing -> showInBreadcrubs
                 this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
                 this._fullTitleGen();
-                this._currentLink = {
+                if (this._breadcrumbs.length) {
+                    this._currentLink = {
                     url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
                     title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
                     fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle
+                    }
                 }
                 this._breadcrumbs$.next(this._breadcrumbs);
             });

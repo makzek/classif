@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { IPaginationConfig, IPageLength } from './node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
@@ -8,76 +8,27 @@ import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
     selector: 'eos-node-list-pagination',
     templateUrl: 'node-list-pagination.component.html'
 })
-export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges {
+export class NodeListPaginationComponent implements OnInit, OnChanges {
     @Input() total: number;
-    @Output() pageChanged: EventEmitter<IPaginationConfig> = new EventEmitter<IPaginationConfig>();
+    @Input() config: IPaginationConfig;
 
-    private _routerSub;
     readonly pageLengths = PAGES;
     private readonly _buttonsTotal = 5;
-
-    public config: IPaginationConfig = {
-        start: 1,
-        current: 1,
-        length: 10,
-    }
 
     pageCount = 1;
     pages: number[] = [];
 
     constructor(
         private _storageSrv: EosStorageService,
-        private _route: ActivatedRoute,
         private _router: Router
-    ) {
-        const pageLength = this._getPage(this._storageSrv.getItem(LS_PAGE_LENGTH) || 1);
-
-        this.config.length = pageLength.value;
-
-        this._routerSub = this._route.queryParams.subscribe(params => {
-            let update = false;
-            if (params.length) {
-                this.config.length = this._getPage(this._positive(params.length)).value;
-                update = true;
-            }
-            if (params.page) {
-                this.config.current = this._positive(params.page);
-                update = true;
-            }
-            if (params.start) {
-                this.config.start = this._positive(params.start);
-                update = true;
-            }
-            if (update) {
-                this.pageChanged.emit(this.config);
-                this._update();
-            }
-        });
-    }
-
-    private _positive(val: any): number {
-        let res = val * 1 || 1;
-        if (res < 1) {
-            res = 1;
-        }
-        return Math.floor(res);
-    }
-
-    private _getPage(length: number) {
-        return PAGES.find((item) => item.value >= length) || PAGES[0];
-    }
+    ) { }
 
     ngOnInit() {
         this._update();
-        this.pageChanged.emit(this.config);
     }
 
     ngOnChanges() {
         this._update();
-    }
-
-    ngOnDestroy() {
-        this._routerSub.unsubscribe();
     }
 
     public setPageLength(length: number): void {
@@ -114,7 +65,7 @@ export class NodeListPaginationComponent implements OnInit, OnDestroy, OnChanges
     }
 
     private _update() {
-        if (this.total) {
+        if (this.total && this.config) {
             const total = Math.ceil(this.total / this.config.length);
             const firstSet = this._buttonsTotal - this.config.current;
             const lastSet = total - this._buttonsTotal + 1;

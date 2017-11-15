@@ -41,24 +41,12 @@ export class EosDictionary {
         return this._userOrdered;
     }
 
-    set userOrdered(userOrder: boolean) {
-        this._userOrdered = userOrder;
+    set userOrdered(userOrdered: boolean) {
+        this._userOrdered = userOrdered;
     }
 
     set orderBy(order: IOrderBy) {
         this._orderBy = order;
-    }
-
-    set userOrder(userOrder: any) {
-        this._userOrder = userOrder;
-    }
-
-    get orderedArray(): { [parentId: string]: EosDictionaryNode[] } {
-        return this._orderedArray;
-    }
-
-    set orderedArray(order: { [parentId: string]: EosDictionaryNode[] }) {
-        this._orderedArray = order;
     }
 
     constructor(descData: IDictionaryDescriptor) {
@@ -89,6 +77,11 @@ export class EosDictionary {
 
         /* add nodes */
         this.updateNodes(data, true);
+    }
+
+    initUserOrder(userOrdered: boolean, userOrder: any) {
+        this._userOrdered = userOrdered;
+        this._userOrder = userOrder;
     }
 
     private _updateTree() {
@@ -303,7 +296,7 @@ export class EosDictionary {
             userOrderedIDs.forEach((nodeId) => {
                 const node = nodes.find((item) => item.id === nodeId);
                 if (node) {
-                    userOrderedIDs.push(node);
+                    orderedNodes.push(node);
                 }
             });
             nodes.forEach((node) => {

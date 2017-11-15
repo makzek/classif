@@ -78,7 +78,7 @@ export class ErrorService /*implements IErrorService*/ {
 
     defaultErrorHandler(e) {
         let message = e.message || '';
-        const error = e.data['odata.error'] || e.data['error"'];
+        const error = e.data['odata.error'] || e.data['error'];
         message = error.message ? error.message.value : message;
 
         if (error.innererror && error.innererror.type === 'Eos.Delo.Exceptions.LogicException') {

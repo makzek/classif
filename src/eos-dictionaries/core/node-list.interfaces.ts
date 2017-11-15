@@ -4,4 +4,6 @@ export interface INodeListParams {
     hasParent?: boolean;
     showCheckbox?: boolean;
     select: boolean;
+    notLast?: boolean;
+    notFirst?: boolean;
 };

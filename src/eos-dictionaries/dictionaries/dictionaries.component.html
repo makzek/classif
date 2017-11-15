@@ -1,9 +1,9 @@
 <div class="eos-dictionaries">
     <button *ngFor="let dictionary of dictionariesList" class="dictionary btn block"
-     [routerLink]="['/spravochniki', dictionary.id]">
+     [routerLink]="['/spravochniki', dictionary.id]" tooltip="{{dictionary.title}}" containerClass="tooltip-info">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-dept-blue"></span>
         </span>
-        <span class="text" tooltip="{{dictionary.title}}" containerClass="tooltip-info">{{dictionary.title}}</span>
+        <span class="text">{{dictionary.title}}</span>
     </button>
 </div>

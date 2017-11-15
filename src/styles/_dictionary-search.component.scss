@@ -19,16 +19,17 @@
         display: inline-block;
         width: 0;
         padding: 6px 0;
-        border-radius: 0;
-        height: 45px;
+        height: 46px;
         border: 0;
         transition: 300ms ease-in-out;
         position: relative;
 
         &.opened {
-            width: 476px;
+            width: 428px;
             padding: 6px 12px 6px 20px;
-            border-left: 1px solid grey;
+            border-left-width: 1px;
+            border-left-style: solid;
+            border-radius: 0;
         }
 
         &.hidden {
@@ -44,6 +45,8 @@
         width: $item-width;
         border: 0;
         background-color: transparent;
+        padding: 8px;
+        margin-right: -8px;
     }
 
     .btn {
@@ -90,7 +93,7 @@
     border-radius: 0;
 
     .popover-arrow.arrow {
-        right: 68px !important;
+        right: 61px !important;
         left: auto !important;
     }
 
@@ -102,11 +105,16 @@
         text-align: center;
         padding: 10px;
     }
+
+    .checkbox-inline input[type="checkbox"] + span {
+        margin-right: 12px;
+    }
 }
 
 .full-search-bottom {
     height: $item-height;
-    border-top: 1px solid transparent;
+    border-top-width: 1px;
+    border-top-style: solid;
     padding: 8px 20px;
 
     .btn {
@@ -118,7 +126,8 @@
 }
 
 .full-search-top {
-    border-bottom: 1px solid transparent;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     padding-top: 20px;
     padding-bottom: 8px;
     margin: 0 20px;
@@ -131,24 +140,46 @@
 }
 
 .full-search-settings-container {
-    border-bottom: 1px solid transparent;
-    margin: 0 0 20px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: 0;
     padding-top: 30px;
+    display: flex;
 
     .radio-inline,
     .checkbox-inline {
-        height: 48px;
-        vertical-align: middle;
+        height: 32px;
+        padding: 5px 0;
+        margin-bottom: 20px;
     }
 
     .radio-inline + .radio-inline,
     .checkbox-inline + .checkbox-inline {
         margin-left: 0;
     }
+
+    .checkbox-inline,
+    .radio-inline {
+        padding-left: 0;
+    }
+
+    .col-1 {
+        width: 190px;
+        margin-right: 40px;
+        margin-left: 20px;
+    }
+
+    .col-2 {
+        width: 300px;
+    }
 }
 
 .full-search-form {
     padding: 0 20px;
+
+    .tabs-wrapper {
+        margin: 0 -20px -10px;
+    }
 
     label {
         text-transform: uppercase;
@@ -159,6 +190,18 @@
 
     .form-control {
         border-radius: 0;
+        height: 32px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    .no-top-margin {
+        .form-group {
+            margin-top: 10px;
+        }
     }
 
 }

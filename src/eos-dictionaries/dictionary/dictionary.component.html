@@ -1,13 +1,13 @@
-<div class="eos-dictionary" [ngClass]="{'full': currentState === states.full,
-        'only-selected': currentState === states.selected,
-        'info': currentState === states.info,
-        'tree': currentState === states.tree}" (window:resize)="resize()">
-    <div class="tree-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree,
-        'has-spinner': !treeNodes.length}">
+<div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
+        'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
+        'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1] && hideTree,
+        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()">
+    <div class="tree-wrapper secondary-block" [ngClass]="{'open-tree': currentState[0] && !hideTree, 'has-spinner': !treeNodes.length }"
+        [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
         <eos-tree *ngIf="treeNodes.length" [nodes]="treeNodes" [showDeleted]="params.showDeleted"></eos-tree>
     </div>
-    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState === states.full || currentState === states.tree}" (click)="onClick()">
+    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
             <div *ngIf="selectedNode" class="block selected-node">
                 <div class="go-top-wrapper">
@@ -16,10 +16,10 @@
                     </button>
                 </div>
                 <span class="selected-node-title">{{_selectedNodeText}}</span>
-                <div class="item-count pull-right">
+                <div class="item-count pull-right usual-border">
                     <span class="item-count-content">
                         Записей:
-                        <span class="bright">{{listNodes?.length}}</span>
+                        <span class="bright">{{filteredNodes?.length}}</span>
                     </span>
                 </div>
             </div>
@@ -31,22 +31,21 @@
                     <eos-dictionary-search (searchResult)="searchResult($event)"></eos-dictionary-search>
                 </div>
             </div>
-            <div class="second-line block special-text">
+            <div class="second-line block selected-text">
                 <div class="second-line-content">
                     <span *ngIf="params.showCheckbox" class="checkbox-inline">
-                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
-                            containerClass="tooltip-info">
+                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right"
+                        [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}" containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                             <span></span>
                         </label>
                     </span>
                     <span class="node-title">
                         <span *ngFor="let field of viewFields" class="item" [ngClass]="{'user-sort': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
-                            <span class="text" (click)="orderByField(field.key)">{{field.title}}</span>
-                            <span *ngIf="this.orderBy?.fieldKey === field.key && this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-top small"
-                                (click)="toggleOrderDirection()"></span>
-                            <span *ngIf="this.orderBy?.fieldKey === field.key && !this.orderBy?.ascend && !params.userSort" class="icon eos-icon eos-icon-arrow-blue-bottom small"
-                                (click)="toggleOrderDirection()"></span>
+                            <span class="text" *ngIf="!params.userSort" (click)="orderByField(field.key)">{{field.title}}
+                                <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small" [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                            </span>
+                            <span class="text" *ngIf="params.userSort">{{field.title}}</span>
                         </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
@@ -60,11 +59,11 @@
             <eos-spinner size="lg"></eos-spinner>
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
-            <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (change)="updateMarks()"></eos-node-list>
-            <eos-node-list-pagination [total]="listNodes?.length" (pageChanged)="pageChanged($event)"></eos-node-list-pagination>
+            <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
+            <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page"></eos-node-list-pagination>
         </ng-container>
     </div>
-    <div class="opened-wrapper" [ngClass]="{'open-info': currentState === states.full || currentState === states.info}">
+    <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
         <eos-node-info (action)=doAction($event)></eos-node-info>
     </div>
 </div>

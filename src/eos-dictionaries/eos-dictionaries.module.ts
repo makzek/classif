@@ -3,6 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -36,9 +37,9 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 
 /* services */
-import { DictionaryActionService } from './dictionary/dictionary-action.service';
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
+import { EosSandwichService } from './services/eos-sandwich.service';
 
 @NgModule({
     declarations: [
@@ -77,6 +78,7 @@ import { EosDictService } from './services/eos-dict.service';
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
+        BsDropdownModule.forRoot(),
         DragulaModule,
     ],
     exports: [
@@ -88,7 +90,7 @@ import { EosDictService } from './services/eos-dict.service';
     providers: [
         EosDictApiService,
         EosDictService,
-        DictionaryActionService,
+        EosSandwichService,
     ],
 })
 export class EosDictionariesModule { }
