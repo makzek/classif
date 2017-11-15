@@ -174,7 +174,8 @@
             </div>
             <div>
                 <span class="block-title usual-border primary-text">Исполнитель моих обязанностей</span>
-                <div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
+                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+                <!--<div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_START_DATE">Начало действия</label>
                         <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
@@ -195,7 +196,7 @@
                             <i [hidden]="!editMode" class="fa fa-user-plus selected-text user-icon" aria-hidden="true"></i>
                         </button>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="row alternate-button-wrapper">
                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -208,7 +209,8 @@
             </div>
             <div>
                 <span class="block-title usual-border primary-text">Исполняю обязанности</span>
-                <div class="row alternates">
+                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+                <!--<div class="row alternates">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
@@ -226,7 +228,7 @@
                             placeholder="Исполняет мои обязанности"
                             readonly>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div *ngIf="currTab === 1">
