@@ -90,11 +90,6 @@ export class DictionarySearchComponent implements OnDestroy {
         this.dictSubscription.unsubscribe();
     }
 
-    close(pop: PopoverDirective) {
-        pop.hide();
-    }
-
-
     quickSearch(evt: KeyboardEvent) {
         const _settings = {
             onlyCurrentNode: false,

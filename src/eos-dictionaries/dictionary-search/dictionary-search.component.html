@@ -4,14 +4,14 @@
         <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [readonly]="false"></eos-datepicker>
     </div>
     <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
-        containerClass="full-search-popover" placement="bottom" #full="bs-popover"
-        (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false" (click)="close(quick)">
+        containerClass="full-search-popover" placement="bottom" #full="bs-popover" [outsideClick]="true"
+        (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
         <i [hidden]="isOpenFull || !noSearchData" class="eos-icon eos-icon-filter-blue small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
         <i [hidden]="!(isOpenFull || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
     <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn"
-        [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"
-        (onShown)="isOpenQuick = true" (onHidden)="isOpenQuick = false" (click)="close(full)">
+        [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"  [outsideClick]="true"
+        (onShown)="isOpenQuick = true" (onHidden)="isOpenQuick = false">
             <i class="fa fa-search" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
 </div>
