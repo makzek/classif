@@ -151,17 +151,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             if (node) {
                 this.params.select = true;
                 const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
-                if (_openedIndex % this._page.length === 0) {
-                    this.params.notFirst = false;
-                } else {
-                    this.params.notFirst = true;
-                }
-
-                if (_openedIndex % this._page.length === this._page.length - 1) {
-                    this.params.notLast = false;
-                } else {
-                    this.params.notLast = true;
-                }
             }
         }));
 
@@ -382,7 +371,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length - 1) {
+        if (_idx < this._page.current * this._page.length - 1 && _idx < this.visibleNodes.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
