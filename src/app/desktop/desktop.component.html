@@ -1,20 +1,21 @@
 <div class="eos-desktop">
     <div class="desktop-wrapper" [ngClass]="{'reverse': historyToLeft}">
         <div class="links-container" [ngClass]="{'right': historyToLeft}">
-            <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item" itemActiveClass="sortable-item-active"
+            <bs-sortable [(ngModel)]="referencesList" [itemTemplate]="referenceTemplate" itemClass="sortable-item xl-font" itemActiveClass="sortable-item-active"
                 placeholderItem="На этом рабочем столе нет ссылок" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper"></bs-sortable>
         </div>
 
-        <div [ngClass]="{'left': historyToLeft}" class="block recent">
-            <span class="recent-title-wrapper">
+        <div [ngClass]="{'left': historyToLeft}" class="block recent xl-font">
+            <span class="recent-title-wrapper usual-border">
                 <span class="icon eos-icon eos-icon-arrow-v-blue-left" *ngIf="!historyToLeft" (click)="historyToLeft = true"
                     tooltip="Переместить влево" containerClass="tooltip-info"></span>
                 <span class="recent-title">История:</span>
-                <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false" tooltip="Переместить вправо"></span>
+                <span class="icon eos-icon eos-icon-arrow-v-blue-right" aria-hidden="true" *ngIf="historyToLeft" (click)="historyToLeft = false"
+                    tooltip="Переместить вправо" containerClass="tooltip-info"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="tooltip-info  word-break">
-                    <a class="special-text" [routerLink]="[link.url]">{{link.title}}</a>
+                <li class="recent-item usual-border" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}" placement="left" containerClass="tooltip-info  word-break">
+                    <a class="link-text" [routerLink]="[link.url]">{{link.title}}</a>
                 </li>
             </ul>
         </div>
@@ -22,8 +23,8 @@
 </div>
 
 <ng-template #referenceTemplate let-item="item" let-index="index">
-    <div class="btn item-content block edited" *ngIf="editing(item.value)" >
-        <input id="title" name="title" #title class="title-input form-control" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
+    <div class="btn item-content xl-font block edited" *ngIf="editing(item.value)" >
+        <input id="title" name="title" #title class="title-input form-control light xl-font" [ngModel]="item.value.title" (focus)="setCursor($event)" (ngModelChange)="changeName($event)"
             required pattern="^\S(.*\S$|$)"/>
         <button  class="icon-btn btn lefter" [disabled]="!_newTitle?.length || !title.checkValidity()" (click)="save($event)"
             tooltip="Сохранить"
@@ -43,11 +44,12 @@
         </button>
     </div>
 
-    <div *ngIf="!editing(item.value)" class="btn item-content block" [routerLink]="[item.value.url]">
+    <div *ngIf="!editing(item.value)" class="btn item-content xl-font block" [routerLink]="[item.value.url]"
+    tooltip="{{deskId === 'system' ? item.value.title : item.value.fullTitle}}" containerClass="tooltip-info word-break" container="body">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>
-        <span [hidden]="editing(item.value)" tooltip="{{item.value.fullTitle}}" placement="top" containerClass="tooltip-info word-break" container="body" class="text">
+        <span [hidden]="editing(item.value)" class="text">
             {{item.value.title}}
         </span>
         <!--<button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"

@@ -1,11 +1,15 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.hide()" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
-    <button dropdownToggle type="button" class="dropdown-button btn dropdown-toggle">
-        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" [isDisabled]="dropDown.isOpen" #hint="bs-tooltip" containerClass="tooltip-info" container="body">{{selectedDesk.name}}</span>
+    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border m-font">
+        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom"
+            [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
+            containerClass="tooltip-info" container="body">
+            {{selectedDesk.name}}
+        </span>
         <span class="btn-icon">
             <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </span>
-    </button>
+    </span>
     <ul class="dropdown-menu" role="menu">
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)">
             <span [hidden]="desk.edited">
@@ -22,7 +26,7 @@
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                    <input type="text" class="form-control light" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default"
                             [disabled]="!deskName?.length || !nameForm.checkValidity()" tooltip="Сохранить" containerClass="tooltip-info">
@@ -37,9 +41,9 @@
         </li>
         <li *ngIf="deskList.length < 6" class="divider dropdown-divider"></li>
         <li *ngIf="deskList.length < 6" (click)="openCreateForm()">
-            <a><span *ngIf="!creating" class="create">Создать рабочий стол</span>
+            <a><span *ngIf="!creating" class="create primary-text">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                    <input type="text" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
                         [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn creating-btns">

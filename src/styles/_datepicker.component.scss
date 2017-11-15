@@ -11,11 +11,14 @@
         background-size: 24px;
         display: inline-block;
 
-        &.readonly {
-            border-color: transparent;
-            background-color: transparent;
+        &.stub {
             box-shadow: none;
             background-image: none;
+            padding: 0;
+        }
+
+        &.hidden {
+            display: none;
         }
     }
 }

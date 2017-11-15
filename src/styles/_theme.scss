@@ -1,24 +1,4 @@
-.modal-body {
-    label {
-        color: $primary-font-color-main-theme;
-    }
-}
-
-.tooltip {
-    opacity: 1 !important;
-
-    &.word-break {
-        word-break: break-all;
-    }
-
-    .tooltip-inner {
-        color: #333333;
-        border-radius: 4px;
-        background-color: white;
-        box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
-    }
-}
-
+/*
 .column-settings-modal {
     color: $unimportant-info-color-main-theme;
 
@@ -40,9 +20,11 @@
         background-color: transparent;
     }
 }
+*/
 
+// THEME BUT USE IN MODAL/TOOLTIPS/ECT
 .btn-primary {
-    border: 2px solid $button-color-main-theme !important;
+    border-color: $button-color-main-theme !important;
     color: $button-color-main-theme !important;
     background: white !important;
     padding: 0 4px;
@@ -54,7 +36,7 @@
 }
 
 .btn-primary-full {
-    border: 2px solid $button-color-main-theme !important;
+    border-color: $button-color-main-theme !important;
     background-color: $button-color-main-theme !important;
     color: white !important;
     padding: 0 4px;
@@ -62,6 +44,57 @@
     &:hover {
         border-color: $button-color-hover-main-theme !important;
         background: $button-color-hover-main-theme !important;
+    }
+}
+
+.btn-primary-light {
+    background-color: transparent;
+    color: $button-color-main-theme;
+    border-color: transparent;
+    padding: 1px 6px;
+
+    &:hover {
+        color: $button-color-hover-main-theme;
+    }
+
+    &.search-btn {
+        &.opened {
+            color: $primary-color-main-theme;
+            background: $button-color-main-theme;
+            outline: none;
+        }
+    }
+}
+
+.btn-default {
+    background-color: $primary-color-main-theme;
+    border-color: $border-color-main-theme;
+    color: $primary-font-color-main-theme;
+
+    &:hover:not(:disabled) {
+        background-color: $border-color-main-theme;
+    }
+}
+
+.btn {
+    &.active {
+        color: $primary-color-main-theme;
+        background-color: $button-color-main-theme;
+    }
+}
+
+.tooltip {
+    opacity: 1 !important;
+
+    &.word-break {
+        word-break: break-all;
+    }
+
+    .tooltip-inner {
+        color: #333333;
+        border-radius: 4px;
+        background-color: $primary-color-main-theme;
+        box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
     }
 }
 
@@ -113,373 +146,135 @@
     }
 }
 
-input,
-textarea {
+.form-control {
+    color: $secondary-font-color-main-theme;
+    background-color: $secondary-color-main-theme;
+    border-color: $border-color-main-theme;
+
+    &.light {
+        background-color: $primary-color-main-theme;
+    }
+
+    &:focus {
+        border-color: $active-field-color-main-theme;
+    }
+
+    &:-ms-input-placeholder {
+        color: $primary-font-color-main-theme;
+    }
+
     &.ng-invalid.ng-dirty {
         border-color: $invalid-color-main-theme !important;
         outline: $invalid-color-main-theme solid 1px !important;
-        outline-offset: 0!important;
+        outline-offset: 0 !important;
+    }
+
+    &.ng-valid {
+        border-color: $border-color-main-theme !important;
+    }
+
+    &.readonly {
+        border-color: transparent !important;
+        background-color: transparent;
+
+        &:focus {
+            border-color: transparent;
+        }
     }
 }
 
-.full-search-settings-container {
-    border-color: $border-color-main-theme;
-}
-
 .main-theme {
-    // general
     .block {
-        background-color: $primary-color-main-theme;
+        background-color: $block-color-main-theme;
         color: $primary-font-color-main-theme;
         border-color: $border-color-main-theme !important;
     }
 
-    .special-text {
+    .secondary-block {
+        background-color: $block-color-main-theme;
+        color: $secondary-font-color-main-theme;
+        border-color: $border-color-main-theme;
+    }
+
+    .link-text {
         color: $button-color-main-theme;
     }
 
-    .btn-primary-light {
-        background-color: transparent;
+    .selected-text {
         color: $button-color-main-theme;
-        border-color: transparent;
-        padding: 1px 6px;
-
-        &:hover {
-            color: $button-color-hover-main-theme;
-        }
-
-        &.search-btn {
-            &.opened {
-                color: white;
-                background: $button-color-main-theme;
-                outline: none;
-            }
-        }
     }
 
-    .btn {
-        &.active {
-            color: white;
-            background-color: $button-color-main-theme;
-        }
+    .primary-text {
+        color: $primary-font-color-main-theme;
+    }
+
+    .secondary-text {
+        color: $secondary-font-color-main-theme;
+    }
+
+    .unimportant-text {
+        color: $unimportant-info-color-main-theme;
     }
 
     .active {
         border-color: $button-color-main-theme;
+        color: $button-color-main-theme;
     }
 
-    /* .btn-icon {
-            background-color: white;
-            width: $item-width;
-            color: $button-color-main-theme;
-        }*/
-
-    .pagination {
-        & > li {
-            & > a,
-            & > span {
-                color: $button-color-main-theme;
-            }
-        }
-
-        & > .active {
-            & > a,
-            & > span {
-                &,
-                &:hover,
-                &:focus {
-                    background-color: $button-color-main-theme;
-                    border-color: $button-color-main-theme;
-                    color: white;
-                }
-            }
-        }
+    .usual-border {
+        border-color: $border-color-main-theme;
     }
 
-    .input-cleaner {
+    .active-border {
+        border-color: $button-color-main-theme;
+    }
+
+    .transparent-border {
+        border-color: transparent;
+    }
+
+    /*.input-cleaner {
         color: $button-color-main-theme;
 
         &:hover {
             color: $button-color-hover-main-theme;
         }
-    }
+    }*/
 
     .deleted {
         color: $disabled-color-main-theme;
     }
 
-    .tabs-wrapper {
-        border-color: $border-color-main-theme;
-
-        .tab-item {
-            &.active {
-                border-color: $button-color-main-theme;
-            }
-        }
+    .highlighted {
+        background: $highlight-color-main-theme;
+        color: $secondary-font-color-main-theme;
     }
 
     // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
         color: $primary-font-color-main-theme;
-
-        .header-wrapper {
-            background-color: $primary-color-main-theme;
-
-            .header-content {
-                .header-item {
-                    color: $primary-font-color-main-theme;
-
-                    a {
-                        color: $primary-font-color-main-theme;
-                    }
-
-                    .active {
-                        color: $button-color-main-theme;
-                    }
-                }
-            }
-        }
     }
 
     .content-wrapper {
         background: $secondary-color-main-theme;
     }
 
-    .eos-breadcrumb {
-        .link {
-            color: $primary-font-color-main-theme;
-        }
-
-        .breadcrumb > li::before {
-            color: $button-color-main-theme;
-        }
-    }
-
-    .sidebar-wrapper,
-    .header-wrapper,
-    .breadcrumb-wrapper {
-        border-color: $border-color-main-theme;
-    }
-
-    .opened-wrapper {
-        background-color: $block-color-main-theme;
-        color: $secondary-font-color-main-theme;
-    }
-
-    .tree-wrapper {
-        background: $block-color-main-theme;
-        color: $secondary-font-color-main-theme;
-    }
-
-    // components
-    .eos-opened-node {
-        .full-info {
-            border-color: $border-color-main-theme;
-
-            .field-title {
-                color: $unimportant-info-color-main-theme;
-            }
-        }
-
-        .opened-node-actions {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .eos-node-list-item {
-        color: $secondary-font-color-main-theme;
-    }
-
-    .eos-node-list,
-    .eos-node-list-item {
-        // background-color: $block-color-main-theme;
-        .elements,
-        .selected-node {
-            color: $secondary-font-color-main-theme;
-        }
-
-        .highlight,
-        &.highlight {
-            background: $highlight-color-main-theme;
-        }
-
-        .count-select {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .eos-tree-node {
-        .deleted {
-            .node-title {
-                color: $disabled-color-main-theme;
-            }
-        }
-
-        .active {
-            background-color: $highlight-color-main-theme;
-
-            .node-title {
-                color: $secondary-font-color-main-theme;
-            }
-        }
-
-        .node-title {
-            color: $primary-font-color-main-theme;
-        }
-    }
-
-    .eos-search {
+    .breadcrumb > li::before {
         color: $button-color-main-theme;
     }
 
-    .eos-notice {
-        .btn {
-            color: $button-color-main-theme;
-        }
-    }
-
-    .eos-desktop {
-        .recent {
-            .recent-title-wrapper,
-            .recent-item {
-                border-color: $border-color-main-theme;
-            }
-        }
-
-        .icon-btn {
-            color: $secondary-font-color-main-theme;
-        }
-    }
-
-    .eos-dictionary {
-        .tree-wrapper,
-        .opened-wrapper {
-            border-color: $border-color-main-theme;
-        }
-
-        .node-actions {
-            .second-line .node-title .item.user-sort {
-                color: $primary-font-color-main-theme;
-            }
-
-            .selected-node .item-count {
-                border-color: $border-color-main-theme;
-
-                .bright {
-                    color: $secondary-font-color-main-theme;
-                }
-            }
-        }
-    }
-
-    .eos-user {
-        /* .avatar {
-            background: $block-color-main-theme;
-        }*/
-        .text {
-            color: $secondary-font-color-main-theme;
-        }
-    }
-
-    .eos-desktop-switcher {
-        color: $secondary-font-color-main-theme;
-
-        .menuitem {
-            a {
-                color: $secondary-font-color-main-theme;
-            }
-
-            &:hover {
-                background-color: $secondary-color-main-theme;
-            }
-
-            &:active {
-                background-color: $secondary-color-main-theme;
-            }
-        }
-
-        .dropdown-button {
-            border-color: $border-color-main-theme;
+    .menuitem {
+        a {
             color: $primary-font-color-main-theme;
         }
-    }
 
-    .eos-card {
-        background: $block-color-main-theme;
-        color: $secondary-font-color-main-theme;
-        border-color: $border-color-main-theme;
-
-        .edit-header {
-            background: $block-color-main-theme;
-            color: $secondary-font-color-main-theme;
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .edit-content {
-        label {
-            color: $primary-font-color-main-theme;
-
-            &.readonly {
-                color: $unimportant-info-color-main-theme;
-            }
-        }
-
-        .form-control {
-            color: $secondary-font-color-main-theme;
+        &:hover {
             background-color: $secondary-color-main-theme;
-            border-color: $border-color-main-theme;
-
-            &:focus {
-                border-color: $active-field-color-main-theme;
-            }
-
-            &:-ms-input-placeholder {
-                color: $primary-font-color-main-theme;
-            }
-
-            &.readonly {
-                background-color: transparent;
-                border-color: transparent;
-
-                &:focus {
-                    border-color: transparent;
-                }
-            }
-        }
-    }
-
-    .eos-node-actions {
-        .icon {
-            color: $button-color-main-theme;
-        }
-    }
-
-    .search-wrapper {
-        .ng-valid {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .full-search-top,
-    .full-search-bottom {
-        border-color: $border-color-main-theme;
-    }
-
-    .full-search-form {
-        label {
-            color: $primary-font-color-main-theme;
         }
 
-        .form-control.ng-valid {
-            border-color: $border-color-main-theme;
-        }
-    }
-
-    .eos-dictionary-search {
-        .quick-search-form {
-            border-color: $border-color-main-theme;
+        &:active {
+            background-color: $secondary-color-main-theme;
         }
     }
 
@@ -488,6 +283,9 @@ textarea {
         .block-title {
             border-color: $border-color-main-theme;
             color: $primary-font-color-main-theme;
+            &:focus {
+                border-color: transparent;
+            }
         }
     }
 }

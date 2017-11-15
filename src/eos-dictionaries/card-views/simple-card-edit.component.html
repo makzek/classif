@@ -2,8 +2,8 @@
     <article class="edit-content">
         <form #cardForm="ngForm"  class="form form-horizontal">
                 <div class="form-group" *ngFor="let key of keys(fieldsDescription)">
-                    <label for="{{key}}" [ngClass]="{'readonly': !editMode }">{{fieldsDescription[key].title}}</label>
-                    <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control"
+                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription[key].title}}</label>
+                    <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
                         [ngModel]="data[key]" (ngModelChange)="change(key, $event)"
                         placeholder="{{fieldsDescription[key].title}}"
                         [readonly] = "!editMode"

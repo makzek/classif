@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EosUserProfileService } from '../services/eos-user-profile.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { LoginFormComponent } from '../login-form/login-form.component';
 
 @Injectable()
@@ -47,12 +47,12 @@ export class UnauthorizedGuard implements CanActivate {
         return this._profileSrv.checkAuth()
             .then((auth) => {
                 if (auth) {
-                    let _returnUrl = ['desk', 'system'];
+                    let _returnUrl = '/desk/system';
 
                     if (route.queryParams['returnUrl']) {
-                        _returnUrl = [route.queryParams['returnUrl']]
+                        _returnUrl = route.queryParams['returnUrl']
                     }
-                    this._router.navigate(_returnUrl);
+                    this._router.navigateByUrl(_returnUrl);
                 }
                 return !auth;
             });

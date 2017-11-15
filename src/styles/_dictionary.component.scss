@@ -11,9 +11,10 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: 425px;
+        width: 424px;
         overflow-y: auto;
-        border-right: 1px solid transparent;
+        border-right-width: 1px;
+        border-right-style: solid;
         transform: translateX(-24px);
 
         &.has-spinner {
@@ -26,7 +27,8 @@
     .opened-wrapper {
         height: calc(100vh - 60px);
         width: $dictionary-block-width;
-        border-left: 1px solid transparent;
+        border-left-width: 1px;
+        border-left-style: solid;
         z-index: 3;
     }
 
@@ -59,7 +61,7 @@
 
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $dictionary-block-width;
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
             right: $grid-gutter-width / 2;
         }
     }
@@ -103,7 +105,6 @@
             border: 1px solid transparent;
             border-bottom: 0;
             min-height: $item-height;
-            font-size: 18px;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
             -ms-grid-columns:  48px 1fr 150px;
@@ -114,14 +115,12 @@
                 width: 150px;
                 display: inline-block;
                 text-align: center;
-                font-size: 14px;
-                line-height: 20px;
-                border-left: 1px solid transparent;
+                border-left-width: 1px;
+                border-left-style: solid;
                 grid-column: 3;
             }
 
             .selected-node-title {
-                line-height: 26px;
                 grid-column: 2;
             }
 
@@ -186,7 +185,7 @@
 
         .eos-datepicker {
             display: inline-block;
-            width: 145px;
+            width: 125px;
             font-weight: bold;
             position: relative;
             top: 6px;
@@ -207,6 +206,8 @@
             .second-line-content {
                 display: flex;
                 width: 100%;
+                position: relative;
+                top: -7px;
             }
 
             .config-btn {
@@ -222,8 +223,6 @@
                 .item {
                     display: inline-block;
                     padding: 0 20px;
-                    font-size: 16px;
-                    line-height: 24px;
                     white-space: nowrap;
 
                     .text {

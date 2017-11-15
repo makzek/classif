@@ -17,14 +17,10 @@
 
     .elements {
         list-style: none;
-        max-height: calc(100vh - 150px - 95px - 150px);
+        max-height: calc(100vh - 415px);
         overflow-y: auto;
         overflow-x: hidden;
         padding-left: 0;
-
-        &.has-parent {
-            max-height: calc(100vh - 150px - 95px - 215px);
-        }
 
         .child {
             cursor: pointer;
@@ -38,6 +34,7 @@
             align-self: center;
             cursor: pointer;
             width: calc(100% - 2* 48px); // checkbox and spinner
+
         }
 
         .code {
@@ -76,179 +73,6 @@
 .node-list-item {
     height: $item-height;
 }
-
-.pagination-option {
-    margin-top: 20px;
-    height: $item-height;
-    font-size: 16px;
-    line-height: 24px;
-    border: 1px solid transparent;
-    display: -ms-grid;
-    display: grid;// sass-lint:disable-line no-duplicate-properties
-    -ms-grid-columns: 330px 1fr 220px;
-    grid-template-columns: 330px 1fr 220px;
-    
-    .pagintaion {
-        display: flex;
-    }
-
-    .pag-btn {
-        display: flex;
-        width: 48px;
-        height: 48px;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #ddd;
-    }
-
-    .active {
-        background: #2196f3;
-        color: #fff;
-        border: 1px solid #2196f3;
-    }
-
-    .inactive:hover {
-        background: #e6e6e6;
-        border: 1px solid #ddd;
-    }
-
-    .pag-btn:disabled {
-        cursor: not-allowed;
-    }
-
-    .pag-btn:disabled:hover {
-        background: #fff;
-    }
-
-    .pagination,
-    .count-select {
-        display: inline-block;
-        margin: 0;
-    }
-
-    .pagination {
-        margin-top: -1px;
-        margin-left: -1px;
-        grid-column: 1;
-    }
-
-    .count-select {
-        height: $item-height;
-        border-left: 1px solid transparent;
-        border-color: $border-color-main-theme;
-        grid-column: 3;
-
-        .drop-btn {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .icon-btn {
-            padding: 12px;
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            height: $item-height;
-            width: 100%;
-            display: inline-flex;
-            justify-content: space-around;
-            cursor: pointer;
-
-            .dropdown-toggle-text {
-                position: relative;
-                padding: 12px 0 12px 20px;
-            }
-        }
-    }
-
-    .page-link {
-        height: $item-height;
-        width: $item-width;
-        text-align: center;
-        padding: 12px 16px;
-        font-size: 16px;
-    }
-
-    .show-more {
-        position: relative;
-        left: -5px;
-        height: $item-height;
-        padding: 0 10px;
-        background: transparent;
-        font-size: 16px;
-        line-height: 24px;
-        grid-column: 2;
-    }
-
-    .pagination-lg > li {
-        &:last-child,
-        &:first-child {
-            & > a,
-            & > span {
-                border-radius: 0;
-            }
-        }
-    }
-}
-/*
-@media (max-width: 1700px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 280px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1650px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 230px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1580px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 14px;
-                line-height: 20px;
-            }
-
-            .count-select {
-                width: 170px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1500px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 16px;
-                line-height: 24px;
-            }
-
-            .count-select {
-                width: 330px;
-            }
-        }
-    }
-}*/
 
 .create-new-node {
     &.modal-body {

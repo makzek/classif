@@ -1,15 +1,15 @@
 <div class="eos-breadcrumb block">
-    <eos-sandwich class="left-sandwich" [hidden]="treeIsBlocked" (onClick)="openTree($event)" [isLeft]="true" [isWide]="treeOpened" [close]="closeAll"></eos-sandwich>
+    <eos-sandwich class="left-sandwich" [isLeft]="true"></eos-sandwich>
     <ol class="breadcrumb">
         <li *ngFor="let route of breadcrumbs; let isLast = last; let i = index;">
-            <a class="breadcrumb-item link" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" container="body"
+            <a class="breadcrumb-item link primary-text l-font" [routerLink]="[route.url]" tooltip="{{route.title}}" placement="bottom" container="body"
                 containerClass="tooltip-info word-break" *ngIf="!isLast">{{route.title}}</a>
-            <span class="breadcrumb-item special-text" tooltip="{{route.title}}" placement="bottom" container="body" containerClass="tooltip-info word-break"
+            <span class="breadcrumb-item selected-text l-font" tooltip="{{route.title}}" placement="bottom" container="body" containerClass="tooltip-info word-break"
                 *ngIf="isLast"> {{route.title}}</span>
         </li>
     </ol>
     <span class="pull-right">
         <eos-pushpin [infoOpened]="infoOpened"></eos-pushpin>
-        <eos-sandwich class="right-sandwich" (onClick)="openInfo($event)" [isLeft]="false" [isWide]="infoOpened" [close]="closeAll"></eos-sandwich>
+        <eos-sandwich class="right-sandwich" [isLeft]="false"></eos-sandwich>
     </span>
 </div>

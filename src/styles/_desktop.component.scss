@@ -20,8 +20,6 @@
         margin-right: 10px;
         margin-bottom: 10px;
         border-radius: 0;
-        font-size: 18px;
-        line-height: 26px;
         text-align: left;
         overflow: hidden;
 
@@ -32,8 +30,6 @@
         .item-content {
             width: 100%;
             height: 100%;
-            font-size: 18px;
-            line-height: 26px;
             text-align: left;
             border-radius: 0;
 
@@ -112,10 +108,9 @@
         padding: 0;
         grid-column: 2;
         grid-row: 1;
-        border: 1px solid transparent;
+        border-width: 1px;
+        border-style: solid;
         text-align: center;
-        font-size: 18px;
-        line-height: 26px;
 
         &.left {
             grid-column: 1;
@@ -125,7 +120,8 @@
         .recent-title-wrapper {
             padding: 10px;
             display: inline-block;
-            border-bottom: 1px solid transparent;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
             width: 100%;
 
             .recent-title {
@@ -139,13 +135,14 @@
             padding: 0;
 
             .recent-item {
-                border-bottom: 1px solid transparent;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 padding: 10px;
 
 
-                a.special-text {
+                a.link-text {
                     white-space: nowrap;
                 }
             }

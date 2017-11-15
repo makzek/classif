@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -132,7 +132,9 @@ export class DictionarySearchComponent implements OnDestroy {
     dateFilter(date: Date) {
         if (date !== this.date) {
             this.date = date;
-            /* this._dictSrv.fullSearch({ date: date }, this.settings); */
+            this._dictSrv.filter({ date: date }).then(() => {
+                console.log('filtered');
+            }).catch((err) => { console.log(err) });
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
@@ -6,7 +6,7 @@ import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/conf
 import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
@@ -16,6 +16,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosSandwichService } from '../services/eos-sandwich.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -25,7 +26,8 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
-    WARN_LOGIC_DELETE_ONE
+    WARN_LOGIC_DELETE_ONE,
+    DANGER_HAVE_NO_ELEMENTS
 } from '../consts/messages.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
@@ -33,11 +35,6 @@ import { FieldDescriptor } from '../core/field-descriptor'
 
 import { IOrderBy } from '../core/sort.interface'
 
-import {
-    DictionaryActionService,
-    DICTIONARY_ACTIONS,
-    DICTIONARY_STATES
-} from '../dictionary/dictionary-action.service';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
@@ -48,9 +45,11 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 @Component({
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy {
+export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
+
+    @ViewChild('tree') treeEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -67,8 +66,8 @@ export class DictionaryComponent implements OnDestroy {
     filteredNodes: EosDictionaryNode[];
     _page: IPaginationConfig;
 
-    currentState: number;
-    readonly states = DICTIONARY_STATES;
+    currentState: boolean[];
+    // readonly states = DICTIONARY_STATES;
 
     private _subscriptions: Subscription[];
 
@@ -90,6 +89,10 @@ export class DictionaryComponent implements OnDestroy {
     orderBy: IOrderBy;
 
     treeIsBlocked = false;
+    _treeScrollTop = 0;
+
+    private _updating = false;
+    dictTypes = E_DICT_TYPE;
 
     constructor(
         private _route: ActivatedRoute,
@@ -101,8 +104,8 @@ export class DictionaryComponent implements OnDestroy {
         private _modalSrv: BsModalService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
-        private _dictActSrv: DictionaryActionService,
         private _confirmSrv: ConfirmWindowService,
+        private _sandwichSrv: EosSandwichService,
     ) {
         this.params = {
             userSort: false,
@@ -111,17 +114,15 @@ export class DictionaryComponent implements OnDestroy {
             select: false
         };
 
-        this._page = {
-            start: 1,
-            current: 1,
-            length: _storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
-        }
+        this._initPage();
 
         this._subscriptions = [];
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
-        this.currentState = this._dictActSrv.state;
+        this._subscriptions.push(this._sandwichSrv.currentDictState$.subscribe((state) => {
+            this.currentState = state;
+        }));
 
         this._subscriptions.push(this._route.params.subscribe((params) => {
             if (params) {
@@ -136,12 +137,6 @@ export class DictionaryComponent implements OnDestroy {
                 this.dictionary = dictionary;
                 this.dictionaryId = dictionary.id;
                 this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
-                this.resize();
-                if (this.dictionary.descriptor.type === E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.blockTree);
-                } else {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.unblockTree);
-                }
                 if (dictionary.root) {
                     this.dictionaryName = dictionary.root.title;
                     this.treeNodes = [dictionary.root];
@@ -155,72 +150,9 @@ export class DictionaryComponent implements OnDestroy {
         this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
             if (node) {
                 this.params.select = true;
-            }
-        }))
-
-        this._subscriptions.push(this._dictActSrv.action$.subscribe((action) => {
-            this._dictActSrv.closeAll = false;
-            switch (action) {
-                // TODO: try to find more simple solition
-                case DICTIONARY_ACTIONS.closeTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openTree:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.closeInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.full:
-                            this.currentState = DICTIONARY_STATES.tree;
-                            this._dictActSrv.state = DICTIONARY_STATES.tree;
-                            break;
-                        case DICTIONARY_STATES.info:
-                            this.currentState = DICTIONARY_STATES.selected;
-                            this._dictActSrv.state = DICTIONARY_STATES.selected;
-                            break;
-                    }
-                    break;
-                case DICTIONARY_ACTIONS.openInfo:
-                    switch (this.currentState) {
-                        case DICTIONARY_STATES.tree:
-                            this.currentState = DICTIONARY_STATES.full;
-                            this._dictActSrv.state = DICTIONARY_STATES.full;
-                            break;
-                        case DICTIONARY_STATES.selected:
-                            this.currentState = DICTIONARY_STATES.info;
-                            this._dictActSrv.state = DICTIONARY_STATES.info;
-                            break;
-                    }
-                    break;
-                default:
-                    break;
+                const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
             }
         }));
-
-        this._subscriptions.push(this._profileSrv.settings$
-            .map((settings) => settings.find((s) => s.id === 'showDeleted').value)
-            .subscribe((s) => {
-                this.params.showDeleted = s;
-            })
-        );
 
         this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
             let nodes = [];
@@ -240,10 +172,70 @@ export class DictionaryComponent implements OnDestroy {
             }
             this._updateVisibleNodes();
         }));
+
+        this._subscriptions.push(this._route.queryParams.subscribe(params => {
+            this._initPage();
+            const _page = Object.assign({}, this._page);
+
+            let update = false;
+            if (params.length) {
+                this._page.length = this._getPage(this._positive(params.length)).value;
+                update = true;
+            }
+            if (params.page) {
+                this._page.current = this._positive(params.page);
+                update = true;
+            }
+            if (params.start) {
+                this._page.start = this._positive(params.start);
+                update = true;
+            }
+
+            if (update) {
+                if (_page.start !== this._page.start) {
+                    this._cleanCheck();
+                }
+                this._updateVisibleNodes();
+            }
+        }));
+    }
+
+    private _initPage() {
+        this._page = {
+            start: 1,
+            current: 1,
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
+        }
+    }
+
+    private _getPage(length: number) {
+        return PAGES.find((item) => item.value >= length) || PAGES[0];
+    }
+
+    private _positive(val: any): number {
+        let res = val * 1 || 1;
+        if (res < 1) {
+            res = 1;
+        }
+        return Math.floor(res);
     }
 
     ngOnDestroy() {
+        this._sandwichSrv.treeScrollTop = this._treeScrollTop;
         this._subscriptions.forEach((_s) => _s.unsubscribe());
+    }
+
+    ngAfterViewInit() {
+        this._treeScrollTop = this._sandwichSrv.treeScrollTop;
+        this.treeEl.nativeElement.scrollTop = this._treeScrollTop;
+    }
+
+    ngDoCheck() {
+        this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
+    }
+
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
     }
 
     private _countColumnWidth() {
@@ -271,39 +263,32 @@ export class DictionaryComponent implements OnDestroy {
                 .then((dictionary) => {
                     // todo: re-factor this ugly solution
                     this.params = Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered });
-                    this._dictSrv.selectNode(this._nodeId)
-                });
+                    this._dictSrv.selectNode(this._nodeId);
+                })
+                .catch((err) => this._errHandler(err));
         }
     }
 
+    private _cleanCheck() {
+        this.filteredNodes.forEach(item => item.marked = false);
+    }
+
     private _updateVisibleNodes() {
-        // console.log('_updateVisibleNodes fired');
+        console.log('_updateVisibleNodes fired', this._page);
         let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
-
-        this.visibleNodes.forEach(item => item.marked = false);
-        this.updateMarks();
 
         if (!this.params.showDeleted) {
             _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
         }
 
         this.filteredNodes = _list;
-
         if (page) {
             this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
         } else {
             this.visibleNodes = _list;
         }
-        // this.updateMarks();
-    }
-
-    pageChanged(page: IPaginationConfig) {
-        // console.log('page changed', page);
-        this._page = page;
-        if (this.listNodes[0]) {
-            this._updateVisibleNodes();
-        }
+        this.updateMarks();
     }
 
     doAction(action: E_RECORD_ACTIONS) {
@@ -386,7 +371,7 @@ export class DictionaryComponent implements OnDestroy {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length) {
+        if (_idx < this._page.current * this._page.length - 1 && _idx < this.visibleNodes.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
@@ -431,9 +416,8 @@ export class DictionaryComponent implements OnDestroy {
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.closeAll = true;
+            this._sandwichSrv.changeDictState(false, false);
+            this._sandwichSrv.changeDictState(false, true);
         }
     }
 
@@ -500,14 +484,17 @@ export class DictionaryComponent implements OnDestroy {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            if (arr.length === 1) {
+            if (arr.length === 0) {
+                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
+            } else if (arr.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
             } else if (arr.length) {
                 const WARN = Object.assign({}, WARN_LOGIC_DELETE);
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes);
+                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
+                    .catch((err) => this._errHandler(err));
             }
         }
     }
@@ -523,6 +510,7 @@ export class DictionaryComponent implements OnDestroy {
             }
             list = list.slice(0, list.length - 2);
             if (j === 0) {
+                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
                 return;
             } else if (j === 1) {
                 const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
@@ -603,7 +591,8 @@ export class DictionaryComponent implements OnDestroy {
                     this.creatingModal.hide();
                 }
                 this._clearForm();
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     cancelCreate() {
@@ -622,23 +611,7 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     public resize(): void {
-        if (window.innerWidth > 1500) {
-            if (this.currentState !== DICTIONARY_STATES.tree) {
-                this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-            }
-            if (this.dictionary) {
-                if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
-                    this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-                } else {
-                    if (this.currentState === DICTIONARY_STATES.full || this.currentState === DICTIONARY_STATES.tree) {
-                        this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-                    }
-                }
-            }
-        } else {
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-        }
+        this._sandwichSrv.resize();
     }
 
     searchResult(nodes: EosDictionaryNode[]) {
@@ -647,5 +620,15 @@ export class DictionaryComponent implements OnDestroy {
             this.listNodes = nodes;
             this._updateVisibleNodes();
         }
+    }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
     }
 }

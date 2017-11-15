@@ -56,7 +56,7 @@
     input,
     textarea {
         &.ng-invalid.ng-dirty {
-            border-color: $active-field-color-main-theme !important;
+            border-color: $disabled-color-main-theme !important;
             outline: none !important;
 
             &.ng-touched {

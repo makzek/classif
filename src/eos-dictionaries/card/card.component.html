@@ -1,5 +1,5 @@
-<div class="eos-card">
-    <header class="edit-header" [ngClass]="{'edited': editMode}">
+<div class="eos-card secondary-block">
+    <header class="edit-header usual-border" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <div>
                 <button *ngIf="node && !editMode" [disabled]="disManager(true, tt1)" #tt1="bs-tooltip" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
@@ -31,7 +31,7 @@
                     <span class="eos-icon eos-icon-edit-blue small"></span>
                 </button>
                 <a routerLink="{{selfLink}}" target="_blank">
-                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новой вкладке" placement="bottom" containerClass="tooltip-info">
+                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новом окне" placement="bottom" containerClass="tooltip-info">
                         <span class="eos-icon eos-icon-external-link-blue small"></span>
                     </button>
                 </a>

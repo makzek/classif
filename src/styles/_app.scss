@@ -17,12 +17,9 @@
     padding: $grid-gutter-width / 2;
 }
 
-.sidebar-wrapper {
-    border-right: 1px solid transparent;
-}
-
 .header-wrapper {
-    border-bottom: 1px solid transparent;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     height: 60px;
 
     .round-img-wrapper {
@@ -65,13 +62,11 @@
             margin: auto;
             margin-left: -4px;
 
-            .link-text {
+            .link-name {
                 position: relative;
                 top: 3px;
                 padding-left: 40px;
                 padding-right: 0;
-                font-size: 18px;
-                line-height: 26px;
                 cursor: pointer;
 
                 &:hover,
@@ -96,8 +91,6 @@
                     .else-item {
                         height: $item-height;
                         padding: 12px 20px;
-                        font-size: 18px;
-                        line-height: 26px;
 
                         & > a {
                             padding: 0;
@@ -117,7 +110,7 @@
     right: $grid-gutter-width / 2;
     min-width: 20%;
     max-width: 50%;
-    z-index: 1049;
+    z-index: 1052;
 
     .alert {
         span {
@@ -130,4 +123,8 @@
     position: fixed;
     bottom: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
+}
+
+.btn-transparent {
+    background-color: transparent;
 }

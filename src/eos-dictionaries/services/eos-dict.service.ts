@@ -14,6 +14,8 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 
 @Injectable()
 export class EosDictService {
@@ -38,6 +40,7 @@ export class EosDictService {
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
+        private _confirmSrv: ConfirmWindowService,
     ) {
         /* this._dictionaries = new Map<string, EosDictionary>(); */
         /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
@@ -230,6 +233,9 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             if (this.selectedNode) {
+                if (this.selectedNode.children) {
+                    this.selectedNode.children.forEach((child) => child.marked = false);
+                }
                 this.selectedNode.isActive = false;
             }
             if (node) {
@@ -367,13 +373,48 @@ export class EosDictService {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
         // Object.assign(node, { ...node, isDeleted: false });
+        this.updateNode(node, { DELETED: 0 })
+            .then((res) => {
+                return this.reloadNode(node);
+            });
+
+        // WTF?????
+        Object.assign(node, { ...node, marked: false });
+        if (node.children) {
+            let delChld: boolean;
+            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+            _confrm.body = _confrm.body.replace('{{name}}', node.data['CLASSIF_NAME']);
+
+            this._confirmSrv
+                .confirm(_confrm)
+                .then((confirmed: boolean) => {
+                    delChld = confirmed;
+                    if (delChld) {
+                        node.children.forEach((subNode) => {
+                            this._restoreItem(subNode);
+                        });
+                    }
+                }).catch();
+        }
+    }
+
+    private _restoreItem(node: EosDictionaryNode) {
+        if (node.parent && node.parent.isDeleted) {
+            this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
+        }
         this.updateNode(node, { DELETED: 0 }).then((res) => {
             this.reloadNode(node);
         });
         Object.assign(node, { ...node, marked: false });
         if (node.children) {
-            node.children.forEach((subNode) => this.restoreItem(subNode));
+            node.children.forEach((subNode) => {
+                this._restoreItem(subNode);
+            });
         }
+    }
+
+    filter(params: any): Promise<any> {
+        return Promise.reject('not implemeted')
     }
 
     getNodePath(node: EosDictionaryNode): string[] {
@@ -445,5 +486,16 @@ export class EosDictService {
             this._reorder();
             this._storageSrv.setUserOrder(this.dictionary.id, this.selectedNode.id, _order);
         }
+    }
+
+    private _errHandler(err) {
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка операции',
+            msg: errMessage,
+            dismissOnTimeout: 100000
+        });
+        return null;
     }
 }
