@@ -19,44 +19,19 @@ import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 
 @Injectable()
 export class EosDictService {
-    /* private _dictionaries: Map<string, EosDictionary>; */
     private _dictionariesList = DICTIONARIES;
-    public dictionary: EosDictionary;
+    private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
-    private _searchResults: EosDictionaryNode[];
+    private _currentList: EosDictionaryNode[];
     private _searchString: string;
 
-    /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
-    // private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
+    private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
-
-    constructor(
-        private _api: EosDictApiService,
-        private _msgSrv: EosMessageService,
-        private _profileSrv: EosUserProfileService,
-        private _storageSrv: EosStorageService,
-        private _confirmSrv: ConfirmWindowService,
-    ) {
-        /* this._dictionaries = new Map<string, EosDictionary>(); */
-        /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
-        this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
-        this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
-        this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
-        this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
-        // this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-    }
-
-    /* Observable dictionary for subscribing on updates in components */
-    /*
-    get dictionariesList$(): Observable<Array<{ id: string, title: string }>> {
-        return this._dictionariesList$.asObservable();
-    }
-    */
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -73,20 +48,35 @@ export class EosDictService {
         return this._openedNode$.asObservable();
     }
 
-    /*
-    get searchResults$(): Observable<EosDictionaryNode[]> {
-        return this._searchResults$.asObservable();
+    get currentList$(): Observable<EosDictionaryNode[]> {
+        return this._currentList$.asObservable();
     }
-    */
+
+    get userOrdered(): boolean {
+        return this.dictionary && this.dictionary.userOrdered;
+    }
+
+    constructor(
+        private _api: EosDictApiService,
+        private _msgSrv: EosMessageService,
+        private _profileSrv: EosUserProfileService,
+        private _storageSrv: EosStorageService,
+        private _confirmSrv: ConfirmWindowService,
+    ) {
+        this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
+        this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
+        this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
+        this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
+        this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
+    }
 
     public getDictionariesList(): Promise<any> {
-        return new Promise((res) => {
-            res(DICTIONARIES);
-        });
+        return Promise.resolve(DICTIONARIES);
     }
 
     closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
+        this._currentList$.next([]);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -206,6 +196,12 @@ export class EosDictService {
         }
     }
 
+    private _setCurrentList(nodes: EosDictionaryNode[]) {
+        this._currentList = nodes || [];
+        // todo: filter & order list before anounce
+        this._currentList$.next(this._currentList);
+    }
+
     /**
      *
      * @param nodeId node ID to be selected
@@ -240,6 +236,7 @@ export class EosDictService {
             }
             if (node) {
                 node.isActive = true;
+                this._setCurrentList(node.children);
             }
             this._openNode(null);
             this.selectedNode = node;
@@ -358,13 +355,14 @@ export class EosDictService {
         this._openNode(null);
         return this._api.search(criteries)
             .then((data: any[]) => {
-                this._searchResults = [];
+                let nodes = [];
                 if (!data || data.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this._searchResults = this.dictionary.updateNodes(data, false);
+                    nodes = this.dictionary.updateNodes(data, false);
                 }
-                return this._searchResults;
+                this._setCurrentList(nodes);
+                return this._currentList;
             });
     }
 
@@ -445,15 +443,13 @@ export class EosDictService {
     }
 
     // temporary
-    get userOrdered(): boolean {
-        return this.dictionary && this.dictionary.userOrdered;
-    }
-
     private _reorder() {
         if (this.dictionary) {
-            console.log()
+            this._setCurrentList(this.dictionary.reorderList(this._currentList));
+            /*
             this.dictionary.reorder();
             this._selectedNode$.next(this.selectedNode);
+            */
         }
     }
 

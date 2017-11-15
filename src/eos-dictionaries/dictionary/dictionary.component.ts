@@ -1,12 +1,15 @@
 import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/confirms.const';
-import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/confirms.const';
+import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosDeskService } from '../../app/services/eos-desk.service';
@@ -46,6 +49,8 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy {
+    private ngUnsubscribe: Subject<any> = new Subject();
+
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
@@ -91,6 +96,10 @@ export class DictionaryComponent implements OnDestroy {
     private _updating = false;
     dictTypes = E_DICT_TYPE;
 
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
+    }
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -117,71 +126,16 @@ export class DictionaryComponent implements OnDestroy {
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
-        this._subscriptions.push(this._sandwichSrv.currentDictState$.subscribe((state) => {
-            this.currentState = state;
-        }));
 
-        this._subscriptions.push(this._route.params.subscribe((params) => {
+        this._route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
                 this._selectNode();
             }
-        }));
+        });
 
-        this._subscriptions.push(this._dictSrv.dictionary$.subscribe((dictionary) => {
-            if (dictionary) {
-                this.dictionary = dictionary;
-                this.dictionaryId = dictionary.id;
-                this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
-                if (dictionary.root) {
-                    this.dictionaryName = dictionary.root.title;
-                    this.treeNodes = [dictionary.root];
-                }
-                this.params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-            } else {
-                this.treeNodes = [];
-            }
-        }));
-
-        this._subscriptions.push(this._dictSrv.openedNode$.subscribe(node => {
-            if (node) {
-                this.params.select = true;
-                const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
-                if (_openedIndex % this._page.length === 0) {
-                    this.params.notFirst = false;
-                } else {
-                    this.params.notFirst = true;
-                }
-
-                if (_openedIndex % this._page.length === this._page.length - 1) {
-                    this.params.notLast = false;
-                } else {
-                    this.params.notLast = true;
-                }
-            }
-        }));
-
-        this._subscriptions.push(this._dictSrv.selectedNode$.subscribe((node) => {
-            let nodes = [];
-            if (node) {
-                this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
-                this.viewFields = node.getListView();
-                this.params.hasParent = !!node.parent;
-                nodes = node.children || [];
-                this._countColumnWidth();
-            }
-
-            if (node !== this.selectedNode) {
-                this.selectedNode = node;
-            }
-            if (this.listNodes !== nodes) {
-                this.listNodes = nodes;
-            }
-            this._updateVisibleNodes();
-        }));
-
-        this._subscriptions.push(this._route.queryParams.subscribe(params => {
+        this._route.queryParams.subscribe(params => {
             this._initPage();
             const _page = Object.assign({}, this._page);
 
@@ -205,7 +159,70 @@ export class DictionaryComponent implements OnDestroy {
                 }
                 this._updateVisibleNodes();
             }
-        }));
+        });
+
+        this._sandwichSrv.currentDictState$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((state) => this.currentState = state);
+
+        this._dictSrv.dictionary$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((dictionary) => {
+                if (dictionary) {
+                    this.dictionary = dictionary;
+                    this.dictionaryId = dictionary.id;
+                    this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
+                    if (dictionary.root) {
+                        this.dictionaryName = dictionary.root.title;
+                        this.treeNodes = [dictionary.root];
+                    }
+                    this.params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                } else {
+                    this.treeNodes = [];
+                }
+            });
+
+        this._dictSrv.openedNode$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe(node => {
+                if (node) {
+                    this.params.select = true;
+                    const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
+                    if (_openedIndex % this._page.length === 0) {
+                        this.params.notFirst = false;
+                    } else {
+                        this.params.notFirst = true;
+                    }
+
+                    if (_openedIndex % this._page.length === this._page.length - 1) {
+                        this.params.notLast = false;
+                    } else {
+                        this.params.notLast = true;
+                    }
+                }
+            });
+
+        this._dictSrv.selectedNode$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((node) => {
+                if (node) {
+                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                    this.viewFields = node.getListView();
+                    this.params.hasParent = !!node.parent;
+                    this._countColumnWidth();
+                }
+
+                if (node !== this.selectedNode) {
+                    this.selectedNode = node;
+                }
+            });
+
+        this._dictSrv.currentList$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((nodes) => {
+                this.listNodes = nodes;
+                this._updateVisibleNodes();
+            });
     }
 
     private _initPage() {
@@ -229,11 +246,8 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._subscriptions.forEach((_s) => _s.unsubscribe());
-    }
-
-    get hideTree() {
-        return this._sandwichSrv.treeIsBlocked;
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 
     private _countColumnWidth() {
@@ -614,10 +628,12 @@ export class DictionaryComponent implements OnDestroy {
 
     searchResult(nodes: EosDictionaryNode[]) {
         console.log('searchresult', nodes);
+        /*
         if (nodes && nodes.length) {
             this.listNodes = nodes;
             this._updateVisibleNodes();
         }
+        */
     }
 
     private _errHandler(err) {
