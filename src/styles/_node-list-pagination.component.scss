@@ -5,9 +5,9 @@
     display: grid; // sass-lint:disable-line no-duplicate-properties
     -ms-grid-columns: 330px 1fr 180px;
     grid-template-columns: 330px 1fr 180px;
-    position: fixed;
+    // position: fixed;
     bottom: 60px;
-    width: calc(100vw - 40px);
+    width: 100%; // calc(100vw - 40px);
 
     .pagination {
         display: flex;
