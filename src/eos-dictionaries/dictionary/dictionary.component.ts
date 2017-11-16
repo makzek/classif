@@ -468,27 +468,29 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     /* darkside */
 
     deleteSelectedItems(): void {
-        const arr = [];
+        const deletedNames: string[] = [];
         const selectedNodes: string[] = [];
+        let countMakedItems = 0;
         if (this.listNodes) {
-            this.listNodes.forEach((child) => {
+            this.listNodes.forEach((child: EosDictionaryNode) => {
+                if (child.marked) { countMakedItems++ }
                 if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.marked = false;
                 } else if (child.marked && child.isDeleted) {
-                    arr.push(child.data.CLASSIF_NAME)
+                    deletedNames.push(child.data.CLASSIF_NAME)
                 }
             });
             let str = '';
-            for (const item of arr) {
+            for (const item of deletedNames) {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            if (arr.length === 0) {
+            if (countMakedItems === 0) {
                 this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-            } else if (arr.length === 1) {
+            } else if (deletedNames.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-            } else if (arr.length) {
+            } else if (deletedNames.length) {
                 const WARN = Object.assign({}, WARN_LOGIC_DELETE);
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
