@@ -53,4 +53,14 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     /* clean(field: string, value: string) {
         this.change(field, value);
     }*/
+
+    checkCode(val: any) {
+        if (this.nodeSet) {
+            /* tslint:disable:no-bitwise */
+            return !!~this.nodeSet.findIndex((_node) => _node.data['RUBRIC_CODE'] === val);
+            /* tslint:enable:no-bitwise */
+        } else {
+            return null;
+        }
+    }
 }
