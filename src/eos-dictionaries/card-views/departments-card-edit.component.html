@@ -33,7 +33,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         (focus)="focus('RUBRIC_CODE_PERSON')" (blur)="blur()"
                         maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"  [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
-                        eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [key]="'RUBRIC_CODE'" [checkingMethod]="checkCode.bind(this)"
+                        eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [key]="'RUBRIC_CODE'" [checkingMethod]="checkUnic.bind(this)"
                         tooltip="Максимальная длина {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                         [isOpen]="cardForm.controls.RUBRIC_CODE_PERSON?.invalid && cardForm.controls.RUBRIC_CODE_PERSON?.dirty && focusedField === 'RUBRIC_CODE_PERSON'" triggers="">
@@ -581,7 +581,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     (focus)="focus('RUBRIC_CODE_DEP')" (blur)="blur()"
                     [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
-                    eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [key]="'RUBRIC_CODE'" [checkingMethod]="checkCode.bind(this)"
+                    eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [key]="'RUBRIC_CODE'" [checkingMethod]="checkUnic.bind(this)"
                     tooltip="Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                     [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                     [isOpen]="cardForm.controls.RUBRIC_CODE_DEP?.invalid && cardForm.controls.RUBRIC_CODE_DEP?.dirty && focusedField === 'RUBRIC_CODE_DEP'" triggers="">

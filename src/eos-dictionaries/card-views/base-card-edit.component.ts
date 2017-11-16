@@ -1,6 +1,7 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosDictService } from '../services/eos-dict.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -17,6 +18,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
 
     tooltipText = '';
     focusedField: string;
+
+    protected dictSrv;
+
+    constructor(injector: Injector) {
+        this.dictSrv = injector.get(EosDictService);
+    }
 
     keys(data: Object): string[] {
         return Object.keys(data);
@@ -54,13 +61,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         this.change(field, value);
     }*/
 
-    checkUnic(val: any, key: string) {
-        if (this.nodeSet) {
-            /* tslint:disable:no-bitwise */
-            return !!~this.nodeSet.findIndex((_node) => _node.data[key] === val);
-            /* tslint:enable:no-bitwise */
-        } else {
-            return null;
-        }
+    checkUnic(val: any, key: string, inDict?: boolean) {
+        return this.dictSrv.isUnic(val, key, inDict);
     }
 }
