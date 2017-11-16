@@ -12,6 +12,8 @@ export class EosSandwichService {
     private _currentDictState$: BehaviorSubject<boolean[]> = new BehaviorSubject<boolean[]>(null);
     private _treeIsBlocked = false;
 
+    private _treeScrollTop = 0;
+
     constructor(private _dictSrv: EosDictService) {
         this._dictSrv.dictionary$.subscribe((dict) => {
             if (dict) {
@@ -33,6 +35,14 @@ export class EosSandwichService {
 
     get treeIsBlocked(): boolean {
         return this._treeIsBlocked;
+    }
+
+    get treeScrollTop(): number {
+        return this._treeScrollTop;
+    }
+
+    set treeScrollTop(val: number) {
+        this._treeScrollTop = val;
     }
 
     changeDictState( state: boolean, isLeft: boolean ) {
