@@ -1,6 +1,8 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
+
 @Component({
     selector: 'eos-card-edit',
     templateUrl: 'card-edit.component.html'
@@ -10,6 +12,7 @@ export class CardEditComponent {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
+    @Input() nodeSet: EosDictionaryNode[];
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
