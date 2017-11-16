@@ -11,7 +11,7 @@
         <div class="node-actions">
             <div *ngIf="selectedNode" class="block selected-node">
                 <div class="go-top-wrapper">
-                    <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
+                    <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
                     </button>
                 </div>

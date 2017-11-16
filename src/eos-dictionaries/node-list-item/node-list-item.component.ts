@@ -20,7 +20,7 @@ export class NodeListItemComponent implements OnInit {
     @Input('length') length: any = {};
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private viewFields: FieldDescriptor[];
+    viewFields: FieldDescriptor[];
 
     constructor(
         private _storageSrv: EosStorageService,

@@ -74,6 +74,8 @@ export class DictionaryComponent implements OnDestroy {
 
     private _subscriptions: Subscription[];
 
+    hasParent: boolean;
+
     anyMarked: boolean;
     anyUnmarked: boolean;
     allMarked: boolean;
@@ -116,7 +118,6 @@ export class DictionaryComponent implements OnDestroy {
         this.params = {
             userSort: false,
             showDeleted: false,
-            hasParent: false,
             select: false
         };
 
@@ -208,7 +209,7 @@ export class DictionaryComponent implements OnDestroy {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
-                    this.params.hasParent = !!node.parent;
+                    this.hasParent = !!node.parent;
                     this._countColumnWidth();
                 }
 

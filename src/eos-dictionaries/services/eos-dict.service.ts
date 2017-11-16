@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
 import { ISearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
@@ -24,7 +25,7 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
-    private _searchString: string;
+    private _viewParameters: string;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -339,19 +340,17 @@ export class EosDictService {
 
     public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
         const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
-        this._searchString = searchString;
-
         return this._search(_criteries);
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
         const critery = this.dictionary.getFullsearchCriteries(data, params, this.selectedNode);
-        // console.log('full search', critery);
         return this._search([critery]);
     }
 
 
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
+        // console.log('full search', critery);
         this._openNode(null);
         return this._api.search(criteries)
             .then((data: any[]) => {
