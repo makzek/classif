@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -48,11 +48,13 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 @Component({
     templateUrl: 'dictionary.component.html',
 })
-export class DictionaryComponent implements OnDestroy {
+export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
+
+    @ViewChild('tree') treeEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -94,6 +96,7 @@ export class DictionaryComponent implements OnDestroy {
     orderBy: IOrderBy;
 
     treeIsBlocked = false;
+    _treeScrollTop = 0;
 
     private _updating = false;
     dictTypes = E_DICT_TYPE;
@@ -189,17 +192,6 @@ export class DictionaryComponent implements OnDestroy {
                 if (node) {
                     this.params.select = true;
                     const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
-                    if (_openedIndex % this._page.length === 0) {
-                        this.params.notFirst = false;
-                    } else {
-                        this.params.notFirst = true;
-                    }
-
-                    if (_openedIndex % this._page.length === this._page.length - 1) {
-                        this.params.notLast = false;
-                    } else {
-                        this.params.notLast = true;
-                    }
                 }
             });
 
@@ -247,8 +239,18 @@ export class DictionaryComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        this._sandwichSrv.treeScrollTop = this._treeScrollTop;
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    ngAfterViewInit() {
+        this._treeScrollTop = this._sandwichSrv.treeScrollTop;
+        this.treeEl.nativeElement.scrollTop = this._treeScrollTop;
+    }
+
+    ngDoCheck() {
+        this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
     }
 
     private _countColumnWidth() {
@@ -384,7 +386,7 @@ export class DictionaryComponent implements OnDestroy {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length - 1) {
+        if (_idx < this._page.current * this._page.length - 1 && _idx < this.visibleNodes.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
@@ -481,27 +483,29 @@ export class DictionaryComponent implements OnDestroy {
     /* darkside */
 
     deleteSelectedItems(): void {
-        const arr = [];
+        const deletedNames: string[] = [];
         const selectedNodes: string[] = [];
+        let countMakedItems = 0;
         if (this.listNodes) {
-            this.listNodes.forEach((child) => {
+            this.listNodes.forEach((child: EosDictionaryNode) => {
+                if (child.marked) { countMakedItems++ }
                 if (child.marked && !child.isDeleted) {
                     selectedNodes.push(child.id);
                     child.marked = false;
                 } else if (child.marked && child.isDeleted) {
-                    arr.push(child.data.CLASSIF_NAME)
+                    deletedNames.push(child.data.CLASSIF_NAME)
                 }
             });
             let str = '';
-            for (const item of arr) {
+            for (const item of deletedNames) {
                 str += '"' + item + '", ';
             }
             str = str.slice(0, str.length - 2);
-            if (arr.length === 0) {
+            if (countMakedItems === 0) {
                 this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-            } else if (arr.length === 1) {
+            } else if (deletedNames.length === 1) {
                 this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-            } else if (arr.length) {
+            } else if (deletedNames.length) {
                 const WARN = Object.assign({}, WARN_LOGIC_DELETE);
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);

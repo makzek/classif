@@ -10,19 +10,19 @@
     <div class="card-wrapper">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Краткое наименование кабинета:</span>
-            <input *ngIf="editMode" (input)="change('fakeField', $event)" type="text" class="form-control" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
+            <input *ngIf="editMode" (input)="change('fakeField', $event)" type="text" class="form-control m-font" placeholder="Краткое наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="data['title']">
-            <p *ngIf="!editMode" class="form-control">{{data['title']}}</p>
+            <p *ngIf="!editMode" class="form-control m-font">{{data['title']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Полное наименование кабинета:</span>
-            <input *ngIf="editMode" (input)="change('fakeField', $event)" type="text" class="form-control" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
+            <input *ngIf="editMode" (input)="change('fakeField', $event)" type="text" class="form-control m-font" placeholder="Полное наименование кабинета" aria-describedby="basic-addon1"
                 [(ngModel)]="data['description']">
-            <p *ngIf="!editMode" class="form-control">{{data['description']}}</p>
+            <p *ngIf="!editMode" class="form-control m-font">{{data['description']}}</p>
         </div>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Подразделение:</span>
-            <p class="form-control">{{data['department']}}</p>
+            <p class="form-control m-font">{{data['department']}}</p>
         </div>
 
         <div class="panel panel-default">

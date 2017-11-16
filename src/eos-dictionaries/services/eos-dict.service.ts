@@ -230,7 +230,7 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             if (this.selectedNode) {
-                if (this.selectedNode.hasSubnodes) {
+                if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
                 }
                 this.selectedNode.isActive = false;

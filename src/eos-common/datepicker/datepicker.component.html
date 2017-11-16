@@ -9,7 +9,7 @@
         [minDate]="bsConfig.minDate"
         [maxDate]="bsConfig.maxDate"
         [isDisabled]="isDisabled">
-    <input class="form-control stub" 
+    <input class="form-control readonly" 
         value="{{value | date:'dd.MM.yyyy'}}" 
         readonly 
         [ngClass]="{'hidden': !readonly}"

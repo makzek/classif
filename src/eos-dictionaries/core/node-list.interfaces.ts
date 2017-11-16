@@ -6,6 +6,4 @@ export interface INodeListParams {
     userSort?: boolean;
     showCheckbox?: boolean;
     select: boolean;
-    notLast?: boolean;
-    notFirst?: boolean;
 };
