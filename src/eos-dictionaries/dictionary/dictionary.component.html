@@ -25,7 +25,7 @@
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
-                    <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
+                    <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
                     <eos-dictionary-search (searchResult)="searchResult($event)"></eos-dictionary-search>

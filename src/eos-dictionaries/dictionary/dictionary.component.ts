@@ -1,6 +1,5 @@
 import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 
@@ -16,6 +15,7 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
+import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
@@ -74,8 +74,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     currentState: boolean[];
     // readonly states = DICTIONARY_STATES;
 
-    private _subscriptions: Subscription[];
-
     hasParent: boolean;
 
     anyMarked: boolean;
@@ -126,7 +124,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._initPage();
 
-        this._subscriptions = [];
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
@@ -213,6 +210,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
             .subscribe((nodes) => {
+                console.log('incoming list', nodes);
                 this.listNodes = nodes;
                 this._updateVisibleNodes();
             });
@@ -290,18 +288,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _updateVisibleNodes() {
         console.log('_updateVisibleNodes fired', this._page);
-        let _list: EosDictionaryNode[] = this.listNodes;
         const page = this._page;
 
-        if (!this.params.showDeleted) {
-            _list = _list.filter((node) => node.isVisible(this.params.showDeleted));
-        }
-
-        this.filteredNodes = _list;
+        this.filteredNodes = this.listNodes;
         if (page) {
-            this.visibleNodes = _list.slice((page.start - 1) * page.length, page.current * page.length);
+            this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
         } else {
-            this.visibleNodes = _list;
+            this.visibleNodes = this.listNodes;
         }
         this.updateMarks();
     }
@@ -321,7 +314,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.showDeleted:
-                this._toggleDeleted();
+                this._dictSrv.toggleDeleted();
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
@@ -441,20 +434,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             const path = this._dictSrv.getNodePath(this.selectedNode.parent);
             this._router.navigate(path);
         }
-    }
-
-    private _toggleDeleted(): void {
-        this.params = Object.assign({}, this.params, { showDeleted: !this.params.showDeleted });
-        if (!this.params.showDeleted) {
-            // Fall checkbox with deleted elements
-            for (const node of this.listNodes) {
-                if (node.data.DELETED === 1) {
-                    node.marked = false;
-                }
-            }
-            this.updateMarks();
-        }
-        this._updateVisibleNodes();
     }
 
     private _toggleUserOrder(): void {

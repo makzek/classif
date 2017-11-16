@@ -25,12 +25,13 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
-    private _viewParameters: string;
+    private _viewParameters: IDictionaryViewParameters;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
     private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
+    private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
 
@@ -53,6 +54,10 @@ export class EosDictService {
         return this._currentList$.asObservable();
     }
 
+    get viewParameters$(): Observable<IDictionaryViewParameters> {
+        return this._viewParameters$.asObservable();
+    }
+
     get userOrdered(): boolean {
         return this.dictionary && this.dictionary.userOrdered;
     }
@@ -64,11 +69,21 @@ export class EosDictService {
         private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService,
     ) {
+        this._initViewParameters();
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
+        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this._viewParameters);
+    }
+
+    private _initViewParameters() {
+        this._viewParameters = {
+            showDeleted: false,
+            userSorted: false,
+            markItems: false,
+        };
     }
 
     public getDictionariesList(): Promise<any> {
@@ -77,6 +92,9 @@ export class EosDictService {
 
     closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
+        this._initViewParameters();
+        this._viewParameters$.next(this._viewParameters);
+        this._currentList = [];
         this._currentList$.next([]);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
@@ -200,7 +218,17 @@ export class EosDictService {
     private _setCurrentList(nodes: EosDictionaryNode[]) {
         this._currentList = nodes || [];
         // todo: filter & order list before anounce
-        this._currentList$.next(this._currentList);
+        this._updateCurrentList();
+    }
+
+    private _updateCurrentList() {
+        let nodes = this._currentList;
+
+        if (!this._viewParameters.showDeleted) {
+            nodes = nodes.filter((node) => node.isVisible(this._viewParameters.showDeleted));
+        }
+
+        this._currentList$.next(nodes);
     }
 
     /**
@@ -481,6 +509,17 @@ export class EosDictService {
             this._reorder();
             this._storageSrv.setUserOrder(this.dictionary.id, this.selectedNode.id, _order);
         }
+    }
+
+    toggleDeleted() {
+        this._viewParameters.showDeleted = !this._viewParameters.showDeleted;
+        if (!this._viewParameters.showDeleted) {
+            this._currentList.forEach((node) => {
+                if (node.isDeleted) { node.marked = false; }
+            });
+        }
+        this._updateCurrentList();
+        this._viewParameters$.next(this._viewParameters);
     }
 
     private _errHandler(err) {
