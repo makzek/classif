@@ -38,7 +38,10 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 2000,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.',
+        /* tslint:disable:max-line-length */
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах вершины',
+        /* tslint:enable:max-line-length */
+        isUnic: true,
     }, {
         key: 'NOTE',
         title: 'Примечание',

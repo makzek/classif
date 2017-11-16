@@ -10,7 +10,7 @@
                         [ngClass]="{'readonly': !editMode }"
                         [required]="fieldsDescription[key]?.required"
                         [pattern]="fieldsDescription[key].pattern" maxlength="{{fieldsDescription[key].length}}"
-                        eosUnic="{{fieldsDescription[key].isUnic}}" [checkingMethod]="checkCode.bind(this)"
+                        eosUnic="{{fieldsDescription[key].isUnic}}" [key]="key" [checkingMethod]="checkUnic.bind(this)"
                         [tooltip]="fieldsDescription[key]?.invalidMessage"
                         placement="right" containerClass="tooltip-error" container="body"
                         (focus)="focus(key)" (blur)="blur()"
