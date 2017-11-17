@@ -60,7 +60,7 @@
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
             <eos-node-list [nodes]="visibleNodes" [length]="length" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
-            <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page"></eos-node-list-pagination>
+            <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page" [currentState]="currentState"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
@@ -76,7 +76,7 @@
         </button>
     </div>
     <div class="create-new-node modal-body">
-        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"></eos-card-edit>
+        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" [nodeSet]="listNodes" editMode="true" (invalid)="validate($event)"></eos-card-edit>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>

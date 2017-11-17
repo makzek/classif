@@ -1,4 +1,5 @@
-<div class="pagination-option block l-font">
+<div class="pagination-option block l-font"
+    [ngClass]="{'tree': currentState[0] && !currentState[1], 'info': !currentState[0] && currentState[1], 'full': currentState[0] && currentState[1]}">
     <div class="pagination">
         <button class="pag-btn btn-default prev" [disabled]="config.current === 1" (click)="showPage(config.current - 1)">&lsaquo;</button>
         <button *ngFor="let page of pages let i = index" class="pag-btn btn-default" [ngClass]="{'btn-primary-full': config.current === page}"
