@@ -17,17 +17,17 @@
                 </div>
                 <div class="form-group gender">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="gender">{{fieldsDescription['gender']?.title}}</label>
-                    <select *ngIf="editMode" name="gender" id="gender" class="form-control gender-select"
+                    <select *ngIf="editMode" name="gender" id="gender" class="form-control m-font gender-select"
                         [ngModel]="data['gender']" (ngModelChange)="change('gender', $event)"
                         [ngClass]="{'readonly': !editMode }">
                         <option *ngFor="let g of gender" [value]="g.id">{{g.title}}</option>
                     </select>
-                    <input *ngIf="!data['gender']" readonly name="gender" type="text" class="form-control readonly"
+                    <input *ngIf="!data['gender']" readonly name="gender" type="text" class="form-control m-font readonly"
                         [ngClass]="{'gender-placeholder': editMode }" placeholder="{{fieldsDescription['gender']?.title}}" />
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
-                    <input [readonly]="!editMode" id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control m-font"
                         [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                         placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexPerson">{{fieldsDescription['indexPerson']?.title}}</label>
-                    <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control m-font"
                         [ngModel]="data['DEPARTMENT_INDEX']" (ngModelChange)="change('DEPARTMENT_INDEX', $event)"
                         placeholder="{{fieldsDescription['indexPerson']?.title}}"
                         [ngClass]="{'readonly': !editMode }" pattern="fieldsDescription['DEPARTMENT_INDEX']?.pattern"
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group sev">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV">{{fieldsDescription['SEV']?.title}}</label>
-                    <input [readonly]="!editMode" id="SEV" name="SEV" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="SEV" name="SEV" type="text" class="form-control m-font "
                         [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                         placeholder="{{fieldsDescription['SEV']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -78,7 +78,7 @@
             <div class="col-2">
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastName">{{fieldsDescription['lastName']?.title}}</label>
-                    <input [readonly]="!editMode" id="lastName" name="lastName" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="lastName" name="lastName" type="text" class="form-control m-font "
                         [ngModel]="data['lastName']" (ngModelChange)="change('lastName', $event)"
                         placeholder="{{fieldsDescription['lastName']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -91,7 +91,7 @@
                 <div class="names row-wrapper">
                     <div class="form-group first-name">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="firstName">{{fieldsDescription['firstName']?.title}}</label>
-                        <input [readonly]="!editMode" id="firstName" name="firstName" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstName" name="firstName" type="text" class="form-control m-font "
                             [ngModel]="data['firstName']" (ngModelChange)="change('firstName', $event)"
                             placeholder="{{fieldsDescription['firstName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -103,7 +103,7 @@
                     </div>
                     <div class="form-group fathers-name">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fathersName">{{fieldsDescription['fathersName']?.title}}</label>
-                        <input [readonly]="!editMode" id="fathersName" name="fathersName" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="fathersName" name="fathersName" type="text" class="form-control m-font "
                             [ngModel]="data['fathersName']" (ngModelChange)="change('fathersName', $event)"
                             placeholder="{{fieldsDescription['fathersName']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -117,7 +117,7 @@
 
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SURNAME">{{fieldsDescription['SURNAME']?.title}}</label>
-                    <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control m-font "
                         [ngModel]="data['SURNAME']" (ngModelChange)="change('SURNAME', $event)"
                         placeholder="{{fieldsDescription['SURNAME']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -130,7 +130,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY">{{fieldsDescription['DUTY']?.title}}</label>
                     <div class="row-wrapper">
-                        <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control duty"
+                        <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control m-font  duty"
                             [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
                             placeholder="{{fieldsDescription['DUTY']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -148,7 +148,7 @@
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">{{fieldsDescription['fullPosition']?.title}}</label>
-                    <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font "
                         [ngModel]="data['fullPosition']" (ngModelChange)="change('fullPosition', $event)"
                         placeholder="{{fieldsDescription['fullPosition']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -160,7 +160,7 @@
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NOTE">{{fieldsDescription['NOTE']?.title}}</label>
-                    <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control note-person"  rows="5"
+                    <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control m-font  note-person"  rows="5"
                         [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                         placeholder="{{fieldsDescription['NOTE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -173,8 +173,9 @@
             </div>
             </div>
             <div>
-                <span class="block-title usual-border primary-text">Исполнитель моих обязанностей</span>
-                <div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
+                <span class="block-title l-font usual-border primary-text">Исполнитель моих обязанностей</span>
+                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+                <!--<div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_START_DATE">Начало действия</label>
                         <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
@@ -187,7 +188,7 @@
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Исполнитель моих обязанностей</label>
-                        <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control m-font "
                             [ngModel]="alternate.name"
                             placeholder="Исполнитель моих обязанностей"
                             [ngClass]="{'readonly': !editMode }">
@@ -195,7 +196,7 @@
                             <i [hidden]="!editMode" class="fa fa-user-plus selected-text user-icon" aria-hidden="true"></i>
                         </button>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="row alternate-button-wrapper">
                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -207,8 +208,9 @@
                 </div>
             </div>
             <div>
-                <span class="block-title usual-border primary-text">Исполняю обязанности</span>
-                <div class="row alternates">
+                <span class="block-title l-font usual-border primary-text">Исполняю обязанности</span>
+                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+                <!--<div class="row alternates">
                     <div class="col-md-3 col-lg-3 col-xl-3 form-group">
                         <label for="alternate_START_DATE">начало действия</label>
                         <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
@@ -221,19 +223,19 @@
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 form-group">
                         <label for="fullPosition">Исполняю обязанности</label>
-                        <input id="fullPosition" name="alternate.name" type="text" class="form-control readonly"
+                        <input id="fullPosition" name="alternate.name" type="text" class="form-control m-font  readonly"
                             [ngModel]="data['alternates'][0].name"
                             placeholder="Исполняет мои обязанности"
                             readonly>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div *ngIf="currTab === 1">
             <div class="row-wrapper">
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NUM_CAB">{{fieldsDescription['NUM_CAB']?.title}}</label>
-                    <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control m-font "
                         [ngModel]="data['NUM_CAB']" (ngModelChange)="change('NUM_CAB', $event)"
                         placeholder="{{fieldsDescription['NUM_CAB']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -246,7 +248,7 @@
 
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE">{{fieldsDescription['PHONE']?.title}}</label>
-                    <input [readonly]="!editMode" id="PHONE" name="PHONE" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="PHONE" name="PHONE" type="text" class="form-control m-font "
                         [ngModel]="data['PHONE']" (ngModelChange)="change('PHONE', $event)"
                         placeholder="{{fieldsDescription['PHONE']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -259,7 +261,7 @@
 
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE_LOCAL">{{fieldsDescription['PHONE_LOCAL']?.title}}</label>
-                    <input [readonly]="!editMode" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control m-font "
                         [ngModel]="data['PHONE_LOCAL']" (ngModelChange)="change('PHONE_LOCAL', $event)"
                         placeholder="{{fieldsDescription['PHONE_LOCAL']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -272,7 +274,7 @@
 
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="FAX">{{fieldsDescription['FAX']?.title}}</label>
-                    <input [readonly]="!editMode" id="FAX" name="FAX" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="FAX" name="FAX" type="text" class="form-control m-font "
                         [ngModel]="data['FAX']" (ngModelChange)="change('FAX', $event)"
                         placeholder="{{fieldsDescription['FAX']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -288,7 +290,7 @@
                 <div class="form-group"></div>
                 <div class="form-group email">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="E_MAIL">{{fieldsDescription['E_MAIL']?.title}}</label>
-                        <input [readonly]="!editMode" id="E_MAIL" name="E_MAIL" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="E_MAIL" name="E_MAIL" type="text" class="form-control m-font "
                             [ngModel]="data['E_MAIL']" (ngModelChange)="change('E_MAIL', $event)"
                             placeholder="{{fieldsDescription['E_MAIL']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -300,7 +302,7 @@
                 </div>
                 <div class="form-group skype">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="skype">{{fieldsDescription['skype']?.title}}</label>
-                        <input [readonly]="!editMode" id="skype" name="skype" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="skype" name="skype" type="text" class="form-control m-font "
                             [ngModel]="data['skype']" (ngModelChange)="change('skype', $event)"
                             placeholder="{{fieldsDescription['skype']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -314,10 +316,10 @@
         </div>
 
         <div *ngIf="currTab === 2">
-                <span class="block-title first usual-border primary-text">Склонение должности</span>
+                <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
                     <div class="form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionRP">{{fieldsDescription['shortPositionRP']?.title}}</label>
-                        <input [readonly]="!editMode" id="shortPositionRP" name="shortPositionRP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="shortPositionRP" name="shortPositionRP" type="text" class="form-control m-font "
                             [ngModel]="data['shortPositionRP']" (ngModelChange)="change('shortPositionRP', $event)"
                             placeholder="{{fieldsDescription['shortPositionRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -330,7 +332,7 @@
 
                     <div class="form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionDP">{{fieldsDescription['shortPositionDP']?.title}}</label>
-                        <input [readonly]="!editMode"  id="shortPositionDP" name="shortPositionDP" type="text" class="form-control"
+                        <input [readonly]="!editMode"  id="shortPositionDP" name="shortPositionDP" type="text" class="form-control m-font "
                             [ngModel]="data['shortPositionDP']" (ngModelChange)="change('shortPositionDP', $event)"
                             placeholder="{{fieldsDescription['shortPositionDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -343,7 +345,7 @@
 
                     <div class="form-group">
                         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPositionVP">{{fieldsDescription['shortPositionVP']?.title}}</label>
-                        <input [readonly]="!editMode"  id="shortPositionVP" name="shortPositionVP" type="text" class="form-control"
+                        <input [readonly]="!editMode"  id="shortPositionVP" name="shortPositionVP" type="text" class="form-control m-font "
                             [ngModel]="data['shortPositionVP']" (ngModelChange)="change('shortPositionVP', $event)"
                             placeholder="{{fieldsDescription['shortPositionVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -354,10 +356,10 @@
                             [isOpen]="cardForm.controls.shortPositionVP?.invalid && cardForm.controls.shortPositionVP?.dirty && focusedField === 'shortPositionVP'" triggers="">
                     </div>
 
-                <span class="block-title usual-border primary-text">Склонение фамилии, имени, отчества</span>
+                <span class="block-title l-font usual-border primary-text">Склонение фамилии, имени, отчества</span>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fioDP">{{fieldsDescription['fioDP']?.title}}</label>
-                    <input [readonly]="!editMode"  id="fioDP" name="fioDP" type="text" class="form-control"
+                    <input [readonly]="!editMode"  id="fioDP" name="fioDP" type="text" class="form-control m-font "
                         [ngModel]="data['fioDP']" (ngModelChange)="change('fioDP', $event)"
                         placeholder="{{fieldsDescription['fioDP']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -369,7 +371,7 @@
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="iofDP">{{fieldsDescription['iofDP']?.title}}</label>
-                    <input [readonly]="!editMode"  id="iofDP" name="iofDP" type="text" class="form-control"
+                    <input [readonly]="!editMode"  id="iofDP" name="iofDP" type="text" class="form-control m-font "
                         [ngModel]="data['iofDP']" (ngModelChange)="change('iofDP', $event)"
                         placeholder="{{fieldsDescription['iofDP']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -383,7 +385,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameRP">Родительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
-                        <input [readonly]="!editMode" id="lastNameRP" name="lastNameRP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="lastNameRP" name="lastNameRP" type="text" class="form-control m-font "
                             [ngModel]="data['lastNameRP']" (ngModelChange)="change('lastNameRP', $event)"
                             placeholder="{{fieldsDescription['lastNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -392,7 +394,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.lastNameRP?.invalid && cardForm.controls.lastNameRP?.dirty && focusedField === 'lastNameRP'" triggers="">
-                        <input [readonly]="!editMode" id="firstNameRP" name="firstNameRP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstNameRP" name="firstNameRP" type="text" class="form-control m-font "
                             [ngModel]="data['firstNameRP']" (ngModelChange)="change('firstNameRP', $event)"
                             placeholder="{{fieldsDescription['firstNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -401,7 +403,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.firstNameRP?.invalid && cardForm.controls.firstNameRP?.dirty && focusedField === 'firstNameRP'" triggers="">
-                        <input [readonly]="!editMode" id="fathersNameRP" name="fathersNameRP" type="text" class="form-control last"
+                        <input [readonly]="!editMode" id="fathersNameRP" name="fathersNameRP" type="text" class="form-control m-font  last"
                             [ngModel]="data['fathersNameRP']" (ngModelChange)="change('fathersNameRP', $event)"
                             placeholder="{{fieldsDescription['fathersNameRP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -415,7 +417,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameDP">Дательный падеж (кому?)</label>
                     <div class="row-wrapper declination-wrapper">
-                        <input [readonly]="!editMode" id="lastNameDP" name="lastNameDP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="lastNameDP" name="lastNameDP" type="text" class="form-control m-font "
                             [ngModel]="data['lastNameDP']" (ngModelChange)="change('lastNameDP', $event)"
                             placeholder="{{fieldsDescription['lastNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -424,7 +426,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.lastNameDP?.invalid && cardForm.controls.lastNameDP?.dirty && focusedField === 'lastNameDP'" triggers="">
-                        <input [readonly]="!editMode" id="firstNameDP" name="firstNameDP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstNameDP" name="firstNameDP" type="text" class="form-control m-font "
                             [ngModel]="data['firstNameDP']" (ngModelChange)="change('firstNameDP', $event)"
                             placeholder="{{fieldsDescription['firstNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -433,7 +435,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.firstNameDP?.invalid && cardForm.controls.firstNameDP?.dirty && focusedField === 'firstNameDP'" triggers="">
-                        <input [readonly]="!editMode" id="fathersNameDP" name="fathersNameDP" type="text" class="form-control last"
+                        <input [readonly]="!editMode" id="fathersNameDP" name="fathersNameDP" type="text" class="form-control m-font  last"
                             [ngModel]="data['fathersNameDP']" (ngModelChange)="change('fathersNameDP', $event)"
                             placeholder="{{fieldsDescription['fathersNameDP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -447,7 +449,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameVP">Винительный падеж (кого?)</label>
                     <div class="row-wrapper declination-wrapper">
-                        <input [readonly]="!editMode" id="lastNameVP" name="lastNameVP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="lastNameVP" name="lastNameVP" type="text" class="form-control m-font "
                             [ngModel]="data['lastNameVP']" (ngModelChange)="change('lastNameVP', $event)"
                             placeholder="{{fieldsDescription['lastNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -456,7 +458,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.lastNameVP?.invalid && cardForm.controls.lastNameVP?.dirty && focusedField === 'lastNameVP'" triggers="">
-                        <input [readonly]="!editMode" id="firstNameVP" name="firstNameVP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstNameVP" name="firstNameVP" type="text" class="form-control m-font "
                             [ngModel]="data['firstNameVP']" (ngModelChange)="change('firstNameVP', $event)"
                             placeholder="{{fieldsDescription['firstNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -465,7 +467,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.firstNameVP?.invalid && cardForm.controls.firstNameVP?.dirty && focusedField === 'firstNameVP'" triggers="">
-                        <input [readonly]="!editMode" id="fathersNameVP" name="fathersNameVP" type="text" class="form-control last"
+                        <input [readonly]="!editMode" id="fathersNameVP" name="fathersNameVP" type="text" class="form-control m-font  last"
                             [ngModel]="data['fathersNameVP']" (ngModelChange)="change('fathersNameVP', $event)"
                             placeholder="{{fieldsDescription['fathersNameVP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -479,7 +481,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNameTP">Творительный падеж (кем?)</label>
                     <div class="row-wrapper declination-wrapper">
-                        <input [readonly]="!editMode" id="lastNameTP" name="lastNameTP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="lastNameTP" name="lastNameTP" type="text" class="form-control m-font "
                             [ngModel]="data['lastNameTP']" (ngModelChange)="change('lastNameTP', $event)"
                             placeholder="{{fieldsDescription['lastNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -488,7 +490,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.lastNameTP?.invalid && cardForm.controls.lastNameTP?.dirty && focusedField === 'lastNameTP'" triggers="">
-                        <input [readonly]="!editMode" id="firstNameTP" name="firstNameTP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstNameTP" name="firstNameTP" type="text" class="form-control m-font "
                             [ngModel]="data['firstNameTP']" (ngModelChange)="change('firstNameTP', $event)"
                             placeholder="{{fieldsDescription['firstNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -497,7 +499,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.firstNameTP?.invalid && cardForm.controls.firstNameTP?.dirty && focusedField === 'firstNameTP'" triggers="">
-                        <input [readonly]="!editMode" id="fathersNameTP" name="fathersNameTP" type="text" class="form-control last"
+                        <input [readonly]="!editMode" id="fathersNameTP" name="fathersNameTP" type="text" class="form-control m-font  last"
                             [ngModel]="data['fathersNameTP']" (ngModelChange)="change('fathersNameTP', $event)"
                             placeholder="{{fieldsDescription['fathersNameTP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -511,7 +513,7 @@
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="lastNamePP">Предложный падеж (о ком?)</label>
                     <div class="row-wrapper declination-wrapper">
-                        <input [readonly]="!editMode" id="lastNamePP" name="lastNamePP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="lastNamePP" name="lastNamePP" type="text" class="form-control m-font "
                             [ngModel]="data['lastNamePP']" (ngModelChange)="change('lastNamePP', $event)"
                             placeholder="{{fieldsDescription['lastNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -520,7 +522,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.lastNamePP?.invalid && cardForm.controls.lastNamePP?.dirty && focusedField === 'lastNamePP'" triggers="">
-                        <input [readonly]="!editMode" id="firstNamePP" name="firstNamePP" type="text" class="form-control"
+                        <input [readonly]="!editMode" id="firstNamePP" name="firstNamePP" type="text" class="form-control m-font "
                             [ngModel]="data['firstNamePP']" (ngModelChange)="change('firstNamePP', $event)"
                             placeholder="{{fieldsDescription['firstNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -529,7 +531,7 @@
                             tooltip="Пробелы в начале и в конце строки запрещены."
                             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                             [isOpen]="cardForm.controls.firstNamePP?.invalid && cardForm.controls.firstNamePP?.dirty && focusedField === 'firstNamePP'" triggers="">
-                        <input [readonly]="!editMode" id="fathersNamePP" name="fathersNamePP" type="text" class="form-control last"
+                        <input [readonly]="!editMode" id="fathersNamePP" name="fathersNamePP" type="text" class="form-control m-font  last"
                             [ngModel]="data['fathersNamePP']" (ngModelChange)="change('fathersNamePP', $event)"
                             placeholder="{{fieldsDescription['fathersNamePP']?.title}}"
                             [ngClass]="{'readonly': !editMode }"
@@ -540,10 +542,10 @@
                             [isOpen]="cardForm.controls.fathersNamePP?.invalid && bottom.controls.fathersNamePP?.dirty && focusedField === 'fathersNamePP'" triggers="">
                     </div>
                 </div>
-                <span class="block-title usual-border primary-text">Данные для формирования поручений</span>
+                <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="shortPosition">{{fieldsDescription['DUTY']?.title}}</label>
-                    <input [readonly]="!editMode" id="shortPosition" name="shortPosition" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="shortPosition" name="shortPosition" type="text" class="form-control m-font "
                         [ngModel]="data['DUTY']" (ngModelChange)="change('DUTY', $event)"
                         placeholder="{{fieldsDescription['DUTY']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -556,7 +558,7 @@
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="department">{{fieldsDescription['department']?.title}}</label>
-                    <input [readonly]="!editMode"  id="department" name="department" type="text" class="form-control"
+                    <input [readonly]="!editMode"  id="department" name="department" type="text" class="form-control m-font "
                         [ngModel]="data['department']" (ngModelChange)="change('department', $event)"
                         placeholder="{{fieldsDescription['department']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -572,7 +574,7 @@
         <div class="col-1">
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="RUBRIC_CODE">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
-                <input [readonly]="!editMode" id="RUBRIC_CODE_DEP" name="RUBRIC_CODE_DEP" type="text" class="form-control"
+                <input [readonly]="!editMode" id="RUBRIC_CODE_DEP" name="RUBRIC_CODE_DEP" type="text" class="form-control m-font "
                     [ngModel]="data['RUBRIC_CODE']" (ngModelChange)="change('RUBRIC_CODE', $event)"
                     placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -585,7 +587,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexDep">{{fieldsDescription['indexDep']?.title}}</label>
-                <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control"
+                <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control m-font "
                     [ngModel]="data['INDEX']" (ngModelChange)="change('INDEX', $event)"
                     placeholder="{{fieldsDescription['indexDep']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -597,7 +599,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV_DEP">{{fieldsDescription['SEV']?.title}}</label>
-                <input [readonly]="!editMode" id="SEV_DEP" name="SEV_DEP" type="text" class="form-control"
+                <input [readonly]="!editMode" id="SEV_DEP" name="SEV_DEP" type="text" class="form-control m-font "
                     [ngModel]="data['SEV']" (ngModelChange)="change('SEV', $event)"
                     placeholder="{{fieldsDescription['SEV']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -630,7 +632,7 @@
         <div class="col-2">
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CLASSIF_NAME_DEP">{{fieldsDescription['title']?.title}}</label>
-                <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control"
+                <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control m-font "
                     [ngModel]="data['CLASSIF_NAME']" (ngModelChange)="change('CLASSIF_NAME', $event)"
                     placeholder="{{fieldsDescription['title']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -648,7 +650,7 @@
             </span>
             <div class="form-group full-position">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullTitle">{{fieldsDescription['fullTitle']?.title}}</label>
-                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control"
+                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control m-font "
                         [ngModel]="data['fullTitle']" (ngModelChange)="change('fullTitle', $event)"
                         placeholder="{{fieldsDescription['fullTitle']?.title}}"
                         [ngClass]="{'readonly': !editMode }"
@@ -660,7 +662,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="titleRP">{{fieldsDescription['titleRP']?.title}}</label>
-                <input [readonly]="!editMode" id="titleRP" name="titleRP" type="text" class="form-control"
+                <input [readonly]="!editMode" id="titleRP" name="titleRP" type="text" class="form-control m-font "
                     [ngModel]="data['titleRP']" (ngModelChange)="change('titleRP', $event)"
                     placeholder="{{fieldsDescription['titleRP']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -672,7 +674,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUE_LINK_ORGANIZ">{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}</label>
-                <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control"
+                <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control m-font "
                     [ngModel]="data['DUE_LINK_ORGANIZ']" (ngModelChange)="change('DUE_LINK_ORGANIZ', $event)"
                     placeholder="{{fieldsDescription['DUE_LINK_ORGANIZ']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -684,7 +686,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CARD_NAME">{{fieldsDescription['CARD_NAME']?.title}}</label>
-                <input [readonly]="!editMode" id="CARD_NAME" name="CARD_NAME" type="text" class="form-control"
+                <input [readonly]="!editMode" id="CARD_NAME" name="CARD_NAME" type="text" class="form-control m-font "
                     [ngModel]="data['CARD_NAME']" (ngModelChange)="change('CARD_NAME', $event)"
                     placeholder="{{fieldsDescription['CARD_NAME']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
@@ -696,7 +698,7 @@
             </div>
             <div class="form-group">
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NOTE_DEP">{{fieldsDescription['NOTE']?.title}}</label>
-                <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control note-dep"  rows="5"
+                <textarea [readonly]="!editMode" id="NOTE_DEP" name="NOTE_DEP" type="text" class="form-control m-font  note-dep"  rows="5"
                     [ngModel]="data['NOTE']" (ngModelChange)="change('NOTE', $event)"
                     placeholder="{{fieldsDescription['NOTE']?.title}}"
                     [ngClass]="{'readonly': !editMode }"
