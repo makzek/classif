@@ -1,7 +1,8 @@
 import { Injectable, Optional } from '@angular/core';
 import { PipRX } from './pipRX.service';
-import { USER_CL, SYS_PARMS } from '../interfaces/structures'
+import { USER_CL, SYS_PARMS, SRCH_VIEW } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
+import { debug } from 'util';
 
 
 @Injectable()
@@ -11,13 +12,18 @@ export class AppContext {
      */
     public CurrentUser: USER_CL;
     public SysParms: SYS_PARMS;
+    /**
+     * Настройки отображения
+     */
+    public UserViews: SRCH_VIEW[];
 
     /**
      * рабочие столы
      */
     public workBanches: any[];
 
-    constructor(private pip: PipRX) { }
+    constructor(private pip: PipRX) {
+    }
 
     init(): Promise<any> {
         const p = this.pip;
@@ -37,15 +43,28 @@ export class AppContext {
 
         const oCurrentUser = p.read<USER_CL>({
             CurrentUser: ALL_ROWS,
-            expand: 'USERDEP_List,USERSECUR_List',
+            expand: 'USERDEP_List,USERSECUR_List,USER_VIEW_List',
             _moreJSON: { ParamsDic: null }
         });
+        const oUserViews = oCurrentUser.then(d => {
+            const uvl = d[0].USER_VIEW_List;
+            const isnViews = <number[]>[];
+            for (let i = 0; i !== uvl.length; i++) {
+                // if(uvl[i].SRCH_KIND_NAME.indexOf('clman') !== -1)
+                    isnViews.push(uvl[i].ISN_VIEW);
+            }
 
-        return Promise.all([oSysParams, oCurrentUser])
-            .then(([sysParms, curentUser]) => {
+            return p.read<SRCH_VIEW>({SRCH_VIEW: isnViews, expand: 'SRCH_VIEW_DESC_List'});
+        });
+
+        return Promise.all([oSysParams, oCurrentUser, oUserViews])
+            .then(([sysParms, curentUser, userViews]) => {
+                // tslint:disable-next-line:no-debugger
+                debugger;
                 this.SysParms = sysParms[0];
                 this.CurrentUser = curentUser[0];
-                return [this.CurrentUser, this.SysParms];
+                this.UserViews = userViews;
+                return [this.CurrentUser, this.SysParms, this.UserViews];
             })
             /*
             .then(d => {

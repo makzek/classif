@@ -11,6 +11,14 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
+import { debug } from 'util';
+
+import { AppContext} from '../../eos-rest/services/appContext.service';
+import { SRCH_VIEW, USER_CL} from '../../eos-rest/interfaces/structures';
+
+import {ViewManager} from '../../eos-rest/services/viewManager';
+
+
 
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
@@ -59,7 +67,8 @@ export class EosDeskService {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private viewManager: ViewManager
     ) {
         this._desksList = DEFAULT_DESKS;
 
@@ -67,7 +76,6 @@ export class EosDeskService {
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._recentItems$ = new BehaviorSubject(this._recentItems);
-
         _dictSrv.getDictionariesList()
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
@@ -171,6 +179,15 @@ export class EosDeskService {
     }
 
     createDesk(desk: EosDesk): void {
+        const viewMan = this.viewManager;
+        const newDesc = viewMan.createView('clmanDesc');
+        newDesc.VIEW_NAME = desk.name;
+
+        viewMan.saveView(newDesc).then(isn_view => {
+            alert('новый стол сохранен!' + isn_view.toString());
+            // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
+        });
+
         if (this._desksList.length < 6) {// users desk + system desk
             if (!desk.id) { desk.id = (this._desksList.length + 1).toString(); }
             this._desksList.push(desk);

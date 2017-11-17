@@ -22,6 +22,8 @@ import { AuthService } from './services/auth.service';
 import { DepartmentService } from './services/department.service';
 import { LinearDictionaryService } from './services/linear-dictionary.service';
 import { TreeDictionaryService } from './services/tree-dictionary.service';
+import { AppContext } from 'eos-rest/services/appContext.service';
+import { ViewManager } from 'eos-rest/services/viewManager';
 
 @NgModule({
     imports: [
@@ -45,6 +47,8 @@ import { TreeDictionaryService } from './services/tree-dictionary.service';
     providers: [
         PipRX,
         AuthService,
+        AppContext,
+        ViewManager,
         // ContextService,
         DepartmentService,
         LinearDictionaryService,
