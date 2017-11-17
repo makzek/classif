@@ -1,7 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { PipRX} from './pipRX.service';
 import { AppContext} from './appContext.service';
-import { SRCH_VIEW, USER_CL, USER_VIEW} from '../interfaces/structures';
+import { SRCH_VIEW, USER_CL, USER_VIEW, SRCH_VIEW_DESC} from '../interfaces/structures';
 import { _ES } from '../core/consts';
 import { EntityHelper } from 'eos-rest/core/entity-helper';
 import { debug } from 'util';
@@ -17,8 +17,10 @@ export class ViewManager {
         return tmp;
     }
 
-    addViewColumn(view: SRCH_VIEW) {
-
+    addViewColumn(view: SRCH_VIEW): SRCH_VIEW_DESC {
+        const result = <SRCH_VIEW_DESC>{_State: _ES.Added};
+        view.SRCH_VIEW_DESC_List.push(result);
+        return result;
     }
 
     delViewColumn(view: SRCH_VIEW) {

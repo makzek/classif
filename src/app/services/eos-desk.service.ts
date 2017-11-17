@@ -90,8 +90,6 @@ export class EosDeskService {
 
         this._recentItems = [];
         this._appCtx.ready().then(x => {
-            // tslint:disable-next-line:no-debugger
-            debugger;
             this.readDeskList();
         })
     }
@@ -105,11 +103,12 @@ export class EosDeskService {
     }
 
     private readDesc(v: SRCH_VIEW): EosDesk {
-        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false};
+        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: []};
         const cols = v.SRCH_VIEW_DESC_List;
         for ( let i = 0; i !== cols.length; i++) {
             const col = cols[i];
             const di = this.mapToDefaultDescItem( cols[i].BLOCK_ID);
+            res.references.push(di);
         }
         return res;
     }
@@ -122,9 +121,18 @@ export class EosDeskService {
         return result;
     }
 
+    private appendDeskItemToView(deskId: string, item: IDeskItem) {
+        const isn = parseInt(deskId, 0);
+        const v = this._appCtx.UserViews.find(uv => uv.ISN_VIEW === isn)
+        if (v !== undefined) {
+            const col = this.viewManager.addViewColumn(v);
+            col.BLOCK_ID = item.url.split('/')[2];
+            col.LABEL = item.title;
+            this.viewManager.saveView(v);
+        }
+    }
+
     public addNewItemToDesk(desk: IDesk) {
-        // tslint:disable-next-line:no-debugger
-        debugger;
         const item: IDeskItem = {
             title: null,
             fullTitle: null,
@@ -135,6 +143,9 @@ export class EosDeskService {
             this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
                 item.fullTitle = dictionary.title;
                 item.title = dictionary.title;
+                // tslint:disable-next-line:no-debugger
+                debugger;
+                this.appendDeskItemToView(desk.id, item);
             })
         } else if (segments.length === 4) {
             this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
