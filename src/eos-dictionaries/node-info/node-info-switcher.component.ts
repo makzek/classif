@@ -21,6 +21,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     nodeDataFull: any = {};
 
     dictionaryId: string;
+    bossName = '';
 
     private _openedNodeSubscription: Subscription;
 
@@ -34,6 +35,15 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                 this.nodeDataShort = node.getShortViewData();
                 this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
                 this.nodeDataFull = node.getFullViewData();
+
+                if (this.dictionaryId === 'departments' && !node.data['IS_NODE'] && node.children) {
+                    const _boss = node.children.find((_chld) => _chld.data['POST_H']);
+                    if (_boss) {
+                        this.bossName = _boss.data['SURNAME'];
+                    } else {
+                        this.bossName = '';
+                    }
+                }
             }
         },
             (error) => alert(error));

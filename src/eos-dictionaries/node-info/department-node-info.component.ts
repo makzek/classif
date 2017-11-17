@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { BaseNodeInfoComponent } from './base-node-info';
 
@@ -8,6 +8,8 @@ import { BaseNodeInfoComponent } from './base-node-info';
 })
 export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent {
     defaultImage = 'url(../assets/images/no-user.png)';
+
+    @Input() bossName: string;
 
     constructor() {
         super();
