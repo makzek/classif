@@ -26,8 +26,6 @@ export class ViewManager {
     }
 
     saveView(view: SRCH_VIEW): Promise<number> {
-                    // tslint:disable-next-line:no-debugger
-                    debugger;
         let changeUser = Promise.resolve(<USER_CL>null);
         if ( view._State === _ES.Added && view.PERSONAL === 1 ) {
             changeUser = this.pip.read<USER_CL>({USER_CL: [this.appCtx.CurrentUser.ISN_LCLASSIF],

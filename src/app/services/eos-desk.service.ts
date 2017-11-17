@@ -34,11 +34,6 @@ const DEFAULT_DESKS: EosDesk[] = [{
         fullTitle: 'Рубрикатор'
     }],
     edited: false,
-}, {
-    id: '100',
-    name: 'Desk100',
-    references: [],
-    edited: false,
 }];
 
 @Injectable()
@@ -68,6 +63,7 @@ export class EosDeskService {
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
         private _router: Router,
+        private _appCtx: AppContext,
         private viewManager: ViewManager
     ) {
         this._desksList = DEFAULT_DESKS;
@@ -93,9 +89,42 @@ export class EosDeskService {
             });
 
         this._recentItems = [];
+        this._appCtx.ready().then(x => {
+            // tslint:disable-next-line:no-debugger
+            debugger;
+            this.readDeskList();
+        })
+    }
+
+    private readDeskList() {
+        const view = this._appCtx.UserViews.filter(uv => uv.SRCH_KIND_NAME === 'clmanDesc');
+        for (let i = 0; i < view.length; i++) {
+            this._desksList.push(this.readDesc(view[i]));
+            this._desksList$.next(this._desksList);
+        }
+    }
+
+    private readDesc(v: SRCH_VIEW): EosDesk {
+        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false};
+        const cols = v.SRCH_VIEW_DESC_List;
+        for ( let i = 0; i !== cols.length; i++) {
+            const col = cols[i];
+            const di = this.mapToDefaultDescItem( cols[i].BLOCK_ID);
+        }
+        return res;
+    }
+
+    private mapToDefaultDescItem(blockId: string): IDeskItem {
+        const defaults = this._desksList[0].references;
+        const s  = '/spravochniki/' + blockId;
+        const result = defaults.find(it => it.url === s);
+        // TODO: clone?
+        return result;
     }
 
     public addNewItemToDesk(desk: IDesk) {
+        // tslint:disable-next-line:no-debugger
+        debugger;
         const item: IDeskItem = {
             title: null,
             fullTitle: null,

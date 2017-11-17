@@ -3,6 +3,7 @@ import { PipRX } from './pipRX.service';
 import { USER_CL, SYS_PARMS, SRCH_VIEW } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
 import { debug } from 'util';
+import {Deferred} from '../core/pipe-utils';
 
 
 @Injectable()
@@ -21,8 +22,13 @@ export class AppContext {
      * рабочие столы
      */
     public workBanches: any[];
+    private _ready = new Deferred<any>();
 
     constructor(private pip: PipRX) {
+    }
+
+    ready(): Promise<any> {
+        return this._ready.promise;
     }
 
     init(): Promise<any> {
@@ -59,11 +65,10 @@ export class AppContext {
 
         return Promise.all([oSysParams, oCurrentUser, oUserViews])
             .then(([sysParms, curentUser, userViews]) => {
-                // tslint:disable-next-line:no-debugger
-                debugger;
                 this.SysParms = sysParms[0];
                 this.CurrentUser = curentUser[0];
                 this.UserViews = userViews;
+                this._ready.resolve('ready');
                 return [this.CurrentUser, this.SysParms, this.UserViews];
             })
             /*
@@ -77,4 +82,5 @@ export class AppContext {
     reInit() {
         this.init();
     }
+
 }
