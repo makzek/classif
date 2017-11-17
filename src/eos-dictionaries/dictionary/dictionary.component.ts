@@ -94,7 +94,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _updating = false;
     dictTypes = E_DICT_TYPE;
 
-    searchStartFlag = false;
+    searchStartFlag = false; // flag begin search
 
     constructor(
         private _route: ActivatedRoute,
@@ -620,7 +620,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     searchResult(nodes: EosDictionaryNode[]) {
         this.searchStartFlag = false;
-        console.log('searchresult', nodes); //
+        console.log('searchresult', nodes);
         if (nodes && nodes.length) {
             this.listNodes = nodes;
             this._updateVisibleNodes();
@@ -629,10 +629,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public searchStart() {
         this.searchStartFlag = true;
-        /*
-        this.listNodes = [];
-        this._updateVisibleNodes();
-        */
     }
 
     private _errHandler(err) {

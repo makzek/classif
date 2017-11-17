@@ -11,7 +11,7 @@ export class NodeListComponent {
     @Input() nodes: EosDictionaryNode[];
     @Input() params: any;
     @Input() length: any;
-    @Input() searchStartFlag: boolean;
+    @Input() searchStartFlag: boolean; // flag bigin search
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;

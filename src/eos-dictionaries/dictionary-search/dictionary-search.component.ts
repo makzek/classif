@@ -20,7 +20,7 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 export class DictionarySearchComponent implements OnDestroy {
     @Output() searchResult: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>();
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
-    @Output() searchStart: EventEmitter<any> = new EventEmitter();
+    @Output() searchStart: EventEmitter<any> = new EventEmitter(); // event bigin search
 
     dictId = '';
     fieldsDescription = {};
@@ -30,7 +30,7 @@ export class DictionarySearchComponent implements OnDestroy {
     modes: IRecordModeDescription[];
     loading = true;
     isOpenFull = false;
-    searchDone = true; // Flag search is done
+    searchDone = true; // Flag search is done, false while not received data
 
     @ViewChild('full') fSearchPop;
     @ViewChild('quick') qSearchPop;
