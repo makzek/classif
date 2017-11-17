@@ -23,8 +23,19 @@ export class ViewManager {
         return result;
     }
 
-    delViewColumn(view: SRCH_VIEW) {
+    editViewColumn(view: SRCH_VIEW, blockId: string): SRCH_VIEW_DESC {
+        const col = view.SRCH_VIEW_DESC_List.find(c => c.BLOCK_ID === blockId && c._State !== _ES.Deleted);
+        if (col !== undefined) {
+            return this.pip.entityHelper.prepareForEdit(col);
+        }
+        return undefined;
+    }
 
+    delViewColumn(view: SRCH_VIEW, blockId: string) {
+        const cols = view.SRCH_VIEW_DESC_List.filter(c => c.BLOCK_ID === blockId);
+        for (let i = 0; i < cols.length; i++) {
+            cols[i]._State = _ES.Deleted;
+        }
     }
 
     saveView(view: SRCH_VIEW): Promise<number> {
