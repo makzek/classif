@@ -160,9 +160,9 @@ export class PipeUtils {
         if (et.relations && it._State !== _ES.Deleted) {
             for (let i = 0; i < et.relations.length; i++) {
                 const pr = et.relations[i];
-                if (pr.name.indexOf('_List') === -1) {
+                if (pr.name.indexOf('_List') !== -1) {
                     const l = it[pr.name];
-                    if (!l) {
+                    if (l !== undefined) {
 
                         for (let j = 0; j < l.length; j++) {
                             l[j].__metadata = l[j].__metadata || {};
