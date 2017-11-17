@@ -62,6 +62,14 @@ export class RecordDescriptor {
         return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.edit, data));
     }
 
+    getShortQuickFieldDescription(data: any): any {
+        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data));
+    }
+
+    getQuickFieldDescription(data: any): any {
+        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data));
+    }
+
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
         return fields.map((fld) => Object.assign({}, fld, { value: data[fld.foreignKey] }));
     }

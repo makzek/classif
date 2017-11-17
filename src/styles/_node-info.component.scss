@@ -1,4 +1,4 @@
-.eos-opened-node {
+.eos-node-info {
     height: 100%;
 
     .opened-node-wrapper {
@@ -78,5 +78,28 @@
         &:focus {
             outline: 0;
         }
+    }
+
+    .current-image {
+        height: 100px;
+        width: 100px;
+        display: inline-block;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: 20px;
+    }
+
+    .flex-wrapper {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+
+    .boss-icon {
+        margin-right: 12px;
     }
 }
