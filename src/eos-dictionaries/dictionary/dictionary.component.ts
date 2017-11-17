@@ -60,7 +60,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictionaryName: string;
     public dictionaryId: string;
 
-    public params: INodeListParams;
+    public params: IDictionaryViewParameters;
     public selectedNode: EosDictionaryNode;
     public _selectedNodeText: string;
     private _nodeId: string;
@@ -116,12 +116,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
     ) {
-        this.params = {
-            userSort: false,
-            showDeleted: false,
-            select: false
-        };
-
         this._initPage();
 
         this.treeNodes = [];
@@ -177,18 +171,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.dictionaryName = dictionary.root.title;
                         this.treeNodes = [dictionary.root];
                     }
-                    this.params.showCheckbox = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                    this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
                 } else {
                     this.treeNodes = [];
-                }
-            });
-
-        this._dictSrv.openedNode$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe(node => {
-                if (node) {
-                    this.params.select = true;
-                    const _openedIndex = this.listNodes.findIndex((_n) => _n.id === node.id);
                 }
             });
 
@@ -209,9 +194,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => {
+            .combineLatest(this._dictSrv.viewParameters$)
+            .subscribe(([nodes, params]) => {
                 console.log('incoming list', nodes);
                 this.listNodes = nodes;
+                this.params = params;
                 this._updateVisibleNodes();
             });
     }
@@ -275,7 +262,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             this._dictSrv.openDictionary(this.dictionaryId)
                 .then((dictionary) => {
                     // todo: re-factor this ugly solution
-                    this.params = Object.assign({}, this.params, { userSort: this._dictSrv.userOrdered });
                     this._dictSrv.selectNode(this._nodeId);
                 })
                 .catch((err) => this._errHandler(err));
@@ -287,7 +273,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired', this._page);
+        console.log('_updateVisibleNodes fired'/*, this._page*/);
         const page = this._page;
 
         this.filteredNodes = this.listNodes;
@@ -318,7 +304,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.userOrder:
-                this._toggleUserOrder();
+                this._dictSrv.toggleUserOrder();
                 break;
 
             case E_RECORD_ACTIONS.moveUp:
@@ -436,6 +422,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
+    /*
     private _toggleUserOrder(): void {
         this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
         this._dictSrv.toggleUserOrder();
@@ -443,6 +430,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             this._updateVisibleNodes();
         }
     }
+    */
 
     updateMarks(): void {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;

@@ -81,8 +81,9 @@ export class EosDictService {
     private _initViewParameters() {
         this._viewParameters = {
             showDeleted: false,
-            userSorted: false,
+            userOrdered: false,
             markItems: false,
+            searchResults: false
         };
     }
 
@@ -93,9 +94,9 @@ export class EosDictService {
     closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
-        this._viewParameters$.next(this._viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
+        this._viewParameters$.next(this._viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -108,7 +109,9 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
-                        this.closeDictionary();
+                        if (this.dictionary) {
+                            this.closeDictionary();
+                        }
                         return this._openDictionary(dictionaryId);
                     }
                 } else {
@@ -129,16 +132,22 @@ export class EosDictService {
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
+                    this._initViewParameters();
+                    this._viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                    this._viewParameters.markItems = this.dictionary.canMarkItems;
+                    this._viewParameters$.next(this._viewParameters);
                     this.dictionary.initUserOrder(
-                        this._storageSrv.getItem(LS_USE_USER_ORDER),
+                        this._viewParameters.userOrdered,
                         this._storageSrv.getUserOrder(this.dictionary.id)
                     );
                     if (data && data.length) {
                         this.dictionary.init(data);
                     }
+                    /*
                     if (this.dictionary.userOrdered) {
                         this.dictionary.reorder();
                     }
+                    */
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this.dictionary);
                     return this.dictionary;
@@ -389,6 +398,8 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
+                this._viewParameters.searchResults = true;
+                this._viewParameters$.next(this._viewParameters);
                 return this._currentList;
             });
     }
@@ -462,8 +473,9 @@ export class EosDictService {
     }
 
     public toggleUserOrder() {
+        this._viewParameters.userOrdered = !this._viewParameters.userOrdered;
         if (this.dictionary) {
-            this.dictionary.userOrdered = !this.dictionary.userOrdered;
+            this.dictionary.userOrdered = this._viewParameters.userOrdered;
             this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
             this._reorder();
         }
@@ -472,18 +484,23 @@ export class EosDictService {
     // temporary
     private _reorder() {
         if (this.dictionary) {
-            this._setCurrentList(this.dictionary.reorderList(this._currentList));
-            /*
-            this.dictionary.reorder();
-            this._selectedNode$.next(this.selectedNode);
-            */
+            if (this._viewParameters.searchResults) {
+                this._setCurrentList(this.dictionary.reorderList(this._currentList));
+            } else {
+                this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
+            }
         }
+    }
+
+    private aToKeys(a: EosDictionaryNode[]): string[] {
+        return a.map((node) => node.id);
     }
 
     setUserOrder(ordered: EosDictionaryNode[], fullList: EosDictionaryNode[]) {
         const _original = [];
         const _move = {};
 
+        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(fullList));
         // restore original order
         fullList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);

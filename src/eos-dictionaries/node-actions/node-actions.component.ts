@@ -75,11 +75,11 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                     _enabled = _enabled && this._nodeSelected;
-                    _show = this._viewParams.userSorted;
+                    _show = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
                     _enabled = _enabled && this._nodeSelected;
-                    _show = this._viewParams.userSorted;
+                    _show = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.restore:
                     _enabled = this._viewParams.showDeleted;
@@ -88,7 +88,7 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
                     _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
-                    _active = this._viewParams.userSorted;
+                    _active = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.edit:
                     _enabled = _enabled && this._nodeSelected;

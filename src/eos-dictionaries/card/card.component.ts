@@ -75,7 +75,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     selfLink = null;
 
-    showDeleted = false;
     disableSave = false;
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
@@ -260,34 +259,23 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _updateBorders() {
-        const firstIndex = this.node.neighbors.findIndex((node) => node.isVisible(this.showDeleted));
-        let lastIndex = -1;
-
-        for (let idx = this.node.neighbors.length - 1; idx > lastIndex; idx--) {
-            if (this.nodes[idx].isVisible(this.showDeleted)) {
-                lastIndex = idx;
-            }
-        }
-
-        this.nodeIndex = this.nodes.findIndex((chld) => chld.id === this.node.id);
-        this.isFirst = this.nodeIndex <= firstIndex || firstIndex < 0;
-        this.isLast = this.nodeIndex >= lastIndex;
+        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
+        this.isFirst = this.nodeIndex <= 0;
+        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
     }
 
     next() {
-        const _node = this.nodes.find((node, idx) => idx > this.nodeIndex && node.isVisible(this.showDeleted));
-        this._openNode(_node);
+        if (this.nodeIndex < this.nodes.length - 1) {
+            this.nodeIndex++;
+            this._openNode(this.nodes[this.nodeIndex]);
+        }
     }
 
     prev() {
-        let _node: EosDictionaryNode = null;
-
-        for (let idx = this.nodeIndex - 1; idx > -1 && !_node; idx--) {
-            if (this.nodes[idx].isVisible(this.showDeleted)) {
-                _node = this.nodes[idx];
-            }
+        if (this.nodeIndex > 0) {
+            this.nodeIndex--;
+            this._openNode(this.nodes[this.nodeIndex]);
         }
-        this._openNode(_node);
     }
 
     disManager(mod: boolean, tooltip: any): boolean {

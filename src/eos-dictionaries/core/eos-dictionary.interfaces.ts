@@ -1,5 +1,6 @@
 export interface IDictionaryViewParameters {
     showDeleted: boolean;
-    userSorted: boolean;
+    userOrdered: boolean;
     markItems: boolean;
+    searchResults: boolean;
 }
