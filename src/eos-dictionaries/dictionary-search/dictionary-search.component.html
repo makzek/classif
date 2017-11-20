@@ -60,7 +60,7 @@
             <div [hidden]="dictId !== 'departments'" class="full-search-form">
                 <div *ngIf="modes" class="tabs-wrapper usual-border">
                     <ul class="tabs">
-                        <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border': tab.key === currTab}"
+                        <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border secondary-text': tab.key === currTab}"
                             (click)="setTab(tab.key)">
                             <span class="tab-title">{{tab.title}}</span>
                         </li>

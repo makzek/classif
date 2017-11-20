@@ -41,6 +41,7 @@ export interface IFieldDesriptor {
     pattern?: RegExp;
     required?: boolean;
     invalidMessage?: string;
+    isUnic?: boolean;
 };
 
 export interface IFieldDesriptorBase {
@@ -53,6 +54,7 @@ export interface IFieldDesriptorBase {
     pattern?: RegExp;
     readonly required?: boolean;
     readonly invalidMessage?: string;
+    readonly isUnic?: boolean;
 };
 
 export interface IFieldView extends IFieldDesriptorBase {

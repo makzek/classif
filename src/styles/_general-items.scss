@@ -106,11 +106,11 @@
     background-color: transparent;
     position: relative;
 }
-
+*/
 input[type=text]::-ms-clear {
     display: none;
 }
-*/
+
 .form-control {
     &:focus {
         box-shadow: none;
