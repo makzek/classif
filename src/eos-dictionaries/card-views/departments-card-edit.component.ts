@@ -1,5 +1,7 @@
 import { Component, OnChanges } from '@angular/core';
+
 import { BaseCardEditComponent } from './base-card-edit.component';
+import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
     selector: 'eos-departments-card-edit',
@@ -16,13 +18,15 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
         { id: 'f', title: 'Женский' }
     ];
 
-    constructor() {
+    constructor(private _dictSrv: EosDictService) {
         super();
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
+        this.currTab = this._dictSrv.currentTab;
     }
 
     setTab(i: number) {
         this.currTab = i;
+        this._dictSrv.currentTab = this.currTab;
     }
 
     ngOnChanges() {
