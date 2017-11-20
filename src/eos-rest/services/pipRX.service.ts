@@ -3,6 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -164,7 +165,7 @@ export class PipRX extends PipeUtils {
             })
         });
 
-        const rl = Observable.of(...urls).flatMap(url => {
+        const rl = Observable.of(...urls).mergeMap(url => {
             return this.http
                 .get(url, _options)
                 .map((r: Response) => {

@@ -1,7 +1,8 @@
 import { Component, HostListener, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 import { CanDeactivateGuard } from '../../app/guards/can-deactivate.guard';
 import { EosStorageService } from '../../app/services/eos-storage.service';
@@ -13,7 +14,6 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 import { RECENT_URL } from '../../app/consts/common.consts';
 
@@ -45,7 +45,11 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
+    private ngUnsubscribe: Subject<any> = new Subject();
+
     node: EosDictionaryNode;
+    nodes: EosDictionaryNode[];
+
     nodeData: any = {};
     private _originalData: any = {};
     private _changed = false;
@@ -64,7 +68,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     lastEditedCard: EditedCard;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
 
-    private nextState: any;
     private nextRoute: string;
 
     private _mode: EDIT_CARD_MODES;
@@ -72,10 +75,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     selfLink = null;
 
-    showDeleted = false;
     disableSave = false;
-
-    private _dictionarySubscription: Subscription;
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
 
@@ -115,11 +115,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         private _confirmSrv: ConfirmWindowService,
         private _dictSrv: EosDictService,
         private _deskSrv: EosDeskService,
-        private _profileSrv: EosUserProfileService,
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
         private _router: Router,
-        private _breadcrumbsSrv: EosBreadcrumbsService
     ) {
         this.selfLink = this._router.url;
         this._route.params.subscribe((params) => {
@@ -127,10 +125,23 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.nodeId = params.nodeId;
             this._init();
         });
+
+        this._dictSrv.currentList$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((nodes) => this.nodes = nodes);
     }
 
     ngOnInit() {
         this._init();
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+
+        if (this.editMode) {
+            this._clearEditingCardLink();
+        }
     }
 
     turnOffSave(val: boolean) {
@@ -214,12 +225,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
-        if (this.editMode) {
-            this._clearEditingCardLink();
-        }
-    }
-
     edit() {
         const _canEdit = this._preventMultiEdit() && this._preventDeletedEdit();
         if (_canEdit) {
@@ -231,6 +236,16 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         const url = this._storageSrv.getItem(RECENT_URL);
         if (url) {
             this.goTo(url);
+        } else {
+            const backUrl = this._dictSrv.getNodePath(this.node.parent || this.node);
+            this._router.navigate(backUrl);
+            /*Generate back URL*/
+            /*
+            const urlSegments = this._router.url.split('/');
+            urlSegments[3] = this.node.parentId;
+            urlSegments.length--;
+            const backUrl = urlSegments.join('/');
+            this.goTo(backUrl);*/
         }
         if (window.innerWidth > 1500) {
             /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
@@ -254,34 +269,23 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _updateBorders() {
-        const firstIndex = this.node.neighbors.findIndex((node) => node.isVisible(this.showDeleted));
-        let lastIndex = -1;
-
-        for (let idx = this.node.neighbors.length - 1; idx > lastIndex; idx--) {
-            if (this.node.neighbors[idx].isVisible(this.showDeleted)) {
-                lastIndex = idx;
-            }
-        }
-
-        this.nodeIndex = this.node.neighbors.findIndex((chld) => chld.id === this.node.id);
-        this.isFirst = this.nodeIndex <= firstIndex || firstIndex < 0;
-        this.isLast = this.nodeIndex >= lastIndex;
+        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
+        this.isFirst = this.nodeIndex <= 0;
+        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
     }
 
     next() {
-        const _node = this.node.neighbors.find((node, idx) => idx > this.nodeIndex && node.isVisible(this.showDeleted));
-        this._openNode(_node);
+        if (this.nodeIndex < this.nodes.length - 1) {
+            this.nodeIndex++;
+            this._openNode(this.nodes[this.nodeIndex]);
+        }
     }
 
     prev() {
-        let _node: EosDictionaryNode = null;
-
-        for (let idx = this.nodeIndex - 1; idx > -1 && !_node; idx--) {
-            if (this.node.neighbors[idx].isVisible(this.showDeleted)) {
-                _node = this.node.neighbors[idx];
-            }
+        if (this.nodeIndex > 0) {
+            this.nodeIndex--;
+            this._openNode(this.nodes[this.nodeIndex]);
         }
-        this._openNode(_node);
     }
 
     disManager(mod: boolean, tooltip: any): boolean {
@@ -329,7 +333,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     canDeactivate(nextState?: any): boolean | Promise<boolean> {
-        this.nextState = nextState;
         return this._askForSaving();
     }
 

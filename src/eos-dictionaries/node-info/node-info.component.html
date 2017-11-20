@@ -23,7 +23,7 @@
             </span>
         </div>
 
-        <div *ngIf="viewFields" [hidden]="hideFull" class="full-info usual-border">
+        <div *ngIf="viewFields" class="full-info usual-border">
             <div *ngFor="let field of viewFields" class="field">
                 <span *ngIf="field.type === fieldTypes.boolean;then checkboxField else textField"></span>
                 <ng-template #checkboxField>
