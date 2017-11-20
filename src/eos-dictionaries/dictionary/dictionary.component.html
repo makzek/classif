@@ -11,7 +11,7 @@
         <div class="node-actions">
             <div *ngIf="selectedNode" class="block selected-node xl-font">
                 <div class="go-top-wrapper">
-                    <button *ngIf="params.hasParent" class="btn btn-primary-light" (click)="goUp()">
+                    <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
                     </button>
                 </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
-                    <eos-node-actions [params]="params" (action)="doAction($event)"></eos-node-actions>
+                    <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
                     <eos-dictionary-search (searchResult)="searchResult($event)"></eos-dictionary-search>
@@ -33,7 +33,7 @@
             </div>
             <div class="second-line block selected-text">
                 <div class="second-line-content">
-                    <span *ngIf="params.showCheckbox" class="checkbox-inline">
+                    <span *ngIf="params.markItems" class="checkbox-inline">
                         <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right"
                         [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}" containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
@@ -41,11 +41,11 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item l-font" [ngClass]="{'primary-text': params.userSort}" [ngStyle]="{'width.%': length[field.key]}">
-                            <span class="text" *ngIf="!params.userSort" (click)="orderByField(field.key)">{{field.title}}
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngClass]="{'primary-text': params.userOrdered}" [ngStyle]="{'width.%': length[field.key]}">
+                            <span class="text" *ngIf="!params.userOrdered" (click)="orderByField(field.key)">{{field.title}}
                                 <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small" [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
-                            <span class="text" *ngIf="params.userSort">{{field.title}}</span>
+                            <span class="text" *ngIf="params.userOrdered">{{field.title}}</span>
                         </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
@@ -59,8 +59,8 @@
             <eos-spinner size="lg"></eos-spinner>
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
-            <eos-node-list [nodes]="visibleNodes" [params]="params" [length]="length" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
-            <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page"></eos-node-list-pagination>
+            <eos-node-list [nodes]="visibleNodes" [length]="length" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
+            <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page" [currentState]="currentState"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">

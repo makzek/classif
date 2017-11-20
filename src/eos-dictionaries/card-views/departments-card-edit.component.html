@@ -3,7 +3,7 @@
     <div [hidden]="!data['IS_NODE']">
         <div class="tabs-wrapper usual-border">
             <ul class="tabs">
-                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border': i === currTab}"
+                <li class="tab-item primary-text" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border secondary-text': i === currTab}"
                     (click)="setTab(i)">
                     <span class="tab-title">{{tab}}</span>
                 </li>
