@@ -25,7 +25,7 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
-    private _viewParameters: IDictionaryViewParameters;
+    public viewParameters: IDictionaryViewParameters;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -75,11 +75,11 @@ export class EosDictService {
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this._viewParameters);
+        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
     }
 
     private _initViewParameters() {
-        this._viewParameters = {
+        this.viewParameters = {
             showDeleted: false,
             userOrdered: false,
             markItems: false,
@@ -96,7 +96,7 @@ export class EosDictService {
         this._initViewParameters();
         this._currentList = [];
         this._currentList$.next([]);
-        this._viewParameters$.next(this._viewParameters);
+        this._viewParameters$.next(this.viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -133,21 +133,16 @@ export class EosDictService {
                 })
                 .then((data: any[]) => {
                     this._initViewParameters();
-                    this._viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
-                    this._viewParameters.markItems = this.dictionary.canMarkItems;
-                    this._viewParameters$.next(this._viewParameters);
+                    this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                    this.viewParameters.markItems = this.dictionary.canMarkItems;
+                    this._viewParameters$.next(this.viewParameters);
                     this.dictionary.initUserOrder(
-                        this._viewParameters.userOrdered,
+                        this.viewParameters.userOrdered,
                         this._storageSrv.getUserOrder(this.dictionary.id)
                     );
                     if (data && data.length) {
                         this.dictionary.init(data);
                     }
-                    /*
-                    if (this.dictionary.userOrdered) {
-                        this.dictionary.reorder();
-                    }
-                    */
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this.dictionary);
                     return this.dictionary;
@@ -233,8 +228,8 @@ export class EosDictService {
     private _updateCurrentList() {
         let nodes = this._currentList;
 
-        if (!this._viewParameters.showDeleted) {
-            nodes = nodes.filter((node) => node.isVisible(this._viewParameters.showDeleted));
+        if (!this.viewParameters.showDeleted) {
+            nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
 
         this._currentList$.next(nodes);
@@ -398,8 +393,8 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
-                this._viewParameters.searchResults = true;
-                this._viewParameters$.next(this._viewParameters);
+                this.viewParameters.searchResults = true;
+                this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
             });
     }
@@ -473,9 +468,9 @@ export class EosDictService {
     }
 
     public toggleUserOrder() {
-        this._viewParameters.userOrdered = !this._viewParameters.userOrdered;
+        this.viewParameters.userOrdered = !this.viewParameters.userOrdered;
         if (this.dictionary) {
-            this.dictionary.userOrdered = this._viewParameters.userOrdered;
+            this.dictionary.userOrdered = this.viewParameters.userOrdered;
             this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
             this._reorder();
         }
@@ -484,7 +479,7 @@ export class EosDictService {
     // temporary
     private _reorder() {
         if (this.dictionary) {
-            if (this._viewParameters.searchResults) {
+            if (this.viewParameters.searchResults) {
                 this._setCurrentList(this.dictionary.reorderList(this._currentList));
             } else {
                 this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
@@ -529,14 +524,14 @@ export class EosDictService {
     }
 
     toggleDeleted() {
-        this._viewParameters.showDeleted = !this._viewParameters.showDeleted;
-        if (!this._viewParameters.showDeleted) {
+        this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
+        if (!this.viewParameters.showDeleted) {
             this._currentList.forEach((node) => {
                 if (node.isDeleted) { node.marked = false; }
             });
         }
         this._updateCurrentList();
-        this._viewParameters$.next(this._viewParameters);
+        this._viewParameters$.next(this.viewParameters);
     }
 
     private _errHandler(err) {

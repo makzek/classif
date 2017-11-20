@@ -194,11 +194,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(this._dictSrv.viewParameters$)
-            .subscribe(([nodes, params]) => {
-                console.log('incoming list', nodes);
+            .subscribe((nodes) => {
+                // console.log('incoming list', nodes);
                 this.listNodes = nodes;
-                this.params = params;
+                this.params = this._dictSrv.viewParameters;
                 this._updateVisibleNodes();
             });
     }
