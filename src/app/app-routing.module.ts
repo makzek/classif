@@ -79,12 +79,12 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Главная', showInBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false, showBreadcrumb: false }
     }]
 }, {
     path: 'test',
     component: TestPageComponent,
-    data: { title: 'Test page for UI components', showInBreadcrumb: true },
+    data: { title: 'Test page for UI components', showInBreadcrumb: true, showBreadcrumb: false },
     canActivate: [AuthorizedGuard],
 }, {
     path: 'delivery',
