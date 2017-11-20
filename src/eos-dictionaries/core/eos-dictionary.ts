@@ -6,6 +6,7 @@ import {
     ITreeDictionaryDescriptor,
     IFieldView
 } from './dictionary.interfaces';
+import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
@@ -49,6 +50,10 @@ export class EosDictionary {
         this._orderBy = order;
     }
 
+    get canMarkItems(): boolean {
+        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
+    }
+
     constructor(descData: IDictionaryDescriptor) {
         switch (descData.dictType) {
             case E_DICT_TYPE.linear:
@@ -68,7 +73,7 @@ export class EosDictionary {
 
         this._orderBy = {
             ascend: true,
-            fieldKey: 'WEIGHT'
+            fieldKey: 'CLASSIF_NAME'
         };
     }
 
@@ -241,7 +246,7 @@ export class EosDictionary {
         }
         this._userOrder[nodeId] = order;
     }
-
+    /*
     __orderBy(order: IOrderBy, userOrder = false) {
         this._orderBy = order;
         this._userOrdered = userOrder;
@@ -252,23 +257,28 @@ export class EosDictionary {
         this.nodes.forEach((node) => this.reorderNode(node));
     }
 
-    reorderNode(node: EosDictionaryNode) {
+    reorderNode(node: EosDictionaryNode, parentId?: string) {
         if (node.children) {
             if (this._userOrdered) {
-                node.children = this._doUserOrder(node.children, node.id);
+                if (parentId !== undefined) {
+                    node.children = this._doUserOrder(node.children, node.id);
+                } else {
+
+                }
             } else {
                 node.children = this._orderByField(node.children);
             }
         }
     }
-
-    reorderList(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
+    reorderList(nodes: EosDictionaryNode[], parent?: EosDictionaryNode): EosDictionaryNode[] {
+        nodes.forEach((node) => this.reorderNode(node));
         return this._orderByField(nodes);
     }
+    */
 
-    private _order(nodes: EosDictionaryNode[], parentId?: string) {
+    reorderList(nodes: EosDictionaryNode[], parentId?: string) {
         if (this._userOrdered && parentId) {
-            return this._orderedArray[parentId];
+            return this._doUserOrder(nodes, parentId);
         } else {
             return this._orderByField(nodes);
         }
@@ -308,42 +318,4 @@ export class EosDictionary {
         }
         return nodes;
     }
-    /*
-    private restoreOrder(list: EosDictionaryNode[], ID: string): EosDictionaryNode[] {
-        const order: string[] = this._storageSrv.getItem(ID + this.ORDER_NAME);
-        const sortableList: EosDictionaryNode[] = [];
-        for (const id of order) {
-            for (const notSortedItem of list) {
-                if (notSortedItem.id === id) {
-                    sortableList.push(notSortedItem);
-                    break;
-                }
-            }
-        }
-        for (const item of list) {
-            const index = sortableList.indexOf(item);
-            if (index === -1) {
-                sortableList.push(item);
-            }
-        }
-        return sortableList;
-    }
-
-    public getUserOrder(list: EosDictionaryNode[]): { [parentId: string]: EosDictionaryNode[] } {
-
-        const _currentSort = this._storageSrv.getItem(this.dictionary.id + this.ORDER_NAME)
-        if (!_currentSort) {
-            this._storageSrv.setItem(this.dictionary.id + this.ORDER_NAME, {}, true);
-        }
-        if (_currentSort[list[0].parentId]) {
-            _currentSort[list[0].parentId] = this.restoreOrder(list, list[0].parentId)
-            return _currentSort;
-        } else {
-            _currentSort[list[0].parentId] = this.generateOrder(list, list[0].parentId);
-            return _currentSort;
-        }
-
-    }
-    */
-
 }
