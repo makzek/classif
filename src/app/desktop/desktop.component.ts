@@ -108,6 +108,7 @@ export class DesktopComponent implements OnDestroy {
     save(evt: Event) {
         if (this._newTitle !== this._editingItem.title) {
             this._editingItem.title = this._newTitle;
+            this._editingItem.fullTitle = this._newTitle;
             /* todo: add save service call */
             /* then */
         }

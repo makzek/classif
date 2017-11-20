@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
 import { ISearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
@@ -19,44 +20,20 @@ import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 
 @Injectable()
 export class EosDictService {
-    /* private _dictionaries: Map<string, EosDictionary>; */
     private _dictionariesList = DICTIONARIES;
-    public dictionary: EosDictionary;
+    private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
-    private _searchResults: EosDictionaryNode[];
-    private _searchString: string;
+    private _currentList: EosDictionaryNode[];
+    private _viewParameters: IDictionaryViewParameters;
 
-    /* private _dictionariesList$: BehaviorSubject<Array<{ id: string, title: string }>>; */
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
-    // private _searchResults$: BehaviorSubject<EosDictionaryNode[]>;
+    private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
+    private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
-
-    constructor(
-        private _api: EosDictApiService,
-        private _msgSrv: EosMessageService,
-        private _profileSrv: EosUserProfileService,
-        private _storageSrv: EosStorageService,
-        private _confirmSrv: ConfirmWindowService,
-    ) {
-        /* this._dictionaries = new Map<string, EosDictionary>(); */
-        /* this._dictionariesList$ = new BehaviorSubject<Array<{ id: string, title: string }>>([]); */
-        this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
-        this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
-        this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
-        this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
-        // this._searchResults$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-    }
-
-    /* Observable dictionary for subscribing on updates in components */
-    /*
-    get dictionariesList$(): Observable<Array<{ id: string, title: string }>> {
-        return this._dictionariesList$.asObservable();
-    }
-    */
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -73,20 +50,53 @@ export class EosDictService {
         return this._openedNode$.asObservable();
     }
 
-    /*
-    get searchResults$(): Observable<EosDictionaryNode[]> {
-        return this._searchResults$.asObservable();
+    get currentList$(): Observable<EosDictionaryNode[]> {
+        return this._currentList$.asObservable();
     }
-    */
+
+    get viewParameters$(): Observable<IDictionaryViewParameters> {
+        return this._viewParameters$.asObservable();
+    }
+
+    get userOrdered(): boolean {
+        return this.dictionary && this.dictionary.userOrdered;
+    }
+
+    constructor(
+        private _api: EosDictApiService,
+        private _msgSrv: EosMessageService,
+        private _profileSrv: EosUserProfileService,
+        private _storageSrv: EosStorageService,
+        private _confirmSrv: ConfirmWindowService,
+    ) {
+        this._initViewParameters();
+        this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
+        this._openedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
+        this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
+        this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
+        this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
+        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this._viewParameters);
+    }
+
+    private _initViewParameters() {
+        this._viewParameters = {
+            showDeleted: false,
+            userOrdered: false,
+            markItems: false,
+            searchResults: false
+        };
+    }
 
     public getDictionariesList(): Promise<any> {
-        return new Promise((res) => {
-            res(DICTIONARIES);
-        });
+        return Promise.resolve(DICTIONARIES);
     }
 
     closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
+        this._initViewParameters();
+        this._currentList = [];
+        this._currentList$.next([]);
+        this._viewParameters$.next(this._viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -99,7 +109,9 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
-                        this.closeDictionary();
+                        if (this.dictionary) {
+                            this.closeDictionary();
+                        }
                         return this._openDictionary(dictionaryId);
                     }
                 } else {
@@ -120,16 +132,22 @@ export class EosDictService {
                     return this._api.getRoot();
                 })
                 .then((data: any[]) => {
+                    this._initViewParameters();
+                    this._viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                    this._viewParameters.markItems = this.dictionary.canMarkItems;
+                    this._viewParameters$.next(this._viewParameters);
                     this.dictionary.initUserOrder(
-                        this._storageSrv.getItem(LS_USE_USER_ORDER),
+                        this._viewParameters.userOrdered,
                         this._storageSrv.getUserOrder(this.dictionary.id)
                     );
                     if (data && data.length) {
                         this.dictionary.init(data);
                     }
+                    /*
                     if (this.dictionary.userOrdered) {
                         this.dictionary.reorder();
                     }
+                    */
                     this._mDictionaryPromise.delete(dictionaryId);
                     this._dictionary$.next(this.dictionary);
                     return this.dictionary;
@@ -206,6 +224,22 @@ export class EosDictService {
         }
     }
 
+    private _setCurrentList(nodes: EosDictionaryNode[]) {
+        this._currentList = nodes || [];
+        // todo: filter & order list before anounce
+        this._updateCurrentList();
+    }
+
+    private _updateCurrentList() {
+        let nodes = this._currentList;
+
+        if (!this._viewParameters.showDeleted) {
+            nodes = nodes.filter((node) => node.isVisible(this._viewParameters.showDeleted));
+        }
+
+        this._currentList$.next(nodes);
+    }
+
     /**
      *
      * @param nodeId node ID to be selected
@@ -233,13 +267,14 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             if (this.selectedNode) {
-                if (this.selectedNode.hasSubnodes) {
+                if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
                 }
                 this.selectedNode.isActive = false;
             }
             if (node) {
                 node.isActive = true;
+                this._setCurrentList(node.children);
             }
             this._openNode(null);
             this.selectedNode = node;
@@ -342,29 +377,30 @@ export class EosDictService {
 
     public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
         const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
-        this._searchString = searchString;
-
         return this._search(_criteries);
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
         const critery = this.dictionary.getFullsearchCriteries(data, params, this.selectedNode);
-        // console.log('full search', critery);
         return this._search([critery]);
     }
 
 
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
+        // console.log('full search', critery);
         this._openNode(null);
         return this._api.search(criteries)
             .then((data: any[]) => {
-                this._searchResults = [];
+                let nodes = [];
                 if (!data || data.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this._searchResults = this.dictionary.updateNodes(data, false);
+                    nodes = this.dictionary.updateNodes(data, false);
                 }
-                return this._searchResults;
+                this._setCurrentList(nodes);
+                this._viewParameters.searchResults = true;
+                this._viewParameters$.next(this._viewParameters);
+                return this._currentList;
             });
     }
 
@@ -437,30 +473,34 @@ export class EosDictService {
     }
 
     public toggleUserOrder() {
+        this._viewParameters.userOrdered = !this._viewParameters.userOrdered;
         if (this.dictionary) {
-            this.dictionary.userOrdered = !this.dictionary.userOrdered;
+            this.dictionary.userOrdered = this._viewParameters.userOrdered;
             this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
             this._reorder();
         }
     }
 
     // temporary
-    get userOrdered(): boolean {
-        return this.dictionary && this.dictionary.userOrdered;
-    }
-
     private _reorder() {
         if (this.dictionary) {
-            console.log()
-            this.dictionary.reorder();
-            this._selectedNode$.next(this.selectedNode);
+            if (this._viewParameters.searchResults) {
+                this._setCurrentList(this.dictionary.reorderList(this._currentList));
+            } else {
+                this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
+            }
         }
+    }
+
+    private aToKeys(a: EosDictionaryNode[]): string[] {
+        return a.map((node) => node.id);
     }
 
     setUserOrder(ordered: EosDictionaryNode[], fullList: EosDictionaryNode[]) {
         const _original = [];
         const _move = {};
 
+        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(fullList));
         // restore original order
         fullList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);
@@ -486,6 +526,17 @@ export class EosDictService {
             this._reorder();
             this._storageSrv.setUserOrder(this.dictionary.id, this.selectedNode.id, _order);
         }
+    }
+
+    toggleDeleted() {
+        this._viewParameters.showDeleted = !this._viewParameters.showDeleted;
+        if (!this._viewParameters.showDeleted) {
+            this._currentList.forEach((node) => {
+                if (node.isDeleted) { node.marked = false; }
+            });
+        }
+        this._updateCurrentList();
+        this._viewParameters$.next(this._viewParameters);
     }
 
     private _errHandler(err) {

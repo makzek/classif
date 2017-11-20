@@ -1,16 +1,19 @@
 .pagination-option {
     margin-top: 20px;
-    height: $item-height;
-    font-size: 16px;
-    line-height: 24px;
     border: 1px solid transparent;
     display: -ms-grid;
-    display: grid;// sass-lint:disable-line no-duplicate-properties
-    -ms-grid-columns: 330px 1fr 220px;
-    grid-template-columns: 330px 1fr 220px;
+    display: grid; // sass-lint:disable-line no-duplicate-properties
+    -ms-grid-columns: 330px 1fr 180px;
+    grid-template-columns: 330px 1fr 180px;
+    position: fixed;
+    bottom: 60px;
+    left: $grid-gutter-width / 2;
+    right: $grid-gutter-width / 2;
+    transition: 300ms ease-in-out;
 
-    .pagintaion {
+    .pagination {
         display: flex;
+        margin: 0;
     }
 
     .btn {
@@ -19,40 +22,20 @@
     }
 
     .pag-btn {
-        display: flex;
         width: 48px;
         height: 48px;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #ddd;
-    }
+        border-width: 0;
+        border-right-width: 1px;
+        border-right-style: solid;
 
-    .inactive:hover {
-        background: #e6e6e6;
-        border: 1px solid #ddd;
-    }
+        &:disabled {
+            cursor: not-allowed;
+        }
 
-    .pag-btn:disabled {
-        cursor: not-allowed;
-    }
-
-    .pag-btn:disabled:hover {
-        background: #fff;
-    }
-
-    .pagination,
-    .count-select {
-        display: inline-block;
-        margin: 0;
-    }
-
-    .pagination {
-        margin-top: -1px;
-        margin-left: -1px;
-        grid-column: 1;
+        &:hover:not(:disabled) {
+            border-width: 1px;
+            border-style: solid;
+        }
     }
 
     .count-select {
@@ -60,6 +43,8 @@
         border-left-width: 1px;
         border-left-style: solid;
         grid-column: 3;
+        display: inline-block;
+        margin: 0;
 
         .drop-btn {
             width: 48px;
@@ -72,6 +57,7 @@
         .icon-btn {
             padding: 12px;
             position: relative;
+            margin-left: 4px;
         }
 
         .dropdown-toggle {
@@ -88,22 +74,12 @@
         }
     }
 
-    .page-link {
-        height: $item-height;
-        width: $item-width;
-        text-align: center;
-        padding: 12px 16px;
-        font-size: 16px;
-    }
-
     .show-more {
         position: relative;
         left: -5px;
         height: $item-height;
         padding: 0 10px;
         background: transparent;
-        font-size: 16px;
-        line-height: 24px;
         grid-column: 2;
     }
 
@@ -114,6 +90,25 @@
             & > span {
                 border-radius: 0;
             }
+        }
+    }
+}
+
+@media (min-width: 1500px) {
+    .pagination-option {
+        &.tree {
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2;
+        }
+
+        &.info {
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
+            left: $grid-gutter-width / 2;
+        }
+
+        &.full {
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
 }

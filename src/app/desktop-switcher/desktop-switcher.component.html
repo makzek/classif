@@ -1,6 +1,6 @@
 <div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.hide()" bsDropdown class="btn-group eos-desktop-switcher" dropdown [autoClose]="!innerClick"
     (click)="setInnerClick()">
-    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border">
+    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border m-font">
         <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom"
             [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
             containerClass="tooltip-info" container="body">
@@ -26,7 +26,7 @@
             </span>
             <span [hidden]="!desk.edited">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                    <input type="text" class="form-control light" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default"
                             [disabled]="!deskName?.length || !nameForm.checkValidity()" tooltip="Сохранить" containerClass="tooltip-info">
@@ -43,7 +43,7 @@
         <li *ngIf="deskList.length < 6" (click)="openCreateForm()">
             <a><span *ngIf="!creating" class="create primary-text">Создать рабочий стол</span>
                 <div *ngIf="creating" class="input-group">
-                    <input type="text" class="form-control" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                    <input type="text" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
                         [(ngModel)]="deskName" maxlength="{{maxLength}}" required
                         pattern="^\S(.*\S$|$)"/>
                     <span class="input-group-btn creating-btns">

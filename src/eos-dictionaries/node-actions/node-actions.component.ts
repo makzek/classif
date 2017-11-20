@@ -1,19 +1,24 @@
 import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, DoCheck } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/combineLatest';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS} from '../consts/record-actions.consts';
+import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS } from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
-import { INodeListParams } from '../core/node-list.interfaces';
+import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements DoCheck, OnDestroy {
-    @Input('params') params: INodeListParams;
+    private ngUnsubscribe: Subject<any> = new Subject();
+
+    // @Input('params') params: INodeListParams;
     @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     buttons: IActionButton[];
@@ -22,14 +27,21 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
     showMore = false;
 
     private dictionary: EosDictionary;
-    private _dictionarySubscription: Subscription;
+    private _nodeSelected = false;
+    private _viewParams: IDictionaryViewParameters;
 
     constructor(_dictSrv: EosDictService) {
         this._initButtons();
-        this._dictionarySubscription = _dictSrv.dictionary$.subscribe((dict) => {
-            this.dictionary = dict;
-            this._update();
-        });
+
+        _dictSrv.dictionary$
+            .takeUntil(this.ngUnsubscribe)
+            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
+            .subscribe(([dict, node, params]) => {
+                this.dictionary = dict;
+                this._nodeSelected = !!node;
+                this._viewParams = params;
+                this._update();
+            });
     }
 
     ngDoCheck() {
@@ -37,7 +49,8 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._dictionarySubscription.unsubscribe();
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 
     private _initButtons() {
@@ -57,28 +70,28 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
         let _active = false;
         let _show = true;
 
-        if (this.dictionary && this.params) {
+        if (this.dictionary && this._viewParams) {
             _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
-                    _enabled = _enabled && this.params.select && this.params.notFirst;
-                    _show = this.params.userSort;
+                    _enabled = _enabled && this._nodeSelected;
+                    _show = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
-                    _enabled = _enabled && this.params.select && this.params.notLast;
-                    _show = this.params.userSort;
+                    _enabled = _enabled && this._nodeSelected;
+                    _show = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.restore:
-                    _enabled = this.params.showDeleted;
+                    _enabled = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
-                    _active = this.params.showDeleted;
+                    _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
-                    _active = this.params.userSort;
+                    _active = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.edit:
-                    _enabled = _enabled && this.params.select;
+                    _enabled = _enabled && this._nodeSelected;
                     break;
             }
         }

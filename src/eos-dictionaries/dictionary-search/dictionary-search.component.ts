@@ -2,9 +2,7 @@ import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, View
 import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
 
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { ModalDirective } from 'ngx-bootstrap/modal';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
@@ -30,8 +28,9 @@ export class DictionarySearchComponent implements OnDestroy {
     modes: IRecordModeDescription[];
     loading = true;
     isOpenFull = false;
-    @ViewChild('searchForm') searchForm;
-    @ViewChild('pop') searchPop;
+
+    @ViewChild('full') fSearchPop;
+    @ViewChild('quick') qSearchPop;
 
     isOpenQuick = false;
     dataQuick = '';
@@ -91,12 +90,6 @@ export class DictionarySearchComponent implements OnDestroy {
         this.dictSubscription.unsubscribe();
     }
 
-    toggleForm() {
-        this.isOpenQuick = !this.isOpenQuick;
-        this.searchPop.hide();
-    }
-
-
     quickSearch(evt: KeyboardEvent) {
         const _settings = {
             onlyCurrentNode: false,
@@ -105,7 +98,6 @@ export class DictionarySearchComponent implements OnDestroy {
         }
 
         if (evt.keyCode === 13) {
-            this.isOpenQuick = false;
             this._dictSrv.search(this.dataQuick, _settings)
                 .then((nodes) => this.searchResult.emit(nodes));
         }
@@ -116,7 +108,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     fullSearch() {
-        this.searchPop.hide();
+        this.fSearchPop.hide();
         this._dictSrv.fullSearch(this.data, this.settings)
             .then((nodes) => this.searchResult.emit(nodes));
     }
