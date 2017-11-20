@@ -8,11 +8,11 @@
     }
 
     .node-title-wrapper {
-        display: inline-block;
-        width: 100%;
+        display: block;
         position: relative;
         min-height: $item-height;
         cursor: pointer;
+        width: max-content;
 
         .icon {
             cursor: pointer;
@@ -27,6 +27,8 @@
             margin-left: $item-width;
             padding: 12px 20px 12px 0;
             min-height: $item-height;
+            min-width: 400px;
+            max-width: 400px;
         }
     }
 }
