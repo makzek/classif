@@ -9,6 +9,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly pattern?: RegExp;
     readonly required?: boolean;
     readonly invalidMessage?: string;
+    readonly isUnic?: boolean;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -33,6 +34,8 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         this.required = !!data.required;
 
         this.invalidMessage = data.invalidMessage || '';
+
+        this.isUnic = !!data.isUnic;
     }
 }
 

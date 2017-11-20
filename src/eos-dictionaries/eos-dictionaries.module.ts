@@ -43,6 +43,9 @@ import { EosDictApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
+/* directives */
+import { UnicValidatorDirective } from './directives/unic-validator.directive';
+
 @NgModule({
     declarations: [
         CardComponent,
@@ -64,6 +67,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
+        UnicValidatorDirective,
     ],
     entryComponents: [
         ColumnSettingsComponent,

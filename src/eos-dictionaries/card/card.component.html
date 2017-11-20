@@ -17,7 +17,7 @@
             </span>
         </div>
         <div class="name-wrapper">
-            <span *ngIf="node" class="edit-title" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
+            <span *ngIf="node" class="edit-title primary-text" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
             <div>
@@ -45,7 +45,7 @@
     <div *ngIf="!node || node.updating" class="spinner-wrapper">
         <eos-spinner [size]="'lg'"></eos-spinner>
     </div>
-    <eos-card-edit [dictionaryId]="dictionaryId" [data]="nodeData" [fieldsDescription]="fieldsDescription" [editMode]="editMode" (onChange)="recordChanged($event)"
+    <eos-card-edit [dictionaryId]="dictionaryId" [data]="nodeData" [fieldsDescription]="fieldsDescription" [nodeSet]="node?.neighbors" [editMode]="editMode" (onChange)="recordChanged($event)"
         (invalid)="turnOffSave($event)" ></eos-card-edit>
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true"
         (onHide)="forceView()">

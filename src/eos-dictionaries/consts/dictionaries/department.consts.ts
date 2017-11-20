@@ -42,6 +42,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         pattern: NOT_EMPTY_STRING,
         length: 64,
+        isUnic: true,
     }, {
         key: 'title',
         title: 'Краткое наименование подразделения',
