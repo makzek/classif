@@ -1,20 +1,26 @@
 <div class="eos-dictionary-search">
     <div [ngClass]="{'hidden': !hasDate}" class="date-filter-wrapper">
-        <span class="date">Состояние на </span>
+        <span class="date">Состояние на: </span>
         <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [readonly]="false"></eos-datepicker>
     </div>
     <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
-        containerClass="full-search-popover" placement="bottom" #pop="bs-popover"
-        (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false" (click)="isOpenQuick = false">
+        containerClass="full-search-popover" placement="bottom" #full="bs-popover" [outsideClick]="true"
+        (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
         <i [hidden]="isOpenFull || !noSearchData" class="eos-icon eos-icon-filter-blue small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
         <i [hidden]="!(isOpenFull || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true" tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
-    <input type="text" class="form-control quick-search-form usual-border" [ngClass]="{'opened': isOpenQuick}" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
-    <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()"><span class="eos-icon eos-icon-close-blue"></span></button>
-    <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn" (click)="toggleForm()">
-            <i class="fa fa-search" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"></i>
+    <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn"
+        [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"  [outsideClick]="true"
+        (onShown)="isOpenQuick = true" (onHidden)="isOpenQuick = false">
+            <i [hidden]="isOpenQuick" class="eos-icon eos-icon-search-blue small" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"></i>
+            <i [hidden]="!isOpenQuick" class="eos-icon eos-icon-search-white small" aria-hidden="true" tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"></i>
     </button>
 </div>
+
+<ng-template #quickSearchModal>
+    <input type="text" class="form-control quick-search-form usual-border" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
+    <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()"><span class="eos-icon eos-icon-close-blue"></span></button>
+</ng-template>
 
 <ng-template #searchModal>
     <div class="full-search-top usual-border">
@@ -54,7 +60,7 @@
             <div [hidden]="dictId !== 'departments'" class="full-search-form">
                 <div *ngIf="modes" class="tabs-wrapper usual-border">
                     <ul class="tabs">
-                        <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border': tab.key === currTab}"
+                        <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border secondary-text': tab.key === currTab}"
                             (click)="setTab(tab.key)">
                             <span class="tab-title">{{tab.title}}</span>
                         </li>
@@ -64,7 +70,7 @@
                     <div class="row">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
                             <label for="RUBRIC_CODE" class="primary-text">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
-                            <input id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control"
+                            <input id="RUBRIC_CODE_PERSON" name="RUBRIC_CODE_PERSON" type="text" class="form-control light"
                                 [(ngModel)]="data['RUBRIC_CODE']"
                                 placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                                 maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}">
@@ -72,7 +78,7 @@
 
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="lastName" class="primary-text">{{fieldsDescription['lastName']?.title}}</label>
-                            <input id="lastName" name="lastName" type="text" class="form-control"
+                            <input id="lastName" name="lastName" type="text" class="form-control light"
                                 [(ngModel)]="data['lastName']"
                                 placeholder="{{fieldsDescription['lastName']?.title}}"
                                 maxlength="{{fieldsDescription['lastName']?.length}}">
@@ -85,14 +91,14 @@
                             <div class="row">
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="firstName" class="primary-text">{{fieldsDescription['firstName']?.title}}</label>
-                                    <input id="firstName" name="firstName" type="text" class="form-control"
+                                    <input id="firstName" name="firstName" type="text" class="form-control light"
                                         [(ngModel)]="data['firstName']"
                                         placeholder="{{fieldsDescription['firstName']?.title}}"
                                         maxlength="{{fieldsDescription['firstName']?.length}}">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="fathersName" class="primary-text">{{fieldsDescription['fathersName']?.title}}</label>
-                                    <input id="fathersName" name="fathersName" type="text" class="form-control"
+                                    <input id="fathersName" name="fathersName" type="text" class="form-control light"
                                         [(ngModel)]="data['fathersName']"
                                         placeholder="{{fieldsDescription['fathersName']?.title}}"
                                         maxlength="{{fieldsDescription['fathersName']?.length}}">
@@ -103,7 +109,7 @@
                     <div class="row no-top-margin">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
                             <label for="PHONE" class="primary-text">{{fieldsDescription['PHONE']?.title}}</label>
-                            <input id="PHONE" name="PHONE" type="text" class="form-control"
+                            <input id="PHONE" name="PHONE" type="text" class="form-control light"
                                 [(ngModel)]="data['PHONE']"
                                 placeholder="{{fieldsDescription['PHONE']?.title}}"
                                 maxlength="{{fieldsDescription['PHONE']?.length}}">
@@ -111,7 +117,7 @@
 
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="E_MAIL" class="primary-text">{{fieldsDescription['E_MAIL']?.title}}</label>
-                            <input id="E_MAIL" name="E_MAIL" type="text" class="form-control"
+                            <input id="E_MAIL" name="E_MAIL" type="text" class="form-control light"
                                 [(ngModel)]="data['E_MAIL']"
                                 placeholder="{{fieldsDescription['E_MAIL']?.title}}"
                                 maxlength="{{fieldsDescription['E_MAIL']?.length}}">
@@ -121,7 +127,7 @@
                 <div *ngIf="currTab === 'room'">
                     <div class="form-group">
                         <label for="titleRoom" class="primary-text">{{fieldsDescription['titleRoom']?.title}}</label>
-                        <input id="titleRoom" name="titleRoom" type="text" class="form-control"
+                        <input id="titleRoom" name="titleRoom" type="text" class="form-control light"
                             [(ngModel)]="data['CLASSIF_NAME']"
                             placeholder="{{fieldsDescription['titleRoom']?.title}}"
                             maxlength="{{fieldsDescription['titleRoom']?.length}}">
@@ -129,7 +135,7 @@
 
                     <div class="form-group">
                         <label for="fullTitleRoom" class="primary-text">{{fieldsDescription['fullTitleRoom']?.title}}</label>
-                        <input id="fullTitleRoom" name="fullTitleRoom" type="text" class="form-control"
+                        <input id="fullTitleRoom" name="fullTitleRoom" type="text" class="form-control light"
                             [(ngModel)]="data['fullTitleRoom']"
                             placeholder="{{fieldsDescription['fullTitleRoom']?.title}}"
                             maxlength="{{fieldsDescription['fullTitleRoom']?.length}}">
@@ -139,14 +145,14 @@
                     <div class="col-md-3 col-lg-3 col-xl-3">
                         <div class="form-group">
                             <label for="code" class="primary-text">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
-                            <input id="code" name="code" type="text" class="form-control"
+                            <input id="code" name="code" type="text" class="form-control light"
                                 [(ngModel)]="data['RUBRIC_CODE']"
                                 placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                                 maxlength="{{fieldsDescription[RUBRIC_CODE].length}}">
                         </div>
                         <div class="form-group">
                             <label for="indexDep" class="primary-text">{{fieldsDescription['indexDep']?.title}}</label>
-                            <input id="indexDep" name="indexDepcode" type="text" class="form-control"
+                            <input id="indexDep" name="indexDepcode" type="text" class="form-control light"
                                 [(ngModel)]="data['DEPARTMENT_INDEX']"
                                 placeholder="{{fieldsDescription['indexDep']?.title}}"
                                 maxlength="{{fieldsDescription['indexDep']?.length}}">
@@ -155,14 +161,14 @@
                     <div class="col-md-9 col-lg-9 col-xl-9">
                         <div class="form-group">
                             <label for="title">{{fieldsDescription['title']?.title}}</label>
-                            <input id="title" name="title" type="text" class="form-control"
+                            <input id="title" name="title" type="text" class="form-control light"
                                 [(ngModel)]="data['CLASSIF_NAME']"
                                 placeholder="{{fieldsDescription['title']?.title}}"
                                 maxlength="{{fieldsDescription['title']?.length}}">
                         </div>
                         <div class="form-group">
                             <label for="fullTitle" class="primary-text">{{fieldsDescription['fullTitle']?.title}}</label>
-                            <input id="fullTitle" name="fullTitle" type="text" class="form-control"
+                            <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
                                 [(ngModel)]="data['fullTitle']"
                                 placeholder="{{fieldsDescription['fullTitle']?.title}}"
                                 maxlength="{{fieldsDescription['fullTitle']?.length}}">
@@ -174,7 +180,7 @@
                 <div class="col-md-3 col-lg-3 col-xl-3">
                     <div class="form-group">
                         <label for="code" class="primary-text">{{fieldsDescription['RUBRIC_CODE']?.title}}</label>
-                        <input id="code" name="code" type="text" class="form-control"
+                        <input id="code" name="code" type="text" class="form-control light"
                             [(ngModel)]="data['RUBRIC_CODE']"
                             placeholder="{{fieldsDescription['RUBRIC_CODE']?.title}}"
                             maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}">
@@ -183,14 +189,14 @@
                 <div class="col-md-9 col-lg-9 col-xl-9">
                     <div class="form-group">
                         <label for="title" class="primary-text">{{fieldsDescription['CLASSIF_NAME']?.title}}</label>
-                        <input id="title" name="title" type="text" class="form-control"
+                        <input id="title" name="title" type="text" class="form-control light"
                             [(ngModel)]="data['CLASSIF_NAME']"
                             placeholder="{{fieldsDescription['CLASSIF_NAME']?.title}}"
                             maxlength="{{fieldsDescription['CLASSIF_NAME']?.length}}">
                     </div>
                     <div class="form-group">
                         <label for="fullTitle" class="primary-text">{{fieldsDescription['fullTitle']?.title}}</label>
-                        <input id="fullTitle" name="fullTitle" type="text" class="form-control"
+                        <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
                             [(ngModel)]="data['fullTitle']"
                             placeholder="{{fieldsDescription['fullTitle']?.title}}"
                             maxlength="{{fieldsDescription['fullTitle']?.length}}">
@@ -198,18 +204,44 @@
 
                     <div class="form-group">
                         <label for="note" class="primary-text">{{fieldsDescription['NOTE']?.title}}</label>
-                        <input id="note" name="note" type="text" class="form-control"
+                        <input id="note" name="note" type="text" class="form-control light"
                             [(ngModel)]="data['NOTE']"
                             placeholder="{{fieldsDescription['NOTE']?.title}}"
                             maxlength="{{fieldsDescription['NOTE']?.length}}">
                     </div>
                 </div>
             </div>
+            <div [hidden]="dictId !== 'region'" class="full-search-form">
+                <div class="form-group">
+                    <label for="code" class="primary-text">{{fieldsDescription['CODE']?.title}}</label>
+                    <input id="code" name="code" type="text" class="form-control"
+                        [(ngModel)]="data['CODE']"
+                        placeholder="{{fieldsDescription['CODE']?.title}}">
+                </div> 
+                <div class="form-group">
+                    <label for="cod-okato" class="primary-text">{{fieldsDescription['COD_OKATO']?.title}}</label>
+                    <input id="cod-okato" name="cod-okato" type="text" class="form-control"
+                        [(ngModel)]="data['COD_OKATO']"
+                        placeholder="{{fieldsDescription['COD_OKATO']?.title}}">
+                </div> 
+                <div class="form-group">
+                    <label for="name" class="primary-text">{{fieldsDescription['CLASSIF_NAME']?.title}}</label>
+                    <input id="name" name="name" type="text" class="form-control"
+                        [(ngModel)]="data['CLASSIF_NAME']"
+                        placeholder="{{fieldsDescription['CLASSIF_NAME']?.title}}">
+                </div> 
+                <div class="form-group">
+                    <label for="note" class="primary-text">{{fieldsDescription['NOTE']?.title}}</label>
+                    <input id="note" name="note" type="text" class="form-control"
+                        [(ngModel)]="data['NOTE']"
+                        placeholder="{{fieldsDescription['NOTE']?.title}}">
+                </div> 
+            </div>
         </form>
         <div class="full-search-bottom usual-border">
             <span class="pull-right">
-                <button [disabled]="noSearchData" class="btn btn-primary" (click)="clearForm()">Сбросить</button>
-                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full">Найти</button>
+                <button [disabled]="noSearchData" class="btn btn-primary s-font" (click)="clearForm()">Сбросить</button>
+                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full s-font">Найти</button>
             </span>
         </div>
     </div>

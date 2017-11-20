@@ -17,14 +17,10 @@
 
     .elements {
         list-style: none;
-        max-height: calc(100vh - 150px - 95px - 150px);
+        max-height: calc(100vh - 415px);
         overflow-y: auto;
         overflow-x: hidden;
         padding-left: 0;
-
-        &.has-parent {
-            max-height: calc(100vh - 150px - 95px - 215px);
-        }
 
         .child {
             cursor: pointer;
@@ -38,6 +34,7 @@
             align-self: center;
             cursor: pointer;
             width: calc(100% - 2* 48px); // checkbox and spinner
+
         }
 
         .code {
@@ -76,7 +73,6 @@
 .node-list-item {
     height: $item-height;
 }
-
 
 .create-new-node {
     &.modal-body {

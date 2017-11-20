@@ -16,7 +16,7 @@ export class PushpinComponent {
     public _show = false;
     private deskList: EosDesk[];
     @Input() infoOpened: boolean;
-    private openStyle = '350px';
+    private openStyle = '252px';
     private closeStyle = '0px';
 
     constructor(
