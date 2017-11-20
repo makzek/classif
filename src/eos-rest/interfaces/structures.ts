@@ -494,7 +494,6 @@ export interface USER_CL extends ILinearCL {
      * Было неудачных попыток входа
      */
     LOGIN_ATTEMPTS: number;
-
     /**
      * список используемых для этого пользователя параметров систем оповещения и уведомления
      */
@@ -530,6 +529,16 @@ export interface USER_CL extends ILinearCL {
     USER_TECH_List: USER_TECH[];
 
     /**
+     * список используемых для этого пользователя представлений результатов запроса
+     */
+    USER_VIEW_List: USER_VIEW[];
+
+    /**
+     * список используемых для этого пользователя сохраненных запросов
+     */
+    USER_REQUEST_List: USER_REQUEST[];
+
+    /**
      * список используемых для этого пользователя картотечных прав
      */
     USERCARD_List: USERCARD[];
@@ -543,7 +552,6 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя грифов доступа
      */
     USERSECUR_List: USERSECUR[];
-
 }
 
 /**
@@ -707,6 +715,14 @@ export interface VISA_TYPE_CL extends ILinearCL {
      * Вес элемента
      */
     WEIGHT: number;
+    /**
+     * Признак финальной визы
+     */
+    IS_FINAL: number;
+    /**
+     * Статус визы
+     */
+    STATUS: string;
 }
 
 /**
@@ -845,6 +861,18 @@ export interface DEPARTMENT extends IHierCL {
      * ISN фотографии
      */
     ISN_PHOTO: number;
+    /**
+     * полное наименование
+     */
+    FULLNAME: string;
+    /**
+     * код
+     */
+    CODE: string;
+    /**
+     * skype
+     */
+    SKYPE: string;
 }
 
 /**
@@ -935,6 +963,14 @@ export interface DOCGROUP_CL extends IHierCL {
      * флаг Инициативная резолюция
      */
     INITIATIVE_RESOLUTION: number;
+    /**
+     * Полное наименование
+    */
+    FULLNAME: string;
+    /**
+     * Код
+    */
+    CODE: string;
 
     /**
      * список используемых для этой группы документов дополнительных реквизитов
@@ -1083,6 +1119,10 @@ export interface RUBRIC_CL extends IHierCL, IStamp {
      * Наименование темы
      */
     CLASSIF_NAME: string;
+    /**
+     * Полное наименование
+     */
+    FULLNAME: string;
 }
 
 /**
@@ -1345,6 +1385,11 @@ export interface CABINET extends IEnt {
      * Имя кабинета
      */
     CABINET_NAME: string;
+    /**
+    * Полное наименование
+    */
+    FULLNAME: string;
+
 
     /**
      * список используемых для кабинетов папок
@@ -3110,7 +3155,55 @@ export interface USERSECUR extends IEnt {
     WEIGHT: number;
 }
 
+/**
+ * Представление пользователя результатов запроса
+ */
+export interface USER_VIEW extends IEnt {
+    /**
+     * ISN пользователя
+     */
+    ISN_USER: number;
+    /**
+     * ISN представления
+     */
+    ISN_VIEW: number;
+    /**
+     * Вес
+     */
+    WEIGHT: number;
+    /**
+     * Тип списка
+     */
+    SRCH_KIND_NAME: string;
+}
+
+/**
+ * Сохраненные запросы пользователей
+ */
+export interface USER_REQUEST extends IEnt {
+    /**
+     * ISN пользователя
+     */
+    ISN_USER: number;
+    /**
+     * ISN запроса
+     */
+    ISN_REQUEST: number;
+    /**
+     * Вес
+     */
+    WEIGHT: number;
+    /**
+     * Параметры папок кабинетов
+     */
+    PARAMS: string;
+    /**
+     * Тип списка
+     */
+    SRCH_KIND_NAME: string;
+}
+
 export interface SYS_PARMS {
-    DBMS: string;
+    dbms: string;
     USER_PARMS_List: USER_PARMS[];
 }

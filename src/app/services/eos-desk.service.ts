@@ -11,6 +11,15 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
+import { debug } from 'util';
+
+import { AppContext} from '../../eos-rest/services/appContext.service';
+import { SRCH_VIEW, USER_CL} from '../../eos-rest/interfaces/structures';
+
+import {ViewManager} from '../../eos-rest/services/viewManager';
+import { _ES } from 'eos-rest/core/consts';
+
+
 
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
@@ -25,11 +34,6 @@ const DEFAULT_DESKS: EosDesk[] = [{
         title: 'Рубрикатор',
         fullTitle: 'Рубрикатор'
     }],
-    edited: false,
-}, {
-    id: '100',
-    name: 'Desk100',
-    references: [],
     edited: false,
 }];
 
@@ -59,7 +63,9 @@ export class EosDeskService {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _appCtx: AppContext,
+        private viewManager: ViewManager
     ) {
         this._desksList = DEFAULT_DESKS;
 
@@ -67,7 +73,6 @@ export class EosDeskService {
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._recentItems$ = new BehaviorSubject(this._recentItems);
-
         _dictSrv.getDictionariesList()
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
@@ -85,6 +90,55 @@ export class EosDeskService {
             });
 
         this._recentItems = [];
+        this._appCtx.ready().then(x => {
+            this.readDeskList();
+        })
+    }
+
+    private readDeskList() {
+        const view = this._appCtx.UserViews.filter(uv => uv.SRCH_KIND_NAME === 'clmanDesc');
+        for (let i = 0; i < view.length; i++) {
+            this._desksList.push(this.readDesc(view[i]));
+            this._desksList$.next(this._desksList);
+        }
+    }
+
+    private readDesc(v: SRCH_VIEW): EosDesk {
+        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: []};
+        const cols = v.SRCH_VIEW_DESC_List;
+        for ( let i = 0; i !== cols.length; i++) {
+            const col = cols[i];
+            const di = this.mapToDefaultDescItem( cols[i].BLOCK_ID);
+            res.references.push(di);
+        }
+        return res;
+    }
+
+    private mapToDefaultDescItem(blockId: string): IDeskItem {
+        const defaults = this._desksList[0].references;
+        const s  = '/spravochniki/' + blockId;
+        const result = defaults.find(it => it.url === s);
+        // TODO: clone?
+        return result;
+    }
+
+    private findView(deskId: string) {
+        const isn = parseInt(deskId, 0);
+        const v = this._appCtx.UserViews.find(uv => uv.ISN_VIEW === isn)
+        if (v === undefined) {
+            // TODO: может отругаться?
+        }
+        return v;
+    }
+
+    private appendDeskItemToView(deskId: string, item: IDeskItem) {
+        const v = this.findView(deskId);
+        if (v !== undefined) {
+            const col = this.viewManager.addViewColumn(v);
+            col.BLOCK_ID = item.url.split('/')[2];
+            col.LABEL = item.title;
+            this.viewManager.saveView(v);
+        }
     }
 
     public addNewItemToDesk(desk: IDesk) {
@@ -98,6 +152,9 @@ export class EosDeskService {
             this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
                 item.fullTitle = dictionary.title;
                 item.title = dictionary.title;
+                // tslint:disable-next-line:no-debugger
+                debugger;
+                this.appendDeskItemToView(desk.id, item);
             })
         } else if (segments.length === 4) {
             this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
@@ -143,6 +200,13 @@ export class EosDeskService {
     }
 
     unpinRef(link: IDeskItem): void {
+        const v = this.findView(this._selectedDesk.id)
+        if (v !== undefined) {
+            const blockId = link.url.split('/')[2];
+            this.viewManager.delViewColumn(v, blockId);
+            this.viewManager.saveView(v);
+        }
+
         this._selectedDesk.references = this._selectedDesk.references.filter((r) => r !== link);
         this._selectedDesk$.next(this._selectedDesk);
     }
@@ -156,6 +220,11 @@ export class EosDeskService {
     }
 
     removeDesk(desk: EosDesk): void {
+        const v = this.findView(desk.id);
+        if ( v !== undefined) {
+            v._State = _ES.Deleted;
+            this.viewManager.saveView(v);
+        }
         if (this._selectedDesk === desk) {
             this._selectedDesk = this._desksList[0]; // system desk
             this._selectedDesk$.next(this._selectedDesk);
@@ -171,16 +240,25 @@ export class EosDeskService {
     }
 
     createDesk(desk: EosDesk): void {
-        if (this._desksList.length < 6) {// users desk + system desk
-            if (!desk.id) { desk.id = (this._desksList.length + 1).toString(); }
-            this._desksList.push(desk);
-            this._desksList$.next(this._desksList);
-        } else {
+        if (this._desksList.length > 5) {// users desk + system desk
             this._msgSrv.addNewMessage({
                 type: 'warning',
                 title: 'Предупреждение: максимальное колличество рабочих столов!',
                 msg: 'У вас может быть не более 5 рабочих столов',
             });
         }
+
+        const viewMan = this.viewManager;
+        const newDesc = viewMan.createView('clmanDesc');
+        newDesc.VIEW_NAME = desk.name;
+
+        viewMan.saveView(newDesc).then(isn_view => {
+//            alert('новый стол сохранен!' + isn_view.toString());
+            // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
+            desk.id = isn_view.toString();
+            this._desksList.push(desk);
+            this._desksList$.next(this._desksList);
+        });
+
     }
 }

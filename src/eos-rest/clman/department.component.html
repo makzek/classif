@@ -23,7 +23,7 @@
             <br/>
         </div>
         <div style="border:1px rised gray" (click)="onSave()">Сохранить</div>
-        <div>{{detailedItem.cabinet.CABINET_NAME}}</div>
+        <div *ngIf="detailedItem.cabinet">{{detailedItem.cabinet.CABINET_NAME}}</div>
     </div>
 
 </div>

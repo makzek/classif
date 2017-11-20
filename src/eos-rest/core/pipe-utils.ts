@@ -3,6 +3,20 @@ import { URL_LIMIT } from './consts';
 import { IEnt } from '../interfaces/interfaces';
 import { _ES, _T } from '../core/consts';
 
+
+export class Deferred<T> {
+    promise: Promise<T>;
+    resolve: (value?: T | PromiseLike<T>) => void;
+    reject:  (reason?: any) => void;
+
+    constructor() {
+        this.promise = new Promise<T>((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject  = reject;
+        });
+    }
+}
+
 export class PipeUtils {
     protected _metadata: Metadata;
 
@@ -146,9 +160,9 @@ export class PipeUtils {
         if (et.relations && it._State !== _ES.Deleted) {
             for (let i = 0; i < et.relations.length; i++) {
                 const pr = et.relations[i];
-                if (pr.name.indexOf('_List') === -1) {
+                if (pr.name.indexOf('_List') !== -1) {
                     const l = it[pr.name];
-                    if (!l) {
+                    if (l !== undefined) {
 
                         for (let j = 0; j < l.length; j++) {
                             l[j].__metadata = l[j].__metadata || {};
@@ -174,4 +188,33 @@ export class PipeUtils {
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
+
+    protected getAjax(url): Promise<any> {
+        const starttime: any = new Date();
+        const xhr = new XMLHttpRequest();
+        const result = new Deferred<string>();
+        xhr.open('GET', url);
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState > 3 && xhr.status === 200) {
+                console.log('чтение ' + (<any>new Date() - starttime).toString() + 'ms')
+                const ans = xhr.responseText;
+                // const d = JSON.parse(ans);
+                result.resolve(xhr.responseText);
+                /**
+                 Observable.fromPromise(this.getAjax(urls[0]).then(r => {
+            return this.nativeParser(JSON.parse(r));
+        }));
+                 */
+            } // success(xhr.responseText);
+        };
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('MaxDataServiceVersion', '3.0');
+        xhr.setRequestHeader('Accept', 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;');
+        xhr.send();
+        return result.promise;
+    }
+
 }
+

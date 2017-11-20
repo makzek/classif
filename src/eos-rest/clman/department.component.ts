@@ -18,6 +18,8 @@ class vmDEPARTMENT {
     ORGANIZ: ORGANIZ_CL;
 
     static Load(pip: PipRX, due: string, forEdit: boolean): Promise<vmDEPARTMENT> {
+        const startReadTime: any = new Date();
+
         // Читаем себя, НЕ из кеша
         const rDep = pip.read<DEPARTMENT>({ DEPARTMENT: due });
         // Здесь предсталены все запросы, которые вспомнил для подробной инофрмации о подразделении
@@ -34,6 +36,7 @@ class vmDEPARTMENT {
                 parents.sort((a, b) => {
                     return a.DUE.length - b.DUE.length;
                 });
+                console.log('Чтение ДЛ шаг1:' + (<any>new Date() - startReadTime) + 'ms');
                 return parents;
             });
         // TODO: разобраться почему без прохода через промис запрос выполняется дважды
@@ -64,6 +67,7 @@ class vmDEPARTMENT {
         })})
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
         .then(([a, b, [pi, org, cab ], d]) => {
+            console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
             const result = new vmDEPARTMENT();
             result.row = a[a.length - 1];
             // tslint:disable-next-line:no-debugger
@@ -82,8 +86,6 @@ class vmDEPARTMENT {
             result.cabinet = <CABINET>cab[0];
 
             result.SEV_ASSOCIATION = pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
-
-            console.log(JSON.stringify(result));
 
             return result;
         });
@@ -111,9 +113,8 @@ export class DepartmentComponent implements OnInit {
         this.pip.cache.read<DEPARTMENT>({
             DEPARTMENT: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE'
+            , top: 10
         }).then(r => {
-            console.log('----->>>>>>>');
-            console.log(r);
             this.treeItems = r;
         });
     }
