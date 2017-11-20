@@ -11,6 +11,7 @@ import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
 export class NodeListPaginationComponent implements OnInit, OnChanges {
     @Input() total: number;
     @Input() config: IPaginationConfig;
+    @Input() currentState: boolean[];
 
     readonly pageLengths = PAGES;
     private readonly _buttonsTotal = 5;

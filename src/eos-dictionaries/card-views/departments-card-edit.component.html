@@ -3,7 +3,7 @@
     <div [hidden]="!data['IS_NODE']">
         <div class="tabs-wrapper usual-border">
             <ul class="tabs">
-                <li class="tab-item" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border': i === currTab}"
+                <li class="tab-item primary-text" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border secondary-text': i === currTab}"
                     (click)="setTab(i)">
                     <span class="tab-title">{{tab}}</span>
                 </li>
@@ -33,7 +33,8 @@
                         [ngClass]="{'readonly': !editMode }"
                         (focus)="focus('RUBRIC_CODE_PERSON')" (blur)="blur()"
                         maxlength="{{fieldsDescription['RUBRIC_CODE']?.length}}"  [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
-                        tooltip="Максимальная длина {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [checkingMethod]="checkCode.bind(this)"
+                        tooltip="Максимальная длина {{fieldsDescription['RUBRIC_CODE']?.length}} символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                         [isOpen]="cardForm.controls.RUBRIC_CODE_PERSON?.invalid && cardForm.controls.RUBRIC_CODE_PERSON?.dirty && focusedField === 'RUBRIC_CODE_PERSON'" triggers="">
 
@@ -580,7 +581,8 @@
                     [ngClass]="{'readonly': !editMode }"
                     (focus)="focus('RUBRIC_CODE_DEP')" (blur)="blur()"
                     [pattern]="fieldsDescription['RUBRIC_CODE']?.pattern"
-                    tooltip="Пробелы в начале и в конце строки запрещены."
+                    eosUnic="{{fieldsDescription['RUBRIC_CODE']?.isUnic}}" [checkingMethod]="checkCode.bind(this)"
+                    tooltip="Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                     [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body"
                     [isOpen]="cardForm.controls.RUBRIC_CODE_DEP?.invalid && cardForm.controls.RUBRIC_CODE_DEP?.dirty && focusedField === 'RUBRIC_CODE_DEP'" triggers="">
 

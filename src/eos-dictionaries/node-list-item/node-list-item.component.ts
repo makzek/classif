@@ -9,6 +9,7 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { FieldDescriptor } from '../core/field-descriptor';
+import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-list-item',
@@ -16,11 +17,11 @@ import { FieldDescriptor } from '../core/field-descriptor';
 })
 export class NodeListItemComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
-    @Input('params') params: any;
+    @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private viewFields: FieldDescriptor[];
+    viewFields: FieldDescriptor[];
 
     constructor(
         private _storageSrv: EosStorageService,
