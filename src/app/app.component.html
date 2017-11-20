@@ -41,7 +41,7 @@
                 </li>
             </ul>
         </div>
-        <eos-breadcrumb *ngIf="breadcrumbView"></eos-breadcrumb>
+        <eos-breadcrumb [ngClass]="{'hide' : !breadcrumbView}"></eos-breadcrumb>
     </div>
     <div class="content-wrapper">
         <!-- *ngIf="isAuthorized" -->

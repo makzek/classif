@@ -24,13 +24,12 @@ const routes: Routes = [{
         path: '',
         pathMatch: 'full',
         component: DictionariesComponent,
-        canActivate: [AuthorizedGuard]
+        canActivate: [AuthorizedGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true,
-                showSandwichInBreadcrumb: true,
-                showPinInBreadcrumb: true,
-                showBreadcrumb: true },
+        data: { title: 'Справочник', showBreadcrumb: true,
+        showInBreadcrumb: true,
+        showSandwichInBreadcrumb: true },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: false },
@@ -38,7 +37,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showSandwichInBreadcrumb: true, showPinInBreadcrumb: true, showBreadcrumb: true },
+                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true },
             }, {
                 path: 'edit',
                 pathMatch: 'full',
@@ -47,9 +46,8 @@ const routes: Routes = [{
                     title: 'Редактирование',
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
-                    showPinInBreadcrumb: true,
-                    closeStyle: true,
-                    showBreadcrumb: true
+                    showBreadcrumb: true,
+                    closeStyle: true
                 },
                 canDeactivate: [CanDeactivateGuard]
             }, {
@@ -60,9 +58,8 @@ const routes: Routes = [{
                     title: 'Просмотр',
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
-                    showPinInBreadcrumb: true,
-                    closeStyle: true,
-                    showBreadcrumb: true
+                    showBreadcrumb: true,
+                    closeStyle: true
                 },
             }],
         }, {
@@ -82,18 +79,18 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Главная', showInBreadcrumb: false, showBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false }
     }]
 }, {
     path: 'test',
     component: TestPageComponent,
-    data: { title: 'Test page for UI components', showInBreadcrumb: true, showBreadcrumb: false },
+    data: { title: 'Test page for UI components', showInBreadcrumb: true },
     canActivate: [AuthorizedGuard],
 }, {
     path: 'delivery',
     canActivate: [AuthorizedGuard],
     component: DeliveryComponent,
-    data: { title: 'delivery page', showInBreadcrumb: true,  },
+    data: { title: 'delivery page', showInBreadcrumb: true },
 }, {
     path: 'rubric',
     canActivate: [AuthorizedGuard],
