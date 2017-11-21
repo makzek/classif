@@ -25,6 +25,8 @@
         <div *ngIf="detailedItem.cabinet">{{detailedItem.cabinet.CABINET_NAME}}</div>
         индекс СЭВ
         <input [(ngModel)]="detailedItem.SEV_ASSOCIATION.GLOBAL_ID" placeholder="Индекс СЭВ" />
+        фамилия в дательном падеже:
+        <input [(ngModel)]="detailedItem.CB_PRINT_INFO.SURNAME_DP" placeholder="Фамилия дательный" />
     </div>
     <button (click)="onSave()">Сохранить</button>
 </div>

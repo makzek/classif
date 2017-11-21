@@ -169,7 +169,7 @@ const commonMeta =
             relations: [
 
             ] },
-        CB_PRINT_INFO: { pk: 'ISN_OWNER',
+        CB_PRINT_INFO: { pk: 'ISN_OWNER OWNER_KIND',
             properties: {
                 ISN_OWNER: _t.i,
                 OWNER_KIND: _t.i,
