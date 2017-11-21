@@ -2,8 +2,10 @@
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL } from '../interfaces/structures';
-import { ALL_ROWS } from '../core/consts';
+import { ALL_ROWS, _ES } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
+import { IEnt } from 'eos-rest';
+import {SevIndexHelper} from '../services/sevIndex-helper'
 //
 
 // tslint:disable-next-line:class-name
@@ -62,9 +64,7 @@ class vmDEPARTMENT {
             return Promise.all([rPrintInfo, rOrg, rCab]);
         });
         // загружаем индекс СЭВ
-        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: PipRX.criteries({
-            OBJECT_NAME: 'DEPARTMENT', OBJECT_ID : due
-        })})
+        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')]})
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
         .then(([a, b, [pi, org, cab ], d]) => {
             console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
@@ -84,8 +84,7 @@ class vmDEPARTMENT {
             // Здесь врапить не надо - запись кабинете мы редатировать не должны
             // а ссылку на него можно и по другому поставить.
             result.cabinet = <CABINET>cab[0];
-
-            result.SEV_ASSOCIATION = pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
+            result.SEV_ASSOCIATION = SevIndexHelper.PrepareStub(d[0], pip);
 
             return result;
         });
@@ -145,13 +144,19 @@ export class DepartmentComponent implements OnInit {
     }
 
     onSave() {
-        /*
-        const chl = Utils.changeList([this.currentItem]);
-        this.pip.batch(chl, '').subscribe((r) => {
-            alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        const item = this.detailedItem;
+        const changed = [];
+        if (SevIndexHelper.PrepareForSave(item.SEV_ASSOCIATION, item.row)) {
+            changed.push(item.SEV_ASSOCIATION);
+        }
+        const chl = this.pip.changeList(changed);
+        this.pip.batch(chl, '').then((r) => {
+            alert('oki');
         });
-        */
     }
+
 }
 
 

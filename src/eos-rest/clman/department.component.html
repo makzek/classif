@@ -22,10 +22,11 @@
             <input [(ngModel)]="detailedItem.row.CLASSIF_NAME" placeholder="name" />
             <br/>
         </div>
-        <div style="border:1px rised gray" (click)="onSave()">Сохранить</div>
         <div *ngIf="detailedItem.cabinet">{{detailedItem.cabinet.CABINET_NAME}}</div>
+        индекс СЭВ
+        <input [(ngModel)]="detailedItem.SEV_ASSOCIATION.GLOBAL_ID" placeholder="Индекс СЭВ" />
     </div>
-
+    <button (click)="onSave()">Сохранить</button>
 </div>
 
 

@@ -991,7 +991,7 @@ const commonMeta =
             relations: [
 
             ] },
-        SEV_ASSOCIATION: { pk: 'OBJECT_ID',
+        SEV_ASSOCIATION: { pk: 'OBJECT_ID OBJECT_NAME',
             properties: {
                 OBJECT_ID: _t.s,
                 OBJECT_NAME: _t.s,
