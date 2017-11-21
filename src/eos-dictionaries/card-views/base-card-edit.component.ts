@@ -10,6 +10,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeSet: EosDictionaryNode[];
+    @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -62,6 +63,10 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }*/
 
     checkUnic(val: any, key: string, inDict?: boolean) {
-        return this.dictSrv.isUnic(val, key, inDict);
+        if (this.focusedField === key) {
+            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
+        } else {
+            return null;
+        }
     }
 }

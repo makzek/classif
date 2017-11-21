@@ -550,11 +550,11 @@ export class EosDictService {
         return null;
     }
 
-    isUnic(val: string, key: string, inDict?: boolean): { [key: string]: any } {
+    isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
-                if (_node.data[key] === val) {
+                if (_node.data[key] === val && _node.id !== nodeId) {
                     _hasMatch = true;
                 }
             });
@@ -564,6 +564,8 @@ export class EosDictService {
             const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data[key] === val);
             /* tslint:enable:no-bitwise */
             return _hasMatch ? { 'isUnic': _hasMatch } : null;
+        } else {
+            return null;
         }
     }
 }

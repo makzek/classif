@@ -9,6 +9,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 })
 export class CardEditComponent {
     @Input() dictionaryId: string;
+    @Input() nodeId: string;
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
