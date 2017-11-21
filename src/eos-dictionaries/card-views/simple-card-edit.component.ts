@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
 
@@ -7,7 +7,7 @@ import { BaseCardEditComponent } from './base-card-edit.component';
     templateUrl: 'simple-card-edit.component.html',
 })
 export class SimpleCardEditComponent extends BaseCardEditComponent {
-    constructor() {
-        super();
+    constructor(injector: Injector) {
+        super(injector);
     }
 }
