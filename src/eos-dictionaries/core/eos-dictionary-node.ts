@@ -101,6 +101,11 @@ export class EosDictionaryNode {
         return this._fieldValue(this._descriptor.parentField);
     }
 
+
+    get dictionaryId(): string {
+        return this._dictionary.id;
+    }
+
     constructor(dictionary: EosDictionary, data: any) {
         if (data) {
             this.marked = !!this.marked;
@@ -218,6 +223,30 @@ export class EosDictionaryNode {
     getEditData(): any {
         const _data = {};
         this._descriptor.getEditView(this.data).forEach((_f) => {
+            _data[_f.foreignKey] = _f.value;
+        });
+        return _data;
+    }
+
+    getShortViewFieldsDescription(): any {
+        return this._descriptor.getShortQuickFieldDescription(this.data);
+    }
+
+    getFullViewFieldsDescription(): any {
+        return this._descriptor.getQuickFieldDescription(this.data);
+    }
+
+    getShortViewData(): any {
+        const _data = {};
+        this._descriptor.getShortQuickView(this.data).forEach((_f) => {
+            _data[_f.foreignKey] = _f.value;
+        });
+        return _data;
+    }
+
+    getFullViewData(): any {
+        const _data = {};
+        this._descriptor.getQuickView(this.data).forEach((_f) => {
             _data[_f.foreignKey] = _f.value;
         });
         return _data;
