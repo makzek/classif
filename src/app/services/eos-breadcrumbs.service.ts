@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
@@ -11,11 +13,10 @@ import { EosDesk } from '../core/eos-desk';
 
 @Injectable()
 export class EosBreadcrumbsService {
-    _breadcrumbs: IBreadcrumb[];
-    _currentLink: IDeskItem;
+    private _breadcrumbs: IBreadcrumb[];
+    private _currentLink: IDeskItem;
 
-    _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
-    _currentLink$: BehaviorSubject<IDeskItem>;
+    private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
 
     constructor(
         private _router: Router,
@@ -24,71 +25,58 @@ export class EosBreadcrumbsService {
         private _deskSrv: EosDeskService
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
-        this._currentLink$ = new BehaviorSubject<IDeskItem>(null);
-
-        _router.events
-            .filter((e) => e instanceof NavigationEnd)
+        _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
             .combineLatest(_deskSrv.selectedDesk)
             .subscribe((val: [NavigationEnd, EosDesk]) => {
                 this.makeBreadCrumbs(val[1]);
             });
     }
 
-    get breadcrumbs(): Observable<IBreadcrumb[]> {
+    get breadcrumbs$(): Observable<IBreadcrumb[]> {
         return this._breadcrumbs$.asObservable();
     }
 
-    get currentLink(): Observable<IDeskItem> {
-        return this._currentLink$.asObservable();
+    get breadcrumbs() {
+        return this._breadcrumbs;
     }
 
-    makeBreadCrumbs(desk: EosDesk) {
-        if (desk) {
-            this._breadcrumbs = [{
-                url: '/desk/' + desk.id,
-                title: 'Главная', // desk.name,
-                params: null,
-            }];
+    get currentLink() {
+        return this._currentLink;
+    }
 
-            Promise.all(this._parseState(this._route.snapshot))
-                .then((breadcrumbs) => {
-                    this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
-
-                    let title = '';
-                    this._breadcrumbs.forEach(element => {
-                        title += element.title + '/';
-                    });
-                    title = title.slice(0, title.length - 1);
-
+    public makeBreadCrumbs(desk: EosDesk) {
+        this._breadcrumbs = [];
+        Promise.all(this._parseState(this._route.snapshot))
+            .then((breadcrumbs) => {
+                // 55: Убрать без title (!?) routing -> showInBreadcrubs
+                this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
+                this._fullTitleGen();
+                if (this._breadcrumbs.length) {
                     this._currentLink = {
-                        link: this._breadcrumbs[this._breadcrumbs.length - 1].url,
-                        title: title
+                    url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
+                    title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
+                    fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle
                     }
-
-                    this._breadcrumbs$.next(this._breadcrumbs);
-                    this._currentLink$.next(this._currentLink);
-                });
-        }
+                }
+                this._breadcrumbs$.next(this._breadcrumbs);
+            });
     }
 
     private _parseState(route: ActivatedRouteSnapshot): Promise<IBreadcrumb>[] {
         let currUrl = '';
         let _current = route;
-
         const crumbs: Promise<IBreadcrumb>[] = [];
 
         while (_current) {
             const subpath = _current.url.map((item) => item.path).join('/');
-
             if (subpath && _current.data && _current.data.showInBreadcrumb) {
                 currUrl += '/' + subpath;
-
                 const bc: IBreadcrumb = {
                     title: _current.data.title,
                     url: currUrl,
                     params: _current.params,
+                    fullTitle: ''
                 };
-
                 let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
 
                 if (_current.params) {
@@ -119,24 +107,27 @@ export class EosBreadcrumbsService {
                                 }
                                 return bc;
                             });
-                    } /* else if (_current.params.desktopId && _current.data.showInBreadcrumb) { // is it still need ????
-                        const _deskId = _current.params.desktopId;
-                        _crumbPromise = this._deskSrv.desksList.toPromise()
-                            .then((list) => {
-                                console.warn('get desk');
-                                const _d = list.find((e: any) => e.id === _deskId);
-                                if (_d) {
-                                    bc.title = _d.name;
-                                }
-                                return bc;
-                            });
-                    } */
+                    }
                 }
-
                 crumbs.push(_crumbPromise);
             }
             _current = _current.firstChild;
         }
         return crumbs;
+    }
+
+    private _fullTitleGen() {
+        const arr = [];
+        for (const bc of this._breadcrumbs) {
+            arr.push(bc.title + '/');
+        }
+        for (let i = 1; i < this._breadcrumbs.length; i++ ) {
+            for (let j = 0; j <= i; j++) {
+                this._breadcrumbs[i].fullTitle += arr[j];
+            }
+        }
+        for (const bc of this._breadcrumbs) {
+            bc.fullTitle = bc.fullTitle.substring(0, bc.fullTitle.length - 1);
+        }
     }
 }

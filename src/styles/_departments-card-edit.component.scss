@@ -2,54 +2,116 @@
     overflow-y: auto;
     overflow-x: hidden;
 
-    .tabs {
-        display: inline-block;
-        width: 100%;
-        border-bottom: 1px solid transparent;
-
-        .tab-item {
-            display: inline-block;
-            border-bottom: 5px solid transparent;
-            padding: 5px;
-            position: relative;
-            cursor: pointer;
-            height: $item-height;
-            padding-top: 12px;
-            margin-right: $item-width;
-        }
-    }
-
     .block-title {
-        border-bottom: 1px solid transparent;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
         display: inline-block;
         height: 38px;
-        line-height: 38px;
         width: 100%;
         font-weight: 700;
-        font-size: 17px;
+        padding-top: 8px;
+
+        &:not(.first) {
+            margin-top: 50px;
+        }
     }
 
-    .form-group:not(:first-child) {
-        &.fathers-name {
-            margin-top: 0;
+    .checkbox {
+        display: block;
+        margin-top: 8px;
+        margin-bottom: 0;
+
+        label {
+            padding-left: 0;
         }
 
-        &.email {
-            margin-top: 5px;
+        input[type="checkbox"] + span {
+            margin-right: 12px;
         }
 
-        &.full-position {
-            margin-top: 61px;
+        &.card-flag {
+            margin-top: 62px;
+        }
+    }
+
+    .alternates {
+        .form-group {
+            &:first-child {
+                margin-top: 30px;
+            }
+
+            &:last-child {
+                .form-control {
+                    padding-right: 32px;
+                    position: relative;
+                }
+            }
+
+            .person-list-btn {
+                position: absolute;
+                right: 20px;
+                top: 29px;
+                height: 32px;
+                width: 32px;
+            }
+        }
+    }
+
+    .form-group {
+        margin-bottom: 0;
+
+        &:not(:first-child) {
+            &.fathers-name {
+                margin-top: 0;
+            }
+
+            &.full-position {
+                margin-top: 91px;
+            }
+
+            &.gender {
+                margin-top: 44px;
+                position: relative;
+            }
+        }
+
+        .duty {
+            margin-right: 40px;
+        }
+
+        .boss {
+            width: 153px;
         }
     }
 
     textarea {
         resize: none;
+
+        &.note-person {
+            height: 212px;
+        }
+
+        &.note-dep {
+            height: 90px;
+        }
+    }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    .alternate-button-wrapper {
+        margin-top: 20px;
+
+        .alternate-button {
+            width: 100%;
+            height: 32px;
+        }
     }
 
     .current-image {
-        height: 150px;
-        width: 150px;
+        height: 130px;
+        width: 130px;
         display: inline-block;
         border: 1px solid transparent;
         border-radius: 50%;
@@ -57,11 +119,98 @@
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
+        margin: 0 24px;
 
         .photo-uploader {
             position: absolute;
             bottom: -8px;
-            right: 0;
+            right: -24px;
         }
+    }
+
+    .gender-placeholder {
+        position: absolute;
+        top: 30px;
+        left: 9px;
+        width: 30px;
+    }
+
+    .gender-select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
+        background-repeat: no-repeat;
+        background-position-x: right;
+        background-position-y: center;
+        background-size: 24px;
+    }
+
+    .names {
+        margin-top: 30px;
+    }
+
+    .wrapper,
+    .row-wrapper {
+        display: flex;
+    }
+
+    .row-wrapper {
+        .form-group {
+            width: 100%;
+
+            &:not(:first-child) {
+                margin-top: 0;
+
+                &.email,
+                &.skype {
+                    margin-top: 30px;
+                }
+            }
+
+            &:not(:last-child) {
+                margin-right: 40px;
+            }
+        }
+    }
+
+    .email-wrapper {
+        .form-group {
+            width: 54%;
+
+            &:first-child,
+            &:last-child {
+                width: 24%;
+            }
+        }
+
+    }
+
+    .declination-wrapper {
+        .form-control {
+            width: 24%;
+
+            &:not(.last) {
+                margin-right: 40px;
+            }
+
+            &:first-child {
+                width: 54%;
+            }
+        }
+    }
+
+    .col-1,
+    .col-2 {
+        display: inline-block;
+    }
+
+    .col-1 {
+        width: 178px;
+        margin-right: 40px;
+    }
+
+    .col-2 {
+        width: 535px;
     }
 }

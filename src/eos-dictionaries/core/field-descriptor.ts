@@ -1,42 +1,4 @@
-export enum E_FIELD_TYPE {
-    string,
-    number,
-    photo,
-    text,
-    date,
-    icon,
-    boolean
-};
-
-export interface IFieldDesriptor {
-    key: string;
-    title: string;
-    type: string;
-    length?: number;
-    format?: string;
-    foreignKey?: string;
-    /* column?: number;
-    subcolumn?: number;*/
-}
-/*
-export interface IFieldGroup {
-    title: string;
-    fields: string[];
-}
-*/
-export interface IFieldDesriptorBase {
-    readonly key: string;
-    readonly title: string;
-    readonly type: E_FIELD_TYPE;
-    readonly length?: number;
-    readonly format?: string;
-    readonly foreignKey?: string;
-};
-
-export interface IFieldView extends IFieldDesriptorBase {
-    value: any;
-}
-
+import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from './dictionary.interfaces';
 export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
@@ -44,8 +6,10 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly length?: number;
     readonly format?: string;
     readonly foreignKey?: string;
-    /* readonly column?: number;
-    readonly subcolumn?: number;*/
+    readonly pattern?: RegExp;
+    readonly required?: boolean;
+    readonly invalidMessage?: string;
+    readonly isUnic?: boolean;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -63,13 +27,15 @@ export class FieldDescriptor implements IFieldDesriptorBase {
             this.format = data.format
         }
 
-        /*if (data.column) {
-            this.column = data.column
+        if (data.pattern) {
+            this.pattern = data.pattern
         }
 
-        if (data.subcolumn) {
-            this.subcolumn = data.subcolumn
-        }*/
+        this.required = !!data.required;
+
+        this.invalidMessage = data.invalidMessage || '';
+
+        this.isUnic = !!data.isUnic;
     }
 }
 

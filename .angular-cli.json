@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "eos",
       "styles": [
-        "styles/main.scss"
+        "styles/main.scss",
+        "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

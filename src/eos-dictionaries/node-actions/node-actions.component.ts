@@ -1,272 +1,116 @@
-import { Component, TemplateRef, ViewChild, HostListener, OnDestroy } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/combineLatest';
 
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
-import { EosDeskService } from '../../app/services/eos-desk.service';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictionary } from '../core/eos-dictionary';
-import { NodeActionsService } from './node-actions.service';
-import { FieldDescriptor } from '../core/field-descriptor';
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
-import { IFieldView } from '../core/field-descriptor';
-import { E_FIELD_SET } from '../core/dictionary-descriptor';
-// import { CardActionService, EDIT_CARD_ACTIONS } from '../card/card-action.service';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS } from '../consts/record-actions.consts';
-import { EditedCard } from '../card/card.component';
+import { E_RECORD_ACTIONS } from '../core/record-action';
+import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { IActionButton, IAction } from '../core/action.interface';
+import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements OnDestroy {
-    recordActions = RECORD_ACTIONS;
-    dropdownRecordActions = DROPDOWN_RECORD_ACTIONS;
+export class NodeActionsComponent implements DoCheck, OnDestroy {
+    private ngUnsubscribe: Subject<any> = new Subject();
 
-    showDeleted = false;
-    modalRef: BsModalRef;
-    checkAll = false;
-    itemIsChecked = false;
-    // newNode: EosDictionaryNode;
+    // @Input('params') params: INodeListParams;
+    @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
-    searchResults: EosDictionaryNode[];
-    searchString: string;
-    searchInAllDict = false;
+    buttons: IActionButton[];
+    ddButtons: IActionButton[];
+    moreButtons: IActionButton[];
+    showMore = false;
 
-    dictionary: EosDictionary;
-    viewFields: FieldDescriptor[];
+    private dictionary: EosDictionary;
+    private _nodeSelected = false;
+    private _viewParams: IDictionaryViewParameters;
 
-    showCheckbox: boolean;
-    userSort = false;
+    constructor(_dictSrv: EosDictService) {
+        this._initButtons();
 
-    rootSelected = false;
-    allChildrenSelected = false;
-    someChildrenSelected = false;
-
-    dropdownIsOpen = false;
-    date = new Date();
-
-    fields: IFieldView[];
-    searchInDeleted = false;
-
-    dictIdFromDescriptor: string;
-
-    innerClick = false;
-
-    lastEditedCard: EditedCard;
-
-    private _userSettingsSubscription: Subscription;
-    private _dictionarySubscription: Subscription;
-    private _actionSubscription: Subscription;
-
-    newNodeData: any = {};
-    private editMode = true;
-
-    @ViewChild('creatingModal') public creatingModal: ModalDirective;
-
-    get noSearchData(): boolean {
-        /* tslint:disable:no-bitwise */
-        return !~this.fields.findIndex((f) => f.value);
-        /* tslint:enable:no-bitwise */
-    }
-
-    @HostListener('window:click', [])
-    private _closeSearchModal(): void {
-        if (!this.innerClick) {
-            this.dropdownIsOpen = false;
-        }
-        this.innerClick = false;
-    }
-
-    constructor(
-        private _profileSrv: EosUserProfileService,
-        private _modalSrv: BsModalService,
-        private _dictSrv: EosDictService,
-        private _deskSrv: EosDeskService,
-        private _actSrv: NodeActionsService,
-    ) {
-        this._userSettingsSubscription = this._profileSrv.settings$.subscribe((res) => {
-            this.showDeleted = res.find((s) => s.id === 'showDeleted').value;
-        });
-
-        this._dictionarySubscription = this._dictSrv.dictionary$.subscribe((_d) => {
-            this.dictionary = _d;
-            if (_d) {
-                this.dictIdFromDescriptor = _d.descriptor.id;
-                this.viewFields = _d.descriptor.getFieldSet(E_FIELD_SET.list);
-
-                this.showCheckbox = _d.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                this.fields = _d.descriptor.getFieldSet(E_FIELD_SET.fullSearch).map((fld) => Object.assign({}, fld, { value: null }));
-            }
-        });
-
-        this._actionSubscription = this._actSrv.action$.subscribe((act) => {
-            switch (act) {
-                case E_RECORD_ACTIONS.markOne:
-                    this.itemIsChecked = true;
-                    this.checkAll = false;
-                    this.someChildrenSelected = true;
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkAllChildren:
-                    this.allChildrenSelected = false;
-                    this.someChildrenSelected = false;
-                    this.itemIsChecked = false;
-                    this.checkAll = false;
-                    break;
-
-                case E_RECORD_ACTIONS.markAllChildren:
-                    this.allChildrenSelected = true;
-                    if (this.rootSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.markRoot:
-                    this.rootSelected = true;
-                    if (this.allChildrenSelected) {
-                        this.checkAll = true;
-                        this.itemIsChecked = false;
-                    } else {
-                        this.checkAll = false;
-                        this.itemIsChecked = true;
-                    }
-                    break;
-
-                case E_RECORD_ACTIONS.unmarkRoot:
-                    this.rootSelected = false;
-                    if (this.allChildrenSelected || this.someChildrenSelected) {
-                        this.itemIsChecked = true;
-                        this.checkAll = false;
-                    } else {
-                        this.itemIsChecked = false;
-                        this.checkAll = false;
-                    }
-                    break;
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this._userSettingsSubscription.unsubscribe();
-        this._dictionarySubscription.unsubscribe();
-        this._actionSubscription.unsubscribe();
-    }
-
-    doAction(type: E_RECORD_ACTIONS) {
-        switch (type) {
-            case E_RECORD_ACTIONS.add:
-                this.newNodeData = {};
-                this.creatingModal.show();
-                break;
-
-            case E_RECORD_ACTIONS.userOrder:
-                this.switchUserSort();
-                break;
-
-            default:
-                this._actSrv.emitAction(type);
-                break;
-        }
-    }
-
-    isEnabled(group: E_ACTION_GROUPS, type: E_RECORD_ACTIONS) {
-        if (this.dictionary) {
-            switch (type) {
-                case E_RECORD_ACTIONS.moveUp:
-                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.moveDown:
-                    return this.userSort && this.dictionary.descriptor.canDo(group, type);
-                case E_RECORD_ACTIONS.showDeleted:
-                    return this.showDeleted && this.dictionary.descriptor.canDo(group, type);
-                default:
-                    return this.dictionary.descriptor.canDo(group, type);
-            }
-        }
-        return false;
-    }
-
-    switchUserSort() {
-        this.userSort = !this.userSort;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.userOrder);
-    }
-
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this._modalSrv.show(template);
-        this.dropdownIsOpen = true;
-    }
-
-    public change(value: boolean): void {
-        this.dropdownIsOpen = value;
-    }
-
-    checkAllItems() {
-        if (this.checkAll) {
-            this.rootSelected = true;
-            this.allChildrenSelected = true;
-            this.itemIsChecked = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.markRecords);
-        } else {
-            this.itemIsChecked = false;
-            this.allChildrenSelected = false;
-            this.someChildrenSelected = false;
-            this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-        }
-    }
-
-    uncheckAllItems() {
-        this.checkAll = false;
-        this.itemIsChecked = false;
-        this.allChildrenSelected = false;
-        this.someChildrenSelected = false;
-        this._actSrv.emitAction(E_RECORD_ACTIONS.unmarkRecords);
-    }
-
-    search(event) {
-        if (event.keyCode === 13) {
-            this.dropdownIsOpen = false;
-            this._dictSrv.search(this.searchString, this.searchInAllDict);
-            event.target.blur();
-        }
-    }
-
-    fullSearch() {
-        this.modalRef.hide();
-        this._dictSrv.fullSearch(this.fields, this.searchInDeleted);
-    }
-
-    create(hide = true) {
-        // this._editActSrv.emitAction(EDIT_CARD_ACTIONS.create);
-        this._dictSrv.addNode(this.newNodeData)
-            .then((node) => {
-                console.log('created node', node);
-                let title = '';
-                node.getShortQuickView().forEach((_f) => {
-                    title += this.newNodeData[_f.key];
-                });
-                this._deskSrv.addRecentItem({
-                    link: '/spravochniki/' + this.dictionary.id + '/' + node.id,
-                    title: title,
-                });
-                if (hide) {
-                    this.creatingModal.hide();
-                }
-                this.newNodeData = {};
+        _dictSrv.dictionary$
+            .takeUntil(this.ngUnsubscribe)
+            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
+            .subscribe(([dict, node, params]) => {
+                this.dictionary = dict;
+                this._nodeSelected = !!node;
+                this._viewParams = params;
+                this._update();
             });
     }
 
-    cancelCreate() {
-        this.creatingModal.hide();
+    ngDoCheck() {
+        setTimeout(this._update(), 0);
     }
 
-    dataSeted(date: Date) {
-        console.log('recive date: ', date);
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
+
+    private _initButtons() {
+        this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
+        this.moreButtons = MORE_RECORD_ACTIONS.map(act => this._actionToButton(act));
+    }
+
+    private _update() {
+        this.buttons.forEach(btn => this._updateButton(btn));
+        this.ddButtons.forEach(btn => this._updateButton(btn));
+        this.moreButtons.forEach(btn => this._updateButton(btn));
+    }
+
+    private _updateButton(button: IActionButton) {
+        let _enabled = false;
+        let _active = false;
+        let _show = true;
+
+        if (this.dictionary && this._viewParams) {
+            _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
+            switch (button.type) {
+                case E_RECORD_ACTIONS.moveUp:
+                    _enabled = _enabled && this._nodeSelected;
+                    _show = this._viewParams.userOrdered;
+                    break;
+                case E_RECORD_ACTIONS.moveDown:
+                    _enabled = _enabled && this._nodeSelected;
+                    _show = this._viewParams.userOrdered;
+                    break;
+                case E_RECORD_ACTIONS.restore:
+                    _enabled = this._viewParams.showDeleted;
+                    break;
+                case E_RECORD_ACTIONS.showDeleted:
+                    _active = this._viewParams.showDeleted;
+                    break;
+                case E_RECORD_ACTIONS.userOrder:
+                    _active = this._viewParams.userOrdered;
+                    break;
+                case E_RECORD_ACTIONS.edit:
+                    _enabled = _enabled && this._nodeSelected;
+                    break;
+            }
+        }
+        button.show = _show;
+        button.enabled = _enabled;
+        button.isActive = _active;
+    }
+
+    private _actionToButton(action: IAction): IActionButton {
+        const _btn = Object.assign({
+            isActive: false,
+            enabled: false,
+            show: false
+        }, action);
+        this._updateButton(_btn);
+        return _btn;
+    }
+
+    doAction(action: IAction) {
+        this.action.emit(action.type);
     }
 }

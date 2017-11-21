@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
 </div>
@@ -8,6 +8,6 @@
     {{body}}
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="confirm()">{{okTitle}}</button>
-    <button type="button" class="btn btn-default" (click)="cancel()">{{cancelTitle}}</button>
+    <button type="button" class="btn btn-primary" (click)="cancel()">{{cancelTitle}}</button>
+    <button type="button" class="btn btn-primary-full" [disabled]="confirmDisabled" (click)="confirm()">{{okTitle}}</button>
 </div>

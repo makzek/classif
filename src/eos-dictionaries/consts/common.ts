@@ -1,16 +1,22 @@
-import { IDictionaryDescriptor } from '../core/dictionary-descriptor';
+import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary.interfaces';
+import { SEARCH_TYPES } from './search-types';
+
+export const LS_EDIT_CARD = 'lastEditedCard';
+export const LS_USE_USER_ORDER = 'useUserOrder';
 
 /* tslint:disable:max-line-length */
 
 export const ROOMS_DICT: IDictionaryDescriptor = {
     id: 'rooms',
     apiInstance: 'ROOMS',
+    dictType: E_DICT_TYPE.tree,
     title: 'Кабинеты',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder'],
     itemActions: ['edit', 'view'],
     groupActions: ['remove', 'removeHard', 'userOrder'],
     keyField: 'id',
     parentField: 'parent',
+    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'id',
         type: 'string',
@@ -85,6 +91,7 @@ export const ROOMS_DICT: IDictionaryDescriptor = {
     fullSearchFields: ['code', 'title', 'description'],
     quickViewFields: ['department', 'owner', 'roomUsers'],
     shortQuickViewFields: ['description'],
-    listFields: ['title']
+    listFields: ['title'],
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
 };
 /* tslint:enable:max-line-length */

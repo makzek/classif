@@ -3,7 +3,6 @@
 import { DELIVERY_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { Utils } from '../core/utils';
 
 import { AuthService } from '../services/auth.service';
 
@@ -33,7 +32,7 @@ export class DeliveryComponent implements OnInit {
 
             // - поиск по критериям
             // DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
-        }).subscribe(r => {
+        }).then(r => {
             console.log('----->>>>>>>');
             console.log(r);
             this.items = r;
@@ -45,10 +44,30 @@ export class DeliveryComponent implements OnInit {
     }
 
     onAdd() {
-        const tmp = this.pip.prepareAdded<DELIVERY_CL>({
+        const tmp = this.pip.entityHelper.prepareAdded<DELIVERY_CL>({
             ISN_LCLASSIF: this.pip.sequenceMap.GetTempISN(),
             CLASSIF_NAME: 'Добавляем?'
         }, 'DELIVERY_CL');
         this.currentItem = tmp;
+    }
+
+    onErrorMirror() {
+        /* this.pip.read( {ErrorMirror_GetError: Utils.args({code: 404, msg: 'What?'})})
+        .subscribe(d => {
+                alert('пустой результат не ошибка');
+            }
+        );*/
+        // потеря соединения при чтении
+        this.pip.read( {ErrorMirror_GetError: PipRX.args({code: 434, msg: 'What?'})})
+        .then(d => {
+                alert('пустой результат не ошибка');
+            }
+        )
+        /*const ch = [];
+        Utils.invokeSop( ch, 'ErrorMirror_BatchError', {code: -1, msg: 'incorrect data'});
+        this.pip.batch(ch, '')
+        .subscribe(d => {
+            alert(d);
+        });*/
     }
 }

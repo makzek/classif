@@ -1,6 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { PipRX } from './pipRX.service';
-import { USER_CL } from '../interfaces/structures'
+import { USER_CL, SYS_PARMS } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
 
 
@@ -10,7 +10,7 @@ export class AppContext {
      * залогиненый пользователь
      */
     public CurrentUser: USER_CL;
-    public SysParms: any;
+    public SysParms: SYS_PARMS;
 
     /**
      * рабочие столы
@@ -21,7 +21,12 @@ export class AppContext {
 
     init(): Promise<any> {
         const p = this.pip;
-        const oSysParams = p.read({
+        // раз присоеденились сбрасываем подавление ругательства о потере соединения
+        // @igiware: потенциальная ошибка, тк PipeRX - singleton, параллельный запрос данных пропустит ошибку,
+        //           как и последующие дальнейшие запросы
+        // p.errorService.LostConnectionAlerted = false;
+
+        const oSysParams = p.read<SYS_PARMS>({
             SysParms: ALL_ROWS,
             _moreJSON: {
                 DbDateTime: new Date(),
@@ -29,21 +34,25 @@ export class AppContext {
                 ParamsDic: '-99'
             }
         });
+
         const oCurrentUser = p.read<USER_CL>({
             CurrentUser: ALL_ROWS,
             expand: 'USERDEP_List,USERSECUR_List',
             _moreJSON: { ParamsDic: null }
         });
 
-        return oSysParams
-            .combineLatest(oCurrentUser)
-            .map(([sysParams, users]) => {
-                /* */
-                this.SysParms = sysParams[0];
-                this.CurrentUser = users[0];
-                return 'all readed';
+        return Promise.all([oSysParams, oCurrentUser])
+            .then(([sysParms, curentUser]) => {
+                this.SysParms = sysParms[0];
+                this.CurrentUser = curentUser[0];
+                return [this.CurrentUser, this.SysParms];
             })
-            .toPromise();
+            /*
+            .then(d => {
+                // tslint:disable-next-line:no-debugger
+                debugger;
+            })*/
+            ;
     }
 
     reInit() {

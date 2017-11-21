@@ -17,11 +17,10 @@
 @import "title.component";
 @import "dictionaries.component";
 @import "edit-card.component";
-@import "selected-node.component";
 @import "opened-node.component";
 @import "breadcrumb.component";
 @import "desktop-switcher.component";
-@import "search.component";
+@import "dictionary-search.component";
 @import "user.component";
 @import "tree.component";
 @import "notice.component";
@@ -29,6 +28,7 @@
 @import "dictionary.component";
 @import "info.component";
 @import "node-list.component";
+@import "node-list-pagination.component";
 @import "node-actions.component";
 @import "pushpin.component";
 @import "departments-card-edit.component";
@@ -36,5 +36,7 @@
 @import "sandwich.component";
 @import "photo-uploader.component";
 @import "datepicker.component";
+@import "column-settings.component";
 
 @import "theme";
+@import "adaptation";

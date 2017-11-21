@@ -1,11 +1,13 @@
 import { Component, EventEmitter } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 export interface IConfirmWindow {
     title: string;
     body: string;
     okTitle: string;
     cancelTitle: string;
+    confirmDisabled?: boolean;
 }
 
 export interface IConfirmWindowContent extends IConfirmWindow {
@@ -13,7 +15,6 @@ export interface IConfirmWindowContent extends IConfirmWindow {
 }
 
 @Component({
-    selector: 'eos-confirm-window',
     templateUrl: 'confirm-window.component.html',
 })
 export class ConfirmWindowComponent implements IConfirmWindowContent {
@@ -21,21 +22,33 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
     body: string;
     okTitle: string;
     cancelTitle: string;
+    confirmDisabled: boolean;
 
     readonly confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(public modalRef: BsModalRef) { }
+    constructor(public modalRef: BsModalRef, private modalService: BsModalService) {
+        this.modalService.onHide.subscribe((evt) => {
+            this.confirmEvt.emit(undefined);
+        });
+    }
 
     confirm() {
-        if (this.modalRef) {
-            this.confirmEvt.emit(true);
-            this.modalRef.hide();
-        }
+        this.confirmEvt.emit(true);
+        this._hide();
     }
 
     cancel() {
+        this.confirmEvt.emit(false);
+        this._hide();
+    }
+
+    close() {
+        this.confirmEvt.emit(undefined);
+        this._hide();
+    }
+
+    private _hide() {
         if (this.modalRef) {
-            this.confirmEvt.emit(false);
             this.modalRef.hide();
         }
     }

@@ -13,3 +13,24 @@ export const CONFIRM_LINK_DELETE: IConfirmWindow = {
     okTitle: 'Удалить',
     cancelTitle: 'Отмена'
 };
+
+export const CONFIRM_NODE_DELETE: IConfirmWindow = {
+    title: 'Подтверждение удаления',
+    body: 'Вы действительно хотите удалить запись {{name}} ?',
+    okTitle: 'Удалить',
+    cancelTitle: 'Отмена'
+}
+
+export const CONFIRM_NODES_DELETE: IConfirmWindow = {
+    title: 'Подтверждение удаления',
+    body: 'Вы действительно хотите удалить записи {{name}} ?',
+    okTitle: 'Удалить',
+    cancelTitle: 'Отмена'
+}
+
+export const CONFIRM_SUBNODES_RESTORE: IConfirmWindow = {
+    title: 'Подтверждение востановления',
+    body: 'Востановить дочерние элементы для {{name}}',
+    okTitle: 'Востановить дочерние',
+    cancelTitle: 'Не востанавливать дочерние'
+}

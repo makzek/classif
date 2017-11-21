@@ -1,124 +1,185 @@
 import { Injectable } from '@angular/core';
 
-import { DICTIONARIES, DICT_API_INSTANCES } from '../consts/dictionaries.consts';
-import { DictionaryDescriptor } from '../core/dictionary-descriptor';
+import { DICTIONARIES } from '../consts/dictionaries.consts';
+import { E_DICT_TYPE } from '../core/dictionary.interfaces';
+import { AbstractDictionaryDescriptor } from '../core/abstract-dictionary-descriptor';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
-import { RubricService, DepartmentService } from '../../eos-rest';
+import { BaseDictionaryService } from '../../eos-rest/services/base-dictionary.service';
+import { LinearDictionaryService } from '../../eos-rest/services/linear-dictionary.service';
+import { TreeDictionaryService } from '../../eos-rest/services/tree-dictionary.service';
+import { DepartmentService } from '../../eos-rest/services/department.service';
 
 @Injectable()
 export class EosDictApiService {
+    private _type: E_DICT_TYPE;
     private _dictionaries: any;
-    private _service: any;
+    private _service: BaseDictionaryService;
 
     constructor(
-        private _rubricSrv: RubricService,
+        private _linearSrv: LinearDictionaryService,
+        private _treeSrv: TreeDictionaryService,
         private _deptSrv: DepartmentService,
     ) {
         this._dictionaries = {};
-        DICTIONARIES.forEach((dict) => this._dictionaries[dict.id] = dict);
+        DICTIONARIES.sort((a, b) => {
+            if (a.title > b.title) {
+                return 1;
+            } else if (a.title < b.title) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).forEach((dict) => this._dictionaries[dict.id] = dict);
     }
 
-    init(descriptor: DictionaryDescriptor) {
-        switch (descriptor.apiInstance) {
-            case DICT_API_INSTANCES.rubricator:
-                this._service = this._rubricSrv;
+    init(descriptor: AbstractDictionaryDescriptor) {
+        if (descriptor) {
+            this._type = descriptor.type;
+        } else {
+            this._type = null;
+        }
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                this._service = this._linearSrv;
+                this._linearSrv.setInstance(descriptor.apiInstance);
                 break;
-            case DICT_API_INSTANCES.department:
+
+            case E_DICT_TYPE.tree:
+                this._service = this._treeSrv;
+                this._treeSrv.setInstance(descriptor.apiInstance);
+                break;
+
+            case E_DICT_TYPE.department:
                 this._service = this._deptSrv;
                 break;
+
             default:
                 this._service = null;
         }
     }
 
     getDictionaryDescriptorData(dictionaryId: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return Promise.resolve().then(() => {
             if (this._dictionaries[dictionaryId]) {
-                resolve(this._dictionaries[dictionaryId]);
+                return this._dictionaries[dictionaryId];
             } else {
-                reject('Dictionary descriptor data for "' + dictionaryId + '" not found');
+                throw new Error('Dictionary descriptor data for "' + dictionaryId + '" not found');
             }
         });
     }
 
     getRoot(): Promise<any[]> {
-        return this.getNodeWithChildren('0.');
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service.getData().catch((err) => this._errHandler(err));
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                return this._service
+                    .getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }).catch((err) => this._errHandler(err));
+            default:
+                return this._noData();
+        }
     }
 
-    getNodes(descriptor: DictionaryDescriptor, nodeId?: string, level = 0): Promise<any[]> {
-        let _promise: Promise<any[]>;
-        const _params = {
-            DUE: (nodeId ? nodeId : '0.') + '%',
-        };
-        if (this._service) {
-            _promise = this._service.getAll(_params);
-        } else {
-            _promise = this._noData();
+    getNode(nodeId: string | number): Promise<any> {
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _params = [nodeId];
+                return this._service
+                    .getData(_params)
+                    .catch((err) => this._errHandler(err));
+            default:
+                return this._noData();
         }
-        return _promise;
-    }
-
-    getNode(nodeId: string): Promise<any> {
-
-        let _promise: Promise<any>;
-
-        const _params = {
-            DUE: nodeId || '',
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_params)
-                .then((data: any[]) => {
-                    if (data && data.length) {
-                        return data[0];
-                    } else {
-                        return null;
-                    }
-                });
-        } else {
-            _promise = this._noData();
-        }
-        return _promise;
     }
 
     getNodeWithChildren(nodeId: string): Promise<any[]> {
         return this.getNode(nodeId)
             .then((rootNode) => {
-                if (rootNode && !isNaN(rootNode.ISN_NODE)) {
-                    return this.getChildren(rootNode.ISN_NODE)
+                if (rootNode) {
+                    return this.getChildren(rootNode)
                         .then((nodes) => {
                             return [rootNode].concat(nodes);
                         });
                 } else {
                     return [rootNode];
                 }
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     update(originalData: any, updates: any): Promise<any> {
-        return this._service.update(originalData, updates);
+        return this._service
+            .update(originalData, updates)
+            .catch((err) => this._errHandler(err));
     }
 
-    getChildren(parentISN: number): Promise<any[]> {
-        let _promise: Promise<any[]>;
-
-        const _children = {
-            'ISN_HIGH_NODE': parentISN + ''
-        };
-
-        if (this._service) {
-            _promise = this._service.getAll(_children)
-        } else {
-            _promise = this._noData()
+    getChildren(node: EosDictionaryNode): Promise<any[]> {
+        // console.log('get children');
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                return this._service
+                    .getData()
+                    .catch((err) => this._errHandler(err));
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                const _id = node.data['ISN_NODE'];
+                const _children = {
+                    ['ISN_HIGH_NODE']: _id + ''
+                };
+                return this._service
+                    .getData({ criteries: _children })
+                    .catch((err) => this._errHandler(err));
+            default:
+                return this._noData();
         }
-        return _promise;
-    }
-
-    private _noData(): Promise<any[]> {
-        return new Promise((res, rej) => res([]));
     }
 
     addNode(parentData: any, nodeData: any): Promise<any> {
-        return this._service.create(parentData, nodeData);
+        let _promise: Promise<any>;
+        switch (this._type) {
+            case E_DICT_TYPE.linear:
+                _promise = this._service.create(nodeData);
+                break;
+            case E_DICT_TYPE.tree:
+            case E_DICT_TYPE.department:
+                _promise = this._service.create(nodeData, parentData);
+                break;
+            default:
+                _promise = this._noData();
+        }
+        return _promise.catch((err) => this._errHandler(err));
+    }
+
+    deleteNode(nodeData: any): Promise<any> {
+        return this._service.delete(nodeData)
+            .catch((err) => this._errHandler(err));
+    }
+
+    search(criteries: any[]): Promise<any> {
+        console.log('search critery', criteries);
+
+        const _search = criteries.map((critery) => this._service.getData({ criteries: critery }));
+
+        return Promise.all(_search)
+            .then((results) => {
+                const _res = [].concat(...results);
+                console.log('found', _res);
+                return _res;
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
+    private _noData(): Promise<any[]> {
+        return Promise.resolve(null);
+    }
+
+    private _errHandler(err: any) {
+        console.log('API error', err);
+        return Promise.reject(err.message);
+        // return this._noData();
     }
 }

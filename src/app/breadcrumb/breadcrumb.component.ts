@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-
+import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionaries/dictionary/dictionary-action.service';
-
-/* enum CURRENT_PAGE {
-    dictionary
-};*/
+import { EosSandwichService } from '../../eos-dictionaries/services/eos-sandwich.service';
 
 @Component({
     selector: 'eos-breadcrumb',
@@ -15,36 +11,27 @@ import { DictionaryActionService, DICTIONARY_ACTIONS } from '../../eos-dictionar
 
 export class BreadcrumbsComponent {
     breadcrumbs: IBreadcrumb[];
-    treeOpened = false;
-    infoOpened = false;
+    infoOpened: boolean;
     isDictionaryPage = false;
 
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _actSrv: DictionaryActionService
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _sandwichSrv: EosSandwichService,
+
     ) {
-        this._breadcrumbsSrv.breadcrumbs.subscribe((bc) => {
-            if (bc) {
-                this.breadcrumbs = bc;
-            }
+        this._breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
+
+        _router.events
+            .filter((evt) => evt instanceof NavigationEnd)
+            .subscribe((evt) => {
+                let _actRoute = _route.snapshot;
+                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+            });
+
+        this._sandwichSrv.currentDictState$.subscribe((state) => {
+            this.infoOpened = state[1];
         });
     }
-
-    openTree(value: boolean) {
-        if (value) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-        } else {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeTree);
-        }
-    }
-
-    openInfo(value: boolean) {
-        this.infoOpened = value;
-        if (value) {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.openInfo);
-        } else {
-            this._actSrv.emitAction(DICTIONARY_ACTIONS.closeInfo);
-        }
-    }
-
 }

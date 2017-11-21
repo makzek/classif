@@ -1,3 +1,10 @@
+.checkbox-inline,
+.radio-inline {
+    padding-left: 12px;
+    line-height: 24px;
+}
+
+.checkbox-inline,
 .checkbox {
     input[type="checkbox"] {
         opacity: 0;
@@ -10,10 +17,11 @@
 
         & + span {
             margin-right: 6px;
-            margin-bottom: -3px;
+            margin-bottom: -7px;
             display: inline-block;
-            height: 16px;
-            width: 16px;
+            height: 24px;
+            width: 24px;
+            line-height: 2px;
             background-size: cover;
             background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
         }
@@ -30,9 +38,40 @@
     }
 
     label {
-        padding-left: 0;
+        // padding-left: 0;
+        // position: relative;
+        margin: 0;
     }
 }
+
+.radio-inline,
+.radio {
+    input[type="radio"] {
+        opacity: 0;
+        cursor: pointer;
+        margin-left: 0;
+
+        &:checked + span {
+            background-image: url("../assets/icons/Radio-V-Blue.svg");
+        }
+
+        & + span {
+            margin-right: 12px;
+            margin-bottom: -7px;
+            display: inline-block;
+            height: 24px;
+            width: 24px;
+            line-height: 2px;
+            background-size: cover;
+            background-image: url("../assets/icons/Radio-Blue.svg");
+        }
+    }
+
+    label {
+        margin: 0;
+    }
+}
+
 
 .group-checkbox {
     input[type="checkbox"] {
@@ -40,15 +79,15 @@
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
 
-        & + span {
+        /*& + span {
             margin-right: 6px;
             margin-bottom: -3px;
-        }
+        }*/
     }
-
 }
 
-.modal-body {
+.modal-body,
+.popover-body {
     label {
         text-transform: uppercase;
         font-size: 12px;
@@ -61,13 +100,75 @@
     cursor: pointer;
 }
 
-.input-cleaner {
+/*.input-cleaner {
     float: right;
     margin-top: -34px;
     background-color: transparent;
     position: relative;
 }
-
+*/
 input[type=text]::-ms-clear {
     display: none;
+}
+
+.form-control {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.tabs-wrapper {
+    width: 800px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: -21px -20px 20px;
+}
+
+.tabs {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+
+    .tab-item {
+        display: inline-block;
+        border-bottom: 5px solid transparent;
+        padding: 12px 0 5px;
+        position: relative;
+        cursor: pointer;
+        height: $item-height;
+        margin-right: 40px;
+    }
+}
+
+.btn {
+    border-radius: 2px !important;
+    height: 32px;
+}
+
+.btn-primary,
+.btn-primary-full {
+    border-style: solid;
+    border-width: 2px;
+}
+
+.s-font {
+    line-height: 16px;
+    font-size: 12px;
+}
+
+.m-font {
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.l-font {
+    line-height: 24px;
+    font-size: 16px;
+}
+
+.xl-font {
+    line-height: 26px;
+    font-size: 18px;
 }

@@ -1,0 +1,42 @@
+<div class="eos-opened-node">
+    <span class="opened-node-actions pull-right usual-border">
+        <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}"
+            containerClass="tooltip-info">
+            <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
+        </button>
+        <button class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}"
+            containerClass="tooltip-info">
+            <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
+        </button>
+        <button class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}" containerClass="tooltip-info">
+            <span class="icon {{actionEdit.iconClass}} small"></span>
+        </button>
+    </span>
+    <div class="opened-node-wrapper">
+        <div *ngIf="updating" class="no-data full-info usual-border">
+            <eos-spinner [size]="'lg'"></eos-spinner>
+        </div>
+
+        <div *ngIf="shortViewFields" class="short-info l-font">
+            <span *ngFor="let field of shortViewFields">
+                {{field.value}}
+            </span>
+        </div>
+
+        <div *ngIf="viewFields" class="full-info usual-border">
+            <div *ngFor="let field of viewFields" class="field">
+                <span *ngIf="field.type === fieldTypes.boolean;then checkboxField else textField"></span>
+                <ng-template #checkboxField>
+                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" value="{{field.value}}" disabled>
+                        <span></span>
+                        {{field.title}}</label>
+                </ng-template>
+                <ng-template #textField>
+                    <span class="field-title unimportant-text s-font">{{field.title}}</span>
+                    <br>
+                    <span class="field-value m-font">{{field.value}}</span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

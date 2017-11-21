@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -8,9 +9,8 @@ import { EosMessageService } from '../../eos-common/services/eos-message.service
 import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
-
-/* todo replace with profile API */
-import { RubricService } from '../../eos-rest/services/rubric.service';
+import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
+import { IOrderBy, IDictionaryOrder } from '../../eos-dictionaries/core/sort.interface'
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -19,6 +19,8 @@ export class EosUserProfileService implements IUserProfile {
     family: string;
     photoUrl?: string;
     settings: ISettingsItem[];
+    private _user: USER_CL;
+    private _params: SYS_PARMS;
 
     private _isAuthorized: boolean;
 
@@ -27,7 +29,11 @@ export class EosUserProfileService implements IUserProfile {
     private _authPromise: Promise<boolean>;
 
     get shortName(): string {
-        return [this.family, this.name.substr(0, 1), this.secondName.substr(0, 1)].join(' ');
+        if (this._user) {
+            return this._user.SURNAME_PATRON;
+        } else {
+            return null;
+        }
     }
 
     get settings$(): Observable<ISettingsItem[]> {
@@ -41,15 +47,14 @@ export class EosUserProfileService implements IUserProfile {
     isAuthorized(silent = false): boolean {
         if (!silent && !this._isAuthorized) {
             this._msgSrv.addNewMessage(AUTH_REQUIRED);
-            this._authorized$.next(this._isAuthorized);
+            // this._authorized$.next(this._isAuthorized);
         }
         return this._isAuthorized;
     }
 
     constructor(
+        private _router: Router,
         private _authSrv: AuthService,
-        private _rubricSrv: RubricService,
-        /* private _pipe: PipRX, */
         private _msgSrv: EosMessageService
     ) {
         Object.assign(this, DEFAURT_USER);
@@ -60,64 +65,74 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     checkAuth(): Promise<boolean> {
-        if (this._isAuthorized) {
-            return new Promise((resp) => resp(true));
-        } else {
-            const _params = {
-                DUE: '0.',
-                IS_NODE: '0'
-            };
-            if (!this._authPromise) {
-                this._authPromise = this._rubricSrv.getAll(_params)
-                    .then((resp) => {
-                        this._isAuthorized = true;
-                        this._authPromise = null;
-                        return this._isAuthorized;
-                    })
-                    .catch((err: Response) => {
-                        if (err.status === 434) {
-                            this.notAuthorized();
-                        }
-                        this._authPromise = null;
-                        return this._isAuthorized;
-                    });
-            }
+        if (!this._isAuthorized) {
+            this._authPromise = this._authSrv.getContext()
+                .then((context) => {
+                    this._authPromise = null;
+                    this._setUser(context.user, context.sysParams);
+                    return this._setAuth(true);
+                })
+                .catch((err) => {
+                    this._authPromise = null;
+                    return this._setAuth(false);
+                });
             return this._authPromise;
+        } else {
+            return Promise.resolve(this._isAuthorized);
         }
     }
 
-    notAuthorized() {
+    notAuthorized(): boolean {
         /* console.log('notAuthorized fired'); */
-        this._isAuthorized = false;
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
+        return this._setAuth(false);
+    }
+
+    private _setUser(user: USER_CL, params: SYS_PARMS) {
+        // console.log('_setUser', user, params);
+        this._user = user;
+        this._params = params;
+    }
+
+    private _setAuth(auth: boolean): boolean {
+        if (this._isAuthorized !== auth) {
+            this._isAuthorized = auth;
+            this._authorized$.next(auth);
+        }
+        return auth;
     }
 
     login(name: string, password: string): Promise<any> {
-        return this._authSrv.login(name, password).then(resp => {
-            this._isAuthorized = true;
-            this._authorized$.next(true);
-            return resp;
-        });
+        return this._authSrv.login(name, password).then((context) => {
+            // todo: fill user profile from response
+            this._setUser(context.user, context.sysParams);
+            return this._setAuth(true);
+        })
+            .catch((err) => {
+                return this.notAuthorized();
+            });
     }
 
     logout(): Promise<any> {
         return this._authSrv.logout().then((resp) => {
-            this._isAuthorized = false;
-            this._authorized$.next(false);
+            this._user = null;
+            this._params = null;
+            this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
+            this._router.navigate(['/login']);
             return resp;
         });
     }
 
     setSetting(key: string, value: any) {
         this._setSetting(key, value);
-        this._settings$.next(this.settings);
+        // this._settings$.next(this.settings);
         this._settings$.next(this.settings);
     }
 
     saveSettings(settings: any[]) {
         settings.forEach((item) => this._setSetting(item.id, item.value));
-        this._settings$.next(this.settings);
+        // this._settings$.next(this.settings);
         this._settings$.next(this.settings);
     }
 
@@ -129,6 +144,7 @@ export class EosUserProfileService implements IUserProfile {
                 name: key,
                 value: value
             }
+            this.settings.push(_setting);
         } else {
             _setting.value = value;
         }

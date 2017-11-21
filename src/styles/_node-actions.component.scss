@@ -1,126 +1,16 @@
 .eos-node-actions {
-    .first-line {
+    height: $item-height;
+
+    .rotate {
+        transform: rotate(-90deg);
+    }
+
+    .btn {
         height: $item-height;
-        border: 1px solid transparent;
-        margin-bottom: 20px;
-
-        .dropdown-menu {
-            padding: 0;
-        }
-    }
-
-    .second-line {
-        border: 1px solid transparent;
-    }
-
-    .table-title {
-        .checkbox {
-            display: inline-block;
-        }
-
-        .code {
-            margin: 0 20px;
-        }
-    }
-
-    .date {
-        position: relative;
-        top: -6px;
-    }
-
-    .search {
-        width: 320px;
-
-        .input-group-addon {
-            cursor: pointer;
-
-            &.search-icon-wrapper {
-                padding: 0 6px;
-            }
-
-            &.checkbox-icon-wrapper {
-                padding-left: 8px;
-            }
-        }
-
-        .checkbox {
-            margin: 0 -4px -4px 0;
-        }
-    }
-
-    .search-wrapper {
-        left: auto;
-        right: 0;
-        top: 35px;
-    }
-
-    .actions {
-        position: relative;
-        top: 8px;
-    }
-
-    .icon {
-        margin: 5px 10px;
-        cursor: pointer;
-
-        &.eos-icon-fab-blue {
-            margin-top: -5px;
-        }
-
-        &.eos-icon-search-blue {
-            position: relative;
-            top: -2px;
-        }
-    }
-
-    .full-search {
-        position: relative;
-        top: -3px;
-    }
-
-    .date-comment {
-        position: relative;
-        top: 3px;
-    }
-
-    .eos-datepicker {
-        display: inline-block;
-        width: 145px;
-        top: 5px;
-        font-weight: bold;
-        top: -1px;
-
-        .datepicker-input {
-            border: 0;
-            box-shadow: none;
-            height: 48px;
-        }
-
+        width: $item-width;
     }
 }
 
-@media (max-width: 1430px) {
-    .eos-node-actions {
-        .first-line {
-            padding: 0 7px;
-        }
-    }
-}
-
-@media (max-width: 1199px) {
-    .eos-node-actions {
-        .icon {
-            &.eos-icon-fab-blue {
-                position: relative;
-                top: 15px;
-            }
-        }
-    }
-}
-
-.creating-modal {
-    .form {
-        margin-left: 20px;
-        margin-right: 20px;
-    }
+.create-new-node {
+    padding: 0;
 }

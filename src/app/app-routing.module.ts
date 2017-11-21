@@ -13,39 +13,52 @@ import { DepartmentComponent } from '../eos-rest/clman/department.component';
 import { UserRestComponent } from '../eos-rest/clman/user.component';
 
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
-import { AuthGuard } from './guards/eos-auth.guard';
+import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [{
     path: 'spravochniki',
     data: { title: 'Справочники', showInBreadcrumb: true },
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizedGuard],
     children: [{
         path: '',
         pathMatch: 'full',
         component: DictionariesComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthorizedGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true },
+        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
         children: [{
             path: ':nodeId',
-            data: { title: 'Запись', showInBreadcrumb: true },
+            data: { title: 'Запись', showInBreadcrumb: false },
             children: [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showSandwichInBreadcrumb: true },
+                data: { showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
             }, {
                 path: 'edit',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Редактирование', showInBreadcrumb: true },
+                data: {
+                    title: 'Редактирование',
+                    showInBreadcrumb: false,
+                    showSandwichInBreadcrumb: false,
+                    showPinInBreadcrumb: true,
+                    closeStyle: true
+                },
                 canDeactivate: [CanDeactivateGuard]
             }, {
                 path: 'view',
                 pathMatch: 'full',
                 component: CardComponent,
-                data: { title: 'Просмотр', showInBreadcrumb: true },
+                data: {
+                    title: 'Просмотр',
+                    showInBreadcrumb: false,
+                    showSandwichInBreadcrumb: false,
+                    showPinInBreadcrumb: true,
+                    closeStyle: true
+                },
             }],
         }, {
             path: '',
@@ -56,6 +69,7 @@ const routes: Routes = [{
 }, {
     path: 'desk',
     data: { title: 'Главная', showInBreadcrumb: false },
+    canActivate: [AuthorizedGuard],
     children: [{
         path: '',
         pathMatch: 'full',
@@ -68,39 +82,45 @@ const routes: Routes = [{
 }, {
     path: 'test',
     component: TestPageComponent,
-    data: { title: 'Test page for UI components', showInBreadcrumb: true }
+    data: { title: 'Test page for UI components', showInBreadcrumb: true },
+    canActivate: [AuthorizedGuard],
 }, {
     path: 'delivery',
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizedGuard],
     component: DeliveryComponent,
-    data: { title: 'delivery page', showInBreadcrumb: true }
+    data: { title: 'delivery page', showInBreadcrumb: true },
 }, {
     path: 'rubric',
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizedGuard],
     component: RubricComponent,
     data: { title: 'rubric page', showInBreadcrumb: true }
 }, {
     path: 'department',
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizedGuard],
     component: DepartmentComponent,
     data: { title: 'department page', showInBreadcrumb: true }
 }, {
     path: 'user',
-    canActivate: [AuthGuard],
+    canActivate: [AuthorizedGuard],
     component: UserRestComponent,
     data: { title: 'user page', showInBreadcrumb: true }
 }, {
+    path: 'login',
+    canActivate: [UnauthorizedGuard],
+    component: LoginComponent,
+    data: { title: 'Вход в систему', showInBreadcrumb: false }
+}, {
     path: '',
-    redirectTo: '/desk',
+    redirectTo: '/desk/system',
     pathMatch: 'full',
 }, {
     path: '**',
-    redirectTo: '/desk',
+    redirectTo: '/desk/system',
     pathMatch: 'full',
 }];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
 export class AppRoutingModule {

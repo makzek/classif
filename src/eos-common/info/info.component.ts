@@ -34,7 +34,8 @@ export class InfoComponent {
         }
     }
 
-    reverse() {
+    reverse($evt: Event) {
+        $evt.stopPropagation();
         this._innerClick = true;
         this._pinned = !this._pinned;
         this.check();

@@ -1,17 +1,17 @@
 .eos-sandwich {
-    z-index: 1;
+    z-index: 4;
     position: relative;
 
     &.wide {
         display: inline-block;
         width: $dictionary-block-width;
-
         .sandwich {
             left: $dictionary-block-width - $item-width;
         }
     }
 
     .sandwich {
+        border-radius: 0 !important;
         position: relative;
     }
 
@@ -39,14 +39,6 @@
 
         &.icon-right {
             margin: 8px 12px;
-        }
-
-        &.rotate-left {
-            transform: rotate(-90deg);
-        }
-
-        &.rotate-right {
-            transform: rotate(90deg);
         }
     }
 }

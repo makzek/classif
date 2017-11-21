@@ -2,7 +2,7 @@
 
 import { DELIVERY_CL } from '../interfaces/structures';
 import { PipRX } from '../services/pipRX.service';
-import { Utils } from '../core/utils';
+import { _ES } from '../core/consts';
 
 @Component({
     selector: 'eos-delivery-detail',
@@ -37,17 +37,27 @@ export class DeliveryDetailComponent {
 
     read(isn: number) {
         this.pip.read<DELIVERY_CL>({ 'DELIVERY_CL': [isn] })
-            .subscribe((r) => {
-                Utils.prepareForEdit(r[0]);
+            .then(r => {
+                this.pip.entityHelper.prepareForEdit(r[0]);
                 this.item = r[0];
             });
     }
 
     onSave() {
-        const chl = Utils.changeList([this.item]);
-        this.pip.batch(chl, '').subscribe((r) => {
+        const chl = this.pip.changeList([this.item]);
+        this.pip.batch(chl, '').then((r) => {
             alert(this.pip.sequenceMap.GetFixed(this.item.ISN_LCLASSIF));
         });
 
+    }
+
+    onDel() {
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        this.item._State = _ES.Deleted;
+        const chl = this.pip.changeList([this.item]);
+        this.pip.batch(chl, '').then((r) => {
+            alert(r);
+        });
     }
 }

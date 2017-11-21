@@ -1,7 +1,8 @@
 import { Component, ViewContainerRef } from '@angular/core';
 
-import { EosDeskService } from '../app/services/eos-desk.service';
 import { environment } from '../environments/environment';
+import { APP_MODULES, APP_MODULES_DROPDOWN } from './consts/app-modules.const';
+import { EosUserProfileService } from './services/eos-user-profile.service';
 
 @Component({
     selector: 'eos-root',
@@ -10,33 +11,17 @@ import { environment } from '../environments/environment';
 export class AppComponent {
     private _containerRef: ViewContainerRef;
 
-    currentDesk: string;
+    modules = APP_MODULES;
+    modulesDropdown = APP_MODULES_DROPDOWN;
     version: string;
-
-    modules = [{
-        title: 'Cправочники',
-        url: '/spravochniki'
-    }, {
-        title: 'Тестовая страница',
-        url: '/test'
-    }];
+    isAuthorized: boolean;
 
     constructor(
         viewContainerRef: ViewContainerRef,
-        private _deskSrv: EosDeskService,
+        private _profileSrv: EosUserProfileService
     ) {
         this._containerRef = viewContainerRef;
-
-        this._deskSrv.selectedDesk.subscribe(
-            (link) => {
-                if (link) {
-                    this.currentDesk = '/home/' + link.id;
-                } else {
-                    this.currentDesk = '';
-                }
-            }
-        );
-
+        this._profileSrv.authorized$.subscribe((auth) => this.isAuthorized = auth);
         if (!environment.production) {
             this.version = environment.version;
         }

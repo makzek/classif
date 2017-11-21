@@ -1,73 +1,36 @@
 .eos-datepicker {
     position: relative;
 
-    .datepicker-input {
-        padding-right: 40px;
-        background-color: transparent;
-    }
-
-    .icon {
-        position: absolute;
-        right: 5px;
-        top: 5px;
+    input {
+        padding-right: 32px !important;
+        background-image: url("../assets/icons/Calendar-Blue.png");
+        background-repeat: no-repeat;
         cursor: pointer;
-    }
+        background-position-x: right;
+        background-position-y: center;
+        background-size: 24px;
+        display: inline-block;
 
-    .well-sm {
-        position: fixed;
-        background: white;
-        padding: 0;
-        z-index: 1;
-        right: 10px;
-
-        button {
-            border-color: transparent;
-            border-radius: 50%;
-            height: 34px;
-            width: 24px;
-            padding: 5px;
-            margin: 5px;
-            font-weight: bold;
-
-            .text-info {
-                color: $invalid-color-hover-main-theme;
-            }
-
-            &.active {
-                color: white;
-                background-color: $button-color-main-theme;
-
-                .text-info {
-                    color: white;
-                }
-            }
+        &.stub {
+            box-shadow: none;
+            background-image: none;
+            padding: 0;
         }
 
-        thead {
-            tr:first-child {
-                background-color: $button-color-main-theme;
-
-                button {
-                    border-radius: 0;
-                    background-color: $button-color-main-theme;
-                    color: white;
-                    height: $item-height;
-
-                    &:hover {
-                        background-color: $button-color-hover-main-theme;
-                    }
-                }
-            }
-
-            th:not(:last-child) {
-                padding-left: 10px;
-            }
-        }
-
-        tbody {
-            td:last-child {
-                padding-right: 8px;
-            }
+        &.hidden {
+            display: none;
         }
     }
+}
+
+.theme-dark-blue .bs-datepicker-head,
+.theme-dark-blue .bs-datepicker-body table td span.selected,
+.theme-dark-blue .bs-datepicker-body table td.selected span,
+.theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after,
+.theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
+    background-color: $button-color-main-theme !important;
+}
+
+.bs-datepicker-body table td {
+    color: black !important;
 }

@@ -1,6 +1,6 @@
 .eos-notice {
-    position: relative;
-    top: -26px;
+    height: 100%;
+    width: 48px;
 
     .badge {
         font-size: 9px;
@@ -15,6 +15,7 @@
 
     .btn {
         padding: 6px 7px;
+        height: 100%;
     }
 
     .dropdown-button {
@@ -24,15 +25,5 @@
 
     .menuitem {
         cursor: pointer;
-    }
-}
-
-@media (max-width: 1280px) {
-    .eos-notice {
-        // top: -24px;
-
-        .dropdown-button {
-            font-size: 16px;
-        }
     }
 }

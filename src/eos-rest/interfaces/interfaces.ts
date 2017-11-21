@@ -19,6 +19,30 @@ export interface ILinearCL extends IEnt {
     DELETED: number;
     NOTE: string;
 }
+/**
+ * свойства записи про ее создание и изменение
+ * есть у многих
+ */
+export interface IStamp {
+    /**
+     * Дата и время создания
+     */
+    INS_DATE: number;
+    /**
+     * Дата и время обновления
+     */
+    UPD_DATE: number;
+    /**
+     * Кто создал
+     */
+    INS_WHO: number;
+    /**
+     * Кто обновил
+     */
+    UPD_WHO: number;
+}
+
+
 
 export interface IHierCL extends IEnt {
     DUE: string;
@@ -31,27 +55,6 @@ export interface IHierCL extends IEnt {
     DELETED: number;
     NOTE: string;
 }
-
-export interface IDeliveryCl extends IEnt {
-    ISN_LCLASSIF: any;
-    CLASSIF_NAME: any;
-};
-
-export interface IRubricCl extends IEnt {
-    DUE: any;
-    RUBRIC_CODE: any;
-    CODE: any;
-    ISN_LCLASSIF: any;
-    PARENT_DUE: any;
-    ISN_NODE: any;
-    IS_NODE: any;
-    ISN_HIGH_NODE: any;
-    WEIGHT: any;
-    CLASSIF_NAME: any;
-    PROTECTED: any;
-    DELETED: any;
-    NOTE: any;
-};
 
 export interface ITypeDef {
     pk: string;
@@ -101,3 +104,17 @@ export interface IAsk {
 export interface IR extends IRequest {
     _et: string;
 };
+
+export enum CacheLevel {
+    Entities = 1, List = 2, EntitiesAndList = 4
+}
+
+export interface ICachePolicy {
+    level?: CacheLevel
+    refresh?: CacheLevel
+
+//    expire?: Date;
+
+//    zone?: string;
+//    izolateZone?: boolean;
+}

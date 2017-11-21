@@ -2,6 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+    width: calc(100vw - 30px);
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
 
     .dictionary {
         height: 100px;
@@ -9,9 +12,8 @@
         margin-right: 10px;
         margin-bottom: 10px;
         border-radius: 0;
-        font-size: 18px;
-        line-height: 26px;
         text-align: left;
+        overflow: hidden;
 
         &.btn {
             padding: 0;

@@ -1,25 +1,30 @@
-import { Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { CODE_LENGTH, TITLE_LENGTH, DESCRIPTION_LENGTH } from '../consts/input-validation';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
+@Component({
+    selector: 'eos-card-edit',
+    templateUrl: 'card-edit.component.html'
+})
 export class CardEditComponent {
+    @Input() dictionaryId: string;
     @Input() data: any;
-    @Input() editMode = false;
+    @Input() editMode: boolean;
+    @Input() fieldsDescription: any;
+    @Input() nodeSet: EosDictionaryNode[];
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    readonly codeLenth = CODE_LENGTH;
-    readonly titleLenth = TITLE_LENGTH;
-    readonly descriptionLength = DESCRIPTION_LENGTH;
-
-
-    change(fldKey: string, value: string) {
-        this.data[fldKey] = value;
-        this.onChange.emit(this.data);
+    recordChanged(data: any) {
+        this.onChange.emit(data);
     }
 
-    clean(field: string, value: string) {
+    onInvalid(data: any) {
+        this.invalid.emit(data);
+    }
+
+    /* clean(field: string, value: string) {
         this.change(field, value);
-    }
+    }*/
 }

@@ -1,134 +1,37 @@
 <div class="eos-node-actions">
-    <div class="first-line block">
-        <span class="controller">
-            <span *ngFor="let action of recordActions" class="visible-lg-inline-block actions">
-                <button *ngIf="isEnabled(action.group, action.type)" class="btn btn-primary-light {{action.buttonClass}}" (click)="doAction(action.type)">
-                    <span class="{{action.iconClass}} small" tooltip="{{action.hint}}" placement="right" container="body"></span>
+    <span *ngFor="let item of buttons let i = index" class="visible-lg-inline-block actions">
+        <button *ngIf="item.show" [disabled]="!item.enabled" class="btn btn-primary-light {{item.buttonClass}}" [ngClass]="{active: item.isActive}"
+            tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
+            <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
+            <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
         </button>
-        </span>
-        <div class="btn-group" dropdown>
-            <span class="actions">
-                    <button class="btn btn-primary-light" dropdownToggle tooltip="Ещё" placement="right">
-                        <span class="eos-icon eos-icon-fab-blue small"></span>
-            </button>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-                <ng-template ngFor let-item let-i="index" [ngForOf]="dropdownRecordActions">
-                    <li *ngIf="isEnabled(item.group, item.type)" role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right">
-                        <a class="dropdown-item" (click)="doAction(item.type)">{{item.title}}</a>
-                    </li>
-                </ng-template>
-            </ul>
-        </div>
-        </span>
-        <span class="pull-right">
-            <span class="date"><span class="date-comment">Состояние на </span><!--<b>{{date | date:'shortDate'}}</b>--></span>
-        <!--<span class="icon eos-icon eos-icon-calendar-blue small"></span>-->
-        <eos-datepicker class="datepicker" (change)="dataSeted()"></eos-datepicker>
-        <button class="btn btn-primary-light full-search" tooltip="Расширенный поиск" placement="left" container="body">
-            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+    </span>
+
+    <span *ngFor="let item of moreButtons let i = index" class="visible-lg-inline-block actions">
+        <button *ngIf="showMore" [disabled]="!item.enabled" class="btn btn-primary-light {{item.buttonClass}}" [ngClass]="{active: item.isActive}"
+            tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info" (click)="doAction(item)">
+            <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
+            <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
         </button>
-        <div class="btn-group" dropdown [isOpen]="dropdownIsOpen" (isOpenChange)="change($event)" [autoClose]="!innerClick" (click)="innerClick = true">
-            <span dropdownToggle type="button">
-                        <span class="icon eos-icon eos-icon-search-blue small" tooltip="Быстрый поиск" container="body" placement="left"></span>
-            </span>
-            <ul *dropdownMenu class="dropdown-menu search-wrapper" role="menu">
-                <li>
-                    <div class="input-group search">
-                        <span class="input-group-addon search-icon-wrapper" id="basic-addon1">
-                                <span class="eos-icon eos-icon-search-blue x-small" aria-hidden="true" (click)="openModal(searchModal)" tooltip="Расширенный поиск"></span>
-                        </span>
-                        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Поиск" aria-describedby="basic-addon1" (keydown)="search($event)">
-                        <span class="input-group-addon checkbox-icon-wrapper" id="basic-addon1">
-                            <span class="checkbox">
-                                <label><input type="checkbox" [(ngModel)]="searchInAllDict" tooltip="Искать во всём словаре" placement="bottom">
-                                    <span></span>
-                                </label>
-                            </span>
-                        </span>
-                    </div>
+    </span>
+
+    <span class="visible-lg-inline-block actions">
+        <button class="btn btn-primary-light actions" [tooltip]="showMore ? 'Скрыть меню': 'Показать меню'"
+        placement="right" containerClass="tooltip-info" (click)="showMore = !showMore">
+            <span class="eos-icon eos-icon-fab-blue small" [ngClass]="{'rotate': showMore}"></span>
+        </button>
+    </span>
+
+    <span class="btn-group hidden-lg" dropdown>
+        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">
+            <span class="eos-icon eos-icon-fab-blue small"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
+                <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
+                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item)">{{item.title}}</button>
                 </li>
-            </ul>
-        </div>
-        </span>
-    </div>
-    <div class="second-line block special-text">
-        <span class="table-title">
-            <span *ngIf="showCheckbox && !itemIsChecked" class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="checkAll" (change)="checkAllItems()" tooltip="{{ checkAll ? 'Снять пометки' : 'Пометить все' }}">
-                    <span></span>
-        </label>
-        </span>
-        <span *ngIf="showCheckbox && itemIsChecked" class="group-checkbox checkbox">
-                <label><input type="checkbox" [(ngModel)]="itemIsChecked" (change)="uncheckAllItems()" tooltip="{{ itemIsChecked ? 'Снять пометки' : 'Пометить все' }}">
-                    <span></span>
-        </label>
-        </span>
-        <span *ngFor="let field of viewFields" class="code">{{field.title}}</span>
-        </span>
-
-
-        <div class="clear-all"></div>
-    </div>
+            </ng-template>
+        </ul>
+    </span>
 </div>
-
-<div bsModal #creatingModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="creating-modal modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Добавление записи</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="creatingModal.hide()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="create-new-node modal-body">
-                <eos-rubricator-card-edit [data]="newNodeData" editMode="true" *ngIf="dictIdFromDescriptor === 'rubricator'"></eos-rubricator-card-edit>
-                <!--eos-departments-card-edit [data]="newNodeData" *ngIf="dictIdFromDescriptor === 'departments'"></eos-departments-card-edit>
-                <eos-rooms-card-edit *ngIf="dictIdFromDescriptor === 'rooms'"></eos-rooms-card-edit-->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" (click)="create()">Добавить</button>
-                <button class="btn btn-default" (click)="cancelCreate()">Отмена</button>
-                <button class="btn btn-default" (click)="create(false)">Добавить ещё</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<template #searchModal>
-    <div class="search-modal modal-header">
-        <h4 class="modal-title pull-left">Форма расширенного поиска</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    <div class="search-modal modal-body">
-        <div class="intro-text">Введите поисковой запрос. В результате поиска отобразятся только те элементы, которые отвечают всем заданным критериям.</div>
-        <div class="checkbox">
-            <label><input type="checkbox" [(ngModel)]="searchInDeleted">
-                <span></span>
-                Учитывать логически удаленные</label>
-        </div>
-        <div *ngIf="fields">
-            <div *ngFor="let field of fields">
-                <div class="input-group" *ngIf="field.type === 3">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group" *ngIf="field.type === 0">
-                    <span class="input-group-addon" id="basic-addon1">{{field.title}}</span>
-                    <input type="text" class="form-control" placeholder="{{field.title}}" [(ngModel)]="field.value" aria-describedby="basic-addon1">
-                </div>
-                <div class="checkbox" *ngIf="field.type === 6">
-                    <label><input type="checkbox" [(ngModel)]="field.value">
-                        <span></span>
-                        {{field.title}}</label>
-                </div>
-            </div>
-        </div>
-        <div>
-            <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary">Искать</button>
-        </div>
-    </div>
-</template>

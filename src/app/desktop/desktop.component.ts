@@ -4,13 +4,13 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 import { IDeskItem } from '../core/desk-item.interface';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
 
 @Component({
-    selector: 'eos-desktop',
     templateUrl: 'desktop.component.html',
 })
 export class DesktopComponent implements OnDestroy {
@@ -33,7 +33,8 @@ export class DesktopComponent implements OnDestroy {
         private _deskSrv: EosDeskService,
         private _router: Router,
         private _route: ActivatedRoute,
-        private _confirmSrv: ConfirmWindowService
+        private _confirmSrv: ConfirmWindowService,
+        private _storageSrv: EosStorageService
     ) {
         this.referencesList = [];
         this._routerSubscription = this._router.events
@@ -72,7 +73,8 @@ export class DesktopComponent implements OnDestroy {
         this.referencesList = dictionariesList;
     }
 
-    removeLink(link: IDeskItem): void {
+    removeLink(link: IDeskItem, $evt: Event): void {
+        $evt.stopPropagation();
         const _confrm = Object.assign({}, CONFIRM_LINK_DELETE);
         _confrm.body = _confrm.body.replace('{{link}}', link.title);
 
@@ -98,11 +100,15 @@ export class DesktopComponent implements OnDestroy {
         this.stopDefault(evt);
         this._editingItem = item;
         this._newTitle = item.title;
+        const index = this.referencesList.indexOf(item);
+        const itemDiv = document.getElementsByClassName('sortable-item');
+        itemDiv[index]['draggable'] = false;
     }
 
     save(evt: Event) {
         if (this._newTitle !== this._editingItem.title) {
             this._editingItem.title = this._newTitle;
+            this._editingItem.fullTitle = this._newTitle;
             /* todo: add save service call */
             /* then */
         }
@@ -110,6 +116,9 @@ export class DesktopComponent implements OnDestroy {
     }
 
     cancel(evt: Event) {
+        const index = this.referencesList.indexOf(this._editingItem);
+        const itemDiv = document.getElementsByClassName('sortable-item');
+        itemDiv[index]['draggable'] = true;
         this._editingItem = null;
     }
 

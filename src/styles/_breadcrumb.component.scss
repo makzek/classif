@@ -2,6 +2,7 @@
     height: $breadcrumbs-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
+    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, .15);
 
     .breadcrumb {
         background-color: inherit;
@@ -10,6 +11,7 @@
         padding: 0;
         position: relative;
         top: 11px;
+        padding-left: 20px;
 
         & > li:not(:first-child)::before {
             // font-family: "Glyphicons Halflings";
@@ -30,8 +32,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             display: inline-block;
-            font-size: 16px;
-            line-height: 24px;
             padding: 0 12px;
         }
 
@@ -46,6 +46,9 @@
 
     .pushpin {
         top: 11px;
+        position: relative;
+        transition: right .25s ease-in-out;
+        right: 0;
     }
 
     .left-sandwich {
@@ -57,7 +60,7 @@
 
     .right-sandwich {
         .btn {
-            margin-bottom: -20px;
+            margin-bottom: -19px;
         }
     }
 

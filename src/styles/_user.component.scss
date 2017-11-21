@@ -1,19 +1,21 @@
 .eos-user {
     height: 100%;
     cursor: pointer;
-    padding-left: 20px;
+    width: 280px;
+    margin: 0 20px;
 
     .text {
         position: relative;
         top: -24px;
-        font-size: 14px;
-        line-height: 20px;
+        display: inline-block;
     }
 
-    .caret {
-        position: relative;
-        top: -23px;
-        left: -12px;
+    .user-menu-btn {
+        width: 240px;
+        height: 100%;
+        background-color: transparent;
+        padding: 0;
+        overflow: hidden;
     }
 }
 
@@ -24,11 +26,20 @@
     }
 }
 
-@media (max-width: 1280px) {
+
+@media (max-width: 1250px) {
     .eos-user {
+        width: 90px;
+        padding: 0 14px;
+        margin: 0;
+
         .text {
-            font-size: 12px;
-            line-height: 18px;
+            display: none;
+        }
+
+        .user-menu-btn {
+            width: 60px;
         }
     }
 }
+

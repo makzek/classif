@@ -16,4 +16,14 @@ export class SequenceMap {
     Fix(tempID: any, id: any) {
         this.fixed[tempID] = id;
     }
+
+    FixMapItem(data: any) {
+        if (data.TempID) {
+            this.Fix(data.TempID, data.ID);
+        }
+        if (data.TempISN) {
+            this.Fix(data.TempISN, data.FixedISN);
+        }
+
+    }
 }

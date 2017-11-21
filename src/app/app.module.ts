@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
@@ -14,75 +15,84 @@ import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
 
 import { AppRoutingModule } from './app-routing.module';
-import { EosRestModule } from '../eos-rest/eos-rest.module';
-import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
+import { EosDictionariesModule } from '../eos-dictionaries/eos-dictionaries.module';
+import { EosRestModule } from '../eos-rest/eos-rest.module';
+
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
-import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
-import { SearchComponent } from './search/search.component';
-import { UserComponent } from './user/user.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { NoticeComponent } from './notice/notice.component';
 import { DesktopComponent } from './desktop/desktop.component';
-import { TitleComponent } from './title/title.component';
+import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
+import { LoginComponent } from './login/login.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { NoticeComponent } from './notice/notice.component';
 import { PushpinComponent } from './pushpin/pushpin.component';
-import { SandwichComponent } from './sandwich/sandwich.component';
-
-import { EosDeskService } from './services/eos-desk.service';
-import { EosUserProfileService } from './services/eos-user-profile.service';
-import { EosNoticeService } from './services/eos-notice.service';
-import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
+import { SearchComponent } from './search/search.component';
 
 import { TestPageComponent } from './test-page/test-page.component';
 
+import { TitleComponent } from './title/title.component';
+import { UserComponent } from './user/user.component';
+
+import { EosBreadcrumbsService } from './services/eos-breadcrumbs.service';
+import { EosDeskService } from './services/eos-desk.service';
+import { EosNoticeService } from './services/eos-notice.service';
+import { EosStorageService } from './services/eos-storage.service';
+import { EosUserProfileService } from './services/eos-user-profile.service';
+
 /* guards */
+import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
-import { AuthGuard } from './guards/eos-auth.guard';
 /* end guards */
 
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         BreadcrumbsComponent,
-        DesktopSwitcherComponent,
-        SearchComponent,
-        UserComponent,
-        UserSettingsComponent,
-        TestPageComponent,
-        NoticeComponent,
         DesktopComponent,
-        TitleComponent,
-        PushpinComponent,
+        DesktopSwitcherComponent,
         LoginComponent,
-        SandwichComponent,
+        LoginFormComponent,
+        NoticeComponent,
+        PushpinComponent,
+        SearchComponent,
+        TestPageComponent,
+        TitleComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
         AppRoutingModule,
         HttpModule,
-        Ng2BootstrapModule.forRoot(),
+        BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
+        TooltipModule.forRoot(),
         EosRestModule.forRoot(APP_CONFIG.apiCfg),
         EosCommonModule,
         EosDictionariesModule,
+    ],
+    entryComponents: [
+        LoginFormComponent,
     ],
     exports: [
         EosRestModule,
     ],
     providers: [
+        { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: EosErrorHandler },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        AuthGuard,
-        EosErrorHandler,
-        EosDeskService,
-        EosUserProfileService,
-        EosNoticeService,
+        AuthorizedGuard,
+        UnauthorizedGuard,
         CanDeactivateGuard,
         EosBreadcrumbsService,
+        EosDeskService,
+        EosErrorHandler,
+        EosNoticeService,
+        EosStorageService,
+        EosUserProfileService,
+        { provide: LOCALE_ID, useValue: 'ru-RU' },
     ],
     bootstrap: [AppComponent],
 })

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router'
 import { EosDictService } from '../services/eos-dict.service';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 @Component({
     selector: 'eos-dictionaries',
@@ -9,7 +10,11 @@ import { EosDictService } from '../services/eos-dict.service';
 export class DictionariesComponent {
     dictionariesList: { id: string, title: string }[];
 
-    constructor(private _dictSrv: EosDictService) {
+    constructor(
+        private _dictSrv: EosDictService,
+        private _route: ActivatedRoute,
+        private _storageSrv: EosStorageService
+    ) {
         this.dictionariesList = [];
         this._dictSrv
             .getDictionariesList()

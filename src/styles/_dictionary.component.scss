@@ -13,7 +13,8 @@
         height: calc(100vh - 108px);
         width: $dictionary-block-width + $item-width / 2;
         overflow-y: auto;
-        border-right: 1px solid transparent;
+        border-right-width: 1px;
+        border-right-style: solid;
         transform: translateX(-24px);
 
         &.has-spinner {
@@ -26,7 +27,9 @@
     .opened-wrapper {
         height: calc(100vh - 60px);
         width: $dictionary-block-width;
-        border-left: 1px solid transparent;
+        border-left-width: 1px;
+        border-left-style: solid;
+        z-index: 3;
     }
 
     &.info {
@@ -42,7 +45,7 @@
         .selected-wrapper {
             top: $grid-gutter-width / 2 + $top-menu-height;
             left: $grid-gutter-width / 2;
-            right: 420px;
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
 
@@ -96,6 +99,156 @@
             right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
+
+    .node-actions {
+        .selected-node {
+            border: 1px solid transparent;
+            border-bottom: 0;
+            min-height: $item-height;
+            display: -ms-grid;
+            display: grid;// sass-lint:disable-line no-duplicate-properties
+            -ms-grid-columns:  48px 1fr 150px;
+            grid-template-columns: 48px 1fr 150px;
+
+            .item-count {
+                height: 100%;
+                width: 150px;
+                display: inline-block;
+                text-align: center;
+                border-left-width: 1px;
+                border-left-style: solid;
+                grid-column: 3;
+            }
+
+            .selected-node-title {
+                grid-column: 2;
+            }
+
+            .btn {
+                height: $item-height;
+                width: $item-width;
+            }
+
+            .go-top-wrapper,
+            .item-count,
+            .selected-node-title {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+
+            .go-top-wrapper {
+                grid-column: 1;
+            }
+        }
+
+        .first-line {
+            height: $item-height;
+            border: 1px solid transparent;
+        }
+
+        .date {
+            position: relative;
+            top: 6px;
+        }
+
+        .search {
+            width: 320px;
+
+            .input-group-addon {
+                cursor: pointer;
+
+                &.search-icon-wrapper {
+                    padding: 0 6px;
+                }
+
+                &.checkbox-icon-wrapper {
+                    padding-left: 8px;
+                }
+            }
+
+            .checkbox {
+                margin: 0 -4px -4px 0;
+            }
+        }
+
+        .search-wrapper {
+            left: auto;
+            right: 0;
+            top: 35px;
+        }
+
+        .icon {
+            margin: 5px 10px;
+            cursor: pointer;
+        }
+
+        .eos-datepicker {
+            display: inline-block;
+            width: 125px;
+            font-weight: bold;
+            position: relative;
+            top: 6px;
+
+            input {
+                border-color: transparent;
+                box-shadow: none;
+            }
+        }
+
+        .second-line {
+            border: 1px solid transparent;
+            border-top: 0;
+            width: 100%;
+            height: $item-height;
+            line-height: $item-height;
+
+            .second-line-content {
+                display: flex;
+                width: 100%;
+                position: relative;
+                top: -7px;
+            }
+
+            .config-btn {
+                height: $item-height;
+                width: $item-width;
+                font-size: 24px;
+            }
+
+            .node-title {
+                display: inline-block;
+                width: 100%;
+
+                .item {
+                    display: inline-block;
+                    padding: 0 20px;
+                    white-space: nowrap;
+
+                    .text {
+                        cursor: pointer;
+                    }
+
+                    .icon {
+                        margin: 0;
+                        vertical-align: sub;
+                    }
+                }
+            }
+
+            .checkbox-inline {
+                line-height: $item-height;
+                width: $item-width;
+                padding-right: 12px;
+            }
+        }
+    }
+}
+
+.creating-modal {
+    .modal-content {
+        padding: 0 20px;
+    }
 }
 
 @media (max-width: 1500px) {
@@ -118,6 +271,15 @@
             .selected-wrapper {
                 left: $grid-gutter-width / 2;
             }
+        }
+
+        .screen-wrapper {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
         }
     }
 }

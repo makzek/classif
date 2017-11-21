@@ -2,23 +2,22 @@
     // min-height: 450px;
     max-height: calc(100vh - 108px - 60px);
     width: 800px;
-    margin: 20px auto;
+    margin: 0 auto;
     border: 1px solid transparent;
     overflow-y: auto;
 
     .edit-header {
-        padding: 5px;
+        min-height: $item-height;
+        padding:  0;
         display: -ms-grid;
-        display: grid;
-
-        // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 100px 20px 1fr 130px;
-        grid-template-columns: 100px 20px 1fr 130px;
+        display: grid; // sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 100px 48px 1fr 153px;
+        grid-template-columns: 100px 48px 1fr 153px;
         border-bottom: 1px solid transparent;
 
         &.edited {
-            -ms-grid-columns: 100px 20px 1fr 172px;
-            grid-template-columns: 100px 20px 1fr 172px;
+            -ms-grid-columns: 0 48px 1fr 195px;
+            grid-template-columns: 0 48px 1fr 195px;
         }
 
         .btn {
@@ -36,16 +35,29 @@
         .check-wrapper {
             grid-column: 2;
             grid-row: 1;
-            margin: 8px 0 0 -10px;
 
             .checkbox {
                 margin: 0;
+
+                label {
+                    padding: 0;
+                }
+            }
+
+            .checkbox-inline {
+                padding: 0;
+                margin-left: 12px;
             }
         }
 
         .move-wrapper {
             grid-column: 1;
             grid-row: 1;
+
+            .btn {
+                height: $item-height;
+                width: $item-width;
+            }
         }
 
         .name-wrapper {
@@ -57,12 +69,30 @@
         .buttons-wrapper {
             grid-column: 4;
             grid-row: 1;
-            margin: auto;
+
+            .btn {
+                text-transform: uppercase;
+            }
         }
 
         .action-wrapper {
             grid-column: 4;
             grid-row: 1;
+
+            .btn {
+                height: $item-height;
+                margin: -8px 0;
+                width: $item-width;
+            }
+        }
+
+        .move-wrapper,
+        .check-wrapper,
+        .buttons-wrapper,
+        .action-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
         }
     }
 
@@ -82,43 +112,46 @@
         background-color: #e6e5e5;
         border-color: #adadad;
     }*/
+}
 
-    .edit-content {
-        padding: 10px 20px;
+.edit-content {
+    padding: 20px;
 
-        label {
-            font-size: 12px;
-            line-height: 16px;
-            font-weight: normal;
-        }
+    label {
+        font-weight: normal;
 
-        .form-group {
-            &:not(:first-child) {
-                margin-top: 20px;
-            }
-
-            label {
-                text-transform: uppercase;
-                white-space: nowrap;
-            }
-        }
-
-        .form-control {
-            font-size: 14px;
-            line-height: 20px;
-            border-radius: 0;
-            padding: 8px;
-            padding-right: 37px;
-        }
-
-        .readonly {
-            border: 0;
-            box-shadow: none;
-            padding: 0;
+        &:not(.checkbox) {
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
     }
 
-    .rubricator-card-edit {
-        padding: 20px;
+    .form-group {
+        &:not(.gender) {
+            position: relative;
+        }
+
+        &:not(:first-child) {
+            margin-top: 30px;
+        }
     }
+
+    .form-control {
+        border-radius: 0;
+        padding: 8px;
+    }
+
+    input.form-control {
+        height: 32px;
+    }
+
+    .readonly {
+        box-shadow: none;
+        padding: 0;
+    }
+}
+
+.simple-card-edit {
+    padding: 20px;
 }

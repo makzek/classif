@@ -1,33 +1,34 @@
+import {
+    E_FIELD_SET,
+    E_DEPT_MODE,
+    IDepartmentDictionaryDescriptor,
+    IDictionaryDescriptor,
+    ITreeDictionaryDescriptor,
+    IRecordMode,
+    IRecordModeDescription,
+} from './dictionary.interfaces';
+import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, IRecordMode, ModeFieldSet, E_FIELD_SET } from './dictionary-descriptor';
+import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
-
-export enum E_DEPT_MODE {
-    person,
-    department
-}
-
-export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
-    modeField: string;
-    fullSearchFields: IRecordMode;
-    quickViewFields: IRecordMode;
-    shortQuickViewFields: IRecordMode;
-    editFields: IRecordMode;
-    listFields: IRecordMode;
-}
+import { ModeFieldSet } from './record-mode';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
-    parent: DepartmentDictionaryDescriptor;
+    dictionary: DepartmentDictionaryDescriptor;
+    parentField: FieldDescriptor;
     modeField: FieldDescriptor;
+    modeList: IRecordModeDescription[];
 
     constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
-        /* fields: IFieldDesriptor[], typeFieldName: string */
-        super(data);
-        this.parent = dictionary;
+        super(dictionary, data);
+        this.dictionary = dictionary;
+        this._setCustomField('parentField', data);
         this.modeField = this.fieldsMap.get(data.modeField);
         if (!this.modeField) {
             throw new Error('No field decribed for "' + data.modeField + '"');
         }
+
+        this.modeList = data.modeList;
     }
 
     getMode(values: any): E_DEPT_MODE {
@@ -49,17 +50,25 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
     }
 }
 
-export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
+export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: DepartmentRecordDescriptor;
     fullSearchFields: ModeFieldSet;
     quickViewFields: ModeFieldSet;
     shortQuickViewFields: ModeFieldSet;
     editFields: ModeFieldSet;
     listFields: ModeFieldSet;
+    allVisibleFields: FieldDescriptor[];
 
     constructor(data: IDepartmentDictionaryDescriptor) {
         super(data);
-        this._initModeSets(['quickViewFields', 'shortQuickViewFields', 'editFields', 'listFields', 'fullSearchFields', 'listFields'], data);
+        this._initModeSets([
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields',
+            'listFields'
+        ], data);
     }
 
     _init(data: IDepartmentDictionaryDescriptor) {
@@ -88,11 +97,17 @@ export class DepartmentDictionaryDescriptor extends DictionaryDescriptor {
                 return this._getModeSet(this.editFields, values);
             case E_FIELD_SET.list:
                 return this._getModeSet(this.listFields, values);
-            case E_FIELD_SET.fullSearch:
-                return this._getModeSet(this.fullSearchFields, values);
+            /* case E_FIELD_SET.fullSearch:
+                return this._getModeSet(this.fullSearchFields, values);*/
+            case E_FIELD_SET.allVisible:
+                return this._getFieldSet(E_FIELD_SET.allVisible, values);
             default:
                 throw new Error('Unknown field set');
         }
+    }
+
+    getModeList(): IRecordModeDescription[] {
+        return this.record.modeList;
     }
 
 

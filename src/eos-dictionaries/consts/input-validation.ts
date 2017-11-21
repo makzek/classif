@@ -1,3 +1,9 @@
-export const TITLE_LENGTH = 250;
-export const DESCRIPTION_LENGTH = 1500;
-export const CODE_LENGTH = 20;
+export const RUBRIC_TITLE_LENGTH = 2000;
+export const DESCRIPTION_LENGTH = 248;
+export const RUBRIC_CODE_LENGTH = 248;
+export const NOTE_LENGTH = 255;
+export const SEV_LENGTH = 64;
+export const DEPARTMENT_TITLE_LENGTH = 255;
+export const SURNAME_LENGTH = 64;
+
+export const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;

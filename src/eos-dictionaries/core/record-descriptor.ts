@@ -1,16 +1,17 @@
-import { FieldDescriptor, /*IFieldDesriptor,*/ IFieldView } from './field-descriptor';
-import { IDictionaryDescriptor, DictionaryDescriptor, E_FIELD_SET } from './dictionary-descriptor';
+import { IDictionaryDescriptor, E_FIELD_SET, IFieldView } from './dictionary.interfaces';
+import { FieldDescriptor } from './field-descriptor';
+import { DictionaryDescriptor } from './dictionary-descriptor';
 
-export abstract class RecordDescriptor {
-    protected parent: DictionaryDescriptor;
+export class RecordDescriptor {
+    protected dictionary: DictionaryDescriptor | any;
+    parentField?: FieldDescriptor;
     keyField: FieldDescriptor;
-    parentField: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor(data: IDictionaryDescriptor) {
+    constructor(dictionary: DictionaryDescriptor | any, data: IDictionaryDescriptor) {
         const fields = data.fields;
-
+        this.dictionary = dictionary;
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
         fields.forEach((f) => {
@@ -20,10 +21,9 @@ export abstract class RecordDescriptor {
         });
 
         this._setCustomField('keyField', data);
-        this._setCustomField('parentField', data);
     }
 
-    private _setCustomField(fldName: string, data: IDictionaryDescriptor) {
+    protected _setCustomField(fldName: string, data: IDictionaryDescriptor) {
         if (fldName) {
             this[fldName] = this.fieldsMap.get(data[fldName]);
         }
@@ -43,19 +43,23 @@ export abstract class RecordDescriptor {
     }
 
     getListView(data: any): IFieldView[] {
-        return this._bindData(this.parent.getFieldSet(E_FIELD_SET.list), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.list), data);
     }
 
     getQuickView(data: any): IFieldView[] {
-        return this._bindData(this.parent.getFieldSet(E_FIELD_SET.quickView, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data), data);
     }
 
     getShortQuickView(data: any): IFieldView[] {
-        return this._bindData(this.parent.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
     }
 
     getEditView(data: any): IFieldView[] {
-        return this._bindData(this.parent.getFieldSet(E_FIELD_SET.edit, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.edit, data), data);
+    }
+
+    getEditFieldDescription(data: any): any {
+        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.edit, data));
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {

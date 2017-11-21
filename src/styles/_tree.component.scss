@@ -1,5 +1,4 @@
 .eos-tree-node {
-    margin-bottom: 8px;
     padding-left: 24px;
     position: relative;
 
@@ -13,6 +12,7 @@
         width: 100%;
         position: relative;
         min-height: $item-height;
+        cursor: pointer;
 
         .icon {
             cursor: pointer;
@@ -25,10 +25,8 @@
             cursor: pointer;
             display: inline-block;
             margin-left: $item-width;
-            padding: 13px 7px 13px 0;
+            padding: 12px 20px 12px 0;
             min-height: $item-height;
-            font-size: 16px;
-            line-height: 24px;
         }
     }
 }

@@ -1,50 +1,59 @@
-.eos-node-list {
-    .checkbox {
-        margin-left: 12px;
-        margin-bottom: 7px;
-        vertical-align: middle;
+.eos-node-list,
+.eos-node-list-item {
+    .checkbox,
+    .checkbox-inline {
+        width: $item-width;
+        line-height: 36px;
+    }
+
+    bs-sortable {
+        width: 100%;
+    }
+
+    .node-list-item {
+        padding: 5px 0;
+        display: flex;
     }
 
     .elements {
         list-style: none;
-        max-height: calc(100vh - 150px - 95px - 150px);
+        max-height: calc(100vh - 415px);
         overflow-y: auto;
+        overflow-x: hidden;
         padding-left: 0;
-
-        &.has-parent {
-            max-height: calc(100vh - 150px - 95px - 215px);
-        }
 
         .child {
             cursor: pointer;
-        }
-
-        .node-list-item {
-            padding: 5px 0 5px 20px;
         }
 
         .flat-child {
             padding: 0;
         }
 
-        li,
-        .node-list-item {
-            display: flex;
-        }
-
         .node-info {
             align-self: center;
             cursor: pointer;
-            margin-left: 10px;
-            margin-right: 20px;
+            width: calc(100% - 2* 48px); // checkbox and spinner
+
         }
 
         .code {
-            margin-right: 10px;
+            padding: 0 20px;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
         }
 
         .spinner {
             margin-top: 10px;
+            width: 48px;
+            text-align: center;
+
+            &.transparent {
+                opacity: 0;
+            }
         }
     }
 
@@ -59,129 +68,10 @@
             height: 100px;
         }
     }
-
-    .pagination-option {
-        margin-top: 20px;
-        height: $item-height;
-        font-size: 16px;
-        line-height: 24px;
-        border: 1px solid transparent;
-        display: flex;
-        justify-content: space-between;
-
-        .pagination,
-        .count-select {
-            display: inline-block;
-            margin: 0;
-        }
-
-        .count-select {
-            height: $item-height;
-            width: 330px;
-            border-left: 1px solid transparent;
-
-            .icon-btn {
-                top: 7px;
-                position: relative;
-                margin-left: 5px;
-            }
-
-            .dropdown-toggle {
-                height: $item-height;
-                width: 100%;
-                display: inline-flex;
-                justify-content: space-around;
-                cursor: pointer;
-
-                .dropdown-toggle-text {
-                    position: relative;
-                    top: 5px;
-                    margin-left: 8px;
-                }
-            }
-        }
-
-        .page-link {
-            height: $item-height;
-            width: $item-width;
-            text-align: center;
-            padding: 12px 16px;
-            font-size: 16px;
-        }
-
-        .show-more {
-            margin: 0 30px;
-            position: relative;
-            left: -5px;
-            height: $item-height;
-            padding: 0 10px;
-            background: transparent;
-            font-size: 16px;
-            line-height: 24px;
-        }
-
-        .pagination-lg > li {
-            &:last-child,
-            &:first-child {
-                & > a,
-                & > span {
-                    border-radius: 0;
-                }
-            }
-        }
-    }
 }
 
-@media (max-width: 1700px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 280px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1650px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select {
-                width: 230px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1580px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 14px;
-                line-height: 20px;
-            }
-
-            .count-select {
-                width: 170px;
-            }
-        }
-    }
-}
-
-@media (max-width: 1500px) {
-    .eos-node-list {
-        .pagination-option {
-            .count-select,
-            .show-more {
-                font-size: 16px;
-                line-height: 24px;
-            }
-
-            .count-select {
-                width: 330px;
-            }
-        }
-    }
+.node-list-item {
+    height: $item-height;
 }
 
 .create-new-node {

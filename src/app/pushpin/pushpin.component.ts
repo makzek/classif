@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk } from '../core/eos-desk';
@@ -6,41 +6,38 @@ import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { WARN_LINK_PIN } from '../consts/messages.consts';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'eos-pushpin',
     templateUrl: 'pushpin.component.html',
 })
 export class PushpinComponent {
-    deskList: EosDesk[];
-    _link: IDeskItem;
+    public _show = false;
+    private deskList: EosDesk[];
+    @Input() infoOpened: boolean;
+    private openStyle = '252px';
+    private closeStyle = '0px';
 
     constructor(
         private _deskSrv: EosDeskService,
         private _bcSrv: EosBreadcrumbsService,
-        private _msgSrv: EosMessageService
+        private _msgSrv: EosMessageService,
+        private _route: ActivatedRoute,
+        private _router: Router,
     ) {
         this._deskSrv.desksList.subscribe((res) => {
             this.deskList = res.filter((d) => d.id !== 'system');
         });
-
-        this._bcSrv.currentLink.subscribe((link) => {
-            if (link) {
-                this._link = link;
-                // this._deskService.addRecentItem(this._link);
-            }
+        _router.events.filter((evt: NavigationEnd) => evt instanceof NavigationEnd)
+        .subscribe((evt: NavigationEnd) => {
+            let _actRoute = _route.snapshot;
+            while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+            this._show = _actRoute.data && _actRoute.data.showPinInBreadcrumb;
         });
     }
 
     pin(desk: EosDesk) {
-        /* tslint:disable:no-bitwise */
-        if (!~desk.references.findIndex((_ref) =>  _ref.link === this._link.link)) {
-            desk.references.push(this._link);
-            this._deskSrv.editDesk(desk);
-        } else {
-            this._msgSrv.addNewMessage(WARN_LINK_PIN);
-        }
-        /* tslint:enable:no-bitwise */
+        if (!this._deskSrv.addNewItemToDesk(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
     }
-
 }

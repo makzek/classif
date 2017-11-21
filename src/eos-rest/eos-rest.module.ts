@@ -17,11 +17,11 @@ import { ApiCfg } from './core/api-cfg';
 
 /* services */
 import { PipRX } from './services/pipRX.service';
-import { RubricService } from './services/rubric.service';
 import { AuthService } from './services/auth.service';
-import { AppContext } from './services/appContext.service';
+// import { ContextService } from './services/appContext.service';
 import { DepartmentService } from './services/department.service';
-
+import { LinearDictionaryService } from './services/linear-dictionary.service';
+import { TreeDictionaryService } from './services/tree-dictionary.service';
 
 @NgModule({
     imports: [
@@ -45,9 +45,10 @@ import { DepartmentService } from './services/department.service';
     providers: [
         PipRX,
         AuthService,
-        RubricService,
+        // ContextService,
         DepartmentService,
-        AppContext
+        LinearDictionaryService,
+        TreeDictionaryService,
     ]
 })
 export class EosRestModule {

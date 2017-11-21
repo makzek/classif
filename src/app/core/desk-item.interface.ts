@@ -1,5 +1,5 @@
 export interface IDeskItem {
-    link: string;
-    // title: string;
+    url: string;
     title: any;
+    fullTitle: string;
 };

@@ -46,6 +46,12 @@ export const DANGER_NAVIGATE_TO_DELETED_ERROR: IMessage = {
     /* tslint:enable:max-line-length */
 };
 
+export const DANGER_HAVE_NO_ELEMENTS: IMessage = {
+    type: 'warning',
+    title: 'Элементы не выбраны!',
+    msg: 'Удалять нечего.'
+}
+
 export const INFO_NOTHING_CHANGES: IMessage = {
     type: 'info',
     title: 'Информация о сохранении изменений: ',
@@ -57,4 +63,16 @@ export const SUCCESS_SAVE: IMessage = {
     title: 'Изменения сохранены',
     msg: '',
     dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+}
+
+export const WARN_LOGIC_DELETE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'элементы {{elem}} были логически удалены ранее! Отметьте неудаленные элементы.',
+}
+
+export const WARN_LOGIC_DELETE_ONE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'элемент был логически удален ранее! Отметьте неудаленные элементы.',
 }

@@ -7,7 +7,7 @@ $light-grey: #eee;
 // $primary-color-main-theme: #0b1324;
 // $primary-font-color-main-theme: $white;
 $deviders-color-main-theme: grey;
-$block-color-main-theme: $white;
+$block-color-main-theme: #fff;
 // $button-color-main-theme: #337ab7;
 $highlight-color-main-theme: #d9edf7;
 $disabled-color-main-theme: grey;
@@ -15,11 +15,12 @@ $disabled-color-main-theme: #ccc;
 
 // Colors from new design
 $unimportant-info-color-main-theme: #969696;
-$secondary-color-main-theme: #fafafa;
+$primary-color-main-theme: #fff;
+$secondary-color-main-theme: #f3f2f2;
 $border-color-main-theme: #e6e6e6;
+$active-field-color-main-theme: #2196f3;
 $button-color-main-theme: #2196f3;
 $button-color-hover-main-theme: #1976d2;
-$primary-color-main-theme: white;
 $primary-font-color-main-theme: #646464;
 $secondary-font-color-main-theme: black;
 $invalid-color-main-theme: #f44336;
@@ -37,7 +38,7 @@ $item-height: 48px;
 $item-width: 48px;
 $item-small-height: 32px;
 $item-small-width: 32px;
-$dictionary-block-width: 400px;
+$dictionary-block-width: 300px;
 
 
 $grid-gutter-width: 40px;

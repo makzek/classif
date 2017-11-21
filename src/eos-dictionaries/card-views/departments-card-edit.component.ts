@@ -1,21 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
-import { CardEditComponent } from './card-edit.component';
+import { Component, OnChanges } from '@angular/core';
+import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends CardEditComponent implements OnInit {
+export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnChanges {
     fieldGroups: string[];
     currTab = 0;
-    @ViewChild('departmentsForm') form;
 
     defaultImage = 'url(../assets/images/no-user.png)';
 
+    gender = [
+        { id: 'm', title: 'Мужской' },
+        { id: 'f', title: 'Женский' }
+    ];
+
     constructor() {
         super();
-
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     }
 
@@ -23,9 +25,24 @@ export class DepartmentsCardEditComponent extends CardEditComponent implements O
         this.currTab = i;
     }
 
-    ngOnInit() {
-        this.form.control.valueChanges
-        .subscribe(values => this.invalid.emit(!this.form.valid));
+    ngOnChanges() {
+        // fake data
+        const today = new Date();
+        /*this.data['alternates'] = [
+            {
+                name: 'Иван Иванович',
+                START_DATE: today,
+                END_DATE: today,
+            }, {
+                name: 'Пётр Иванович',
+                START_DATE: today,
+                END_DATE: today,
+            }, {
+                name: 'Иван Петрович',
+                START_DATE: today,
+                END_DATE: today,
+            }
+        ];*/
     }
 
     newImage(evt) {

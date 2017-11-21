@@ -1,5 +1,5 @@
 <div class="eos-photo-uploader">
-    <input class="input-file" type="file" #fileInput name="file" id="file" [multiple]="multiple" (change)="chooseFile($event)" placeholder="Upload file" 
+    <input class="input-file" type="file" #fileInput name="file" id="file" [multiple]="multiple" (change)="chooseFile($event)" placeholder="Upload file"
     accept=".jpg, .png">
     <label for="file" class="input-file-label">
         <span *ngIf="!disableEdit" class="eos-icon eos-icon-edit-blue small"></span>
@@ -16,10 +16,10 @@
                     <div class="image-wrapper">
                         <div class="user-image" [ngStyle]="{'background-image': imageSrc}" ></div>
                     </div>
-                    <div class="pull-right">
-                        <button class="btn btn-default" (click)="upload()">Подтвердить</button>
-                        <button class="btn btn-default" (click)="cancel()">Отменить</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+                    <button class="btn btn-primary-full" (click)="upload()">Подтвердить</button>
                 </div>
             </div>
         </div>
