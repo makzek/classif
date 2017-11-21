@@ -35,7 +35,7 @@ export class EosDictService {
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
 
-    private _currentTab = 0;
+    public currentTab = 0;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -64,13 +64,13 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
-    get currentTab(): number {
+    /*get currentTab(): number {
         return this._currentTab;
     }
 
     set currentTab(val: number) {
         this._currentTab = val;
-    }
+    }*/
 
     constructor(
         private _api: EosDictApiService,
