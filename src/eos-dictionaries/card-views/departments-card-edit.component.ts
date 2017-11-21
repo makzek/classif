@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import { Component, OnChanges } from '@angular/core';
 
+=======
+import { Component, OnChanges, Injector } from '@angular/core';
+>>>>>>> bug/eos-303
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { EosDictService } from '../services/eos-dict.service';
 
@@ -18,8 +22,9 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
         { id: 'f', title: 'Женский' }
     ];
 
-    constructor(private _dictSrv: EosDictService) {
-        super();
+    constructor(injector: Injector) {
+        super(injector);
+
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
         this.currTab = this._dictSrv.currentTab;
     }
