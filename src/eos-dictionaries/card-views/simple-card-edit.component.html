@@ -1,17 +1,17 @@
 <div class="simple-card-edit">
     <article class="edit-content">
         <form #cardForm="ngForm"  class="form form-horizontal">
-                <div class="form-group" *ngFor="let key of keys(fieldsDescription)">
-                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription[key].title}}</label>
+                <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
+                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
                     <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
-                        [ngModel]="data[key]" (ngModelChange)="change(key, $event)"
-                        placeholder="{{fieldsDescription[key].title}}"
+                        [ngModel]="data.rec[key]" (ngModelChange)="change(key, $event)"
+                        placeholder="{{fieldsDescription.rec[key].title}}"
                         [readonly] = "!editMode"
                         [ngClass]="{'readonly': !editMode }"
-                        [required]="fieldsDescription[key]?.required"
-                        [pattern]="fieldsDescription[key].pattern" maxlength="{{fieldsDescription[key].length}}"
-                        eosUnic="{{fieldsDescription[key].isUnic}}" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription[key].unicInDict"
-                        [tooltip]="fieldsDescription[key]?.invalidMessage"
+                        [required]="fieldsDescription.rec[key]?.required"
+                        [pattern]="fieldsDescription.rec[key].pattern" maxlength="{{fieldsDescription.rec[key].length}}"
+                        eosUnic="{{fieldsDescription.rec[key].isUnic}}" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict"
+                        [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                         placement="right" containerClass="tooltip-error" container="body"
                         (focus)="focus(key)" (blur)="blur()"
                         [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">

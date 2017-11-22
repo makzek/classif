@@ -172,6 +172,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
+            console.log('recived data', this.nodeData);
         }
     }
 
@@ -259,6 +260,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     recordChanged(data: any) {
+        console.log('recordChanged', data, this.nodeData);
         if (this.nodeData) {
             /* tslint:disable:no-bitwise */
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((key) => this.nodeData[key] !== this._originalData[key]);

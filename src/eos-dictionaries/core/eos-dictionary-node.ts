@@ -230,7 +230,7 @@ export class EosDictionaryNode {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
                 _data[_f.key] = {};
-                /*  */
+                /* recive other dict data */
             }
         });
         return _data;

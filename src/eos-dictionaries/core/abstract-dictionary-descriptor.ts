@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor } from './dictionary.interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor, E_FIELD_TYPE } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
@@ -98,16 +98,23 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     getFieldDescription(fields: FieldDescriptor[]): any {
-        const _description = {};
+        const _description = {
+            rec: {}
+        };
         fields.forEach((_f) => {
-            _description[_f.key] = {
-                title: _f.title,
-                length: _f.length,
-                pattern: _f.pattern,
-                required: _f.required,
-                invalidMessage: _f.invalidMessage,
-                isUnic: _f.isUnic,
-                unicInDict: _f.unicInDict,
+            if (_f.type !== E_FIELD_TYPE.dictionary) {
+                _description.rec[_f.key] = {
+                    title: _f.title,
+                    length: _f.length,
+                    pattern: _f.pattern,
+                    required: _f.required,
+                    invalidMessage: _f.invalidMessage,
+                    isUnic: _f.isUnic,
+                    unicInDict: _f.unicInDict,
+                }
+            } else {
+                _description[_f.key] = {};
+                /* recive other dict description */
             }
         });
         return _description;

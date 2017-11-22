@@ -67,40 +67,40 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'title',
         title: 'Краткое наименование подразделения',
-        type: 'text',
+        type: 'string',
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',
-        type: 'text',
+        type: 'string',
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'SURNAME',
         title: 'Фамилия И.О.',
-        type: 'text',
+        type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DUTY',
         title: 'Краткое наименование должности',
-        type: 'text',
+        type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
-        type: 'text',
+        type: 'string',
         foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
-        type: 'text',
+        type: 'string',
         foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
@@ -113,13 +113,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'SKYPE',
         title: 'Skype',
-        type: 'text',
+        type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DEPARTMENT_DUE',
         title: 'Картотека ДЛ',
-        type: 'text',
+        type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
     }, {
@@ -148,7 +148,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'indexDep',
         title: 'Индекс',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'DEPARTMENT_INDEX',
@@ -163,7 +163,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'CARD_NAME',
         title: 'Наименование картотеки',
-        type: 'text',
+        type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
     }, {
@@ -187,37 +187,37 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'PHONE',
         title: '№ телефона',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'FAX',
         title: 'Факс',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'E_MAIL',
         title: 'E-mail',
-        type: 'text',
+        type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'NUM_CAB',
         title: '№ кабинета',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DUE_LINK_ORGANIZ',
         title: 'Due связанной организации',
-        type: 'text',
+        type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
     }, {
@@ -240,6 +240,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'UPD_WHO',
         title: 'Кто обновил',
         type: 'number',
+    }, {
+        key: 'print-info',
+        type: 'dictionary',
+        title: '',
     },
     /*NO DISCRIPTION FIELDS*/
     {
@@ -249,18 +253,18 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'SEV',
         title: 'Индекс СЭВ',
-        type: 'text',
+        type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'INDEX',
         title: 'Индекс',
-        type: 'text',
+        type: 'string',
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'alternate',
         title: 'Заместитель',
-        type: 'text',
+        type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
     }, {
@@ -275,18 +279,18 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'iofDP',
         title: 'И.О. Фамилия в дательном падеже',
-        type: 'text',
+        type: 'string',
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'titleRoom',
         title: 'Краткое наименование кабинета',
-        type: 'text',
+        type: 'string',
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'CLASSIF_NAME',
     }, {
         key: 'fullTitleRoom',
         title: 'Краткое наименование кабинета',
-        type: 'text',
+        type: 'string',
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
@@ -313,11 +317,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     },
     editFields: { // TODO: remove IS_NODE!!!
         person: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-            'gender', 'SEV', 'lastName', 'firstName', 'fathersName', 'DUTY', 'fullPosition', 'SKYPE', 'shortPositionRP', 'shortPositionDP', 'shortPositionVP',
-            'fioDP', 'iofDP', 'lastNameRP', 'firstNameRP', 'fathersNameRP', 'lastNameDP', 'firstNameDP', 'fathersNameDP', 'lastNameVP', 'firstNameVP', 'fathersNameVP',
-            'lastNameTP', 'firstNameTP', 'fathersNameTP', 'lastNamePP', 'firstNamePP', 'fathersNamePP'],
+         'SEV', 'DUTY', 'fullPosition', 'SKYPE', 'print-info'],
         department: ['IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-            'INDEX', 'SEV', 'fullTitle', 'titleRP', 'notInPositionTitle'],
+            'INDEX', 'SEV', 'fullTitle', 'print-info'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],

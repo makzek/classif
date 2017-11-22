@@ -27,7 +27,11 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }
 
     keys(data: Object): string[] {
-        return Object.keys(data);
+        if (data) {
+            return Object.keys(data);
+        } else {
+            return [];
+        }
     }
 
     ngOnInit() {
