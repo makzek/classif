@@ -10,6 +10,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly required?: boolean;
     readonly invalidMessage?: string;
     readonly isUnic?: boolean;
+    readonly unicInDict?: boolean;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -36,6 +37,8 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         this.invalidMessage = data.invalidMessage || '';
 
         this.isUnic = !!data.isUnic;
+
+        this.unicInDict = !!data.unicInDict;
     }
 }
 

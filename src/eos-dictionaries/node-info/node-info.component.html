@@ -1,4 +1,4 @@
-<div class="eos-opened-node">
+<div class="eos-node-info">
     <span class="opened-node-actions pull-right usual-border">
         <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}"
             containerClass="tooltip-info">
@@ -17,24 +17,24 @@
             <eos-spinner [size]="'lg'"></eos-spinner>
         </div>
 
-        <div *ngIf="shortViewFields" class="short-info l-font">
-            <span *ngFor="let field of shortViewFields">
-                {{field.value}}
+        <div *ngIf="nodeDataShort" class="short-info l-font">
+            <span *ngFor="let key of keys(fieldsDescriptionShort)">
+                {{nodeDataShort[key]}}
             </span>
         </div>
 
-        <div *ngIf="viewFields" class="full-info usual-border">
-            <div *ngFor="let field of viewFields" class="field">
-                <span *ngIf="field.type === fieldTypes.boolean;then checkboxField else textField"></span>
+        <div *ngIf="nodeDataFull" class="full-info usual-border">
+            <div *ngFor="let key of keys(fieldsDescriptionFull)" class="field">
+                <span *ngIf="fieldsDescriptionFull[key].type === fieldTypes.boolean;then checkboxField else textField"></span>
                 <ng-template #checkboxField>
-                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" value="{{field.value}}" disabled>
+                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" value="{{nodeDataFull[key]}}" disabled>
                         <span></span>
-                        {{field.title}}</label>
+                        {{fieldsDescriptionFull[key].title}}</label>
                 </ng-template>
                 <ng-template #textField>
-                    <span class="field-title unimportant-text s-font">{{field.title}}</span>
+                    <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull[key].title}}</span>
                     <br>
-                    <span class="field-value m-font">{{field.value}}</span>
+                    <span class="field-value m-font">{{nodeDataFull[key]}}</span>
                 </ng-template>
             </div>
         </div>
