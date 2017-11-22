@@ -2,6 +2,7 @@ import { IFieldView } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
+import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -221,9 +222,16 @@ export class EosDictionaryNode {
     }
 
     getEditData(): any {
-        const _data = {};
+        const _data = {
+            rec: {},
+        };
         this._descriptor.getEditView(this.data).forEach((_f) => {
-            _data[_f.foreignKey] = _f.value;
+            if (_f.type !== E_FIELD_TYPE.dictionary) {
+                _data.rec[_f.foreignKey] = _f.value;
+            } else {
+                _data[_f.key] = {};
+                /*  */
+            }
         });
         return _data;
     }
