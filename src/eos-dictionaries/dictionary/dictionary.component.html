@@ -28,7 +28,7 @@
                     <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
-                    <eos-dictionary-search (searchResult)="searchResult($event)"></eos-dictionary-search>
+                    <eos-dictionary-search (searchStart)="searchStart()" (searchResult)="searchResult($event)"></eos-dictionary-search>
                 </div>
             </div>
             <div class="second-line block selected-text">
@@ -64,7 +64,7 @@
         </ng-container>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
-        <eos-node-info (action)=doAction($event)></eos-node-info>
+        <eos-node-info-switcher (action)=doAction($event)></eos-node-info-switcher>
     </div>
 </div>
 

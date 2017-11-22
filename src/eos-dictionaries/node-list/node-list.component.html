@@ -2,6 +2,11 @@
     <div class="block list">
         <p *ngIf="!nodes?.length" class="text-center text-info">Нет записей.</p>
         <ng-container *ngIf="nodes?.length">
+            <div class="row" *ngIf="searchStartFlag" style="padding: 20px;">
+                <div class="col-md-2 col-md-offset-5">
+                    <eos-spinner size="lg"></eos-spinner>
+                </div>
+            </div>
             <!--Sortable list-->
             <ul *ngIf="params.userOrdered && nodes?.length" class="elements secondary-text">
                 <li class="child">

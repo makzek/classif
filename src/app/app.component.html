@@ -1,47 +1,49 @@
 <div class="main-container main-theme">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper block">
-        <ul class="header-content left">
-            <li class="header-item primary-text">
-                <eos-title></eos-title>
-            </li>
-            <li class="header-item primary-text" *ngIf="isAuthorized">
-                <eos-desktop-switcher></eos-desktop-switcher>
-            </li>
-            <ng-container *ngIf="isAuthorized">
-                <li *ngFor="let item of modules" class="header-item primary-text">
-                    <a class="link-name primary-text xl-font" [routerLink]="item.url" routerLinkActive="active">
-                        <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
-                    </a>
+        <div class="menu">
+            <ul class="header-content left">
+                <li class="header-item primary-text">
+                    <eos-title></eos-title>
                 </li>
-                <li class="header-item else-dropdown primary-text" dropdown>
-                    <span class="link-name xl-font" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
-                    <ul *dropdownMenu class="dropdown-menu" role="menu">
-                        <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
-                            <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
-                                <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
-                            </a>
-                        </li>
-                    </ul>
+                <li class="header-item primary-text" *ngIf="isAuthorized">
+                    <eos-desktop-switcher></eos-desktop-switcher>
                 </li>
-            </ng-container>
-        </ul>
-        <ul class="header-content right pull-right">
-            <li class="header-item primary-text" *ngIf="isAuthorized">
-                <button class="btn search-btn">
-                    <span class="eos-icon eos-icon-search-blue"></span>
-                </button>
-            </li>
-            <li class="header-item primary-text" *ngIf="isAuthorized">
-                <eos-notice></eos-notice>
-            </li>
-            <li class="header-item primary-text">
-                <eos-user></eos-user>
-            </li>
-        </ul>
+                <ng-container *ngIf="isAuthorized">
+                    <li *ngFor="let item of modules" class="header-item primary-text">
+                        <a class="link-name primary-text xl-font" [routerLink]="item.url" routerLinkActive="active">
+                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                        </a>
+                    </li>
+                    <li class="header-item else-dropdown primary-text" dropdown>
+                        <span class="link-name xl-font" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
+                                <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
+                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ng-container>
+            </ul>
+            <ul class="header-content right pull-right">
+                <li class="header-item primary-text" *ngIf="isAuthorized">
+                    <button class="btn search-btn">
+                        <span class="eos-icon eos-icon-search-blue"></span>
+                    </button>
+                </li>
+                <li class="header-item primary-text" *ngIf="isAuthorized">
+                    <eos-notice></eos-notice>
+                </li>
+                <li class="header-item primary-text">
+                    <eos-user></eos-user>
+                </li>
+            </ul>
+        </div>
+        <eos-breadcrumb [ngClass]="{'hide' : !breadcrumbView}"></eos-breadcrumb>
     </div>
     <div class="content-wrapper">
-        <eos-breadcrumb></eos-breadcrumb>
         <!-- *ngIf="isAuthorized" -->
         <div class="content-outlet">
             <router-outlet></router-outlet>

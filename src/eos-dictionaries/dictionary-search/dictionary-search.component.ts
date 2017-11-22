@@ -10,6 +10,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { ISearchSettings } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -19,6 +20,7 @@ import { SEARCH_TYPES } from '../consts/search-types';
 export class DictionarySearchComponent implements OnDestroy {
     @Output() searchResult: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>();
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
+    @Output() searchStart: EventEmitter<any> = new EventEmitter(); // event bigin search
 
     dictId = '';
     fieldsDescription = {};
@@ -28,6 +30,7 @@ export class DictionarySearchComponent implements OnDestroy {
     modes: IRecordModeDescription[];
     loading = true;
     isOpenFull = false;
+    searchDone = true; // Flag search is done, false while not received data
 
     @ViewChild('full') fSearchPop;
     @ViewChild('quick') qSearchPop;
@@ -58,6 +61,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     constructor(
         private _dictSrv: EosDictService,
+        private _msgSrv: EosMessageService
     ) {
         this.settings = {
             onlyCurrentNode: false,
@@ -98,8 +102,21 @@ export class DictionarySearchComponent implements OnDestroy {
         }
 
         if (evt.keyCode === 13) {
-            this._dictSrv.search(this.dataQuick, _settings)
-                .then((nodes) => this.searchResult.emit(nodes));
+            if (!this.searchDone) {
+                this._msgSrv.addNewMessage({
+                    title: 'Идет поиск!',
+                    type: 'warning',
+                    msg: 'Пожалуйста подождите.'
+                })
+            } else {
+                this.searchDone = false;
+                this.searchStart.emit();
+                this._dictSrv.search(this.dataQuick, _settings)
+                    .then((nodes) => {
+                        this.searchDone = true;
+                        this.searchResult.emit(nodes)
+                    })
+            }
         }
     }
 
@@ -109,8 +126,21 @@ export class DictionarySearchComponent implements OnDestroy {
 
     fullSearch() {
         this.fSearchPop.hide();
-        this._dictSrv.fullSearch(this.data, this.settings)
-            .then((nodes) => this.searchResult.emit(nodes));
+        if (this.searchDone) {
+            this.searchDone = false;
+            this.searchStart.emit();
+            this._dictSrv.fullSearch(this.data, this.settings)
+            .then((nodes) => {
+                this.searchDone = true;
+                this.searchResult.emit(nodes);
+            });
+        } else {
+            this._msgSrv.addNewMessage({
+                title: 'Идет поиск!',
+                type: 'danger',
+                msg: 'Пожалуйста подождите.'
+            })
+        }
     }
 
     clearForm() {
