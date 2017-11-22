@@ -113,7 +113,9 @@ export class EosDictionaryNode {
             this._dictionary = dictionary;
             this._descriptor = dictionary.descriptor.record;
             /* store all data from backend in .data */
-            this.data = data;
+            this.data = {
+                rec: data
+            };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
                 this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
