@@ -1,38 +1,31 @@
-.eos-tree {
-    width: max-content;
+.eos-tree-node {
+    padding-left: 24px;
+    position: relative;
 
+    & > div {
+        display: inline-block;
+        width: 15px;
+    }
 
-    .eos-tree-node {
-        padding-left: 24px;
+    .node-title-wrapper {
+        display: inline-block;
         position: relative;
+        min-height: $item-height;
+        cursor: pointer;
 
-        & > div {
-            display: inline-block;
-            width: 15px;
+        .icon {
+            cursor: pointer;
+            position: absolute;
+            top: 16px;
+            left: 16px;
         }
 
-        .node-title-wrapper {
-            display: block;
-            position: relative;
-            min-height: $item-height;
+        .node-title {
             cursor: pointer;
-            width: max-content;
-
-            .icon {
-                cursor: pointer;
-                position: absolute;
-                top: 16px;
-                left: 16px;
-            }
-
-            .node-title {
-                cursor: pointer;
-                margin-left: $item-width;
-                padding: 12px 20px 12px 0;
-                min-height: $item-height;
-                min-width: 400px;
-                width: 100%;
-            }
+            display: inline-block;
+            margin-left: $item-width;
+            padding: 12px 20px 12px 0;
+            min-height: $item-height;
         }
     }
 }
