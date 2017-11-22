@@ -180,56 +180,6 @@ fields: [{
     type: 'text',
     pattern: NOT_EMPTY_STRING,
     length: 255,
-},
-
-/*NO DISCRIPTION FIELDS*/
- {
-    key: 'ISN_LCLASSIF',
-    title: 'ISN_CLASSIF',
-    type: 'number'
-}, {
-    key: 'SEV',
-    title: 'Индекс СЭВ',
-    type: 'text',
-    length: 64,
-    pattern: NOT_EMPTY_STRING,
-}, {
-    key: 'INDEX',
-    title: 'Индекс',
-    type: 'text',
-    pattern: NOT_EMPTY_STRING,
-}, {
-    key: 'alternate',
-    title: 'Заместитель',
-    type: 'text',
-    length: 248,
-    pattern: NOT_EMPTY_STRING,
-}, {
-    key: 'extraData',
-    title: 'Дополнительные сведения',
-    type: 'text',
-    pattern: NOT_EMPTY_STRING,
-}, {
-    key: 'type',
-    title: 'Тип',
-    type: 'icon'
-}, {
-    key: 'iofDP',
-    title: 'И.О. Фамилия в дательном падеже',
-    type: 'text',
-    pattern: NOT_EMPTY_STRING,
-}, {
-    key: 'titleRoom',
-    title: 'Краткое наименование кабинета',
-    type: 'text',
-    pattern: NOT_EMPTY_STRING,
-    foreignKey: 'CLASSIF_NAME',
-}, {
-    key: 'fullTitleRoom',
-    title: 'Краткое наименование кабинета',
-    type: 'text',
-    pattern: NOT_EMPTY_STRING,
-    foreignKey: 'fullTitleRoom',
 }],
 searchFields: [],
 listFields: [],

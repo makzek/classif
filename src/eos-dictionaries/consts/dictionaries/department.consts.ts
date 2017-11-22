@@ -228,7 +228,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'INS_DATE',
         title: 'Дата и время создания',
         type: 'date',
-    },  {
+    }, {
         key: 'INS_WHO',
         title: 'Кто создал',
         type: 'number',
@@ -236,26 +236,16 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'UPD_DATE',
         title: 'Дата и время обновления',
         type: 'date',
-    },  {
+    }, {
         key: 'UPD_WHO',
         title: 'Кто обновил',
         type: 'number',
     },
     /*NO DISCRIPTION FIELDS*/
-     {
+    {
         key: 'ISN_LCLASSIF',
         title: 'ISN_CLASSIF',
         type: 'number'
-    }, {
-        key: 'titleRP',
-        title: 'Наименование в родительном падеже (чего?)',
-        type: 'text',
-        length: 248,
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'notInPositionTitle',
-        title: 'Не использовать подразделение в названии должности',
-        type: 'boolean',
     }, {
         key: 'SEV',
         title: 'Индекс СЭВ',
@@ -267,29 +257,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Индекс',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'gender',
-        title: 'Пол',
-        type: 'text',
-    }, {
-        // key: 'lastName',
-        key: 'lastName',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-        length: 60,
-    }, {
-        key: 'firstName',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-        length: 60,
-    }, {
-        key: 'fathersName',
-        title: 'Отчество',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-        length: 60,
     }, {
         key: 'alternate',
         title: 'Заместитель',
@@ -306,108 +273,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Тип',
         type: 'icon'
     }, {
-        key: 'department',
-        title: 'Подразделение',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'shortPositionRP',
-        title: 'Родительный падеж (кого, чего)',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'shortPositionDP',
-        title: 'Дательный падеж (кому, чему?)',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'shortPositionVP',
-        title: 'Винительный падеж (кого, что?)',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fioDP',
-        title: 'Фамилия И.О. в дательном падеже',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
         key: 'iofDP',
         title: 'И.О. Фамилия в дательном падеже',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'lastNameRP',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'firstNameRP',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fathersNameRP',
-        title: 'Отчество',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'lastNameDP',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'firstNameDP',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fathersNameDP',
-        title: 'Отчество',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'lastNameVP',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'firstNameVP',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fathersNameVP',
-        title: 'Отчество',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'lastNameTP',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'firstNameTP',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fathersNameTP',
-        title: 'Отчество',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'lastNamePP',
-        title: 'Фамилия',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'firstNamePP',
-        title: 'Имя',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'fathersNamePP',
-        title: 'Отчество',
         type: 'text',
         pattern: NOT_EMPTY_STRING,
     }, {
