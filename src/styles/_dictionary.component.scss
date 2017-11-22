@@ -106,9 +106,9 @@
             border-bottom: 0;
             min-height: $item-height;
             display: -ms-grid;
-            display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr 150px;
-            grid-template-columns: 48px 1fr 150px;
+            display: grid; // sass-lint:disable-line no-duplicate-properties
+            -ms-grid-columns: 48px 1fr 240px 150px;
+            grid-template-columns: 48px 1fr 240px 150px;
 
             .item-count {
                 height: 100%;
@@ -117,11 +117,24 @@
                 text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
-                grid-column: 3;
+                grid-column: 4;
             }
 
             .selected-node-title {
                 grid-column: 2;
+            }
+
+            .tabs-wrapper {
+                grid-column: 3;
+                width: auto;
+                margin: 0;
+                border-bottom-width: 0;
+
+                .tabs {
+                    .tab-item {
+                        margin-right: 20px;
+                    }
+                }
             }
 
             .btn {

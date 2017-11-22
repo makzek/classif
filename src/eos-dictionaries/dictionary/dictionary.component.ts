@@ -99,6 +99,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _updating = false;
     dictTypes = E_DICT_TYPE;
 
+    currTab = 1;
+
     searchStartFlag = false; // flag begin search
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
@@ -622,5 +624,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             msg: errMessage,
             dismissOnTimeout: 100000
         });
+    }
+
+    setTab(tab: number) {
+        this.currTab = tab;
     }
 }

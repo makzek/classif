@@ -16,6 +16,18 @@
                     </button>
                 </div>
                 <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
+                <div *ngIf="dictionary.id === 'departments'" class="tabs-wrapper usual-border m-font">
+                    <ul class="tabs">
+                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active-border secondary-text': currTab === 0}"
+                            (click)="setTab(0)">
+                            <span class="tab-title">Кабинеты</span>
+                        </li>
+                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active-border secondary-text': currTab === 1}"
+                            (click)="setTab(1)">
+                            <span class="tab-title">Должностные лица</span>
+                        </li>
+                    </ul>
+                    </div>
                 <div class="item-count pull-right usual-border m-font">
                     <span class="item-count-content">
                         Записей:
