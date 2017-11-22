@@ -28,7 +28,8 @@ export enum E_FIELD_TYPE {
     text,
     date,
     icon,
-    boolean
+    boolean,
+    dictionary
 };
 
 export interface IFieldDesriptor {

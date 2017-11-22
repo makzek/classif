@@ -15,6 +15,7 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 import { ISearchSettings } from '../core/search-settings.interface';
 
 import { IOrderBy } from '../core/sort.interface'
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -54,16 +55,16 @@ export class EosDictionary {
         return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(descData: IDictionaryDescriptor) {
+    constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
         switch (descData.dictType) {
             case E_DICT_TYPE.linear:
-                this.descriptor = new DictionaryDescriptor(descData);
+                this.descriptor = new DictionaryDescriptor(descData, apiSrv);
                 break;
             case E_DICT_TYPE.tree:
-                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData);
+                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData, apiSrv);
                 break;
             case E_DICT_TYPE.department:
-                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData);
+                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData, apiSrv);
                 break;
             default:
                 throw new Error('No API instance');

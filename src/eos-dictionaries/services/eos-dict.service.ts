@@ -17,6 +17,7 @@ import { IOrderBy } from '../core/sort.interface'
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 @Injectable()
 export class EosDictService {
@@ -68,6 +69,7 @@ export class EosDictService {
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService,
+        private _pipeSrv: PipRX,
     ) {
         this._initViewParameters();
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
@@ -127,7 +129,8 @@ export class EosDictService {
             this.dictionary = null;
             _p = this._api.getDictionaryDescriptorData(dictionaryId)
                 .then((descData: any) => {
-                    this.dictionary = new EosDictionary(descData);
+                    // console.log('init dictionary');
+                    this.dictionary = new EosDictionary(descData, this._pipeSrv);
                     this._api.init(this.dictionary.descriptor);
                     return this._api.getRoot();
                 })

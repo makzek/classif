@@ -36,7 +36,7 @@ export class TreeDictionaryService extends BaseDictionaryService {
     create(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(parent, isLeaf, isProtected, isDeleted);
         _newRec = this._pipe.entityHelper.prepareAdded<any>(_newRec, this.instance);
-        console.log('create tree node', _newRec);
+        // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data)
             .then((resp: any[]) => {
                 if (resp && resp[0]) {

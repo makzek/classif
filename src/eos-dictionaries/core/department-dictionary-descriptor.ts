@@ -9,9 +9,9 @@ import {
 } from './dictionary.interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
+import { IHierCL } from 'eos-rest';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -19,16 +19,16 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
     modeField: FieldDescriptor;
     modeList: IRecordModeDescription[];
 
-    constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
-        super(dictionary, data);
+    constructor(dictionary: DepartmentDictionaryDescriptor, descriptor: IDepartmentDictionaryDescriptor) {
+        super(dictionary, descriptor);
         this.dictionary = dictionary;
-        this._setCustomField('parentField', data);
-        this.modeField = this.fieldsMap.get(data.modeField);
+        this._setCustomField('parentField', descriptor);
+        this.modeField = this.fieldsMap.get(descriptor.modeField);
         if (!this.modeField) {
-            throw new Error('No field decribed for "' + data.modeField + '"');
+            throw new Error('No field decribed for "' + descriptor.modeField + '"');
         }
 
-        this.modeList = data.modeList;
+        this.modeList = descriptor.modeList;
     }
 
     getMode(values: any): E_DEPT_MODE {
@@ -59,8 +59,11 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
     listFields: ModeFieldSet;
     allVisibleFields: FieldDescriptor[];
 
-    constructor(data: IDepartmentDictionaryDescriptor) {
-        super(data);
+    _init(descriptor: IDepartmentDictionaryDescriptor) {
+        if (descriptor.fields) {
+            this.record = new DepartmentRecordDescriptor(this, descriptor);
+        }
+
         this._initModeSets([
             'quickViewFields',
             'shortQuickViewFields',
@@ -68,13 +71,7 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
             'listFields',
             'fullSearchFields',
             'listFields'
-        ], data);
-    }
-
-    _init(data: IDepartmentDictionaryDescriptor) {
-        if (data.fields) {
-            this.record = new DepartmentRecordDescriptor(this, data);
-        }
+        ], descriptor);
     }
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
@@ -126,11 +123,49 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         }
     }
 
-    private _initModeSets(setNames: string[], data: IDepartmentDictionaryDescriptor) {
+    private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {
             if (!this[setName]) {
-                this[setName] = new ModeFieldSet(this.record, data[setName]);
+                this[setName] = new ModeFieldSet(this.record, descriptor[setName]);
             }
         })
     }
+
+    addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+        let _newRec = this.preCreate(parent, isLeaf, isProtected, isDeleted);
+        _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
+        // console.log('create tree node', _newRec);
+        return this._postChanges(_newRec, data)
+            .then((resp: any[]) => {
+                if (resp && resp[0]) {
+                    return resp[0].ID;
+                } else {
+                    return null;
+                }
+            });
+    }
+
+    private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+        const _isn = this.apiSrv.sequenceMap.GetTempISN();
+        const _parentDue = parent.DUE;
+
+        const _res: IHierCL = {
+            DUE: _isn + '.',
+            PARENT_DUE: null,
+            ISN_NODE: _isn,
+            ISN_HIGH_NODE: null,
+            IS_NODE: (isLeaf ? 1 : 0),
+            PROTECTED: (isProtected ? 1 : 0),
+            DELETED: (isDeleted ? 1 : 0),
+            CLASSIF_NAME: 'new_classif_name',
+            NOTE: null,
+        }
+
+        if (parent) {
+            _res.DUE = parent.DUE + _res.DUE;
+            _res.PARENT_DUE = parent.DUE;
+            _res.ISN_HIGH_NODE = parent.ISN_NODE;
+        }
+        return _res;
+    };
 }

@@ -11,7 +11,7 @@ export abstract class BaseDictionaryService {
     abstract create(...params): Promise<any>;
 
     setInstance(instance: string) {
-        console.log('set instance to', this, instance);
+        // console.log('set instance to', this, instance);
         this.instance = instance;
     };
 

@@ -1,3 +1,9 @@
+import { Injector } from '@angular/core';
+
+import { commonMergeMeta } from 'eos-rest/common/initMetaData';
+import { PipRX } from 'eos-rest/services/pipRX.service';
+import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
+
 import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
@@ -10,6 +16,14 @@ export abstract class AbstractDictionaryDescriptor {
     readonly type: E_DICT_TYPE;
     readonly apiInstance: string;
     readonly searchConfig: SEARCH_TYPES[];
+    /**
+     * rest metadata. can be used for loading related dictionaries
+     */
+    protected metadata: any;
+    /**
+     * api service endpoint
+     */
+    protected apiSrv: PipRX;
 
     /* set of actions available for dictionary */
     private actions: E_RECORD_ACTIONS[];
@@ -45,31 +59,40 @@ export abstract class AbstractDictionaryDescriptor {
     /* user configurable fields */
     protected allVisibleFields: FieldDescriptor[];
 
-    constructor(data: IDictionaryDescriptor) {
-        if (data) {
-            this.id = data.id;
-            this.title = data.title;
-            this.type = data.dictType;
-            this.apiInstance = data.apiInstance;
-            this.searchConfig = data.searchConfig;
-            data = this._fillForeignKey(data);
-            this._init(data);
-            this._initActions(data);
-            this._initFieldSets(['searchFields', 'allVisibleFields'], data);
+    constructor(descriptor: IDictionaryDescriptor, apiSrv: PipRX) {
+        console.log('create dictionary descriptor', descriptor);
+        if (descriptor) {
+            this.id = descriptor.id;
+            this.title = descriptor.title;
+            this.type = descriptor.dictType;
+            this.apiInstance = descriptor.apiInstance;
+            this.searchConfig = descriptor.searchConfig;
+            descriptor = this._fillForeignKey(descriptor);
+
+            this.apiSrv = apiSrv;
+            commonMergeMeta(this);
+
+            this._init(descriptor);
+            this._initActions(descriptor);
+            this._initFieldSets(['searchFields', 'allVisibleFields'], descriptor);
         } else {
             return undefined;
         }
     }
 
-    private _fillForeignKey(data: IDictionaryDescriptor): IDictionaryDescriptor {
-        // console.log('dict descript', data);
-        data.fields.forEach(field => {
+    merge(metadata: any) {
+        this.metadata = metadata[this.apiInstance];
+    }
+
+    private _fillForeignKey(descriptor: IDictionaryDescriptor): IDictionaryDescriptor {
+        // console.log('dict descript', descriptor);
+        descriptor.fields.forEach(field => {
             if (!field.foreignKey) {
                 field.foreignKey = field.key;
             }
         });
 
-        return data;
+        return descriptor;
     }
 
     canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
@@ -140,7 +163,7 @@ export abstract class AbstractDictionaryDescriptor {
     protected _getFieldView(aSet: E_FIELD_SET, mode?: string): any {
     }
 
-    abstract _init(data: IDictionaryDescriptor);
+    abstract _init(descriptor: IDictionaryDescriptor);
 
     private _getListFields(): FieldDescriptor[] {
         return this.listFields;
@@ -159,23 +182,63 @@ export abstract class AbstractDictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     };
 
-    private _initActions(data: IDictionaryDescriptor) {
+    private _initActions(descriptor: IDictionaryDescriptor) {
         const actKeys = ['actions', 'itemActions', 'groupActions'];
 
         actKeys.forEach((foreignKey) => {
             this[foreignKey] = [];
-            if (data[foreignKey]) {
-                data[foreignKey].forEach((actName) => this._addAction(actName, this[foreignKey]));
+            if (descriptor[foreignKey]) {
+                descriptor[foreignKey].forEach((actName) => this._addAction(actName, this[foreignKey]));
             }
         })
     }
 
-    protected _initFieldSets(fsKeys: string[], data: IDictionaryDescriptor) {
+    protected _initFieldSets(fsKeys: string[], descriptor: IDictionaryDescriptor) {
         fsKeys.forEach((foreignKey) => {
             this[foreignKey] = [];
-            if (data[foreignKey]) {
-                data[foreignKey].forEach((fldName) => this.record.addFieldToSet(fldName, this[foreignKey]));
+            if (descriptor[foreignKey]) {
+                descriptor[foreignKey].forEach((fldName) => this.record.addFieldToSet(fldName, this[foreignKey]));
             }
         });
+    }
+
+    abstract addRecord(...params): Promise<any>;
+
+    getData(params?: any, orderBy?: string): Promise<any> {
+        if (params) {
+            if (params.criteries) {
+                const _criteries = PipRX.criteries(params.criteries);
+                Object.assign(params, _criteries);
+            }
+            // PipRX.criteries(params);
+        } else {
+            params = ALL_ROWS;
+        }
+        console.log('getData params', params);
+        return this.apiSrv
+            .read({ [this.apiInstance]: params, orderby: orderBy || 'WEIGHT' })
+            .then((data) => {
+                data.forEach((item) => this.apiSrv.entityHelper.prepareForEdit(item));
+                return (data);
+            });
+    }
+
+    update(originalData: any, updates: any): Promise<any> {
+        return this._postChanges(originalData, updates);
+    }
+
+    delete(data: any): Promise<any> {
+        return this._postChanges(data, { _State: _ES.Deleted });
+    }
+
+    protected _postChanges(data: any, updates: any): Promise<any> {
+        Object.assign(data, updates);
+        const changes = this.apiSrv.changeList([data]);
+        // console.log('changes', changes);
+        return this.apiSrv.batch(changes, '')
+            .then((resp) => {
+                // console.log('_postchanges resp', resp);
+                return resp;
+            });
     }
 }
