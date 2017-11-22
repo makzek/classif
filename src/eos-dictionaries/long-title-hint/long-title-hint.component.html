@@ -1,0 +1,15 @@
+<style>
+    .longtitle-hint {
+        z-index: 1;
+        background: #e3f2fd;
+        border: 1px #2196f3 solid;
+        padding: 13px;
+        position: absolute;
+        font-family: Roboto, sans-serif;
+        color: #000000;
+        transition: 0.2s opacity;
+    }
+</style>
+<div *ngIf="show" class="longtitle-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left" (mouseleave)="hideHint()" (click)="select()">
+    <span>{{title}}</span>
+</div>

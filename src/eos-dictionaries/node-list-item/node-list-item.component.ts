@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,12 +10,17 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
+import { LongTitleHintComponent } from '../long-title-hint/long-title-hint.component'
+import { createElement } from '@angular/core/src/view/element';
 
 @Component({
     selector: 'eos-node-list-item',
     templateUrl: 'node-list-item.component.html'
 })
 export class NodeListItemComponent implements OnInit {
+    @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
+    @ViewChild('item') item;
+    @ViewChild('someEl') clName;
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
@@ -50,6 +55,23 @@ export class NodeListItemComponent implements OnInit {
             _path.push('view')
             this._router.navigate(_path);
         }
+    }
+
+    showHint() {
+        const span = document.createElement('span');
+        const body = document.getElementsByTagName('body');
+        span.style.position = 'absolute';
+        span.style.top = '-5000px';
+        span.style.left = '-5000px';
+        span.innerText = this.node.data.CLASSIF_NAME;
+        body[0].appendChild(span);
+        if (this.clName.nativeElement.children[1].clientWidth < span.clientWidth) {
+            this.hint.showHint(this.item.nativeElement.offsetTop, this.clName.nativeElement.children[1].offsetLeft);
+        }
+    }
+
+    hideHint() {
+        // this.hint.hideHint();
     }
 
 }
