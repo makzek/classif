@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, Injector } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
@@ -16,8 +16,8 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
         { id: 'f', title: 'Женский' }
     ];
 
-    constructor() {
-        super();
+    constructor(injector: Injector) {
+        super(injector);
         this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     }
 

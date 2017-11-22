@@ -68,7 +68,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property
-    filteredNodes: EosDictionaryNode[];
+    filteredNodes: EosDictionaryNode[] = [];
     _page: IPaginationConfig;
 
     currentState: boolean[];
@@ -195,10 +195,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => {
-                // console.log('incoming list', nodes);
+            .combineLatest(this._dictSrv.viewParameters$)
+            .subscribe(([nodes, params]) => {
+                console.log('incoming list', nodes);
                 this.listNodes = nodes;
-                this.params = this._dictSrv.viewParameters;
+                this.params = params;
                 this._updateVisibleNodes();
             });
     }

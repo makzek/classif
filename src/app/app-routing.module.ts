@@ -27,7 +27,9 @@ const routes: Routes = [{
         canActivate: [AuthorizedGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showInBreadcrumb: true, showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
+        data: { title: 'Справочник', showBreadcrumb: true,
+        showInBreadcrumb: true,
+        showSandwichInBreadcrumb: true },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: false },
@@ -35,7 +37,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showSandwichInBreadcrumb: true, showPinInBreadcrumb: true },
+                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true },
             }, {
                 path: 'edit',
                 pathMatch: 'full',
@@ -44,7 +46,7 @@ const routes: Routes = [{
                     title: 'Редактирование',
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
-                    showPinInBreadcrumb: true,
+                    showBreadcrumb: true,
                     closeStyle: true
                 },
                 canDeactivate: [CanDeactivateGuard]
@@ -56,7 +58,7 @@ const routes: Routes = [{
                     title: 'Просмотр',
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
-                    showPinInBreadcrumb: true,
+                    showBreadcrumb: true,
                     closeStyle: true
                 },
             }],
@@ -77,12 +79,12 @@ const routes: Routes = [{
     }, {
         path: ':desktopId',
         component: DesktopComponent,
-        data: { title: 'Главная', showInBreadcrumb: false }
+        data: { title: 'Главная', showInBreadcrumb: false, showBreadcrumb: false }
     }]
 }, {
     path: 'test',
     component: TestPageComponent,
-    data: { title: 'Test page for UI components', showInBreadcrumb: true },
+    data: { title: 'Test page for UI components', showInBreadcrumb: true, showBreadcrumb: false },
     canActivate: [AuthorizedGuard],
 }, {
     path: 'delivery',

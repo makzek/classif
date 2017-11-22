@@ -35,6 +35,8 @@ import { SimpleCardEditComponent } from './card-views/simple-card-edit.component
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
+import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
+import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
 
 /* services */
 import { EosDictApiService } from './services/eos-api.service';
@@ -63,6 +65,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         SimpleCardEditComponent,
         TreeComponent,
         TreeNodeComponent,
+        NodeInfoSwitcherComponent,
+        DepartmentNodeInfoComponent,
         UnicValidatorDirective,
     ],
     entryComponents: [

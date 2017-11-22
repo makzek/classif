@@ -1,0 +1,19 @@
+<ng-container [ngSwitch]="dictionaryId">
+    <eos-department-node-info *ngSwitchCase="'departments'"
+        [fieldsDescriptionShort]="fieldsDescriptionShort"
+        [nodeDataShort]="nodeDataShort"
+        [fieldsDescriptionFull]="fieldsDescriptionFull"
+        [nodeDataFull]="nodeDataFull"
+        [updating]="updating"
+        [bossName]="bossName"
+        (action)="onAction($event)">
+    </eos-department-node-info>
+    <eos-node-info *ngSwitchDefault
+        [fieldsDescriptionShort]="fieldsDescriptionShort"
+        [nodeDataShort]="nodeDataShort"
+        [fieldsDescriptionFull]="fieldsDescriptionFull"
+        [nodeDataFull]="nodeDataFull"
+        [updating]="updating"
+        (action)="onAction($event)">
+    </eos-node-info>
+</ng-container>
