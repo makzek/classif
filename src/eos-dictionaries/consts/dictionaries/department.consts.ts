@@ -91,16 +91,17 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 255,
         pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'FULLNAME',
+        key: 'fullTitle',
         title: 'Полное наименование подразделения',
         type: 'text',
-        foreignKey: 'fullTitle',
+        foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'FULLNAME',
+        key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
+        foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
@@ -424,19 +425,19 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }],
     searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
     listFields: {
-        person: ['RUBRIC_CODE', 'fio'],
-        department: ['RUBRIC_CODE', 'title']
+        person: ['CODE', 'fio'],
+        department: ['CODE', 'title']
     },
     fullSearchFields: {
-        person: ['RUBRIC_CODE', 'PHONE', 'firstName', 'lastName', 'fathersName', 'E_MAIL'],
+        person: ['CODE', 'PHONE', 'firstName', 'lastName', 'fathersName', 'E_MAIL'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
-        department: ['RUBRIC_CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
         person: ['lastName', 'firstName', 'fathersName', 'fullPosition', 'DUTY', 'photo', 'PHONE', 'PHONE_LOCAL', 'E_MAIL'], // SURNAME is in shortQuickViewFields
-        department: ['CARD_NAME', 'CARD_FLAG', 'RUBRIC_CODE', 'NOTE'] // title is in shortQuickViewFields
+        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE'] // title is in shortQuickViewFields
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
@@ -452,6 +453,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
             'INDEX', 'SEV', 'fullTitle', 'titleRP', 'notInPositionTitle'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
-    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
 };
 /* tslint:enable:max-line-length */
