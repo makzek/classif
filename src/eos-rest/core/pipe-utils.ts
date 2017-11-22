@@ -124,11 +124,6 @@ export class PipeUtils {
         const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
-        /*
-        if (it._State === _ES.Added && !it[pkn])
-            it[pkn] = SequenceMap.GetTempISN();
-        */
-
 
         if (it._State === _ES.Added || it._State === _ES.Modified || (!it._State && it._orig)) {
             ch.data = {};
@@ -185,6 +180,14 @@ export class PipeUtils {
     protected PKinfo(it: any) {
         const etn = this._metadata.etn(it);
         const et = this._metadata.typeDesc(etn);
+        if (et.pk.indexOf(' ') !== -1) {
+            const ss = et.pk.split(' ');
+            const pkv = [];
+            for (let i = 0; i < ss.length; i++) {
+                pkv[i] = it[ss[i]];
+            }
+            return '(\'' + pkv.join(' ') + '\')';
+        }
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
