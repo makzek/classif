@@ -49,9 +49,6 @@ export class EosDictionaryNode {
     }
 
     get isDeleted(): boolean {
-        if (this.data['PROTECTED']) {
-            return false;
-        }
         return !!this.data['DELETED'];
 
     }

@@ -204,13 +204,18 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
 
+    deleteRecord(data: any): Promise<any> {
+        return this._postChanges(data, { _State: _ES.Deleted });
+    }
+
+    abstract getChildren(...params): Promise<any[]>;
+
     getData(params?: any, orderBy?: string): Promise<any> {
         if (params) {
             if (params.criteries) {
                 const _criteries = PipRX.criteries(params.criteries);
                 Object.assign(params, _criteries);
             }
-            // PipRX.criteries(params);
         } else {
             params = ALL_ROWS;
         }
@@ -223,12 +228,27 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
-    update(originalData: any, updates: any): Promise<any> {
-        return this._postChanges(originalData, updates);
+    getRecord(nodeId: string | number): Promise<any> {
+        return this.getData([nodeId]);
     }
 
-    delete(data: any): Promise<any> {
-        return this._postChanges(data, { _State: _ES.Deleted });
+    abstract getRoot(): Promise<any[]>;
+
+    search(criteries: any[]): Promise<any> {
+        console.log('search critery', criteries);
+
+        const _search = criteries.map((critery) => this.getData({ criteries: critery }));
+
+        return Promise.all(_search)
+            .then((results) => {
+                const _res = [].concat(...results);
+                // console.log('found', _res);
+                return _res;
+            });
+    }
+
+    updateRecord(originalData: any, updates: any): Promise<any> {
+        return this._postChanges(originalData, updates);
     }
 
     protected _postChanges(data: any, updates: any): Promise<any> {

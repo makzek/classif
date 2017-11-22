@@ -37,7 +37,6 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 
 /* services */
-import { EosDictApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
@@ -92,7 +91,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ColumnSettingsComponent,
     ],
     providers: [
-        EosDictApiService,
         EosDictService,
         EosSandwichService,
     ],

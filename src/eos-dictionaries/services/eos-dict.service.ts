@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
@@ -11,17 +10,17 @@ import { ISearchSettings } from '../core/search-settings.interface';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 import { LS_USE_USER_ORDER } from '../consts/common';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
-import { EosStorageService } from '../../app/services/eos-storage.service';
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
+import { EosStorageService } from 'app/services/eos-storage.service';
+import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { PipRX } from 'eos-rest/services/pipRX.service';
+import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Injectable()
 export class EosDictService {
-    private _dictionariesList = DICTIONARIES;
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
@@ -35,6 +34,7 @@ export class EosDictService {
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
+    private _dictionaries: Map<string, IDictionaryDescriptor>
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -64,7 +64,6 @@ export class EosDictService {
     }
 
     constructor(
-        private _api: EosDictApiService,
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
@@ -78,6 +77,18 @@ export class EosDictService {
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
+        this._dictionaries = new Map<string, IDictionaryDescriptor>();
+        DICTIONARIES
+            .sort((a, b) => {
+                if (a.title > b.title) {
+                    return 1;
+                } else if (a.title < b.title) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            })
+            .forEach((dict) => this._dictionaries.set(dict.id, dict));
     }
 
     private _initViewParameters() {
@@ -126,36 +137,35 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            this.dictionary = null;
-            _p = this._api.getDictionaryDescriptorData(dictionaryId)
-                .then((descData: any) => {
-                    // console.log('init dictionary');
-                    this.dictionary = new EosDictionary(descData, this._pipeSrv);
-                    this._api.init(this.dictionary.descriptor);
-                    return this._api.getRoot();
-                })
-                .then((data: any[]) => {
-                    this._initViewParameters();
-                    this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
-                    this.viewParameters.markItems = this.dictionary.canMarkItems;
-                    this._viewParameters$.next(this.viewParameters);
-                    this.dictionary.initUserOrder(
-                        this.viewParameters.userOrdered,
-                        this._storageSrv.getUserOrder(this.dictionary.id)
-                    );
-                    if (data && data.length) {
-                        this.dictionary.init(data);
-                    }
-                    this._mDictionaryPromise.delete(dictionaryId);
-                    this._dictionary$.next(this.dictionary);
-                    return this.dictionary;
-                })
-                .catch((err: Response) => {
-                    this.closeDictionary();
-                    this._mDictionaryPromise.delete(dictionaryId);
-                    return null;
-                });
-            this._mDictionaryPromise.set(dictionaryId, _p);
+            const descriptor = this._dictionaries.get(dictionaryId);
+            if (descriptor) {
+                this.dictionary = new EosDictionary(descriptor, this._pipeSrv);
+                _p = this.dictionary.descriptor.getRoot()
+                    .then((data: any[]) => {
+                        this._initViewParameters();
+                        this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                        this.viewParameters.markItems = this.dictionary.canMarkItems;
+                        this._viewParameters$.next(this.viewParameters);
+                        this.dictionary.initUserOrder(
+                            this.viewParameters.userOrdered,
+                            this._storageSrv.getUserOrder(this.dictionary.id)
+                        );
+                        if (data && data.length) {
+                            this.dictionary.init(data);
+                        }
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        this._dictionary$.next(this.dictionary);
+                        return this.dictionary;
+                    })
+                    .catch((err) => {
+                        this.closeDictionary();
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        return null;
+                    });
+                this._mDictionaryPromise.set(dictionaryId, _p);
+            } else {
+                _p = Promise.reject({ message: 'No dictionary' });
+            }
         }
         return _p;
     }
@@ -176,7 +186,7 @@ export class EosDictService {
                     return this.loadChildren(_node);
                 }
             } else {
-                return this._api.getNode(nodeId)
+                return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
                         this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
@@ -191,7 +201,7 @@ export class EosDictService {
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         // console.log('loadChildren for', node.id);
         node.updating = true;
-        return this._api.getChildren(node)
+        return this.dictionary.descriptor.getChildren(node.data['ISN_NODE'])
             .then((data: any[]) => {
                 this._updateDictNodes(data, true);
                 node.updating = false;
@@ -202,7 +212,7 @@ export class EosDictService {
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         node.updating = true;
-        return this._api.getNode(node.originalId)
+        return this.dictionary.descriptor.getRecord(node.originalId)
             .then((nodeData) => {
                 node.updateData(nodeData);
                 node.updating = false;
@@ -230,7 +240,6 @@ export class EosDictService {
 
     private _updateCurrentList() {
         let nodes = this._currentList;
-
         if (!this.viewParameters.showDeleted) {
             nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
@@ -319,7 +328,7 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
-        return this._api.update(node.data, data)
+        return this.dictionary.descriptor.updateRecord(node.data, data)
             .then(() => {
                 return this.reloadNode(node);
             });
@@ -327,7 +336,7 @@ export class EosDictService {
 
     public addNode(data: any): Promise<any> {
         if (this.selectedNode) {
-            return this._api.addNode(this.selectedNode.data, data)
+            return this.dictionary.descriptor.addRecord(this.selectedNode.data, data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
                     return this.loadChildren(this.selectedNode)
@@ -366,7 +375,7 @@ export class EosDictService {
 
     public physicallyDelete(nodeId: string): Promise<any> {
         const _node = this.dictionary.getNode(nodeId);
-        return this._api.deleteNode(_node.data)
+        return this.dictionary.descriptor.deleteRecord(_node.data)
             .then(() => {
                 this.dictionary.deleteNode(nodeId, true);
                 this._selectedNode$.next(this.selectedNode);
@@ -387,7 +396,7 @@ export class EosDictService {
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
-        return this._api.search(criteries)
+        return this.dictionary.descriptor.search(criteries)
             .then((data: any[]) => {
                 let nodes = [];
                 if (!data || data.length < 1) {

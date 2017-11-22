@@ -145,6 +145,17 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
             });
     }
 
+    getChildren(isn: string): Promise<any[]> {
+        const _children = {
+            ['ISN_HIGH_NODE']: isn + ''
+        };
+        return this.getData({ criteries: _children })
+    }
+
+    getRoot(): Promise<any[]> {
+        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } });
+    }
+
     private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;

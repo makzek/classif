@@ -60,6 +60,14 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
             });
     }
 
+    getChildren(): Promise<any> {
+        return this.getData();
+    }
+
+    getRoot(): Promise<any[]> {
+        return this.getData();
+    }
+
     private preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
 
