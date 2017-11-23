@@ -1,4 +1,4 @@
-<div *ngIf="show" (mouseleave)="hideHint()" (click)="select()"
+<div *ngIf="show" (mouseleave)="hideHint()" (click)="select()" (dblclick)="openCard()"
     class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left">
     <span>{{title}}</span>
 </div>

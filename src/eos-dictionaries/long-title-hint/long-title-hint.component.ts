@@ -7,6 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 export class LongTitleHintComponent {
     @Output('onSelect') onSelect: EventEmitter<any> = new EventEmitter();
+    @Output('onOpen') onOpen: EventEmitter<any> = new EventEmitter();
     public title: string;
     public top: string;
     public left: string;
@@ -31,6 +32,10 @@ export class LongTitleHintComponent {
 
     public select() {
         this.onSelect.emit();
+    }
+
+    public openCard() {
+        this.onOpen.emit();
     }
 
 }
