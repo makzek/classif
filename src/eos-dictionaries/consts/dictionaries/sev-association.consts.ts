@@ -18,7 +18,7 @@ export const  SEV_ASSOCIATION_DICT: IDictionaryDescriptor = Object.assign({}, LI
     }, {
         key: 'GLOBAL_ID',
         type: 'string',
-        title: 'Глобальный идентификатор',
+        title: 'Индекс СЭВ',
         length: 255,
     }, {
         key: 'OWNER_ID',
