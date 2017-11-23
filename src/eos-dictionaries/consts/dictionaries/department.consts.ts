@@ -301,7 +301,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['CODE', 'title']
     },
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'firstName', 'lastName', 'fathersName', 'E_MAIL'],
+        person: ['CODE', 'PHONE', 'E_MAIL'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
         department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
         // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
