@@ -23,6 +23,11 @@ fields: [{
     title: 'Вид владельца',
     type: 'number'
 }, {
+    key: 'PRINT_SURNAME',
+    title: 'И.О. Фамилия в дательном падеже',
+    type: 'string',
+    pattern: NOT_EMPTY_STRING,
+}, {
     key: 'PRINT_SURNAME_DP',
     title: 'Фамилия И.О. в дательном падеже',
     type: 'string',

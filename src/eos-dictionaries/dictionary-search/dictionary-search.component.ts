@@ -73,7 +73,7 @@ export class DictionarySearchComponent implements OnDestroy {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
-                this.fieldsDescription = _d.descriptor.getFieldDescription(_d.descriptor.getFieldSet(E_FIELD_SET.fullSearch));
+                this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.modes = _d.descriptor.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;

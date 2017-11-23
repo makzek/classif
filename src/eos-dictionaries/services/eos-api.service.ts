@@ -126,7 +126,7 @@ export class EosDictApiService {
                     .catch((err) => this._errHandler(err));
             case E_DICT_TYPE.tree:
             case E_DICT_TYPE.department:
-                const _id = node.data['ISN_NODE'];
+                const _id = node.data.rec['ISN_NODE'];
                 const _children = {
                     ['ISN_HIGH_NODE']: _id + ''
                 };

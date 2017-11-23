@@ -48,11 +48,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    change(fldKey: string, value: string) {
-        this.data[fldKey] = value;
-        this.onChange.emit(this.data);
+    change(fldKey: string, dict: string, value: string) {
+        if (this.data[dict][fldKey] !== value) {
+            this.data[dict][fldKey] = value;
+            this.onChange.emit(this.data);
+        }
     }
-
 
     focus(name: string) {
         this.focusedField = name;

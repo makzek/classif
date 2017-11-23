@@ -97,11 +97,12 @@ export abstract class AbstractDictionaryDescriptor {
         return this._getFieldSet(aSet, values);
     }
 
-    getFieldDescription(fields: FieldDescriptor[]): any {
+    getFieldDescription(aSet: E_FIELD_SET, data?: any): any {
         const _description = {
             rec: {}
         };
-        fields.forEach((_f) => {
+        const _descs = this.getFieldSet(aSet, data);
+        _descs.forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _description.rec[_f.key] = {
                     title: _f.title,

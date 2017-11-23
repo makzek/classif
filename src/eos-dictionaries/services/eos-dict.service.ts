@@ -168,7 +168,7 @@ export class EosDictService {
     }
 
     private _getNode(nodeId: string): Promise<EosDictionaryNode> {
-        // console.log('get node', nodeId);
+        console.log('get node', nodeId);
         if (this.dictionary) {
             const _node = this.dictionary.getNode(nodeId);
             if (_node) {

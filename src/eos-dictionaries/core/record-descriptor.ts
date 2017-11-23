@@ -59,15 +59,15 @@ export class RecordDescriptor {
     }
 
     getEditFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.edit, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data);
     }
 
     getShortQuickFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.shortQuickView, data);
     }
 
     getQuickFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.quickView, data);
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {

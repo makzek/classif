@@ -283,11 +283,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Тип',
         type: 'icon'
     }, {
-        key: 'iofDP',
-        title: 'И.О. Фамилия в дательном падеже',
-        type: 'string',
-        pattern: NOT_EMPTY_STRING,
-    }, {
         key: 'titleRoom',
         title: 'Краткое наименование кабинета',
         type: 'string',

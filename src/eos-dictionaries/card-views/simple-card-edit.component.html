@@ -4,7 +4,7 @@
                 <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
                     <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
                     <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
-                        [ngModel]="data.rec[key]" (ngModelChange)="change(key, $event)"
+                        [ngModel]="data.rec[key]" (ngModelChange)="change(key, 'rec', $event)"
                         placeholder="{{fieldsDescription.rec[key].title}}"
                         [readonly] = "!editMode"
                         [ngClass]="{'readonly': !editMode }"
