@@ -3,12 +3,15 @@ import { Injector } from '@angular/core';
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
+import { ITypeDef } from 'eos-rest';
 
 import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 import { SEARCH_TYPES } from '../consts/search-types';
+import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
+import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
@@ -19,7 +22,7 @@ export abstract class AbstractDictionaryDescriptor {
     /**
      * rest metadata. can be used for loading related dictionaries
      */
-    protected metadata: any;
+    protected metadata: ITypeDef;
     /**
      * api service endpoint
      */
@@ -222,10 +225,29 @@ export abstract class AbstractDictionaryDescriptor {
         console.log('getData params', params);
         return this.apiSrv
             .read({ [this.apiInstance]: params, orderby: orderBy || 'WEIGHT' })
-            .then((data) => {
-                data.forEach((item) => this.apiSrv.entityHelper.prepareForEdit(item));
-                return (data);
-            });
+            .then((data) => this.prepareForEdit(data));
+    }
+
+    getRelated(rec: any): Promise<any> {
+        const reqs = [];
+        this.metadata.relations.forEach((relation) => {
+            if (rec[relation.sf]) {
+                reqs.push(this.apiSrv
+                    .read({
+                        [relation.__type]: {
+                            criteries: PipRX.criteries({
+                                [relation.tf]: rec[relation.sf] + ''
+                            })
+                        }
+                    })
+                    .then((records) => this.prepareForEdit(records))
+                );
+            } else {
+                reqs.push(Promise.resolve([]));
+            }
+        });
+        return Promise.all(reqs)
+            .then((responses) => this.aRelationsToObject(responses));
     }
 
     getRecord(nodeId: string | number): Promise<any> {
@@ -233,6 +255,12 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     abstract getRoot(): Promise<any[]>;
+
+    getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
+        return this.apiSrv
+            .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
+            .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
+    }
 
     search(criteries: any[]): Promise<any> {
         console.log('search critery', criteries);
@@ -260,5 +288,32 @@ export abstract class AbstractDictionaryDescriptor {
                 // console.log('_postchanges resp', resp);
                 return resp;
             });
+    }
+
+    protected dueToChain(due: string): string[] {
+        const chain: string[] = due.split('.').filter((elem) => !!elem);
+        let prefix = '';
+        chain.forEach((elem, idx, arr) => {
+            arr[idx] = prefix + elem + '.'
+            prefix = arr[idx];
+        })
+        return chain;
+    }
+
+    protected getCachedRecord<T>(query: any): Promise<T> {
+        return this.apiSrv.cache
+            .read<T>(query)
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+    }
+
+    protected prepareForEdit(records: any[]): any[] {
+        records.forEach((record) => this.apiSrv.entityHelper.prepareForEdit(record));
+        return records;
+    }
+
+    protected aRelationsToObject(responses: any): any {
+        const related = {};
+        this.metadata.relations.forEach((relation, idx) => related[relation.name] = responses[idx]);
+        return related;
     }
 }

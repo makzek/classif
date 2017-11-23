@@ -12,6 +12,7 @@ import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
 import { IHierCL } from 'eos-rest';
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -149,7 +150,48 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         const _children = {
             ['ISN_HIGH_NODE']: isn + ''
         };
-        return this.getData({ criteries: _children })
+        return this.getData({ criteries: _children });
+    }
+
+    getRecord(due: string): Promise<any[]> {
+        /*
+        const res = [];
+        const pRec = this.apiSrv.read
+        */
+        const chain = this.dueToChain(due);
+        const recordDue = chain.pop();
+        return this.getData(this.dueToChain(due));
+    }
+
+    getRelated(rec: any, orgDUE: string): Promise<any> {
+        const pUser = this.apiSrv
+            .read({ 'USER_CL': PipRX.criteries({ 'DUE_DEP': rec['DUE'] }) })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+
+        const pOrganization = this.apiSrv.cache
+            .read({ 'ORGANIZ_CL': orgDUE })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+
+        const pCabinet = this.apiSrv.cache
+            .read({ 'CABINET': rec['ISN_CABINET'] })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+
+        const reqs = this.metadata.relations.map((relation) => {
+            switch (relation.name) {
+                case '':
+                    break;
+                default:
+                    return this.apiSrv.read({
+                        [relation.__type]: {
+                            criteries: PipRX.criteries({
+                                [relation.tf]: rec[relation.sf] + ''
+                            })
+                        }
+                    })
+                        .then((records) => this.prepareForEdit(records));
+            }
+        })
+        return Promise.all(reqs);
     }
 
     getRoot(): Promise<any[]> {

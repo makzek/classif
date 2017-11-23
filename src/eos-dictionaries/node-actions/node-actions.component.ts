@@ -45,7 +45,7 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
     }
 
     ngDoCheck() {
-        setTimeout(this._update(), 0);
+        // setTimeout(this._update(), 0);
     }
 
     ngOnDestroy() {

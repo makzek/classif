@@ -79,6 +79,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData({ criteries: _children })
     }
 
+    getRecord(due: string): Promise<any> {
+        return this.getData(this.dueToChain(due));
+    }
+
     getRoot(): Promise<any[]> {
         return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } });
     }
