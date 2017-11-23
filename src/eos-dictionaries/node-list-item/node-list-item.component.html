@@ -8,7 +8,8 @@
                 </label>
         </span>
         <span class="node-info">
-            <span *ngFor="let field of viewFields" class="code" [ngStyle]="{'width.%': length[field.key]}">{{node.data[field.foreignKey]}}</span>
+            <!--span *ngFor="let field of viewFields" class="code" [ngStyle]="{'width.%': length[field.key]}">{{node.data[field.foreignKey]}}</span-->
+            <span *ngFor="let field of viewFields" class="code" [ngStyle]="{'width.%': length[field.key]}">{{field.value}}</span>
         </span>
         <eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner>
     </div>

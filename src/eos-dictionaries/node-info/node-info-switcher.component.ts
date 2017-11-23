@@ -35,7 +35,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                 this.nodeDataShort = node.getShortViewData();
                 this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
                 this.nodeDataFull = node.getFullViewData();
-
                 if (this.dictionaryId === 'departments' && !node.data['IS_NODE'] && node.children) {
                     const _boss = node.children.find((_chld) => _chld.data['POST_H']);
                     if (_boss) {
