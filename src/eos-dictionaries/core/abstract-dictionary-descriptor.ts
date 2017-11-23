@@ -60,7 +60,6 @@ export abstract class AbstractDictionaryDescriptor {
     protected allVisibleFields: FieldDescriptor[];
 
     constructor(descriptor: IDictionaryDescriptor, apiSrv: PipRX) {
-        console.log('create dictionary descriptor', descriptor);
         if (descriptor) {
             this.id = descriptor.id;
             this.title = descriptor.title;
