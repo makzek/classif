@@ -36,6 +36,8 @@ export class EosDictService {
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
 
+    public currentTab = 0;
+
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
         return this._dictionary$.asObservable();
@@ -62,6 +64,14 @@ export class EosDictService {
     get userOrdered(): boolean {
         return this.dictionary && this.dictionary.userOrdered;
     }
+
+    /*get currentTab(): number {
+        return this._currentTab;
+    }
+
+    set currentTab(val: number) {
+        this._currentTab = val;
+    }*/
 
     constructor(
         private _msgSrv: EosMessageService,
@@ -555,5 +565,24 @@ export class EosDictService {
             dismissOnTimeout: 100000
         });
         return null;
+    }
+
+    isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
+        if (inDict) {
+            let _hasMatch = false;
+            this.dictionary.nodes.forEach((_node) => {
+                if (_node.data[key] === val && _node.id !== nodeId) {
+                    _hasMatch = true;
+                }
+            });
+            return _hasMatch ? { 'isUnic': _hasMatch } : null;
+        } else if (this.selectedNode) {
+            /* tslint:disable:no-bitwise */
+            const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data[key] === val);
+            /* tslint:enable:no-bitwise */
+            return _hasMatch ? { 'isUnic': _hasMatch } : null;
+        } else {
+            return null;
+        }
     }
 }

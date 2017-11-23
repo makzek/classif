@@ -145,7 +145,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     turnOffSave(val: boolean) {
-        // console.log(val);
         this.disableSave = val;
     }
 

@@ -1,6 +1,7 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosDictService } from '../services/eos-dict.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,6 +10,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeSet: EosDictionaryNode[];
+    @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -17,6 +19,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
 
     tooltipText = '';
     focusedField: string;
+
+    protected dictSrv;
+
+    constructor(injector: Injector) {
+        this.dictSrv = injector.get(EosDictService);
+    }
 
     keys(data: Object): string[] {
         return Object.keys(data);
@@ -54,11 +62,9 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         this.change(field, value);
     }*/
 
-    checkCode(val: any) {
-        if (this.nodeSet) {
-            /* tslint:disable:no-bitwise */
-            return !!~this.nodeSet.findIndex((_node) => _node.data['RUBRIC_CODE'] === val);
-            /* tslint:enable:no-bitwise */
+    checkUnic(val: any, key: string, inDict?: boolean) {
+        if (this.focusedField === key) {
+            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
         } else {
             return null;
         }

@@ -68,7 +68,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property
-    filteredNodes: EosDictionaryNode[];
+    filteredNodes: EosDictionaryNode[] = [];
     _page: IPaginationConfig;
 
     currentState: boolean[];

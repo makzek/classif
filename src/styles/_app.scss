@@ -11,16 +11,22 @@
 .content-wrapper {
     width: 100%;
     overflow: hidden;
+    margin: 20px 0 20px 0;
 }
 
 .content-outlet {
-    padding: $grid-gutter-width / 2;
+    margin: 0 $grid-gutter-width / 2 0 $grid-gutter-width / 2;
 }
 
 .header-wrapper {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    height: 60px;
+    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, .15);
+
+    .menu {
+        height: 60px;
+        border-bottom: 1px solid $border-color-main-theme;
+    }
 
     .round-img-wrapper {
         display: inline-block;

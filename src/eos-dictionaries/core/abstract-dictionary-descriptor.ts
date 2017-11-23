@@ -130,6 +130,7 @@ export abstract class AbstractDictionaryDescriptor {
                 required: _f.required,
                 invalidMessage: _f.invalidMessage,
                 isUnic: _f.isUnic,
+                unicInDict: _f.unicInDict,
             }
         });
         return _description;
