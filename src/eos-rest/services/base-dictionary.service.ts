@@ -45,7 +45,7 @@ export abstract class BaseDictionaryService {
     protected _postChanges(data: any, updates: any): Promise<any> {
         Object.assign(data, updates);
         const changes = this._pipe.changeList([data]);
-        // console.log('changes', changes);
+        console.log('changes', data, updates, changes);
         return this._pipe.batch(changes, '')
             .then((resp) => {
                 // console.log('_postchanges resp', resp);

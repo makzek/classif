@@ -1,9 +1,8 @@
 import { IDictionaryDescriptor, E_DICT_TYPE } from '../core/dictionary.interfaces';
 import { SEARCH_TYPES } from './search-types';
 
-export const LS_EDIT_CARD = 'lastEditedCard';
 export const LS_USE_USER_ORDER = 'useUserOrder';
-
+export { LS_EDIT_CARD } from '../../app/consts/common.consts';
 /* tslint:disable:max-line-length */
 
 export const ROOMS_DICT: IDictionaryDescriptor = {
