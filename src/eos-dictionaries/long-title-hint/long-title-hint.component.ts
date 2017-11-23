@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'eos-longtitle-hint',
@@ -6,8 +6,8 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 })
 
 export class LongTitleHintComponent {
-    @Input() title: string;
     @Output('onSelect') onSelect: EventEmitter<any> = new EventEmitter();
+    public title: string;
     public top: string;
     public left: string;
     public opacity = 0;
@@ -16,7 +16,8 @@ export class LongTitleHintComponent {
     constructor() {
     }
 
-    public showHint(top: number, left: number) {
+    public showHint(top: number, left: number, title: string) {
+        this.title = title;
         this.show = true;
         this.top = top + 'px';
         this.left = left + 'px';

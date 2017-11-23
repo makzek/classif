@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -17,10 +17,10 @@ import { createElement } from '@angular/core/src/view/element';
     selector: 'eos-node-list-item',
     templateUrl: 'node-list-item.component.html'
 })
+
 export class NodeListItemComponent implements OnInit {
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
-    @ViewChild('item') item;
-    @ViewChild('someEl') clName;
+    @ViewChild('item') item: ElementRef;
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
@@ -57,21 +57,19 @@ export class NodeListItemComponent implements OnInit {
         }
     }
 
-    showHint() {
-        const span = document.createElement('span');
-        const body = document.getElementsByTagName('body');
+    public showHint(el: HTMLElement) {
+        const span = document.createElement('span'),
+        body = document.getElementsByTagName('body');
         span.style.position = 'absolute';
         span.style.top = '-5000px';
         span.style.left = '-5000px';
-        span.innerText = this.node.data.CLASSIF_NAME;
+        span.style.padding = '20px';
+        span.innerText = el.innerText;
         body[0].appendChild(span);
-        if (this.clName.nativeElement.children[1].clientWidth < span.clientWidth) {
-            this.hint.showHint(this.item.nativeElement.offsetTop, this.clName.nativeElement.children[1].offsetLeft);
+        if (span.clientWidth > el.clientWidth) {
+            this.hint.showHint(this.item.nativeElement.offsetTop, el.offsetLeft, el.innerText);
         }
-    }
-
-    hideHint() {
-        // this.hint.hideHint();
+        body[0].removeChild(span)
     }
 
 }
