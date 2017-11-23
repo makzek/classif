@@ -309,7 +309,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     },
     quickViewFields: {
         person: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H'], // 'SURNAME', 'firstName', 'fathersName', 'lastName', 'photo' is in shortQuickViewFields
-        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'SEV'] // title is in shortQuickViewFields
+        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE'] // title is in shortQuickViewFields
         // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
     },
     shortQuickViewFields: {
@@ -318,11 +318,11 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     },
     editFields: { // TODO: remove IS_NODE!!!
         person: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-         'SEV', 'DUTY', 'fullPosition', 'SKYPE', 'print-info', 'sev-association', 'organiz', 'cabinet'],
+         'DUTY', 'fullPosition', 'SKYPE', 'print-info', 'sev-association', 'organiz', 'cabinet'],
         department: ['IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-            'INDEX', 'SEV', 'fullTitle', 'print-info', 'sev-association', 'organiz', 'cabinet'],
+            'INDEX', 'fullTitle', 'print-info', 'sev-association', 'organiz', 'cabinet'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
 };
 /* tslint:enable:max-line-length */

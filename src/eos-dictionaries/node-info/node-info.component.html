@@ -37,6 +37,12 @@
                     <span class="field-value m-font">{{nodeDataFull.rec[key]}}</span>
                 </ng-template>
             </div>
+
+            <div *ngIf="nodeDataFull['sev-assiciation']" class="field">
+                <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['sev-assiciation']['GLOBAL_ID'].title}}</span>
+                <br>
+                <span class="field-value m-font">{{nodeDataFull['sev-assiciation']['GLOBAL_ID']}}</span>
+            </div>
         </div>
     </div>
 </div>
