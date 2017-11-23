@@ -11,15 +11,17 @@
         list-style: none;
 
         li {
-            display: flex;
-            cursor: pointer;
+            .node {
+                cursor: pointer;
+                display: flex;
 
-            .tree-btn {
-                padding: 13.5px 16px;
-            }
+                .tree-btn {
+                    padding: 13.5px 16px;
+                }
 
-            .title {
-                padding: 12px 0;
+                .title {
+                    padding: 12px 0;
+                }
             }
         }
     }
