@@ -21,7 +21,7 @@
                     <div class="form-group" *ngIf="data['sev-association']">
                         <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription['sev-association']['GLOBAL_ID'].title}}</label>
                         <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
-                            [ngModel]="data['sev-association']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'rec', $event)"
+                            [ngModel]="data['sev-association']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev-association', $event)"
                             placeholder="{{fieldsDescription['sev-association']['GLOBAL_ID'].title}}"
                             [readonly] = "!editMode"
                             [ngClass]="{'readonly': !editMode }"
