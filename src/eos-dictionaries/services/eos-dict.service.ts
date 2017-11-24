@@ -486,8 +486,13 @@ export class EosDictService {
         }
     }
 
-    public toggleUserOrder() {
-        this.viewParameters.userOrdered = !this.viewParameters.userOrdered;
+    public toggleUserOrder(value?: boolean) {
+        if (value === undefined) {
+            this.viewParameters.userOrdered = !this.viewParameters.userOrdered;
+        } else {
+            this.viewParameters.userOrdered = value;
+        }
+
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;
             this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);

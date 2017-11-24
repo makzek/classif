@@ -41,11 +41,11 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item l-font" [ngClass]="{'primary-text': params.userOrdered}" [ngStyle]="{'width.%': length[field.key]}">
-                            <span class="text" *ngIf="!params.userOrdered" (click)="orderByField(field.key)">{{field.title}}
-                                <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small" [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
+                            <span class="text" (click)="orderByField(field.key)">{{field.title}}
+                                <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small"
+                                [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
-                            <span class="text" *ngIf="params.userOrdered">{{field.title}}</span>
                         </span>
                     </span>
                     <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
