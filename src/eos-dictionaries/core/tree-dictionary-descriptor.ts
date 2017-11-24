@@ -63,7 +63,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data)
-            .then((resp: any[]) => {
+            .then((resp) => {
                 if (resp && resp[0]) {
                     return resp[0].ID;
                 } else {

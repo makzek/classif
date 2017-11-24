@@ -13,6 +13,7 @@ import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
 import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
+import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -168,30 +169,28 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
             .read({ 'USER_CL': PipRX.criteries({ 'DUE_DEP': rec['DUE'] }) })
             .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
 
-        const pOrganization = this.apiSrv.cache
-            .read({ 'ORGANIZ_CL': orgDUE })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+        const pOrganization = (orgDUE) ? this.getCachedRecord({ ORGANIZ_CL: [orgDUE] }) : Promise.resolve(null);
 
-        const pCabinet = this.apiSrv.cache
-            .read({ 'CABINET': rec['ISN_CABINET'] })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+        const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
 
-        const reqs = this.metadata.relations.map((relation) => {
-            switch (relation.name) {
-                case '':
-                    break;
-                default:
-                    return this.apiSrv.read({
-                        [relation.__type]: {
-                            criteries: PipRX.criteries({
-                                [relation.tf]: rec[relation.sf] + ''
-                            })
-                        }
-                    })
-                        .then((records) => this.prepareForEdit(records));
-            }
-        })
-        return Promise.all(reqs);
+        const pPrintInfo = this.apiSrv
+            .read<CB_PRINT_INFO>({
+                CB_PRINT_INFO: PipRX.criteries({
+                    ISN_OWNER: rec['ISN_NODE'].toString() + '|' + rec['ISN_HIGH_NODE'].toString(),
+                    OWNER_KIND: '104'
+                })
+            })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0], 'CB_PRINT_INFO'));
+
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
+            .then(([user, org, cabinet, printInfo]) => {
+                return {
+                    user: user,
+                    organization: org,
+                    cabinet: cabinet,
+                    printInfo: printInfo
+                };
+            });
     }
 
     getRoot(): Promise<any[]> {

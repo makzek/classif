@@ -147,7 +147,11 @@ export class EosDictionary {
         return _nodes;
     }
 
-    getNode(nodeId: string): EosDictionaryNode {
+    getFullNode(nodeId: string): Promise<EosDictionaryNode> {
+        return Promise.resolve(null);
+    }
+
+    getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
         const _res = this._nodes.get(nodeId);
         // console.log('get node', this.id, nodeId, this._nodes, _res);
         return _res;
@@ -171,7 +175,7 @@ export class EosDictionary {
                 if (node.parent) {
                     node.parent.addChild(node);
                 } else {
-                    this.getNode(parentId).addChild(node);
+                    this._nodes.get(parentId).addChild(node);
                 }
             }
         }

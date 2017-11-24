@@ -213,7 +213,7 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract getChildren(...params): Promise<any[]>;
 
-    getData(params?: any, orderBy?: string): Promise<any> {
+    getData(params?: any, orderBy?: string): Promise<any[]> {
         if (params) {
             if (params.criteries) {
                 const _criteries = PipRX.criteries(params.criteries);
@@ -225,10 +225,13 @@ export abstract class AbstractDictionaryDescriptor {
         console.log('getData params', params);
         return this.apiSrv
             .read({ [this.apiInstance]: params, orderby: orderBy || 'WEIGHT' })
-            .then((data) => this.prepareForEdit(data));
+            .then((data: any[]) => {
+                this.prepareForEdit(data);
+                return data;
+            });
     }
 
-    getRelated(rec: any): Promise<any> {
+    getRelated(rec: any, ...args): Promise<any> {
         const reqs = [];
         this.metadata.relations.forEach((relation) => {
             if (rec[relation.sf]) {
@@ -247,7 +250,9 @@ export abstract class AbstractDictionaryDescriptor {
             }
         });
         return Promise.all(reqs)
-            .then((responses) => this.aRelationsToObject(responses));
+            .then((responses) => {
+                return this.aRelationsToObject(responses);
+            });
     }
 
     getRecord(nodeId: string | number): Promise<any> {
@@ -275,19 +280,15 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
-    updateRecord(originalData: any, updates: any): Promise<any> {
+    updateRecord(originalData: any, updates: any): Promise<any[]> {
         return this._postChanges(originalData, updates);
     }
 
-    protected _postChanges(data: any, updates: any): Promise<any> {
+    protected _postChanges(data: any, updates: any): Promise<any[]> {
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);
-        return this.apiSrv.batch(changes, '')
-            .then((resp) => {
-                // console.log('_postchanges resp', resp);
-                return resp;
-            });
+        return this.apiSrv.batch(changes, '');
     }
 
     protected dueToChain(due: string): string[] {
@@ -300,18 +301,17 @@ export abstract class AbstractDictionaryDescriptor {
         return chain;
     }
 
-    protected getCachedRecord<T>(query: any): Promise<T> {
+    protected getCachedRecord(query: any): Promise<any> {
         return this.apiSrv.cache
-            .read<T>(query)
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+            .read(query)
+            .then((items: any[]) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
     }
 
     protected prepareForEdit(records: any[]): any[] {
-        records.forEach((record) => this.apiSrv.entityHelper.prepareForEdit(record));
-        return records;
+        return records.map((record) => this.apiSrv.entityHelper.prepareForEdit(record));
     }
 
-    protected aRelationsToObject(responses: any): any {
+    protected aRelationsToObject(responses: any[]): any {
         const related = {};
         this.metadata.relations.forEach((relation, idx) => related[relation.name] = responses[idx]);
         return related;
