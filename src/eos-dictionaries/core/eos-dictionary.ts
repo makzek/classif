@@ -78,11 +78,14 @@ export class EosDictionary {
         };
     }
 
-    init(data: any[]) {
+    init(): Promise<EosDictionaryNode> {
         this._nodes.clear();
-
-        /* add nodes */
-        this.updateNodes(data, true);
+        return this.descriptor.getRoot()
+            .then((data: any[]) => {
+                this.updateNodes(data, true);
+                console.log('this.r00t', this.root, this._nodes);
+                return this.root;
+            })
     }
 
     initUserOrder(userOrdered: boolean, userOrder: any) {
@@ -110,18 +113,21 @@ export class EosDictionary {
 
         /* fallback if root undefined */
         if (!this.root) {
-            this.root = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 0 });
+            this.root = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
             this.root.children = [];
             this._nodes.set(this.root.id, this.root);
         }
 
         this.root.title = this.descriptor.title;
+        this.root.data.rec['DELETED'] = false;
 
-        this._nodes.forEach((_node) => {
-            if (!_node.parent && _node !== this.root) {
-                this.root.addChild(_node);
+        this._nodes.forEach((node) => {
+            if (!node.parent && node !== this.root) {
+                this.root.addChild(node);
             }
+            node.updateEpandabe();
         });
+        this.root.updateEpandabe();
     }
 
     updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -148,7 +154,11 @@ export class EosDictionary {
     }
 
     getFullNode(nodeId: string): Promise<EosDictionaryNode> {
-        return Promise.resolve(null);
+        return this.descriptor.getRecord(nodeId)
+            .then((nodes) => {
+                this.updateNodes(nodes, true);
+                return this._nodes.get(nodeId);
+            });
     }
 
     getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
@@ -251,35 +261,6 @@ export class EosDictionary {
         }
         this._userOrder[nodeId] = order;
     }
-    /*
-    __orderBy(order: IOrderBy, userOrder = false) {
-        this._orderBy = order;
-        this._userOrdered = userOrder;
-        this.reorder();
-    }
-
-    reorder() {
-        this.nodes.forEach((node) => this.reorderNode(node));
-    }
-
-    reorderNode(node: EosDictionaryNode, parentId?: string) {
-        if (node.children) {
-            if (this._userOrdered) {
-                if (parentId !== undefined) {
-                    node.children = this._doUserOrder(node.children, node.id);
-                } else {
-
-                }
-            } else {
-                node.children = this._orderByField(node.children);
-            }
-        }
-    }
-    reorderList(nodes: EosDictionaryNode[], parent?: EosDictionaryNode): EosDictionaryNode[] {
-        nodes.forEach((node) => this.reorderNode(node));
-        return this._orderByField(nodes);
-    }
-    */
 
     reorderList(nodes: EosDictionaryNode[], parentId?: string) {
         if (this._userOrdered && parentId) {

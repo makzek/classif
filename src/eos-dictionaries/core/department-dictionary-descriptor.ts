@@ -158,9 +158,9 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         /*
         const res = [];
         const pRec = this.apiSrv.read
-        */
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
+        */
         return this.getData(this.dueToChain(due));
     }
 
@@ -194,7 +194,7 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
     }
 
     getRoot(): Promise<any[]> {
-        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } });
+        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }, 'DUE');
     }
 
     private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {

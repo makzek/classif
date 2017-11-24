@@ -5,8 +5,8 @@
             (click)="onExpand($event, node.isDeleted)"></span>
         <span class="node-title primary-text l-font" [ngClass]="{'secondary-text': node.isActive, 'deleted': node.isDeleted && showDeleted}">
             <span *ngFor="let field of viewFields; let i = index">{{field.value}}</span>
-            <eos-spinner *ngIf="node.updating" [size]="sm"></eos-spinner>
+            <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
         </span>
     </span>
-    <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
+    <eos-tree *ngIf="node.isExpanded && node.isNode" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
 </div>

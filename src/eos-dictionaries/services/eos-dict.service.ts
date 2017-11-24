@@ -150,8 +150,8 @@ export class EosDictService {
             const descriptor = this._dictionaries.get(dictionaryId);
             if (descriptor) {
                 this.dictionary = new EosDictionary(descriptor, this._pipeSrv);
-                _p = this.dictionary.descriptor.getRoot()
-                    .then((data: any[]) => {
+                _p = this.dictionary.init()
+                    .then((root) => {
                         this._initViewParameters();
                         this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
@@ -160,9 +160,6 @@ export class EosDictService {
                             this.viewParameters.userOrdered,
                             this._storageSrv.getUserOrder(this.dictionary.id)
                         );
-                        if (data && data.length) {
-                            this.dictionary.init(data);
-                        }
                         this._mDictionaryPromise.delete(dictionaryId);
                         this._dictionary$.next(this.dictionary);
                         return this.dictionary;
@@ -211,7 +208,7 @@ export class EosDictService {
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         // console.log('loadChildren for', node.id);
         node.updating = true;
-        return this.dictionary.descriptor.getChildren(node.data['ISN_NODE'])
+        return this.dictionary.descriptor.getChildren(node.data.rec['ISN_NODE'])
             .then((data: any[]) => {
                 this._updateDictNodes(data, true);
                 node.updating = false;

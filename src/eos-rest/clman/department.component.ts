@@ -112,7 +112,7 @@ export class DepartmentComponent implements OnInit {
         this.pip.cache.read<DEPARTMENT>({
             DEPARTMENT: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE'
-            , top: 10
+            , top: 100
         }).then(r => {
             this.treeItems = r;
         });

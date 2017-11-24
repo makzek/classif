@@ -34,6 +34,11 @@ export class EosDictionaryNode {
      * */
     data: any;
 
+    /**
+     * can be expanded
+     */
+    expandable: boolean;
+
     sorting: number;
 
     /**
@@ -45,7 +50,7 @@ export class EosDictionaryNode {
         return this._children;
     }
 
-    set children(nodes: EosDictionaryNode[]){
+    set children(nodes: EosDictionaryNode[]) {
         this._children = nodes;
     }
 
@@ -75,16 +80,12 @@ export class EosDictionaryNode {
         }
     }
 
-    get expandable(): boolean {
-        return this.hasSubnodes && this._children && this._children.length > 0;
-    }
-
-    get hasSubnodes(): boolean {
+    get isNode(): boolean {
         return (this.data.rec['IS_NODE'] !== undefined && this.data.rec['IS_NODE'] === 0);
     }
 
     get loaded(): boolean {
-        return !this.hasSubnodes || this._children !== undefined;
+        return !this.isNode || this._children !== undefined;
     }
 
     isVisible(showDeleted: boolean): boolean {
@@ -124,6 +125,10 @@ export class EosDictionaryNode {
                 this.id = this._keyToString(data[this._descriptor.keyField.key]);
             }
         }
+    }
+
+    updateEpandabe() {
+        this.expandable = this.isNode && this._children && this._children.findIndex((node) => node.isNode) > -1;
     }
 
     private _keyToString(value: any): string {

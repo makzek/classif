@@ -221,18 +221,14 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract getChildren(...params): Promise<any[]>;
 
-    getData(params?: any, orderBy?: string): Promise<any[]> {
-        if (params) {
-            if (params.criteries) {
-                const _criteries = PipRX.criteries(params.criteries);
-                Object.assign(params, _criteries);
-            }
-        } else {
-            params = ALL_ROWS;
+    getData(query?: any, order?: string, limit?: number): Promise<any[]> {
+        console.log(query);
+        if (!query) {
+            query = ALL_ROWS;
         }
-        console.log('getData params', params);
+        console.log('getData query', query);
         return this.apiSrv
-            .read({ [this.apiInstance]: params, orderby: orderBy || 'WEIGHT' })
+            .read({ [this.apiInstance]: query, top: limit || 100, orderby: order || 'WEIGHT'})
             .then((data: any[]) => {
                 this.prepareForEdit(data);
                 return data;
