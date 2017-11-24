@@ -1,4 +1,5 @@
-<div *ngIf="show" (mouseleave)="hideHint()" (click)="select()" (dblclick)="openCard()"
+<div *ngIf="show" (mouseleave)="hideHint()" (click)="selectNode($event)" (dblclick)="viewNode()" (contextmenu)="hideHint()"
     class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left">
-    <span>{{title}}</span>
+    <span class="title">{{title}}</span>
+    <span class="interface-text">ПКМ - скрыть.</span>
 </div>

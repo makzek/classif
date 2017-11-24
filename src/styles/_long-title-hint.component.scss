@@ -7,4 +7,12 @@
     background: $highlight-color-main-theme;
     border: 1px $active-field-color-main-theme solid;
     transition: .2s opacity;
+
+    .title {
+        cursor: default;
+    }
+
+    .interface-text {
+        color: $active-field-color-main-theme;
+    }
 }

@@ -1,4 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { HintConfiguration } from './hint-configuration.interface';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { EosDictService } from '../services/eos-dict.service';
+import { EosStorageService } from '../../app/services/eos-storage.service';
+import { RECENT_URL } from '../../app/consts/common.consts';
 
 @Component({
     selector: 'eos-longtitle-hint',
@@ -6,36 +12,55 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 
 export class LongTitleHintComponent {
-    @Output('onSelect') onSelect: EventEmitter<any> = new EventEmitter();
-    @Output('onOpen') onOpen: EventEmitter<any> = new EventEmitter();
     public title: string;
     public top: string;
     public left: string;
     public opacity = 0;
 
     public show = false;
-    constructor() {
-    }
+    private _node: EosDictionaryNode;
 
-    public showHint(top: number, left: number, title: string) {
-        this.title = title;
+    constructor(
+        private _dictSrv: EosDictService,
+        private _storageSrv: EosStorageService,
+        private _router: Router,
+    ) { }
+
+    public showHint(hintConfig: HintConfiguration) {
+        if (this._node && this._node.id === hintConfig.node.id) {
+            return;
+        }
+        this.title = hintConfig.text;
         this.show = true;
-        this.top = top + 'px';
-        this.left = left + 'px';
+        this.top = hintConfig.top + 'px';
+        this.left = hintConfig.left + 'px';
         this.opacity = 1;
+        this._node = hintConfig.node;
     }
 
-    public hideHint() {
+    public hideHint(hintConfig?: HintConfiguration) {
+        if (hintConfig) {
+            this._node = hintConfig.node;
+            console.log(this._node.id);
+        }
         this.opacity = 0;
         setTimeout(() => this.show = false, 200);
+        return false;
     }
 
-    public select() {
-        this.onSelect.emit();
+    public selectNode(evt: MouseEvent) {
+        if (!this._node.isDeleted && this._node.id !== '') {
+            this._dictSrv.openNode(this._node.id);
+        }
     }
 
-    public openCard() {
-        this.onOpen.emit();
+    public viewNode() {
+        if (!this._dictSrv.isRoot(this._node.id)) {
+            this._storageSrv.setItem(RECENT_URL, this._router.url);
+            const _path = this._dictSrv.getNodePath(this._node);
+            _path.push('view')
+            this._router.navigate(_path);
+        }
     }
 
 }

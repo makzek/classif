@@ -10,8 +10,8 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { FieldDescriptor } from '../core/field-descriptor';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
-import { LongTitleHintComponent } from '../long-title-hint/long-title-hint.component'
 import { createElement } from '@angular/core/src/view/element';
+import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
 
 @Component({
     selector: 'eos-node-list-item',
@@ -19,12 +19,14 @@ import { createElement } from '@angular/core/src/view/element';
 })
 
 export class NodeListItemComponent implements OnInit {
-    @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
     @ViewChild('item') item: ElementRef;
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
+
+    private down = false;
 
     viewFields: FieldDescriptor[];
 
@@ -39,6 +41,7 @@ export class NodeListItemComponent implements OnInit {
     }
 
     selectNode(): void {
+        this.down = true;
         if (!this.node.isDeleted && this.node.id !== '') {
             this._dictSrv.openNode(this.node.id);
         }
@@ -67,7 +70,18 @@ export class NodeListItemComponent implements OnInit {
         span.innerText = el.innerText;
         body[0].appendChild(span);
         if (span.clientWidth > el.clientWidth) {
-            this.hint.showHint(this.item.nativeElement.offsetTop, el.offsetLeft, el.innerText);
+            this.onHoverItem.emit({
+                top: this.item.nativeElement.offsetTop,
+                left: el.offsetLeft,
+                text: el.innerText,
+                show: true,
+                node: this.node
+            });
+        } else {
+            this.onHoverItem.emit({
+                show: false,
+                node: this.node
+            })
         }
         body[0].removeChild(span)
     }

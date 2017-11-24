@@ -6,6 +6,8 @@ import 'rxjs/add/operator/takeUntil';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictService } from '../services/eos-dict.service';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
+import { LongTitleHintComponent } from '../long-title-hint/long-title-hint.component';
+import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
+    @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
     params: IDictionaryViewParameters;
 
@@ -48,6 +51,14 @@ export class NodeListComponent implements OnInit, OnDestroy {
     writeValues(nodes: EosDictionaryNode[]) {
         if (nodes && nodes.length) {
             this.sortableComponent.writeValue(nodes);
+        }
+    }
+
+    public showHint(hintConfig: HintConfiguration) {
+        if (hintConfig.show) {
+            this.hint.showHint(hintConfig);
+        } else {
+            this.hint.hideHint(hintConfig);
         }
     }
 }
