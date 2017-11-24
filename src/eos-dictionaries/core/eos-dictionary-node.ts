@@ -2,6 +2,7 @@ import { IFieldView } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
+import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -49,20 +50,20 @@ export class EosDictionaryNode {
     }
 
     get isDeleted(): boolean {
-        return !!this.data['DELETED'];
+        return !!this.data.rec['DELETED'];
 
     }
 
     set isDeleted(val: boolean) {
-        if (!this.data['PROTECTED']) {
-            this.data['DELETED'] = val;
+        if (!this.data.rec['PROTECTED']) {
+            this.data.rec['DELETED'] = val;
         }
     }
 
     set title(title: string) {
         const _rec = this.getListView();
         if (_rec && _rec.length) {
-            this.data[_rec[0].key] = title;
+            this.data.rec[_rec[0].key] = title;
         }
     }
 
@@ -79,7 +80,7 @@ export class EosDictionaryNode {
     }
 
     get hasSubnodes(): boolean {
-        return (this.data['IS_NODE'] !== undefined && this.data['IS_NODE'] === 0);
+        return (this.data.rec['IS_NODE'] !== undefined && this.data.rec['IS_NODE'] === 0);
     }
 
     get loaded(): boolean {
@@ -109,7 +110,9 @@ export class EosDictionaryNode {
             this._dictionary = dictionary;
             this._descriptor = dictionary.descriptor.record;
             /* store all data from backend in .data */
-            this.data = data;
+            this.data = {
+                rec: data
+            };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
                 this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
@@ -133,8 +136,8 @@ export class EosDictionaryNode {
 
     private _fieldValue(field: FieldDescriptor): any {
         const _fld = field.foreignKey;
-        if (this.data) {
-            return this.data[_fld];
+        if (this.data.rec) {
+            return this.data.rec[_fld];
         } else {
             return null;
         }
@@ -142,6 +145,7 @@ export class EosDictionaryNode {
 
     updateData(nodeData: any) {
         Object.assign(this.data, nodeData);
+        /* here we update all data not only this.data.rec ?? */
     }
 
     isChildOf(node: EosDictionaryNode): boolean {
@@ -201,26 +205,33 @@ export class EosDictionaryNode {
         return this._descriptor.getListView(this.data);
     }
 
-    getQuickView(): IFieldView[] {
+    /*getQuickView(): IFieldView[] {
         return this._descriptor.getQuickView(this.data);
-    }
+    }*/
 
     getShortQuickView(): IFieldView[] {
         return this._descriptor.getShortQuickView(this.data);
     }
 
-    getEditView(): any {
+    /*getEditView(): any {
         return this._descriptor.getEditView(this.data);
-    }
+    }*/
 
     getEditFieldsDescription(): any {
         return this._descriptor.getEditFieldDescription(this.data);
     }
 
     getEditData(): any {
-        const _data = {};
+        const _data = {
+            rec: {},
+        };
         this._descriptor.getEditView(this.data).forEach((_f) => {
-            _data[_f.foreignKey] = _f.value;
+            if (_f.type !== E_FIELD_TYPE.dictionary) {
+                _data.rec[_f.foreignKey] = _f.value;
+            } else {
+                _data[_f.key] = {};
+                /* recive other dict data */
+            }
         });
         return _data;
     }
@@ -234,17 +245,31 @@ export class EosDictionaryNode {
     }
 
     getShortViewData(): any {
-        const _data = {};
+        const _data = {
+            rec: {},
+        };
         this._descriptor.getShortQuickView(this.data).forEach((_f) => {
-            _data[_f.foreignKey] = _f.value;
+            if (_f.type !== E_FIELD_TYPE.dictionary) {
+                _data.rec[_f.foreignKey] = _f.value;
+            } else {
+                _data[_f.key] = {};
+                /* recive other dict data */
+            }
         });
         return _data;
     }
 
     getFullViewData(): any {
-        const _data = {};
+        const _data = {
+            rec: {},
+        };
         this._descriptor.getQuickView(this.data).forEach((_f) => {
-            _data[_f.foreignKey] = _f.value;
+            if (_f.type !== E_FIELD_TYPE.dictionary) {
+                _data.rec[_f.foreignKey] = _f.value;
+            } else {
+                _data[_f.key] = {};
+                /* recive other dict data */
+            }
         });
         return _data;
     }

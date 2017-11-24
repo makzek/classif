@@ -27,7 +27,11 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }
 
     keys(data: Object): string[] {
-        return Object.keys(data);
+        if (data) {
+            return Object.keys(data);
+        } else {
+            return [];
+        }
     }
 
     ngOnInit() {
@@ -44,11 +48,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    change(fldKey: string, value: string) {
-        this.data[fldKey] = value;
-        this.onChange.emit(this.data);
+    change(fldKey: string, dict: string, value: string) {
+        if (this.data[dict][fldKey] !== value) {
+            this.data[dict][fldKey] = value;
+            this.onChange.emit(this.data);
+        }
     }
-
 
     focus(name: string) {
         this.focusedField = name;

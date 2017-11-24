@@ -43,31 +43,31 @@ export class RecordDescriptor {
     }
 
     getListView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.list), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.list), data.rec);
     }
 
     getQuickView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data.rec), data.rec);
     }
 
     getShortQuickView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data.rec), data.rec);
     }
 
     getEditView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.edit, data), data);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.edit, data.rec), data.rec);
     }
 
     getEditFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.edit, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data);
     }
 
     getShortQuickFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.shortQuickView, data);
     }
 
     getQuickFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data));
+        return this.dictionary.getFieldDescription(E_FIELD_SET.quickView, data);
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
