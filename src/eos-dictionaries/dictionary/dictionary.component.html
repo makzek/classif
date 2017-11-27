@@ -6,6 +6,8 @@
         [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
         <eos-tree *ngIf="treeNodes.length" [nodes]="treeNodes" [showDeleted]="params.showDeleted"></eos-tree>
+        <!-- new code-->
+        <div class="fon highlighted" [style.width]="fonConf.width" [style.height]="fonConf.height" [style.top]="fonConf.top"></div>
     </div>
     <div class="selected-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">

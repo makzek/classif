@@ -42,6 +42,7 @@ import { DepartmentNodeInfoComponent } from './node-info/department-node-info.co
 import { EosDictApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
+import { EosActiveTreeNodeService } from './tree/active-node-fon.service';
 
 /* directives */
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
@@ -99,6 +100,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         EosDictApiService,
         EosDictService,
         EosSandwichService,
+        EosActiveTreeNodeService,
     ],
 })
 export class EosDictionariesModule { }

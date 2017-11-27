@@ -1,6 +1,6 @@
 <ul *ngIf="node && (!node.isDeleted || showDeleted)">
-    <li (click)="onSelect($event, node.isDeleted)">
-        <div class="node" [ngClass]="{'highlighted': node.isActive}">
+    <li>
+        <div class="node" #el (click)="onSelect($event, node.isDeleted, el)">
             <div class="tree-btn">
                 <span *ngIf="node.expandable" (click)="onExpand($event, node.isDeleted)" class="eos-icon x-small icon"
                 [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"></span>
