@@ -222,11 +222,10 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getChildren(...params): Promise<any[]>;
 
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
-        console.log(query);
         if (!query) {
             query = ALL_ROWS;
         }
-        console.log('getData query', query);
+        // console.log('getData query', query);
         return this.apiSrv
             .read({ [this.apiInstance]: query, top: limit || 100, orderby: order || 'WEIGHT'})
             .then((data: any[]) => {
@@ -285,10 +284,11 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     updateRecord(originalData: any, updates: any): Promise<any[]> {
-        return this._postChanges(originalData, updates);
+        return this._postChanges(originalData.rec, updates.rec);
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
+        console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);

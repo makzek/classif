@@ -537,7 +537,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _clearForm() {
         this.formValidated = false;
-        this.nodeData = {};
+        this.nodeData = {
+            rec: {}
+        };
     }
 
     private _create() {

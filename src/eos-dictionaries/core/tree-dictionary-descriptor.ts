@@ -59,10 +59,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     }
 
     addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
-        let _newRec = this.preCreate(parent, isLeaf, isProtected, isDeleted);
+        let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
-        return this._postChanges(_newRec, data)
+        return this._postChanges(_newRec, data.rec)
             .then((resp) => {
                 if (resp && resp[0]) {
                     return resp[0].ID;

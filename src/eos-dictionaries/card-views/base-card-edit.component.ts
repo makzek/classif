@@ -37,7 +37,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if (this.cardForm) {
             this.cardForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(!this.cardForm.valid);
+                this.invalid.emit(this.cardForm.invalid);
             });
         }
     }

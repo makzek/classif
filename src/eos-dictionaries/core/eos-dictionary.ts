@@ -83,7 +83,7 @@ export class EosDictionary {
         return this.descriptor.getRoot()
             .then((data: any[]) => {
                 this.updateNodes(data, true);
-                console.log('this.r00t', this.root, this._nodes);
+                // console.log('this.r00t', this.root, this._nodes);
                 return this.root;
             })
     }

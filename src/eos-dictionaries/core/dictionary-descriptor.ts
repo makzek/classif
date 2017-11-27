@@ -50,7 +50,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     addRecord(data: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
-        return this._postChanges(_newRec, data)
+        return this._postChanges(_newRec, data.rec)
             .then((resp: any[]) => {
                 if (resp && resp[0]) {
                     return resp[0].ID;

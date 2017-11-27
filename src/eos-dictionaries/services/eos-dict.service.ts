@@ -183,7 +183,7 @@ export class EosDictService {
     }
 
     private _getNode(nodeId: string): Promise<EosDictionaryNode> {
-        console.log('get node', nodeId);
+        // console.log('get node', nodeId);
         if (this.dictionary) {
             const _node = this.dictionary.getNode(nodeId);
             if (_node) {
@@ -343,7 +343,8 @@ export class EosDictService {
 
     public addNode(data: any): Promise<any> {
         if (this.selectedNode) {
-            return this.dictionary.descriptor.addRecord(this.selectedNode.data, data)
+            console.log('addNode', data, this.selectedNode.data);
+            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
                     return this.loadChildren(this.selectedNode)
@@ -573,14 +574,14 @@ export class EosDictService {
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
-                if (_node.data[key] === val && _node.id !== nodeId) {
+                if (_node.data.rec[key] === val && _node.id !== nodeId) {
                     _hasMatch = true;
                 }
             });
             return _hasMatch ? { 'isUnic': _hasMatch } : null;
         } else if (this.selectedNode) {
             /* tslint:disable:no-bitwise */
-            const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data[key] === val);
+            const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data.rec[key] === val);
             /* tslint:enable:no-bitwise */
             return _hasMatch ? { 'isUnic': _hasMatch } : null;
         } else {

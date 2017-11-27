@@ -1051,7 +1051,8 @@ const commonMeta =
                 UPD_DATE: _T.d,
                 INS_WHO: _T.i,
                 UPD_WHO: _T.i,
-                FULLNAME: _T.s
+                FULLNAME: _T.s,
+                NOTE: _T.s,
             },
             readonly: [
                 'INS_DATE',
