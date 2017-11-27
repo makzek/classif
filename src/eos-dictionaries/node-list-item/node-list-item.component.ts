@@ -26,22 +26,19 @@ export class NodeListItemComponent implements OnInit {
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 
-    private down = false;
-
     viewFields: FieldDescriptor[];
 
     constructor(
         private _storageSrv: EosStorageService,
         private _dictSrv: EosDictService,
         private _router: Router,
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
     }
 
     selectNode(): void {
-        this.down = true;
         if (!this.node.isDeleted && this.node.id !== '') {
             this._dictSrv.openNode(this.node.id);
         }
@@ -62,7 +59,7 @@ export class NodeListItemComponent implements OnInit {
 
     public showHint(el: HTMLElement) {
         const span = document.createElement('span'),
-        body = document.getElementsByTagName('body');
+            body = document.getElementsByTagName('body');
         span.style.position = 'absolute';
         span.style.top = '-5000px';
         span.style.left = '-5000px';
@@ -71,7 +68,7 @@ export class NodeListItemComponent implements OnInit {
         body[0].appendChild(span);
         if (span.clientWidth > el.clientWidth) {
             this.onHoverItem.emit({
-                top: this.item.nativeElement.offsetTop,
+                top: el.offsetTop - el.offsetParent.scrollTop,
                 left: el.offsetLeft,
                 text: el.innerText,
                 show: true,

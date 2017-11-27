@@ -17,6 +17,7 @@ export class LongTitleHintComponent {
     public left: string;
     public opacity = 0;
 
+    public lkm = false;
     public show = false;
     private _node: EosDictionaryNode;
 
@@ -27,24 +28,31 @@ export class LongTitleHintComponent {
     ) { }
 
     public showHint(hintConfig: HintConfiguration) {
-        if (this._node && this._node.id === hintConfig.node.id) {
+        if (this._node && this._node.id === hintConfig.node.id && this.lkm) {
             return;
         }
-        this.title = hintConfig.text;
-        this.show = true;
-        this.top = hintConfig.top + 'px';
-        this.left = hintConfig.left + 'px';
-        this.opacity = 1;
-        this._node = hintConfig.node;
+        setTimeout(() => {
+            this.title = hintConfig.text;
+            this.show = true;
+            this.top = hintConfig.top + 'px';
+            this.left = hintConfig.left + 'px';
+            this.opacity = 1;
+            this._node = hintConfig.node;
+            this.lkm = false;
+        }, 100)
     }
 
     public hideHint(hintConfig?: HintConfiguration) {
         if (hintConfig) {
             this._node = hintConfig.node;
-            console.log(this._node.id);
         }
         this.opacity = 0;
         setTimeout(() => this.show = false, 200);
+    }
+
+    public lkmClick() {
+        this.lkm = true;
+        this.hideHint();
         return false;
     }
 

@@ -54,7 +54,14 @@ export class NodeListComponent implements OnInit, OnDestroy {
         }
     }
 
-    public showHint(hintConfig: HintConfiguration) {
+    public showHint(hintConfig?: HintConfiguration) {
+        if (!hintConfig) {
+            this.hint.hideHint({
+                node: null,
+                show: false
+            })
+            return;
+        }
         if (hintConfig.show) {
             this.hint.showHint(hintConfig);
         } else {
