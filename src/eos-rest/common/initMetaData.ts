@@ -169,7 +169,7 @@ const commonMeta =
             relations: [
 
             ] },
-        CB_PRINT_INFO: { pk: 'ISN_OWNER OWNER_KIND',
+        CB_PRINT_INFO: { pk: 'ISN_OWNER',
             properties: {
                 ISN_OWNER: _t.i,
                 OWNER_KIND: _t.i,
@@ -406,7 +406,9 @@ const commonMeta =
                 NOTE: _t.s,
                 FULLNAME: _t.s,
                 CODE: _t.s,
-                SKYPE: _t.s
+                SKYPE: _t.s,
+                START_ACTION_DATE: _t.d,
+                END_ACTION_DATE: _t.d
             },
             readonly: [
 
@@ -991,7 +993,7 @@ const commonMeta =
             relations: [
 
             ] },
-        SEV_ASSOCIATION: { pk: 'OBJECT_ID OBJECT_NAME',
+        SEV_ASSOCIATION: { pk: 'OBJECT_ID',
             properties: {
                 OBJECT_ID: _t.s,
                 OBJECT_NAME: _t.s,
@@ -1455,7 +1457,7 @@ const commonMeta =
                 { name: 'UFOLDER_List', __type: 'UFOLDER', sf: 'ISN_LCLASSIF', tf: 'ISN_USER' },
                 { name: 'USER_CERTIFICATE_List', __type: 'USER_CERTIFICATE', sf: 'ISN_LCLASSIF', tf: 'ISN_USER' },
                 { name: 'USER_DOCGROUP_ACCESS_List', __type: 'USER_DOCGROUP_ACCESS', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' },
-                { name: 'USER_ORGANIZ_List', __type: 'USER_ORGANIZ', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' },
+                { name: 'USER_ORGANIZ_List', __type: 'USER_ORGANIZ_List', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' },
                 { name: 'USER_PARMS_List', __type: 'USER_PARMS', sf: 'ISN_LCLASSIF', tf: 'ISN_USER_OWNER' },
                 { name: 'USER_REQUEST_List', __type: 'USER_REQUEST', sf: 'ISN_LCLASSIF', tf: 'ISN_USER' },
                 { name: 'USER_TECH_List', __type: 'USER_TECH', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' },
@@ -1550,33 +1552,6 @@ const commonMeta =
             ],
             relations: [
                 { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_LCLASSIF', tf: 'ISN_LCLASSIF' }
-            ] },
-        USER_VIEW: { pk: 'ISN_USER',
-            properties: {
-                ISN_USER: _t.i,
-                ISN_VIEW: _t.i,
-                WEIGHT: _t.i,
-                SRCH_KIND_NAME: _t.s
-            },
-            readonly: [
-
-            ],
-            relations: [
-                { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_USER', tf: 'ISN_LCLASSIF' }
-            ] },
-        USER_REQUEST: { pk: 'ISN_USER',
-            properties: {
-                ISN_USER: _t.i,
-                ISN_REQUEST: _t.i,
-                WEIGHT: _t.i,
-                PARAMS: _t.s,
-                SRCH_KIND_NAME: _t.s
-            },
-            readonly: [
-
-            ],
-            relations: [
-                { name: 'USER_Ref', __type: 'USER_CL', sf: 'ISN_USER', tf: 'ISN_LCLASSIF' }
             ] },
         USERCARD: { pk: 'ISN_LCLASSIF',
             properties: {

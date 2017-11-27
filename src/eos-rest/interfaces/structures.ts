@@ -1,6 +1,6 @@
 import {IEnt, ILinearCL, IHierCL, IStamp} from './interfaces'
 
-// tslint:disable class-name
+ //tslint:disable class-name
 
 /**
  * Справочник видов доставки
@@ -113,7 +113,7 @@ export interface NOMENKL_CL extends ILinearCL {
     /**
      * Флаг активности дела
      */
-    CLOSED: number;
+    CLOSED:number;
     /**
      * Год создания записи
      */
@@ -309,6 +309,7 @@ export interface SEV_PARTICIPANT extends ILinearCL {
      * список используемых для участников СЭВ правил
      */
     SEV_PARTICIPANT_RULE_List: SEV_PARTICIPANT_RULE[];
+    
 }
 
 /**
@@ -494,10 +495,12 @@ export interface USER_CL extends ILinearCL {
      * Было неудачных попыток входа
      */
     LOGIN_ATTEMPTS: number;
+
     /**
      * список используемых для этого пользователя параметров систем оповещения и уведомления
      */
     NTFY_USER_EMAIL_List: NTFY_USER_EMAIL[];
+    
     /**
      * список используемых для этого пользователя полей стандартного ввода
      */
@@ -529,16 +532,6 @@ export interface USER_CL extends ILinearCL {
     USER_TECH_List: USER_TECH[];
 
     /**
-     * список используемых для этого пользователя представлений результатов запроса
-     */
-    USER_VIEW_List: USER_VIEW[];
-
-    /**
-     * список используемых для этого пользователя сохраненных запросов
-     */
-    USER_REQUEST_List: USER_REQUEST[];
-
-    /**
      * список используемых для этого пользователя картотечных прав
      */
     USERCARD_List: USERCARD[];
@@ -552,6 +545,7 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя грифов доступа
      */
     USERSECUR_List: USERSECUR[];
+
 }
 
 /**
@@ -667,6 +661,7 @@ export interface USERCARD extends ILinearCL {
      * список используемых для пользователя группы документов
      */
     USER_CARD_DOCGROUP_List: USER_CARD_DOCGROUP[];
+    
 }
 
 /**
@@ -754,9 +749,7 @@ export interface AR_CATEGORY extends IHierCL {
 /**
 * Значения доп реквизитов организаций
 */
-// tslint:disable-next-line:no-empty-interface
 export interface AR_ORGANIZ_VALUE extends IHierCL {
-
 }
 
 /**
@@ -873,6 +866,14 @@ export interface DEPARTMENT extends IHierCL {
      * skype
      */
     SKYPE: string;
+    /**
+     * начало действия
+     */
+    START_ACTION_DATE: number;
+    /**
+     * конец действия 
+     */
+    END_ACTION_DATE: number;
 }
 
 /**
@@ -1240,6 +1241,7 @@ export interface AR_DESCRIPT extends IEnt {
      * список используемых для доп. реквизитов допустимых значений полей
      */
     AR_VALUE_LIST_List: AR_VALUE_LIST[];
+    
 }
 
 
@@ -1384,7 +1386,7 @@ export interface CABINET extends IEnt {
     /**
      * Имя кабинета
      */
-    CABINET_NAME: string;
+    CABINET_NAME: string; 
     /**
     * Полное наименование
     */
@@ -1395,6 +1397,7 @@ export interface CABINET extends IEnt {
      * список используемых для кабинетов папок
      */
     FOLDER_List: FOLDER[];
+    
 }
 
 
@@ -2726,6 +2729,7 @@ export interface SRCH_REQUEST extends IEnt {
      * список используемых сохраненных запросов с описанием
      */
     SRCH_REQ_DESC_List: SRCH_REQ_DESC[];
+    
 }
 
 /**
@@ -2953,7 +2957,7 @@ export interface TEMP_RC extends IEnt {
     INS_DATE: number;
 
     /**
-     * список используемых для временной РК файлов
+     * список используемых для временной РК файлов 
      */
     REF_FILE_List: REF_FILE[];
 
@@ -2985,7 +2989,7 @@ export interface USER_AUDIT extends IEnt {
     EVENT_KIND: number;
 
     /**
-     * список используемых для временной РК файлов
+     * список используемых для временной РК файлов 
      */
     REF_FILE_List: REF_FILE[];
 }
@@ -3153,57 +3157,5 @@ export interface USERSECUR extends IEnt {
      * Вес элемента
      */
     WEIGHT: number;
-}
 
-/**
- * Представление пользователя результатов запроса
- */
-export interface USER_VIEW extends IEnt {
-    /**
-     * ISN пользователя
-     */
-    ISN_USER: number;
-    /**
-     * ISN представления
-     */
-    ISN_VIEW: number;
-    /**
-     * Вес
-     */
-    WEIGHT: number;
-    /**
-     * Тип списка
-     */
-    SRCH_KIND_NAME: string;
-}
-
-/**
- * Сохраненные запросы пользователей
- */
-export interface USER_REQUEST extends IEnt {
-    /**
-     * ISN пользователя
-     */
-    ISN_USER: number;
-    /**
-     * ISN запроса
-     */
-    ISN_REQUEST: number;
-    /**
-     * Вес
-     */
-    WEIGHT: number;
-    /**
-     * Параметры папок кабинетов
-     */
-    PARAMS: string;
-    /**
-     * Тип списка
-     */
-    SRCH_KIND_NAME: string;
-}
-
-export interface SYS_PARMS {
-    dbms: string;
-    USER_PARMS_List: USER_PARMS[];
 }
