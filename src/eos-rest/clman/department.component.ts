@@ -151,10 +151,30 @@ export class DepartmentComponent implements OnInit {
         if (SevIndexHelper.PrepareForSave(item.SEV_ASSOCIATION, item.row)) {
             changed.push(item.SEV_ASSOCIATION);
         }
+        if (this.prepareCB_PRINT_INFOforSave(item.CB_PRINT_INFO, item.row)) {
+            changed.push(item.CB_PRINT_INFO);
+        }
         const chl = this.pip.changeList(changed);
         this.pip.batch(chl, '').then((r) => {
             alert('oki');
         });
+    }
+
+    private prepareCB_PRINT_INFOforSave(rec: CB_PRINT_INFO, owner: DEPARTMENT): boolean {
+        // удаление CB_PRINT_INFO, если все поля в нем пустые
+        // как сраснить все поля не пишу - они разные для подразделения и ДЛ.
+        // это пример создания, редактирования, удаления записи
+        if ((rec.SURNAME_DP === null) || (rec.SURNAME_DP.trim() === '') ) {
+            // tslint:disable-next-line:curly
+            if (rec._State === _ES.Stub) return false;
+            rec._State = _ES.Deleted;
+        } else if (rec._State === _ES.Stub) {
+            // Добавление - превращаем Stub в Added
+            rec._State = _ES.Added;
+            rec.ISN_OWNER = owner.ISN_NODE;
+            rec.OWNER_KIND = 104;
+        }
+        return true;
     }
 
 }

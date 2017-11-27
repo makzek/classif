@@ -1,4 +1,4 @@
-import {IEnt, ILinearCL, IHierCL, IStamp} from './interfaces'
+import { IEnt, ILinearCL, IHierCL, IStamp } from './interfaces'
 
 // tslint:disable class-name
 
@@ -14,9 +14,9 @@ export interface DELIVERY_CL extends ILinearCL {
      * ISN вида доставки
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес элемента
-     */
+    /**
+    * Вес элемента
+    */
     WEIGHT: number;
 }
 
@@ -32,9 +32,9 @@ export interface ADDR_CATEGORY_CL extends ILinearCL {
      * ISN_LCLASSIF
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес
-     */
+    /**
+    * Вес
+    */
     WEIGHT: number;
 }
 
@@ -50,9 +50,9 @@ export interface EDS_CATEGORY_CL extends ILinearCL {
      * ISN записи
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес
-     */
+    /**
+    * Вес
+    */
     WEIGHT: number;
 }
 
@@ -309,6 +309,7 @@ export interface SEV_PARTICIPANT extends ILinearCL {
      * список используемых для участников СЭВ правил
      */
     SEV_PARTICIPANT_RULE_List: SEV_PARTICIPANT_RULE[];
+
 }
 
 /**
@@ -494,10 +495,12 @@ export interface USER_CL extends ILinearCL {
      * Было неудачных попыток входа
      */
     LOGIN_ATTEMPTS: number;
+
     /**
      * список используемых для этого пользователя параметров систем оповещения и уведомления
      */
     NTFY_USER_EMAIL_List: NTFY_USER_EMAIL[];
+
     /**
      * список используемых для этого пользователя полей стандартного ввода
      */
@@ -524,11 +527,6 @@ export interface USER_CL extends ILinearCL {
     USER_PARMS_List: USER_PARMS[];
 
     /**
-     * список используемых для этого пользователя прав на справочники
-     */
-    USER_TECH_List: USER_TECH[];
-
-    /**
      * список используемых для этого пользователя представлений результатов запроса
      */
     USER_VIEW_List: USER_VIEW[];
@@ -537,6 +535,11 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя сохраненных запросов
      */
     USER_REQUEST_List: USER_REQUEST[];
+
+    /**
+     * список используемых для этого пользователя прав на справочники
+     */
+    USER_TECH_List: USER_TECH[];
 
     /**
      * список используемых для этого пользователя картотечных прав
@@ -552,6 +555,7 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя грифов доступа
      */
     USERSECUR_List: USERSECUR[];
+
 }
 
 /**
@@ -667,6 +671,7 @@ export interface USERCARD extends ILinearCL {
      * список используемых для пользователя группы документов
      */
     USER_CARD_DOCGROUP_List: USER_CARD_DOCGROUP[];
+
 }
 
 /**
@@ -754,9 +759,11 @@ export interface AR_CATEGORY extends IHierCL {
 /**
 * Значения доп реквизитов организаций
 */
-// tslint:disable-next-line:no-empty-interface
 export interface AR_ORGANIZ_VALUE extends IHierCL {
-
+    /**
+     * Наименование статуса
+     */
+    CLASSIF_NAME: string;
 }
 
 /**
@@ -873,6 +880,14 @@ export interface DEPARTMENT extends IHierCL {
      * skype
      */
     SKYPE: string;
+    /**
+     * начало действия
+     */
+    START_ACTION_DATE: number;
+    /**
+     * конец действия
+     */
+    END_ACTION_DATE: number;
 }
 
 /**
@@ -1240,6 +1255,7 @@ export interface AR_DESCRIPT extends IEnt {
      * список используемых для доп. реквизитов допустимых значений полей
      */
     AR_VALUE_LIST_List: AR_VALUE_LIST[];
+
 }
 
 
@@ -1320,9 +1336,9 @@ export interface BANK_RECVISIT extends IEnt {
      * Наименование Банка
      */
     BANK_NAME: string;
-     /**
-     * Расчетный счет
-     */
+    /**
+    * Расчетный счет
+    */
     ACOUNT: string;
     /**
      * Кор счет
@@ -1395,6 +1411,7 @@ export interface CABINET extends IEnt {
      * список используемых для кабинетов папок
      */
     FOLDER_List: FOLDER[];
+
 }
 
 
@@ -2726,6 +2743,7 @@ export interface SRCH_REQUEST extends IEnt {
      * список используемых сохраненных запросов с описанием
      */
     SRCH_REQ_DESC_List: SRCH_REQ_DESC[];
+
 }
 
 /**
@@ -3153,8 +3171,8 @@ export interface USERSECUR extends IEnt {
      * Вес элемента
      */
     WEIGHT: number;
-}
 
+}
 /**
  * Представление пользователя результатов запроса
  */
