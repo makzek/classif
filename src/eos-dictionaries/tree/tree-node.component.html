@@ -7,6 +7,7 @@
             </div>
             <div class="title">
                 <span *ngFor="let field of viewFields; let i = index">{{field.value + '&nbsp;'}}</span>
+                <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
             </div>
         </div>
         <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
