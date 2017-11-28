@@ -8,7 +8,7 @@
                 </div>
             </div>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && nodes?.length" class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && !params.searchResults && nodes?.length" class="elements secondary-text">
                 <li class="child">
                     <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
                         placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
@@ -19,7 +19,7 @@
                 <eos-node-list-item [node]="item.value" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered && nodes?.length" class="elements secondary-text">
+            <ul *ngIf="!params.userOrdered || params.searchResults && nodes?.length" class="elements secondary-text">
                 <li *ngFor="let item of nodes" class="child">
                     <eos-node-list-item [node]="item" [params]="params" [length]="length" (mark)="checkState()"></eos-node-list-item>
                 </li>
