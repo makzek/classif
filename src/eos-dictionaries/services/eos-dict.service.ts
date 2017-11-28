@@ -417,7 +417,6 @@ export class EosDictService {
                 this._setCurrentList(nodes);
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
-                this.selectNode(null);
                 return this._currentList;
             });
     }
@@ -496,6 +495,7 @@ export class EosDictService {
         } else {
             this.viewParameters.userOrdered = value;
         }
+        this._viewParameters$.next(this.viewParameters);
 
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;
