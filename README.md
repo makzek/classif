@@ -5,6 +5,7 @@ For building application you need [NodeJs](https://nodejs.org/en/download/) inst
 
 For compile styles from sass you need to install [Compass](http://compass-style.org/install/)
 
+- run `npm install -g @angular/cli`
 - run `npm install`
 
 ## Development server
