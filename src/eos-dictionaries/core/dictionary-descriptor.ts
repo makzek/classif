@@ -4,6 +4,8 @@ import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ILinearCL } from 'eos-rest';
+import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
+import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 
 export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: RecordDescriptor;
@@ -60,8 +62,14 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
             });
     }
 
-    getChildren(): Promise<any> {
-        return this.getData();
+    getChildren(): Promise<any[]> {
+        return Promise.resolve([]);
+    }
+
+    getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
+        return this.apiSrv
+            .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['ISN_LCLASSIF'], this.apiInstance)] })
+            .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
     }
 
     getRoot(): Promise<any[]> {

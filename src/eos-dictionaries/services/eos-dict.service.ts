@@ -65,14 +65,6 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
-    /*get currentTab(): number {
-        return this._currentTab;
-    }
-
-    set currentTab(val: number) {
-        this._currentTab = val;
-    }*/
-
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -208,7 +200,7 @@ export class EosDictService {
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         // console.log('loadChildren for', node.id);
         node.updating = true;
-        return this.dictionary.descriptor.getChildren(node.data.rec['ISN_NODE'])
+        return this.dictionary.descriptor.getChildren(node.data.rec)
             .then((data: any[]) => {
                 this._updateDictNodes(data, true);
                 node.updating = false;
@@ -228,7 +220,7 @@ export class EosDictService {
     }
 
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNode(this.dictionary.id, nodeId);
+        return this.dictionary.expandNode(nodeId);
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {

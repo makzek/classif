@@ -8,8 +8,8 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { FieldDescriptor } from '../core/field-descriptor';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-list-item',
@@ -21,7 +21,7 @@ export class NodeListItemComponent implements OnInit {
     @Input('length') length: any = {};
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    viewFields: FieldDescriptor[];
+    viewFields: IFieldView[];
 
     constructor(
         private _storageSrv: EosStorageService,

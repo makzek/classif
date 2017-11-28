@@ -130,6 +130,19 @@ export class EosDictionary {
         this.root.updateEpandabe();
     }
 
+    expandNode(nodeId: string): Promise<EosDictionaryNode> {
+        const node = this._nodes.get(nodeId);
+        if (node) {
+            return this.descriptor.getChildren(node.data.rec)
+                .then((nodes) => {
+                    this.updateNodes(nodes, true);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(null);
+        }
+    }
+
     updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
         const _nodes: EosDictionaryNode[] = [];
         data.forEach((nodeData) => {
@@ -158,14 +171,39 @@ export class EosDictionary {
         return this.descriptor.getRecord(nodeId)
             .then((nodes) => {
                 this.updateNodes(nodes, true);
-                return this._nodes.get(nodeId);
+                const node = this._nodes.get(nodeId);
+                let orgDUE = '';
+                if (this.descriptor.type === E_DICT_TYPE.department) {
+                    orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
+                    if (!orgDUE) {
+                        const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
+                        if (parentNode) {
+                            orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                        }
+                    }
+                }
+
+                return Promise.all([
+                    this.descriptor.getRelated(node.data.rec, orgDUE),
+                    this.descriptor.getRelatedSev(node.data.rec)
+                ]).then(([related, sev]) => {
+                    node.data = Object.assign(node.data, related, { sev: sev });
+                    console.log('full node info', node.data);
+                    return node;
+                });
             });
     }
 
     getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
-        const _res = this._nodes.get(nodeId);
+        const node = this._nodes.get(nodeId);
+        if (this.descriptor.type !== E_DICT_TYPE.linear) {
+            this.descriptor.getChildren(node.data.rec)
+                .then((nodes) => {
+                    this.updateNodes(nodes, true);
+                })
+        }
         // console.log('get node', this.id, nodeId, this._nodes, _res);
-        return _res;
+        return node;
     }
 
     addNode(node: EosDictionaryNode, parentId?: string): boolean {

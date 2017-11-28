@@ -72,15 +72,20 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             });
     }
 
-    getChildren(isn: string): Promise<any[]> {
+    getChildren(record: IHierCL): Promise<any[]> {
         const _children = {
-            ['ISN_HIGH_NODE']: isn + ''
+            ISN_HIGH_NODE: record.ISN_NODE + '',
         };
-        return this.getData({ criteries: _children })
+        return this.getData({ criteries: _children }, 'DUE')
     }
 
     getRecord(due: string): Promise<any> {
-        return this.getData(this.dueToChain(due));
+        const chain = this.dueToChain(due);
+        const recordDue = chain.pop();
+        return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
+            .then(([record, parents]) => {
+                return record.concat(parents);
+            });
     }
 
     getRoot(): Promise<any[]> {

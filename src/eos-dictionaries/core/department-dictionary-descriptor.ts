@@ -155,13 +155,12 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
     }
 
     getRecord(due: string): Promise<any[]> {
-        /*
-        const res = [];
-        const pRec = this.apiSrv.read
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
-        */
-        return this.getData(this.dueToChain(due));
+        return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
+            .then(([record, parents]) => {
+                return record.concat(parents);
+            });
     }
 
     getRelated(rec: any, orgDUE: string): Promise<any> {

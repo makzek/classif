@@ -1,15 +1,15 @@
 import { IDictionaryDescriptor, E_FIELD_SET, IFieldView } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
+import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
 
 export class RecordDescriptor {
-    protected dictionary: DictionaryDescriptor | any;
+    protected dictionary: AbstractDictionaryDescriptor;
     parentField?: FieldDescriptor;
     keyField: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    constructor(dictionary: DictionaryDescriptor | any, data: IDictionaryDescriptor) {
+    constructor(dictionary: AbstractDictionaryDescriptor, data: IDictionaryDescriptor) {
         const fields = data.fields;
         this.dictionary = dictionary;
         this.fieldsMap = new Map<string, FieldDescriptor>();

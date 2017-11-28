@@ -92,8 +92,8 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
-        key: 'sev-association',
-        title: '',
+        key: 'sev',
+        title: 'Индекс СЭВ',
         type: 'dictionary',
     }],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
