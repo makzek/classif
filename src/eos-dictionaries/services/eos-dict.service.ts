@@ -307,7 +307,7 @@ export class EosDictService {
 
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
-            return this._getNode(nodeId)
+            return this.dictionary.getFullNodeInfo(nodeId)
                 .then((node) => {
                     this._openNode(node);
                     return node;
@@ -319,11 +319,11 @@ export class EosDictService {
 
     private _openNode(node: EosDictionaryNode) {
         if (this._openedNode !== node) {
-            if (node) {
-                node.isSelected = true;
-            }
             if (this._openedNode) {
                 this._openedNode.isSelected = false;
+            }
+            if (node) {
+                node.isSelected = true;
             }
             this._openedNode = node;
             this._openedNode$.next(node);
@@ -363,7 +363,7 @@ export class EosDictService {
             this._openNode(null);
         }
         // Object.assign(node, { ...node, isDeleted: true });
-        this.updateNode(node, { DELETED: 1 }).then((res) => {
+        this.updateNode(node, { rec: { DELETED: 1 } }).then((res) => {
             this.reloadNode(node);
         });
         if (node.children) {

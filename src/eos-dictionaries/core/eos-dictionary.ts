@@ -153,7 +153,8 @@ export class EosDictionary {
         return _nodes;
     }
 
-    getFullNode(nodeId: string): Promise<EosDictionaryNode> {
+    getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
+        console.log('getFullNodeInfo fired', nodeId);
         return this.descriptor.getRecord(nodeId)
             .then((nodes) => {
                 this.updateNodes(nodes, true);
