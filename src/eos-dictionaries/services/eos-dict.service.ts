@@ -65,6 +65,11 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
+    get order() {
+        return this.dictionary.orderBy;
+    }
+
+
     /*get currentTab(): number {
         return this._currentTab;
     }
@@ -114,7 +119,11 @@ export class EosDictService {
         return Promise.resolve(DICTIONARIES);
     }
 
-    closeDictionary() {
+    public defaultOrder() {
+        this.dictionary.defaultOrder();
+    }
+
+    public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
         this._currentList = [];
@@ -260,6 +269,9 @@ export class EosDictService {
      * @returns selected node in current dictionary
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
+        if (!this.userOrdered) { // defaultOrder at select node
+            this.defaultOrder();
+        }
         if (nodeId) {
             return this._getNode(nodeId)
                 .then((node) => {
@@ -492,6 +504,12 @@ export class EosDictService {
             this.viewParameters.userOrdered = !this.viewParameters.userOrdered;
         } else {
             this.viewParameters.userOrdered = value;
+        }
+
+        if (this.viewParameters.userOrdered) {
+            this.dictionary.orderBy = null;
+        } else {
+            this.defaultOrder();
         }
 
         if (this.dictionary) {
