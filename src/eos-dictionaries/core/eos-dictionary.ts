@@ -133,7 +133,7 @@ export class EosDictionary {
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
         const node = this._nodes.get(nodeId);
         if (node) {
-            return this.descriptor.getChildren(node.data.rec)
+            return this.descriptor.getSubtree(node.data.rec)
                 .then((nodes) => {
                     this.updateNodes(nodes, true);
                     return node;
@@ -144,18 +144,20 @@ export class EosDictionary {
     }
 
     updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
-        const _nodes: EosDictionaryNode[] = [];
+        const nodeIds: string[] = [];
         data.forEach((nodeData) => {
             if (nodeData) {
                 const nodeId = nodeData[this.descriptor.record.keyField.key];
+                nodeIds.push(nodeId);
                 let _node = this._nodes.get(nodeId);
                 if (_node) {
                     _node.updateData(nodeData);
                 } else {
                     _node = new EosDictionaryNode(this, nodeData);
-                    this._nodes.set(_node.id, _node);
+                    if (_node) {
+                        this._nodes.set(_node.id, _node);
+                    }
                 }
-                _nodes.push(_node);
             } else {
                 console.log('no data');
             }
@@ -163,7 +165,8 @@ export class EosDictionary {
         if (updateTree) {
             this._updateTree();
         }
-        return _nodes;
+        return nodeIds.map((id) => this._nodes.get(id))
+            .filter((node) => !!node);
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {

@@ -74,9 +74,19 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getChildren(record: IHierCL): Promise<any[]> {
         const _children = {
-            ISN_HIGH_NODE: record.ISN_NODE + '',
+            ISN_HIGH_NODE: record.ISN_NODE + ''
         };
-        return this.getData({ criteries: _children }, 'DUE')
+        return this.getData({ criteries: _children }, 'DUE');
+    }
+
+    getSubtree(record: IHierCL): Promise<IHierCL[]> {
+        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
+        const criteries = {
+            DUE: record.DUE + '%',
+            LAYER: (layer + 1) + ':' + (layer + 2),
+            IS_NODE: '0'
+        };
+        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
     getRecord(due: string): Promise<any> {

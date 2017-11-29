@@ -415,7 +415,7 @@ export class EosDictService {
         if (node.parent && node.parent.isDeleted) {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
-        // Object.assign(node, { ...node, isDeleted: false });
+
         this.updateNode(node, { rec: { DELETED: 0 } })
             .then((res) => {
                 return this.reloadNode(node);
@@ -426,7 +426,7 @@ export class EosDictService {
         if (node.children) {
             let delChld: boolean;
             const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', node.data['CLASSIF_NAME']);
+            _confrm.body = _confrm.body.replace('{{name}}', node.title);
 
             this._confirmSrv
                 .confirm(_confrm)
@@ -470,6 +470,11 @@ export class EosDictService {
             _path.push(node.id);
         }
         return _path;
+    }
+
+    getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
+        return this.openDictionary(dictionaryId)
+            .then(() => this.dictionary.getFullNodeInfo(nodeId));
     }
 
     public orderBy(orderBy: IOrderBy) {

@@ -220,14 +220,25 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     abstract getChildren(...params): Promise<any[]>;
+    abstract getSubtree(...params): Promise<any[]>;
 
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
             query = ALL_ROWS;
         }
-        // console.log('getData query', query);
+
+        const req = { [this.apiInstance]: query };
+
+        if (limit) {
+            req.top = limit;
+        }
+
+        if (order) {
+            req.orderby = order;
+        }
+
         return this.apiSrv
-            .read({ [this.apiInstance]: query, top: limit || 100, orderby: order || 'WEIGHT'})
+            .read(req)
             .then((data: any[]) => {
                 this.prepareForEdit(data);
                 return data;

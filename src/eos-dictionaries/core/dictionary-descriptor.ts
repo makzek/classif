@@ -64,6 +64,10 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getChildren(): Promise<any[]> {
         return Promise.resolve([]);
+    };
+
+    getSubtree(): Promise<any[]> {
+        return Promise.resolve([]);
     }
 
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {

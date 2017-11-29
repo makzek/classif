@@ -59,7 +59,7 @@ export class RecordDescriptor {
     }
 
     getEditFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data);
+        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data.rec);
     }
 
     getShortQuickFieldDescription(data: any): any {
