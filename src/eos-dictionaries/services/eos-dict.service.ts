@@ -121,6 +121,7 @@ export class EosDictService {
 
     public defaultOrder() {
         this.dictionary.defaultOrder();
+        this._reorder();
     }
 
     public closeDictionary() {
@@ -269,9 +270,6 @@ export class EosDictService {
      * @returns selected node in current dictionary
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
-        if (!this.userOrdered) { // defaultOrder at select node
-            this.defaultOrder();
-        }
         if (nodeId) {
             return this._getNode(nodeId)
                 .then((node) => {

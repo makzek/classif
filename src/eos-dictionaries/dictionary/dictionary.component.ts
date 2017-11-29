@@ -185,6 +185,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
                     if (!this._dictSrv.userOrdered) {
+                        this._dictSrv.defaultOrder();
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
