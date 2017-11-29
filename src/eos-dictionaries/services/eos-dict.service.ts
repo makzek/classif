@@ -424,7 +424,7 @@ export class EosDictService {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
         // Object.assign(node, { ...node, isDeleted: false });
-        this.updateNode(node, { DELETED: 0 })
+        this.updateNode(node, { rec: { DELETED: 0 } })
             .then((res) => {
                 return this.reloadNode(node);
             });
