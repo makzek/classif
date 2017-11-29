@@ -303,6 +303,8 @@ export class EosDictService {
             this._openNode(null);
             this.selectedNode = node;
             this._selectedNode$.next(node);
+            this.viewParameters.searchResults = false;
+            this._viewParameters$.next(this.viewParameters);
         }
     }
 
@@ -434,7 +436,7 @@ export class EosDictService {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
         // Object.assign(node, { ...node, isDeleted: false });
-        this.updateNode(node, { DELETED: 0 })
+        this.updateNode(node, { rec: { DELETED: 0 } })
             .then((res) => {
                 return this.reloadNode(node);
             });
@@ -503,6 +505,7 @@ export class EosDictService {
         } else {
             this.viewParameters.userOrdered = value;
         }
+        this._viewParameters$.next(this.viewParameters);
 
         if (this.viewParameters.userOrdered) {
             this.dictionary.orderBy = null;

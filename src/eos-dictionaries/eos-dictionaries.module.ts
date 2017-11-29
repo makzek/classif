@@ -37,6 +37,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
+import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 
 /* services */
 import { EosDictService } from './services/eos-dict.service';
@@ -67,6 +68,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
         UnicValidatorDirective,
+        LongTitleHintComponent,
     ],
     entryComponents: [
         ColumnSettingsComponent,

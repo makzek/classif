@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -15,7 +15,7 @@ import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.
     selector: 'eos-node-actions',
     templateUrl: 'node-actions.component.html',
 })
-export class NodeActionsComponent implements DoCheck, OnDestroy {
+export class NodeActionsComponent implements OnDestroy {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     // @Input('params') params: INodeListParams;
@@ -42,10 +42,13 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
                 this._viewParams = params;
                 this._update();
             });
-    }
-
-    ngDoCheck() {
-        // setTimeout(this._update(), 0);
+        _dictSrv.viewParameters$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((params) => {
+                this._viewParams = params;
+                this._update();
+                console.log(this._viewParams)
+            })
     }
 
     ngOnDestroy() {
@@ -89,6 +92,7 @@ export class NodeActionsComponent implements DoCheck, OnDestroy {
                     break;
                 case E_RECORD_ACTIONS.userOrder:
                     _active = this._viewParams.userOrdered;
+                    _enabled = !this._viewParams.searchResults;
                     break;
                 case E_RECORD_ACTIONS.edit:
                     _enabled = _enabled && this._nodeSelected;
