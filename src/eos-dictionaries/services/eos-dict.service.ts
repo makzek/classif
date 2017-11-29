@@ -351,6 +351,7 @@ export class EosDictService {
                     console.log('created node', newNodeId);
                     return this.loadChildren(this.selectedNode)
                         .then(() => {
+                            this._setCurrentList(this.selectedNode.children);
                             this._selectedNode$.next(this.selectedNode);
                             return this.dictionary.getNode(newNodeId + '');
                         });
