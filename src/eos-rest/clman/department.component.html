@@ -1,22 +1,26 @@
 ﻿<div>Подразделения</div>
 <div style="width:340px;height:600px;float:left;border:1px;">
-    <ul >
-        <li *ngFor="let item of treeItems" (click)="onSelectTreeItem(item)" ><span *ngFor="let s of item.DUE.split('.')">&nbsp;&nbsp;</span><span>{{item.CLASSIF_NAME}}</span></li>
-    </ul>
-</div>
-
-<div style="width:340px;height:600px;float:left">
     <ul>
-        <li *ngFor="let item of listItems" (click)="onSelectListItem(item)" >{{item.CLASSIF_NAME}}</li>
+        <li *ngFor="let item of treeItems" (click)="onSelectTreeItem(item)">
+            <span *ngFor="let s of item.DUE.split('.')">&nbsp;&nbsp;</span>
+            <span>{{item.CLASSIF_NAME}}</span>
+        </li>
     </ul>
 </div>
 
-<div style="width:340px;height:600px;float:left">
+<div style="width:340px;height:600px;float:left;">
+    <ul>
+        <li *ngFor="let item of listItems" (click)="onSelectListItem(item)">{{item.CLASSIF_NAME}}</li>
+    </ul>
+</div>
+
+<div style="width:340px;height:600px;float:left; overflow: auto;">
     <span (click)="onAdd()" style="border:1px rised grey;">Добавить</span>
     <div *ngIf="detailedItem">
         <h2>{{detailedItem.row.CLASSIF_NAME}} details!</h2>
 
-        <div><label>id: </label>{{detailedItem.row.DUE}}</div>
+        <div>
+            <label>id: </label>{{detailedItem.row.DUE}}</div>
         <div>
             <label>name: </label>
             <input [(ngModel)]="detailedItem.row.CLASSIF_NAME" placeholder="name" />
@@ -24,11 +28,10 @@
         </div>
         <div *ngIf="detailedItem.cabinet">{{detailedItem.cabinet.CABINET_NAME}}</div>
         индекс СЭВ
-        <input [(ngModel)]="detailedItem.SEV_ASSOCIATION.GLOBAL_ID" placeholder="Индекс СЭВ" />
-        фамилия в дательном падеже:
+        <input [(ngModel)]="detailedItem.SEV_ASSOCIATION.GLOBAL_ID" placeholder="Индекс СЭВ" /> фамилия в дательном падеже:
         <input [(ngModel)]="detailedItem.CB_PRINT_INFO.SURNAME_DP" placeholder="Фамилия дательный" />
+        <hr>
+        <pre>{{detailedItem | json}}</pre>
     </div>
     <button (click)="onSave()">Сохранить</button>
 </div>
-
-

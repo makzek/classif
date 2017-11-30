@@ -65,14 +65,6 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
-    /*get currentTab(): number {
-        return this._currentTab;
-    }
-
-    set currentTab(val: number) {
-        this._currentTab = val;
-    }*/
-
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -208,7 +200,7 @@ export class EosDictService {
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         // console.log('loadChildren for', node.id);
         node.updating = true;
-        return this.dictionary.descriptor.getChildren(node.data.rec['ISN_NODE'])
+        return this.dictionary.descriptor.getChildren(node.data.rec)
             .then((data: any[]) => {
                 this._updateDictNodes(data, true);
                 node.updating = false;
@@ -228,7 +220,7 @@ export class EosDictService {
     }
 
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNode(this.dictionary.id, nodeId);
+        return this.dictionary.expandNode(nodeId);
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -425,7 +417,7 @@ export class EosDictService {
         if (node.parent && node.parent.isDeleted) {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
-        // Object.assign(node, { ...node, isDeleted: false });
+
         this.updateNode(node, { rec: { DELETED: 0 } })
             .then((res) => {
                 return this.reloadNode(node);
@@ -436,7 +428,7 @@ export class EosDictService {
         if (node.children) {
             let delChld: boolean;
             const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', node.data['CLASSIF_NAME']);
+            _confrm.body = _confrm.body.replace('{{name}}', node.title);
 
             this._confirmSrv
                 .confirm(_confrm)
@@ -480,6 +472,11 @@ export class EosDictService {
             _path.push(node.id);
         }
         return _path;
+    }
+
+    getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
+        return this.openDictionary(dictionaryId)
+            .then(() => this.dictionary.getFullNodeInfo(nodeId));
     }
 
     public orderBy(orderBy: IOrderBy) {

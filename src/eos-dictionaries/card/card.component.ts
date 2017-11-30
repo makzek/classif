@@ -132,7 +132,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this._init();
+        // this._init();
     }
 
     ngOnDestroy() {
@@ -145,7 +145,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     turnOffSave(val: boolean) {
-        console.log('form invalid', val);
         this.disableSave = val;
     }
 
@@ -157,7 +156,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
-        return this._dictSrv.getNode(this.dictionaryId, this.nodeId)
+        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
     }
@@ -175,7 +174,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
-            console.log('recived description', this.fieldsDescription);
+            // console.log('recived description', this.fieldsDescription, this.nodeData);
         }
     }
 
@@ -264,7 +263,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     recordChanged(data: any) {
         if (this.nodeData) {
-            console.log('recordChanged', this.nodeData, this._originalData);
+            // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
             const hasChanges = !!~Object.keys(this.nodeData.rec).findIndex((key) => this.nodeData.rec[key] !== this._originalData.rec[key]);
             /* tslint:enable:no-bitwise */
