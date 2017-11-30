@@ -240,7 +240,6 @@ export class EosDictionary {
             if (params.mode === SEARCH_MODES.totalDictionary) {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
             } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
-                console.log('!')
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
             } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';

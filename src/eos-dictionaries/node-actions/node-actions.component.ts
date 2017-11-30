@@ -47,7 +47,6 @@ export class NodeActionsComponent implements OnDestroy {
             .subscribe((params) => {
                 this._viewParams = params;
                 this._update();
-                console.log(this._viewParams)
             })
     }
 
