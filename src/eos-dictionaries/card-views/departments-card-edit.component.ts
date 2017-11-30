@@ -8,26 +8,8 @@ import { EosDictService } from '../services/eos-dict.service';
     templateUrl: 'departments-card-edit.component.html',
 })
 export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnChanges {
-    fieldGroups: string[];
-    currTab = 0;
-
-    defaultImage = 'url(../assets/images/no-user.png)';
-
-    gender = [
-        { id: 'm', title: 'Мужской' },
-        { id: 'f', title: 'Женский' }
-    ];
-
     constructor(injector: Injector) {
         super(injector);
-
-        this.fieldGroups = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
-        this.currTab = this.dictSrv.currentTab;
-    }
-
-    setTab(i: number) {
-        this.currTab = i;
-        this.dictSrv.currentTab = this.currTab;
     }
 
     ngOnChanges() {
@@ -48,10 +30,5 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
                 END_DATE: today,
             }
         ];*/
-    }
-
-    newImage(evt) {
-        this.defaultImage = 'url(' + evt + ')';
-        // send it on server
     }
 }

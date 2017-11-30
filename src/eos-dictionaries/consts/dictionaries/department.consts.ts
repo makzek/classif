@@ -216,7 +216,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DUE_LINK_ORGANIZ',
-        title: 'Due связанной организации',
+        title: 'DUE связанной организации',
         type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
@@ -241,19 +241,23 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Кто обновил',
         type: 'number',
     }, {
-        key: 'print-info',
+        key: 'printInfo',
         type: 'dictionary',
         title: '',
     }, {
-        key: 'sev-association',
+        key: 'sev',
         type: 'dictionary',
         title: '',
     }, {
-        key: 'organiz',
+        key: 'organization',
         type: 'dictionary',
         title: '',
     }, {
         key: 'cabinet',
+        type: 'dictionary',
+        title: '',
+    }, {
+        key: 'user',
         type: 'dictionary',
         title: '',
     },
@@ -318,9 +322,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     },
     editFields: { // TODO: remove IS_NODE!!!
         person: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-         'DUTY', 'fullPosition', 'SKYPE', 'print-info', 'sev-association', 'organiz', 'cabinet'],
+            'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
         department: ['IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-            'INDEX', 'fullTitle', 'print-info', 'sev-association', 'organiz', 'cabinet'],
+            'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
