@@ -22,7 +22,7 @@
         <div class="buttons-wrapper" *ngIf="editMode">
             <div>
                 <button class="btn btn-primary" (click)="cancel()">Отменить</button>
-                <button class="btn btn-primary-full" [disabled]="!_changed || disableSave" (click)="save()">Сохранить</button>
+                <button class="btn btn-primary-full" [disabled]="!isChanged || disableSave" (click)="save()">Сохранить</button>
             </div>
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
@@ -51,7 +51,7 @@
         [data]="nodeData"
         [fieldsDescription]="fieldsDescription"
         [nodeSet]="node?.neighbors"
-        [editMode]="editMode" 
+        [editMode]="editMode"
         (onChange)="recordChanged($event)"
         (invalid)="turnOffSave($event)" ></eos-card-edit>
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true"

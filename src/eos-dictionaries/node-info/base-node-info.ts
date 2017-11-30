@@ -24,6 +24,8 @@ export class BaseNodeInfoComponent {
     }
 
     keys(data: Object): string[] {
-        return Object.keys(data);
+        if (data) {
+            return Object.keys(data);
+        }
     }
 }

@@ -1,0 +1,18 @@
+.long-title-hint {
+    z-index: 1;
+    padding: 13px 20px;
+    position: absolute;
+    font-family: Roboto, sans-serif;
+    color: $secondary-font-color-main-theme;
+    background: $highlight-color-main-theme;
+    border: 1px $active-field-color-main-theme solid;
+    transition: .2s opacity;
+
+    .title {
+        cursor: default;
+    }
+
+    .interface-text {
+        color: $active-field-color-main-theme;
+    }
+}

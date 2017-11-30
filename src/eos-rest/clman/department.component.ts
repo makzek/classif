@@ -2,8 +2,10 @@
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL } from '../interfaces/structures';
-import { ALL_ROWS } from '../core/consts';
+import { ALL_ROWS, _ES } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
+import { IEnt } from 'eos-rest';
+import {SevIndexHelper} from '../services/sevIndex-helper'
 //
 
 // tslint:disable-next-line:class-name
@@ -18,6 +20,8 @@ class vmDEPARTMENT {
     ORGANIZ: ORGANIZ_CL;
 
     static Load(pip: PipRX, due: string, forEdit: boolean): Promise<vmDEPARTMENT> {
+        const startReadTime: any = new Date();
+
         // Читаем себя, НЕ из кеша
         const rDep = pip.read<DEPARTMENT>({ DEPARTMENT: due });
         // Здесь предсталены все запросы, которые вспомнил для подробной инофрмации о подразделении
@@ -34,6 +38,7 @@ class vmDEPARTMENT {
                 parents.sort((a, b) => {
                     return a.DUE.length - b.DUE.length;
                 });
+                console.log('Чтение ДЛ шаг1:' + (<any>new Date() - startReadTime) + 'ms');
                 return parents;
             });
         // TODO: разобраться почему без прохода через промис запрос выполняется дважды
@@ -59,11 +64,10 @@ class vmDEPARTMENT {
             return Promise.all([rPrintInfo, rOrg, rCab]);
         });
         // загружаем индекс СЭВ
-        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: PipRX.criteries({
-            OBJECT_NAME: 'DEPARTMENT', OBJECT_ID : due
-        })})
+        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')]})
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
         .then(([a, b, [pi, org, cab ], d]) => {
+            console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
             const result = new vmDEPARTMENT();
             result.row = a[a.length - 1];
             // tslint:disable-next-line:no-debugger
@@ -80,10 +84,7 @@ class vmDEPARTMENT {
             // Здесь врапить не надо - запись кабинете мы редатировать не должны
             // а ссылку на него можно и по другому поставить.
             result.cabinet = <CABINET>cab[0];
-
-            result.SEV_ASSOCIATION = pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
-
-            console.log(JSON.stringify(result));
+            result.SEV_ASSOCIATION = SevIndexHelper.PrepareStub(d[0], pip);
 
             return result;
         });
@@ -111,9 +112,8 @@ export class DepartmentComponent implements OnInit {
         this.pip.cache.read<DEPARTMENT>({
             DEPARTMENT: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE'
+            , top: 100
         }).then(r => {
-            console.log('----->>>>>>>');
-            console.log(r);
             this.treeItems = r;
         });
     }
@@ -144,13 +144,39 @@ export class DepartmentComponent implements OnInit {
     }
 
     onSave() {
-        /*
-        const chl = Utils.changeList([this.currentItem]);
-        this.pip.batch(chl, '').subscribe((r) => {
-            alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        const item = this.detailedItem;
+        const changed = [];
+        if (SevIndexHelper.PrepareForSave(item.SEV_ASSOCIATION, item.row)) {
+            changed.push(item.SEV_ASSOCIATION);
+        }
+        if (this.prepareCB_PRINT_INFOforSave(item.CB_PRINT_INFO, item.row)) {
+            changed.push(item.CB_PRINT_INFO);
+        }
+        const chl = this.pip.changeList(changed);
+        this.pip.batch(chl, '').then((r) => {
+            alert('oki');
         });
-        */
     }
+
+    private prepareCB_PRINT_INFOforSave(rec: CB_PRINT_INFO, owner: DEPARTMENT): boolean {
+        // удаление CB_PRINT_INFO, если все поля в нем пустые
+        // как сраснить все поля не пишу - они разные для подразделения и ДЛ.
+        // это пример создания, редактирования, удаления записи
+        if ((rec.SURNAME_DP === null) || (rec.SURNAME_DP.trim() === '') ) {
+            // tslint:disable-next-line:curly
+            if (rec._State === _ES.Stub) return false;
+            rec._State = _ES.Deleted;
+        } else if (rec._State === _ES.Stub) {
+            // Добавление - превращаем Stub в Added
+            rec._State = _ES.Added;
+            rec.ISN_OWNER = owner.ISN_NODE;
+            rec.OWNER_KIND = 104;
+        }
+        return true;
+    }
+
 }
 
 

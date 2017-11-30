@@ -10,8 +10,10 @@ export class RoomsCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showUsers = true;
     showAccess = true;
+    owner: any[] = [];
 
     constructor(injector: Injector) {
         super(injector);
     }
+
 }

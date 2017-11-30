@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { PipRX } from '../../eos-rest/services/pipRX.service';
 import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
+import { debug } from 'util';
 
 @Component({
     selector: 'eos-test-page',
@@ -65,4 +66,13 @@ export class TestPageComponent implements OnInit {
         this.date = evt;
     }
 
+    chooseCL(evt) {
+        const siteUrl = 'http://localhost/v175.WebSite.Publish/';
+        const pageUrl = siteUrl + 'Pages/Classif/ChooseClassif.aspx?'
+        const params = 'Classif=DEPARTMENT&value_id=__ClassifIds&skip_deleted=True&select_nodes=True&select_leaf=True&return_due=True';
+        window.open(pageUrl + params , 'clhoose', 'width=1050,height=800,resizable=1,status=1,top=20,left=20');
+        window['endPopup'] = function (result) {
+            console.log(result);
+        }
+    }
 }
