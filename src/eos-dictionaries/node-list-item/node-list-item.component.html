@@ -1,5 +1,5 @@
 <div #item class="eos-node-list-item secondary-text" [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}"
-(mousedown)="selectNode()" (mouseup)="down = false" (dblclick)="viewNode()">
+(mousedown)="selectNode()" (dblclick)="viewNode()">
     <div [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
         <span *ngIf="params?.markItems" class="checkbox-inline">
             <label tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
