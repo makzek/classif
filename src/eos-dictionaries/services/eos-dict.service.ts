@@ -389,6 +389,7 @@ export class EosDictService {
         return this.dictionary.descriptor.deleteRecord(_node.data)
             .then(() => {
                 this.dictionary.deleteNode(nodeId, true);
+                this._setCurrentList(this.selectedNode.children);
                 this._selectedNode$.next(this.selectedNode);
             });
     }
