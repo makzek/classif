@@ -103,7 +103,7 @@
                     triggers="">
 
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
-                    <input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', $event)" [disabled]="!editMode" [ngModel]="data.rec['POST_H']">
+                    <input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', 'rec', $event)" [disabled]="!editMode" [ngModel]="data.rec['POST_H']">
                     <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
                 </label>
             </div>
