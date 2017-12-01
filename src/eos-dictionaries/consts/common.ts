@@ -5,6 +5,10 @@ export const LS_USE_USER_ORDER = 'useUserOrder';
 export { LS_EDIT_CARD } from '../../app/consts/common.consts';
 /* tslint:disable:max-line-length */
 
+export interface StorageUserOrderFlags {
+    [dictionaryId: string]: boolean;
+}
+
 export const ROOMS_DICT: IDictionaryDescriptor = {
     id: 'rooms',
     apiInstance: 'ROOMS',

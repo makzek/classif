@@ -9,7 +9,7 @@ import { ISearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
-import { LS_USE_USER_ORDER } from '../consts/common';
+import { LS_USE_USER_ORDER, StorageUserOrderFlags } from '../consts/common';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
@@ -145,7 +145,12 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
-                        this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                        const userOrder = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                        if (!userOrder || !userOrder[dictionaryId]) {
+                            this.viewParameters.userOrdered = false;
+                        } else {
+                            this.viewParameters.userOrdered = userOrder[dictionaryId];
+                        }
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
                         this.dictionary.initUserOrder(
@@ -496,7 +501,9 @@ export class EosDictService {
 
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;
-            this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
+            const strOrdFlag = this._storageSrv.getItem(LS_USE_USER_ORDER);
+            strOrdFlag[this.dictionary.id] = this.dictionary.userOrdered;
+            this._storageSrv.setItem(LS_USE_USER_ORDER, strOrdFlag, true);
             this._reorder();
         }
     }

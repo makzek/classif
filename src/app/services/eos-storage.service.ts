@@ -38,7 +38,7 @@ export class EosStorageService {
      * @param key key for data
      */
     public getItem(key: string): any {
-        if (key && key !== '__storage' && key !== 'userOrder') {
+        if (key && key !== '__storage') {
             return this._data[key];
         }
     }
