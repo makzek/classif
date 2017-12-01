@@ -142,6 +142,8 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
+                        this.viewParameters.showDeleted = false;
+                        this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -271,7 +273,10 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            return this._getNode(nodeId)
+            if (this.selectedNode && this.selectedNode.id !== nodeId) {
+                this.viewParameters.showDeleted = false;
+                this._viewParameters$.next(this.viewParameters);
+                return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
                         let parent = node.parent;
@@ -283,6 +288,7 @@ export class EosDictService {
                     this._selectNode(node);
                     return node;
                 });
+            }
         } else {
             return Promise.resolve(this._selectRoot());
         }
