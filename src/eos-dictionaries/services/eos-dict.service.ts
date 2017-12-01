@@ -98,7 +98,8 @@ export class EosDictService {
             showDeleted: false,
             userOrdered: false,
             markItems: false,
-            searchResults: false
+            searchResults: false,
+            updating: false
         };
     }
 
@@ -242,7 +243,6 @@ export class EosDictService {
         if (!this.viewParameters.showDeleted) {
             nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
-
         this._currentList$.next(nodes);
     }
 
@@ -253,6 +253,8 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
+            this.viewParameters.updating = true;
+            this._viewParameters$.next(this.viewParameters);
             return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
@@ -262,6 +264,8 @@ export class EosDictService {
                             parent = parent.parent;
                         }
                     }
+                    this.viewParameters.updating = false;
+                    this._viewParameters$.next(this.viewParameters);
                     this._selectNode(node);
                     return node;
                 });
@@ -398,6 +402,7 @@ export class EosDictService {
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
+        this.viewParameters.updating = true;
         return this.dictionary.descriptor.search(criteries)
             .then((data: any[]) => {
                 let nodes = [];
@@ -407,6 +412,7 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
+                this.viewParameters.updating = false;
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
