@@ -256,7 +256,7 @@ export class EosDictionary {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
-                [fld.foreignKey]: '%' + search + '%'
+                [fld.foreignKey]: '"' + search + '"'
             };
             this._extendCritery(_crit, params, selectedNode);
             return _crit;
@@ -269,7 +269,7 @@ export class EosDictionary {
         const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
         fields.forEach((fld) => {
             if (data[fld.key]) {
-                critery[fld.foreignKey] = '%' + data[fld.key] + '%';
+                critery[fld.foreignKey] = '"' + data[fld.key] + '"';
             }
         })
         this._extendCritery(critery, params, selectedNode);
