@@ -8,8 +8,4 @@ import { BaseNodeInfoComponent } from './base-node-info';
     templateUrl: 'node-info.component.html',
 })
 
-export class NodeInfoComponent extends BaseNodeInfoComponent {
-    constructor() {
-        super();
-    }
-}
+export class NodeInfoComponent extends BaseNodeInfoComponent { }

@@ -13,7 +13,7 @@ import { IFieldView } from '../core/dictionary.interfaces';
 export class TreeNodeComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
     @Input('showDeleted') showDeleted: boolean;
-    private viewFields: IFieldView[];
+    viewFields: IFieldView[];
     public _fonWidth: number;
     public _fonLeft: number;
     public _fonTop: number;

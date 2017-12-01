@@ -11,6 +11,7 @@ import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
 import { IOrderBy, IDictionaryOrder } from '../../eos-dictionaries/core/sort.interface'
+import { EosStorageService } from 'app/services/eos-storage.service';
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -27,6 +28,14 @@ export class EosUserProfileService implements IUserProfile {
     private _settings$: BehaviorSubject<ISettingsItem[]>;
     private _authorized$: BehaviorSubject<boolean>;
     private _authPromise: Promise<boolean>;
+
+    get userId(): string {
+        if (this._user) {
+            return this._user.ISN_LCLASSIF + '';
+        } else {
+            return 'nobody';
+        }
+    }
 
     get shortName(): string {
         if (this._user) {
@@ -55,7 +64,8 @@ export class EosUserProfileService implements IUserProfile {
     constructor(
         private _router: Router,
         private _authSrv: AuthService,
-        private _msgSrv: EosMessageService
+        private _msgSrv: EosMessageService,
+        private _storageSrv: EosStorageService,
     ) {
         Object.assign(this, DEFAURT_USER);
         this.settings = USER_SETTINGS;
@@ -92,6 +102,7 @@ export class EosUserProfileService implements IUserProfile {
         // console.log('_setUser', user, params);
         this._user = user;
         this._params = params;
+        this._storageSrv.init(this.userId);
     }
 
     private _setAuth(auth: boolean): boolean {

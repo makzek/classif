@@ -1,0 +1,19 @@
+<div>
+    <div class="tabs-wrapper usual-border">
+        <ul class="tabs">
+            <li class="tab-item primary-text" *ngFor="let tab of fieldGroups; let i = index" role="presentation" [ngClass]="{'active-border secondary-text': i === currTab}"
+                (click)="setTab(i)">
+                <span class="tab-title">{{tab}}</span>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="currTab === 0">
+        <eos-departments-card-edit-person-main [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"></eos-departments-card-edit-person-main>
+    </div>
+    <div *ngIf="currTab === 1">
+        <eos-departments-card-edit-person-contacts [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"></eos-departments-card-edit-person-contacts>
+    </div>
+    <div *ngIf="currTab === 2">
+        <eos-departments-card-edit-person-info [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"></eos-departments-card-edit-person-info>
+    </div>
+</div>

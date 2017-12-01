@@ -12,10 +12,10 @@ import { WARN_LINK_PIN } from '../consts/messages.consts';
     templateUrl: 'pushpin.component.html',
 })
 export class PushpinComponent {
-    private deskList: EosDesk[];
     @Input() infoOpened: boolean;
-    private openStyle = '252px';
-    private closeStyle = '0px';
+    deskList: EosDesk[];
+    openStyle = '252px';
+    closeStyle = '0px';
 
     constructor(
         private _deskSrv: EosDeskService,

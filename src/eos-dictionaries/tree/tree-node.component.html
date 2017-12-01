@@ -1,4 +1,4 @@
-<ul *ngIf="node && (!node.isDeleted || showDeleted)">
+<div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
     <li>
         <div class="node" #el (click)="onSelect($event, node.isDeleted, el)">
             <div class="tree-btn">
