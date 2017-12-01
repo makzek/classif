@@ -405,10 +405,14 @@ export class EosDictService {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
                     nodes = this.dictionary.updateNodes(data, false);
+                    this._setCurrentList(nodes);
+                    this.viewParameters.searchResults = true;
+                    if (criteries[0].DELETED === undefined) {
+                        this.viewParameters.showDeleted = true;
+                        this._updateCurrentList();
+                    }
+                    this._viewParameters$.next(this.viewParameters);
                 }
-                this._setCurrentList(nodes);
-                this.viewParameters.searchResults = true;
-                this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
             });
     }
