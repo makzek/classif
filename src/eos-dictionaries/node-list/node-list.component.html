@@ -2,13 +2,13 @@
     <div class="block list">
         <p *ngIf="!nodes?.length" class="text-center text-info">Нет записей.</p>
         <ng-container *ngIf="nodes?.length">
-            <div class="row" *ngIf="searchStartFlag" style="padding: 20px;">
+            <div class="row spinner-container" *ngIf="searchStartFlag">
                 <div class="col-md-2 col-md-offset-5">
                     <eos-spinner size="lg"></eos-spinner>
                 </div>
             </div>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && !params.searchResults && nodes?.length" class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && nodes?.length && !searchStartFlag" class="elements secondary-text">
                 <li class="child">
                     <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
                         placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
@@ -20,7 +20,7 @@
                 (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered || params.searchResults && nodes?.length" class="elements secondary-text">
+            <ul *ngIf="!params.userOrdered && nodes?.length && !searchStartFlag" class="elements secondary-text">
                 <li *ngFor="let item of nodes" class="child">
                     <eos-node-list-item [node]="item" [params]="params" [length]="length"
                     (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
