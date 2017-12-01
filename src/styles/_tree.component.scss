@@ -21,6 +21,11 @@
 
                 .title {
                     padding: 12px 0;
+                    color: $primary-font-color-main-theme;
+                }
+
+                .selected {
+                    color: $secondary-font-color-main-theme;
                 }
             }
         }
