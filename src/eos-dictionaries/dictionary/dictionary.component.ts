@@ -185,13 +185,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
                     if (!this._dictSrv.userOrdered) {
-                        this._dictSrv.defaultOrder();
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
                     this._countColumnWidth();
                 }
-
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
                 }
@@ -205,6 +203,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this.params = this._dictSrv.viewParameters;
                 this._updateVisibleNodes();
             });
+
+        this._dictSrv.viewParameters$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe(viewParameters => this.params = viewParameters);
     }
 
     private _initPage() {

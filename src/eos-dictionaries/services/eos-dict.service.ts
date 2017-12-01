@@ -127,9 +127,9 @@ export class EosDictService {
     public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
+        this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
-        this._viewParameters$.next(this.viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
