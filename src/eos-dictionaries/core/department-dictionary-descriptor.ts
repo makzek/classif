@@ -159,7 +159,7 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         const criteries = {
             DUE: record.DUE + '%',
             LAYER: (layer + 1) + ':' + (layer + 2),
-            IS_NODE: '0'
+            // IS_NODE: '0'
         };
         return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
     }
