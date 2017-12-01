@@ -1,4 +1,4 @@
-<div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
+<ul *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
     <li>
         <div class="node" #el (click)="onSelect($event, node.isDeleted, el)">
             <div class="tree-btn">
@@ -10,6 +10,6 @@
                 <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
             </div>
         </div>
-        <eos-tree *ngIf="node.isExpanded && node.hasSubnodes" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
+        <eos-tree *ngIf="node.isExpanded && node.expandable" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
     </li>
 </ul>
