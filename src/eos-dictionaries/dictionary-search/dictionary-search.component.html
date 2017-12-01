@@ -48,7 +48,7 @@
             <div class="col-2">
                 <div class="checkbox-inline">
                     <label>
-                        <input type="checkbox" [(ngModel)]="settings.deleted">
+                        <input type="checkbox" [(ngModel)]="settings.deleted" (change)="considerDel()">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
                 <div class="checkbox-inline">

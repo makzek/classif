@@ -101,6 +101,11 @@ export class EosDictService {
             searchResults: false
         };
     }
+    // May be need used always instead this._viewParameters$.next();
+    // Because this.viewParametrs is public and may be changed from other classes need way for share state
+    public shareViewParameters() {
+        this._viewParameters$.next(this.viewParameters);
+    }
 
     public getDictionariesList(): Promise<any> {
         return Promise.resolve(DICTIONARIES);
