@@ -145,7 +145,7 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
-                        this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                        this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
                         this.dictionary.initUserOrder(
@@ -496,7 +496,7 @@ export class EosDictService {
 
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;
-            this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
+            this._storageSrv.setUserOrderState(this.dictionary.id, this.dictionary.userOrdered);
             this._reorder();
         }
     }
