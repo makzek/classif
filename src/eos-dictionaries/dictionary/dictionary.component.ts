@@ -115,7 +115,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _deskSrv: EosDeskService,
         private _confirmSrv: ConfirmWindowService,
-        private _sandwichSrv: EosSandwichService,
+        private _sandwichSrv: EosSandwichService
     ) {
         this._initPage();
 
@@ -574,10 +574,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     title: title,
                     fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME + '/Редактирование'
                 });
-                if (hide) {
+                // if (hide) {
                     this.creatingModal.hide();
+                // }
+                // this._clearForm();
+                if (!hide) {
+                    this._create();
                 }
-                this._clearForm();
             })
             .catch((err) => this._errHandler(err));
     }
