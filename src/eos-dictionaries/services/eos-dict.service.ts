@@ -9,7 +9,7 @@ import { ISearchSettings } from '../core/search-settings.interface';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
-import { LS_USE_USER_ORDER } from '../consts/common';
+import { LS_USE_USER_ORDER, StorageUserOrderFlags } from '../consts/common';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
