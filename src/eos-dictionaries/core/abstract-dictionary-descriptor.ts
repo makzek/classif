@@ -13,6 +13,8 @@ import { SEARCH_TYPES } from '../consts/search-types';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
+import { EosDictService } from '../services/eos-dict.service';
+
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
     readonly title: string;
@@ -140,7 +142,7 @@ export abstract class AbstractDictionaryDescriptor {
                 }
             } else {
                 _description[_f.key] = {};
-                /* recive other dict description */
+                // this.dictSrv.getDictionaryField(_f.key);
             }
         });
         return _description;

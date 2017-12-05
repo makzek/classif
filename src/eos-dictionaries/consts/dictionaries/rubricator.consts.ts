@@ -96,7 +96,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'Индекс СЭВ',
         type: 'dictionary',
     }],
-    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE', 'fullTitle'*/],
     quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields

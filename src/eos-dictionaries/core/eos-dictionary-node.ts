@@ -231,7 +231,7 @@ export class EosDictionaryNode {
     getEditData(): any {
         const _data = {
             rec: {},
-        };
+        }
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
