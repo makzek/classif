@@ -30,16 +30,41 @@
         }
     }
 
-    .clear-btn {
-        position: absolute;
-        top: 11px;
-        right: 24px;
-        height: 46px;
-        width: 48px;
-        border: 0;
-        background-color: transparent;
-        padding: 8px;
-        margin-right: -8px;
+    .quickInput {
+        position: relative;
+
+        .clear-btn {
+            position: absolute;
+            top: 0;
+            right: 9px;
+            height: 46px;
+            width: 48px;
+            border: 0;
+            background-color: transparent;
+            padding: 8px;
+            margin-right: -8px;
+        }
+    }
+
+    .quick-search-top {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        padding-top: 20px;
+        padding-bottom: 8px;
+        height: 42px;
+
+        .title {
+            margin: 0;
+            line-height: 14px;
+        }
+    }
+
+    .quickRadio {
+        margin: 8px 0 8px 0;
+
+        .quick {
+            padding-left: 0;
+        }
     }
 
     .btn {
@@ -47,13 +72,14 @@
             position: relative;
             height: 48px;
             width: 48px;
-            top: -2px;
+            top: -1px;
             padding: 10px 6px;
         }
 
         &.quick-search-btn {
+            height: 48px;
+            width: 48px;
             top: -1px;
-            margin-left: -7px;
             padding-bottom: 11px;
             padding-top: 5px;
 

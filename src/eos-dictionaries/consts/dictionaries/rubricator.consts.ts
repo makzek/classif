@@ -38,7 +38,11 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 2000,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.',
+        /* tslint:disable:max-line-length */
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах вершины',
+        /* tslint:enable:max-line-length */
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'NOTE',
         title: 'Примечание',
@@ -81,25 +85,22 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'WEIGHT',
         type: 'number'
     }, {
-        key: 'sev',
-        title: 'Индекс СЭВ',
-        type: 'number',
-        length: 64,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
-    }, {
-        key: 'fullTitle',
+        key: 'FULLNAME',
         title: 'Полное наименование',
         type: 'text',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
+    }, {
+        key: 'sev',
+        title: 'Индекс СЭВ',
+        type: 'dictionary',
     }],
-    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE', 'fullTitle'*/],
-    quickViewFields: ['fullTitle', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
+    quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
 };

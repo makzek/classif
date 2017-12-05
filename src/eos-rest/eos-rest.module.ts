@@ -19,9 +19,8 @@ import { ApiCfg } from './core/api-cfg';
 import { PipRX } from './services/pipRX.service';
 import { AuthService } from './services/auth.service';
 // import { ContextService } from './services/appContext.service';
-import { DepartmentService } from './services/department.service';
-import { LinearDictionaryService } from './services/linear-dictionary.service';
-import { TreeDictionaryService } from './services/tree-dictionary.service';
+import { AppContext } from 'eos-rest/services/appContext.service';
+import { ViewManager } from 'eos-rest/services/viewManager';
 
 @NgModule({
     imports: [
@@ -45,10 +44,9 @@ import { TreeDictionaryService } from './services/tree-dictionary.service';
     providers: [
         PipRX,
         AuthService,
+        AppContext,
+        ViewManager,
         // ContextService,
-        DepartmentService,
-        LinearDictionaryService,
-        TreeDictionaryService,
     ]
 })
 export class EosRestModule {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
 
@@ -10,8 +10,10 @@ export class RoomsCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showUsers = true;
     showAccess = true;
+    owner: any[] = [];
 
-    constructor() {
-        super();
+    constructor(injector: Injector) {
+        super(injector);
     }
+
 }
