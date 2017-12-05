@@ -265,7 +265,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         if (this.nodeData) {
             // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData.rec).findIndex((key) => this.nodeData.rec[key] !== this._originalData.rec[key]);
+        // const hasChanges = !!~Object.keys(this.nodeData).findIndex((key) => this.nodeData[key] !== this._originalData[key]);
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                return !!~Object.keys(this.nodeData[dict]).findIndex((key) => this.nodeData[dict][key] !== this._originalData[dict][key])
+            });
             /* tslint:enable:no-bitwise */
             this.isChanged = hasChanges;
         }

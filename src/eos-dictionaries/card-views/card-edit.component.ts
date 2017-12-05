@@ -18,6 +18,7 @@ export class CardEditComponent {
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     recordChanged(data: any) {
+        console.log('recordChanged');
         this.onChange.emit(data);
     }
 

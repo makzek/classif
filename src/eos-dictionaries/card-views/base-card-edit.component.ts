@@ -52,6 +52,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }
 
     change(fldKey: string, dict: string, value: string) {
+        console.log('change');
         if (this.data[dict][fldKey] !== value) {
             this.data[dict][fldKey] = value;
             this.onChange.emit(this.data);

@@ -31,4 +31,12 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
             }
         ];*/
     }
+
+    OnInvalid(val: any) {
+        this.invalid.emit(val);
+    }
+
+    recordChanded(data: any) {
+        this.onChange.emit(data);
+    }
 }
