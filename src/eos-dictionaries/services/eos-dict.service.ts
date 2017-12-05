@@ -65,6 +65,19 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
+    get order() {
+        return this.dictionary.orderBy;
+    }
+
+
+    /*get currentTab(): number {
+        return this._currentTab;
+    }
+
+    set currentTab(val: number) {
+        this._currentTab = val;
+    }*/
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -98,7 +111,8 @@ export class EosDictService {
             showDeleted: false,
             userOrdered: false,
             markItems: false,
-            searchResults: false
+            searchResults: false,
+            updating: false
         };
     }
 
@@ -106,12 +120,17 @@ export class EosDictService {
         return Promise.resolve(DICTIONARIES);
     }
 
-    closeDictionary() {
+    public defaultOrder() {
+        this.dictionary.defaultOrder();
+        this._reorder();
+    }
+
+    public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
+        this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
-        this._viewParameters$.next(this.viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -124,6 +143,8 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
+                        this.viewParameters.showDeleted = false;
+                        this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -145,7 +166,7 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
-                        this.viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
+                        this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
                         this.dictionary.initUserOrder(
@@ -242,7 +263,6 @@ export class EosDictService {
         if (!this.viewParameters.showDeleted) {
             nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
-
         this._currentList$.next(nodes);
     }
 
@@ -253,7 +273,10 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            return this._getNode(nodeId)
+            if (this.selectedNode && this.selectedNode.id !== nodeId) {
+                this.viewParameters.showDeleted = false;
+                this._viewParameters$.next(this.viewParameters);
+                return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
                         let parent = node.parent;
@@ -262,9 +285,12 @@ export class EosDictService {
                             parent = parent.parent;
                         }
                     }
+                    this.viewParameters.updating = false;
+                    this._viewParameters$.next(this.viewParameters);
                     this._selectNode(node);
                     return node;
                 });
+            }
         } else {
             return Promise.resolve(this._selectRoot());
         }
@@ -398,6 +424,7 @@ export class EosDictService {
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
+        this.viewParameters.updating = true;
         return this.dictionary.descriptor.search(criteries)
             .then((data: any[]) => {
                 let nodes = [];
@@ -407,6 +434,7 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
+                this.viewParameters.updating = false;
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
@@ -494,9 +522,15 @@ export class EosDictService {
         }
         this._viewParameters$.next(this.viewParameters);
 
+        if (this.viewParameters.userOrdered) {
+            this.dictionary.orderBy = null;
+        } else {
+            this.defaultOrder();
+        }
+
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;
-            this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
+            this._storageSrv.setUserOrderState(this.dictionary.id, this.dictionary.userOrdered);
             this._reorder();
         }
     }

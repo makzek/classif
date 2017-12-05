@@ -51,6 +51,17 @@ export class EosDictionary {
         this._orderBy = order;
     }
 
+    public defaultOrder() {
+        this._orderBy = {
+            ascend: true,
+            fieldKey: 'CLASSIF_NAME'
+        };
+    }
+
+    get orderBy() {
+        return this._orderBy;
+    }
+
     get canMarkItems(): boolean {
         return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
     }
@@ -71,11 +82,7 @@ export class EosDictionary {
         }
 
         this._nodes = new Map<string, EosDictionaryNode>();
-
-        this._orderBy = {
-            ascend: true,
-            fieldKey: 'CLASSIF_NAME'
-        };
+        this.defaultOrder();
     }
 
     init(): Promise<EosDictionaryNode> {
@@ -256,7 +263,7 @@ export class EosDictionary {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
-                [fld.foreignKey]: '%' + search + '%'
+                [fld.foreignKey]: '"' + search + '"'
             };
             this._extendCritery(_crit, params, selectedNode);
             return _crit;
@@ -269,7 +276,7 @@ export class EosDictionary {
         const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
         fields.forEach((fld) => {
             if (data[fld.key]) {
-                critery[fld.foreignKey] = '%' + data[fld.key] + '%';
+                critery[fld.foreignKey] = '"' + data[fld.key] + '"';
             }
         })
         this._extendCritery(critery, params, selectedNode);
@@ -315,13 +322,13 @@ export class EosDictionary {
     private _orderByField(array: EosDictionaryNode[]): EosDictionaryNode[] {
         const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
         return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
-            if (a.data[_orderBy.fieldKey] > b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] > b.data.rec[_orderBy.fieldKey]) {
                 return _orderBy.ascend ? 1 : -1;
             }
-            if (a.data[_orderBy.fieldKey] < b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] < b.data.rec[_orderBy.fieldKey]) {
                 return _orderBy.ascend ? -1 : 1;
             }
-            if (a.data[_orderBy.fieldKey] === b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] === b.data.rec[_orderBy.fieldKey]) {
                 return 0;
             }
         });
