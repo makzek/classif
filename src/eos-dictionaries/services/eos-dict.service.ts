@@ -65,6 +65,19 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
+    get order() {
+        return this.dictionary.orderBy;
+    }
+
+
+    /*get currentTab(): number {
+        return this._currentTab;
+    }
+
+    set currentTab(val: number) {
+        this._currentTab = val;
+    }*/
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -107,12 +120,17 @@ export class EosDictService {
         return Promise.resolve(DICTIONARIES);
     }
 
-    closeDictionary() {
+    public defaultOrder() {
+        this.dictionary.defaultOrder();
+        this._reorder();
+    }
+
+    public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
+        this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
-        this._viewParameters$.next(this.viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -125,6 +143,8 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
+                        this.viewParameters.showDeleted = false;
+                        this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -253,9 +273,10 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            this.viewParameters.updating = true;
-            this._viewParameters$.next(this.viewParameters);
-            return this._getNode(nodeId)
+            if (this.selectedNode && this.selectedNode.id !== nodeId) {
+                this.viewParameters.showDeleted = false;
+                this._viewParameters$.next(this.viewParameters);
+                return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
                         let parent = node.parent;
@@ -269,6 +290,7 @@ export class EosDictService {
                     this._selectNode(node);
                     return node;
                 });
+            }
         } else {
             return Promise.resolve(this._selectRoot());
         }
@@ -499,6 +521,12 @@ export class EosDictService {
             this.viewParameters.userOrdered = value;
         }
         this._viewParameters$.next(this.viewParameters);
+
+        if (this.viewParameters.userOrdered) {
+            this.dictionary.orderBy = null;
+        } else {
+            this.defaultOrder();
+        }
 
         if (this.dictionary) {
             this.dictionary.userOrdered = this.viewParameters.userOrdered;

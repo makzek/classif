@@ -46,6 +46,7 @@ import { LongTitleHintComponent } from './long-title-hint/long-title-hint.compon
 /* services */
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
+import { EosActiveTreeNodeService } from './tree/active-node-fon.service';
 
 /* directives */
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
@@ -107,6 +108,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
     providers: [
         EosDictService,
         EosSandwichService,
+        EosActiveTreeNodeService,
     ],
 })
 export class EosDictionariesModule { }
