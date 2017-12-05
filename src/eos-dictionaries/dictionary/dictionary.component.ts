@@ -195,11 +195,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(this._dictSrv.viewParameters$)
-            .subscribe(([nodes, params]) => {
-                console.log('incoming list', nodes);
+            .subscribe((nodes) => {
+                // console.log('incoming list', nodes);
                 this.listNodes = nodes;
-                this.params = params;
+                this.params = this._dictSrv.viewParameters;
                 this._updateVisibleNodes();
             });
     }
@@ -337,6 +336,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     orderByField(fieldKey: string) {
+        this._dictSrv.toggleUserOrder(false);
         if (!this.orderBy || this.orderBy.fieldKey !== fieldKey) {
             this.orderBy = {
                 fieldKey: fieldKey,
@@ -461,7 +461,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     selectedNodes.push(child.id);
                     child.marked = false;
                 } else if (child.marked && child.isDeleted) {
-                    deletedNames.push(child.data.CLASSIF_NAME)
+                    deletedNames.push(child.title)
                 }
             });
             let str = '';
@@ -490,7 +490,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             for (const node of this.listNodes) {
                 if (node.marked) {
                     j++;
-                    list += '"' + node.data.CLASSIF_NAME + '", ';
+                    list += '"' + node.title + '", ';
                 }
             }
             list = list.slice(0, list.length - 2);
@@ -537,7 +537,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _clearForm() {
         this.formValidated = false;
-        this.nodeData = {};
+        this.nodeData = {
+            rec: {}
+        };
     }
 
     private _create() {

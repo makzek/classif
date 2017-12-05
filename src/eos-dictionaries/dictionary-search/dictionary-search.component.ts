@@ -24,7 +24,9 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictId = '';
     fieldsDescription = {};
-    data = {};
+    data = {
+        rec: {},
+    };
     settings: ISearchSettings;
     currTab: string;
     modes: IRecordModeDescription[];
@@ -51,9 +53,13 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     get noSearchData(): boolean {
-        for (const _field in this.data) {
-            if (this.data[_field] !== '') {
-                return false;
+        for (const _dict in this.data) {
+            if (this.data[_dict]) {
+                for (const _field in this.data[_dict]) {
+                    if (this.data[_field] !== '') {
+                        return false;
+                    }
+                }
             }
         }
         return true;
@@ -73,7 +79,7 @@ export class DictionarySearchComponent implements OnDestroy {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
-                this.fieldsDescription = _d.descriptor.getFieldDescription(_d.descriptor.getFieldSet(E_FIELD_SET.fullSearch));
+                this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.modes = _d.descriptor.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
@@ -130,10 +136,10 @@ export class DictionarySearchComponent implements OnDestroy {
             this.searchDone = false;
             this.searchStart.emit();
             this._dictSrv.fullSearch(this.data, this.settings)
-            .then((nodes) => {
-                this.searchDone = true;
-                this.searchResult.emit(nodes);
-            });
+                .then((nodes) => {
+                    this.searchDone = true;
+                    this.searchResult.emit(nodes);
+                });
         } else {
             this._msgSrv.addNewMessage({
                 title: 'Идет поиск!',
@@ -146,7 +152,7 @@ export class DictionarySearchComponent implements OnDestroy {
     clearForm() {
         for (const _field in this.data) {
             if (this.data[_field]) {
-                this.data[_field] = '';
+                this.data[_field] = {};
             }
         }
     }

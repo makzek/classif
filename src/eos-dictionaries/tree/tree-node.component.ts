@@ -12,7 +12,7 @@ import { IFieldView } from '../core/dictionary.interfaces';
 export class TreeNodeComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
     @Input('showDeleted') showDeleted: boolean;
-    private viewFields: IFieldView[];
+    viewFields: IFieldView[];
 
     constructor(
         private _router: Router,

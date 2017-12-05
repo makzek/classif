@@ -9,9 +9,11 @@ import {
 } from './dictionary.interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
+import { IHierCL } from 'eos-rest';
+import { PipRX } from 'eos-rest/services/pipRX.service';
+import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -19,16 +21,16 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
     modeField: FieldDescriptor;
     modeList: IRecordModeDescription[];
 
-    constructor(dictionary: DepartmentDictionaryDescriptor, data: IDepartmentDictionaryDescriptor) {
-        super(dictionary, data);
+    constructor(dictionary: DepartmentDictionaryDescriptor, descriptor: IDepartmentDictionaryDescriptor) {
+        super(dictionary, descriptor);
         this.dictionary = dictionary;
-        this._setCustomField('parentField', data);
-        this.modeField = this.fieldsMap.get(data.modeField);
+        this._setCustomField('parentField', descriptor);
+        this.modeField = this.fieldsMap.get(descriptor.modeField);
         if (!this.modeField) {
-            throw new Error('No field decribed for "' + data.modeField + '"');
+            throw new Error('No field decribed for "' + descriptor.modeField + '"');
         }
 
-        this.modeList = data.modeList;
+        this.modeList = descriptor.modeList;
     }
 
     getMode(values: any): E_DEPT_MODE {
@@ -59,8 +61,11 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
     listFields: ModeFieldSet;
     allVisibleFields: FieldDescriptor[];
 
-    constructor(data: IDepartmentDictionaryDescriptor) {
-        super(data);
+    _init(descriptor: IDepartmentDictionaryDescriptor) {
+        if (descriptor.fields) {
+            this.record = new DepartmentRecordDescriptor(this, descriptor);
+        }
+
         this._initModeSets([
             'quickViewFields',
             'shortQuickViewFields',
@@ -68,13 +73,7 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
             'listFields',
             'fullSearchFields',
             'listFields'
-        ], data);
-    }
-
-    _init(data: IDepartmentDictionaryDescriptor) {
-        if (data.fields) {
-            this.record = new DepartmentRecordDescriptor(this, data);
-        }
+        ], descriptor);
     }
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
@@ -126,11 +125,108 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         }
     }
 
-    private _initModeSets(setNames: string[], data: IDepartmentDictionaryDescriptor) {
+    private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {
             if (!this[setName]) {
-                this[setName] = new ModeFieldSet(this.record, data[setName]);
+                this[setName] = new ModeFieldSet(this.record, descriptor[setName]);
             }
         })
     }
+
+    addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+        let _newRec = this.preCreate(parent, isLeaf, isProtected, isDeleted);
+        _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
+        // console.log('create tree node', _newRec);
+        return this._postChanges(_newRec, data)
+            .then((resp: any[]) => {
+                if (resp && resp[0]) {
+                    return resp[0].ID;
+                } else {
+                    return null;
+                }
+            });
+    }
+
+    getChildren(record: IHierCL): Promise<any[]> {
+        const _children = {
+            ['ISN_HIGH_NODE']: record['ISN_NODE'] + ''
+        };
+        return this.getData({ criteries: _children });
+    }
+
+    getSubtree(record: IHierCL): Promise<IHierCL[]> {
+        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
+        const criteries = {
+            DUE: record.DUE + '%',
+            LAYER: (layer + 1) + ':' + (layer + 2),
+            IS_NODE: '0'
+        };
+        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
+    }
+
+    getRecord(due: string): Promise<any[]> {
+        const chain = this.dueToChain(due);
+        const recordDue = chain.pop();
+        return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
+            .then(([record, parents]) => {
+                return record.concat(parents);
+            });
+    }
+
+    getRelated(rec: any, orgDUE: string): Promise<any> {
+        const pUser = this.apiSrv
+            .read({ 'USER_CL': PipRX.criteries({ 'DUE_DEP': rec['DUE'] }) })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
+
+        const pOrganization = (orgDUE) ? this.getCachedRecord({ ORGANIZ_CL: [orgDUE] }) : Promise.resolve(null);
+
+        const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
+
+        const pPrintInfo = this.apiSrv
+            .read<CB_PRINT_INFO>({
+                CB_PRINT_INFO: PipRX.criteries({
+                    ISN_OWNER: rec['ISN_NODE'].toString() + '|' + rec['ISN_HIGH_NODE'].toString(),
+                    OWNER_KIND: '104'
+                })
+            })
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0], 'CB_PRINT_INFO'));
+
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
+            .then(([user, org, cabinet, printInfo]) => {
+                return {
+                    user: user,
+                    organization: org,
+                    cabinet: cabinet,
+                    printInfo: printInfo
+                };
+            });
+    }
+
+    getRoot(): Promise<any[]> {
+        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }, 'DUE');
+    }
+
+    private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+        const _isn = this.apiSrv.sequenceMap.GetTempISN();
+        const _parentDue = parent.DUE;
+
+        const _res: IHierCL = {
+            DUE: _isn + '.',
+            PARENT_DUE: null,
+            ISN_NODE: _isn,
+            ISN_HIGH_NODE: null,
+            IS_NODE: (isLeaf ? 1 : 0),
+            PROTECTED: (isProtected ? 1 : 0),
+            DELETED: (isDeleted ? 1 : 0),
+            CLASSIF_NAME: 'new_classif_name',
+            NOTE: null,
+        }
+
+        if (parent) {
+            _res.DUE = parent.DUE + _res.DUE;
+            _res.PARENT_DUE = parent.DUE;
+            _res.ISN_HIGH_NODE = parent.ISN_NODE;
+        }
+        return _res;
+    };
 }

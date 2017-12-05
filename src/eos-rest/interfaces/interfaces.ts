@@ -64,6 +64,9 @@ export interface ITypeDef {
 
 export interface IRelationDef {
     name: string;
+    __type: string;
+    sf: string;
+    tf: string;
 };
 
 export interface IViewModelResponse {
