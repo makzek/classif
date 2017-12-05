@@ -28,7 +28,7 @@
                     <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
-                    <eos-dictionary-search (searchStart)="searchStart()" (searchResult)="searchResult($event)"></eos-dictionary-search>
+                    <eos-dictionary-search></eos-dictionary-search>
                 </div>
             </div>
             <div class="second-line block selected-text">
@@ -59,12 +59,12 @@
             <eos-spinner size="lg"></eos-spinner>
         </p>
         <ng-container *ngIf="!selectedNode?.updating">
-            <eos-node-list [nodes]="visibleNodes" [length]="length" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
+            <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
             <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page" [currentState]="currentState"></eos-node-list-pagination>
         </ng-container>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
-        <eos-node-info-switcher (action)=doAction($event)></eos-node-info-switcher>
+        <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
     </div>
 </div>
 
