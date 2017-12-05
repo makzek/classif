@@ -126,8 +126,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _actTreeNodeSrv: EosActiveTreeNodeService
     ) {
         this._actTreeNodeSrv.fon$.subscribe(fonConf => {
-
-            console.log(this.treeEl);
             this.fonConf.width = fonConf.width + 'px';
             this.fonConf.height = fonConf.height + 'px';
             if (this.treeEl) {
