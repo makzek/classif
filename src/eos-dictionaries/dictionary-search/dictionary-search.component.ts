@@ -102,7 +102,7 @@ export class DictionarySearchComponent implements OnDestroy {
     quickSearch(evt: KeyboardEvent) {
         if (evt.keyCode === 13) {
             if (this.searchDone) {
-                // this.dataQuick = this.dataQuick.trim();
+                this.dataQuick = this.dataQuick.trim();
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
                     this._dictSrv.search(this.dataQuick, this.settings)
