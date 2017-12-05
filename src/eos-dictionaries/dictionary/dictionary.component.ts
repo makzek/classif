@@ -122,6 +122,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.visibleNodes = [];
 
         this._route.params.subscribe((params) => {
+            console.log('!')
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
@@ -178,14 +179,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._dictSrv.selectedNode$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((node) => {
+            .subscribe((node: EosDictionaryNode) => {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
+                    if (!this._dictSrv.userOrdered) {
+                        this.orderBy = this._dictSrv.order;
+                    }
                     this.hasParent = !!node.parent;
                     this._countColumnWidth();
                 }
-
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
                 }
@@ -199,6 +202,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this.params = this._dictSrv.viewParameters;
                 this._updateVisibleNodes();
             });
+
+        this._dictSrv.viewParameters$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe(viewParameters => this.params = viewParameters);
     }
 
     private _initPage() {
@@ -303,6 +310,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
             case E_RECORD_ACTIONS.userOrder:
                 this._dictSrv.toggleUserOrder();
+                this.orderBy = this._dictSrv.order;
                 break;
 
             case E_RECORD_ACTIONS.moveUp:
