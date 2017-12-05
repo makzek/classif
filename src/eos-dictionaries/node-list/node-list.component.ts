@@ -19,7 +19,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     @Input() nodes: EosDictionaryNode[];
     @Input() length: any;
-    @Input() searchStartFlag: boolean; // flag bigin search
+    @Input() update: boolean; // flag bigin search
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;

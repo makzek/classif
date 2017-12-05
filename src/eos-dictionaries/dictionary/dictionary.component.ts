@@ -96,10 +96,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     treeIsBlocked = false;
     _treeScrollTop = 0;
 
-    private _updating = false;
     dictTypes = E_DICT_TYPE;
 
-    searchStartFlag = false; // flag begin search
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
     }
@@ -599,21 +597,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-    }
-
-    searchResult(nodes: EosDictionaryNode[]) {
-        this.searchStartFlag = false;
-        console.log('searchresult', nodes);
-        /*
-        if (nodes && nodes.length) {
-            this.listNodes = nodes;
-            this._updateVisibleNodes();
-        }
-        */
-    }
-
-    public searchStart() {
-        this.searchStartFlag = true;
     }
 
     private _errHandler(err) {
