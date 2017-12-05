@@ -68,7 +68,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     treeNodes: EosDictionaryNode[];
     listNodes: EosDictionaryNode[];
-    visibleNodes: EosDictionaryNode[]; // Checkbox use it property
+    visibleNodes: EosDictionaryNode[]; // Checkbox use it property | elements for page
     filteredNodes: EosDictionaryNode[] = [];
     _page: IPaginationConfig;
 
@@ -133,44 +133,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this.fonConf.top = fonConf.top + 'px';
             }
         })
-        this._initPage();
 
         this.treeNodes = [];
         this.listNodes = [];
         this.visibleNodes = [];
 
         this._route.params.subscribe((params) => {
-            console.log('!')
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
                 this._selectNode();
-            }
-        });
-
-        this._route.queryParams.subscribe(params => {
-            this._initPage();
-            const _page = Object.assign({}, this._page);
-
-            let update = false;
-            if (params.length) {
-                this._page.length = this._getPage(this._positive(params.length)).value;
-                update = true;
-            }
-            if (params.page) {
-                this._page.current = this._positive(params.page);
-                update = true;
-            }
-            if (params.start) {
-                this._page.start = this._positive(params.start);
-                update = true;
-            }
-
-            if (update) {
-                if (_page.start !== this._page.start) {
-                    this._cleanCheck();
-                }
-                this._updateVisibleNodes();
             }
         });
 
@@ -227,26 +199,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.viewParameters$
             .takeUntil(this.ngUnsubscribe)
             .subscribe(viewParameters => this.params = viewParameters);
-    }
-
-    private _initPage() {
-        this._page = {
-            start: 1,
-            current: 1,
-            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
-        }
-    }
-
-    private _getPage(length: number) {
-        return PAGES.find((item) => item.value >= length) || PAGES[0];
-    }
-
-    private _positive(val: any): number {
-        let res = val * 1 || 1;
-        if (res < 1) {
-            res = 1;
-        }
-        return Math.floor(res);
     }
 
     ngOnDestroy() {

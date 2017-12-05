@@ -6,6 +6,8 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
 import { ISearchSettings } from '../core/search-settings.interface';
+import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
+import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
@@ -25,6 +27,7 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
+    private paginationConfig: IPaginationConfig;
     public viewParameters: IDictionaryViewParameters;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
@@ -32,6 +35,7 @@ export class EosDictService {
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
     private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
+    private _paginationConfig$: BehaviorSubject<IPaginationConfig>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
@@ -61,6 +65,10 @@ export class EosDictService {
         return this._viewParameters$.asObservable();
     }
 
+    get paginationConfig$(): Observable<IPaginationConfig> {
+        return this._paginationConfig$.asObservable();
+    }
+
     get userOrdered(): boolean {
         return this.dictionary && this.dictionary.userOrdered;
     }
@@ -68,7 +76,6 @@ export class EosDictService {
     get order() {
         return this.dictionary.orderBy;
     }
-
 
     /*get currentTab(): number {
         return this._currentTab;
@@ -92,6 +99,7 @@ export class EosDictService {
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
+        this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._dictionaries = new Map<string, IDictionaryDescriptor>();
         DICTIONARIES
             .sort((a, b) => {
@@ -114,6 +122,22 @@ export class EosDictService {
             searchResults: false,
             updating: false
         };
+    }
+
+    private _initPaginationConfig() {
+        this.paginationConfig = {
+            start: 1,
+            current: 1,
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
+        }
+        this._paginationConfig$.next(this.paginationConfig);
+        return this.paginationConfig;
+    }
+
+    public changePagination(config: IPaginationConfig) {
+        this.paginationConfig = config;
+        console.log(this.paginationConfig);
+        // Выдать новый лист узлов
     }
 
     public getDictionariesList(): Promise<any> {
@@ -166,6 +190,7 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
+                        this._initPaginationConfig();
                         this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
