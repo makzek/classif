@@ -12,7 +12,7 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { ISearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 
 import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
@@ -258,7 +258,7 @@ export class EosDictionary {
 
         return _result;
     }
-
+ // ??
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
@@ -285,10 +285,12 @@ export class EosDictionary {
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         if (this.descriptor.type !== E_DICT_TYPE.linear) {
-            if (params.onlyCurrentNode) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
-            } else if (params.subbranches) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
+            if (params.mode === SEARCH_MODES.totalDictionary) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
+            } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
+            } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
             }
         }
         if (!params.deleted) {

@@ -8,7 +8,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { ISearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
@@ -48,6 +48,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
     date: Date = new Date();
 
+    public radio = true;
+
     setTab(key: string) {
         this.currTab = key;
     }
@@ -70,8 +72,7 @@ export class DictionarySearchComponent implements OnDestroy {
         private _msgSrv: EosMessageService
     ) {
         this.settings = {
-            onlyCurrentNode: false,
-            subbranches: false,
+            mode: SEARCH_MODES.totalDictionary,
             deleted: false
         };
 
@@ -101,12 +102,6 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     quickSearch(evt: KeyboardEvent) {
-        const _settings = {
-            onlyCurrentNode: false,
-            subbranches: true,
-            deleted: true
-        }
-
         if (evt.keyCode === 13) {
             if (!this.searchDone) {
                 this._msgSrv.addNewMessage({
@@ -117,7 +112,7 @@ export class DictionarySearchComponent implements OnDestroy {
             } else {
                 this.searchDone = false;
                 this.searchStart.emit();
-                this._dictSrv.search(this.dataQuick, _settings)
+                this._dictSrv.search(this.dataQuick, this.settings)
                     .then((nodes) => {
                         this.searchDone = true;
                         this.searchResult.emit(nodes)
@@ -163,6 +158,17 @@ export class DictionarySearchComponent implements OnDestroy {
             this._dictSrv.filter({ date: date }).then(() => {
                 console.log('filtered');
             }).catch((err) => { console.log(err) });
+        }
+    }
+
+    public changeMode(val: boolean) {
+        switch (val) {
+            case null: this.settings.mode = SEARCH_MODES.totalDictionary;
+                break;
+            case true: this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
+                break;
+            case false: this.settings.mode = SEARCH_MODES.currentAndSubbranch;
+                break;
         }
     }
 }
