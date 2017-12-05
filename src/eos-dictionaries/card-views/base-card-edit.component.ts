@@ -2,6 +2,7 @@ import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, I
 import { NgForm } from '@angular/forms';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictService } from '../services/eos-dict.service';
+import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -21,6 +22,8 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     focusedField: string;
 
     protected dictSrv;
+
+    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
