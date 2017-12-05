@@ -28,6 +28,10 @@
                 .selected {
                     color: $secondary-font-color-main-theme;
                 }
+
+                .deleted {
+                    color: $disabled-color-main-theme;
+                }
             }
         }
     }
