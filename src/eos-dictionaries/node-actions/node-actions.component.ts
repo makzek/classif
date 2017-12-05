@@ -47,7 +47,7 @@ export class NodeActionsComponent implements OnDestroy {
             .subscribe((params) => {
                 this._viewParams = params;
                 this._update();
-                console.log(this._viewParams)
+                console.log(this._viewParams);
             })
     }
 
@@ -96,6 +96,12 @@ export class NodeActionsComponent implements OnDestroy {
                     break;
                 case E_RECORD_ACTIONS.edit:
                     _enabled = _enabled && this._nodeSelected;
+                    break;
+                case E_RECORD_ACTIONS.remove:
+                    _enabled = this._viewParams.haveMarked;
+                    break;
+                case E_RECORD_ACTIONS.removeHard:
+                    _enabled = this._viewParams.haveMarked;
                     break;
             }
         }
