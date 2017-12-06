@@ -70,7 +70,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     listNodes: EosDictionaryNode[];
     visibleNodes: EosDictionaryNode[]; // Checkbox use it property | elements for page
     filteredNodes: EosDictionaryNode[] = [];
-    _page: IPaginationConfig;
+    private paginationConfig: IPaginationConfig;
 
     currentState: boolean[];
     // readonly states = DICTIONARY_STATES;
@@ -188,7 +188,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .takeUntil(this.ngUnsubscribe)
             .subscribe((nodes) => {
                 // console.log('incoming list', nodes);
-                this.params = this._dictSrv.viewParameters;
                 const filtredNodes = nodes.filter((item, index) => {
                     return nodes.lastIndexOf(item) === index
                 });
@@ -196,9 +195,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this._updateVisibleNodes();
             });
 
-        this._dictSrv.viewParameters$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe(viewParameters => this.params = viewParameters);
+        this._dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe).subscribe(viewParameters => this.params = viewParameters);
+        this._dictSrv.paginationConfig$.takeUntil(this.ngUnsubscribe).subscribe(config => {
+            this.paginationConfig = config;
+            this._updateVisibleNodes();
+            if (this.paginationConfig) {
+                this.paginationConfig.allItemsCurrent = this.filteredNodes.length;
+            }
+        })
     }
 
     ngOnDestroy() {
@@ -246,13 +250,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
-    private _cleanCheck() {
-        this.filteredNodes.forEach(item => item.marked = false);
-    }
-
     private _updateVisibleNodes() {
         console.log('_updateVisibleNodes fired'/*, this._page*/);
-        const page = this._page;
+        const page = this.paginationConfig;
 
         this.filteredNodes = this.listNodes;
         if (page) {
@@ -345,7 +345,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length - 1 && _idx < this.visibleNodes.length - 1) {
+        if (_idx < this.paginationConfig.current * this.paginationConfig.length - 1 && _idx < this.visibleNodes.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
@@ -401,16 +401,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             this._router.navigate(path);
         }
     }
-
-    /*
-    private _toggleUserOrder(): void {
-        this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        this._dictSrv.toggleUserOrder();
-        if (this.selectedNode) {
-            this._updateVisibleNodes();
-        }
-    }
-    */
 
     updateMarks(): void {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;

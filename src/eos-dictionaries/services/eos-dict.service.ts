@@ -128,7 +128,8 @@ export class EosDictService {
         this.paginationConfig = {
             start: 1,
             current: 1,
-            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
+            allItemsCurrent: this._currentList.length
         }
         this._paginationConfig$.next(this.paginationConfig);
         return this.paginationConfig;
@@ -136,8 +137,7 @@ export class EosDictService {
 
     public changePagination(config: IPaginationConfig) {
         this.paginationConfig = config;
-        console.log(this.paginationConfig);
-        // Выдать новый лист узлов
+        this._paginationConfig$.next(this.paginationConfig);
     }
 
     public getDictionariesList(): Promise<any> {
@@ -190,7 +190,6 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
-                        this._initPaginationConfig();
                         this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
@@ -332,6 +331,7 @@ export class EosDictService {
             if (node) {
                 node.isActive = true;
                 this._setCurrentList(node.children);
+                this._initPaginationConfig();
             }
             this._openNode(null);
             this.selectedNode = node;
@@ -459,6 +459,7 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
+                this._initPaginationConfig();
                 this.viewParameters.updating = false;
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
