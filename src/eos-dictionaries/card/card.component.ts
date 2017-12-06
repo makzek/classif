@@ -156,6 +156,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
+        console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
             .catch((err) => console.log('getNode error', err));
@@ -249,10 +250,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             const backUrl = urlSegments.join('/');
             this.goTo(backUrl);*/
         }
-        if (window.innerWidth > 1500) {
-            /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);*/
-        }
     }
 
 
@@ -263,11 +260,16 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     recordChanged(data: any) {
         if (this.nodeData) {
-            // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-        // const hasChanges = !!~Object.keys(this.nodeData).findIndex((key) => this.nodeData[key] !== this._originalData[key]);
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
-                return !!~Object.keys(this.nodeData[dict]).findIndex((key) => this.nodeData[dict][key] !== this._originalData[dict][key])
+                if (this.nodeData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
+                            return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                                (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
+                    });
+                } else {
+                    return false;
+                }
             });
             /* tslint:enable:no-bitwise */
             this.isChanged = hasChanges;

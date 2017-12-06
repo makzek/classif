@@ -504,7 +504,10 @@ export class EosDictService {
 
     getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
-            .then(() => this.dictionary.getFullNodeInfo(nodeId));
+            .then(() => {
+                console.log('recive dict')
+                return this.dictionary.getFullNodeInfo(nodeId);
+            });
     }
 
     public orderBy(orderBy: IOrderBy) {
