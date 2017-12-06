@@ -357,8 +357,37 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.restore:
                 this._restoreItems();
                 break;
+
+            case E_RECORD_ACTIONS.createRepresentative:
+                this._createRepresentative();
+                break;
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[action]);
+        }
+    }
+
+    private _createRepresentative() {
+        if (this.dictionaryId === 'departments') {
+            let _selectedCount = 0;
+            const _selectedList: EosDictionaryNode[] = [];
+            if (this.listNodes) {
+                this.listNodes.forEach((_node) => {
+                    _selectedCount++;
+                    _selectedList.push(_node);
+                });
+            }
+
+            if (!_selectedCount) {
+                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS);
+            } else {
+                _selectedList.forEach((_node) => {
+                    if (_node.data.rec['IS_NODE']) {
+                        this._dictSrv.updateNode(_node, Object.assign({}, _node.data, {
+                            /* New data with person data like but not the same!!!
+                            organiz: _node.data.rec*/ }));
+                    }
+                });
+            }
         }
     }
 
