@@ -371,8 +371,9 @@ export class EosDictService {
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
-                    return this.loadChildren(this.selectedNode)
-                        .then(() => {
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((nodes) => {
+                            this._setCurrentList(nodes);
                             this._selectedNode$.next(this.selectedNode);
                             return this.dictionary.getNode(newNodeId + '');
                         });
