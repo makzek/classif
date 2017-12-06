@@ -27,6 +27,7 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
+    private _visibleListNodes: EosDictionaryNode[];
     private paginationConfig: IPaginationConfig;
     public viewParameters: IDictionaryViewParameters;
 
@@ -116,7 +117,7 @@ export class EosDictService {
 
     private _initViewParameters() {
         this.viewParameters = {
-            showDeleted: false,
+            showDeleted: true,
             userOrdered: false,
             markItems: false,
             searchResults: false,
@@ -124,12 +125,12 @@ export class EosDictService {
         };
     }
 
-    private _initPaginationConfig() {
+    private _initPaginationConfig(allCount: number) {
         this.paginationConfig = {
             start: 1,
             current: 1,
             length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
-            allItemsCurrent: this._currentList.length
+            allItemsCurrent: allCount
         }
         this._paginationConfig$.next(this.paginationConfig);
         return this.paginationConfig;
@@ -137,6 +138,10 @@ export class EosDictService {
 
     public changePagination(config: IPaginationConfig) {
         this.paginationConfig = config;
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._updateVisibleNodes(filtredNodeList);
         this._paginationConfig$.next(this.paginationConfig);
     }
 
@@ -279,15 +284,31 @@ export class EosDictService {
     private _setCurrentList(nodes: EosDictionaryNode[]) {
         this._currentList = nodes || [];
         // todo: filter & order list before anounce
-        this._updateCurrentList();
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._initPaginationConfig(filtredNodeList.length);
+        this._updateVisibleNodes(filtredNodeList);
     }
 
-    private _updateCurrentList() {
-        let nodes = this._currentList;
+    private _updateVisibleNodes(filtredNodeList: EosDictionaryNode[]) {
+        const page = this.paginationConfig;
+        this._visibleListNodes = filtredNodeList.slice((page.start - 1) * page.length, page.current * page.length);
+        this._currentList$.next(this._visibleListNodes);
+    }
+
+    private _filtredDublicate(nodeList: EosDictionaryNode[]) {
+        return nodeList.filter((item, index) => {
+            return nodeList.lastIndexOf(item) === index
+        });
+    }
+
+    private _filtredDelete(nodeList: EosDictionaryNode[]) {
         if (!this.viewParameters.showDeleted) {
-            nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            return nodeList.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+        } else {
+            return nodeList;
         }
-        this._currentList$.next(nodes);
     }
 
     /**
@@ -331,7 +352,6 @@ export class EosDictService {
             if (node) {
                 node.isActive = true;
                 this._setCurrentList(node.children);
-                this._initPaginationConfig();
             }
             this._openNode(null);
             this.selectedNode = node;
@@ -459,7 +479,6 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
-                this._initPaginationConfig();
                 this.viewParameters.updating = false;
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
@@ -615,7 +634,11 @@ export class EosDictService {
                 if (node.isDeleted) { node.marked = false; }
             });
         }
-        this._updateCurrentList();
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._initPaginationConfig(filtredNodeList.length);
+        this._updateVisibleNodes(filtredNodeList);
         this._viewParameters$.next(this.viewParameters);
     }
 

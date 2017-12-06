@@ -20,7 +20,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
-import { EosActiveTreeNodeService } from '../tree/active-node-fon.service'
+import { EosActiveTreeNodeService } from '../tree/active-node-fon.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -66,10 +66,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public _selectedNodeText: string;
     private _nodeId: string;
 
-    treeNodes: EosDictionaryNode[];
-    listNodes: EosDictionaryNode[];
-    visibleNodes: EosDictionaryNode[]; // Checkbox use it property | elements for page
-    filteredNodes: EosDictionaryNode[] = [];
+    treeNodes: EosDictionaryNode[] = [];
+    listNodes: EosDictionaryNode[] = [];
+    visibleNodes: EosDictionaryNode[] = []; // Checkbox use it property | elements for page
     private paginationConfig: IPaginationConfig;
 
     currentState: boolean[];
@@ -124,21 +123,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _sandwichSrv: EosSandwichService,
         private _actTreeNodeSrv: EosActiveTreeNodeService
     ) {
-        this._actTreeNodeSrv.fon$.subscribe(fonConf => {
-            this.fonConf.width = fonConf.width + 'px';
-            this.fonConf.height = fonConf.height + 'px';
-            if (this.treeEl) {
-                this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
-            } else {
-                this.fonConf.top = fonConf.top + 'px';
-            }
-        })
+        _actTreeNodeSrv.fon$.takeUntil(this.ngUnsubscribe)
+            .subscribe(fonConf => {
+                this.fonConf.width = fonConf.width + 'px';
+                this.fonConf.height = fonConf.height + 'px';
+                if (this.treeEl) {
+                    this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
+                } else {
+                    this.fonConf.top = fonConf.top + 'px';
+                }
+            })
 
-        this.treeNodes = [];
-        this.listNodes = [];
-        this.visibleNodes = [];
-
-        this._route.params.subscribe((params) => {
+        _route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
@@ -146,12 +142,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             }
         });
 
-        this._sandwichSrv.currentDictState$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((state) => this.currentState = state);
+        _sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
+            .subscribe((state: boolean[]) => this.currentState = state);
 
-        this._dictSrv.dictionary$
-            .takeUntil(this.ngUnsubscribe)
+        _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
             .subscribe((dictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
@@ -167,8 +161,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        this._dictSrv.selectedNode$
-            .takeUntil(this.ngUnsubscribe)
+        _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
@@ -184,25 +177,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        this._dictSrv.currentList$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => {
-                // console.log('incoming list', nodes);
-                const filtredNodes = nodes.filter((item, index) => {
-                    return nodes.lastIndexOf(item) === index
-                });
-                this.listNodes = filtredNodes;
-                this._updateVisibleNodes();
+        _dictSrv.currentList$.takeUntil(this.ngUnsubscribe)
+            .subscribe((nodes: EosDictionaryNode[]) => {
+                this.visibleNodes = nodes;
+                this.updateMarks();
             });
 
-        this._dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe).subscribe(viewParameters => this.params = viewParameters);
-        this._dictSrv.paginationConfig$.takeUntil(this.ngUnsubscribe).subscribe(config => {
-            this.paginationConfig = config;
-            this._updateVisibleNodes();
-            if (this.paginationConfig) {
-                this.paginationConfig.allItemsCurrent = this.filteredNodes.length;
-            }
-        })
+        _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
+            .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
     }
 
     ngOnDestroy() {
@@ -248,19 +230,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 })
                 .catch((err) => this._errHandler(err));
         }
-    }
-
-    private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired'/*, this._page*/);
-        const page = this.paginationConfig;
-
-        this.filteredNodes = this.listNodes;
-        if (page) {
-            this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
-        } else {
-            this.visibleNodes = this.listNodes;
-        }
-        this.updateMarks();
     }
 
     doAction(action: E_RECORD_ACTIONS) {
