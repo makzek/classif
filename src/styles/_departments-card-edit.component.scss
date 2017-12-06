@@ -176,7 +176,13 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
         -ms-grid-rows: 60px 90px;
         grid-template-rows: 60px 90px;
-        grid-column-gap: 40px;
+
+        .cab,
+        .phone,
+        .phone-local,
+        .email {
+            margin-right: 40px;
+        }
 
         .phone,
         .phone-local,
