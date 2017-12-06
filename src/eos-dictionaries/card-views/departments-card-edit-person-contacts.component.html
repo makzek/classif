@@ -1,5 +1,5 @@
-<div class="row-wrapper">
-    <div class="form-group">
+<div class="contact-wrapper">
+    <div class="form-group cab">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NUM_CAB">{{fieldsDescription.rec['NUM_CAB']?.title}}</label>
         <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control m-font " [ngModel]="data.rec['NUM_CAB']"
             (ngModelChange)="change('NUM_CAB', 'rec', $event)" placeholder="{{fieldsDescription.rec['NUM_CAB']?.title}}" [ngClass]="{'readonly': !editMode }"
@@ -9,7 +9,7 @@
             triggers="">
     </div>
 
-    <div class="form-group">
+    <div class="form-group phone">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE">{{fieldsDescription.rec['PHONE']?.title}}</label>
         <input [readonly]="!editMode" id="PHONE" name="PHONE" type="text" class="form-control m-font " [ngModel]="data.rec['PHONE']"
             (ngModelChange)="change('PHONE', 'rec', $event)" placeholder="{{fieldsDescription.rec['PHONE']?.title}}" [ngClass]="{'readonly': !editMode }"
@@ -19,7 +19,7 @@
             triggers="">
     </div>
 
-    <div class="form-group">
+    <div class="form-group phone-local">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PHONE_LOCAL">{{fieldsDescription.rec['PHONE_LOCAL']?.title}}</label>
         <input [readonly]="!editMode" id="PHONE_LOCAL" name="PHONE_LOCAL" type="text" class="form-control m-font " [ngModel]="data.rec['PHONE_LOCAL']"
             (ngModelChange)="change('PHONE_LOCAL', 'rec', $event)" placeholder="{{fieldsDescription.rec['PHONE_LOCAL']?.title}}"
@@ -29,7 +29,7 @@
             triggers="">
     </div>
 
-    <div class="form-group">
+    <div class="form-group fax">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="FAX">{{fieldsDescription.rec['FAX']?.title}}</label>
         <input [readonly]="!editMode" id="FAX" name="FAX" type="text" class="form-control m-font " [ngModel]="data.rec['FAX']" (ngModelChange)="change('FAX', 'rec', $event)"
             placeholder="{{fieldsDescription.rec['FAX']?.title}}" [ngClass]="{'readonly': !editMode }" (focus)="focus('FAX')"
@@ -38,10 +38,7 @@
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['FAX']?.invalid && cardForm.controls['FAX']?.dirty && focusedField === 'FAX'"
             triggers="">
     </div>
-</div>
 
-<div class="email-wrapper row-wrapper">
-    <div class="form-group"></div>
     <div class="form-group email">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="E_MAIL">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
         <input [readonly]="!editMode" id="E_MAIL" name="E_MAIL" type="text" class="form-control m-font " [ngModel]="data.rec['E_MAIL']"
