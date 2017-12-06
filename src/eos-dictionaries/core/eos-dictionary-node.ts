@@ -181,6 +181,7 @@ export class EosDictionaryNode {
 
     delete(hard = false) { // TODO: check maybe this is unused
         if (hard) {
+            // console.log('delete children parent', this, this._children, this.parent);
             if ((!this._children || this._children.length < 1) && this.parent) {
                 this.parent.deleteChild(this);
                 this.isDeleted = true;

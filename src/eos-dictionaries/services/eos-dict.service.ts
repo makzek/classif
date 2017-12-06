@@ -414,9 +414,11 @@ export class EosDictService {
 
     public physicallyDelete(nodeId: string): Promise<any> {
         const _node = this.dictionary.getNode(nodeId);
-        return this.dictionary.descriptor.deleteRecord(_node.data)
+        return this.dictionary.descriptor.deleteRecord(_node.data.rec)
             .then(() => {
                 this.dictionary.deleteNode(nodeId, true);
+                // console.log('update list', this.selectedNode);
+                this._setCurrentList(this.selectedNode.children);
                 this._selectedNode$.next(this.selectedNode);
             });
     }

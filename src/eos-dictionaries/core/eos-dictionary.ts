@@ -155,8 +155,7 @@ export class EosDictionary {
         const nodeIds: string[] = [];
         data.forEach((nodeData) => {
             if (nodeData) {
-                const nodeId = nodeData[this.descriptor.record.keyField.key];
-                nodeIds.push(nodeId);
+                const nodeId = nodeData[this.descriptor.record.keyField.foreignKey] + '';
                 let _node = this._nodes.get(nodeId);
                 if (_node) {
                     _node.updateData(nodeData);
@@ -165,6 +164,9 @@ export class EosDictionary {
                     if (_node) {
                         this._nodes.set(_node.id, _node);
                     }
+                }
+                if (_node) {
+                    nodeIds.push(_node.id);
                 }
             } else {
                 console.log('no data');
@@ -178,7 +180,7 @@ export class EosDictionary {
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
-        console.log('getFullNodeInfo fired', nodeId);
+        // console.log('getFullNodeInfo fired', nodeId);
         let id: any = nodeId;
 
         if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
@@ -270,7 +272,7 @@ export class EosDictionary {
         return this.descriptor.markDeleted(nodeSet);
     }
 
-    restoreMarked(recursive = false) {
+    restoreMarked(recursive = false): Promise<any> {
         const nodeSet: any[] = [];
         this._nodes.forEach((node) => {
             if (node.marked) {
@@ -289,9 +291,10 @@ export class EosDictionary {
             node.updating = true;
             return this.descriptor.getChildren(node.data.rec)
                 .then((nodes) => {
-                    this.updateNodes(nodes, true);
+                    const res = this.updateNodes(nodes, true);
+                    console.log(res);
                     node.updating = false;
-                    return node.children;
+                    return res;
                 })
         } else {
             return Promise.resolve([]);
@@ -315,7 +318,7 @@ export class EosDictionary {
 
         return _result;
     }
- // ??
+    // ??
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
