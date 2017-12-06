@@ -10,6 +10,7 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeSet: EosDictionaryNode[];
+    @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -26,13 +27,17 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }
 
     keys(data: Object): string[] {
-        return Object.keys(data);
+        if (data) {
+            return Object.keys(data);
+        } else {
+            return [];
+        }
     }
 
     ngOnInit() {
         if (this.cardForm) {
             this.cardForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(!this.cardForm.valid);
+                this.invalid.emit(this.cardForm.invalid);
             });
         }
     }
@@ -43,11 +48,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    change(fldKey: string, value: string) {
-        this.data[fldKey] = value;
-        this.onChange.emit(this.data);
+    change(fldKey: string, dict: string, value: string) {
+        if (this.data[dict][fldKey] !== value) {
+            this.data[dict][fldKey] = value;
+            this.onChange.emit(this.data);
+        }
     }
-
 
     focus(name: string) {
         this.focusedField = name;
@@ -62,6 +68,10 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     }*/
 
     checkUnic(val: any, key: string, inDict?: boolean) {
-        return this.dictSrv.isUnic(val, key, inDict);
+        if (this.focusedField === key) {
+            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
+        } else {
+            return null;
+        }
     }
 }

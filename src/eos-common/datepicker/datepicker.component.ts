@@ -48,7 +48,9 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     emitChange(date: Date) {
-        this.change.emit(date);
+        if (this.value !== date) {
+            this.change.emit(date);
+        }
     }
 
     measureDistance() {

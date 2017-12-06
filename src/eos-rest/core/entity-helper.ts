@@ -29,7 +29,8 @@ export class EntityHelper {
             if (typeName !== undefined) {
                 const e = <T>{};
                 const et = this._metadata.typeDesc(typeName);
-                e.__metadata = {__type: typeName, _ES: _ES.Stub};
+                e._State = _ES.Stub;
+                e.__metadata = {__type: typeName};
                 // tslint:disable-next-line:forin
                 for (const pn in et.properties) {
                     e[pn] = null;

@@ -12,9 +12,10 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { ISearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 
 import { IOrderBy } from '../core/sort.interface'
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -50,38 +51,48 @@ export class EosDictionary {
         this._orderBy = order;
     }
 
-    get canMarkItems(): boolean {
-        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
-    }
-
-    constructor(descData: IDictionaryDescriptor) {
-        switch (descData.dictType) {
-            case E_DICT_TYPE.linear:
-                this.descriptor = new DictionaryDescriptor(descData);
-                break;
-            case E_DICT_TYPE.tree:
-                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData);
-                break;
-            case E_DICT_TYPE.department:
-                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData);
-                break;
-            default:
-                throw new Error('No API instance');
-        }
-
-        this._nodes = new Map<string, EosDictionaryNode>();
-
+    public defaultOrder() {
         this._orderBy = {
             ascend: true,
             fieldKey: 'CLASSIF_NAME'
         };
     }
 
-    init(data: any[]) {
-        this._nodes.clear();
+    get orderBy() {
+        return this._orderBy;
+    }
 
-        /* add nodes */
-        this.updateNodes(data, true);
+    get canMarkItems(): boolean {
+        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
+    }
+
+    constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
+        switch (descData.dictType) {
+            case E_DICT_TYPE.linear:
+                this.descriptor = new DictionaryDescriptor(descData, apiSrv);
+                break;
+            case E_DICT_TYPE.tree:
+                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData, apiSrv);
+                break;
+            case E_DICT_TYPE.department:
+                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData, apiSrv);
+                break;
+            default:
+                throw new Error('No API instance');
+        }
+
+        this._nodes = new Map<string, EosDictionaryNode>();
+        this.defaultOrder();
+    }
+
+    init(): Promise<EosDictionaryNode> {
+        this._nodes.clear();
+        return this.descriptor.getRoot()
+            .then((data: any[]) => {
+                this.updateNodes(data, true);
+                // console.log('this.r00t', this.root, this._nodes);
+                return this.root;
+            })
     }
 
     initUserOrder(userOrdered: boolean, userOrder: any) {
@@ -109,33 +120,51 @@ export class EosDictionary {
 
         /* fallback if root undefined */
         if (!this.root) {
-            this.root = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 0 });
+            this.root = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
             this.root.children = [];
             this._nodes.set(this.root.id, this.root);
         }
 
         this.root.title = this.descriptor.title;
+        this.root.data.rec['DELETED'] = false;
 
-        this._nodes.forEach((_node) => {
-            if (!_node.parent && _node !== this.root) {
-                this.root.addChild(_node);
+        this._nodes.forEach((node) => {
+            if (!node.parent && node !== this.root) {
+                this.root.addChild(node);
             }
+            node.updateEpandabe();
         });
+        this.root.updateEpandabe();
+    }
+
+    expandNode(nodeId: string): Promise<EosDictionaryNode> {
+        const node = this._nodes.get(nodeId);
+        if (node) {
+            return this.descriptor.getSubtree(node.data.rec)
+                .then((nodes) => {
+                    this.updateNodes(nodes, true);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(null);
+        }
     }
 
     updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
-        const _nodes: EosDictionaryNode[] = [];
+        const nodeIds: string[] = [];
         data.forEach((nodeData) => {
             if (nodeData) {
                 const nodeId = nodeData[this.descriptor.record.keyField.key];
+                nodeIds.push(nodeId);
                 let _node = this._nodes.get(nodeId);
                 if (_node) {
                     _node.updateData(nodeData);
                 } else {
                     _node = new EosDictionaryNode(this, nodeData);
-                    this._nodes.set(_node.id, _node);
+                    if (_node) {
+                        this._nodes.set(_node.id, _node);
+                    }
                 }
-                _nodes.push(_node);
             } else {
                 console.log('no data');
             }
@@ -143,13 +172,48 @@ export class EosDictionary {
         if (updateTree) {
             this._updateTree();
         }
-        return _nodes;
+        return nodeIds.map((id) => this._nodes.get(id))
+            .filter((node) => !!node);
     }
 
-    getNode(nodeId: string): EosDictionaryNode {
-        const _res = this._nodes.get(nodeId);
+    getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
+        console.log('getFullNodeInfo fired', nodeId);
+        return this.descriptor.getRecord(nodeId)
+            .then((nodes) => {
+                this.updateNodes(nodes, true);
+                const node = this._nodes.get(nodeId);
+                let orgDUE = '';
+                if (this.descriptor.type === E_DICT_TYPE.department) {
+                    orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
+                    if (!orgDUE) {
+                        const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
+                        if (parentNode) {
+                            orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                        }
+                    }
+                }
+
+                return Promise.all([
+                    this.descriptor.getRelated(node.data.rec, orgDUE),
+                    this.descriptor.getRelatedSev(node.data.rec)
+                ]).then(([related, sev]) => {
+                    node.data = Object.assign(node.data, related, { sev: sev });
+                    console.log('full node info', node.data);
+                    return node;
+                });
+            });
+    }
+
+    getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
+        const node = this._nodes.get(nodeId);
+        if (this.descriptor.type !== E_DICT_TYPE.linear) {
+            this.descriptor.getChildren(node.data.rec)
+                .then((nodes) => {
+                    this.updateNodes(nodes, true);
+                })
+        }
         // console.log('get node', this.id, nodeId, this._nodes, _res);
-        return _res;
+        return node;
     }
 
     addNode(node: EosDictionaryNode, parentId?: string): boolean {
@@ -170,7 +234,7 @@ export class EosDictionary {
                 if (node.parent) {
                     node.parent.addChild(node);
                 } else {
-                    this.getNode(parentId).addChild(node);
+                    this._nodes.get(parentId).addChild(node);
                 }
             }
         }
@@ -194,12 +258,12 @@ export class EosDictionary {
 
         return _result;
     }
-
+ // ??
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
-                [fld.foreignKey]: '%' + search + '%'
+                [fld.foreignKey]: '"' + search + '"'
             };
             this._extendCritery(_crit, params, selectedNode);
             return _crit;
@@ -212,7 +276,7 @@ export class EosDictionary {
         const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
         fields.forEach((fld) => {
             if (data[fld.key]) {
-                critery[fld.foreignKey] = '%' + data[fld.key] + '%';
+                critery[fld.foreignKey] = '"' + data[fld.key] + '"';
             }
         })
         this._extendCritery(critery, params, selectedNode);
@@ -221,10 +285,12 @@ export class EosDictionary {
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         if (this.descriptor.type !== E_DICT_TYPE.linear) {
-            if (params.onlyCurrentNode) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId
-            } else if (params.subbranches) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%'
+            if (params.mode === SEARCH_MODES.totalDictionary) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
+            } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
+            } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
+                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
             }
         }
         if (!params.deleted) {
@@ -246,35 +312,6 @@ export class EosDictionary {
         }
         this._userOrder[nodeId] = order;
     }
-    /*
-    __orderBy(order: IOrderBy, userOrder = false) {
-        this._orderBy = order;
-        this._userOrdered = userOrder;
-        this.reorder();
-    }
-
-    reorder() {
-        this.nodes.forEach((node) => this.reorderNode(node));
-    }
-
-    reorderNode(node: EosDictionaryNode, parentId?: string) {
-        if (node.children) {
-            if (this._userOrdered) {
-                if (parentId !== undefined) {
-                    node.children = this._doUserOrder(node.children, node.id);
-                } else {
-
-                }
-            } else {
-                node.children = this._orderByField(node.children);
-            }
-        }
-    }
-    reorderList(nodes: EosDictionaryNode[], parent?: EosDictionaryNode): EosDictionaryNode[] {
-        nodes.forEach((node) => this.reorderNode(node));
-        return this._orderByField(nodes);
-    }
-    */
 
     reorderList(nodes: EosDictionaryNode[], parentId?: string) {
         if (this._userOrdered && parentId) {
@@ -287,13 +324,13 @@ export class EosDictionary {
     private _orderByField(array: EosDictionaryNode[]): EosDictionaryNode[] {
         const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
         return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
-            if (a.data[_orderBy.fieldKey] > b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] > b.data.rec[_orderBy.fieldKey]) {
                 return _orderBy.ascend ? 1 : -1;
             }
-            if (a.data[_orderBy.fieldKey] < b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] < b.data.rec[_orderBy.fieldKey]) {
                 return _orderBy.ascend ? -1 : 1;
             }
-            if (a.data[_orderBy.fieldKey] === b.data[_orderBy.fieldKey]) {
+            if (a.data.rec[_orderBy.fieldKey] === b.data.rec[_orderBy.fieldKey]) {
                 return 0;
             }
         });

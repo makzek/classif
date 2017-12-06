@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { EosDictApiService } from './eos-api.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
@@ -11,21 +10,22 @@ import { ISearchSettings } from '../core/search-settings.interface';
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
 import { LS_USE_USER_ORDER } from '../consts/common';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { IOrderBy } from '../core/sort.interface'
-import { EosStorageService } from '../../app/services/eos-storage.service';
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
+import { EosStorageService } from 'app/services/eos-storage.service';
+import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
+import { PipRX } from 'eos-rest/services/pipRX.service';
+import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Injectable()
 export class EosDictService {
-    private _dictionariesList = DICTIONARIES;
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
-    private _viewParameters: IDictionaryViewParameters;
+    public viewParameters: IDictionaryViewParameters;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -34,6 +34,9 @@ export class EosDictService {
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
+    private _dictionaries: Map<string, IDictionaryDescriptor>
+
+    public currentTab = 0;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -62,12 +65,25 @@ export class EosDictService {
         return this.dictionary && this.dictionary.userOrdered;
     }
 
+    get order() {
+        return this.dictionary.orderBy;
+    }
+
+
+    /*get currentTab(): number {
+        return this._currentTab;
+    }
+
+    set currentTab(val: number) {
+        this._currentTab = val;
+    }*/
+
     constructor(
-        private _api: EosDictApiService,
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService,
+        private _pipeSrv: PipRX,
     ) {
         this._initViewParameters();
         this._selectedNode$ = new BehaviorSubject<EosDictionaryNode>(null);
@@ -75,15 +91,28 @@ export class EosDictService {
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this._viewParameters);
+        this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
+        this._dictionaries = new Map<string, IDictionaryDescriptor>();
+        DICTIONARIES
+            .sort((a, b) => {
+                if (a.title > b.title) {
+                    return 1;
+                } else if (a.title < b.title) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            })
+            .forEach((dict) => this._dictionaries.set(dict.id, dict));
     }
 
     private _initViewParameters() {
-        this._viewParameters = {
+        this.viewParameters = {
             showDeleted: false,
             userOrdered: false,
             markItems: false,
-            searchResults: false
+            searchResults: false,
+            updating: false
         };
     }
 
@@ -91,12 +120,17 @@ export class EosDictService {
         return Promise.resolve(DICTIONARIES);
     }
 
-    closeDictionary() {
+    public defaultOrder() {
+        this.dictionary.defaultOrder();
+        this._reorder();
+    }
+
+    public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = null;
         this._initViewParameters();
+        this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
-        this._viewParameters$.next(this._viewParameters);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -109,6 +143,8 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
+                        this.viewParameters.showDeleted = false;
+                        this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -124,40 +160,32 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            this.dictionary = null;
-            _p = this._api.getDictionaryDescriptorData(dictionaryId)
-                .then((descData: any) => {
-                    this.dictionary = new EosDictionary(descData);
-                    this._api.init(this.dictionary.descriptor);
-                    return this._api.getRoot();
-                })
-                .then((data: any[]) => {
-                    this._initViewParameters();
-                    this._viewParameters.userOrdered = this._storageSrv.getItem(LS_USE_USER_ORDER);
-                    this._viewParameters.markItems = this.dictionary.canMarkItems;
-                    this._viewParameters$.next(this._viewParameters);
-                    this.dictionary.initUserOrder(
-                        this._viewParameters.userOrdered,
-                        this._storageSrv.getUserOrder(this.dictionary.id)
-                    );
-                    if (data && data.length) {
-                        this.dictionary.init(data);
-                    }
-                    /*
-                    if (this.dictionary.userOrdered) {
-                        this.dictionary.reorder();
-                    }
-                    */
-                    this._mDictionaryPromise.delete(dictionaryId);
-                    this._dictionary$.next(this.dictionary);
-                    return this.dictionary;
-                })
-                .catch((err: Response) => {
-                    this.closeDictionary();
-                    this._mDictionaryPromise.delete(dictionaryId);
-                    return null;
-                });
-            this._mDictionaryPromise.set(dictionaryId, _p);
+            const descriptor = this._dictionaries.get(dictionaryId);
+            if (descriptor) {
+                this.dictionary = new EosDictionary(descriptor, this._pipeSrv);
+                _p = this.dictionary.init()
+                    .then((root) => {
+                        this._initViewParameters();
+                        this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
+                        this.viewParameters.markItems = this.dictionary.canMarkItems;
+                        this._viewParameters$.next(this.viewParameters);
+                        this.dictionary.initUserOrder(
+                            this.viewParameters.userOrdered,
+                            this._storageSrv.getUserOrder(this.dictionary.id)
+                        );
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        this._dictionary$.next(this.dictionary);
+                        return this.dictionary;
+                    })
+                    .catch((err) => {
+                        this.closeDictionary();
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        return null;
+                    });
+                this._mDictionaryPromise.set(dictionaryId, _p);
+            } else {
+                _p = Promise.reject({ message: 'No dictionary' });
+            }
         }
         return _p;
     }
@@ -178,7 +206,7 @@ export class EosDictService {
                     return this.loadChildren(_node);
                 }
             } else {
-                return this._api.getNode(nodeId)
+                return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
                         this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
@@ -193,7 +221,7 @@ export class EosDictService {
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         // console.log('loadChildren for', node.id);
         node.updating = true;
-        return this._api.getChildren(node)
+        return this.dictionary.descriptor.getChildren(node.data.rec)
             .then((data: any[]) => {
                 this._updateDictNodes(data, true);
                 node.updating = false;
@@ -204,7 +232,7 @@ export class EosDictService {
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
         node.updating = true;
-        return this._api.getNode(node.originalId)
+        return this.dictionary.descriptor.getRecord(node.originalId)
             .then((nodeData) => {
                 node.updateData(nodeData);
                 node.updating = false;
@@ -213,7 +241,7 @@ export class EosDictService {
     }
 
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNode(this.dictionary.id, nodeId);
+        return this.dictionary.expandNode(nodeId);
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -232,11 +260,9 @@ export class EosDictService {
 
     private _updateCurrentList() {
         let nodes = this._currentList;
-
-        if (!this._viewParameters.showDeleted) {
-            nodes = nodes.filter((node) => node.isVisible(this._viewParameters.showDeleted));
+        if (!this.viewParameters.showDeleted) {
+            nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
-
         this._currentList$.next(nodes);
     }
 
@@ -247,7 +273,10 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            return this._getNode(nodeId)
+            if (this.selectedNode && this.selectedNode.id !== nodeId) {
+                this.viewParameters.showDeleted = false;
+                this._viewParameters$.next(this.viewParameters);
+                return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
                         let parent = node.parent;
@@ -256,9 +285,12 @@ export class EosDictService {
                             parent = parent.parent;
                         }
                     }
+                    this.viewParameters.updating = false;
+                    this._viewParameters$.next(this.viewParameters);
                     this._selectNode(node);
                     return node;
                 });
+            }
         } else {
             return Promise.resolve(this._selectRoot());
         }
@@ -279,6 +311,8 @@ export class EosDictService {
             this._openNode(null);
             this.selectedNode = node;
             this._selectedNode$.next(node);
+            this.viewParameters.searchResults = false;
+            this._viewParameters$.next(this.viewParameters);
         }
     }
 
@@ -293,7 +327,7 @@ export class EosDictService {
 
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
-            return this._getNode(nodeId)
+            return this.dictionary.getFullNodeInfo(nodeId)
                 .then((node) => {
                     this._openNode(node);
                     return node;
@@ -305,11 +339,11 @@ export class EosDictService {
 
     private _openNode(node: EosDictionaryNode) {
         if (this._openedNode !== node) {
-            if (node) {
-                node.isSelected = true;
-            }
             if (this._openedNode) {
                 this._openedNode.isSelected = false;
+            }
+            if (node) {
+                node.isSelected = true;
             }
             this._openedNode = node;
             this._openedNode$.next(node);
@@ -321,7 +355,7 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
-        return this._api.update(node.data, data)
+        return this.dictionary.descriptor.updateRecord(node.data, data)
             .then(() => {
                 return this.reloadNode(node);
             });
@@ -329,7 +363,8 @@ export class EosDictService {
 
     public addNode(data: any): Promise<any> {
         if (this.selectedNode) {
-            return this._api.addNode(this.selectedNode.data, data)
+            console.log('addNode', data, this.selectedNode.data);
+            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
                     return this.loadChildren(this.selectedNode)
@@ -348,7 +383,7 @@ export class EosDictService {
             this._openNode(null);
         }
         // Object.assign(node, { ...node, isDeleted: true });
-        this.updateNode(node, { DELETED: 1 }).then((res) => {
+        this.updateNode(node, { rec: { DELETED: 1 } }).then((res) => {
             this.reloadNode(node);
         });
         if (node.children) {
@@ -368,7 +403,7 @@ export class EosDictService {
 
     public physicallyDelete(nodeId: string): Promise<any> {
         const _node = this.dictionary.getNode(nodeId);
-        return this._api.deleteNode(_node.data)
+        return this.dictionary.descriptor.deleteRecord(_node.data)
             .then(() => {
                 this.dictionary.deleteNode(nodeId, true);
                 this._selectedNode$.next(this.selectedNode);
@@ -389,7 +424,8 @@ export class EosDictService {
     private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
-        return this._api.search(criteries)
+        this.viewParameters.updating = true;
+        return this.dictionary.descriptor.search(criteries)
             .then((data: any[]) => {
                 let nodes = [];
                 if (!data || data.length < 1) {
@@ -398,8 +434,9 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                 }
                 this._setCurrentList(nodes);
-                this._viewParameters.searchResults = true;
-                this._viewParameters$.next(this._viewParameters);
+                this.viewParameters.updating = false;
+                this.viewParameters.searchResults = true;
+                this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
             });
     }
@@ -408,8 +445,8 @@ export class EosDictService {
         if (node.parent && node.parent.isDeleted) {
             this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
         }
-        // Object.assign(node, { ...node, isDeleted: false });
-        this.updateNode(node, { DELETED: 0 })
+
+        this.updateNode(node, { rec: { DELETED: 0 } })
             .then((res) => {
                 return this.reloadNode(node);
             });
@@ -419,7 +456,7 @@ export class EosDictService {
         if (node.children) {
             let delChld: boolean;
             const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', node.data['CLASSIF_NAME']);
+            _confrm.body = _confrm.body.replace('{{name}}', node.title);
 
             this._confirmSrv
                 .confirm(_confrm)
@@ -465,6 +502,11 @@ export class EosDictService {
         return _path;
     }
 
+    getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
+        return this.openDictionary(dictionaryId)
+            .then(() => this.dictionary.getFullNodeInfo(nodeId));
+    }
+
     public orderBy(orderBy: IOrderBy) {
         if (this.dictionary) {
             this.dictionary.orderBy = orderBy;
@@ -472,11 +514,23 @@ export class EosDictService {
         }
     }
 
-    public toggleUserOrder() {
-        this._viewParameters.userOrdered = !this._viewParameters.userOrdered;
+    public toggleUserOrder(value?: boolean) {
+        if (value === undefined) {
+            this.viewParameters.userOrdered = !this.viewParameters.userOrdered;
+        } else {
+            this.viewParameters.userOrdered = value;
+        }
+        this._viewParameters$.next(this.viewParameters);
+
+        if (this.viewParameters.userOrdered) {
+            this.dictionary.orderBy = null;
+        } else {
+            this.defaultOrder();
+        }
+
         if (this.dictionary) {
-            this.dictionary.userOrdered = this._viewParameters.userOrdered;
-            this._storageSrv.setItem(LS_USE_USER_ORDER, this.dictionary.userOrdered, true);
+            this.dictionary.userOrdered = this.viewParameters.userOrdered;
+            this._storageSrv.setUserOrderState(this.dictionary.id, this.dictionary.userOrdered);
             this._reorder();
         }
     }
@@ -484,7 +538,7 @@ export class EosDictService {
     // temporary
     private _reorder() {
         if (this.dictionary) {
-            if (this._viewParameters.searchResults) {
+            if (this.viewParameters.searchResults) {
                 this._setCurrentList(this.dictionary.reorderList(this._currentList));
             } else {
                 this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
@@ -529,14 +583,14 @@ export class EosDictService {
     }
 
     toggleDeleted() {
-        this._viewParameters.showDeleted = !this._viewParameters.showDeleted;
-        if (!this._viewParameters.showDeleted) {
+        this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
+        if (!this.viewParameters.showDeleted) {
             this._currentList.forEach((node) => {
                 if (node.isDeleted) { node.marked = false; }
             });
         }
         this._updateCurrentList();
-        this._viewParameters$.next(this._viewParameters);
+        this._viewParameters$.next(this.viewParameters);
     }
 
     private _errHandler(err) {
@@ -550,20 +604,22 @@ export class EosDictService {
         return null;
     }
 
-    isUnic(val: string, key: string, inDict?: boolean): { [key: string]: any } {
+    isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
-                if (_node.data[key] === val) {
+                if (_node.data.rec[key] === val && _node.id !== nodeId) {
                     _hasMatch = true;
                 }
             });
             return _hasMatch ? { 'isUnic': _hasMatch } : null;
         } else if (this.selectedNode) {
             /* tslint:disable:no-bitwise */
-            const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data[key] === val);
+            const _hasMatch = !!~this.selectedNode.children.findIndex((_node) => _node.data.rec[key] === val);
             /* tslint:enable:no-bitwise */
             return _hasMatch ? { 'isUnic': _hasMatch } : null;
+        } else {
+            return null;
         }
     }
 }

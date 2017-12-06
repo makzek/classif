@@ -11,7 +11,6 @@
     }
 
     .node-list-item {
-        padding: 5px 0;
         display: flex;
     }
 
@@ -31,15 +30,20 @@
         }
 
         .node-info {
-            align-self: center;
             cursor: pointer;
             width: calc(100% - 2* 48px); // checkbox and spinner
 
         }
 
+        .checkbox-inline {
+            padding: 5px 0 5px 12px;
+        }
+
         .code {
             padding: 0 20px;
+            line-height: 48px;
             display: inline-block;
+            height: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -67,6 +71,18 @@
             align-items: center;
             height: 100px;
         }
+
+        .spinner-container {
+            padding: 20px;
+        }
+    }
+}
+
+.eos-node-list {
+    position: relative;
+
+    ul {
+        position: relative;
     }
 }
 
