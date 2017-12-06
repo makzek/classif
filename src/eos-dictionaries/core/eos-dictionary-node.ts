@@ -290,6 +290,17 @@ export class EosDictionaryNode {
             return [];
         }
     }
+
+    getAllChildren(): EosDictionaryNode[] {
+        let children = [];
+        if (this._children) {
+            children = children.concat(this._children);
+            this._children.forEach((chld) => {
+                children = children.concat(chld.getAllChildren());
+            })
+        }
+        return children;
+    }
 }
 
 
