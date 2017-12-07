@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { IPaginationConfig, IPageLength } from './node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
@@ -10,6 +11,7 @@ import { EosDictService } from '../services/eos-dict.service';
     templateUrl: 'node-list-pagination.component.html'
 })
 export class NodeListPaginationComponent {
+    private ngUnsubscribe: Subject<any> = new Subject();
     public config: IPaginationConfig;
     @Input() currentState: boolean[];
 
@@ -23,12 +25,13 @@ export class NodeListPaginationComponent {
         private _dictSrv: EosDictService,
         private _storageSrv: EosStorageService,
     ) {
-        _dictSrv.paginationConfig$.subscribe((config: IPaginationConfig) => {
-            if (config) {
-                this.config = config;
-                this._update();
-            }
-        });
+        _dictSrv.paginationConfig$.takeUntil(this.ngUnsubscribe)
+            .subscribe((config: IPaginationConfig) => {
+                if (config) {
+                    this.config = config;
+                    this._update();
+                }
+            });
     }
 
     public setPageLength(length: number): void {
@@ -52,7 +55,7 @@ export class NodeListPaginationComponent {
 
     private _update() {
         let total = Math.ceil(this.config.allItemsCurrent / this.config.length);
-        if (total === 0 ) { total = 1}
+        if (total === 0) { total = 1 }
         const firstSet = this._buttonsTotal - this.config.current;
         const lastSet = total - this._buttonsTotal + 1;
         const middleSet = this._buttonsTotal - 3;

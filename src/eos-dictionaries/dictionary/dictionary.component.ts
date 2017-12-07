@@ -54,7 +54,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
-
     @ViewChild('tree') treeEl;
 
     dictionary: EosDictionary;
@@ -67,11 +66,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _nodeId: string;
 
     treeNodes: EosDictionaryNode[] = [];
-    listNodes: EosDictionaryNode[] = [];
-    visibleNodes: EosDictionaryNode[] = []; // Checkbox use it property | elements for page
+    listNodes: EosDictionaryNode[] = []; // All elements
+    visibleNodes: EosDictionaryNode[] = []; // Elements for one page
     private paginationConfig: IPaginationConfig;
 
-    currentState: boolean[];
+    public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
 
     hasParent: boolean;
@@ -181,6 +180,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((nodes: EosDictionaryNode[]) => {
                 this.visibleNodes = nodes;
                 this.updateMarks();
+            });
+
+        _dictSrv.paginationConfig$.takeUntil(this.ngUnsubscribe)
+            .subscribe((config: IPaginationConfig) => {
+                if (config) {
+                    this.paginationConfig = config;
+                }
             });
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
@@ -389,68 +395,67 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     /* darkside */
 
     deleteSelectedItems(): void {
-        const deletedNames: string[] = [];
-        const selectedNodes: string[] = [];
-        let countMakedItems = 0;
-        if (this.listNodes) {
-            this.listNodes.forEach((child: EosDictionaryNode) => {
-                if (child.marked) { countMakedItems++ }
-                if (child.marked && !child.isDeleted) {
-                    selectedNodes.push(child.id);
-                    child.marked = false;
-                } else if (child.marked && child.isDeleted) {
-                    deletedNames.push(child.title)
-                }
-            });
-            let str = '';
-            for (const item of deletedNames) {
-                str += '"' + item + '", ';
+        const deletedNames: string[] = [],
+            selectedNodes: string[] = [];
+        let countMakedItems = 0,
+            str = '';
+
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) { countMakedItems++ }
+            if (node.marked && !node.isDeleted) {
+                selectedNodes.push(node.id);
+                node.marked = false;
+            } else if (node.marked && node.isDeleted) {
+                deletedNames.push(node.title)
             }
-            str = str.slice(0, str.length - 2);
-            if (countMakedItems === 0) {
-                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-            } else if (deletedNames.length === 1) {
-                this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-            } else if (deletedNames.length) {
-                const WARN = Object.assign({}, WARN_LOGIC_DELETE);
-                WARN.msg = WARN.msg.replace('{{elem}}', str);
-                this._msgSrv.addNewMessage(WARN);
-            } else {
-                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
-                    .catch((err) => this._errHandler(err));
-            }
+        });
+
+        for (const item of deletedNames) {
+            str += '"' + item + '", ';
+        }
+        str = str.slice(0, str.length - 2);
+
+        if (countMakedItems === 0) {
+            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
+        } else if (deletedNames.length === 1) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
+        } else if (deletedNames.length) {
+            const WARN = Object.assign({}, WARN_LOGIC_DELETE);
+            WARN.msg = WARN.msg.replace('{{elem}}', str);
+            this._msgSrv.addNewMessage(WARN);
+        } else {
+            this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
+                .catch((err) => this._errHandler(err));
         }
     }
 
     public physicallyDelete(): void {
-        if (this.listNodes) {
-            let list = '', j = 0;
-            for (const node of this.listNodes) {
-                if (node.marked) {
-                    j++;
-                    list += '"' + node.title + '", ';
-                }
+        let list = '', j = 0;
+        for (const node of this.visibleNodes) {
+            if (node.marked) {
+                j++;
+                list += '"' + node.title + '", ';
             }
-            list = list.slice(0, list.length - 2);
-            if (j === 0) {
-                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-                return;
-            } else if (j === 1) {
-                const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
-                _confrm.body = _confrm.body.replace('{{name}}', list);
-                this._callDelWindow(_confrm);
-            } else {
-                const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
-                _confrm.body = _confrm.body.replace('{{name}}', list);
-                this._callDelWindow(_confrm);
-            }
+        }
+        list = list.slice(0, list.length - 2);
+        if (j === 0) {
+            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
+            return;
+        } else if (j === 1) {
+            const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
+        } else {
+            const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
         }
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {
         this._confirmSrv.confirm(_confrm).then((confirmed: boolean) => {
             if (confirmed) {
-                for (const node of this.listNodes) {
+                this.visibleNodes.forEach((node: EosDictionaryNode) => {
                     if (node.marked) {
                         if (1 !== 1) { // here must be API request for check if possible to delete
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
@@ -464,7 +469,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                                 });
                         }
                     }
-                }
+                });
             }
         }).catch();
     }

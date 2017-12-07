@@ -117,7 +117,7 @@ export class EosDictService {
 
     private _initViewParameters() {
         this.viewParameters = {
-            showDeleted: true,
+            showDeleted: false,
             userOrdered: false,
             markItems: false,
             searchResults: false,
