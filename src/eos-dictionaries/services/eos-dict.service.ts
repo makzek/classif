@@ -225,6 +225,7 @@ export class EosDictService {
     }
 
     private _getNode(nodeId: string): Promise<EosDictionaryNode> {
+        // todo: refactor
         // console.log('get node', nodeId);
         if (this.dictionary) {
             const _node = this.dictionary.getNode(nodeId);
@@ -248,15 +249,14 @@ export class EosDictService {
     }
 
     public loadChildren(node: EosDictionaryNode): Promise<EosDictionaryNode> {
-        // console.log('loadChildren for', node.id);
-        node.updating = true;
-        return this.dictionary.descriptor.getChildren(node.data.rec)
-            .then((data: any[]) => {
-                this._updateDictNodes(data, true);
-                node.updating = false;
-                return this.dictionary.getNode(node.id);
-            });
-
+        if (this.dictionary) {
+            return this.dictionary.getChildren(node)
+                .then((nodes) => {
+                    return node;
+                });
+        } else {
+            return Promise.resolve(null);
+        }
     }
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
@@ -372,11 +372,15 @@ export class EosDictService {
 
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
-            return this.dictionary.getFullNodeInfo(nodeId)
-                .then((node) => {
-                    this._openNode(node);
-                    return node;
-                });
+            if (!this._openedNode || this._openedNode.id !== nodeId) {
+                return this.dictionary.getFullNodeInfo(nodeId)
+                    .then((node) => {
+                        this._openNode(node);
+                        return node;
+                    });
+            } else {
+                return Promise.resolve(this._openedNode);
+            }
         } else {
             return Promise.resolve(null);
         }
@@ -412,8 +416,9 @@ export class EosDictService {
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
-                    return this.loadChildren(this.selectedNode)
-                        .then(() => {
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((nodes) => {
+                            this._setCurrentList(nodes);
                             this._selectedNode$.next(this.selectedNode);
                             return this.dictionary.getNode(newNodeId + '');
                         });
@@ -423,34 +428,43 @@ export class EosDictService {
         }
     }
 
-    private _deleteNode(node: EosDictionaryNode): void {
-        if (this._openedNode === node) {
-            this._openNode(null);
-        }
-        // Object.assign(node, { ...node, isDeleted: true });
-        this.updateNode(node, { rec: { DELETED: 1 } }).then((res) => {
-            this.reloadNode(node);
-        });
-        if (node.children) {
-            node.children.forEach((subNode) => this._deleteNode(subNode));
+    public deleteMarkedNodes(nodes: string[]): Promise<boolean> {
+        if (this.dictionary) {
+            return this.dictionary.deleteMarked(nodes)
+                .then((resp) => {
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((list) => {
+                            this._setCurrentList(list);
+                            return true;
+                        });
+                });
+        } else {
+            return Promise.resolve(false);
         }
     }
 
-    public deleteMarkedNodes(dictionaryId: string, nodes: string[]): Promise<any> {
-        nodes.forEach((nodeId) => {
-            this.getNode(dictionaryId, nodeId)
-                .then((node) => this._deleteNode(node));
-        });
-        // this._dictionary$.next(this.dictionary);
-        this._selectedNode$.next(this.selectedNode);
-        return Promise.resolve(true); /* fake */
+    public restoreNodes(nodes: EosDictionaryNode[], recursive = false): Promise<boolean> {
+        if (this.dictionary) {
+        return this.dictionary.restoreMarked(recursive)
+            .then(() => {
+                return this.dictionary.getChildren(this.selectedNode)
+                .then((list) => {
+                    this._setCurrentList(list);
+                    return true;
+                });
+            });
+        } else {
+            return Promise.resolve(false);
+        }
     }
 
     public physicallyDelete(nodeId: string): Promise<any> {
         const _node = this.dictionary.getNode(nodeId);
-        return this.dictionary.descriptor.deleteRecord(_node.data)
+        return this.dictionary.descriptor.deleteRecord(_node.data.rec)
             .then(() => {
                 this.dictionary.deleteNode(nodeId, true);
+                // console.log('update list', this.selectedNode);
+                this._setCurrentList(this.selectedNode.children);
                 this._selectedNode$.next(this.selectedNode);
             });
     }
@@ -484,36 +498,6 @@ export class EosDictService {
                 this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
             });
-    }
-
-    public restoreItem(node: EosDictionaryNode) {
-        if (node.parent && node.parent.isDeleted) {
-            this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
-        }
-
-        this.updateNode(node, { rec: { DELETED: 0 } })
-            .then((res) => {
-                return this.reloadNode(node);
-            });
-
-        // WTF?????
-        Object.assign(node, { ...node, marked: false });
-        if (node.children) {
-            let delChld: boolean;
-            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', node.title);
-
-            this._confirmSrv
-                .confirm(_confrm)
-                .then((confirmed: boolean) => {
-                    delChld = confirmed;
-                    if (delChld) {
-                        node.children.forEach((subNode) => {
-                            this._restoreItem(subNode);
-                        });
-                    }
-                }).catch();
-        }
     }
 
     private _restoreItem(node: EosDictionaryNode) {

@@ -12,13 +12,18 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
-    keyField: 'ISN_NODE',
-    parentField: 'ISN_HIGH_NODE',
+    keyField: 'DUE',
+    parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'DUE',
         type: 'string',
         title: 'ID',
+        length: 248,
+    }, {
+        key: 'PARENT_DUE',
+        type: 'string',
+        title: 'Parent ID',
         length: 248,
     }, {
         key: 'ISN_NODE',

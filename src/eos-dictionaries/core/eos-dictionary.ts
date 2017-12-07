@@ -4,7 +4,8 @@ import {
     IDictionaryDescriptor,
     IDepartmentDictionaryDescriptor,
     ITreeDictionaryDescriptor,
-    IFieldView
+    IFieldView,
+    E_FIELD_TYPE
 } from './dictionary.interfaces';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
@@ -154,8 +155,7 @@ export class EosDictionary {
         const nodeIds: string[] = [];
         data.forEach((nodeData) => {
             if (nodeData) {
-                const nodeId = nodeData[this.descriptor.record.keyField.key];
-                nodeIds.push(nodeId);
+                const nodeId = nodeData[this.descriptor.record.keyField.foreignKey] + '';
                 let _node = this._nodes.get(nodeId);
                 if (_node) {
                     _node.updateData(nodeData);
@@ -164,6 +164,9 @@ export class EosDictionary {
                     if (_node) {
                         this._nodes.set(_node.id, _node);
                     }
+                }
+                if (_node) {
+                    nodeIds.push(_node.id);
                 }
             } else {
                 console.log('no data');
@@ -177,30 +180,45 @@ export class EosDictionary {
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
-        console.log('getFullNodeInfo fired', nodeId);
-        return this.descriptor.getRecord(nodeId)
+        // console.log('getFullNodeInfo fired', nodeId);
+        let id: any = nodeId;
+
+        if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
+            id = id * 1;
+        }
+
+        return this.descriptor.getRecord(id)
             .then((nodes) => {
                 this.updateNodes(nodes, true);
                 const node = this._nodes.get(nodeId);
-                let orgDUE = '';
-                if (this.descriptor.type === E_DICT_TYPE.department) {
-                    orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
-                    if (!orgDUE) {
-                        const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
-                        if (parentNode) {
-                            orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                switch (this.descriptor.type) {
+                    case E_DICT_TYPE.department:
+                        let orgDUE = '';
+                        orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
+                        if (!orgDUE) {
+                            const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
+                            if (parentNode) {
+                                orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                            }
                         }
-                    }
+                        return Promise.all([
+                            this.descriptor.getRelated(node.data.rec, orgDUE),
+                            this.descriptor.getRelatedSev(node.data.rec)
+                        ]).then(([related, sev]) => {
+                            node.data = Object.assign(node.data, related, { sev: sev });
+                            console.log('full node info', node.data);
+                            return node;
+                        });
+                    case E_DICT_TYPE.tree:
+                        return this.descriptor.getRelatedSev(node.data.rec)
+                            .then((sev) => {
+                                node.data = Object.assign(node.data, { sev: sev });
+                                return node;
+                            });
+                    default:
+                        return node;
                 }
 
-                return Promise.all([
-                    this.descriptor.getRelated(node.data.rec, orgDUE),
-                    this.descriptor.getRelatedSev(node.data.rec)
-                ]).then(([related, sev]) => {
-                    node.data = Object.assign(node.data, related, { sev: sev });
-                    console.log('full node info', node.data);
-                    return node;
-                });
             });
     }
 
@@ -241,6 +259,48 @@ export class EosDictionary {
         return _result;
     }
 
+    deleteMarked(nodeIds: string[], hard = false): Promise<any> {
+        const nodeSet: any[] = [];
+
+        nodeIds.forEach((nodeId) => {
+            const node = this._nodes.get(nodeId);
+            if (node) {
+                nodeSet.push(node.data.rec);
+            }
+        });
+
+        return this.descriptor.markDeleted(nodeSet);
+    }
+
+    restoreMarked(recursive = false): Promise<any> {
+        const nodeSet: any[] = [];
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+                nodeSet.push(node.data.rec);
+                if (recursive) {
+                    node.getAllChildren().forEach((chld) => nodeSet.push(chld.data.rec));
+                }
+            }
+        });
+
+        return this.descriptor.markDeleted(nodeSet, 0);
+    }
+
+    getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        if (node) {
+            node.updating = true;
+            return this.descriptor.getChildren(node.data.rec)
+                .then((nodes) => {
+                    const res = this.updateNodes(nodes, true);
+                    console.log(res);
+                    node.updating = false;
+                    return res;
+                })
+        } else {
+            return Promise.resolve([]);
+        }
+    }
+
     deleteNode(nodeId: string, hard = false): boolean {
         let _result = false;
         const _node: EosDictionaryNode = this._nodes.get(nodeId);
@@ -258,7 +318,7 @@ export class EosDictionary {
 
         return _result;
     }
- // ??
+    // ??
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
