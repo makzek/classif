@@ -158,6 +158,8 @@ export abstract class AbstractDictionaryDescriptor {
             */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.fullSearch:
+                return this._getFullSearchFields();
             default:
                 return null;
         }
@@ -182,6 +184,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getFullSearchFields() {
+        return this.fullSearchFields;
     }
 
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {

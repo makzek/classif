@@ -332,15 +332,15 @@ export class EosDictionary {
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
-        const critery = {};
-        const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        fields.forEach((fld) => {
-            if (data[fld.key]) {
-                critery[fld.foreignKey] = '"' + data[fld.key] + '"';
+        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries =  {}
+        _searchFields.forEach((fld) => {
+            if (data.rec[fld.key]) {
+                _criteries[fld.foreignKey] = '"' + data.rec[fld.key] + '"';
             }
         })
-        this._extendCritery(critery, params, selectedNode);
-        return critery;
+        this._extendCritery(_criteries, params, selectedNode);
+        return _criteries;
     }
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
