@@ -112,7 +112,8 @@ export class EosDictService {
             userOrdered: false,
             markItems: false,
             searchResults: false,
-            updating: false
+            updating: false,
+            haveMarked: false
         };
     }
 
@@ -310,6 +311,7 @@ export class EosDictService {
             }
             this._openNode(null);
             this.selectedNode = node;
+            this._reorder();
             this._selectedNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);
@@ -608,5 +610,10 @@ export class EosDictService {
         } else {
             return null;
         }
+    }
+
+    public markItem(val: boolean) {
+        this.viewParameters.haveMarked = val;
+        this._viewParameters$.next(this.viewParameters);
     }
 }

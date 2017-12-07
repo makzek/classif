@@ -49,7 +49,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
         ], descriptor);
     }
 
-    addRecord(data: any, isProtected = false, isDeleted = false): Promise<any> {
+    addRecord(data: any, useless: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
         return this._postChanges(_newRec, data.rec)
@@ -82,7 +82,6 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     private preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
-
         const _res: ILinearCL = {
             ISN_LCLASSIF: _isn,
             PROTECTED: (isProtected ? 1 : 0),

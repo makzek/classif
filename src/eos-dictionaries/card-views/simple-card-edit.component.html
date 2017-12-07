@@ -1,6 +1,6 @@
 <div class="simple-card-edit">
     <article class="edit-content">
-        <form #cardForm="ngForm"  class="form form-horizontal">
+        <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
                 <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
                     <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
                     <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
