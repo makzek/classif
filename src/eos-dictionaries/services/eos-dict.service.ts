@@ -121,7 +121,8 @@ export class EosDictService {
             userOrdered: false,
             markItems: false,
             searchResults: false,
-            updating: false
+            updating: false,
+            haveMarked: false
         };
     }
 
@@ -666,5 +667,10 @@ export class EosDictService {
         } else {
             return null;
         }
+    }
+
+    public markItem(val: boolean) {
+        this.viewParameters.haveMarked = val;
+        this._viewParameters$.next(this.viewParameters);
     }
 }

@@ -96,6 +96,12 @@ export class NodeActionsComponent implements OnDestroy {
                 case E_RECORD_ACTIONS.edit:
                     _enabled = _enabled && this._nodeSelected;
                     break;
+                case E_RECORD_ACTIONS.remove:
+                    _enabled = this._viewParams.haveMarked;
+                    break;
+                case E_RECORD_ACTIONS.removeHard:
+                    _enabled = this._viewParams.haveMarked;
+                    break;
             }
         }
         button.show = _show;

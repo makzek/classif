@@ -380,12 +380,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
+        this._dictSrv.markItem(this.allMarked);
     }
 
     toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
+        this._dictSrv.markItem(this.allMarked);
     }
 
     /* darkside */
