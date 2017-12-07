@@ -133,7 +133,6 @@ export class EosDictService {
             length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
             allItemsCurrent: allCount
         }
-        console.warn(this.paginationConfig);
         this._paginationConfig$.next(this.paginationConfig);
         return this.paginationConfig;
     }
