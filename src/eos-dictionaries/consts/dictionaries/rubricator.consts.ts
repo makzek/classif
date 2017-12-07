@@ -28,9 +28,10 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 248,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах вершины',
+        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
+        unicInDict: true,
     }, {
         key: 'CLASSIF_NAME',
         title: 'Краткое наименование',
