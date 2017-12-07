@@ -63,7 +63,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     }
 
     getChildren(): Promise<any[]> {
-        return Promise.resolve([]);
+        return this.getData();
     };
 
     getSubtree(): Promise<any[]> {

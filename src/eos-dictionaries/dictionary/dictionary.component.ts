@@ -7,7 +7,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE } from '../../app/consts/confirms.const';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
@@ -31,7 +31,8 @@ import {
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
     WARN_LOGIC_DELETE_ONE,
-    DANGER_HAVE_NO_ELEMENTS
+    DANGER_HAVE_NO_ELEMENTS,
+    DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
@@ -216,8 +217,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .takeUntil(this.ngUnsubscribe)
             .subscribe((nodes) => {
                 // console.log('incoming list', nodes);
-                this.listNodes = nodes;
                 this.params = this._dictSrv.viewParameters;
+                const filtredNodes = nodes.filter((item, index) => {
+                    return nodes.lastIndexOf(item) === index
+                });
+                this.listNodes = filtredNodes;
                 this._updateVisibleNodes();
             });
 
@@ -488,11 +492,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     deletedNames.push(child.title)
                 }
             });
-            let str = '';
-            for (const item of deletedNames) {
-                str += '"' + item + '", ';
-            }
-            str = str.slice(0, str.length - 2);
+            const str = deletedNames.join(', ');
             if (countMakedItems === 0) {
                 this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
             } else if (deletedNames.length === 1) {
@@ -502,7 +502,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 WARN.msg = WARN.msg.replace('{{elem}}', str);
                 this._msgSrv.addNewMessage(WARN);
             } else {
-                this._dictSrv.deleteMarkedNodes(this.dictionaryId, selectedNodes)
+                this._dictSrv.deleteMarkedNodes(selectedNodes)
                     .catch((err) => this._errHandler(err));
             }
         }
@@ -612,11 +612,35 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _restoreItems(): void {
-        this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) {
-                this._dictSrv.restoreItem(node);
+        const marked = this.visibleNodes.filter((node) => node.marked);
+        const withChildren: string[] = [];
+
+        marked.forEach((node) => {
+            if (node.parent && node.parent.isDeleted) {
+                this._msgSrv.addNewMessage(DANGER_LOGICALY_RESTORE_ELEMENT);
+                node.marked = false;
+            } else {
+                if (node.children && node.children.length) {
+                    withChildren.push(node.title);
+                }
             }
         });
+
+        if (withChildren.length) {
+                const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+                _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+
+                this._confirmSrv
+                    .confirm(_confrm)
+                    .then((confirmed: boolean) => {
+                        if (confirmed) {
+                            this._dictSrv.restoreNodes(marked, confirmed);
+                        }
+                    });
+        } else {
+            this._dictSrv.restoreNodes(marked);
+        }
+
         this.anyMarked = false;
         this.allMarked = false;
     }
