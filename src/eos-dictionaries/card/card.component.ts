@@ -391,7 +391,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 const fullTitle = this._fullTitle(resp);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
-                    title: resp.data.CLASSIF_NAME,
+                    title: resp.data.rec.CLASSIF_NAME,
                     fullTitle: fullTitle + ' - Редактирование'
                 });
                 this._clearEditingCardLink();
