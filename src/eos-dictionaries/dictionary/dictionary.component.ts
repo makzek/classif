@@ -67,9 +67,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _nodeId: string;
 
     treeNodes: EosDictionaryNode[] = [];
-    listNodes: EosDictionaryNode[] = []; // All elements
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
-    private paginationConfig: IPaginationConfig;
+    private paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
 
     public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
@@ -89,7 +88,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     customFields: FieldDescriptor[] = [];
 
-    length = {};
+    public length = {}; // Length column
 
     orderBy: IOrderBy;
 
@@ -98,7 +97,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     dictTypes = E_DICT_TYPE;
 
-    searchStartFlag = false; // flag begin search
     public fonConf = {
         width: 0 + 'px',
         height: 0 + 'px',
@@ -304,7 +302,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     userOrdered(nodes: EosDictionaryNode[]) {
-        this._dictSrv.setUserOrder(nodes, this.listNodes);
+        this._dictSrv.setUserOrder(nodes);
     }
 
     private _moveUp(): void {
@@ -390,9 +388,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
     }
 
-    private _updateChildrenMarks(marked: boolean) {
-        this.listNodes.forEach((node) => node.marked = marked);
-    }
     /* darkside */
 
     deleteSelectedItems(): void {
@@ -432,12 +427,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public physicallyDelete(): void {
         let list = '', j = 0;
-        for (const node of this.visibleNodes) {
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
             if (node.marked) {
                 j++;
                 list += '"' + node.title + '", ';
             }
-        }
+        })
         list = list.slice(0, list.length - 2);
         if (j === 0) {
             this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)

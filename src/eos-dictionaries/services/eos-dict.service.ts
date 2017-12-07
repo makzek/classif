@@ -132,6 +132,7 @@ export class EosDictService {
             length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
             allItemsCurrent: allCount
         }
+        console.warn(this.paginationConfig);
         this._paginationConfig$.next(this.paginationConfig);
         return this.paginationConfig;
     }
@@ -569,9 +570,19 @@ export class EosDictService {
     private _reorder() {
         if (this.dictionary) {
             if (this.viewParameters.searchResults) {
-                this._setCurrentList(this.dictionary.reorderList(this._currentList));
+                this._currentList = this.dictionary.reorderList(this._currentList)
+                let filtredNodeList: EosDictionaryNode[];
+                filtredNodeList = this._filtredDelete(this._currentList);
+                filtredNodeList = this._filtredDublicate(filtredNodeList);
+                this._updateVisibleNodes(filtredNodeList);
+                this._viewParameters$.next(this.viewParameters);
             } else {
-                this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
+                this._currentList = this.dictionary.reorderList(this._currentList, this.selectedNode.id);
+                let filtredNodeList: EosDictionaryNode[];
+                filtredNodeList = this._filtredDelete(this._currentList);
+                filtredNodeList = this._filtredDublicate(filtredNodeList);
+                this._updateVisibleNodes(filtredNodeList);
+                this._viewParameters$.next(this.viewParameters);
             }
         }
     }
@@ -580,13 +591,13 @@ export class EosDictService {
         return a.map((node) => node.id);
     }
 
-    setUserOrder(ordered: EosDictionaryNode[], fullList: EosDictionaryNode[]) {
+    setUserOrder(ordered: EosDictionaryNode[]) {
         const _original = [];
         const _move = {};
 
-        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(fullList));
+        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
         // restore original order
-        fullList.forEach((node) => {
+        this._currentList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);
             if (_oNode) {
                 _original.push(node);
@@ -597,7 +608,7 @@ export class EosDictService {
             _move[node.id] = ordered[idx];
         });
 
-        const _order = fullList.map((node) => {
+        const _order = this._currentList.map((node) => {
             if (_move[node.id]) {
                 return _move[node.id].id;
             } else {
