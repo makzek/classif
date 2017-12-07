@@ -310,6 +310,7 @@ export class EosDictService {
             }
             this._openNode(null);
             this.selectedNode = node;
+            this._reorder();
             this._selectedNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);

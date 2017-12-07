@@ -44,7 +44,6 @@ export class TreeNodeComponent implements OnInit {
             const _path = this._dictSrv.getNodePath(this.node);
             this.calcFullPadding(this.node, el);
             const x = el.getBoundingClientRect();
-            console.log(x.top - 109 + 'px')
             this._actTreeNodeSrv.take({
                 width: this._fonWidth,
                 height: el.clientHeight,
@@ -53,8 +52,8 @@ export class TreeNodeComponent implements OnInit {
             this._router.navigate(_path);
         }
     }
+
     calcFullPadding(node: EosDictionaryNode, el: HTMLElement) {
-        console.log(el.offsetTop)
         let fullPadding = 0,
             pnode = node;
         while (pnode.parent) {
