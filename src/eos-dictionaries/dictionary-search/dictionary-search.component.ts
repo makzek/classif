@@ -27,7 +27,10 @@ export class DictionarySearchComponent implements OnDestroy {
     data = {
         rec: {},
     };
-    settings: ISearchSettings;
+    public settings: ISearchSettings = {
+        mode: SEARCH_MODES.totalDictionary,
+        deleted: false
+    };
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
@@ -71,11 +74,6 @@ export class DictionarySearchComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService
     ) {
-        this.settings = {
-            mode: SEARCH_MODES.totalDictionary,
-            deleted: false
-        };
-
         this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
@@ -159,17 +157,6 @@ export class DictionarySearchComponent implements OnDestroy {
             this._dictSrv.filter({ date: date }).then(() => {
                 console.log('filtered');
             }).catch((err) => { console.log(err) });
-        }
-    }
-
-    public changeMode(val: boolean) {
-        switch (val) {
-            case null: this.settings.mode = SEARCH_MODES.totalDictionary;
-                break;
-            case true: this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
-                break;
-            case false: this.settings.mode = SEARCH_MODES.currentAndSubbranch;
-                break;
         }
     }
 }

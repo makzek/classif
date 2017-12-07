@@ -24,21 +24,23 @@
 
 <ng-template #quickSearchModal>
     <div *ngIf="hasFull">
-        <div class="quick-search-top usual-border">
-            <span class="pull-left title">Область быстрого поиска</span>
-        </div>
-        <div class="col-1 quickRadio">
-            <div class="radio-inline quick">
-                <label>
-                    <input type="radio" name="search-area" [value]="true" (change)="changeMode(null)" [(ngModel)]="radio">
-                    <span></span>Во всём справочнике</label>
+        <form #form="ngForm">
+            <div class="quick-search-top usual-border">
+                <span class="pull-left title">Область быстрого поиска</span>
             </div>
-            <div class="radio-inline quick">
-                <label>
-                    <input type="radio" name="search-area" [value]="false" (change)="changeMode(false)" [(ngModel)]="radio">
-                    <span></span>В текущей ветке</label>
-            </div>
+            <div class="col-1 quickRadio">
+                <div class="radio-inline quick">
+                    <label>
+                        <input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode">
+                        <span></span>Во всём справочнике</label>
+                </div>
+                <div class="radio-inline quick">
+                    <label>
+                        <input type="radio" name="quick-space" [value]="2" [(ngModel)]="settings.mode">
+                        <span></span>В текущей ветке</label>
+                </div>
         </div>
+        </form>
     </div>
     <div class="quickInput">
         <input type="text" class="form-control quick-search-form usual-border" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
@@ -52,31 +54,30 @@
     </div>
     <div>
         <div class="full-search-settings-container usual-border">
-            <div class="col-1">
+            <form #form="ngForm">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="search-area" [value]="true" (change)="changeMode(null)" [(ngModel)]="radio">
+                        <input type="radio" name="full-space" [value]="0" [(ngModel)]="settings.mode">
                         <span></span>Во всём справочнике</label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="search-area" [value]="false" (change)="changeMode(false)" [(ngModel)]="radio">
+                        <input type="radio" name="full-space" [value]="1" [(ngModel)]="settings.mode">
                         <span></span>В текущей ветке</label>
                 </div>
-            </div>
-            <div class="col-2">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="full-space" [value]="2" [(ngModel)]="settings.mode">
+                        <span></span>Текущая и подчиненные</label>
+                </div>
                 <div class="checkbox-inline">
                     <label>
-                        <input type="checkbox" [(ngModel)]="settings.deleted">
+                        <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
-                <div class="checkbox-inline">
-                    <label>
-                        <input type="checkbox" (change)="changeMode(true)">
-                        <span></span>Учитывать подчинённые ветки</label>
-                </div>
-            </div>
+        </form>
         </div>
+
         <div *ngIf="loading" class="spinner-wrapper">
             <eos-spinner size="md"></eos-spinner>
         </div>
