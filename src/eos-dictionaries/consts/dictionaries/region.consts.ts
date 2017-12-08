@@ -89,7 +89,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
-    searchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: [/*'CODE', 'COD_OKATO',*/ 'CLASSIF_NAME', /*'NOTE'*/],
     fullSearchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
     quickViewFields: ['CODE', 'NOTE', 'COD_OKATO'],
     shortQuickViewFields: ['CLASSIF_NAME'],
