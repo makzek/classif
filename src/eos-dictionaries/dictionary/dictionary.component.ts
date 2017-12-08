@@ -592,12 +592,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 console.log('created node', node);
                 let title = '';
                 node.getShortQuickView().forEach((_f) => {
-                    title += this.nodeData[_f.key];
+                    title += this.nodeData.rec[_f.key];
                 });
                 this._deskSrv.addRecentItem({
                     url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                     title: title,
-                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME + '/Редактирование'
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
                 });
                 if (hide) {
                     this.creatingModal.hide();
