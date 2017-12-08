@@ -29,7 +29,8 @@ const routes: Routes = [{
         path: ':dictionaryId',
         data: { title: 'Справочник', showBreadcrumb: true,
         showInBreadcrumb: true,
-        showSandwichInBreadcrumb: true },
+        showSandwichInBreadcrumb: true,
+        showPushpin: true  },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: false },
@@ -37,7 +38,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true },
+                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true, showPushpin: false},
             }, {
                 path: 'edit',
                 pathMatch: 'full',
@@ -47,7 +48,8 @@ const routes: Routes = [{
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
                     showBreadcrumb: true,
-                    closeStyle: true
+                    closeStyle: true,
+                    showPushpin: false
                 },
                 canDeactivate: [CanDeactivateGuard]
             }, {
@@ -59,7 +61,8 @@ const routes: Routes = [{
                     showInBreadcrumb: false,
                     showSandwichInBreadcrumb: false,
                     showBreadcrumb: true,
-                    closeStyle: true
+                    closeStyle: true,
+                    showPushpin: false
                 },
             }],
         }, {
