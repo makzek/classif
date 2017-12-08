@@ -80,6 +80,9 @@ export class DictionarySearchComponent implements OnDestroy {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
+                if (this.dictId) {
+                    this.data['printInfo'] = {};
+                }
                 this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.modes = _d.descriptor.getModeList();
                 if (this.modes) {
