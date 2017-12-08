@@ -23,7 +23,7 @@
 </div>
 
 <ng-template #quickSearchModal>
-    <div *ngIf="hasFull">
+    <div *ngIf="type === 1 || type === 2">
         <form #form="ngForm">
             <div class="quick-search-top usual-border">
                 <span class="pull-left title">Область быстрого поиска</span>

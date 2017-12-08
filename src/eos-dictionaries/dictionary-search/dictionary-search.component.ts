@@ -11,6 +11,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -46,6 +47,7 @@ export class DictionarySearchComponent implements OnDestroy {
     hasDate: boolean;
     hasQuick: boolean;
     hasFull: boolean;
+    type:  E_DICT_TYPE;
 
     dictSubscription: Subscription;
 
@@ -83,6 +85,7 @@ export class DictionarySearchComponent implements OnDestroy {
                     this.data['printInfo'] = {};
                 }
                 this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
+                this.type = _d.descriptor.dictionaryType;
                 this.modes = _d.descriptor.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
@@ -96,6 +99,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 /* tslint:enable:no-bitwise */
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
+            console.log(this.type);
         });
     }
 

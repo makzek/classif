@@ -118,6 +118,10 @@ export abstract class AbstractDictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
+    get dictionaryType(): E_DICT_TYPE {
+        return this.type;
+    }
+
     getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         return this._getFieldSet(aSet, values);
     }
