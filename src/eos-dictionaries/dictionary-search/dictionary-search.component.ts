@@ -166,4 +166,9 @@ export class DictionarySearchComponent implements OnDestroy {
             }).catch((err) => { console.log(err) });
         }
     }
+
+    public considerDel() {
+        this._dictSrv.viewParameters.showDeleted = this.settings.deleted;
+        this._dictSrv.shareViewParameters();
+    }
 }

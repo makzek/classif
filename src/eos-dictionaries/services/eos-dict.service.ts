@@ -116,6 +116,11 @@ export class EosDictService {
             haveMarked: false
         };
     }
+    // May be need used always instead this._viewParameters$.next();
+    // Because this.viewParametrs is public and may be changed from other classes need way for share state
+    public shareViewParameters() {
+        this._viewParameters$.next(this.viewParameters);
+    }
 
     public getDictionariesList(): Promise<any> {
         return Promise.resolve(DICTIONARIES);
@@ -448,6 +453,13 @@ export class EosDictService {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
                     nodes = this.dictionary.updateNodes(data, false);
+                    this._setCurrentList(nodes);
+                    this.viewParameters.searchResults = true;
+                    if (criteries[0].DELETED === undefined) {
+                        this.viewParameters.showDeleted = true;
+                        this._updateCurrentList();
+                    }
+                    this._viewParameters$.next(this.viewParameters);
                 }
                 this._setCurrentList(nodes);
                 this.viewParameters.updating = false;
