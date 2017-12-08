@@ -60,6 +60,6 @@ export class TreeNodeComponent implements OnInit {
             fullPadding += 24;
             pnode = pnode.parent;
         }
-        this._fonWidth = el.clientWidth + fullPadding + 50;
+        this._fonWidth = el.clientWidth + fullPadding + 70;
     }
 }

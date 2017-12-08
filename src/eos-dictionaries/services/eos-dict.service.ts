@@ -432,7 +432,7 @@ export class EosDictService {
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
-        const critery = this.dictionary.getFullsearchCriteries(data, params, this.selectedNode);
+        const critery = this.dictionary.getFullsearchCriteries(data.rec, params, this.selectedNode);
         return this._search([critery]);
     }
 

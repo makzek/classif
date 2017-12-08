@@ -141,7 +141,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.visibleNodes = [];
 
         this._route.params.subscribe((params) => {
-            console.log('!')
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;

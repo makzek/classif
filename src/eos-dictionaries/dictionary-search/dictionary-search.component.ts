@@ -128,7 +128,6 @@ export class DictionarySearchComponent implements OnDestroy {
         if (this.searchDone) {
             this.searchDone = false;
             this.searchStart.emit();
-            console.log(this.data)
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then((nodes) => {
                     this.searchDone = true;
