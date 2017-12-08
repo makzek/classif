@@ -99,7 +99,6 @@ export class DictionarySearchComponent implements OnDestroy {
                 /* tslint:enable:no-bitwise */
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
-            console.log(this.type);
         });
     }
 
