@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 
 import { IFieldView, E_FIELD_TYPE } from '../core/dictionary.interfaces';
@@ -6,7 +6,7 @@ import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIG
 import { E_RECORD_ACTIONS } from '../core/record-action';
 
 
-export class BaseNodeInfoComponent {
+export class BaseNodeInfoComponent implements OnDestroy {
     @Input() fieldsDescriptionShort: any;
     @Input() nodeDataShort: any;
     @Input() fieldsDescriptionFull: any;
@@ -18,6 +18,14 @@ export class BaseNodeInfoComponent {
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
     fieldTypes = E_FIELD_TYPE;
+
+    ngOnDestroy() {
+        console.log('DESTROY');
+        this.fieldsDescriptionFull = {};
+        this.fieldsDescriptionShort = {};
+        this.nodeDataFull = {};
+        this.nodeDataShort = {};
+    }
 
     actionHandler(type: E_RECORD_ACTIONS) {
         this.action.emit(type);
