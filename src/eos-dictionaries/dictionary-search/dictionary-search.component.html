@@ -86,7 +86,7 @@
             <eos-spinner size="md"></eos-spinner>
         </div>
         <form #searchForm="ngForm">
-            <div [hidden]="dictId !== 'departments'" class="full-search-form" *ngIf="data.rec && data['print-info']">
+            <div [hidden]="dictId !== 'departments'" class="full-search-form" *ngIf="data.rec && data['printInfo']">
                 <div *ngIf="modes" class="tabs-wrapper usual-border">
                     <ul class="tabs">
                         <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border secondary-text': tab.key === currTab}"
@@ -98,17 +98,17 @@
                 <div *ngIf="currTab === 'person'">
                     <div class="row">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
-                            <label for="CODE" class="primary-text">{{fieldsDescription['CODE']?.title}}</label>
+                            <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['CODE']"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}" >
                         </div>
 
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
-                            <label for="SURNAME" class="primary-text">{{fieldsDescription['print-info']['SURNAME']?.title}}</label>
+                            <label for="SURNAME" class="primary-text">Фамилия</label>
                             <input id="SURNAME" name="SURNAME" type="text" class="form-control light"
-                                [(ngModel)]="data['print-info']['SURNAME']"
-                                placeholder="{{fieldsDescription['print-info']['SURNAME']?.title}}" >
+                                [(ngModel)]="data['printInfo']['SURNAME']"
+                                placeholder="Фамилия" >
                         </div>
                     </div>
                     <div class="row no-top-margin">
@@ -117,16 +117,16 @@
                         <div class="col-md-9 col-lg-9 col-xl-9">
                             <div class="row">
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <label for="NAME" class="primary-text">{{fieldsDescription['print-info']['NAME']?.title}}</label>
+                                    <label for="NAME" class="primary-text">Имя</label>
                                     <input id="NAME" name="NAME" type="text" class="form-control light"
-                                        [(ngModel)]="data['print-info']['NAME']"
-                                        placeholder="{{fieldsDescription['print-info']['NAME']?.title}}" >
+                                        [(ngModel)]="data['printInfo']['NAME']"
+                                        placeholder="Имя" >
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <label for="PATRON" class="primary-text">{{fieldsDescription['print-info']['PATRON']?.title}}</label>
+                                    <label for="PATRON" class="primary-text">Отчество</label>
                                     <input id="PATRON" name="PATRON" type="text" class="form-control light"
-                                        [(ngModel)]="data['print-info']['PATRON']"
-                                        placeholder="{{fieldsDescription['print-info']['PATRON']?.title}}" >
+                                        [(ngModel)]="data['printInfo']['PATRON']"
+                                        placeholder="Отчество" >
                                 </div>
                             </div>
                         </div>

@@ -14,7 +14,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
-    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
+    searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
     fields: [{
         key: 'DUE',
         type: 'string',
