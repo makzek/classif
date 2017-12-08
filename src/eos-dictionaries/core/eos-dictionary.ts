@@ -374,7 +374,7 @@ export class EosDictionary {
     }
 
     reorderList(nodes: EosDictionaryNode[], parentId?: string) {
-        if (this._userOrdered && parentId) {
+        if (this._userOrdered) {
             return this._doUserOrder(nodes, parentId);
         } else {
             return this._orderByField(nodes);
