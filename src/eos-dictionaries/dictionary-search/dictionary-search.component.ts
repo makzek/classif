@@ -51,7 +51,8 @@ export class DictionarySearchComponent implements OnDestroy {
 
     date: Date = new Date();
 
-    public radio = true;
+    public useSub = false;
+    public mode = 0;
 
     setTab(key: string) {
         this.currTab = key;
@@ -124,6 +125,13 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     fullSearch() {
+        if (this.mode === 0) {
+            this.settings.mode = SEARCH_MODES.totalDictionary;
+        } else if (this.mode === 1 && !this.useSub) {
+            this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
+        } else if (this.mode === 1 && this.useSub) {
+            this.settings.mode = SEARCH_MODES.currentAndSubbranch;
+        }
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;

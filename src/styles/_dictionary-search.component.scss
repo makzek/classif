@@ -173,7 +173,10 @@
     padding-left: 20px;
     margin: 0;
     padding-top: 30px;
-    display: flex;
+
+    form {
+        display: flex;
+    }
 
     label {
         text-transform: none;
@@ -198,7 +201,6 @@
     .col-1 {
         width: 190px;
         margin-right: 40px;
-        margin-left: 20px;
     }
 
     .col-2 {

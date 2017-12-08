@@ -54,27 +54,31 @@
     </div>
     <div>
         <div class="full-search-settings-container usual-border">
-            <form #form="ngForm">
+            <form>
+            <div class="col-1">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="full-space" [value]="0" [(ngModel)]="settings.mode">
+                        <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
                         <span></span>Во всём справочнике</label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="full-space" [value]="1" [(ngModel)]="settings.mode">
+                        <input type="radio" name="full-space" [value]="1" [(ngModel)]="mode">
                         <span></span>В текущей ветке</label>
                 </div>
-                <div class="radio-inline">
-                    <label>
-                        <input type="radio" name="full-space" [value]="2" [(ngModel)]="settings.mode">
-                        <span></span>Текущая и подчиненные</label>
-                </div>
+            </div>
+            <div class="col-2">
                 <div class="checkbox-inline">
                     <label>
                         <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
+                <div *ngIf="mode === 1" class="checkbox-inline">
+                    <label>
+                        <input type="checkbox" name="useSub" [(ngModel)]="useSub">
+                        <span></span>Учитывать подчиненные ветки</label>
+                </div>
+            </div>
         </form>
         </div>
 
