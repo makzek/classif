@@ -12,6 +12,7 @@ export class NodeListPaginationComponent implements OnInit, OnChanges {
     @Input() total: number;
     @Input() config: IPaginationConfig;
     @Input() currentState: boolean[];
+    @Input() hideTree: boolean;
 
     readonly pageLengths = PAGES;
     private readonly _buttonsTotal = 5;
