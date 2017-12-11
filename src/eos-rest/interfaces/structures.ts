@@ -1,4 +1,4 @@
-import {IEnt, ILinearCL, IHierCL, IStamp} from './interfaces'
+import { IEnt, ILinearCL, IHierCL, IStamp } from './interfaces'
 
 // tslint:disable class-name
 
@@ -14,9 +14,9 @@ export interface DELIVERY_CL extends ILinearCL {
      * ISN вида доставки
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес элемента
-     */
+    /**
+    * Вес элемента
+    */
     WEIGHT: number;
 }
 
@@ -32,9 +32,9 @@ export interface ADDR_CATEGORY_CL extends ILinearCL {
      * ISN_LCLASSIF
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес
-     */
+    /**
+    * Вес
+    */
     WEIGHT: number;
 }
 
@@ -50,9 +50,9 @@ export interface EDS_CATEGORY_CL extends ILinearCL {
      * ISN записи
      */
     ISN_LCLASSIF: number;
-     /**
-     * Вес
-     */
+    /**
+    * Вес
+    */
     WEIGHT: number;
 }
 
@@ -603,12 +603,11 @@ export interface USER_CL extends ILinearCL {
      */
     NOTE2: string;
 
-    
     /**
      * список используемых для этого пользователя параметров систем оповещения и уведомления
      */
     NTFY_USER_EMAIL_List: NTFY_USER_EMAIL[];
-    
+
     /**
      * список используемых для этого пользователя полей стандартного ввода
      */
@@ -648,7 +647,7 @@ export interface USER_CL extends ILinearCL {
      * список используемых для этого пользователя сохраненных запросов
      */
     USER_REQUEST_List: USER_REQUEST[];
-    
+
     /**
      * список используемых для этого пользователя картотечных прав
      */
@@ -1020,13 +1019,13 @@ export interface DEPARTMENT extends IHierCL, IStamp {
      * WDUE
      */
     WDUE: string;
-    
+
 }
 
 /**
 * Справочник Группы документов
 */
-export interface DOCGROUP_CL extends IHierCL, IStamp{
+export interface DOCGROUP_CL extends IHierCL, IStamp {
     /**
      * Номер уровня
     */
@@ -1135,7 +1134,7 @@ export interface DOCGROUP_CL extends IHierCL, IStamp{
      * флаг Инициативная резолюция
      */
     INITIATIVE_RESOLUTION: number;
-    
+
 
     /**
      * список используемых для этой группы документов дополнительных реквизитов
@@ -1332,7 +1331,7 @@ export interface RUBRIC_CL extends IHierCL, IStamp {
      * Код рубрики
     */
     RUBRIC_CODE: string;
-    
+
 }
 
 /**
@@ -1570,9 +1569,9 @@ export interface BANK_RECVISIT extends IEnt {
      * Наименование Банка
      */
     BANK_NAME: string;
-     /**
-     * Расчетный счет
-     */
+    /**
+    * Расчетный счет
+    */
     ACOUNT: string;
     /**
      * Кор счет
@@ -1634,7 +1633,7 @@ export interface CABINET extends IEnt {
     /**
      * Имя кабинета
      */
-    CABINET_NAME: string; 
+    CABINET_NAME: string;
     /**
     * Полное наименование
     */
@@ -3260,7 +3259,7 @@ export interface TEMP_RC extends IEnt {
     INS_DATE: number;
 
     /**
-     * список используемых для временной РК файлов 
+     * список используемых для временной РК файлов
      */
     REF_FILE_List: REF_FILE[];
 
@@ -3292,7 +3291,7 @@ export interface USER_AUDIT extends IEnt {
     EVENT_KIND: number;
 
     /**
-     * список используемых для временной РК файлов 
+     * список используемых для временной РК файлов
      */
     REF_FILE_List: REF_FILE[];
 }
