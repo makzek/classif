@@ -16,13 +16,13 @@
                 </li>
             </ul>
             <ng-template #childTemplate let-item="item" let-index="index">
-                <eos-node-list-item  [node]="item.value" [params]="params" [length]="length"
+                <eos-node-list-item  [node]="item.value" [params]="params" [length]="length" [customFields]="customFields"
                 (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
             <ul *ngIf="!params.userOrdered && nodes?.length && !update" class="elements secondary-text">
                 <li *ngFor="let item of nodes" class="child">
-                    <eos-node-list-item [node]="item" [params]="params" [length]="length"
+                    <eos-node-list-item [node]="item" [params]="params" [length]="length" [customFields]="customFields"
                     (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
                 </li>
             </ul>

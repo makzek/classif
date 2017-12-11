@@ -46,6 +46,7 @@ import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
+// import { setTimeout } from 'timers';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -57,6 +58,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
 
     @ViewChild('tree') treeEl;
+
+    @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -101,6 +104,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictTypes = E_DICT_TYPE;
 
     searchStartFlag = false; // flag begin search
+
+    readonly MIN_COL_WIDTH = 50; // let 100px min width for column
+
+    tableWidth = 0;
+
     public fonConf = {
         width: 0 + 'px',
         height: 0 + 'px',
@@ -176,7 +184,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         this._sandwichSrv.currentDictState$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((state) => this.currentState = state);
+            .subscribe((state) => {
+                this.currentState = state;
+                setTimeout(() => {
+                    this._countColumnWidth();
+                }, 301);
+            });
 
         this._dictSrv.dictionary$
             .takeUntil(this.ngUnsubscribe)
@@ -258,6 +271,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     ngAfterViewInit() {
         this._treeScrollTop = this._sandwichSrv.treeScrollTop;
         this.treeEl.nativeElement.scrollTop = this._treeScrollTop;
+        this.selectedEl.onresize = this.tableResize;
     }
 
     ngDoCheck() {
@@ -274,13 +288,62 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             }
         });
 
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    _totalWidth += _f.length;
+                } else {
+                    _totalWidth += 200;
+                }
+            });
+        }
+
+        /*Use Math.floor() to be be sure that there is enough space */
         this.viewFields.forEach((_f) => {
             if (_f.length) {
-                this.length[_f.key] = _f.length / _totalWidth * 100;
+                this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
             } else {
-                this.length[_f.key] = 200 / _totalWidth * 100;
+                this.length[_f.key] = Math.floor(200 / _totalWidth * 100);
             }
         });
+
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
+                } else {
+                    this.length[_f.key] = Math.floor(200 / _totalWidth * 100);
+                }
+            });
+        }
+
+        if (this.selectedEl) {
+            const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
+            console.log('selectedEl', this.selectedEl);
+            this.tableWidth = _selectedWidth;
+
+            this.viewFields.forEach((_f) => {
+                if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                    this.tableWidth = Math.ceil(this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01));
+                }
+            });
+
+            this.customFields.forEach((_f) => {
+                if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                    this.tableWidth = Math.ceil(this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01));
+                }
+            });
+
+            if (this.tableWidth < _selectedWidth + 2) {
+                this.tableWidth = _selectedWidth + 2;
+            }
+
+            console.log('this.tableWidth', this.tableWidth);
+        }
+    }
+
+    tableResize() {
+        console.log('!!!!!!!!tableResize');
     }
 
     private _selectNode() {
@@ -581,7 +644,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
         this.creatingModal.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
-            console.log(this.customFields);
+            this._countColumnWidth();
             this.creatingModal.hide();
         })
     }
@@ -628,16 +691,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         });
 
         if (withChildren.length) {
-                const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-                _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+            _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
 
-                this._confirmSrv
-                    .confirm(_confrm)
-                    .then((confirmed: boolean) => {
-                        if (confirmed) {
-                            this._dictSrv.restoreNodes(marked, confirmed);
-                        }
-                    });
+            this._confirmSrv
+                .confirm(_confrm)
+                .then((confirmed: boolean) => {
+                    if (confirmed) {
+                        this._dictSrv.restoreNodes(marked, confirmed);
+                    }
+                });
         } else {
             this._dictSrv.restoreNodes(marked);
         }
@@ -648,6 +711,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
+        setTimeout(() => {
+            this._countColumnWidth();
+        }, 0);
     }
 
     private _errHandler(err) {

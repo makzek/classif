@@ -37,6 +37,17 @@
         z-index: 3;
     }
 
+    .selected-wrapper {
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+            position: relative;
+            top: -3px;
+        }
+    }
+
     &.info {
         .tree-wrapper {
             left: -1 * $dictionary-block-width;
@@ -202,51 +213,49 @@
                 box-shadow: none;
             }
         }
+    }
 
-        .second-line {
-            border: 1px solid transparent;
-            border-top: 0;
+    .second-line {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        width: 100%;
+        height: $item-height;
+        line-height: $item-height;
+
+        .second-line-content {
+            display: flex;
             width: 100%;
+        }
+
+        .config-btn {
             height: $item-height;
-            line-height: $item-height;
+            width: $item-width;
+            font-size: 24px;
+        }
 
-            .second-line-content {
-                display: flex;
-                width: 100%;
-                position: relative;
-                top: -3px;
-            }
+        .node-title {
+            display: inline-block;
+            width: 100%;
 
-            .config-btn {
-                height: $item-height;
-                width: $item-width;
-                font-size: 24px;
-            }
-
-            .node-title {
+            .item {
                 display: inline-block;
-                width: 100%;
+                padding: 0 20px;
+                white-space: nowrap;
 
-                .item {
-                    display: inline-block;
-                    padding: 0 20px;
-                    white-space: nowrap;
+                .text {
+                    cursor: pointer;
+                }
 
-                    .text {
-                        cursor: pointer;
-                    }
-
-                    .icon {
-                        margin: 0;
-                        vertical-align: sub;
-                    }
+                .icon {
+                    margin: 0;
+                    vertical-align: sub;
                 }
             }
+        }
 
-            .checkbox-inline {
-                line-height: $item-height;
-                width: $item-width;
-            }
+        .checkbox-inline {
+            line-height: $item-height;
+            width: $item-width;
         }
     }
 }

@@ -62,9 +62,6 @@
     }
 
     .list {
-        border: 1px solid transparent;
-        border-top: 0;
-
         &.has-spinner {
             display: flex;
             justify-content: space-around;
