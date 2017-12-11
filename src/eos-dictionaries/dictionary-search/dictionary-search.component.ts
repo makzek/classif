@@ -55,6 +55,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     public useSub = false;
     public mode = 0;
+    public seeDeleted = false;
 
     setTab(key: string) {
         this.currTab = key;
@@ -117,6 +118,7 @@ export class DictionarySearchComponent implements OnDestroy {
             } else {
                 this.searchDone = false;
                 this.searchStart.emit();
+                this.settings.deleted = true;
                 this._dictSrv.search(this.dataQuick, this.settings)
                     .then((nodes) => {
                         this.searchDone = true;
@@ -138,6 +140,7 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 1 && this.useSub) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
+        if (this.seeDeleted) { this.settings.deleted = this.seeDeleted; }
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;

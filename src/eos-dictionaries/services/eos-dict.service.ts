@@ -478,16 +478,16 @@ export class EosDictService {
 
     public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
         const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
-        return this._search(_criteries);
+        return this._search(_criteries, params.deleted, 'quick');
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
         const critery = this.dictionary.getFullsearchCriteries(data.rec, params, this.selectedNode);
-        return this._search([critery]);
+        return this._search([critery], params.deleted, 'full');
     }
 
 
-    private _search(criteries: any[]): Promise<EosDictionaryNode[]> {
+    private _search(criteries: any[], showDeleted: boolean, mode: string): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
         this.viewParameters.updating = true;
@@ -500,7 +500,7 @@ export class EosDictService {
                     nodes = this.dictionary.updateNodes(data, false);
                     this._setCurrentList(nodes);
                     this.viewParameters.searchResults = true;
-                    if (criteries[0].DELETED === undefined) {
+                    if (showDeleted && mode === 'full') {
                         this.viewParameters.showDeleted = true;
                         let filtredNodeList: EosDictionaryNode[];
                         filtredNodeList = this._filtredDelete(this._currentList);
