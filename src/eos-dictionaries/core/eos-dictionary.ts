@@ -27,6 +27,16 @@ export class EosDictionary {
     private _userOrder: any;
     private _userOrdered: boolean;
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
+    private _showDeleted: boolean;
+
+    get showDeleted(): boolean {
+        return this._showDeleted;
+    }
+
+    set showDeleted(value: boolean) {
+        this._showDeleted = value;
+        this._nodes.forEach((node) => node.updateExpandable(value));
+    }
 
     get id(): string {
         return this.descriptor.id;
@@ -133,9 +143,9 @@ export class EosDictionary {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
-            node.updateEpandabe();
+            node.updateExpandable(this._showDeleted);
         });
-        this.root.updateEpandabe();
+        this.root.updateExpandable(this._showDeleted);
     }
 
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -333,7 +343,7 @@ export class EosDictionary {
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries =  {}
+        const _criteries = {}
         _searchFields.forEach((fld) => {
             if (data[fld.key]) {
                 _criteries[fld.foreignKey] = '"' + data[fld.key] + '"';

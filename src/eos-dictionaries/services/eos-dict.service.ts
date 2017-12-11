@@ -116,6 +116,7 @@ export class EosDictService {
     }
 
     private _initViewParameters() {
+        console.log('_initViewParameters');
         this.viewParameters = {
             showDeleted: false,
             userOrdered: false,
@@ -178,8 +179,8 @@ export class EosDictService {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
                     } else {
-                        this.viewParameters.showDeleted = false;
-                        this._viewParameters$.next(this.viewParameters);
+                        // this.viewParameters.showDeleted = false;
+                        // this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -318,29 +319,27 @@ export class EosDictService {
     }
 
     /**
-     *
+     * @description Mark node selected in tree, updale current list
      * @param nodeId node ID to be selected
      * @returns selected node in current dictionary
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
             if (this.selectedNode && this.selectedNode.id !== nodeId) {
-                this.viewParameters.showDeleted = false;
-                this._viewParameters$.next(this.viewParameters);
                 return this._getNode(nodeId)
-                .then((node) => {
-                    if (node) {
-                        let parent = node.parent;
-                        while (parent) {
-                            parent.isExpanded = true;
-                            parent = parent.parent;
+                    .then((node) => {
+                        if (node) {
+                            let parent = node.parent;
+                            while (parent) {
+                                parent.isExpanded = true;
+                                parent = parent.parent;
+                            }
                         }
-                    }
-                    this.viewParameters.updating = false;
-                    this._viewParameters$.next(this.viewParameters);
-                    this._selectNode(node);
-                    return node;
-                });
+                        this.viewParameters.updating = false;
+                        this._viewParameters$.next(this.viewParameters);
+                        this._selectNode(node);
+                        return node;
+                    });
             }
         } else {
             return Promise.resolve(this._selectRoot());
@@ -452,14 +451,14 @@ export class EosDictService {
 
     public restoreNodes(nodes: EosDictionaryNode[], recursive = false): Promise<boolean> {
         if (this.dictionary) {
-        return this.dictionary.restoreMarked(recursive)
-            .then(() => {
-                return this.dictionary.getChildren(this.selectedNode)
-                .then((list) => {
-                    this._setCurrentList(list);
-                    return true;
+            return this.dictionary.restoreMarked(recursive)
+                .then(() => {
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((list) => {
+                            this._setCurrentList(list);
+                            return true;
+                        });
                 });
-            });
         } else {
             return Promise.resolve(false);
         }
@@ -640,7 +639,13 @@ export class EosDictService {
     }
 
     toggleDeleted() {
+        console.log('toggle deleted fired');
         this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
+
+        if (this.dictionary) {
+            this.dictionary.showDeleted = this.viewParameters.showDeleted;
+        }
+
         if (!this.viewParameters.showDeleted) {
             this._currentList.forEach((node) => {
                 if (node.isDeleted) { node.marked = false; }
