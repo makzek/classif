@@ -143,6 +143,8 @@
             }
 
             .go-top-wrapper {
+                width: $item-height;
+                height: $item-height;
                 grid-column: 1;
             }
         }

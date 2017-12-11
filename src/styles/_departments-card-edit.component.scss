@@ -161,11 +161,6 @@
 
             &:not(:first-child) {
                 margin-top: 0;
-
-                &.email,
-                &.skype {
-                    margin-top: 30px;
-                }
             }
 
             &:not(:last-child) {
@@ -174,17 +169,57 @@
         }
     }
 
-    .email-wrapper {
-        .form-group {
-            width: 54%;
+    .contact-wrapper {
+        display: -ms-grid;
+        display: grid;// sass-lint:disable-line no-duplicate-properties
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        -ms-grid-rows: 60px 90px;
+        grid-template-rows: 60px 90px;
 
-            &:first-child,
-            &:last-child {
-                width: 24%;
-            }
+        .cab,
+        .phone,
+        .phone-local,
+        .email {
+            margin-right: 40px;
         }
 
+        .phone,
+        .phone-local,
+        .fax {
+            margin-top: 0;
+        }
+
+        .cab {
+            grid-column: 1;
+        }
+
+        .phone {
+            grid-column: 2;
+        }
+
+        .phone-local {
+            grid-column: 3;
+        }
+
+        .fax {
+            grid-column: 4;
+        }
+
+        .email {
+            grid-column-start: 2;
+            grid-column-end: 4;
+            grid-row: 2;
+            -ms-grid-column-span: 2;
+        }
+
+        .skype {
+            grid-column-start: 4;
+            grid-column-end: 5;
+            grid-row: 2;
+        }
     }
+
 
     .declination-wrapper {
         .form-control {
@@ -195,7 +230,7 @@
             }
 
             &:first-child {
-                width: 54%;
+                width: 55%;
             }
         }
     }

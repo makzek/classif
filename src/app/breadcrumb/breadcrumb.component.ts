@@ -14,6 +14,8 @@ export class BreadcrumbsComponent {
     infoOpened: boolean;
     isDictionaryPage = false;
 
+    showPushpin = false;
+
     constructor(
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _router: Router,
@@ -28,8 +30,9 @@ export class BreadcrumbsComponent {
             .subscribe((evt) => {
                 let _actRoute = _route.snapshot;
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-            });
 
+                this.showPushpin = _actRoute.data.showPushpin;
+            });
         this._sandwichSrv.currentDictState$.subscribe((state) => {
             this.infoOpened = state[1];
         });
