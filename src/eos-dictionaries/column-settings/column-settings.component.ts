@@ -21,13 +21,17 @@ export class ColumnSettingsComponent {
         // value[3] - src
         // value[1] - droped elem
         dragulaService.drop.subscribe((value) => {
-            if (value[3].id === 'curr') {
+            if (value[3].id === 'selected') {
                 this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
                 this.removeToCurrent();
             } else {
                 this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
                 this.addToCurrent();
             }
+          });
+
+        dragulaService.drag.subscribe((value) => {
+            value[1].style = 'background-color: #d9edf7; color: #000';
           });
     }
 

@@ -22,22 +22,27 @@
     }
 
     .info-block {
-        border: 1px solid transparent;
+        border-width: 1px;
+        border-style: solid;
         min-height: 300px;
 
         .item {
             height: 32px;
             padding: 8px;
             cursor: move;
+
+            &.gu-transist {
+                border: 1px dashed purple;
+            }
+
+            &.gu-mirror {
+                background-color: red;
+            }
         }
     }
 
-    .col-wrapper {
-        display: flex;
-    }
-
     .col {
-        width: 30%;
+        width: 100%;
     }
 
     .driver-col {
@@ -53,7 +58,7 @@
         }
     }
 
-    .container {
+    .modal-body-container {
         display: flex;
     }
 }

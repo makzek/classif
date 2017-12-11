@@ -5,11 +5,11 @@
     </button>
 </div>
 <div class="modal-body">
-    <div class="container">
+    <div class="modal-body-container">
         <div class="col">
-            <span class="title">Исходный список</span>
-            <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
-                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)" [ngClass]="{'selected': item === selectedDictItem}"></div>
+            <span class="title unimportant-text">Исходный список</span>
+            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
+                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}"></div>
             </div>
         </div>
         <div class="driver-col">
@@ -23,9 +23,9 @@
             </span>
         </div>
         <div class="col">
-            <span class="title">Итоговый список</span>
-            <div class="info-block" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
-                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item.title' (click)="select(item, true)" [ngClass]="{'selected': item === selectedCurrItem}"></div>
+            <span class="title unimportant-text">Итоговый список</span>
+            <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
+                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item.title' (click)="select(item, true)" [ngClass]="{'highlighted': item === selectedCurrItem}"></div>
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     protected shortQuickViewFields: FieldDescriptor[];
     protected editFields: FieldDescriptor[];
     protected listFields: FieldDescriptor[];
+    protected allVisibleFields: FieldDescriptor[];
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         const _res = super._getFieldSet(aSet, values);
@@ -40,6 +41,8 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.allVisible:
+                return this.allVisibleFields;
             default:
                 throw new Error('Unknown field set');
         }
@@ -55,6 +58,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             'editFields',
             'listFields',
             'fullSearchFields',
+            'allVisibleFields',
         ], descriptor);
     }
 
