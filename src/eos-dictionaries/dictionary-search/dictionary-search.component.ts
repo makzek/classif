@@ -11,6 +11,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -27,7 +28,10 @@ export class DictionarySearchComponent implements OnDestroy {
     data = {
         rec: {},
     };
-    settings: ISearchSettings;
+    public settings: ISearchSettings = {
+        mode: SEARCH_MODES.totalDictionary,
+        deleted: false
+    };
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
@@ -43,12 +47,14 @@ export class DictionarySearchComponent implements OnDestroy {
     hasDate: boolean;
     hasQuick: boolean;
     hasFull: boolean;
+    type:  E_DICT_TYPE;
 
     dictSubscription: Subscription;
 
     date: Date = new Date();
 
-    public radio = true;
+    public useSub = false;
+    public mode = 0;
 
     setTab(key: string) {
         this.currTab = key;
@@ -71,16 +77,15 @@ export class DictionarySearchComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService
     ) {
-        this.settings = {
-            mode: SEARCH_MODES.totalDictionary,
-            deleted: false
-        };
-
         this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
+                if (this.dictId) {
+                    this.data['printInfo'] = {};
+                }
                 this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
+                this.type = _d.descriptor.dictionaryType;
                 this.modes = _d.descriptor.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
@@ -126,6 +131,13 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     fullSearch() {
+        if (this.mode === 0) {
+            this.settings.mode = SEARCH_MODES.totalDictionary;
+        } else if (this.mode === 1 && !this.useSub) {
+            this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
+        } else if (this.mode === 1 && this.useSub) {
+            this.settings.mode = SEARCH_MODES.currentAndSubbranch;
+        }
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
@@ -161,14 +173,8 @@ export class DictionarySearchComponent implements OnDestroy {
         }
     }
 
-    public changeMode(val: boolean) {
-        switch (val) {
-            case null: this.settings.mode = SEARCH_MODES.totalDictionary;
-                break;
-            case true: this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
-                break;
-            case false: this.settings.mode = SEARCH_MODES.currentAndSubbranch;
-                break;
-        }
+    public considerDel() {
+        this._dictSrv.viewParameters.showDeleted = this.settings.deleted;
+        this._dictSrv.shareViewParameters();
     }
 }

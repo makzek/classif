@@ -23,22 +23,24 @@
 </div>
 
 <ng-template #quickSearchModal>
-    <div *ngIf="hasFull">
-        <div class="quick-search-top usual-border">
-            <span class="pull-left title">Область быстрого поиска</span>
-        </div>
-        <div class="col-1 quickRadio">
-            <div class="radio-inline quick">
-                <label>
-                    <input type="radio" name="search-area" [value]="true" (change)="changeMode(null)" [(ngModel)]="radio">
-                    <span></span>Во всём справочнике</label>
+    <div *ngIf="type === 1 || type === 2">
+        <form #form="ngForm">
+            <div class="quick-search-top usual-border">
+                <span class="pull-left title">Область быстрого поиска</span>
             </div>
-            <div class="radio-inline quick">
-                <label>
-                    <input type="radio" name="search-area" [value]="false" (change)="changeMode(false)" [(ngModel)]="radio">
-                    <span></span>В текущей ветке</label>
-            </div>
+            <div class="col-1 quickRadio">
+                <div class="radio-inline quick">
+                    <label>
+                        <input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode">
+                        <span></span>Во всём справочнике</label>
+                </div>
+                <div class="radio-inline quick">
+                    <label>
+                        <input type="radio" name="quick-space" [value]="2" [(ngModel)]="settings.mode">
+                        <span></span>В текущей ветке</label>
+                </div>
         </div>
+        </form>
     </div>
     <div class="quickInput">
         <input type="text" class="form-control quick-search-form usual-border" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
@@ -52,36 +54,39 @@
     </div>
     <div>
         <div class="full-search-settings-container usual-border">
+            <form>
             <div class="col-1">
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="search-area" [value]="true" (change)="changeMode(null)" [(ngModel)]="radio">
+                        <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
                         <span></span>Во всём справочнике</label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="search-area" [value]="false" (change)="changeMode(false)" [(ngModel)]="radio">
+                        <input type="radio" name="full-space" [value]="1" [(ngModel)]="mode">
                         <span></span>В текущей ветке</label>
                 </div>
             </div>
             <div class="col-2">
                 <div class="checkbox-inline">
                     <label>
-                        <input type="checkbox" [(ngModel)]="settings.deleted">
+                        <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
-                <div class="checkbox-inline">
+                <div *ngIf="mode === 1" class="checkbox-inline">
                     <label>
-                        <input type="checkbox" (change)="changeMode(true)">
-                        <span></span>Учитывать подчинённые ветки</label>
+                        <input type="checkbox" name="useSub" [(ngModel)]="useSub">
+                        <span></span>Учитывать подчиненные ветки</label>
                 </div>
             </div>
+        </form>
         </div>
+
         <div *ngIf="loading" class="spinner-wrapper">
             <eos-spinner size="md"></eos-spinner>
         </div>
         <form #searchForm="ngForm">
-            <div [hidden]="dictId !== 'departments'" class="full-search-form" *ngIf="data.rec && data['print-info']">
+            <div [hidden]="dictId !== 'departments'" class="full-search-form" *ngIf="data.rec && data['printInfo']">
                 <div *ngIf="modes" class="tabs-wrapper usual-border">
                     <ul class="tabs">
                         <li class="tab-item" *ngFor="let tab of modes" role="presentation" [ngClass]="{'active-border secondary-text': tab.key === currTab}"
@@ -93,7 +98,7 @@
                 <div *ngIf="currTab === 'person'">
                     <div class="row">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
-                            <label for="CODE" class="primary-text">{{fieldsDescription['CODE']?.title}}</label>
+                            <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['CODE']"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}"
@@ -103,8 +108,8 @@
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="SURNAME" class="primary-text">Фамилия</label>
                             <input id="SURNAME" name="SURNAME" type="text" class="form-control light"
-                                [(ngModel)]="data['print-info']['SURNAME']"
-                                placeholder="Фамилия"
+                                [(ngModel)]="data['printInfo']['SURNAME']"
+                                placeholder="Фамилия" >
                                 maxlength="64">
                         </div>
                     </div>
@@ -116,15 +121,15 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="NAME" class="primary-text">Имя</label>
                                     <input id="NAME" name="NAME" type="text" class="form-control light"
-                                        [(ngModel)]="data['print-info']['NAME']"
-                                        placeholder="Имя"
+                                        [(ngModel)]="data['printInfo']['NAME']"
+                                        placeholder="Имя" >
                                         maxlength="64">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="PATRON" class="primary-text">Отчество</label>
                                     <input id="PATRON" name="PATRON" type="text" class="form-control light"
-                                        [(ngModel)]="data['print-info']['PATRON']"
-                                        placeholder="Отчество"
+                                        [(ngModel)]="data['printInfo']['PATRON']"
+                                        placeholder="Отчество" >
                                         maxlength="64">
                                 </div>
                             </div>
