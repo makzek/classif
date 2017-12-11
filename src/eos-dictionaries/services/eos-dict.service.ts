@@ -6,6 +6,8 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
 import { ISearchSettings } from '../core/search-settings.interface';
+import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
+import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
@@ -25,6 +27,8 @@ export class EosDictService {
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
+    private _visibleListNodes: EosDictionaryNode[];
+    private paginationConfig: IPaginationConfig;
     public viewParameters: IDictionaryViewParameters;
 
     private _dictionary$: BehaviorSubject<EosDictionary>;
@@ -32,6 +36,7 @@ export class EosDictService {
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
     private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
+    private _paginationConfig$: BehaviorSubject<IPaginationConfig>;
 
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
@@ -61,6 +66,10 @@ export class EosDictService {
         return this._viewParameters$.asObservable();
     }
 
+    get paginationConfig$(): Observable<IPaginationConfig> {
+        return this._paginationConfig$.asObservable();
+    }
+
     get userOrdered(): boolean {
         return this.dictionary && this.dictionary.userOrdered;
     }
@@ -68,7 +77,6 @@ export class EosDictService {
     get order() {
         return this.dictionary.orderBy;
     }
-
 
     /*get currentTab(): number {
         return this._currentTab;
@@ -92,6 +100,7 @@ export class EosDictService {
         this._mDictionaryPromise = new Map<string, Promise<EosDictionary>>();
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
+        this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._dictionaries = new Map<string, IDictionaryDescriptor>();
         DICTIONARIES
             .sort((a, b) => {
@@ -120,6 +129,26 @@ export class EosDictService {
     // Because this.viewParametrs is public and may be changed from other classes need way for share state
     public shareViewParameters() {
         this._viewParameters$.next(this.viewParameters);
+    }
+
+    private _initPaginationConfig(allCount: number) {
+        this.paginationConfig = {
+            start: 1,
+            current: 1,
+            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
+            allItemsCurrent: allCount
+        }
+        this._paginationConfig$.next(this.paginationConfig);
+        return this.paginationConfig;
+    }
+
+    public changePagination(config: IPaginationConfig) {
+        this.paginationConfig = config;
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._updateVisibleNodes(filtredNodeList);
+        this._paginationConfig$.next(this.paginationConfig);
     }
 
     public getDictionariesList(): Promise<any> {
@@ -261,15 +290,31 @@ export class EosDictService {
     private _setCurrentList(nodes: EosDictionaryNode[]) {
         this._currentList = nodes || [];
         // todo: filter & order list before anounce
-        this._updateCurrentList();
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._initPaginationConfig(filtredNodeList.length);
+        this._updateVisibleNodes(filtredNodeList);
     }
 
-    private _updateCurrentList() {
-        let nodes = this._currentList;
+    private _updateVisibleNodes(filtredNodeList: EosDictionaryNode[]) {
+        const page = this.paginationConfig;
+        this._visibleListNodes = filtredNodeList.slice((page.start - 1) * page.length, page.current * page.length);
+        this._currentList$.next(this._visibleListNodes);
+    }
+
+    private _filtredDublicate(nodeList: EosDictionaryNode[]) {
+        return nodeList.filter((item, index) => {
+            return nodeList.lastIndexOf(item) === index
+        });
+    }
+
+    private _filtredDelete(nodeList: EosDictionaryNode[]) {
         if (!this.viewParameters.showDeleted) {
-            nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            return nodeList.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+        } else {
+            return nodeList;
         }
-        this._currentList$.next(nodes);
     }
 
     /**
@@ -457,7 +502,11 @@ export class EosDictService {
                     this.viewParameters.searchResults = true;
                     if (criteries[0].DELETED === undefined) {
                         this.viewParameters.showDeleted = true;
-                        this._updateCurrentList();
+                        let filtredNodeList: EosDictionaryNode[];
+                        filtredNodeList = this._filtredDelete(this._currentList);
+                        filtredNodeList = this._filtredDublicate(filtredNodeList);
+                        this._updateVisibleNodes(filtredNodeList);
+                        this._viewParameters$.next(this.viewParameters);
                     }
                     this._viewParameters$.next(this.viewParameters);
                 }
@@ -537,9 +586,19 @@ export class EosDictService {
     private _reorder() {
         if (this.dictionary) {
             if (this.viewParameters.searchResults) {
-                this._setCurrentList(this.dictionary.reorderList(this._currentList));
+                this._currentList = this.dictionary.reorderList(this._currentList)
+                let filtredNodeList: EosDictionaryNode[];
+                filtredNodeList = this._filtredDelete(this._currentList);
+                filtredNodeList = this._filtredDublicate(filtredNodeList);
+                this._updateVisibleNodes(filtredNodeList);
+                this._viewParameters$.next(this.viewParameters);
             } else {
-                this._setCurrentList(this.dictionary.reorderList(this._currentList, this.selectedNode.id));
+                this._currentList = this.dictionary.reorderList(this._currentList, this.selectedNode.id);
+                let filtredNodeList: EosDictionaryNode[];
+                filtredNodeList = this._filtredDelete(this._currentList);
+                filtredNodeList = this._filtredDublicate(filtredNodeList);
+                this._updateVisibleNodes(filtredNodeList);
+                this._viewParameters$.next(this.viewParameters);
             }
         }
     }
@@ -548,13 +607,13 @@ export class EosDictService {
         return a.map((node) => node.id);
     }
 
-    setUserOrder(ordered: EosDictionaryNode[], fullList: EosDictionaryNode[]) {
+    setUserOrder(ordered: EosDictionaryNode[]) {
         const _original = [];
         const _move = {};
 
-        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(fullList));
+        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
         // restore original order
-        fullList.forEach((node) => {
+        this._currentList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);
             if (_oNode) {
                 _original.push(node);
@@ -565,7 +624,7 @@ export class EosDictService {
             _move[node.id] = ordered[idx];
         });
 
-        const _order = fullList.map((node) => {
+        const _order = this._currentList.map((node) => {
             if (_move[node.id]) {
                 return _move[node.id].id;
             } else {
@@ -587,7 +646,11 @@ export class EosDictService {
                 if (node.isDeleted) { node.marked = false; }
             });
         }
-        this._updateCurrentList();
+        let filtredNodeList: EosDictionaryNode[];
+        filtredNodeList = this._filtredDelete(this._currentList);
+        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        this._initPaginationConfig(filtredNodeList.length);
+        this._updateVisibleNodes(filtredNodeList);
         this._viewParameters$.next(this.viewParameters);
     }
 
