@@ -20,7 +20,6 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
-import { EosActiveTreeNodeService } from '../tree/active-node-fon.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -119,19 +118,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _deskSrv: EosDeskService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
-        private _actTreeNodeSrv: EosActiveTreeNodeService
     ) {
-        _actTreeNodeSrv.fon$.takeUntil(this.ngUnsubscribe)
-            .subscribe(fonConf => {
-                this.fonConf.width = fonConf.width + 'px';
-                this.fonConf.height = fonConf.height + 'px';
-                if (this.treeEl) {
-                    this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
-                } else {
-                    this.fonConf.top = fonConf.top + 'px';
-                }
-            })
-
         _route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;

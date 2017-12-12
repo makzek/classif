@@ -1,37 +1,26 @@
 .eos-tree-node {
-    display: flex;
-    flex-direction: column;
-    margin-left: 24px;
-    position: relative;
-    width: 100%;
+    .node {
+        cursor: pointer;
+        width: $dictionary-block-width;
 
-    ul {
-        padding: 0;
-        margin: 0;
-        list-style: none;
+        .fake-padding,
+        .tree-btn,
+        .title {
+            display: inline-block;
+        }
 
-        li {
-            .node {
-                cursor: pointer;
-                display: flex;
+        .tree-btn {
+            padding: 13.5px 16px;
+            width: $item-width;
+            vertical-align: top;
+        }
 
-                .tree-btn {
-                    padding: 13.5px 16px;
-                }
+        .title {
+            padding: $item-width / 4 0;
+            word-wrap: break-word;
 
-                .title {
-                    padding: 12px 0;
-                    color: $primary-font-color-main-theme;
-                    font-size: 16px;
-                }
-
-                .selected {
-                    color: $secondary-font-color-main-theme;
-                }
-
-                .deleted {
-                    color: $disabled-color-main-theme;
-                }
+            .title-item {
+                padding-right: $item-width / 4;
             }
         }
     }
