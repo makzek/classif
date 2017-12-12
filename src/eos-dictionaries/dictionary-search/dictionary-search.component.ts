@@ -40,12 +40,12 @@ export class DictionarySearchComponent implements OnDestroy {
     @ViewChild('quick') qSearchPop;
 
     isOpenQuick = false;
-    dataQuick = '';
+    dataQuick = null;
 
     hasDate: boolean;
     hasQuick: boolean;
     hasFull: boolean;
-    type:  E_DICT_TYPE;
+    type: E_DICT_TYPE;
 
     dictSubscription: Subscription;
 
