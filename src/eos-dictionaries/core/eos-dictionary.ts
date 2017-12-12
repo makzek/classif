@@ -394,13 +394,15 @@ export class EosDictionary {
     private _orderByField(array: EosDictionaryNode[]): EosDictionaryNode[] {
         const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
         return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
-            if (a.data.rec[_orderBy.fieldKey] > b.data.rec[_orderBy.fieldKey]) {
+            const item1 = a.data.rec[_orderBy.fieldKey].toString().toLowerCase(),
+                item2 = b.data.rec[_orderBy.fieldKey].toString().toLowerCase();
+            if (item1 > item2) {
                 return _orderBy.ascend ? 1 : -1;
             }
-            if (a.data.rec[_orderBy.fieldKey] < b.data.rec[_orderBy.fieldKey]) {
+            if (item1 < item2) {
                 return _orderBy.ascend ? -1 : 1;
             }
-            if (a.data.rec[_orderBy.fieldKey] === b.data.rec[_orderBy.fieldKey]) {
+            if (item1 === item2) {
                 return 0;
             }
         });
