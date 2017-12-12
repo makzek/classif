@@ -65,7 +65,7 @@ export class DictionarySearchComponent implements OnDestroy {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
-                    if (this.data[_field] !== '') {
+                    if (this.data[_dict][_field] !== '') {
                         return false;
                     }
                 }
