@@ -84,7 +84,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         const criteries = {
             DUE: record.DUE + '%',
             LAYER: (layer + 1) + ':' + (layer + 2),
-            IS_NODE: '0'
+            // IS_NODE: '0'
         };
         return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
@@ -92,6 +92,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
+        console.log('read', recordDue, 'read from cache', chain);
         return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
             .then(([record, parents]) => {
                 return record.concat(parents);
