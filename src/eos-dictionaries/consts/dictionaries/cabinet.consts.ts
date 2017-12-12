@@ -5,6 +5,8 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     id: 'cabinet',
     apiInstance: 'CABINET',
     title: 'Кабинеты ',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{
         key: 'ISN_CABINET',
         type: 'number',
@@ -26,4 +28,5 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'Полное наименование',
         length: 2000,
     }],
+    allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
 });

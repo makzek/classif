@@ -123,8 +123,8 @@
             min-height: $item-height;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr 150px;
-            grid-template-columns: 48px 1fr 150px;
+            -ms-grid-columns:  48px 1fr 150px 48px;
+            grid-template-columns: 48px 1fr 150px 48px;
 
             .item-count {
                 height: 100%;
@@ -133,7 +133,16 @@
                 text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
+                border-right-width: 1px;
+                border-right-style: solid;
                 grid-column: 3;
+            }
+
+            .config-btn {
+                height: $item-height;
+                width: $item-width;
+                font-size: 24px;
+                grid-column: 4;
             }
 
             .selected-node-title {
@@ -225,12 +234,6 @@
         .second-line-content {
             display: flex;
             width: 100%;
-        }
-
-        .config-btn {
-            height: $item-height;
-            width: $item-width;
-            font-size: 24px;
         }
 
         .node-title {

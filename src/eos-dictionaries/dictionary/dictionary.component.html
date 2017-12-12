@@ -25,6 +25,10 @@
                         <span class="secondary-text">{{filteredNodes?.length}}</span>
                     </span>
                 </div>
+                <button class="btn btn-primary-light pull-right config-btn" tooltip="Настройка отображения" containerClass="tooltip-info"
+                    placement="left" (click)="_configColumns()">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
@@ -63,10 +67,6 @@
                                     </span>
                                 </span>
                             </span>
-                            <button class="btn btn-primary-light pull-right config-btn" tooltip="Настройка отображения" containerClass="tooltip-info"
-                                placement="left" (click)="_configColumns()">
-                                <i class="fa fa-cog" aria-hidden="true"></i>
-                            </button>
                         </div>
                     </div>
             <div [ngStyle]="{'width.px': tableWidth}">
