@@ -148,6 +148,8 @@ export class EosDeskService {
             url: this._router.url
         }
         const segments = this._router.url.split('/');
+        segments.pop();
+        item.url = segments.join('/');
         this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
             item.fullTitle = dictionary.title;
             item.title = dictionary.title;
