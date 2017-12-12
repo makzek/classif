@@ -396,7 +396,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
      * Logic delete checked elements on page
      */
     public deleteSelectedItems(): void {
+        let delCount = 0, allCount = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) { allCount++ }
+            if (node.marked && node.isDeleted) { delCount++ }
+        })
+        if (delCount === allCount) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
+        }
         this._dictSrv.deleteMarkedNodes()
+            .then(() => this.updateMarks())
             .catch((err) => this._errHandler(err));
     }
 

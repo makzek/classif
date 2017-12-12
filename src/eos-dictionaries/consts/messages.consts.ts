@@ -68,5 +68,5 @@ export const SUCCESS_SAVE: IMessage = {
 export const WARN_LOGIC_DELETE: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
-    msg: 'элементы {{elem}} уже были логически удалены ранее!'
+    msg: 'отмеченные элементы уже были логически удалены!'
 }
