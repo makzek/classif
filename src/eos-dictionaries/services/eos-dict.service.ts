@@ -35,6 +35,7 @@ export class EosDictService {
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
     private _currentList$: BehaviorSubject<EosDictionaryNode[]>;
+    private _visibleList$: BehaviorSubject<EosDictionaryNode[]>;
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
     private _paginationConfig$: BehaviorSubject<IPaginationConfig>;
 
@@ -70,6 +71,10 @@ export class EosDictService {
         return this._paginationConfig$.asObservable();
     }
 
+    get visibleList$(): Observable<EosDictionaryNode[]> {
+        return this._visibleList$.asObservable();
+    }
+
     get userOrdered(): boolean {
         return this.dictionary && this.dictionary.userOrdered;
     }
@@ -102,6 +107,7 @@ export class EosDictService {
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._dictionaries = new Map<string, IDictionaryDescriptor>();
+        this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         DICTIONARIES
             .sort((a, b) => {
                 if (a.title > b.title) {
@@ -166,6 +172,7 @@ export class EosDictService {
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
+        this._visibleList$.next([]);
         this._openedNode$.next(null);
         this._selectedNode$.next(null);
         this._dictionary$.next(null);
@@ -294,13 +301,15 @@ export class EosDictService {
         filtredNodeList = this._filtredDelete(this._currentList);
         filtredNodeList = this._filtredDublicate(filtredNodeList);
         this._initPaginationConfig(filtredNodeList.length);
+        filtredNodeList = this.dictionary.reorderList(filtredNodeList)
+        this._currentList$.next(filtredNodeList);
         this._updateVisibleNodes(filtredNodeList);
     }
 
     private _updateVisibleNodes(filtredNodeList: EosDictionaryNode[]) {
         const page = this.paginationConfig;
         this._visibleListNodes = filtredNodeList.slice((page.start - 1) * page.length, page.current * page.length);
-        this._currentList$.next(this._visibleListNodes);
+        this._visibleList$.next(this._visibleListNodes);
     }
 
     private _filtredDublicate(nodeList: EosDictionaryNode[]) {
