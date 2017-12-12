@@ -515,10 +515,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     title: title,
                     fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
                 });
-                if (hide) {
+                // if (hide) {
                     this.creatingModal.hide();
+                // }
+                // this._clearForm();
+                if (!hide) {
+                    this._create();
                 }
-                this._clearForm();
             })
             .catch((err) => this._errHandler(err));
     }
