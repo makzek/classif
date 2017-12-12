@@ -9,8 +9,7 @@
         <!-- new code-->
         <div class="fon highlighted" [style.width]="fonConf.width" [style.height]="fonConf.height" [style.top]="fonConf.top"></div>
     </div>
-    <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()"
-    (resize)="tableResize($event)">
+    <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
             <div *ngIf="selectedNode" class="block selected-node xl-font">
                 <div class="go-top-wrapper">

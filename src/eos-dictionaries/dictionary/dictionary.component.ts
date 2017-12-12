@@ -271,7 +271,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     ngAfterViewInit() {
         this._treeScrollTop = this._sandwichSrv.treeScrollTop;
         this.treeEl.nativeElement.scrollTop = this._treeScrollTop;
-        this.selectedEl.onresize = this.tableResize;
     }
 
     ngDoCheck() {
@@ -319,31 +318,24 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         if (this.selectedEl) {
             const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
-            console.log('selectedEl', this.selectedEl);
             this.tableWidth = _selectedWidth;
 
             this.viewFields.forEach((_f) => {
                 if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                    this.tableWidth = Math.ceil(this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01));
+                    this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
                 }
             });
 
             this.customFields.forEach((_f) => {
                 if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                    this.tableWidth = Math.ceil(this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01));
+                    this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
                 }
             });
 
-            if (this.tableWidth < _selectedWidth + 2) {
-                this.tableWidth = _selectedWidth + 2;
+            if (this.tableWidth <= _selectedWidth) {
+                this.tableWidth = _selectedWidth - 2;
             }
-
-            console.log('this.tableWidth', this.tableWidth);
         }
-    }
-
-    tableResize() {
-        console.log('!!!!!!!!tableResize');
     }
 
     private _selectNode() {
