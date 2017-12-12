@@ -22,10 +22,14 @@ export class PushpinComponent {
         private _bcSrv: EosBreadcrumbsService,
         private _msgSrv: EosMessageService,
     ) {
-        this._deskSrv.desksList.subscribe((res) => this.deskList = res.filter((d) => d.id !== 'system'));
+        _deskSrv.desksList.subscribe((res: EosDesk[]) => this.deskList = res.filter((d: EosDesk) => d.id !== 'system'));
     }
 
-    pin(desk: EosDesk) {
+    /**
+     * Add dictionary to desktop
+     * @param desk desktop with which add dictionary
+     */
+    public pin(desk: EosDesk) {
         if (!this._deskSrv.addNewItemToDesk(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
     }
 }
