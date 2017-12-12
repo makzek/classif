@@ -30,7 +30,6 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
-    WARN_LOGIC_DELETE_ONE,
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
@@ -144,7 +143,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((state: boolean[]) => this.currentState = state);
 
         _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
-            .subscribe((dictionary) => {
+            .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
                     this.dictionaryId = dictionary.id;
@@ -383,50 +382,36 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.markItem(this.allMarked);
     }
 
-    toggleAllMarks(): void {
+    /**
+     * Toggle checkbox checked all
+     */
+    public toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
         this._dictSrv.markItem(this.allMarked);
     }
 
-    /* darkside */
-
-    deleteSelectedItems(): void {
-        const deletedNames: string[] = [],
-            selectedNodes: string[] = [];
-        let countMakedItems = 0,
-            str = '';
-
+    /**
+     * Logic delete checked elements on page
+     */
+    public deleteSelectedItems(): void {
+        let delCount = 0, allCount = 0;
         this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) { countMakedItems++ }
-            if (node.marked && !node.isDeleted) {
-                selectedNodes.push(node.id);
-                node.marked = false;
-            } else if (node.marked && node.isDeleted) {
-                deletedNames.push(node.title)
-            }
-        });
-
-        for (const item of deletedNames) {
-            str += '"' + item + '", ';
+            if (node.marked) { allCount++ }
+            if (node.marked && node.isDeleted) { delCount++ }
+        })
+        if (delCount === allCount) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
         }
-        str = str.slice(0, str.length - 2);
-
-        if (countMakedItems === 0) {
-            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-        } else if (deletedNames.length === 1) {
-            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-        } else if (deletedNames.length) {
-            const WARN = Object.assign({}, WARN_LOGIC_DELETE);
-            WARN.msg = WARN.msg.replace('{{elem}}', str);
-            this._msgSrv.addNewMessage(WARN);
-        } else {
-            this._dictSrv.deleteMarkedNodes(selectedNodes)
-                .catch((err) => this._errHandler(err));
-        }
+        this._dictSrv.deleteMarkedNodes()
+            .then(() => this.updateMarks())
+            .catch((err) => this._errHandler(err));
     }
 
+    /**
+     * Physical delete checked elements on page
+     */
     public physicallyDelete(): void {
         let list = '', j = 0;
         this.visibleNodes.forEach((node: EosDictionaryNode) => {

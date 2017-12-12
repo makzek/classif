@@ -269,13 +269,13 @@ export class EosDictionary {
         return _result;
     }
 
-    deleteMarked(nodeIds: string[], hard = false): Promise<any> {
+    deleteMarked(hard = false): Promise<any> {
         const nodeSet: any[] = [];
 
-        nodeIds.forEach((nodeId) => {
-            const node = this._nodes.get(nodeId);
-            if (node) {
+        this._nodes.forEach((node) => {
+            if (node.marked) {
                 nodeSet.push(node.data.rec);
+                node.marked = false;
             }
         });
 
@@ -287,6 +287,7 @@ export class EosDictionary {
         this._nodes.forEach((node) => {
             if (node.marked) {
                 nodeSet.push(node.data.rec);
+                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => nodeSet.push(chld.data.rec));
                 }
