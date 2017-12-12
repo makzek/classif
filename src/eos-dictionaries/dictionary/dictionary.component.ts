@@ -175,7 +175,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        _dictSrv.currentList$.takeUntil(this.ngUnsubscribe)
+        _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
                 this.visibleNodes = nodes;
                 this.updateMarks();
