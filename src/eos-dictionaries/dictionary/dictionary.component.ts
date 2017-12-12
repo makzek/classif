@@ -105,7 +105,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     searchStartFlag = false; // flag begin search
 
-    readonly MIN_COL_WIDTH = 50; // let 100px min width for column
+    readonly MIN_COL_WIDTH = 90; // 40px - paddings, 50px - content
+    readonly DEFAULT_FIELD_LEN = 200;
 
     tableWidth = 0;
 
@@ -283,7 +284,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             if (_f.length) {
                 _totalWidth += _f.length;
             } else {
-                _totalWidth += 200;
+                _totalWidth += this.DEFAULT_FIELD_LEN;
             }
         });
 
@@ -292,7 +293,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (_f.length) {
                     _totalWidth += _f.length;
                 } else {
-                    _totalWidth += 200;
+                    _totalWidth += this.DEFAULT_FIELD_LEN;
                 }
             });
         }
@@ -302,7 +303,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             if (_f.length) {
                 this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
             } else {
-                this.length[_f.key] = Math.floor(200 / _totalWidth * 100);
+                this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
             }
         });
 
@@ -311,7 +312,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (_f.length) {
                     this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
                 } else {
-                    this.length[_f.key] = Math.floor(200 / _totalWidth * 100);
+                    this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
                 }
             });
         }

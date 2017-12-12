@@ -55,9 +55,11 @@ export class ColumnSettingsComponent {
     addToCurrent() {
         if (this.selectedDictItem) {
             // console.log('addToCurrent, this.selectedDictItem', this.selectedDictItem);
+            /* tslint:disable:no-bitwise */
             if (!~this.currentFields.findIndex((_f) => _f.key === this.selectedDictItem.key)) {
                 this.currentFields.push(this.selectedDictItem);
             }
+            /* tslint:enable:no-bitwise */
             this.dictionaryFields.splice(this.dictionaryFields.indexOf(this.selectedDictItem), 1);
             this.selectedDictItem = null;
         }
@@ -65,9 +67,11 @@ export class ColumnSettingsComponent {
 
     removeToCurrent() {
         if (this.selectedCurrItem) {
+            /* tslint:disable:no-bitwise */
             if (!~this.dictionaryFields.findIndex((_f) => _f.key === this.selectedCurrItem.key)) {
                 this.dictionaryFields.push(this.selectedCurrItem);
             }
+            /* tslint:enable:no-bitwise */
             this.currentFields.splice(this.currentFields.indexOf(this.selectedCurrItem), 1);
             this.selectedCurrItem = null;
         }
