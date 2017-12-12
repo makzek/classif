@@ -15,8 +15,6 @@ export class SevIndexHelper {
     }
 
     static PrepareStub( rec: SEV_ASSOCIATION, pip: PipRX): SEV_ASSOCIATION {
-        // tslint:disable-next-line:no-debugger
-        debugger;
         return pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(rec, 'SEV_ASSOCIATION');
     }
 

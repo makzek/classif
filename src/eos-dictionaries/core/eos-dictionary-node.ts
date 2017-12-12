@@ -69,7 +69,6 @@ export class EosDictionaryNode {
         const _rec = this.getShortQuickView();
         if (_rec && _rec.length) {
             return _rec.map((fld) => fld.value).join(' ');
-            // return this.data.rec[_rec[0].key];
         } else {
             return this.data.rec['CLASSIF_NAME'];
         }
@@ -137,8 +136,9 @@ export class EosDictionaryNode {
         }
     }
 
-    updateEpandabe() {
-        this.expandable = this.isNode && this._children && this._children.findIndex((node) => node.isNode) > -1;
+    updateExpandable(showDeleted = false) {
+        this.expandable = this.isNode && this._children &&
+            this._children.findIndex((node) => !!node.isNode && node.isVisible(showDeleted)) > -1;
     }
 
     private _keyToString(value: any): string {
@@ -159,8 +159,7 @@ export class EosDictionaryNode {
     }
 
     updateData(nodeData: any) {
-        Object.assign(this.data, nodeData);
-        /* here we update all data not only this.data.rec ?? */
+        Object.assign(this.data.rec, nodeData);
     }
 
     isChildOf(node: EosDictionaryNode): boolean {
@@ -183,6 +182,7 @@ export class EosDictionaryNode {
 
     delete(hard = false) { // TODO: check maybe this is unused
         if (hard) {
+            // console.log('delete children parent', this, this._children, this.parent);
             if ((!this._children || this._children.length < 1) && this.parent) {
                 this.parent.deleteChild(this);
                 this.isDeleted = true;
@@ -209,12 +209,6 @@ export class EosDictionaryNode {
         }
         /* tslint:enable:no-bitwise */
     }
-
-    /* deprecated */
-    getValues(fields: FieldDescriptor[]): IFieldView[] {
-        return fields.map((fld) => Object.assign({}, fld, { value: this.data[fld.key] }));
-    }
-    /* deprecated */
 
     getListView(): IFieldView[] {
         return this._descriptor.getListView(this.data);
@@ -244,7 +238,8 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                _data[_f.key] = {};
+                // console.log('subdictionary', this.data[_f.key]);
+                _data[_f.key] = this.data[_f.key];
                 /* recive other dict data */
             }
         });
@@ -267,7 +262,7 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                _data[_f.key] = {};
+                _data[_f.key] = this.data[_f.key] || {};
                 /* recive other dict data */
             }
         });
@@ -282,11 +277,31 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                _data[_f.key] = {};
+                console.log('dictionary', _f);
+                _data[_f.key] = this.data[_f.key] || {};
                 /* recive other dict data */
             }
         });
         return _data;
+    }
+
+    getParents(): EosDictionaryNode[] {
+        if (this.parent) {
+            return [this.parent].concat(this.parent.getParents());
+        } else {
+            return [];
+        }
+    }
+
+    getAllChildren(): EosDictionaryNode[] {
+        let children = [];
+        if (this._children) {
+            children = children.concat(this._children);
+            this._children.forEach((chld) => {
+                children = children.concat(chld.getAllChildren());
+            })
+        }
+        return children;
     }
 }
 

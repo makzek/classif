@@ -4,7 +4,7 @@ import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor, E_FIE
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
-import { ITypeDef } from 'eos-rest';
+import { ITypeDef, IEnt } from 'eos-rest';
 
 import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
@@ -118,6 +118,10 @@ export abstract class AbstractDictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
+    get dictionaryType(): E_DICT_TYPE {
+        return this.type;
+    }
+
     getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         return this._getFieldSet(aSet, values);
     }
@@ -158,6 +162,8 @@ export abstract class AbstractDictionaryDescriptor {
             */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.fullSearch:
+                return this._getFullSearchFields();
             default:
                 return null;
         }
@@ -182,6 +188,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getFullSearchFields() {
+        return this.fullSearchFields;
     }
 
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {
@@ -220,14 +230,27 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     abstract getChildren(...params): Promise<any[]>;
+    abstract getSubtree(...params): Promise<any[]>;
 
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
             query = ALL_ROWS;
         }
-        // console.log('getData query', query);
+
+        console.warn('getData', query, order, limit);
+
+        const req = { [this.apiInstance]: query };
+
+        if (limit) {
+            req.top = limit;
+        }
+
+        if (order) {
+            req.orderby = order;
+        }
+
         return this.apiSrv
-            .read({ [this.apiInstance]: query, top: limit || 100, orderby: order || 'WEIGHT'})
+            .read(req)
             .then((data: any[]) => {
                 this.prepareForEdit(data);
                 return data;
@@ -265,15 +288,22 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getRoot(): Promise<any[]>;
 
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
+        // todo: fix hardcode
         return this.apiSrv
             .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
             .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
     }
 
-    search(criteries: any[]): Promise<any> {
+    markDeleted(records: any[], deletedState = 1): Promise<any[]> {
+        records.forEach((record) => record.DELETED = deletedState);
+        const changes = this.apiSrv.changeList(records);
+        return this.apiSrv.batch(changes, '');
+    }
+
+    search(criteries: any[]): Promise<any[]> {
         console.log('search critery', criteries);
 
-        const _search = criteries.map((critery) => this.getData({ criteries: critery }));
+        const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
         return Promise.all(_search)
             .then((results) => {

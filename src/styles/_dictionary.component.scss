@@ -6,6 +6,11 @@
     .selected-wrapper {
         position: absolute;
         transition: 300ms ease-in-out;
+
+        .fon {
+            position: absolute;
+            z-index: -1;
+        }
     }
 
     .tree-wrapper {
@@ -138,6 +143,8 @@
             }
 
             .go-top-wrapper {
+                width: $item-height;
+                height: $item-height;
                 grid-column: 1;
             }
         }

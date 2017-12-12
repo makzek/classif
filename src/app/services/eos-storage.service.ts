@@ -110,4 +110,25 @@ export class EosStorageService {
         }
         return null;
     }
+
+    public setUserOrderState(dictionary: string, state: boolean): void {
+        if (!this._data.userOrder) {
+            this._data.userOrder = {};
+        }
+        if (!this._data.userOrder[dictionary]) {
+            this._data.userOrder[dictionary] = {};
+        }
+        this._data.userOrder[dictionary].userOrderOn = state;
+        this._updateStorage();
+    }
+
+    public getUserOrderState(dictionary: string): boolean {
+        if (!this._data.userOrder) {
+            return false;
+        } else if (!this._data.userOrder[dictionary]) {
+            return false;
+        } else {
+            return this._data.userOrder[dictionary].userOrderOn;
+        }
+    }
 }
