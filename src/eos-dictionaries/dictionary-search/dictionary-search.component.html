@@ -70,7 +70,7 @@
             <div class="col-2">
                 <div class="checkbox-inline">
                     <label>
-                        <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
+                        <input type="checkbox" name="seeDelete" [(ngModel)]="seeDeleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
                 <div *ngIf="mode === 1" class="checkbox-inline">
@@ -101,7 +101,8 @@
                             <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['CODE']"
-                                placeholder="{{fieldsDescription.rec['CODE']?.title}}" >
+                                placeholder="{{fieldsDescription.rec['CODE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>
 
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
@@ -109,6 +110,7 @@
                             <input id="SURNAME" name="SURNAME" type="text" class="form-control light"
                                 [(ngModel)]="data['printInfo']['SURNAME']"
                                 placeholder="Фамилия" >
+                                maxlength="64">
                         </div>
                     </div>
                     <div class="row no-top-margin">
@@ -121,12 +123,14 @@
                                     <input id="NAME" name="NAME" type="text" class="form-control light"
                                         [(ngModel)]="data['printInfo']['NAME']"
                                         placeholder="Имя" >
+                                        maxlength="64">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="PATRON" class="primary-text">Отчество</label>
                                     <input id="PATRON" name="PATRON" type="text" class="form-control light"
                                         [(ngModel)]="data['printInfo']['PATRON']"
                                         placeholder="Отчество" >
+                                        maxlength="64">
                                 </div>
                             </div>
                         </div>
@@ -136,14 +140,16 @@
                             <label for="PHONE" class="primary-text">{{fieldsDescription.rec['PHONE']?.title}}</label>
                             <input id="PHONE" name="PHONE" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['PHONE']"
-                                placeholder="{{fieldsDescription.rec['PHONE']?.title}}" >
+                                placeholder="{{fieldsDescription.rec['PHONE']?.title}}" 
+                                maxlength="{{fieldsDescription.rec['PHONE']?.length}}">
                         </div>
 
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="E_MAIL" class="primary-text">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
                             <input id="E_MAIL" name="E_MAIL" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['E_MAIL']"
-                                placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}" >
+                                placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}" 
+                                maxlength="{{fieldsDescription.rec['E_MAIL']?.length}}">
                         </div>
                     </div>
                 </div>
@@ -168,13 +174,15 @@
                             <label for="code" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="code" name="code" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['CODE']"
-                                placeholder="{{fieldsDescription.rec['CODE']?.title}}">
+                                placeholder="{{fieldsDescription.rec['CODE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>
                         <div class="form-group">
                             <label for="indexDep" class="primary-text">{{fieldsDescription.rec['indexDep']?.title}}</label>
                             <input id="indexDep" name="indexDepcode" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['DEPARTMENT_INDEX']"
-                                placeholder="{{fieldsDescription.rec['indexDep']?.title}}">
+                                placeholder="{{fieldsDescription.rec['indexDep']?.title}}"
+                                maxlength="{{fieldsDescription.rec['indexDep']?.length}}">
                         </div>
                     </div>
                     <div class="col-md-9 col-lg-9 col-xl-9">
@@ -182,13 +190,15 @@
                             <label for="title">{{fieldsDescription.rec['title']?.title}}</label>
                             <input id="title" name="title" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['CLASSIF_NAME']"
-                                placeholder="{{fieldsDescription.rec['title']?.title}}">
+                                placeholder="{{fieldsDescription.rec['title']?.title}}"
+                                maxlength="{{fieldsDescription.rec['title']?.length}}">
                         </div>
                         <div class="form-group">
                             <label for="fullTitle" class="primary-text">{{fieldsDescription.rec['fullTitle']?.title}}</label>
                             <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['FULLNAME']"
-                                placeholder="{{fieldsDescription.rec['fullTitle']?.title}}">
+                                placeholder="{{fieldsDescription.rec['fullTitle']?.title}}"
+                                maxlength="{{fieldsDescription.rec['fullTitle']?.length}}">
                         </div>
                     </div>
                 </div>
@@ -199,7 +209,8 @@
                         <label for="code" class="primary-text">{{fieldsDescription.rec['RUBRIC_CODE']?.title}}</label>
                         <input id="code" name="code" type="text" class="form-control light"
                             [(ngModel)]="data.rec['RUBRIC_CODE']"
-                            placeholder="{{fieldsDescription.rec['RUBRIC_CODE']?.title}}">
+                            placeholder="{{fieldsDescription.rec['RUBRIC_CODE']?.title}}"
+                            maxlength="{{fieldsDescription.rec['RUBRIC_CODE']?.length}}">
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-9 col-xl-9">
@@ -207,20 +218,23 @@
                         <label for="title" class="primary-text">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
                         <input id="title" name="title" type="text" class="form-control light"
                             [(ngModel)]="data.rec['CLASSIF_NAME']"
-                            placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}">
+                            placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
+                            maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
                     </div>
                     <div class="form-group">
                         <label for="fullTitle" class="primary-text">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
                         <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
                             [(ngModel)]="data.rec['FULLNAME']"
-                            placeholder="{{fieldsDescription.rec['FULLNAME']?.title}}">
+                            placeholder="{{fieldsDescription.rec['FULLNAME']?.title}}"
+                            maxlength="{{fieldsDescription.rec['FULLNAME']?.length}}">
                     </div>
 
                     <div class="form-group">
                         <label for="note" class="primary-text">{{fieldsDescription.rec['NOTE']?.title}}</label>
                         <input id="note" name="note" type="text" class="form-control light"
                             [(ngModel)]="data.rec['NOTE']"
-                            placeholder="{{fieldsDescription.rec['NOTE']?.title}}">
+                            placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
+                            maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
                     </div>
                 </div>
             </div>
@@ -229,25 +243,29 @@
                     <label for="code" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                     <input id="code" name="code" type="text" class="form-control"
                         [(ngModel)]="data.rec['CODE']"
-                        placeholder="{{fieldsDescription.rec['CODE']?.title}}">
+                        placeholder="{{fieldsDescription.rec['CODE']?.title}}"
+                        maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                 </div>
                 <div class="form-group">
                     <label for="cod-okato" class="primary-text">{{fieldsDescription.rec['COD_OKATO']?.title}}</label>
                     <input id="cod-okato" name="cod-okato" type="text" class="form-control"
                         [(ngModel)]="data.rec['COD_OKATO']"
-                        placeholder="{{fieldsDescription.rec['COD_OKATO']?.title}}">
+                        placeholder="{{fieldsDescription.rec['COD_OKATO']?.title}}"
+                        maxlength="{{fieldsDescription.rec['COD_OKATO']?.length}}">
                 </div>
                 <div class="form-group">
                     <label for="name" class="primary-text">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
                     <input id="name" name="name" type="text" class="form-control"
                         [(ngModel)]="data.rec['CLASSIF_NAME']"
-                        placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}">
+                        placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
+                        maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
                 </div>
                 <div class="form-group">
                     <label for="note" class="primary-text">{{fieldsDescription.rec['NOTE']?.title}}</label>
                     <input id="note" name="note" type="text" class="form-control"
                         [(ngModel)]="data.rec['NOTE']"
-                        placeholder="{{fieldsDescription.rec['NOTE']?.title}}">
+                        placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
+                        maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
                 </div>
             </div>
         </form>

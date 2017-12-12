@@ -21,7 +21,7 @@
                 <div class="item-count pull-right usual-border m-font">
                     <span class="item-count-content">
                         Записей:
-                        <span class="secondary-text">{{filteredNodes?.length}}</span>
+                        <span class="secondary-text">{{paginationConfig?.allItemsCurrent}}</span>
                     </span>
                 </div>
                 <button class="btn btn-primary-light pull-right config-btn" tooltip="Настройка отображения" containerClass="tooltip-info"
@@ -71,7 +71,7 @@
             <div [ngStyle]="{'width.px': tableWidth}">
                 <ng-container *ngIf="!selectedNode?.updating">
                     <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating"  [customFields]="customFields" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
-                    <eos-node-list-pagination [total]="filteredNodes?.length" [config]="_page" [currentState]="currentState" [hideTree]="hideTree"></eos-node-list-pagination>
+                    <eos-node-list-pagination [currentState]="currentState"></eos-node-list-pagination>
                 </ng-container>
             </div>
         </div>
