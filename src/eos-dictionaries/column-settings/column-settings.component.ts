@@ -21,17 +21,21 @@ export class ColumnSettingsComponent {
         // value[3] - src
         // value[1] - droped elem
         dragulaService.drop.subscribe((value) => {
-            if (value[3].id === 'selected') {
-                this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
-                this.removeToCurrent();
+            if (value[2].id !== value[3].id) {
+                if (value[3].id === 'selected') {
+                    this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
+                    this.removeToCurrent();
+                } else {
+                    this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
+                    this.addToCurrent();
+                }
             } else {
-                this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
-                this.addToCurrent();
+                value[1].style = 'background-color: transparent';
             }
           });
 
         dragulaService.drag.subscribe((value) => {
-            value[1].style = 'background-color: #d9edf7; color: #000';
+            value[1].style = 'background-color: #d9edf7';
           });
     }
 
@@ -50,7 +54,10 @@ export class ColumnSettingsComponent {
 
     addToCurrent() {
         if (this.selectedDictItem) {
-            this.currentFields.push(this.selectedDictItem);
+            // console.log('addToCurrent, this.selectedDictItem', this.selectedDictItem);
+            if (!~this.currentFields.findIndex((_f) => _f.key === this.selectedDictItem.key)) {
+                this.currentFields.push(this.selectedDictItem);
+            }
             this.dictionaryFields.splice(this.dictionaryFields.indexOf(this.selectedDictItem), 1);
             this.selectedDictItem = null;
         }
@@ -58,7 +65,9 @@ export class ColumnSettingsComponent {
 
     removeToCurrent() {
         if (this.selectedCurrItem) {
-            this.dictionaryFields.push(this.selectedCurrItem);
+            if (!~this.dictionaryFields.findIndex((_f) => _f.key === this.selectedCurrItem.key)) {
+                this.dictionaryFields.push(this.selectedCurrItem);
+            }
             this.currentFields.splice(this.currentFields.indexOf(this.selectedCurrItem), 1);
             this.selectedCurrItem = null;
         }
