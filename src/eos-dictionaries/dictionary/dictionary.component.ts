@@ -268,7 +268,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.remove:
-                this.deleteSelectedItems();
+                this._deleteItems();
                 break;
 
             case E_RECORD_ACTIONS.removeHard:
@@ -393,24 +393,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * Logic delete checked elements on page
-     */
-    public deleteSelectedItems(): void {
-        let delCount = 0, allCount = 0;
-        this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) { allCount++ }
-            if (node.marked && node.isDeleted) { delCount++ }
-        })
-        if (delCount === allCount) {
-            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
-        }
-        this._dictSrv.deleteMarkedNodes()
-            .then(() => this.updateMarks())
-            .catch((err) => this._errHandler(err));
-    }
-
-    /**
-     * Physical delete checked elements on page
+     * Physical delete marked elements on page
      */
     public physicallyDelete(): void {
         let list = '', j = 0;
@@ -516,6 +499,23 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._clearForm();
     }
 
+    /**
+     * Logic delete marked elements on page
+     */
+    private _deleteItems(): void {
+        let delCount = 0, allCount = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) { allCount++ }
+            if (node.marked && node.isDeleted) { delCount++ }
+        })
+        if (delCount === allCount) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
+        }
+        this._dictSrv.markDeleted(true, true) // todo: add recursive dialogue if any children
+        .then(() => this.updateMarks())
+            .catch((err) => this._errHandler(err));
+    }
+
     private _restoreItems(): void {
         const marked = this.visibleNodes.filter((node) => node.marked);
         const withChildren: string[] = [];
@@ -532,18 +532,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         });
 
         if (withChildren.length) {
-                const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-                _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+            _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
 
-                this._confirmSrv
-                    .confirm(_confrm)
-                    .then((confirmed: boolean) => {
-                        if (confirmed) {
-                            this._dictSrv.restoreNodes(marked, confirmed);
-                        }
-                    });
+            this._confirmSrv
+                .confirm(_confrm)
+                .then((confirmed: boolean) => {
+                    if (confirmed) {
+                        this._dictSrv.markDeleted(confirmed, false);
+                    }
+                });
         } else {
-            this._dictSrv.restoreNodes(marked);
+            this._dictSrv.markDeleted(false, false);
         }
 
         this.anyMarked = false;

@@ -159,9 +159,7 @@ export class EosDictService {
      */
     public changePagination(config: IPaginationConfig) {
         this.paginationConfig = config;
-        let filtredNodeList: EosDictionaryNode[];
-        filtredNodeList = this._filtredDelete(this._currentList);
-        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        const filtredNodeList = this._filterList(this._currentList);
         this._updateVisibleNodes(filtredNodeList);
         this._paginationConfig$.next(this.paginationConfig);
     }
@@ -305,10 +303,10 @@ export class EosDictService {
 
     private _setCurrentList(nodes: EosDictionaryNode[]) {
         this._currentList = nodes || [];
+        console.log('curent list', nodes);
         // todo: filter & order list before anounce
         let filtredNodeList: EosDictionaryNode[];
-        filtredNodeList = this._filtredDelete(this._currentList);
-        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        filtredNodeList = this._filterList(this._currentList);
         filtredNodeList = this.dictionary.reorderList(filtredNodeList);
         this._initPaginationConfig(filtredNodeList.length);
         filtredNodeList = this.dictionary.reorderList(filtredNodeList)
@@ -323,27 +321,22 @@ export class EosDictService {
     }
 
     /**
-     * Filters dublicate nodes on list
+     * @description Filters list of nodes
      * @param nodeList list for filtering
      * @returns list without dublicate
      */
-    private _filtredDublicate(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
-        return nodeList.filter((item, index) => {
-            return nodeList.lastIndexOf(item) === index
-        });
-    }
+    private _filterList(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
+        let nodes = nodeList || [];
+        if (nodes && nodes.length) {
+            nodes = nodes.filter((item, index) => nodes.lastIndexOf(item) === index);
 
-    /**
-     * Filters delete nodes on list if show delete is active
-     * @param nodeList list for filtering
-     * @returns list without delete nodes
-     */
-    private _filtredDelete(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
-        if (!this.viewParameters.showDeleted) {
-            return nodeList.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            if (!this.viewParameters.showDeleted) {
+                nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            }
         } else {
-            return nodeList;
+            nodes = [];
         }
+        return nodes;
     }
 
     /**
@@ -353,7 +346,9 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            if (this.selectedNode && this.selectedNode.id !== nodeId) {
+            console.log('selectNode', nodeId, this.selectedNode);
+            if (!this.selectedNode || this.selectedNode.id !== nodeId) {
+                console.log('getting node');
                 return this._getNode(nodeId)
                     .then((node) => {
                         if (node) {
@@ -392,6 +387,13 @@ export class EosDictService {
             this._selectedNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);
+        }
+        if (this._currentList === undefined) {
+            if (node) {
+                this._setCurrentList(node.children);
+            } else {
+                this._setCurrentList([]);
+            }
         }
     }
 
@@ -463,12 +465,14 @@ export class EosDictService {
     }
 
     /**
-     *
-     * @param nodes
+     * @description Marks or unmarks record as deleted
+     * @param recursive true if need to delete with children, default false
+     * @param deleted true - mark as deleted, false - unmark as deleted
+     * @returns Promise<boolean>
      */
-    public deleteMarkedNodes(): Promise<boolean> {
+    public markDeleted(recursive = false, deleted = true): Promise<boolean> {
         if (this.dictionary) {
-            return this.dictionary.deleteMarked()
+            return this.dictionary.markDeleted(recursive, true)
                 .then((resp) => {
                     return this.dictionary.getChildren(this.selectedNode)
                         .then((list) => {
@@ -481,9 +485,14 @@ export class EosDictService {
         }
     }
 
-    public restoreNodes(nodes: EosDictionaryNode[], recursive = false): Promise<boolean> {
+    /**
+     * @description Unmark records as deleted
+     * @param recursive true if need to restore children, default false
+     * @returns Promise<boolean>
+     */
+    public unmarkDeleted(recursive = false): Promise<boolean> {
         if (this.dictionary) {
-            return this.dictionary.restoreMarked(recursive)
+            return this.dictionary.markDeleted(recursive, false)
                 .then(() => {
                     return this.dictionary.getChildren(this.selectedNode)
                         .then((list) => {
@@ -529,17 +538,15 @@ export class EosDictService {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
                     nodes = this.dictionary.updateNodes(data, false);
-                    this._setCurrentList(nodes);
-                    this.viewParameters.searchResults = true;
+                    // this._setCurrentList(nodes);
+                    // this.viewParameters.searchResults = true;
                     if (showDeleted && mode === 'full') {
                         this.viewParameters.showDeleted = true;
-                        let filtredNodeList: EosDictionaryNode[];
-                        filtredNodeList = this._filtredDelete(this._currentList);
-                        filtredNodeList = this._filtredDublicate(filtredNodeList);
-                        this._updateVisibleNodes(filtredNodeList);
-                        this._viewParameters$.next(this.viewParameters);
+                        // const filtredNodeList = this._filterList(this._currentList);
+                        // this._updateVisibleNodes(filtredNodeList);
+                        // this._viewParameters$.next(this.viewParameters);
                     }
-                    this._viewParameters$.next(this.viewParameters);
+                    // this._viewParameters$.next(this.viewParameters);
                 }
                 this._setCurrentList(nodes);
                 this.viewParameters.updating = false;
@@ -618,19 +625,12 @@ export class EosDictService {
         if (this.dictionary) {
             if (this.viewParameters.searchResults) {
                 this._currentList = this.dictionary.reorderList(this._currentList)
-                let filtredNodeList: EosDictionaryNode[];
-                filtredNodeList = this._filtredDelete(this._currentList);
-                filtredNodeList = this._filtredDublicate(filtredNodeList);
-                this._updateVisibleNodes(filtredNodeList);
-                this._viewParameters$.next(this.viewParameters);
             } else {
                 this._currentList = this.dictionary.reorderList(this._currentList, this.selectedNode.id);
-                let filtredNodeList: EosDictionaryNode[];
-                filtredNodeList = this._filtredDelete(this._currentList);
-                filtredNodeList = this._filtredDublicate(filtredNodeList);
-                this._updateVisibleNodes(filtredNodeList);
-                this._viewParameters$.next(this.viewParameters);
             }
+            const filtredNodeList = this._filterList(this._currentList);
+            this._updateVisibleNodes(filtredNodeList);
+            this._viewParameters$.next(this.viewParameters);
         }
     }
 
@@ -683,9 +683,7 @@ export class EosDictService {
                 if (node.isDeleted) { node.marked = false; }
             });
         }
-        let filtredNodeList: EosDictionaryNode[];
-        filtredNodeList = this._filtredDelete(this._currentList);
-        filtredNodeList = this._filtredDublicate(filtredNodeList);
+        const filtredNodeList = this._filterList(this._currentList);
         this._initPaginationConfig(filtredNodeList.length);
         this._updateVisibleNodes(filtredNodeList);
         this._viewParameters$.next(this.viewParameters);
