@@ -131,6 +131,10 @@ export class EosDictService {
         this._viewParameters$.next(this.viewParameters);
     }
 
+    /**
+     * Initioalisation pagination configuration
+     * @param allCount total count nodes
+     */
     private _initPaginationConfig(allCount: number) {
         this.paginationConfig = {
             start: 1,
@@ -142,6 +146,10 @@ export class EosDictService {
         return this.paginationConfig;
     }
 
+    /**
+     * Change pagination configuration and share state
+     * @param config configuration pagination
+     */
     public changePagination(config: IPaginationConfig) {
         this.paginationConfig = config;
         let filtredNodeList: EosDictionaryNode[];
@@ -173,7 +181,7 @@ export class EosDictService {
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
         return this._profileSrv.checkAuth()
-            .then((authorized) => {
+            .then((authorized: boolean) => {
                 if (authorized) {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
                         return this.dictionary;
@@ -293,6 +301,7 @@ export class EosDictService {
         let filtredNodeList: EosDictionaryNode[];
         filtredNodeList = this._filtredDelete(this._currentList);
         filtredNodeList = this._filtredDublicate(filtredNodeList);
+        filtredNodeList = this.dictionary.reorderList(filtredNodeList);
         this._initPaginationConfig(filtredNodeList.length);
         this._updateVisibleNodes(filtredNodeList);
     }
@@ -303,13 +312,23 @@ export class EosDictService {
         this._currentList$.next(this._visibleListNodes);
     }
 
-    private _filtredDublicate(nodeList: EosDictionaryNode[]) {
+    /**
+     * Filters dublicate nodes on list
+     * @param nodeList list for filtering
+     * @returns list without dublicate
+     */
+    private _filtredDublicate(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
         return nodeList.filter((item, index) => {
             return nodeList.lastIndexOf(item) === index
         });
     }
 
-    private _filtredDelete(nodeList: EosDictionaryNode[]) {
+    /**
+     * Filters delete nodes on list if show delete is active
+     * @param nodeList list for filtering
+     * @returns list without delete nodes
+     */
+    private _filtredDelete(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
         if (!this.viewParameters.showDeleted) {
             return nodeList.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         } else {
@@ -325,8 +344,6 @@ export class EosDictService {
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
             if (this.selectedNode && this.selectedNode.id !== nodeId) {
-                this.viewParameters.showDeleted = false;
-                this._viewParameters$.next(this.viewParameters);
                 return this._getNode(nodeId)
                 .then((node) => {
                     if (node) {
@@ -435,9 +452,13 @@ export class EosDictService {
         }
     }
 
-    public deleteMarkedNodes(nodes: string[]): Promise<boolean> {
+    /**
+     *
+     * @param nodes
+     */
+    public deleteMarkedNodes(): Promise<boolean> {
         if (this.dictionary) {
-            return this.dictionary.deleteMarked(nodes)
+            return this.dictionary.deleteMarked()
                 .then((resp) => {
                     return this.dictionary.getChildren(this.selectedNode)
                         .then((list) => {
