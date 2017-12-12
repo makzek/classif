@@ -472,28 +472,8 @@ export class EosDictService {
      */
     public markDeleted(recursive = false, deleted = true): Promise<boolean> {
         if (this.dictionary) {
-            return this.dictionary.markDeleted(recursive, true)
+            return this.dictionary.markDeleted(recursive, deleted)
                 .then((resp) => {
-                    return this.dictionary.getChildren(this.selectedNode)
-                        .then((list) => {
-                            this._setCurrentList(list);
-                            return true;
-                        });
-                });
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-
-    /**
-     * @description Unmark records as deleted
-     * @param recursive true if need to restore children, default false
-     * @returns Promise<boolean>
-     */
-    public unmarkDeleted(recursive = false): Promise<boolean> {
-        if (this.dictionary) {
-            return this.dictionary.markDeleted(recursive, false)
-                .then(() => {
                     return this.dictionary.getChildren(this.selectedNode)
                         .then((list) => {
                             this._setCurrentList(list);
