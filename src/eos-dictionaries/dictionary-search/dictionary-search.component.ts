@@ -19,9 +19,7 @@ import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 })
 
 export class DictionarySearchComponent implements OnDestroy {
-    @Output() searchResult: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>();
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
-    @Output() searchStart: EventEmitter<any> = new EventEmitter(); // event bigin search
 
     dictId = '';
     fieldsDescription = {};
@@ -42,12 +40,12 @@ export class DictionarySearchComponent implements OnDestroy {
     @ViewChild('quick') qSearchPop;
 
     isOpenQuick = false;
-    dataQuick = '';
+    dataQuick = null;
 
     hasDate: boolean;
     hasQuick: boolean;
     hasFull: boolean;
-    type:  E_DICT_TYPE;
+    type: E_DICT_TYPE;
 
     dictSubscription: Subscription;
 
@@ -109,21 +107,19 @@ export class DictionarySearchComponent implements OnDestroy {
 
     quickSearch(evt: KeyboardEvent) {
         if (evt.keyCode === 13) {
-            if (!this.searchDone) {
+            if (this.searchDone) {
+                this.dataQuick = this.dataQuick.trim();
+                if (this.dataQuick !== '') {
+                    this.searchDone = false;
+                    this._dictSrv.search(this.dataQuick, this.settings)
+                        .then(nodes => this.searchDone = true);
+                }
+            } else {
                 this._msgSrv.addNewMessage({
                     title: 'Идет поиск!',
                     type: 'warning',
                     msg: 'Пожалуйста подождите.'
                 })
-            } else {
-                this.searchDone = false;
-                this.searchStart.emit();
-                this.settings.deleted = true;
-                this._dictSrv.search(this.dataQuick, this.settings)
-                    .then((nodes) => {
-                        this.searchDone = true;
-                        this.searchResult.emit(nodes)
-                    })
             }
         }
     }
@@ -144,11 +140,9 @@ export class DictionarySearchComponent implements OnDestroy {
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
-            this.searchStart.emit();
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then((nodes) => {
                     this.searchDone = true;
-                    this.searchResult.emit(nodes);
                 });
         } else {
             this._msgSrv.addNewMessage({

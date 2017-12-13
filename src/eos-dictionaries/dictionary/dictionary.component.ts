@@ -30,7 +30,6 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
-    WARN_LOGIC_DELETE_ONE,
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
@@ -154,7 +153,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((state: boolean[]) => this.currentState = state);
 
         _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
-            .subscribe((dictionary) => {
+            .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
                     this.dictionaryId = dictionary.id;
@@ -185,7 +184,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        _dictSrv.currentList$.takeUntil(this.ngUnsubscribe)
+        _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
                 this.visibleNodes = nodes;
                 this.updateMarks();
@@ -321,7 +320,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.remove:
-                this.deleteSelectedItems();
+                this._deleteItems();
                 break;
 
             case E_RECORD_ACTIONS.removeHard:
@@ -435,50 +434,19 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.markItem(this.allMarked);
     }
 
-    toggleAllMarks(): void {
+    /**
+     * Toggle checkbox checked all
+     */
+    public toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
         this._dictSrv.markItem(this.allMarked);
     }
 
-    /* darkside */
-
-    deleteSelectedItems(): void {
-        const deletedNames: string[] = [],
-            selectedNodes: string[] = [];
-        let countMakedItems = 0,
-            str = '';
-
-        this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) { countMakedItems++ }
-            if (node.marked && !node.isDeleted) {
-                selectedNodes.push(node.id);
-                node.marked = false;
-            } else if (node.marked && node.isDeleted) {
-                deletedNames.push(node.title)
-            }
-        });
-
-        for (const item of deletedNames) {
-            str += '"' + item + '", ';
-        }
-        str = str.slice(0, str.length - 2);
-
-        if (countMakedItems === 0) {
-            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-        } else if (deletedNames.length === 1) {
-            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-        } else if (deletedNames.length) {
-            const WARN = Object.assign({}, WARN_LOGIC_DELETE);
-            WARN.msg = WARN.msg.replace('{{elem}}', str);
-            this._msgSrv.addNewMessage(WARN);
-        } else {
-            this._dictSrv.deleteMarkedNodes(selectedNodes)
-                .catch((err) => this._errHandler(err));
-        }
-    }
-
+    /**
+     * Physical delete marked elements on page
+     */
     public physicallyDelete(): void {
         let list = '', j = 0;
         this.visibleNodes.forEach((node: EosDictionaryNode) => {
@@ -567,10 +535,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     title: title,
                     fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
                 });
-                if (hide) {
+                // if (hide) {
                     this.creatingModal.hide();
+                // }
+                // this._clearForm();
+                if (!hide) {
+                    this._create();
                 }
-                this._clearForm();
             })
             .catch((err) => this._errHandler(err));
     }
@@ -578,6 +549,23 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    /**
+     * Logic delete marked elements on page
+     */
+    private _deleteItems(): void {
+        let delCount = 0, allCount = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) { allCount++ }
+            if (node.marked && node.isDeleted) { delCount++ }
+        })
+        if (delCount === allCount) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
+        }
+        this._dictSrv.markDeleted(true, true) // todo: add recursive dialogue if any children
+        .then(() => this.updateMarks())
+            .catch((err) => this._errHandler(err));
     }
 
     private _restoreItems(): void {
@@ -603,11 +591,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 .confirm(_confrm)
                 .then((confirmed: boolean) => {
                     if (confirmed) {
-                        this._dictSrv.restoreNodes(marked, confirmed);
+                        this._dictSrv.markDeleted(confirmed, false);
                     }
                 });
         } else {
-            this._dictSrv.restoreNodes(marked);
+            this._dictSrv.markDeleted(false, false);
         }
 
         this.anyMarked = false;

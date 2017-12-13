@@ -34,7 +34,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this._dictSrv.viewParameters$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((params) => this.params = params);
+            .subscribe((params: IDictionaryViewParameters) => this.params = params);
     }
 
     ngOnDestroy() {
