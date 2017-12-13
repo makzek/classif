@@ -269,31 +269,26 @@ export class EosDictionary {
         return _result;
     }
 
-    deleteMarked(nodeIds: string[], hard = false): Promise<any> {
+    /**
+     * @description Set DELETED flag for marked records
+     * @param recursive do cascade operation, default false
+     * @param deleted mark as deleted (true), unmarkmark as deleted (false)
+     */
+    markDeleted(recursive = false, deleted = true): Promise<any> {
         const nodeSet: any[] = [];
 
-        nodeIds.forEach((nodeId) => {
-            const node = this._nodes.get(nodeId);
-            if (node) {
-                nodeSet.push(node.data.rec);
-            }
-        });
-
-        return this.descriptor.markDeleted(nodeSet);
-    }
-
-    restoreMarked(recursive = false): Promise<any> {
-        const nodeSet: any[] = [];
         this._nodes.forEach((node) => {
             if (node.marked) {
                 nodeSet.push(node.data.rec);
+                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => nodeSet.push(chld.data.rec));
                 }
             }
         });
-
-        return this.descriptor.markDeleted(nodeSet, 0);
+        // 1 - mark deleted
+        // 0 - unmark deleted
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
     }
 
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {

@@ -24,27 +24,30 @@
 
 <ng-template #quickSearchModal>
     <div *ngIf="type === 1 || type === 2">
-        <form #form="ngForm">
-            <div class="quick-search-top usual-border">
-                <span class="pull-left title">Область быстрого поиска</span>
-            </div>
-            <div class="col-1 quickRadio">
+        <div class="quick-search-top usual-border">
+            <span class="pull-left title">Область быстрого поиска</span>
+        </div>
+        <div class="col-1 quickRadio">
+            <form>
                 <div class="radio-inline quick">
                     <label>
-                        <input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode">
-                        <span></span>Во всём справочнике</label>
+                    <input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode">
+                    <span></span>Во всём справочнике</label>
                 </div>
                 <div class="radio-inline quick">
                     <label>
                         <input type="radio" name="quick-space" [value]="2" [(ngModel)]="settings.mode">
                         <span></span>В текущей ветке</label>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
     <div class="quickInput">
-        <input type="text" class="form-control quick-search-form usual-border" [(ngModel)]="dataQuick" (keydown)="quickSearch($event)">
-        <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()"><span class="eos-icon eos-icon-close-blue"></span></button>
+        <input (keydown)="quickSearch($event)" type="text" name="quick" class="form-control quick-search-form usual-border"
+        [(ngModel)]="dataQuick" required>
+        <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()">
+            <span class="eos-icon eos-icon-close-blue"></span>
+        </button>
     </div>
 </ng-template>
 
@@ -109,7 +112,7 @@
                             <label for="SURNAME" class="primary-text">Фамилия</label>
                             <input id="SURNAME" name="SURNAME" type="text" class="form-control light"
                                 [(ngModel)]="data['printInfo']['SURNAME']"
-                                placeholder="Фамилия" >
+                                placeholder="Фамилия"
                                 maxlength="64">
                         </div>
                     </div>
@@ -122,14 +125,14 @@
                                     <label for="NAME" class="primary-text">Имя</label>
                                     <input id="NAME" name="NAME" type="text" class="form-control light"
                                         [(ngModel)]="data['printInfo']['NAME']"
-                                        placeholder="Имя" >
+                                        placeholder="Имя"
                                         maxlength="64">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="PATRON" class="primary-text">Отчество</label>
                                     <input id="PATRON" name="PATRON" type="text" class="form-control light"
                                         [(ngModel)]="data['printInfo']['PATRON']"
-                                        placeholder="Отчество" >
+                                        placeholder="Отчество"
                                         maxlength="64">
                                 </div>
                             </div>
@@ -140,7 +143,7 @@
                             <label for="PHONE" class="primary-text">{{fieldsDescription.rec['PHONE']?.title}}</label>
                             <input id="PHONE" name="PHONE" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['PHONE']"
-                                placeholder="{{fieldsDescription.rec['PHONE']?.title}}" 
+                                placeholder="{{fieldsDescription.rec['PHONE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['PHONE']?.length}}">
                         </div>
 
@@ -148,7 +151,7 @@
                             <label for="E_MAIL" class="primary-text">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
                             <input id="E_MAIL" name="E_MAIL" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['E_MAIL']"
-                                placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}" 
+                                placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}"
                                 maxlength="{{fieldsDescription.rec['E_MAIL']?.length}}">
                         </div>
                     </div>

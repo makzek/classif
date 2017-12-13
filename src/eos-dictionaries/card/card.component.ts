@@ -128,7 +128,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => this.nodes = nodes);
+            .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
     ngOnInit() {
