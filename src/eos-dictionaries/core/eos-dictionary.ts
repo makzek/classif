@@ -288,7 +288,6 @@ export class EosDictionary {
             return this.descriptor.getChildren(node.data.rec)
                 .then((nodes) => {
                     const res = this.updateNodes(nodes, true);
-                    console.log(res);
                     node.updating = false;
                     return res;
                 })
@@ -423,6 +422,7 @@ export class EosDictionary {
                 if (orderedNodes.findIndex((item) => item.id === node.id) === -1) {
                     orderedNodes.push(node);
                 }
+
             })
             return orderedNodes;
         }
