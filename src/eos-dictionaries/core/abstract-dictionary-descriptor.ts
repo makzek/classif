@@ -13,6 +13,8 @@ import { SEARCH_TYPES } from '../consts/search-types';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
+import { EosDictService } from '../services/eos-dict.service';
+
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
     readonly title: string;
@@ -144,7 +146,7 @@ export abstract class AbstractDictionaryDescriptor {
                 }
             } else {
                 _description[_f.key] = {};
-                /* recive other dict description */
+                // this.dictSrv.getDictionaryField(_f.key);
             }
         });
         return _description;
@@ -225,8 +227,14 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
 
-    deleteRecord(data: any): Promise<any> {
+    deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
+    }
+
+    deleteRecords(records: IEnt[]): Promise<any> {
+        records.forEach((rec) => rec._State = _ES.Deleted);
+        const changes = this.apiSrv.changeList(records);
+        return this.apiSrv.batch(changes, '');
     }
 
     abstract getChildren(...params): Promise<any[]>;
@@ -237,7 +245,7 @@ export abstract class AbstractDictionaryDescriptor {
             query = ALL_ROWS;
         }
 
-        console.warn('getData', query, order, limit);
+        // console.warn('getData', query, order, limit);
 
         const req = { [this.apiInstance]: query };
 

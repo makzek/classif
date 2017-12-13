@@ -83,14 +83,6 @@ export class EosDictService {
         return this.dictionary.orderBy;
     }
 
-    /*get currentTab(): number {
-        return this._currentTab;
-    }
-
-    set currentTab(val: number) {
-        this._currentTab = val;
-    }*/
-
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -452,12 +444,8 @@ export class EosDictService {
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
-                    return this.dictionary.getChildren(this.selectedNode)
-                        .then((nodes) => {
-                            this._setCurrentList(nodes);
-                            this._selectedNode$.next(this.selectedNode);
-                            return this.dictionary.getNode(newNodeId + '');
-                        });
+                    this._selectedNode$.next(this.selectedNode);
+                    return this.dictionary.getNode(newNodeId + '');
                 });
         } else {
             return Promise.reject('No selected node');
@@ -485,15 +473,19 @@ export class EosDictService {
         }
     }
 
-    public physicallyDelete(nodeId: string): Promise<any> {
-        const _node = this.dictionary.getNode(nodeId);
-        return this.dictionary.descriptor.deleteRecord(_node.data.rec)
-            .then(() => {
-                this.dictionary.deleteNode(nodeId, true);
-                // console.log('update list', this.selectedNode);
-                this._setCurrentList(this.selectedNode.children);
-                this._selectedNode$.next(this.selectedNode);
-            });
+    public deleteMarked(): Promise<boolean> {
+        if (this.dictionary) {
+            return this.dictionary.deleteMarked()
+                .then((resp) => {
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((list) => {
+                            this._setCurrentList(list);
+                            return true;
+                        });
+                });
+        } else {
+            return Promise.resolve(false);
+        }
     }
 
     public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
