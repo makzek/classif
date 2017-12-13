@@ -92,7 +92,8 @@ export class EosBreadcrumbsService {
                             });
                     } else if (_current.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
                         const _dictId = _current.params.dictionaryId;
-                        const _nodeId = _current.params.nodeId
+                        const _nodeId = _current.params.nodeId;
+                        console.warn('remove node from breadcrumbs');
                         _crumbPromise = this._dictSrv.getNode(_dictId, _nodeId)
                             .then((node) => {
                                 if (node) {
