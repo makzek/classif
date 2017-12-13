@@ -444,8 +444,12 @@ export class EosDictService {
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
                     console.log('created node', newNodeId);
-                    this._selectedNode$.next(this.selectedNode);
-                    return this.dictionary.getNode(newNodeId + '');
+                    return this.dictionary.getChildren(this.selectedNode)
+                        .then((nodes) => {
+                            this._setCurrentList(nodes);
+                            this._selectedNode$.next(this.selectedNode);
+                            return this.dictionary.getNode(newNodeId + '');
+                        });
                 });
         } else {
             return Promise.reject('No selected node');
