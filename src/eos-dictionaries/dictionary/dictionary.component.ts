@@ -105,7 +105,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     readonly MIN_COL_WIDTH = 90; // 40px - paddings, 50px - content
     readonly DEFAULT_FIELD_LEN = 200;
 
-    tableWidth = 0;
+    tableWidth: number;
 
     public fonConf = {
         width: 0 + 'px',
