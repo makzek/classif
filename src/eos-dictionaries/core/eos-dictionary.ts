@@ -386,18 +386,23 @@ export class EosDictionary {
         }
     }
 
-    private _orderByField(array: EosDictionaryNode[]): EosDictionaryNode[] {
+    private _orderByField(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
         const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
-        return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
-            const item1 = a.data.rec[_orderBy.fieldKey].toString().toLowerCase(),
-                item2 = b.data.rec[_orderBy.fieldKey].toString().toLowerCase();
-            if (item1 > item2) {
+        return nodes.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
+            let _a = a.data.rec[_orderBy.fieldKey];
+            let _b = b.data.rec[_orderBy.fieldKey];
+
+            if (typeof _a === 'string' || typeof _b === 'string') {
+                _a = (_a + '').toLocaleLowerCase();
+                _b = (_b + '').toLocaleLowerCase();
+            }
+            if (_a > _b) {
                 return _orderBy.ascend ? 1 : -1;
             }
-            if (item1 < item2) {
+            if (_a < _b) {
                 return _orderBy.ascend ? -1 : 1;
             }
-            if (item1 === item2) {
+            if (_a === _b) {
                 return 0;
             }
         });
