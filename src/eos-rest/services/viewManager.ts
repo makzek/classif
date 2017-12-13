@@ -17,8 +17,12 @@ export class ViewManager {
         return tmp;
     }
 
-    addViewColumn(view: SRCH_VIEW): SRCH_VIEW_DESC {
-        const result = <SRCH_VIEW_DESC>{_State: _ES.Added};
+    /**
+     * Add
+     * @param view User
+     */
+    public addViewColumn(view: SRCH_VIEW): SRCH_VIEW_DESC {
+        const result = <SRCH_VIEW_DESC>{_State: _ES.Added };
         view.SRCH_VIEW_DESC_List.push(result);
         return result;
     }

@@ -30,6 +30,6 @@ export class PushpinComponent {
      * @param desk desktop with which add dictionary
      */
     public pin(desk: EosDesk) {
-        if (!this._deskSrv.addNewItemToDesk(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
+        if (!this._deskSrv.appendDeskItemToView(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
     }
 }
