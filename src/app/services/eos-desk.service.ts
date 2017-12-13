@@ -132,10 +132,11 @@ export class EosDeskService {
      * @param desk desktop with which add dictionary
      */
     public appendDeskItemToView(desk: IDesk) {
+        const dictionaryURL = this._router.url.split('/')[2];
         const item: IDeskItem = {
-            title: this._dictSrv.dictionary.title,
-            fullTitle: this._dictSrv.dictionary.title,
-            url: this._router.url
+            title: this._dictSrv.dictionaryTitle,
+            fullTitle: this._dictSrv.dictionaryTitle,
+            url: '/spravochniki/' + dictionaryURL
         }
         const view: SRCH_VIEW = this.findView(desk.id);
         if (view !== undefined) {
@@ -143,13 +144,12 @@ export class EosDeskService {
                 return false;
             }
             const col = this.viewManager.addViewColumn(view);
-            col.BLOCK_ID = item.url.split('/')[2];
+            col.BLOCK_ID = dictionaryURL
             col.LABEL = item.title;
             this.viewManager.saveView(view).then(() => {
                 this._appCtx.reInit();
             })
         }
-
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
             desk.references.push(item);
