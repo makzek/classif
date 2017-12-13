@@ -213,6 +213,7 @@ export class PipRX extends PipeUtils {
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
+                console.log('response', r);
                 const answer: any[] = [];
                 const e = this.parseBatchResponse(r, answer);
                 if (e) {

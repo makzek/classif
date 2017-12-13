@@ -174,7 +174,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
-            console.log('recived description', this.nodeData);
+            // console.log('recived description', this.nodeData);
         }
     }
 

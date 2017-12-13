@@ -280,9 +280,11 @@ export class EosDictService {
     }
 
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        // console.log('reloadNode', node);
         node.updating = true;
         return this.dictionary.descriptor.getRecord(node.originalId)
             .then((nodeData) => {
+                // console.log('reloadNode', nodeData);
                 node.updateData(nodeData);
                 node.updating = false;
                 return node;
@@ -303,7 +305,7 @@ export class EosDictService {
 
     private _setCurrentList(nodes: EosDictionaryNode[]) {
         this._currentList = nodes || [];
-        console.log('curent list', nodes);
+        // console.log('curent list', nodes);
         // todo: filter & order list before anounce
         let filtredNodeList: EosDictionaryNode[];
         filtredNodeList = this._filterList(this._currentList);
