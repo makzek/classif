@@ -246,6 +246,18 @@ export class EosDictionaryNode {
         return _data;
     }
 
+    getCreatingData(): any {
+        const _data = {
+            rec: {},
+        };
+        this._descriptor.getEditView(this.data).forEach((_f) => {
+            if (_f.type === E_FIELD_TYPE.dictionary) {
+                _data[_f.key] = {};
+            }
+        });
+        return _data;
+    }
+
     getShortViewFieldsDescription(): any {
         return this._descriptor.getShortQuickFieldDescription(this.data);
     }
@@ -277,8 +289,8 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                console.log('dictionary', _f);
                 _data[_f.key] = this.data[_f.key] || {};
+                // console.log('dictionary', _data[_f.key]);
                 /* recive other dict data */
             }
         });
