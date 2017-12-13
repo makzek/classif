@@ -234,7 +234,7 @@ export class EosDictService {
                     .catch((err) => {
                         this.closeDictionary();
                         this._mDictionaryPromise.delete(dictionaryId);
-                        return null;
+                        Promise.reject(err);
                     });
                 this._mDictionaryPromise.set(dictionaryId, _p);
             } else {
