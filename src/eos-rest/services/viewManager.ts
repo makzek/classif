@@ -27,6 +27,13 @@ export class ViewManager {
         return result;
     }
 
+    public updateViewColumn(view: SRCH_VIEW , blockId: string, newName: string): SRCH_VIEW_DESC {
+        const editEl = view.SRCH_VIEW_DESC_List.find(el => el.BLOCK_ID === blockId);
+        editEl.LABEL = newName;
+        editEl._State = _ES.Modified;
+        return editEl;
+    }
+
     editViewColumn(view: SRCH_VIEW, blockId: string): SRCH_VIEW_DESC {
         const col = view.SRCH_VIEW_DESC_List.find(c => c.BLOCK_ID === blockId && c._State !== _ES.Deleted);
         if (col !== undefined) {

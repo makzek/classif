@@ -158,6 +158,22 @@ export class EosDeskService {
         /*tslint:enable*/
     }
 
+    /**
+     * Update link name on the server
+     * @param link editing item
+     */
+    public updateName(link: IDeskItem): void {
+        const v = this.findView(this._selectedDesk.id)
+        if (v !== undefined) {
+            const blockId = link.url.split('/')[2];
+            const col = this.viewManager.updateViewColumn(v, blockId, link.title);
+            this.viewManager.saveView(v).then(() => {
+                this._appCtx.reInit();
+                this._selectedDesk$.next(this._selectedDesk);
+            })
+        }
+    }
+
     /* getDesk(id: string): Promise<EosDesk> {
         return new Promise((res, rej) => { // tslint:disable-line:no-unused-variable
             res(this._desksList.find((_desk) => id === _desk.id));
