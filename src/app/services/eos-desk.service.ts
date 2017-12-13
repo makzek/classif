@@ -157,11 +157,13 @@ export class EosDeskService {
                 this.appendDeskItemToView(desk.id, item);
             })
         } else if (segments.length === 4) {
+            console.warn('remove getNode from deskService');
             this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
                 item.fullTitle = node.data.CLASSIF_NAME;
                 item.title = node.data.CLASSIF_NAME;
             })
         } else if (segments.length === 5) {
+            console.warn('remove getNode from deskService');
             this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
                 if (segments[4] === 'view') {
                     item.fullTitle = node.data.CLASSIF_NAME + ' - Просмотр';

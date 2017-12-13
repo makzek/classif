@@ -15,11 +15,11 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width + $item-width / 2;
+        width: $dictionary-block-width;
+        overflow-x: hidden;
         overflow-y: auto;
         border-right-width: 1px;
         border-right-style: solid;
-        transform: translateX(-24px);
         margin-top: -1 * $grid-gutter-width / 2;
 
         &.has-spinner {
