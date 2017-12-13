@@ -92,6 +92,10 @@
     color: $unimportant-info-color-main-theme;
 }
 
+.primary-text {
+    color: $primary-font-color-main-theme;
+}
+
 .modal-block {
     background: $modal-block-background-main-theme;
     color: $secondary-font-color-main-theme;
@@ -217,10 +221,6 @@
 
     .selected-text {
         color: $button-color-main-theme;
-    }
-
-    .primary-text {
-        color: $primary-font-color-main-theme;
     }
 
     .secondary-text {

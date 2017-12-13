@@ -29,14 +29,8 @@ export class ColumnSettingsComponent {
                     this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
                     this.addToCurrent();
                 }
-            } else {
-                value[1].style = 'background-color: transparent';
             }
-          });
-
-        dragulaService.drag.subscribe((value) => {
-            value[1].style = 'background-color: #d9edf7';
-          });
+        });
     }
 
     public hideModal(): void {
