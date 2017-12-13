@@ -10,7 +10,7 @@
         <button class="pag-btn btn-default next" [disabled]="config?.current === pageCount" (click)="showPage(config.current + 1)">&rsaquo;</button>
     </div>
 
-    <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.allItemsCurrent" (click)="showMore()">Показывать еще</button>
+    <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показывать еще</button>
     <div class="btn-group count-select usual-border" dropdown dropup="true" placement="top right">
         <button type="button" dropdownToggle class="dropdown-toggle btn btn-transparent selected-text">
             <span class="selected-text">Показывать по {{config?.length}}</span>

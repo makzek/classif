@@ -111,8 +111,9 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.dataQuick = this.dataQuick.trim();
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
+                    this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
                     this._dictSrv.search(this.dataQuick, this.settings)
-                        .then(nodes => this.searchDone = true);
+                        .then(() => this.searchDone = true);
                 }
             } else {
                 this._msgSrv.addNewMessage({

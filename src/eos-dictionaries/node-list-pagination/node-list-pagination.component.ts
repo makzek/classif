@@ -55,7 +55,7 @@ export class NodeListPaginationComponent {
     }
 
     private _update() {
-        let total = Math.ceil(this.config.allItemsCurrent / this.config.length);
+        let total = Math.ceil(this.config.itemsQty / this.config.length);
         if (total === 0) { total = 1 }
         const firstSet = this._buttonsTotal - this.config.current;
         const lastSet = total - this._buttonsTotal + 1;
