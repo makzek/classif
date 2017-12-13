@@ -131,22 +131,24 @@ export abstract class AbstractDictionaryDescriptor {
             rec: {}
         };
         const _descs = this.getFieldSet(aSet, data);
-        _descs.forEach((_f) => {
-            if (_f.type !== E_FIELD_TYPE.dictionary) {
-                _description.rec[_f.key] = {
-                    title: _f.title,
-                    length: _f.length,
-                    pattern: _f.pattern,
-                    required: _f.required,
-                    invalidMessage: _f.invalidMessage,
-                    isUnic: _f.isUnic,
-                    unicInDict: _f.unicInDict,
+        if (_descs) {
+            _descs.forEach((_f) => {
+                if (_f.type !== E_FIELD_TYPE.dictionary) {
+                    _description.rec[_f.key] = {
+                        title: _f.title,
+                        length: _f.length,
+                        pattern: _f.pattern,
+                        required: _f.required,
+                        invalidMessage: _f.invalidMessage,
+                        isUnic: _f.isUnic,
+                        unicInDict: _f.unicInDict,
+                    }
+                } else {
+                    _description[_f.key] = {};
+                    /* recive other dict description */
                 }
-            } else {
-                _description[_f.key] = {};
-                /* recive other dict description */
-            }
-        });
+            });
+        }
         return _description;
     }
 
@@ -156,14 +158,8 @@ export abstract class AbstractDictionaryDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
-            /*
-            case E_FIELD_SET.list:
-                return this._getListFields();
-            */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
-            case E_FIELD_SET.fullSearch:
-                return this._getFullSearchFields();
             default:
                 return null;
         }
