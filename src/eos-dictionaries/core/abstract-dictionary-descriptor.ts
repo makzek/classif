@@ -148,7 +148,7 @@ export abstract class AbstractDictionaryDescriptor {
                 } else {
                     _description[_f.key] = {};
                     /* recive other dict description */
-                // this.dictSrv.getDictionaryField(_f.key);
+                    // this.dictSrv.getDictionaryField(_f.key);
                 }
             });
         }
