@@ -133,7 +133,7 @@ export class EosDictService {
     /**
      * Initial pagination configuration
      */
-    private _initPaginationConfig(update: boolean) {
+    private _initPaginationConfig(update = false) {
         this.paginationConfig = Object.assign(this.paginationConfig || { start: 1, current: 1 }, {
             length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value,
             itemsQty: this._getListLength()
@@ -219,6 +219,7 @@ export class EosDictService {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
+                        this._initPaginationConfig();
                         this.viewParameters.userOrdered = this._storageSrv.getUserOrderState(this.dictionary.id);
                         this.viewParameters.markItems = this.dictionary.canMarkItems;
                         this._viewParameters$.next(this.viewParameters);
