@@ -20,7 +20,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
-import { EosActiveTreeNodeService } from '../tree/active-node-fon.service'
+import { EosActiveTreeNodeService } from '../tree/active-node-fon.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -30,7 +30,6 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
-    WARN_LOGIC_DELETE_ONE,
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
@@ -55,7 +54,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
-
     @ViewChild('tree') treeEl;
 
     dictionary: EosDictionary;
@@ -67,13 +65,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public _selectedNodeText: string;
     private _nodeId: string;
 
-    treeNodes: EosDictionaryNode[];
-    listNodes: EosDictionaryNode[];
-    visibleNodes: EosDictionaryNode[]; // Checkbox use it property
-    filteredNodes: EosDictionaryNode[] = [];
-    _page: IPaginationConfig;
+    treeNodes: EosDictionaryNode[] = [];
+    visibleNodes: EosDictionaryNode[] = []; // Elements for one page
+    private paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
 
-    currentState: boolean[];
+    public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
 
     hasParent: boolean;
@@ -91,7 +87,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     customFields: FieldDescriptor[] = [];
 
-    length = {};
+    public length = {}; // Length column
 
     orderBy: IOrderBy;
 
@@ -100,7 +96,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     dictTypes = E_DICT_TYPE;
 
-    searchStartFlag = false; // flag begin search
     public fonConf = {
         width: 0 + 'px',
         height: 0 + 'px',
@@ -125,23 +120,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _sandwichSrv: EosSandwichService,
         private _actTreeNodeSrv: EosActiveTreeNodeService
     ) {
-        this._actTreeNodeSrv.fon$.subscribe(fonConf => {
-            this.fonConf.width = fonConf.width + 'px';
-            this.fonConf.height = fonConf.height + 'px';
-            if (this.treeEl) {
-                this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
-            } else {
-                this.fonConf.top = fonConf.top + 'px';
-            }
-        })
-        this._initPage();
+        _actTreeNodeSrv.fon$.takeUntil(this.ngUnsubscribe)
+            .subscribe(fonConf => {
+                this.fonConf.width = fonConf.width + 'px';
+                this.fonConf.height = fonConf.height + 'px';
+                if (this.treeEl) {
+                    this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
+                } else {
+                    this.fonConf.top = fonConf.top + 'px';
+                }
+            })
 
-        this.treeNodes = [];
-        this.listNodes = [];
-        this.visibleNodes = [];
-
-        this._route.params.subscribe((params) => {
-            console.log('!')
+        _route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
@@ -149,39 +139,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             }
         });
 
-        this._route.queryParams.subscribe(params => {
-            this._initPage();
-            const _page = Object.assign({}, this._page);
+        _sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
+            .subscribe((state: boolean[]) => this.currentState = state);
 
-            let update = false;
-            if (params.length) {
-                this._page.length = this._getPage(this._positive(params.length)).value;
-                update = true;
-            }
-            if (params.page) {
-                this._page.current = this._positive(params.page);
-                update = true;
-            }
-            if (params.start) {
-                this._page.start = this._positive(params.start);
-                update = true;
-            }
-
-            if (update) {
-                if (_page.start !== this._page.start) {
-                    this._cleanCheck();
-                }
-                this._updateVisibleNodes();
-            }
-        });
-
-        this._sandwichSrv.currentDictState$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((state) => this.currentState = state);
-
-        this._dictSrv.dictionary$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((dictionary) => {
+        _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
+            .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
                     this.dictionaryId = dictionary.id;
@@ -196,8 +158,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        this._dictSrv.selectedNode$
-            .takeUntil(this.ngUnsubscribe)
+        _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
@@ -213,41 +174,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        this._dictSrv.currentList$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => {
-                // console.log('incoming list', nodes);
-                this.params = this._dictSrv.viewParameters;
-                const filtredNodes = nodes.filter((item, index) => {
-                    return nodes.lastIndexOf(item) === index
-                });
-                this.listNodes = filtredNodes;
-                this._updateVisibleNodes();
+        _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
+            .subscribe((nodes: EosDictionaryNode[]) => {
+                this.visibleNodes = nodes;
+                this.updateMarks();
             });
 
-        this._dictSrv.viewParameters$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe(viewParameters => this.params = viewParameters);
-    }
+        _dictSrv.paginationConfig$.takeUntil(this.ngUnsubscribe)
+            .subscribe((config: IPaginationConfig) => {
+                if (config) {
+                    this.paginationConfig = config;
+                }
+            });
 
-    private _initPage() {
-        this._page = {
-            start: 1,
-            current: 1,
-            length: this._storageSrv.getItem(LS_PAGE_LENGTH) || PAGES[0].value
-        }
-    }
-
-    private _getPage(length: number) {
-        return PAGES.find((item) => item.value >= length) || PAGES[0];
-    }
-
-    private _positive(val: any): number {
-        let res = val * 1 || 1;
-        if (res < 1) {
-            res = 1;
-        }
-        return Math.floor(res);
+        _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
+            .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
     }
 
     ngOnDestroy() {
@@ -295,23 +236,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
-    private _cleanCheck() {
-        this.filteredNodes.forEach(item => item.marked = false);
-    }
-
-    private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes fired'/*, this._page*/);
-        const page = this._page;
-
-        this.filteredNodes = this.listNodes;
-        if (page) {
-            this.visibleNodes = this.listNodes.slice((page.start - 1) * page.length, page.current * page.length);
-        } else {
-            this.visibleNodes = this.listNodes;
-        }
-        this.updateMarks();
-    }
-
     doAction(action: E_RECORD_ACTIONS) {
         switch (action) {
             case E_RECORD_ACTIONS.navigateDown:
@@ -344,7 +268,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.remove:
-                this.deleteSelectedItems();
+                this._deleteItems();
                 break;
 
             case E_RECORD_ACTIONS.removeHard:
@@ -377,7 +301,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     userOrdered(nodes: EosDictionaryNode[]) {
-        this._dictSrv.setUserOrder(nodes, this.listNodes);
+        this._dictSrv.setUserOrder(nodes);
     }
 
     private _moveUp(): void {
@@ -394,7 +318,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _moveDown(): void {
         const _idx = this.visibleNodes.findIndex((node) => node.isSelected);
-        if (_idx < this._page.current * this._page.length - 1 && _idx < this.visibleNodes.length - 1) {
+        if (_idx < this.paginationConfig.current * this.paginationConfig.length - 1 && _idx < this.visibleNodes.length - 1) {
             const item = this.visibleNodes[_idx + 1];
             this.visibleNodes[_idx + 1] = this.visibleNodes[_idx];
             this.visibleNodes[_idx] = item;
@@ -451,16 +375,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
-    /*
-    private _toggleUserOrder(): void {
-        this.params = Object.assign({}, this.params, { userSort: !this.params.userSort });
-        this._dictSrv.toggleUserOrder();
-        if (this.selectedNode) {
-            this._updateVisibleNodes();
-        }
-    }
-    */
-
     updateMarks(): void {
         this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
@@ -468,77 +382,46 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.markItem(this.allMarked);
     }
 
-    toggleAllMarks(): void {
+    /**
+     * Toggle checkbox checked all
+     */
+    public toggleAllMarks(): void {
         this.anyMarked = this.allMarked;
         this.anyUnmarked = !this.allMarked;
         this.visibleNodes.forEach((node) => node.marked = this.allMarked);
         this._dictSrv.markItem(this.allMarked);
     }
 
-    private _updateChildrenMarks(marked: boolean) {
-        this.listNodes.forEach((node) => node.marked = marked);
-    }
-    /* darkside */
-
-    deleteSelectedItems(): void {
-        const deletedNames: string[] = [];
-        const selectedNodes: string[] = [];
-        let countMakedItems = 0;
-        if (this.listNodes) {
-            this.listNodes.forEach((child: EosDictionaryNode) => {
-                if (child.marked) { countMakedItems++ }
-                if (child.marked && !child.isDeleted) {
-                    selectedNodes.push(child.id);
-                    child.marked = false;
-                } else if (child.marked && child.isDeleted) {
-                    deletedNames.push(child.title)
-                }
-            });
-            const str = deletedNames.join(', ');
-            if (countMakedItems === 0) {
-                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-            } else if (deletedNames.length === 1) {
-                this._msgSrv.addNewMessage(WARN_LOGIC_DELETE_ONE);
-            } else if (deletedNames.length) {
-                const WARN = Object.assign({}, WARN_LOGIC_DELETE);
-                WARN.msg = WARN.msg.replace('{{elem}}', str);
-                this._msgSrv.addNewMessage(WARN);
-            } else {
-                this._dictSrv.deleteMarkedNodes(selectedNodes)
-                    .catch((err) => this._errHandler(err));
-            }
-        }
-    }
-
+    /**
+     * Physical delete marked elements on page
+     */
     public physicallyDelete(): void {
-        if (this.listNodes) {
-            let list = '', j = 0;
-            for (const node of this.listNodes) {
-                if (node.marked) {
-                    j++;
-                    list += '"' + node.title + '", ';
-                }
+        let list = '', j = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) {
+                j++;
+                list += '"' + node.title + '", ';
             }
-            list = list.slice(0, list.length - 2);
-            if (j === 0) {
-                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-                return;
-            } else if (j === 1) {
-                const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
-                _confrm.body = _confrm.body.replace('{{name}}', list);
-                this._callDelWindow(_confrm);
-            } else {
-                const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
-                _confrm.body = _confrm.body.replace('{{name}}', list);
-                this._callDelWindow(_confrm);
-            }
+        })
+        list = list.slice(0, list.length - 2);
+        if (j === 0) {
+            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
+            return;
+        } else if (j === 1) {
+            const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
+        } else {
+            const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
         }
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {
         this._confirmSrv.confirm(_confrm).then((confirmed: boolean) => {
             if (confirmed) {
-                for (const node of this.listNodes) {
+                this.visibleNodes.forEach((node: EosDictionaryNode) => {
                     if (node.marked) {
                         if (1 !== 1) { // here must be API request for check if possible to delete
                             this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
@@ -552,7 +435,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                                 });
                         }
                     }
-                }
+                });
             }
         }).catch();
     }
@@ -593,17 +476,20 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 console.log('created node', node);
                 let title = '';
                 node.getShortQuickView().forEach((_f) => {
-                    title += this.nodeData[_f.key];
+                    title += this.nodeData.rec[_f.key];
                 });
                 this._deskSrv.addRecentItem({
                     url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                     title: title,
-                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.CLASSIF_NAME + '/Редактирование'
+                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
                 });
-                if (hide) {
+                // if (hide) {
                     this.creatingModal.hide();
+                // }
+                // this._clearForm();
+                if (!hide) {
+                    this._create();
                 }
-                this._clearForm();
             })
             .catch((err) => this._errHandler(err));
     }
@@ -611,6 +497,23 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     cancelCreate() {
         this.creatingModal.hide();
         this._clearForm();
+    }
+
+    /**
+     * Logic delete marked elements on page
+     */
+    private _deleteItems(): void {
+        let delCount = 0, allCount = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) { allCount++ }
+            if (node.marked && node.isDeleted) { delCount++ }
+        })
+        if (delCount === allCount) {
+            this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
+        }
+        this._dictSrv.markDeleted(true, true) // todo: add recursive dialogue if any children
+        .then(() => this.updateMarks())
+            .catch((err) => this._errHandler(err));
     }
 
     private _restoreItems(): void {
@@ -629,18 +532,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         });
 
         if (withChildren.length) {
-                const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-                _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+            const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
+            _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
 
-                this._confirmSrv
-                    .confirm(_confrm)
-                    .then((confirmed: boolean) => {
-                        if (confirmed) {
-                            this._dictSrv.restoreNodes(marked, confirmed);
-                        }
-                    });
+            this._confirmSrv
+                .confirm(_confrm)
+                .then((confirmed: boolean) => {
+                    if (confirmed) {
+                        this._dictSrv.markDeleted(confirmed, false);
+                    }
+                });
         } else {
-            this._dictSrv.restoreNodes(marked);
+            this._dictSrv.markDeleted(false, false);
         }
 
         this.anyMarked = false;

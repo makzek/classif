@@ -136,8 +136,9 @@ export class EosDictionaryNode {
         }
     }
 
-    updateEpandabe() {
-        this.expandable = this.isNode && this._children && this._children.findIndex((node) => node.isNode) > -1;
+    updateExpandable(showDeleted = false) {
+        this.expandable = this.isNode && this._children &&
+            this._children.findIndex((node) => !!node.isNode && node.isVisible(showDeleted)) > -1;
     }
 
     private _keyToString(value: any): string {

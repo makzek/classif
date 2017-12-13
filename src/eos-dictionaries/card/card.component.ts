@@ -128,7 +128,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => this.nodes = nodes);
+            .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
     ngOnInit() {
@@ -395,10 +395,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 const fullTitle = this._fullTitle(resp);
+                console.log('fullTitle', fullTitle);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
-                    title: resp.data.CLASSIF_NAME,
-                    fullTitle: fullTitle + ' - Редактирование'
+                    title: resp.data.rec.CLASSIF_NAME,
+                    fullTitle: fullTitle
                 });
                 this._clearEditingCardLink();
                 return resp;
@@ -408,12 +409,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _fullTitle(node: EosDictionaryNode) {
         let parent = node.parent;
-        let arr = [node.data.CLASSIF_NAME];
+        let arr = [node.data.rec.CLASSIF_NAME];
         while (parent.parent) {
-            arr.push(parent.data.CLASSIF_NAME);
+            arr.push(parent.data.rec.CLASSIF_NAME);
             parent = parent.parent;
         }
-        arr.push(parent.data.RUBRIC_CODE);
+        arr.push(parent.data.rec.RUBRIC_CODE);
+        arr.push('Справочники');
         arr = arr.reverse();
         const fullTItle = arr.join('/');
         return fullTItle;

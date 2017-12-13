@@ -14,7 +14,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
-    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
+    searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
     fields: [{
         key: 'DUE',
         type: 'string',
@@ -83,7 +83,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
-    searchFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: ['CODE', 'CLASSIF_NAME', /*'NOTE'*/],
     fullSearchFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     quickViewFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],

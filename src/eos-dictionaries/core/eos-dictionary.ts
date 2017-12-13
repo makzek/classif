@@ -27,6 +27,16 @@ export class EosDictionary {
     private _userOrder: any;
     private _userOrdered: boolean;
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
+    private _showDeleted: boolean;
+
+    get showDeleted(): boolean {
+        return this._showDeleted;
+    }
+
+    set showDeleted(value: boolean) {
+        this._showDeleted = value;
+        this._nodes.forEach((node) => node.updateExpandable(value));
+    }
 
     get id(): string {
         return this.descriptor.id;
@@ -133,9 +143,9 @@ export class EosDictionary {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
-            node.updateEpandabe();
+            node.updateExpandable(this._showDeleted);
         });
-        this.root.updateEpandabe();
+        this.root.updateExpandable(this._showDeleted);
     }
 
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -259,31 +269,26 @@ export class EosDictionary {
         return _result;
     }
 
-    deleteMarked(nodeIds: string[], hard = false): Promise<any> {
+    /**
+     * @description Set DELETED flag for marked records
+     * @param recursive do cascade operation, default false
+     * @param deleted mark as deleted (true), unmarkmark as deleted (false)
+     */
+    markDeleted(recursive = false, deleted = true): Promise<any> {
         const nodeSet: any[] = [];
 
-        nodeIds.forEach((nodeId) => {
-            const node = this._nodes.get(nodeId);
-            if (node) {
-                nodeSet.push(node.data.rec);
-            }
-        });
-
-        return this.descriptor.markDeleted(nodeSet);
-    }
-
-    restoreMarked(recursive = false): Promise<any> {
-        const nodeSet: any[] = [];
         this._nodes.forEach((node) => {
             if (node.marked) {
                 nodeSet.push(node.data.rec);
+                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => nodeSet.push(chld.data.rec));
                 }
             }
         });
-
-        return this.descriptor.markDeleted(nodeSet, 0);
+        // 1 - mark deleted
+        // 0 - unmark deleted
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
     }
 
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
@@ -332,15 +337,15 @@ export class EosDictionary {
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
-        const critery = {};
-        const fields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        fields.forEach((fld) => {
+        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries = {}
+        _searchFields.forEach((fld) => {
             if (data[fld.key]) {
-                critery[fld.foreignKey] = '"' + data[fld.key] + '"';
+                _criteries[fld.foreignKey] = '"' + data[fld.key] + '"';
             }
         })
-        this._extendCritery(critery, params, selectedNode);
-        return critery;
+        this._extendCritery(_criteries, params, selectedNode);
+        return _criteries;
     }
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
@@ -374,7 +379,7 @@ export class EosDictionary {
     }
 
     reorderList(nodes: EosDictionaryNode[], parentId?: string) {
-        if (this._userOrdered && parentId) {
+        if (this._userOrdered) {
             return this._doUserOrder(nodes, parentId);
         } else {
             return this._orderByField(nodes);

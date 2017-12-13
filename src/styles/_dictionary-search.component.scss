@@ -72,14 +72,14 @@
             position: relative;
             height: 48px;
             width: 48px;
-            top: -1px;
+            right: -3px;
             padding: 10px 6px;
         }
 
         &.quick-search-btn {
             height: 48px;
             width: 48px;
-            top: -1px;
+            right: 0;
             padding-bottom: 11px;
             padding-top: 5px;
 
@@ -170,9 +170,13 @@
 .full-search-settings-container {
     border-bottom-width: 1px;
     border-bottom-style: solid;
+    padding-left: 20px;
     margin: 0;
     padding-top: 30px;
-    display: flex;
+
+    form {
+        display: flex;
+    }
 
     label {
         text-transform: none;
@@ -181,8 +185,7 @@
     .radio-inline,
     .checkbox-inline {
         height: 32px;
-        padding: 5px 0;
-        margin-bottom: 20px;
+        margin: 5px 5px 25px 0;
     }
 
     .radio-inline + .radio-inline,
@@ -198,7 +201,6 @@
     .col-1 {
         width: 190px;
         margin-right: 40px;
-        margin-left: 20px;
     }
 
     .col-2 {
