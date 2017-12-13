@@ -54,7 +54,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'CODE',
-        title: 'Code',
+        title: 'Код',
         type: 'string',
         length: 64,
         invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
