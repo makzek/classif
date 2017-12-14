@@ -318,12 +318,29 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
+    /**
+     * @description Post chages from all conected dictionaries
+     * @param originalData data before changes
+     * @param updates changes
+     * @returns Promise<any[]>
+     */
     updateRecord(originalData: any, updates: any): Promise<any[]> {
-        return this._postChanges(originalData.rec, updates.rec);
+        const _res = [];
+        for (const key in originalData) {
+            if (originalData[key]) {
+                if (originalData[key]['_State'] === 'STUB') {
+                    SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)
+                    _res.push(this._postChanges(originalData[key], updates[key]));
+                } else {
+                    _res.push(this._postChanges(originalData[key], updates[key]));
+                }
+            }
+        }
+        return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
-        console.log('_postChanges', data, updates);
+        // console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);

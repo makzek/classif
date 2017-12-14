@@ -293,9 +293,11 @@ export class EosDictService {
 
     /*
     public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        // console.log('reloadNode', node);
         node.updating = true;
         return this.dictionary.descriptor.getRecord(node.originalId)
             .then((nodeData) => {
+                // console.log('reloadNode', nodeData);
                 node.updateData(nodeData);
                 node.updating = false;
                 return node;
