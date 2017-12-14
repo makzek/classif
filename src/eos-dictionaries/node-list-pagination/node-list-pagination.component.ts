@@ -14,7 +14,6 @@ export class NodeListPaginationComponent {
     private ngUnsubscribe: Subject<any> = new Subject();
     public config: IPaginationConfig;
     @Input() currentState: boolean[];
-    @Input() hideTree: boolean;
 
     readonly pageLengths = PAGES;
     private readonly _buttonsTotal = 5;
