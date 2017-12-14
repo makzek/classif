@@ -41,11 +41,13 @@
 
         .code {
             padding: 0 20px;
-            line-height: 48px;
             display: inline-block;
+            height: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            vertical-align: bottom;
+            padding-top: 14px;
         }
 
         .spinner {
