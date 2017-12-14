@@ -13,10 +13,10 @@ import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
 import { debug } from 'util';
 
-import { AppContext} from '../../eos-rest/services/appContext.service';
-import { SRCH_VIEW, USER_CL} from '../../eos-rest/interfaces/structures';
+import { AppContext } from '../../eos-rest/services/appContext.service';
+import { SRCH_VIEW, USER_CL } from '../../eos-rest/interfaces/structures';
 
-import {ViewManager} from '../../eos-rest/services/viewManager';
+import { ViewManager } from '../../eos-rest/services/viewManager';
 import { _ES } from 'eos-rest/core/consts';
 
 
@@ -104,11 +104,11 @@ export class EosDeskService {
     }
 
     private readDesc(v: SRCH_VIEW): EosDesk {
-        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: []};
+        const res = <EosDesk>{ id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: [] };
         const cols = v.SRCH_VIEW_DESC_List;
-        for ( let i = 0; i !== cols.length; i++) {
+        for (let i = 0; i !== cols.length; i++) {
             const col = cols[i];
-            const di = this.mapToDefaultDescItem( cols[i].BLOCK_ID);
+            const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
             res.references.push(di);
         }
         return res;
@@ -116,7 +116,7 @@ export class EosDeskService {
 
     private mapToDefaultDescItem(blockId: string): IDeskItem {
         const defaults = this._desksList[0].references;
-        const s  = '/spravochniki/' + blockId;
+        const s = '/spravochniki/' + blockId;
         const result = defaults.find(it => it.url === s);
         // TODO: clone?
         return result;
@@ -148,32 +148,18 @@ export class EosDeskService {
             url: this._router.url
         }
         const segments = this._router.url.split('/');
-        if (segments.length === 3) {
-            this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
-                item.fullTitle = dictionary.title;
-                item.title = dictionary.title;
-                // tslint:disable-next-line:no-debugger
-                debugger;
-                this.appendDeskItemToView(desk.id, item);
-            })
-        } else if (segments.length === 4) {
+        segments.pop();
+        item.url = segments.join('/');
+        this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
+            item.fullTitle = dictionary.title;
+            item.title = dictionary.title;
+            // tslint:disable-next-line:no-debugger
+            debugger;
+            this.appendDeskItemToView(desk.id, item);
+        })
+
             console.warn('remove getNode from deskService');
-            this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
-                item.fullTitle = node.data.CLASSIF_NAME;
-                item.title = node.data.CLASSIF_NAME;
-            })
-        } else if (segments.length === 5) {
             console.warn('remove getNode from deskService');
-            this._dictSrv.getNode(segments[2], segments[3]).then((node: EosDictionaryNode) => {
-                if (segments[4] === 'view') {
-                    item.fullTitle = node.data.CLASSIF_NAME + ' - Просмотр';
-                    item.title = node.data.CLASSIF_NAME + ' - Просмотр';
-                } else if (segments[4] === 'edit') {
-                    item.fullTitle = node.data.CLASSIF_NAME + ' - Редактирование';
-                    item.title = node.data.CLASSIF_NAME + ' - Редактирование';
-                }
-            })
-        }
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
             desk.references.push(item);
@@ -223,7 +209,7 @@ export class EosDeskService {
 
     removeDesk(desk: EosDesk): void {
         const v = this.findView(desk.id);
-        if ( v !== undefined) {
+        if (v !== undefined) {
             v._State = _ES.Deleted;
             this.viewManager.saveView(v);
         }
@@ -255,7 +241,7 @@ export class EosDeskService {
         newDesc.VIEW_NAME = desk.name;
 
         viewMan.saveView(newDesc).then(isn_view => {
-//            alert('новый стол сохранен!' + isn_view.toString());
+            //            alert('новый стол сохранен!' + isn_view.toString());
             // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
             desk.id = isn_view.toString();
             this._desksList.push(desk);

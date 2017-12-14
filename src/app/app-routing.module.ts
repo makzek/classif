@@ -38,7 +38,7 @@ const routes: Routes = [{
                 path: '',
                 component: DictionaryComponent,
                 pathMatch: 'full',
-                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true, showPushpin: false},
+                data: { showBreadcrumb: true, showSandwichInBreadcrumb: true, showPushpin: true },
             }, {
                 path: 'edit',
                 pathMatch: 'full',
