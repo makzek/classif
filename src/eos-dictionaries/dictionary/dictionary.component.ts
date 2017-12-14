@@ -144,15 +144,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
-
                     if (this.dictionaryId !== dictionary.id) {
                         this._dictSrv.customFields = [];
                     }
                     this.customFields = this._dictSrv.customFields;
-                    setTimeout(() => {
-                        this._countColumnWidth();
-                    }, 0);
-
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
@@ -212,6 +207,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     ngDoCheck() {
         this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
+    }
+
+    transitionEnd(e: Event) {
+        this._countColumnWidth();
     }
 
     private _countColumnWidth() {

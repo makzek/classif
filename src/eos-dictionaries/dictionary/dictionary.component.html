@@ -1,7 +1,7 @@
 <div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
         'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
         'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1] && hideTree,
-        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()">
+        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()" (transitionend)="transitionEnd($event)">
     <div class="tree-wrapper secondary-block" #tree [ngClass]="{'open-tree': currentState[0] && !hideTree, 'has-spinner': !treeNodes.length }"
         [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
