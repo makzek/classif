@@ -180,15 +180,10 @@ export class EosDictionaryNode {
         }
     }
 
-    delete(hard = false) { // TODO: check maybe this is unused
-        if (hard) {
-            // console.log('delete children parent', this, this._children, this.parent);
-            if ((!this._children || this._children.length < 1) && this.parent) {
-                this.parent.deleteChild(this);
-                this.isDeleted = true;
-            }
-        } else {
-            this.isDeleted = true;
+    delete() {
+        // console.log('delete children parent', this, this._children, this.parent);
+        if ((!this._children || this._children.length < 1) && this.parent) {
+            this.parent.deleteChild(this);
         }
     }
 
@@ -233,7 +228,7 @@ export class EosDictionaryNode {
     getEditData(): any {
         const _data = {
             rec: {},
-        };
+        }
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
@@ -277,8 +272,8 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                console.log('dictionary', _f);
                 _data[_f.key] = this.data[_f.key] || {};
+                // console.log('dictionary', _data[_f.key]);
                 /* recive other dict data */
             }
         });
