@@ -8,10 +8,10 @@
         </span>
     </button>
     <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-        <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
+        <!--li role="menuitem" class="menuitem" *ngIf="isAuthorized">
             <a class="dropdown-item" (click)="openModal(settingsWindow)">Настройки системы</a>
         </li>
-        <li class="divider dropdown-divider" *ngIf="isAuthorized"></li>
+        <li class="divider dropdown-divider" *ngIf="isAuthorized"></li-->
         <li role="menuitem" class="menuitem" *ngIf="!isAuthorized">
             <a class="dropdown-item" routerLink="login">Войти</a>
         </li>

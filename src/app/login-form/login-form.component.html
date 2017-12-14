@@ -1,18 +1,24 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
-</div>
-<div class="modal-body login-modal">
-    <div class="form-group">
-        <label for="basic-url">Ваш логин</label>
-        <input type="text" [(ngModel)]="userName" maxlength="64" class="form-control light" id="user-name" required/>
+<form #loginForm="ngForm" (submit)="login()">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
     </div>
-    <div class="form-group">
-        <label for="basic-url">Ваш пароль</label>
-        <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control light" id="password" required/>
+    <div class="modal-body login-modal" ng-form="">
+        <div class="form-group">
+            <label for="user-name">Ваш логин</label>
+            <input type="text" [(ngModel)]="userName" maxlength="64" class="form-control light" id="user-name" required name="userName"
+            autocomplete="on"
+            />
+        </div>
+        <div class="form-group">
+            <label for="password">Ваш пароль</label>
+            <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control light" id="password" required name="userPassword"
+            autocomplete="on"
+            />
+        </div>
+        <p class="text-danger">{{errorMessage}}</p>
     </div>
-    <p class="text-danger">{{errorMessage}}</p>
-</div>
-<div class="modal-footer">
-    <!-- button type="button" class="btn btn-primary" (click)="cancel()" [disabled]="inProcess">Отмена</button -->
-    <button type="button" class="btn btn-primary-full" (click)="login()" [disabled]="!userName || !userPassword || inProcess">Войти</button>
-</div>
+    <div class="modal-footer">
+        <!-- button type="button" class="btn btn-primary" (click)="cancel()" [disabled]="inProcess">Отмена</button -->
+        <button type="submit" class="btn btn-primary-full" (click)="login()" [disabled]="!userName || !userPassword || inProcess">Войти</button>
+    </div>
+</form>

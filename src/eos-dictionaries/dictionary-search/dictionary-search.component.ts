@@ -51,7 +51,6 @@ export class DictionarySearchComponent implements OnDestroy {
 
     date: Date = new Date();
 
-    public useSub = false;
     public mode = 0;
     public seeDeleted = false;
 
@@ -63,7 +62,7 @@ export class DictionarySearchComponent implements OnDestroy {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
-                    if (this.data[_field] !== '') {
+                    if (this.data[_dict][_field] !== '') {
                         return false;
                     }
                 }
@@ -111,8 +110,9 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.dataQuick = this.dataQuick.trim();
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
+                    this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
                     this._dictSrv.search(this.dataQuick, this.settings)
-                        .then(nodes => this.searchDone = true);
+                        .then(() => this.searchDone = true);
                 }
             } else {
                 this._msgSrv.addNewMessage({
@@ -131,9 +131,9 @@ export class DictionarySearchComponent implements OnDestroy {
     fullSearch() {
         if (this.mode === 0) {
             this.settings.mode = SEARCH_MODES.totalDictionary;
-        } else if (this.mode === 1 && !this.useSub) {
+        } else if (this.mode === 1) {
             this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
-        } else if (this.mode === 1 && this.useSub) {
+        } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
         if (this.seeDeleted) { this.settings.deleted = this.seeDeleted; }

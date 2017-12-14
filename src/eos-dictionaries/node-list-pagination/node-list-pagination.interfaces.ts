@@ -2,7 +2,7 @@ export interface IPaginationConfig {
     start: number;
     length: number;
     current: number;
-    allItemsCurrent: number;
+    itemsQty: number;
 }
 
 export interface IPageLength {
