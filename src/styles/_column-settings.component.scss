@@ -17,7 +17,8 @@
     .info-block {
         border-width: 1px;
         border-style: solid;
-        min-height: 300px;
+        height: 300px;
+        overflow: auto;
 
         .item {
             height: 32px;
