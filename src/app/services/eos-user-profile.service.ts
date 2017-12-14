@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -10,7 +10,6 @@ import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
-import { IOrderBy, IDictionaryOrder } from '../../eos-dictionaries/core/sort.interface'
 import { EosStorageService } from 'app/services/eos-storage.service';
 
 @Injectable()
@@ -63,6 +62,7 @@ export class EosUserProfileService implements IUserProfile {
 
     constructor(
         private _router: Router,
+        private _route: ActivatedRoute,
         private _authSrv: AuthService,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
@@ -130,7 +130,6 @@ export class EosUserProfileService implements IUserProfile {
             this._params = null;
             this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
-            this._router.navigate(['/login']);
             return resp;
         });
     }
