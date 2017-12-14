@@ -103,5 +103,5 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['NOTE', 'CODE', 'FULLNAME', 'sev'],
+    allVisibleFields: ['NOTE', 'FULLNAME', 'sev'],
 };
