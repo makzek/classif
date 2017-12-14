@@ -123,8 +123,13 @@
             min-height: $item-height;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr 150px 48px;
-            grid-template-columns: 48px 1fr 150px 48px;
+            -ms-grid-columns:  48px 1fr 150px;
+            grid-template-columns: 48px 1fr 150px;
+
+            &.has-custom {
+                -ms-grid-columns:  48px 1fr 150px 48px;
+                grid-template-columns: 48px 1fr 150px 48px;
+            }
 
             .item-count {
                 height: 100%;
@@ -133,8 +138,6 @@
                 text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
-                border-right-width: 1px;
-                border-right-style: solid;
                 grid-column: 3;
             }
 
@@ -142,6 +145,10 @@
                 height: $item-height;
                 width: $item-width;
                 font-size: 24px;
+                border: 0;
+                border-radius: 0;
+                border-left-width: 1px;
+                border-left-style: solid;
                 grid-column: 4;
             }
 

@@ -104,6 +104,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     readonly DEFAULT_FIELD_LEN = 200;
 
     tableWidth: number;
+    hasCustomTable: boolean;
 
     public fonConf = {
         width: 0 + 'px',
@@ -150,6 +151,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.treeNodes = [dictionary.root];
                     }
                     this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = this.dictionary.descriptor.canDo(E_ACTION_GROUPS.common,
+                        E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }

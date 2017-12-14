@@ -11,7 +11,7 @@
     </div>
     <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="selectedNode" class="block selected-node xl-font">
+            <div *ngIf="selectedNode" class="block selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
                 <div class="go-top-wrapper">
                     <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
@@ -24,7 +24,7 @@
                         <span class="secondary-text">{{paginationConfig?.itemsQty}}</span>
                     </span>
                 </div>
-                <button class="btn btn-primary-light pull-right config-btn" tooltip="Настройка отображения" containerClass="tooltip-info"
+                <button *ngIf="hasCustomTable" class="btn block pull-right config-btn selected-text" tooltip="Настройка отображения" containerClass="tooltip-info"
                     placement="left" (click)="_configColumns()">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                 </button>
