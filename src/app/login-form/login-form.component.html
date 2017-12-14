@@ -6,11 +6,13 @@
         <div class="form-group">
             <label for="user-name">Ваш логин</label>
             <input type="text" [(ngModel)]="userName" maxlength="64" class="form-control light" id="user-name" required name="userName"
+            autocomplete="on"
             />
         </div>
         <div class="form-group">
             <label for="password">Ваш пароль</label>
             <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control light" id="password" required name="userPassword"
+            autocomplete="on"
             />
         </div>
         <p class="text-danger">{{errorMessage}}</p>
