@@ -235,12 +235,14 @@ export class EosDictionary {
 
     getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
         const node = this._nodes.get(nodeId);
-        if (this.descriptor.type !== E_DICT_TYPE.linear) {
-            this.descriptor.getChildren(node.data.rec)
-                .then((nodes) => {
-                    this.updateNodes(nodes, true);
+        /*
+            if (this.descriptor.type !== E_DICT_TYPE.linear) {
+                this.descriptor.getChildren(node.data.rec)
+                    .then((nodes) => {
+                        this.updateNodes(nodes, true);
                 })
-        }
+            }
+        */
         // console.log('get node', this.id, nodeId, this._nodes, _res);
         return node;
     }
