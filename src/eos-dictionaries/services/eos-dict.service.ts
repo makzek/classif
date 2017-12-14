@@ -20,6 +20,7 @@ import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.s
 import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
+import { FieldDescriptor } from '../core/field-descriptor'
 
 @Injectable()
 export class EosDictService {
@@ -43,6 +44,8 @@ export class EosDictService {
     private _dictionaries: Map<string, IDictionaryDescriptor>
 
     public currentTab = 0;
+
+    public customFields: FieldDescriptor[];
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -313,7 +316,7 @@ export class EosDictService {
 
     private _setCurrentList(nodes: EosDictionaryNode[], update = false) {
         this._currentList = nodes || [];
-        console.log('_setCurrentList', nodes);
+        // console.log('_setCurrentList', nodes);
         // remove duplicates
         this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
         this._initPaginationConfig(update);
@@ -321,7 +324,7 @@ export class EosDictService {
     }
 
     private _reorderList() {
-        console.log('_reorderList');
+        // console.log('_reorderList');
         if (this.dictionary) {
             if (!this.viewParameters.searchResults && this.viewParameters.userOrdered && this.selectedNode) {
                 this._currentList = this.dictionary.reorderList(this._currentList, this.selectedNode.id);
@@ -334,7 +337,7 @@ export class EosDictService {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes');
+        // console.log('_updateVisibleNodes');
         this._visibleListNodes = this._currentList;
 
         if (!this.viewParameters.showDeleted) {
@@ -372,9 +375,9 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            console.log('selectNode', nodeId, this.selectedNode);
+            // console.log('selectNode', nodeId, this.selectedNode);
             if (!this.selectedNode || this.selectedNode.id !== nodeId) {
-                console.log('getting node');
+                // console.log('getting node');
                 return this._getNode(nodeId)
                     .then((node) => {
                         if (node) {
@@ -474,10 +477,10 @@ export class EosDictService {
 
     public addNode(data: any): Promise<any> {
         if (this.selectedNode) {
-            console.log('addNode', data, this.selectedNode.data);
+            // console.log('addNode', data, this.selectedNode.data);
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
-                    console.log('created node', newNodeId);
+                    // console.log('created node', newNodeId);
                     return this._reloadList()
                         .then(() => {
                             this._selectedNode$.next(this.selectedNode);
@@ -523,7 +526,7 @@ export class EosDictService {
     }
 
     private _reloadList(): Promise<any> {
-        console.log('reloading list');
+        // console.log('reloading list');
         if (this.dictionary) {
             return this.dictionary.getChildren(this.selectedNode)
                 .then((list) => this._setCurrentList(list, true));
@@ -631,7 +634,7 @@ export class EosDictService {
         const _original = [];
         const _move = {};
 
-        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
+        // console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
         // restore original order
         this._currentList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);
@@ -660,7 +663,7 @@ export class EosDictService {
     }
 
     toggleDeleted() {
-        console.log('toggle deleted fired');
+        // console.log('toggle deleted fired');
         this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
 
         if (this.dictionary) {

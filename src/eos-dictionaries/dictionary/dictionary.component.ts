@@ -144,6 +144,15 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
+
+                    if (this.dictionaryId !== dictionary.id) {
+                        this._dictSrv.customFields = [];
+                    }
+                    this.customFields = this._dictSrv.customFields;
+                    setTimeout(() => {
+                        this._countColumnWidth();
+                    }, 0);
+
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
@@ -167,7 +176,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
-                    this._countColumnWidth();
                 }
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
@@ -248,20 +256,23 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         if (this.selectedEl) {
             const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
             this.tableWidth = _selectedWidth;
+            if (this.customFields && this.customFields.length) {
+                this.viewFields.forEach((_f) => {
+                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    }
+                });
 
-            this.viewFields.forEach((_f) => {
-                if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                    this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                this.customFields.forEach((_f) => {
+                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    }
+                });
+
+                if (this.tableWidth <= _selectedWidth) {
+                    this.tableWidth = _selectedWidth - 2;
                 }
-            });
-
-            this.customFields.forEach((_f) => {
-                if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                    this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
-                }
-            });
-
-            if (this.tableWidth <= _selectedWidth) {
+            } else {
                 this.tableWidth = _selectedWidth - 2;
             }
         }
@@ -498,9 +509,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         Object.assign(this.creatingModal.content.currentFields, this.customFields);
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
-        console.log('allVisible', this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
         this.creatingModal.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
+            this._dictSrv.customFields = this.customFields;
             this._countColumnWidth();
             this.creatingModal.hide();
         })
@@ -509,7 +520,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
-                console.log('created node', node);
+                // console.log('created node', node);
                 let title = '';
                 node.getShortQuickView().forEach((_f) => {
                     title += this.nodeData.rec[_f.key];
