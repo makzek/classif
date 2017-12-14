@@ -152,10 +152,11 @@ export class EosDictService {
     }
 
     private _getListLength(): number {
-        return (this._currentList) ? this._currentList.length : 0;
+        return (this._visibleListNodes) ? this._visibleListNodes.length : 0;
     }
 
     private _fixCurrentPage() {
+        this.paginationConfig.itemsQty = this._getListLength();
         const maxPage = Math.ceil(this.paginationConfig.itemsQty / this.paginationConfig.length);
         this.paginationConfig.start = Math.min(this.paginationConfig.start, maxPage);
         this.paginationConfig.current = Math.min(this.paginationConfig.current, maxPage);
@@ -238,6 +239,7 @@ export class EosDictService {
                     .catch((err) => {
                         this.closeDictionary();
                         this._mDictionaryPromise.delete(dictionaryId);
+                        Promise.reject(err);
                         return null;
                     });
                 this._mDictionaryPromise.set(dictionaryId, _p);
@@ -337,16 +339,16 @@ export class EosDictService {
 
     private _updateVisibleNodes() {
         console.log('_updateVisibleNodes');
-        let visible = this._currentList;
+        this._visibleListNodes = this._currentList;
 
         if (!this.viewParameters.showDeleted) {
-            visible = visible.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            this._visibleListNodes = this._visibleListNodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
+        this._fixCurrentPage();
 
         const page = this.paginationConfig;
-        this._fixCurrentPage();
-        this._visibleListNodes = visible.slice((page.start - 1) * page.length, page.current * page.length);
-        this._visibleList$.next(this._visibleListNodes);
+        const pageList = this._visibleListNodes.slice((page.start - 1) * page.length, page.current * page.length);
+        this._visibleList$.next(pageList);
     }
 
     /**
