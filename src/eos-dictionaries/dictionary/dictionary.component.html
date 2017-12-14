@@ -71,7 +71,7 @@
             <div [ngStyle]="{'width.px': tableWidth}">
                 <ng-container *ngIf="!selectedNode?.updating">
                     <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating"  [customFields]="customFields" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
-                    <eos-node-list-pagination [currentState]="currentState"></eos-node-list-pagination>
+                    <eos-node-list-pagination [currentState]="[currentState[0] && !hideTree, currentState[1]]"></eos-node-list-pagination>
                 </ng-container>
             </div>
         </div>
