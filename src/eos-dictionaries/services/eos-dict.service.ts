@@ -304,7 +304,7 @@ export class EosDictService {
     */
 
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.dictionary.expandNode(nodeId);
+        return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -474,7 +474,8 @@ export class EosDictService {
             .then(() => this._reloadList())
             .then(() => {
                 return this.dictionary.getNode(node.id);
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     public addNode(data: any): Promise<any> {
@@ -488,7 +489,8 @@ export class EosDictService {
                             this._selectedNode$.next(this.selectedNode);
                             return this.dictionary.getNode(newNodeId + '');
                         });
-                });
+                })
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.reject('No selected node');
         }
@@ -506,7 +508,8 @@ export class EosDictService {
                 .then(() => this._reloadList())
                 .then(() => {
                     return true;
-                });
+                })
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve(false);
         }
@@ -521,7 +524,8 @@ export class EosDictService {
                 .then(() => this._reloadList())
                 .then(() => {
                     return true;
-                });
+                })
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve(false);
         }
@@ -531,7 +535,8 @@ export class EosDictService {
         console.log('reloading list');
         if (this.dictionary) {
             return this.dictionary.getChildren(this.selectedNode)
-                .then((list) => this._setCurrentList(list, true));
+                .then((list) => this._setCurrentList(list, true))
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve([]);
         }
@@ -574,7 +579,8 @@ export class EosDictService {
                 this.viewParameters.searchResults = true;
                 this._viewParameters$.next(this.viewParameters);
                 return this._currentList;
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     filter(params: any): Promise<any> {
@@ -684,8 +690,13 @@ export class EosDictService {
 
     private _errHandler(err: RestError | any) {
         if (err instanceof RestError && err.code === 434) {
-            this._router.navigate(['login']/*, { queryParams: { returnUrl: this._state.url } }*/);
+            this._router.navigate(['login'], {
+                queryParams: {
+                    returnUrl: this._router.url
+                }
+            });
             /*
+            // login in modal window
             this.modalRef = this._modalSrv.show(LoginFormComponent, {
                 keyboard: false,
                 backdrop: true,
