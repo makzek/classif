@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosActiveTreeNodeService } from './active-node-fon.service';
 
 import { IFieldView } from '../core/dictionary.interfaces';
 
@@ -13,6 +12,7 @@ import { IFieldView } from '../core/dictionary.interfaces';
 export class TreeNodeComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
     @Input('showDeleted') showDeleted: boolean;
+    @Input() layer: number;
     viewFields: IFieldView[];
     public _fonWidth: number;
     public _fonLeft: number;
@@ -21,7 +21,6 @@ export class TreeNodeComponent implements OnInit {
     constructor(
         private _router: Router,
         private _dictSrv: EosDictService,
-        private _actTreeNodeSrv: EosActiveTreeNodeService
     ) { }
 
     ngOnInit() {
@@ -42,24 +41,7 @@ export class TreeNodeComponent implements OnInit {
         evt.stopPropagation();
         if (!isDeleted) {
             const _path = this._dictSrv.getNodePath(this.node);
-            this.calcFullPadding(this.node, el);
-            const x = el.getBoundingClientRect();
-            this._actTreeNodeSrv.take({
-                width: this._fonWidth,
-                height: el.clientHeight,
-                top: x.top - 109
-            })
             this._router.navigate(_path);
         }
-    }
-
-    calcFullPadding(node: EosDictionaryNode, el: HTMLElement) {
-        let fullPadding = 0,
-            pnode = node;
-        while (pnode.parent) {
-            fullPadding += 24;
-            pnode = pnode.parent;
-        }
-        this._fonWidth = el.clientWidth + fullPadding + 70;
     }
 }

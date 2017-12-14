@@ -1,15 +1,14 @@
-<ul *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
-    <li>
-        <div class="node" #el (click)="onSelect($event, node.isDeleted, el)">
+<div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
+        <div class="node" #el (click)="onSelect($event, node.isDeleted, el)" [ngClass]="{'highlighted' : node.isActive}">
+            <span class="fake-padding" [ngStyle]="{'width.px': layer*24}"></span>
             <div class="tree-btn">
                 <span *ngIf="node.expandable" (click)="onExpand($event, node.isDeleted)" class="eos-icon x-small icon"
                 [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"></span>
             </div>
-            <div class="title" [ngClass]="{'selected' : node.isActive, 'deleted': node.isDeleted}">
-                <span *ngFor="let field of viewFields">{{field.value || ''}}&nbsp;</span>
+            <div class="title primary-text l-font" [ngClass]="{'deleted': node.isDeleted}" [ngStyle]="{'width.px': 205 - layer*24}">
+                <span *ngFor="let field of viewFields" class="title-item">{{field.value || ''}}&nbsp;</span>
                 <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
             </div>
         </div>
-        <eos-tree *ngIf="node.isExpanded && node.expandable" [nodes]="node.children" [showDeleted]="showDeleted"></eos-tree>
-    </li>
-</ul>
+        <eos-tree *ngIf="node.isExpanded && node.expandable" [nodes]="node.children" [showDeleted]="showDeleted" [layer]="layer + 1"></eos-tree>
+</div>

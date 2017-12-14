@@ -306,15 +306,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     },
     fullSearchFields: {
         person: ['CODE', 'PHONE', 'E_MAIL'],
-        // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
         department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
-        // ['isPerson', 'code', 'title', 'description', 'fio', 'lastName', 'firstName', 'fathersName', 'phone', 'localPhone', 'email', 'note'],
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {
         person: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H'], // 'SURNAME', 'firstName', 'fathersName', 'lastName', 'photo' is in shortQuickViewFields
-        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE'] // title is in shortQuickViewFields
-        // ['fullPosition', 'department', 'phone', 'email', 'rooms', 'photo']
+        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'] // title is in shortQuickViewFields
     },
     shortQuickViewFields: {
         person: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo'],

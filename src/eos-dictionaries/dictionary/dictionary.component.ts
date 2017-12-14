@@ -20,7 +20,6 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
-import { EosActiveTreeNodeService } from '../tree/active-node-fon.service';
 
 import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
 import { INodeListParams } from '../core/node-list.interfaces';
@@ -118,19 +117,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _deskSrv: EosDeskService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
-        private _actTreeNodeSrv: EosActiveTreeNodeService
     ) {
-        _actTreeNodeSrv.fon$.takeUntil(this.ngUnsubscribe)
-            .subscribe(fonConf => {
-                this.fonConf.width = fonConf.width + 'px';
-                this.fonConf.height = fonConf.height + 'px';
-                if (this.treeEl) {
-                    this.fonConf.top = fonConf.top + this.treeEl.nativeElement.scrollTop + 'px';
-                } else {
-                    this.fonConf.top = fonConf.top + 'px';
-                }
-            })
-
         _route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
@@ -419,25 +406,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {
-        this._confirmSrv.confirm(_confrm).then((confirmed: boolean) => {
-            if (confirmed) {
-                this.visibleNodes.forEach((node: EosDictionaryNode) => {
-                    if (node.marked) {
-                        if (1 !== 1) { // here must be API request for check if possible to delete
-                            this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                        } else {
-                            this._dictSrv.physicallyDelete(node.id)
-                                .then(() => {
-                                    this._router.navigate(this._dictSrv.getNodePath(node.parent));
-                                })
-                                .catch(() => {
-                                    this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                                });
-                        }
-                    }
-                });
-            }
-        }).catch();
+        this._confirmSrv.confirm(_confrm)
+            .then((confirmed: boolean) => {
+                if (confirmed) {
+                    this._dictSrv.deleteMarked()
+                        .then((success) => {
+                            if (!success) {
+                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
+                            }
+                        })
+                        .catch((err) => this._errHandler(err));
+                }
+            });
     }
 
     validate(valid: boolean) {
@@ -446,9 +426,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _clearForm() {
         this.formValidated = false;
-        this.nodeData = {
-            rec: {}
-        };
+        this.nodeData = this.selectedNode.getCreatingData();
     }
 
     private _create() {
@@ -484,7 +462,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
                 });
                 // if (hide) {
-                    this.creatingModal.hide();
+                this.creatingModal.hide();
                 // }
                 // this._clearForm();
                 if (!hide) {
@@ -512,7 +490,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
         }
         this._dictSrv.markDeleted(true, true) // todo: add recursive dialogue if any children
-        .then(() => this.updateMarks())
+            .then(() => this.updateMarks())
             .catch((err) => this._errHandler(err));
     }
 
@@ -555,6 +533,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _errHandler(err) {
+        console.error(err);
         const errMessage = err.message ? err.message : err;
         this._msgSrv.addNewMessage({
             type: 'danger',

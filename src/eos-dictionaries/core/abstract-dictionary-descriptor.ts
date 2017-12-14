@@ -133,22 +133,25 @@ export abstract class AbstractDictionaryDescriptor {
             rec: {}
         };
         const _descs = this.getFieldSet(aSet, data);
-        _descs.forEach((_f) => {
-            if (_f.type !== E_FIELD_TYPE.dictionary) {
-                _description.rec[_f.key] = {
-                    title: _f.title,
-                    length: _f.length,
-                    pattern: _f.pattern,
-                    required: _f.required,
-                    invalidMessage: _f.invalidMessage,
-                    isUnic: _f.isUnic,
-                    unicInDict: _f.unicInDict,
+        if (_descs) {
+            _descs.forEach((_f) => {
+                if (_f.type !== E_FIELD_TYPE.dictionary) {
+                    _description.rec[_f.key] = {
+                        title: _f.title,
+                        length: _f.length,
+                        pattern: _f.pattern,
+                        required: _f.required,
+                        invalidMessage: _f.invalidMessage,
+                        isUnic: _f.isUnic,
+                        unicInDict: _f.unicInDict,
+                    }
+                } else {
+                    _description[_f.key] = {};
+                    /* recive other dict description */
+                    // this.dictSrv.getDictionaryField(_f.key);
                 }
-            } else {
-                _description[_f.key] = {};
-                // this.dictSrv.getDictionaryField(_f.key);
-            }
-        });
+            });
+        }
         return _description;
     }
 
@@ -158,14 +161,8 @@ export abstract class AbstractDictionaryDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
-            /*
-            case E_FIELD_SET.list:
-                return this._getListFields();
-            */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
-            case E_FIELD_SET.fullSearch:
-                return this._getFullSearchFields();
             default:
                 return null;
         }
@@ -227,8 +224,14 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
 
-    deleteRecord(data: any): Promise<any> {
+    deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
+    }
+
+    deleteRecords(records: IEnt[]): Promise<any> {
+        records.forEach((rec) => rec._State = _ES.Deleted);
+        const changes = this.apiSrv.changeList(records);
+        return this.apiSrv.batch(changes, '');
     }
 
     abstract getChildren(...params): Promise<any[]>;
@@ -239,7 +242,7 @@ export abstract class AbstractDictionaryDescriptor {
             query = ALL_ROWS;
         }
 
-        console.warn('getData', query, order, limit);
+        // console.warn('getData', query, order, limit);
 
         const req = { [this.apiInstance]: query };
 
