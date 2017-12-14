@@ -303,10 +303,10 @@ export class EosDictionaryNode {
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
-            children = children.concat(this._children);
             this._children.forEach((chld) => {
                 children = children.concat(chld.getAllChildren());
-            })
+            });
+            children = children.concat(this._children);
         }
         return children;
     }
