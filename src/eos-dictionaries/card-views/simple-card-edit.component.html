@@ -18,23 +18,20 @@
                         <!--pre>{{fieldsDescription[key] | json}}</pre-->
                     </div>
 
-                    <div class="form-group" *ngIf="data['sev-association']">
-                        <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription['sev-association']['GLOBAL_ID'].title}}</label>
+                    <div class="form-group" *ngIf="data['sev']">
+                        <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Индекс СЭВ</label>
                         <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
-                            [ngModel]="data['sev-association']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev-association', $event)"
-                            placeholder="{{fieldsDescription['sev-association']['GLOBAL_ID'].title}}"
+                            [ngModel]="data['sev']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
+                            placeholder="Индекс СЭВ"
                             [readonly] = "!editMode"
                             [ngClass]="{'readonly': !editMode }"
-                            [required]="fieldsDescription['sev-association']['GLOBAL_ID']?.required"
-                            [pattern]="fieldsDescription['sev-association']['GLOBAL_ID'].pattern" maxlength="{{fieldsDescription['sev-association']['GLOBAL_ID'].length}}"
-                            [eosUnic]="fieldsDescription['sev-association']['GLOBAL_ID'].isUnic" [key]="'GLOBAL_ID'" [checkingMethod]="checkUnic.bind(this)"
-                            [inDict]="fieldsDescription['sev-association']['GLOBAL_ID'].unicInDict"
-                            [tooltip]="fieldsDescription['sev-association']['GLOBAL_ID']?.invalidMessage"
+                            [pattern]="NOT_EMPTY_STRING" maxlength="255"
+                            [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
                             placement="right" containerClass="tooltip-error" container="body"
                             (focus)="focus('GLOBAL_ID')" (blur)="blur()"
                             [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
                             <!--pre>{{fieldsDescription[key] | json}}</pre-->
-                     </div>
+                    </div>
         </form>
     </article>
 </div>
