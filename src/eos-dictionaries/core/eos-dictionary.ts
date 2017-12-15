@@ -361,7 +361,7 @@ export class EosDictionary {
             if (params.mode === SEARCH_MODES.totalDictionary) {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
             } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
+                critery['ISN_HIGH_NODE'] = selectedNode.data.rec['ISN_NODE'] + '';
             } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
             }
