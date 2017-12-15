@@ -85,6 +85,10 @@ export class EosDictService {
         return this.dictionary.orderBy;
     }
 
+    get dictionaryTitle(): string {
+        return this.dictionary.title;
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
