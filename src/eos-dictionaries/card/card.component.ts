@@ -158,7 +158,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _getNode() {
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => this._update(node))
-            .catch((err) => console.log('getNode error', err));
+            .catch((err) => {
+                console.log('getNode error', err);
+                const segments: Array<string>  = this._router.url.split('/');
+                this._router.navigate(['spravochniki/' + segments[2]]);
+            });
     }
 
     private _initNodeData(node: EosDictionaryNode) {
