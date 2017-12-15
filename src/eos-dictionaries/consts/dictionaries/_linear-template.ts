@@ -25,7 +25,11 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        /* tslint:disable:max-line-length */
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        /* tslint:enable:max-line-length */
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'NOTE',
         title: 'Примечание',
