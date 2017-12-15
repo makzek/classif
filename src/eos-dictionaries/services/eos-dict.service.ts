@@ -716,7 +716,7 @@ export class EosDictService {
             const errMessage = err.message ? err.message : err;
             this._msgSrv.addNewMessage({
                 type: 'danger',
-                title: 'Ошибка операции',
+                title: 'Ошибка обработки. Ответ сервера:',
                 msg: errMessage,
                 dismissOnTimeout: 100000
             });
