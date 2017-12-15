@@ -156,7 +156,7 @@ export class EosDictService {
 
     private _fixCurrentPage() {
         this.paginationConfig.itemsQty = this._getListLength();
-        const maxPage = Math.ceil(this.paginationConfig.itemsQty / this.paginationConfig.length);
+        const maxPage = Math.max(1, Math.ceil(this.paginationConfig.itemsQty / this.paginationConfig.length));
         this.paginationConfig.start = Math.min(this.paginationConfig.start, maxPage);
         this.paginationConfig.current = Math.min(this.paginationConfig.current, maxPage);
         this._paginationConfig$.next(this.paginationConfig);
@@ -509,7 +509,9 @@ export class EosDictService {
                 .then(() => {
                     return true;
                 })
-                .catch((err) => this._errHandler(err));
+                .catch((err) => {
+                    return this._reloadList().then(() => this._errHandler(err));
+                });
         } else {
             return Promise.resolve(false);
         }
@@ -525,7 +527,9 @@ export class EosDictService {
                 .then(() => {
                     return true;
                 })
-                .catch((err) => this._errHandler(err));
+                .catch((err) => {
+                    return this._reloadList().then(() => this._errHandler(err));
+                });
         } else {
             return Promise.resolve(false);
         }

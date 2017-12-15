@@ -159,7 +159,8 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
             LAYER: (layer + 1) + ':' + (layer + 2),
             // IS_NODE: '0'
         };
-        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
     }
 
     getRecord(due: string): Promise<any[]> {

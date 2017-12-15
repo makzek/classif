@@ -279,6 +279,7 @@ export class EosDictionary {
      */
     markDeleted(recursive = false, deleted = true): Promise<any> {
         const nodeSet = this._getMarkedRecords(recursive);
+        this._resetMarked();
         // 1 - mark deleted
         // 0 - unmark deleted
         return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
@@ -309,6 +310,7 @@ export class EosDictionary {
                 this._nodes.delete(node.id);
             }
         });
+        this._resetMarked();
         return this.descriptor.deleteRecords(records);
     }
 
@@ -321,18 +323,23 @@ export class EosDictionary {
 
         this._nodes.forEach((node) => {
             if (node.marked) {
-                records.push(node.data.rec);
-                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => records.push(chld.data.rec));
                 }
+                records.push(node.data.rec);
             }
         });
-
         return records;
     }
 
-    // ??
+    private _resetMarked() {
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+               node.marked = false;
+            }
+        });
+    }
+
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
