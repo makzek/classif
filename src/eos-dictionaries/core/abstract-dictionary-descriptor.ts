@@ -329,7 +329,9 @@ export abstract class AbstractDictionaryDescriptor {
         for (const key in originalData) {
             if (originalData[key]) {
                 if (originalData[key]['_State'] === 'STUB') {
-                    SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)
+                    if (key === 'sev') {
+                        SevIndexHelper.PrepareForSave(originalData[key], originalData.rec);
+                    }
                     _res.push(this._postChanges(originalData[key], updates[key]));
                 } else {
                     _res.push(this._postChanges(originalData[key], updates[key]));
