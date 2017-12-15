@@ -30,6 +30,9 @@ export class EosDictionary {
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
     private _showDeleted: boolean;
 
+    public shortPositionsList: string[] = [];
+    public fullPositionsList: string[] = [];
+
     get showDeleted(): boolean {
         return this._showDeleted;
     }
@@ -170,6 +173,9 @@ export class EosDictionary {
                 let _node = this._nodes.get(nodeId);
                 if (_node) {
                     _node.updateData(nodeData);
+                    if (this.id === 'departments') {
+                        this._addHintInfo(_node);
+                    }
                 } else {
                     _node = new EosDictionaryNode(this, nodeData);
                     if (_node) {
@@ -179,6 +185,7 @@ export class EosDictionary {
                 if (_node) {
                     nodeIds.push(_node.id);
                 }
+
             } else {
                 console.log('no data');
             }
@@ -188,6 +195,35 @@ export class EosDictionary {
         }
         return nodeIds.map((id) => this._nodes.get(id))
             .filter((node) => !!node);
+    }
+
+    /**
+     * @description add shortPositionsList and fullPositionsList from node data
+     * @param node node which data is used
+     */
+    private _addHintInfo(node: EosDictionaryNode) {
+        if (node.data.rec['IS_NODE']) {
+            /* tslint:disable:no-bitwise */
+            if (!this.shortPositionsList.length || !!~this.shortPositionsList.findIndex((_title) =>
+                _title !== node.data.rec['DUTY'])) {
+                this.shortPositionsList.push(node.data.rec['DUTY']);
+            }
+
+            if (!this.shortPositionsList.length || !!~this.fullPositionsList.findIndex((_title) =>
+                _title !== node.data.rec['FULLNAME'])) {
+                this.fullPositionsList.push(node.data.rec['FULLNAME']);
+            }
+            /* tslint:enable:no-bitwise */
+        }
+        console.log('dictionary this.shortPositionsList', this.shortPositionsList);
+    }
+
+    /**
+     * @description add shortPositionsList and fullPositionsList from node data
+     * @param node node which data is used
+     */
+    public addHintInfo(node: EosDictionaryNode) {
+        this._addHintInfo(node);
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {

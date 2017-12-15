@@ -10,6 +10,9 @@ import { NgForm } from '@angular/forms';
 export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditPersonComponent implements OnInit {
     defaultImage = 'url(../assets/images/no-user.png)';
 
+    public shortPositionsList: string[] = [];
+    public fullPositionsList: string[] = [];
+
     @ViewChild('mainInfoForm') mainInfoForm: NgForm;
 
     gender = [
@@ -24,6 +27,9 @@ export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditP
                 this.invalid.emit(this.mainInfoForm.invalid);
             });
         }
+        this.shortPositionsList = this.dictSrv.getShortPositionsList();
+        this.fullPositionsList = this.dictSrv.getFullPositionsList();
+        console.log('this.shortPositionsList', this.shortPositionsList);
     }
 
     newImage(evt) {

@@ -745,4 +745,26 @@ export class EosDictService {
         this.viewParameters.haveMarked = val;
         this._viewParameters$.next(this.viewParameters);
     }
+
+    /**
+     * @description get shortPositionsList of current dictionary
+     */
+    public getShortPositionsList() {
+        return this.dictionary.shortPositionsList;
+    }
+
+    /**
+     * @description get fullPositionsList of current dictionary
+     */
+    public getFullPositionsList() {
+        return this.dictionary.fullPositionsList;
+    }
+
+    /**
+     * @description add value to shortPositionsList and to fullPositionsList of current dictionary
+     * @param node node which is used
+     */
+    public addHintInfo(node: EosDictionaryNode) {
+        this.dictionary.addHintInfo(node);
+    }
 }
