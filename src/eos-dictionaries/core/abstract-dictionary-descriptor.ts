@@ -11,6 +11,7 @@ import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
+import { PrintInfoHelper } from '../../eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -331,6 +332,8 @@ export abstract class AbstractDictionaryDescriptor {
                 if (originalData[key]['_State'] === 'STUB') {
                     if (key === 'sev') {
                         SevIndexHelper.PrepareForSave(originalData[key], originalData.rec);
+                    } else if (key === 'printInfo') {
+                        PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec);
                     }
                     _res.push(this._postChanges(originalData[key], updates[key]));
                 } else {

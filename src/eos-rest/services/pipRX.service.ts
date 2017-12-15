@@ -210,6 +210,7 @@ export class PipRX extends PipeUtils {
         });
 
         const d = this.buildBatch(changeSet);
+        console.log(this._cfg.dataSrv + '$batch?' + vc, d, _options);
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
