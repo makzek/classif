@@ -1,6 +1,5 @@
 import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictService } from '../services/eos-dict.service';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -9,7 +8,6 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() nodeSet: EosDictionaryNode[];
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();

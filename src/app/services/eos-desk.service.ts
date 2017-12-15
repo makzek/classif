@@ -17,6 +17,7 @@ import { AppContext } from '../../eos-rest/services/appContext.service';
 import { SRCH_VIEW, USER_CL } from '../../eos-rest/interfaces/structures';
 
 import { ViewManager } from '../../eos-rest/services/viewManager';
+import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
 import { _ES } from 'eos-rest/core/consts';
 
 
@@ -25,15 +26,6 @@ const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
     name: 'Стандартный рабочий стол',
     references: [],
-    edited: false,
-}, {
-    id: '2',
-    name: 'Desk2',
-    references: [{
-        url: '/spravochniki/rubricator',
-        title: 'Рубрикатор',
-        fullTitle: 'Рубрикатор'
-    }],
     edited: false,
 }];
 
@@ -109,6 +101,7 @@ export class EosDeskService {
         for (let i = 0; i !== cols.length; i++) {
             const col = cols[i];
             const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
+            di.title = col.LABEL;
             res.references.push(di);
         }
         return res;
@@ -122,52 +115,64 @@ export class EosDeskService {
         return result;
     }
 
+    /**
+     * Find desktop in the UserView
+     * @param deskId destop ID
+     */
     private findView(deskId: string) {
-        const isn = parseInt(deskId, 0);
-        const v = this._appCtx.UserViews.find(uv => uv.ISN_VIEW === isn)
+        const isn: number = parseInt(deskId, 0);
+        const v: SRCH_VIEW = this._appCtx.UserViews.find((uv: SRCH_VIEW) => uv.ISN_VIEW === isn)
         if (v === undefined) {
             // TODO: может отругаться?
         }
         return v;
     }
 
-    private appendDeskItemToView(deskId: string, item: IDeskItem) {
-        const v = this.findView(deskId);
-        if (v !== undefined) {
-            const col = this.viewManager.addViewColumn(v);
-            col.BLOCK_ID = item.url.split('/')[2];
-            col.LABEL = item.title;
-            this.viewManager.saveView(v);
-        }
-    }
-
-    public addNewItemToDesk(desk: IDesk) {
+    /**
+     * Add dictionary to desktop
+     * @param desk desktop with which add dictionary
+     */
+    public appendDeskItemToView(desk: IDesk) {
+        const dictionaryURL = this._router.url.split('/')[2];
         const item: IDeskItem = {
-            title: null,
-            fullTitle: null,
-            url: this._router.url
+            title: this._dictSrv.dictionaryTitle,
+            fullTitle: this._dictSrv.dictionaryTitle,
+            url: '/spravochniki/' + dictionaryURL
         }
-        const segments = this._router.url.split('/');
-        segments.pop();
-        item.url = segments.join('/');
-        this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
-            item.fullTitle = dictionary.title;
-            item.title = dictionary.title;
-            // tslint:disable-next-line:no-debugger
-            debugger;
-            this.appendDeskItemToView(desk.id, item);
-        })
-
-            console.warn('remove getNode from deskService');
-            console.warn('remove getNode from deskService');
+        const view: SRCH_VIEW = this.findView(desk.id);
+        if (view !== undefined) {
+            if (view.SRCH_VIEW_DESC_List.find(el => el.BLOCK_ID === item.url.split('/')[2])) {
+                return false;
+            }
+            const col = this.viewManager.addViewColumn(view);
+            col.BLOCK_ID = dictionaryURL
+            col.LABEL = item.title;
+            this.viewManager.saveView(view).then(() => {
+                this._appCtx.reInit();
+            })
+        }
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
             desk.references.push(item);
             return true;
-        } else {
-            return false;
         }
         /*tslint:enable*/
+    }
+
+    /**
+     * Update link name on the server
+     * @param link editing item
+     */
+    public updateName(link: IDeskItem): void {
+        const v = this.findView(this._selectedDesk.id)
+        if (v !== undefined) {
+            const blockId = link.url.split('/')[2];
+            const col = this.viewManager.updateViewColumn(v, blockId, link.title);
+            this.viewManager.saveView(v).then(() => {
+                this._appCtx.reInit();
+                this._selectedDesk$.next(this._selectedDesk);
+            })
+        }
     }
 
     /* getDesk(id: string): Promise<EosDesk> {
@@ -192,7 +197,11 @@ export class EosDeskService {
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
             this.viewManager.delViewColumn(v, blockId);
-            this.viewManager.saveView(v);
+            this.viewManager.saveView(v)
+                .then(() => {
+                    v.SRCH_VIEW_DESC_List = v.SRCH_VIEW_DESC_List.filter(c => c.BLOCK_ID !== blockId);
+                    // Костыль, рефакторить!
+                });
         }
 
         this._selectedDesk.references = this._selectedDesk.references.filter((r) => r !== link);
