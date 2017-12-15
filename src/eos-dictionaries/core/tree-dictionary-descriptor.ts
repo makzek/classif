@@ -4,6 +4,7 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -86,7 +87,8 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             LAYER: (layer + 1) + ':' + (layer + 2),
             // IS_NODE: '0'
         };
-        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
     getRecord(due: string): Promise<any> {

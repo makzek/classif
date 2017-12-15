@@ -13,8 +13,8 @@ import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
 import { debug } from 'util';
 
-import { AppContext} from '../../eos-rest/services/appContext.service';
-import { SRCH_VIEW, USER_CL} from '../../eos-rest/interfaces/structures';
+import { AppContext } from '../../eos-rest/services/appContext.service';
+import { SRCH_VIEW, USER_CL } from '../../eos-rest/interfaces/structures';
 
 import { ViewManager } from '../../eos-rest/services/viewManager';
 import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
@@ -96,11 +96,11 @@ export class EosDeskService {
     }
 
     private readDesc(v: SRCH_VIEW): EosDesk {
-        const res = <EosDesk>{id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: []};
+        const res = <EosDesk>{ id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: [] };
         const cols = v.SRCH_VIEW_DESC_List;
-        for ( let i = 0; i !== cols.length; i++) {
+        for (let i = 0; i !== cols.length; i++) {
             const col = cols[i];
-            const di = this.mapToDefaultDescItem( cols[i].BLOCK_ID);
+            const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
             res.references.push(di);
         }
         return res;
@@ -108,7 +108,7 @@ export class EosDeskService {
 
     private mapToDefaultDescItem(blockId: string): IDeskItem {
         const defaults = this._desksList[0].references;
-        const s  = '/spravochniki/' + blockId;
+        const s = '/spravochniki/' + blockId;
         const result = defaults.find(it => it.url === s);
         // TODO: clone?
         return result;
@@ -217,7 +217,7 @@ export class EosDeskService {
 
     removeDesk(desk: EosDesk): void {
         const v = this.findView(desk.id);
-        if ( v !== undefined) {
+        if (v !== undefined) {
             v._State = _ES.Deleted;
             this.viewManager.saveView(v);
         }
@@ -249,7 +249,7 @@ export class EosDeskService {
         newDesc.VIEW_NAME = desk.name;
 
         viewMan.saveView(newDesc).then(isn_view => {
-//            alert('новый стол сохранен!' + isn_view.toString());
+            //            alert('новый стол сохранен!' + isn_view.toString());
             // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
             desk.id = isn_view.toString();
             this._desksList.push(desk);

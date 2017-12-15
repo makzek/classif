@@ -235,12 +235,14 @@ export class EosDictionary {
 
     getNode(nodeId: string): /*Promise<*/EosDictionaryNode/*>*/ {
         const node = this._nodes.get(nodeId);
-        if (this.descriptor.type !== E_DICT_TYPE.linear) {
-            this.descriptor.getChildren(node.data.rec)
-                .then((nodes) => {
-                    this.updateNodes(nodes, true);
+        /*
+            if (this.descriptor.type !== E_DICT_TYPE.linear) {
+                this.descriptor.getChildren(node.data.rec)
+                    .then((nodes) => {
+                        this.updateNodes(nodes, true);
                 })
-        }
+            }
+        */
         // console.log('get node', this.id, nodeId, this._nodes, _res);
         return node;
     }
@@ -319,14 +321,13 @@ export class EosDictionary {
 
         this._nodes.forEach((node) => {
             if (node.marked) {
-                records.push(node.data.rec);
-                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => records.push(chld.data.rec));
                 }
+                records.push(node.data.rec);
+                node.marked = false;
             }
         });
-
         return records;
     }
 
@@ -393,16 +394,23 @@ export class EosDictionary {
         }
     }
 
-    private _orderByField(array: EosDictionaryNode[]): EosDictionaryNode[] {
+    private _orderByField(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
         const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
-        return array.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
-            if (a.data.rec[_orderBy.fieldKey] > b.data.rec[_orderBy.fieldKey]) {
+        return nodes.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
+            let _a = a.data.rec[_orderBy.fieldKey];
+            let _b = b.data.rec[_orderBy.fieldKey];
+
+            if (typeof _a === 'string' || typeof _b === 'string') {
+                _a = (_a + '').toLocaleLowerCase();
+                _b = (_b + '').toLocaleLowerCase();
+            }
+            if (_a > _b) {
                 return _orderBy.ascend ? 1 : -1;
             }
-            if (a.data.rec[_orderBy.fieldKey] < b.data.rec[_orderBy.fieldKey]) {
+            if (_a < _b) {
                 return _orderBy.ascend ? -1 : 1;
             }
-            if (a.data.rec[_orderBy.fieldKey] === b.data.rec[_orderBy.fieldKey]) {
+            if (_a === _b) {
                 return 0;
             }
         });

@@ -58,7 +58,6 @@
     <div>
         <div class="full-search-settings-container usual-border">
             <form>
-            <div class="col-1">
                 <div class="radio-inline">
                     <label>
                         <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
@@ -69,19 +68,16 @@
                         <input type="radio" name="full-space" [value]="1" [(ngModel)]="mode">
                         <span></span>В текущей ветке</label>
                 </div>
-            </div>
-            <div class="col-2">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="full-space" [value]="2" [(ngModel)]="mode">
+                        <span></span>Текущая и подчиненные</label>
+                </div>
                 <div class="checkbox-inline">
                     <label>
                         <input type="checkbox" name="seeDelete" [(ngModel)]="seeDeleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
-                <div *ngIf="mode === 1" class="checkbox-inline">
-                    <label>
-                        <input type="checkbox" name="useSub" [(ngModel)]="useSub">
-                        <span></span>Учитывать подчиненные ветки</label>
-                </div>
-            </div>
         </form>
         </div>
 

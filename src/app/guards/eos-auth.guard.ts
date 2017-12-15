@@ -47,14 +47,19 @@ export class UnauthorizedGuard implements CanActivate {
         return this._profileSrv.checkAuth()
             .then((auth) => {
                 if (auth) {
+                    return this._profileSrv.logout()
+                        .then(() => true);
+                    /*
                     let _returnUrl = '/desk/system';
 
                     if (route.queryParams['returnUrl']) {
                         _returnUrl = route.queryParams['returnUrl']
                     }
                     this._router.navigateByUrl(_returnUrl);
+                    */
+                } else {
+                    return true;
                 }
-                return !auth;
             });
     }
 }

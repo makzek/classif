@@ -163,6 +163,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
+                console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
                 this.updateMarks();
             });
@@ -426,9 +427,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _clearForm() {
         this.formValidated = false;
-        this.nodeData = {
-            rec: {}
-        };
+        this.nodeData = this.selectedNode.getCreatingData();
     }
 
     private _create() {

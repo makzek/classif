@@ -241,6 +241,18 @@ export class EosDictionaryNode {
         return _data;
     }
 
+    getCreatingData(): any {
+        const _data = {
+            rec: {},
+        };
+        this._descriptor.getEditView(this.data).forEach((_f) => {
+            if (_f.type === E_FIELD_TYPE.dictionary) {
+                _data[_f.key] = {};
+            }
+        });
+        return _data;
+    }
+
     getShortViewFieldsDescription(): any {
         return this._descriptor.getShortQuickFieldDescription(this.data);
     }
@@ -291,10 +303,10 @@ export class EosDictionaryNode {
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
-            children = children.concat(this._children);
             this._children.forEach((chld) => {
                 children = children.concat(chld.getAllChildren());
-            })
+            });
+            children = children.concat(this._children);
         }
         return children;
     }

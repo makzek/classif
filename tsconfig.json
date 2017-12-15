@@ -3,12 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
-    "paths": {
-      "@app": ["app/*"],
-      "@eos-common": ["eos-common/*"],
-      "@eos-dictionaries": ["eos-dictionaries/*"],
-      "@eos-rest": ["eos-rest/*"]
-    },
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
