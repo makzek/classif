@@ -182,7 +182,7 @@ export class EosDictionaryNode {
 
     delete() {
         // console.log('delete children parent', this, this._children, this.parent);
-        if ((!this._children || this._children.length < 1) && this.parent) {
+        if (/* (!this._children || this._children.length < 1) && */this.parent) {
             this.parent.deleteChild(this);
         }
     }
