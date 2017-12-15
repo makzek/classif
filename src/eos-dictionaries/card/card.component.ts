@@ -23,6 +23,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE
 } from '../consts/messages.consts';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 // import { UUID } from 'angular2-uuid';
@@ -157,12 +158,15 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _getNode() {
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((err) => {
-                console.log('getNode error', err);
-                const segments: Array<string>  = this._router.url.split('/');
-                this._router.navigate(['spravochniki/' + segments[2]]);
-            });
+            .then((node) => {
+                if (node) {
+                    this._update(node)
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            }).catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
@@ -272,8 +276,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
                 if (this.nodeData[dict] && this._originalData[dict]) {
                     return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
-                            return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                                (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
+                        return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
                     });
                 } else {
                     return false;

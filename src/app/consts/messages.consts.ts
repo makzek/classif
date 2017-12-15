@@ -74,6 +74,6 @@ export const AUTH_REQUIRED: IMessage = {
 
 export const NAVIGATE_TO_ELEMENT_WARN: IMessage = {
     title: 'Предупреждение:',
-    msg: 'элемент был удален. Переход не возможен!',
+    msg: 'элемента не существует! Возможно он был удален.',
     type: 'warning'
 }
