@@ -101,6 +101,7 @@ export class EosDeskService {
         for (let i = 0; i !== cols.length; i++) {
             const col = cols[i];
             const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
+            di.title = col.LABEL;
             res.references.push(di);
         }
         return res;
