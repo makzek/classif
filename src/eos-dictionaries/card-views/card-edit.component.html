@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="dictionaryId">
     <eos-departments-card-edit *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
         (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit>
-    <eos-rooms-card-edit  *ngSwitchCase="'rooms'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
-        (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-rooms-card-edit>
-    <eos-simple-card-edit *ngSwitchDefault [data]="data" [fieldsDescription]="fieldsDescription" [nodeSet]="nodeSet" [editMode]="editMode"
-        [nodeId]="nodeId" (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-simple-card-edit>
+    <eos-rooms-card-edit  *ngSwitchCase="'rooms'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+        (invalid)="onInvalid($event)"></eos-rooms-card-edit>
+    <eos-simple-card-edit *ngSwitchDefault [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+        (invalid)="onInvalid($event)"></eos-simple-card-edit>
 </ng-container>
