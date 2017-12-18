@@ -31,4 +31,8 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
             }
         ];*/
     }
+
+    makePerson() {
+        this.data.rec['IS_NODE'] = 1;
+    }
 }
