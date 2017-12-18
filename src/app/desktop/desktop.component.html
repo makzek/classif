@@ -14,7 +14,7 @@
                     tooltip="Переместить вправо" containerClass="tooltip-info"></span>
             </span>
             <ul *ngIf="recentItems" class="recent-list">
-                <li class="recent-item usual-border" *ngFor="let link of recentItems" tooltip="{{link.fullTitle}}"
+                <li class="recent-item usual-border" *ngFor="let link of recentItems" tooltip="{{link.title}}"
                     [placement]="historyToLeft ? 'right' : 'left'" containerClass="tooltip-info  word-break">
                     <a class="link-text" [routerLink]="[link.url]">{{link.title}}</a>
                 </li>
@@ -46,7 +46,7 @@
     </div>
 
     <div *ngIf="!editing(item.value)" class="btn item-content xl-font block" [routerLink]="[item.value.url]"
-    tooltip="{{deskId === 'system' ? item.value.title : item.value.fullTitle}}" containerClass="tooltip-info word-break" container="body">
+    tooltip="{{deskId === 'system' ? item.value.title : item.value.title}}" containerClass="tooltip-info word-break" container="body">
         <span class="icon-wrapper">
             <span class="icon eos-icon eos-icon-bin-blue"></span>
         </span>

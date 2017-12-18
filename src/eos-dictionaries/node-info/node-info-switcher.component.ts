@@ -27,6 +27,8 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     private _dictSubscription: Subscription;
 
     constructor(private _dictSrv: EosDictService) {
+        this._initInfo();
+
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
             if (node) {
                 this.dictionaryId = node.dictionaryId;
@@ -45,16 +47,23 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                         this.bossName = '';
                     }
                 }
+            } else {
+                this._initInfo();
             }
         }, (error) => alert(error));
+
         this._dictSubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             if (dict && dict.id !== this.dictionaryId) {
-                this.fieldsDescriptionFull = {};
-                this.fieldsDescriptionShort = {};
-                this.nodeDataFull = {};
-                this.nodeDataShort = {};
+                this._initInfo();
             }
         });
+    }
+
+    private _initInfo() {
+        this.fieldsDescriptionFull = {};
+        this.fieldsDescriptionShort = {};
+        this.nodeDataFull = {};
+        this.nodeDataShort = {};
     }
 
     ngOnDestroy() {

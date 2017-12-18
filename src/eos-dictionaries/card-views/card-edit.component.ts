@@ -13,7 +13,6 @@ export class CardEditComponent {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() nodeSet: EosDictionaryNode[];
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -66,7 +66,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
-    private paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
+    paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
 
     public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
