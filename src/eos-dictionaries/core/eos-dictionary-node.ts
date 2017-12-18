@@ -1,4 +1,4 @@
-import { IFieldView } from './dictionary.interfaces';
+import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -309,6 +309,15 @@ export class EosDictionaryNode {
             children = children.concat(this._children);
         }
         return children;
+    }
+
+    /**
+     * Get value for field
+     * @param field field which value need recive
+     * @return value of field from node.data.rec
+     */
+    getValue (field: IFieldView): any {
+        return this.data.rec[field.foreignKey];
     }
 }
 

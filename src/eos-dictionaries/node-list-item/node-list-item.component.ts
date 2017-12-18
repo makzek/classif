@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -12,13 +12,14 @@ import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.
 import { createElement } from '@angular/core/src/view/element';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
 import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'eos-node-list-item',
     templateUrl: 'node-list-item.component.html'
 })
 
-export class NodeListItemComponent implements OnInit {
+export class NodeListItemComponent implements OnInit, OnChanges {
     @ViewChild('item') item: ElementRef;
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
@@ -29,6 +30,8 @@ export class NodeListItemComponent implements OnInit {
 
     viewFields: IFieldView[];
 
+    customValues: any = {};
+
     constructor(
         private _storageSrv: EosStorageService,
         private _dictSrv: EosDictService,
@@ -37,6 +40,14 @@ export class NodeListItemComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
+    }
+
+    ngOnChanges() {
+        if (this.customFields) {
+            this.customFields.forEach((_field) => {
+                this.customValues[_field.key] = this.node.getValue(_field);
+            });
+        }
     }
 
     selectNode(): void {
