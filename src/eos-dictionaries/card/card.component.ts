@@ -397,6 +397,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 const fullTitle = this._fullTitle(resp);
+                if (this.dictionaryId === 'departments') {
+                    this._dictSrv.setShortPositionsList();
+                }
                 console.log('fullTitle', fullTitle);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,

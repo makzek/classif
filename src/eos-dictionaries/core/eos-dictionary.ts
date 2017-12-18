@@ -197,6 +197,11 @@ export class EosDictionary {
             .filter((node) => !!node);
     }
 
+    public initHintInfo(shortInfo: string[], fullInfo: string[]) {
+        this.shortPositionsList = shortInfo;
+        this.fullPositionsList = fullInfo;
+    }
+
     /**
      * @description add shortPositionsList and fullPositionsList from node data
      * @param node node which data is used

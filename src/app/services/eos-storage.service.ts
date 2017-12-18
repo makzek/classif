@@ -131,4 +131,28 @@ export class EosStorageService {
             return this._data.userOrder[dictionary].userOrderOn;
         }
     }
+
+    public getShortPositions() {
+        return this._data.shortPositions;
+    }
+
+    public getFullPositions() {
+        return this._data.fullPositions;
+    }
+
+    public setShortPositions(values: string[]) {
+        if (!this._data.shortPositions) {
+            this._data.shortPositions = {};
+        }
+        this._data.shortPositions = values;
+        this._updateStorage();
+    }
+
+    public setFullPositions(values: string[]) {
+        if (!this._data.fullPositions) {
+            this._data.fullPositions = {};
+        }
+        this._data.fullPositions = values;
+        this._updateStorage();
+    }
 }

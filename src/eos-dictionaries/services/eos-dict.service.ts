@@ -235,6 +235,10 @@ export class EosDictService {
                             this.viewParameters.userOrdered,
                             this._storageSrv.getUserOrder(this.dictionary.id)
                         );
+                        this.dictionary.initHintInfo(
+                            this._storageSrv.getShortPositions(),
+                            this._storageSrv.getFullPositions()
+                        );
                         this._mDictionaryPromise.delete(dictionaryId);
                         this._dictionary$.next(this.dictionary);
                         return this.dictionary;
@@ -745,6 +749,20 @@ export class EosDictService {
      */
     public getFullPositionsList() {
         return this.dictionary.fullPositionsList;
+    }
+
+    /**
+     * @description add short positions list in storage
+     */
+    public setShortPositionsList(values: string[]) {
+        this._storageSrv.setShortPositions(values);
+    }
+
+    /**
+     * @description add full positions list in storage
+     */
+    public setFullPositionsList(values: string[]) {
+        this._storageSrv.setFullPositions(values);
     }
 
     /**
