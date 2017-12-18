@@ -357,14 +357,13 @@ export class EosDictionary {
 
         this._nodes.forEach((node) => {
             if (node.marked) {
-                records.push(node.data.rec);
-                node.marked = false;
                 if (recursive) {
                     node.getAllChildren().forEach((chld) => records.push(chld.data.rec));
                 }
+                records.push(node.data.rec);
+                node.marked = false;
             }
         });
-
         return records;
     }
 

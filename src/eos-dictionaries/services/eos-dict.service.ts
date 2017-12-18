@@ -85,6 +85,10 @@ export class EosDictService {
         return this.dictionary.orderBy;
     }
 
+    get dictionaryTitle(): string {
+        return this.dictionary.title;
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -156,7 +160,7 @@ export class EosDictService {
 
     private _fixCurrentPage() {
         this.paginationConfig.itemsQty = this._getListLength();
-        const maxPage = Math.ceil(this.paginationConfig.itemsQty / this.paginationConfig.length);
+        const maxPage = Math.max(1, Math.ceil(this.paginationConfig.itemsQty / this.paginationConfig.length));
         this.paginationConfig.start = Math.min(this.paginationConfig.start, maxPage);
         this.paginationConfig.current = Math.min(this.paginationConfig.current, maxPage);
         this._paginationConfig$.next(this.paginationConfig);
@@ -167,7 +171,7 @@ export class EosDictService {
      * @param config configuration pagination
      */
     public changePagination(config: IPaginationConfig) {
-        this.paginationConfig = config;
+        Object.assign(this.paginationConfig, config);
         this._updateVisibleNodes();
         this._paginationConfig$.next(this.paginationConfig);
     }
@@ -319,7 +323,7 @@ export class EosDictService {
 
     private _setCurrentList(nodes: EosDictionaryNode[], update = false) {
         this._currentList = nodes || [];
-        console.log('_setCurrentList', nodes);
+        // console.log('_setCurrentList', nodes);
         // remove duplicates
         this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
         this._initPaginationConfig(update);
@@ -327,7 +331,7 @@ export class EosDictService {
     }
 
     private _reorderList() {
-        console.log('_reorderList');
+        // console.log('_reorderList');
         if (this.dictionary) {
             if (!this.viewParameters.searchResults && this.viewParameters.userOrdered && this.selectedNode) {
                 this._currentList = this.dictionary.reorderList(this._currentList, this.selectedNode.id);
@@ -340,7 +344,7 @@ export class EosDictService {
     }
 
     private _updateVisibleNodes() {
-        console.log('_updateVisibleNodes');
+        // console.log('_updateVisibleNodes');
         this._visibleListNodes = this._currentList;
 
         if (!this.viewParameters.showDeleted) {
@@ -350,25 +354,10 @@ export class EosDictService {
 
         const page = this.paginationConfig;
         const pageList = this._visibleListNodes.slice((page.start - 1) * page.length, page.current * page.length);
-        this._visibleList$.next(pageList);
-    }
-
-    /**
-     * @description Filters list of nodes
-     * @param nodeList list for filtering
-     * @returns list without dublicate
-     */
-    private _filterList(nodeList: EosDictionaryNode[]): EosDictionaryNode[] {
-        let nodes = nodeList || [];
-        if (nodes && nodes.length) {
-
-            if (!this.viewParameters.showDeleted) {
-                nodes = nodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
-            }
-        } else {
-            nodes = [];
+        if (this._openedNode && pageList.findIndex((node) => node.id === this._openedNode.id) < 0) {
+            this._openNode(null);
         }
-        return nodes;
+        this._visibleList$.next(pageList);
     }
 
     /**
@@ -511,7 +500,9 @@ export class EosDictService {
                 .then(() => {
                     return true;
                 })
-                .catch((err) => this._errHandler(err));
+                .catch((err) => {
+                    return this._reloadList().then(() => this._errHandler(err));
+                });
         } else {
             return Promise.resolve(false);
         }
@@ -527,7 +518,9 @@ export class EosDictService {
                 .then(() => {
                     return true;
                 })
-                .catch((err) => this._errHandler(err));
+                .catch((err) => {
+                    return this._reloadList().then(() => this._errHandler(err));
+                });
         } else {
             return Promise.resolve(false);
         }
@@ -635,17 +628,11 @@ export class EosDictService {
         this._reorderList();
     }
 
-    // temporary
-
-    private aToKeys(a: EosDictionaryNode[]): string[] {
-        return a.map((node) => node.id);
-    }
-
     setUserOrder(ordered: EosDictionaryNode[]) {
         const _original = [];
         const _move = {};
 
-        console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
+        // console.log('setUserOrder', this.aToKeys(ordered), this.aToKeys(this._currentList));
         // restore original order
         this._currentList.forEach((node) => {
             const _oNode = ordered.find((item) => item.id === node.id);
@@ -674,7 +661,7 @@ export class EosDictService {
     }
 
     toggleDeleted() {
-        console.log('toggle deleted fired');
+        // console.log('toggle deleted fired');
         this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
 
         if (this.dictionary) {
@@ -714,7 +701,7 @@ export class EosDictService {
             const errMessage = err.message ? err.message : err;
             this._msgSrv.addNewMessage({
                 type: 'danger',
-                title: 'Ошибка операции',
+                title: 'Ошибка обработки. Ответ сервера:',
                 msg: errMessage,
                 dismissOnTimeout: 100000
             });

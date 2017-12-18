@@ -17,10 +17,21 @@ export class ViewManager {
         return tmp;
     }
 
-    addViewColumn(view: SRCH_VIEW): SRCH_VIEW_DESC {
-        const result = <SRCH_VIEW_DESC>{_State: _ES.Added};
+    /**
+     * Add
+     * @param view User
+     */
+    public addViewColumn(view: SRCH_VIEW): SRCH_VIEW_DESC {
+        const result = <SRCH_VIEW_DESC>{_State: _ES.Added };
         view.SRCH_VIEW_DESC_List.push(result);
         return result;
+    }
+
+    public updateViewColumn(view: SRCH_VIEW , blockId: string, newName: string): SRCH_VIEW_DESC {
+        const editEl = view.SRCH_VIEW_DESC_List.find(el => el.BLOCK_ID === blockId);
+        editEl.LABEL = newName;
+        editEl._State = _ES.Modified;
+        return editEl;
     }
 
     editViewColumn(view: SRCH_VIEW, blockId: string): SRCH_VIEW_DESC {
