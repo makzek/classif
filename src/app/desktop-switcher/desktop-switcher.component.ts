@@ -27,6 +27,7 @@ export class DesktopSwitcherComponent {
     deskName: string;
     creating = false;
     editing = false;
+    updating = false;
     maxLength = 80;
     innerClick: boolean;
 
@@ -100,17 +101,22 @@ export class DesktopSwitcherComponent {
         if ($evt) {
             $evt.stopPropagation();
         }
+        this.updating = true;
+        let pUpdate: Promise<any>;
         desk.edited = false;
         /* todo: re-factor it to inline validation messages */
         // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
         // const _tempDeskName = this.deskName;
         desk.name = this.deskName;
         if (desk.id) {
-            this._deskSrv.editDesk(desk);
+            pUpdate = this._deskSrv.editDesk(desk);
         } else {
-            this._deskSrv.createDesk(desk);
+            pUpdate = this._deskSrv.createDesk(desk);
         }
-        this.deskName = '';
+        pUpdate.then(() => {
+            this.updating = false;
+            this.deskName = '';
+        });
     }
 
     create(evt: Event) {

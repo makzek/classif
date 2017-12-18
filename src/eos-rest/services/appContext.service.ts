@@ -66,7 +66,7 @@ export class AppContext {
             .then(([sysParms, curentUser, userViews]) => {
                 this.SysParms = sysParms[0];
                 this.CurrentUser = curentUser[0];
-                this.UserViews = userViews;
+                this.UserViews = userViews.map((userView) => this.pip.entityHelper.prepareForEdit(userView));
                 this._ready.resolve('ready');
                 return [this.CurrentUser, this.SysParms, this.UserViews];
             })
