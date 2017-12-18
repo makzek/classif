@@ -29,6 +29,12 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     params: IDictionaryViewParameters;
 
+    get updating() {
+        /* tslint:disable:no-bitwise */
+        return !!~this.nodes.findIndex((_n) => _n.updating);
+        /* tslint:enable:no-bitwise */
+    }
+
     constructor(private _dictSrv: EosDictService) { }
 
     ngOnInit() {

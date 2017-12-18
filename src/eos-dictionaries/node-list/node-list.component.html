@@ -1,4 +1,7 @@
 <div class="eos-node-list">
+    <div *ngIf="updating" class="updating-stub">
+        <eos-spinner class="spinner" size="lg"></eos-spinner>
+    </div>
     <div class="block list">
         <p *ngIf="!nodes?.length" class="text-center text-info">Нет записей.</p>
         <ng-container *ngIf="nodes?.length">
