@@ -69,7 +69,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
-    private paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
+    paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
 
     public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
@@ -182,6 +182,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
+                console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
                 this.updateMarks();
             });
@@ -331,7 +332,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.add:
-                this._create();
+                this._preCreate();
                 break;
 
             case E_RECORD_ACTIONS.restore:
@@ -497,7 +498,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.nodeData = this.selectedNode.getCreatingData();
     }
 
-    private _create() {
+    private _preCreate() {
         this._clearForm();
         this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
@@ -520,22 +521,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
-                // console.log('created node', node);
-                let title = '';
-                node.getShortQuickView().forEach((_f) => {
-                    title += this.nodeData.rec[_f.key];
-                });
-                this._deskSrv.addRecentItem({
-                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                    title: title,
-                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
-                });
-                // if (hide) {
+                if (node) {
+                    let title = '';
+                    node.getShortQuickView().forEach((_f) => {
+                        title += this.nodeData.rec[_f.key];
+                    });
+                    this._deskSrv.addRecentItem({
+                        url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
+                        title: title,
+                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
+                    });
+                }
                 this.creatingModal.hide();
-                // }
-                // this._clearForm();
+
                 if (!hide) {
-                    this._create();
+                    this._preCreate();
                 }
             })
             .catch((err) => this._errHandler(err));

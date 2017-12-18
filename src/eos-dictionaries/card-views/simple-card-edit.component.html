@@ -25,7 +25,7 @@
                             placeholder="Индекс СЭВ"
                             [readonly] = "!editMode"
                             [ngClass]="{'readonly': !editMode }"
-                            [pattern]="NOT_EMPTY_STRING" maxlength="255"
+                            [pattern]="notEmptyString" maxlength="255"
                             [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
                             placement="right" containerClass="tooltip-error" container="body"
                             (focus)="focus('GLOBAL_ID')" (blur)="blur()"
