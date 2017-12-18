@@ -11,7 +11,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative'],
     itemActions: ['edit', 'view', 'slantForForms'],
-    groupActions: ['remove', 'removeHard'],
+    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
