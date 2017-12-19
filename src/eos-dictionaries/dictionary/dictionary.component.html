@@ -89,11 +89,12 @@
         </button>
     </div>
     <div class="create-new-node modal-body">
-        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"></eos-card-edit>
+        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"
+        (onChange)="recordChanged($event)"></eos-card-edit>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
-        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create(false)">Добавить ещё</button>
-        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create()">Добавить</button>
+        <button class="btn btn-primary-full" [disabled]="!hasChanges || !formValidated" (click)="create(false)">Добавить ещё</button>
+        <button class="btn btn-primary-full" [disabled]="!hasChanges || !formValidated" (click)="create()">Добавить</button>
     </div>
 </ng-template>

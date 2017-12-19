@@ -85,7 +85,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     nodeData: any = {};
     creatingModal: BsModalRef;
     fieldsDescription: any;
-    formValidated: boolean;
+    formValidated = false;
+    hasChanges = false;
 
     customFields: FieldDescriptor[] = [];
 
@@ -614,5 +615,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             msg: errMessage,
             dismissOnTimeout: 100000
         });
+    }
+
+    recordChanged(data: any) {
+        if (this.nodeData) {
+            /* tslint:disable:no-bitwise */
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                if (this.nodeData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
+                        this.nodeData[dict][key] && key !== 'IS_NODE');
+                } else {
+                    return false;
+                }
+            });
+            /* tslint:enable:no-bitwise */
+            this.hasChanges = hasChanges;
+        }
     }
 }
