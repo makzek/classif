@@ -93,7 +93,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
-        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create(false)">Добавить ещё</button>
-        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create()">Добавить</button>
+        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create(false)">Добавить ещё</button>
+        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create()">Добавить</button>
     </div>
 </ng-template>

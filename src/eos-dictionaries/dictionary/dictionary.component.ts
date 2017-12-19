@@ -489,8 +489,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
     }
 
-    validate(valid: boolean) {
-        this.formValidated = valid;
+    validate(invalid: boolean) {
+        this.formValidated = !invalid;
     }
 
     private _clearForm() {

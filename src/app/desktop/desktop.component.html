@@ -62,6 +62,7 @@
                 aria-hidden="true"></span>
         </button>-->
         <button class="icon-btn btn" (click)="edit($event, item.value)" [ngClass]="{'lefter': deskId !== 'system'}"
+            *ngIf="deskId !== 'system'"
             tooltip="Редактировать"
             placement="left"
             containerClass="tooltip-info"
@@ -69,7 +70,8 @@
             <span class="eos-icon eos-icon-edit-blue small"
                 aria-hidden="true"></span>
         </button>
-        <button *ngIf="deskId !== 'system'" class="icon-btn btn" (click)="removeLink(item.value, $event)"
+        <button class="icon-btn btn" (click)="removeLink(item.value, $event)"
+            *ngIf="deskId !== 'system'"
             tooltip="Удалить"
             placement="left"
             containerClass="tooltip-info"
