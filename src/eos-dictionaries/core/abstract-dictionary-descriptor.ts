@@ -164,6 +164,8 @@ export abstract class AbstractDictionaryDescriptor {
         switch (aSet) {
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
             default:
                 return null;
         }
@@ -188,6 +190,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getAllVisibleFields(): FieldDescriptor[] {
+        return this.allVisibleFields;
     }
 
     private _getFullSearchFields() {

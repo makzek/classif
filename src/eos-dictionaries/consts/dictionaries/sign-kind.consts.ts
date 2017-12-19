@@ -9,7 +9,7 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     dictType: E_DICT_TYPE.linear,
     title: 'Виды подписей (ЭП)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'ISN_LCLASSIF',
@@ -52,5 +52,5 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     quickViewFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
+    allVisibleFields: ['SIGN_TEXT'],
 };

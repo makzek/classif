@@ -44,6 +44,7 @@ import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
+// import { setTimeout } from 'timers';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -54,6 +55,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('createTpl') createTemplate: TemplateRef<any>;
     @ViewChild('tree') treeEl;
+
+    @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -66,7 +69,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
-    private paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
+    paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
 
     public currentState: boolean[]; // State sanwiches
     // readonly states = DICTIONARY_STATES;
@@ -94,6 +97,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     _treeScrollTop = 0;
 
     dictTypes = E_DICT_TYPE;
+
+    searchStartFlag = false; // flag begin search
+
+    readonly MIN_COL_WIDTH = 90; // 40px - paddings, 50px - content
+    readonly DEFAULT_FIELD_LEN = 200;
+
+    tableWidth: number;
+    hasCustomTable: boolean;
 
     public fonConf = {
         width: 0 + 'px',
@@ -133,6 +144,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
+                    if (this.dictionaryId !== dictionary.id) {
+                        this._dictSrv.customFields = [];
+                    }
+                    this.customFields = this._dictSrv.customFields;
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
@@ -140,6 +155,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.treeNodes = [dictionary.root];
                     }
                     this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = this.dictionary.descriptor.canDo(E_ACTION_GROUPS.common,
+                        E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }
@@ -150,11 +167,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
+                    this._countColumnWidth();
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
-                    this._countColumnWidth();
                 }
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
@@ -163,6 +180,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
+                console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
                 this.updateMarks();
             });
@@ -193,23 +211,72 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
     }
 
+    transitionEnd(e: Event) {
+        this._countColumnWidth();
+    }
+
     private _countColumnWidth() {
         let _totalWidth = 0;
         this.viewFields.forEach((_f) => {
             if (_f.length) {
                 _totalWidth += _f.length;
             } else {
-                _totalWidth += 200;
+                _totalWidth += this.DEFAULT_FIELD_LEN;
             }
         });
 
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    _totalWidth += _f.length;
+                } else {
+                    _totalWidth += this.DEFAULT_FIELD_LEN;
+                }
+            });
+        }
+
+        /*Use Math.floor() to be be sure that there is enough space */
         this.viewFields.forEach((_f) => {
             if (_f.length) {
-                this.length[_f.key] = _f.length / _totalWidth * 100;
+                this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
             } else {
-                this.length[_f.key] = 200 / _totalWidth * 100;
+                this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
             }
         });
+
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
+                } else {
+                    this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
+                }
+            });
+        }
+
+        if (this.selectedEl) {
+            const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
+            this.tableWidth = _selectedWidth;
+            if (this.customFields && this.customFields.length) {
+                this.viewFields.forEach((_f) => {
+                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    }
+                });
+
+                this.customFields.forEach((_f) => {
+                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
+                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    }
+                });
+
+                if (this.tableWidth <= _selectedWidth) {
+                    this.tableWidth = _selectedWidth - 2;
+                }
+            } else {
+                this.tableWidth = _selectedWidth - 2;
+            }
+        }
     }
 
     private _selectNode() {
@@ -263,7 +330,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.add:
-                this._create();
+                this._preCreate();
                 break;
 
             case E_RECORD_ACTIONS.restore:
@@ -420,8 +487,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
     }
 
-    validate(valid: boolean) {
-        this.formValidated = valid;
+    validate(invalid: boolean) {
+        this.formValidated = !invalid;
     }
 
     private _clearForm() {
@@ -429,7 +496,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.nodeData = this.selectedNode.getCreatingData();
     }
 
-    private _create() {
+    private _preCreate() {
         this._clearForm();
         this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
@@ -443,7 +510,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
         this.creatingModal.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
-            console.log(this.customFields);
+            this._dictSrv.customFields = this.customFields;
+            this._countColumnWidth();
             this.creatingModal.hide();
         })
     }
@@ -451,22 +519,22 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public create(hide = true) {
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
-                console.log('created node', node);
-                let title = '';
-                node.getShortQuickView().forEach((_f) => {
-                    title += this.nodeData.rec[_f.key];
-                });
-                this._deskSrv.addRecentItem({
-                    url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                    title: title,
-                    fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
-                });
-                // if (hide) {
+                // console.log('created node', node);
+                if (node) {
+                    let title = '';
+                    node.getShortQuickView().forEach((_f) => {
+                        title += this.nodeData.rec[_f.key];
+                    });
+                    this._deskSrv.addRecentItem({
+                        url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
+                        title: title,
+                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
+                    });
+                }
                 this.creatingModal.hide();
-                // }
-                // this._clearForm();
+
                 if (!hide) {
-                    this._create();
+                    this._preCreate();
                 }
             })
             .catch((err) => this._errHandler(err));
@@ -530,6 +598,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
+        setTimeout(() => {
+            this._countColumnWidth();
+        }, 0);
     }
 
     private _errHandler(err) {

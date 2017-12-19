@@ -22,7 +22,9 @@ export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
 
     dictId = '';
-    fieldsDescription = {};
+    fieldsDescription = {
+        rec: {}
+    };
     data = {
         rec: {},
     };
@@ -52,7 +54,6 @@ export class DictionarySearchComponent implements OnDestroy {
     date: Date = new Date();
 
     public mode = 0;
-    public seeDeleted = false;
 
     setTab(key: string) {
         this.currTab = key;
@@ -136,7 +137,7 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
-        if (this.seeDeleted) { this.settings.deleted = this.seeDeleted; }
+
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
@@ -164,9 +165,13 @@ export class DictionarySearchComponent implements OnDestroy {
     dateFilter(date: Date) {
         if (date !== this.date) {
             this.date = date;
-            this._dictSrv.filter({ date: date }).then(() => {
-                console.log('filtered');
-            }).catch((err) => { console.log(err) });
+            this._dictSrv.filter({ date: date })
+                .then(() => {
+                    console.log('filtered');
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
         }
     }
 

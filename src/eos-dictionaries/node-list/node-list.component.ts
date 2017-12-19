@@ -8,6 +8,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
 import { LongTitleHintComponent } from '../long-title-hint/long-title-hint.component';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
 
 @Component({
@@ -20,12 +21,19 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @Input() nodes: EosDictionaryNode[];
     @Input() length: any;
     @Input() update: boolean; // flag bigin search
+    @Input() customFields: IFieldView[];
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
     params: IDictionaryViewParameters;
+
+    get updating() {
+        /* tslint:disable:no-bitwise */
+        return !!~this.nodes.findIndex((_n) => _n.updating);
+        /* tslint:enable:no-bitwise */
+    }
 
     constructor(private _dictSrv: EosDictService) { }
 

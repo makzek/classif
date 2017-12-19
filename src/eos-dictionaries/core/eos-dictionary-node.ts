@@ -182,7 +182,7 @@ export class EosDictionaryNode {
 
     delete() {
         // console.log('delete children parent', this, this._children, this.parent);
-        if ((!this._children || this._children.length < 1) && this.parent) {
+        if (/* (!this._children || this._children.length < 1) && */this.parent) {
             this.parent.deleteChild(this);
         }
     }
@@ -303,10 +303,10 @@ export class EosDictionaryNode {
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
-            children = children.concat(this._children);
             this._children.forEach((chld) => {
                 children = children.concat(chld.getAllChildren());
-            })
+            });
+            children = children.concat(this._children);
         }
         return children;
     }

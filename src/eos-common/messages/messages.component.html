@@ -3,6 +3,6 @@
     [dismissible]="true"
     (onClose)="onClose(message)"
     [dismissOnTimeout]="message.dismissOnTimeout">
-    <strong>{{message.title}}</strong>
+    <strong>{{message.title}}</strong><br/>
     <span [innerHtml]="message.msg"></span>
 </alert>
