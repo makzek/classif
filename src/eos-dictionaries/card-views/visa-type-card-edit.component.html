@@ -1,7 +1,8 @@
 <div class="simple-card-edit">
     <article class="edit-content">
         <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
-            <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
+            <div *ngFor="let key of keys(fieldsDescription.rec)">
+                <div *ngIf="!(key === 'STATUS' || key === 'IS_FINAL')" class="form-group">
                 <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
                 <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
                         [ngModel]="data.rec[key]" (ngModelChange)="change(key, 'rec', $event)"
@@ -15,23 +16,28 @@
                         placement="right" containerClass="tooltip-error" container="body"
                         (focus)="focus(key)" (blur)="blur()"
                         [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="finalyVise" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">ПРИЗНАК ФИНАЛЬНОЙ ВИЗЫ</label>
                     <label class="checkbox">
-                        <input [disabled]="!editMode" id="finalyVise" type="checkbox" name="finalyVise" [(ngModel)]="data.rec['IS_FINAL']">
+                        <input id="finalyVise" type="checkbox" name="finalyVise" #ch
+                            [disabled]="!editMode"
+                            [checked]="this.data.rec['IS_FINAL'] === 1 ? true : false"
+                            (click)="changeFinaly(ch.checked)">
                         <span class="eos-icon eos-icon-checkbox-square-blue"></span>
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label for="STATUS" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">СТАТУС ВИЗЫ</label>
-                    <select class="form-control m-font" name="STATUS" id="STATUS" required [disabled]="!editMode">
-                        <option disabled="disabled" selected="selected" style="display: none">Выберите статус визы</option>
-                        <option value="Положительный" [(ngModel)]="data.rec['STATUS']" name="st1" ngDefaultControl>Положительный</option>
-                        <option value="Отрицательный" [(ngModel)]="data.rec['STATUS']" name="st2" ngDefaultControl>Отрицательный</option>
-                        <option value="Промежуточный" [(ngModel)]="data.rec['STATUS']" name="st3" ngDefaultControl>Промежуточный</option>
+                    <select class="form-control m-font" name="STATUS" id="STATUS" [disabled]="!editMode"
+                    [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()" required>
+                        <option disabled="disabled" selected="selected" class="hiden">Выберите статус визы</option>
+                        <option value="Положительный" name="st1" ngDefaultControl>Положительный</option>
+                        <option value="Отрицательный" name="st2" ngDefaultControl>Отрицательный</option>
+                        <option value="Промежуточный" name="st3" ngDefaultControl>Промежуточный</option>
                     </select>
                 </div>
         </form>
