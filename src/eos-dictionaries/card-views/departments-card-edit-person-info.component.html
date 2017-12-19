@@ -1,13 +1,6 @@
 <form #printInfoForm="ngForm">
 <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
 <div class="form-group">
-    <!--label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY_RP">{{fieldsDescription['printInfo']['DUTY_RP']?.title}}</label>
-    <input [readonly]="!editMode" id="DUTY_RP" name="DUTY_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['DUTY_RP']"
-        (ngModelChange)="change('DUTY_RP', 'printInfo', $event)" placeholder="{{fieldsDescription['printInfo']['DUTY_RP']?.title}}"
-        [ngClass]="{'readonly': !editMode }" (focus)="focus('DUTY_RP')" (blur)="blur()" [pattern]="fieldsDescription['printInfo']['DUTY_RP']?.pattern"
-        tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['DUTY_RP']?.invalid && printInfoForm.controls['DUTY_RP']?.dirty && focusedField === 'DUTY_RP'"
-        triggers=""-->
     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY_RP">Родительный падеж (кого, чего)</label>
     <input [readonly]="!editMode" id="DUTY_RP" name="DUTY_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['DUTY_RP']"
         (ngModelChange)="change('DUTY_RP', 'printInfo', $event)" placeholder="Родительный падеж (кого, чего)"

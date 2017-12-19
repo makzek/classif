@@ -8,15 +8,15 @@
         </ul>
     </div>
     <div *ngIf="currTab === 0">
-        <eos-departments-card-edit-person-main [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode"
+        <eos-departments-card-edit-person-main [cardForm]="cardForm" [data]="data" [editMode]="editMode"
             [nodeId]="nodeId" (onChange)="recordChanded($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit-person-main>
     </div>
     <div *ngIf="currTab === 1">
-        <eos-departments-card-edit-person-contacts [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode"
+        <eos-departments-card-edit-person-contacts [cardForm]="cardForm" [data]="data" [editMode]="editMode"
             [nodeId]="nodeId"  (onChange)="recordChanded($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit-person-contacts>
     </div>
     <div *ngIf="currTab === 2">
-        <eos-departments-card-edit-person-info [cardForm]="cardForm" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode"
+        <eos-departments-card-edit-person-info [cardForm]="cardForm" [data]="data" [editMode]="editMode"
             [nodeId]="nodeId" (onChange)="recordChanded($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit-person-info>
     </div>
 </div>
