@@ -1,4 +1,6 @@
 <div class="eos-departments-card-edit edit-content">
+    <eos-departments-card-edit-person *ngIf="data.rec && data.rec['IS_NODE']" [data]="data" [fieldsDescription]="fieldsDescription"
+        [editMode]="editMode" [nodeId]="nodeId" [cardForm]="cardForm" (onChange)="recordChanded($event)" (invalid)="OnInvalid($event)"></eos-departments-card-edit-person>
     <form #cardForm="ngForm">
         <div *ngIf="data.rec['IS_NODE'] === undefined" class="mask">
             <ul class="btn-wrapper">
@@ -31,11 +33,11 @@
                         triggers="">
                 </div>
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV_DEP">{{fieldsDescription['sev']['GLOBAL_ID']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV_DEP">Индекс СЭВ</label>
                     <input [readonly]="!editMode" id="SEV_DEP" name="SEV_DEP" type="text" class="form-control m-font " [ngModel]="data['sev']['GLOBAL_ID']"
-                        (ngModelChange)="change('GLOBAL_ID', 'sev', $event)" placeholder="{{fieldsDescription['sev']['GLOBAL_ID']?.title}}"
-                        [ngClass]="{'readonly': !editMode }" (focus)="focus('SEV_DEP')" (blur)="blur()" maxlength="{{fieldsDescription['sev']['GLOBAL_ID']?.length}}"
-                        [pattern]="fieldsDescription['sev']['GLOBAL_ID']?.pattern" tooltip="Максимальная длина {{fieldsDescription['sev']['GLOBAL_ID']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        (ngModelChange)="change('GLOBAL_ID', 'sev', $event)" placeholder="Индекс СЭВ"
+                        [ngClass]="{'readonly': !editMode }" (focus)="focus('SEV_DEP')" (blur)="blur()" maxlength="255"
+                        [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SEV_DEP']?.invalid && cardForm.controls['SEV_DEP']?.dirty && focusedField === 'SEV_DEP'"
                         triggers="">
                 </div>
@@ -72,7 +74,7 @@
                         <input type="checkbox" name="NOT_USE_IN_DUTY" (ngModelChange)="change('NOT_USE_IN_DUTY', 'printInfo', $event)" [disabled]="!editMode"
                             [ngModel]="data['printInfo']['NOT_USE_IN_DUTY']">
                         <span></span>
-                        {{fieldsDescription['printInfo']['NOT_USE_IN_DUTY']?.title}}</label>
+                        Не использовать подразделение в названии должности</label>
                 </span>
                 <div class="form-group full-position">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullTitle">{{fieldsDescription.rec['fullTitle']?.title}}</label>
@@ -84,11 +86,11 @@
                         triggers="">
                 </div>
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DEPARTMENT_RP">{{fieldsDescription['printInfo']['DEPARTMENT_RP']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DEPARTMENT_RP">Наименование в родительном падеже (чего?)</label>
                     <input [readonly]="!editMode" id="DEPARTMENT_RP" name="DEPARTMENT_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['DEPARTMENT_RP']"
-                        (ngModelChange)="change('DEPARTMENT_RP', 'printInfo', $event)" placeholder="{{fieldsDescription['printInfo']['DEPARTMENT_RP']?.title}}"
+                        (ngModelChange)="change('DEPARTMENT_RP', 'printInfo', $event)" placeholder="Наименование в родительном падеже (чего?)"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('DEPARTMENT_RP')" (blur)="blur()" maxlength="{{fieldsDescription['printInfo']['DEPARTMENT_RP']?.length}}"
-                        [pattern]="fieldsDescription['printInfo']['DEPARTMENT_RP']?.pattern" tooltip="Максимальная длина {{fieldsDescription['printInfo']['DEPARTMENT_RP']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                        [pattern]="248" tooltip="Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['DEPARTMENT_RP']?.invalid && cardForm.controls['DEPARTMENT_RP']?.dirty && focusedField === 'DEPARTMENT_RP'"
                         triggers="">
                 </div>

@@ -35,4 +35,12 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
     makePerson() {
         this.data.rec['IS_NODE'] = 1;
     }
+
+    OnInvalid(val: any) {
+        this.invalid.emit(val);
+    }
+
+    recordChanded(data: any) {
+        this.onChange.emit(data);
+    }
 }

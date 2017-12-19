@@ -41,7 +41,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             } else {
                 return E_DEPT_MODE.person;
             }*/
-            if (values[this.modeField.key]) { // 0 - department, 1 - person !!!
+            if (values.rec[this.modeField.key]) { // 0 - department, 1 - person !!!
                 return E_DEPT_MODE.person;
             } else {
                 return E_DEPT_MODE.department;
