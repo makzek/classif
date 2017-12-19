@@ -23,12 +23,4 @@ export class DepartmentsCardEditPersonComponent extends DepartmentsCardEditCompo
         this.currTab = i;
         this.dictSrv.currentTab = this.currTab;
     }
-
-    onInvalid(val: any) {
-        this.invalid.emit(val);
-    }
-
-    recordChanded(data: any) {
-        this.onChange.emit(data);
-    }
 }

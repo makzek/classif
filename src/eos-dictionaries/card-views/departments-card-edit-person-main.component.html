@@ -1,4 +1,4 @@
-<form #mainInfoForm="ngForm" class="wrapper">
+<div class="wrapper">
     <div class="col-1">
         <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
             <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
@@ -19,7 +19,7 @@
                 (focus)="focus('CODE_PERSON')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
                 [eosUnic]="true" [key]="'CODE'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false"
                 tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['CODE_PERSON']?.invalid && mainInfoForm.controls['CODE_PERSON']?.dirty && focusedField === 'CODE_PERSON'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['CODE_PERSON']?.invalid && cardForm.controls['CODE_PERSON']?.dirty && focusedField === 'CODE_PERSON'"
                 triggers="">
 
         </div>
@@ -30,7 +30,7 @@
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('DEPARTMENT_INDEX')"
                 (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
                 tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['indexPerson']?.invalid && mainInfoForm.controls['indexPerson']?.dirty && focusedField === 'DEPARTMENT_INDEX'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['indexPerson']?.invalid && cardForm.controls['indexPerson']?.dirty && focusedField === 'DEPARTMENT_INDEX'"
                 triggers="">
         </div>
         <div class="form-group sev">
@@ -39,7 +39,7 @@
                 (ngModelChange)="change('GLOBAL_ID', 'sev', $event)" placeholder="Индекс СЭВ"
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SEV')" (blur)="blur()" maxlength="255"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['SEV']?.invalid && mainInfoForm.controls['SEV']?.dirty && focusedField === 'SEV'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SEV']?.invalid && cardForm.controls['SEV']?.dirty && focusedField === 'SEV'"
                 triggers="">
         </div>
         <div class="form-group">
@@ -60,7 +60,7 @@
                 (ngModelChange)="change('SURNAME', 'printInfo', $event)" placeholder="Фамилия"
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" maxlength="64"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['SURNAME_PRINT']?.invalid && mainInfoForm.controls['SURNAME_PRINT']?.dirty && focusedField === 'SURNAME'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME_PRINT']?.invalid && cardForm.controls['SURNAME_PRINT']?.dirty && focusedField === 'SURNAME'"
                 triggers="">
         </div>
         <div class="names row-wrapper">
@@ -70,7 +70,7 @@
                     (ngModelChange)="change('NAME', 'printInfo', $event)" placeholder="Имя"
                     [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME')" (blur)="blur()" maxlength="64"
                     [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['NAME']?.invalid && mainInfoForm.controls['NAME']?.dirty && focusedField === 'NAME'"
+                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NAME']?.invalid && cardForm.controls['NAME']?.dirty && focusedField === 'NAME'"
                     triggers="">
             </div>
             <div class="form-group fathers-name">
@@ -79,7 +79,7 @@
                     (ngModelChange)="change('PATRON', 'printInfo', $event)" placeholder="Отчество"
                     [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON')" (blur)="blur()" maxlength="64"
                     [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['PATRON']?.invalid && mainInfoForm.controls['PATRON']?.dirty && focusedField === 'PATRON'"
+                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PATRON']?.invalid && cardForm.controls['PATRON']?.dirty && focusedField === 'PATRON'"
                     triggers="">
             </div>
         </div>
@@ -90,7 +90,7 @@
                 (ngModelChange)="change('SURNAME', 'rec', $event)" placeholder="Фамилия И.О."
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" required maxlength="64"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['SURNAME']?.invalid && mainInfoForm.controls['SURNAME']?.dirty && focusedField === 'SURNAME'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME']?.invalid && cardForm.controls['SURNAME']?.dirty && focusedField === 'SURNAME'"
                 triggers="">
         </div>
         <div class="form-group">
@@ -100,7 +100,7 @@
                     (ngModelChange)="change('DUTY', 'rec', $event)" placeholder="Краткое наименование должности" [ngClass]="{'readonly': !editMode }"
                     (focus)="focus('DUTY')" (blur)="blur()" required maxlength="255" [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                    containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="mainInfoForm.controls['DUTY']?.invalid && mainInfoForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
+                    containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
                     triggers="">
 
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
@@ -115,7 +115,7 @@
                 (ngModelChange)="change('fullPosition', 'rec', $event)" placeholder="Полное наименование должности"
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('fullPosition')" (blur)="blur()" maxlength="2000"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['fullPosition']?.invalid && mainInfoForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
                 triggers="">
         </div>
         <div class="form-group">
@@ -123,11 +123,11 @@
             <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control m-font  note-person" rows="5" [ngModel]="data.rec['NOTE']"
                 (ngModelChange)="change('NOTE', 'rec', $event)" placeholder="Примечание" [ngClass]="{'readonly': !editMode }"
                 (focus)="focus('NOTE')" (blur)="blur()" maxlength="255" tooltip="Максимальная длина 255 символов."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="mainInfoForm.controls['NOTE']?.invalid && mainInfoForm.controls['NOTE']?.dirty && focusedField === 'NOTE'"
+                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NOTE']?.invalid && cardForm.controls['NOTE']?.dirty && focusedField === 'NOTE'"
                 triggers=""></textarea>
         </div>
     </div>
-</form>
+</div>
 <div>
     <span class="block-title l-font usual-border primary-text">Исполнитель моих обязанностей</span>
     <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->

@@ -1,11 +1,11 @@
-<form class="contact-wrapper" #contactsInfoForm="ngForm">
+<form class="contact-wrapper" #cardForm="ngForm">
     <div class="form-group cab">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NUM_CAB">№ кабинета</label>
         <input [readonly]="!editMode" id="NUM_CAB" name="NUM_CAB" type="text" class="form-control m-font " [ngModel]="data.rec['NUM_CAB']"
             (ngModelChange)="change('NUM_CAB', 'rec', $event)" placeholder="№ кабинета" [ngClass]="{'readonly': !editMode }"
             (focus)="focus('NUM_CAB')" (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['NUM_CAB']?.invalid && contactsInfoForm.controls['NUM_CAB']?.dirty && focusedField === 'NUM_CAB'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NUM_CAB']?.invalid && cardForm.controls['NUM_CAB']?.dirty && focusedField === 'NUM_CAB'"
             triggers="">
     </div>
 
@@ -15,7 +15,7 @@
             (ngModelChange)="change('PHONE', 'rec', $event)" placeholder="№ телефона" [ngClass]="{'readonly': !editMode }"
             (focus)="focus('PHONE')" (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['PHONE']?.invalid && contactsInfoForm.controls['PHONE']?.dirty && focusedField === 'PHONE'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PHONE']?.invalid && cardForm.controls['PHONE']?.dirty && focusedField === 'PHONE'"
             triggers="">
     </div>
 
@@ -25,7 +25,7 @@
             (ngModelChange)="change('PHONE_LOCAL', 'rec', $event)" placeholder="№ местного телефона"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PHONE_LOCAL')" (blur)="blur()" maxlength="24"
             [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['PHONE_LOCAL']?.invalid && contactsInfoForm.controls['PHONE_LOCAL']?.dirty && focusedField === 'PHONE_LOCAL'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PHONE_LOCAL']?.invalid && cardForm.controls['PHONE_LOCAL']?.dirty && focusedField === 'PHONE_LOCAL'"
             triggers="">
     </div>
 
@@ -35,7 +35,7 @@
             placeholder="Факс" [ngClass]="{'readonly': !editMode }" (focus)="focus('FAX')"
             (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['FAX']?.invalid && contactsInfoForm.controls['FAX']?.dirty && focusedField === 'FAX'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['FAX']?.invalid && cardForm.controls['FAX']?.dirty && focusedField === 'FAX'"
             triggers="">
     </div>
 
@@ -45,7 +45,7 @@
             (ngModelChange)="change('E_MAIL', 'rec', $event)" placeholder="E-mail" [ngClass]="{'readonly': !editMode }"
             (focus)="focus('E_MAIL')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['E_MAIL']?.invalid && contactsInfoForm.controls['E_MAIL']?.dirty && focusedField === 'E_MAIL'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['E_MAIL']?.invalid && cardForm.controls['E_MAIL']?.dirty && focusedField === 'E_MAIL'"
             triggers="">
     </div>
     <div class="form-group skype">
@@ -54,7 +54,7 @@
             (ngModelChange)="change('SKYPE', 'rec', $event)" placeholder="Skype" [ngClass]="{'readonly': !editMode }"
             (focus)="focus('SKYPE')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="contactsInfoForm.controls['SKYPE']?.invalid && contactsInfoForm.controls['SKYPE']?.dirty && focusedField === 'SKYPE'"
+            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SKYPE']?.invalid && cardForm.controls['SKYPE']?.dirty && focusedField === 'SKYPE'"
             triggers="">
     </div>
 </form>

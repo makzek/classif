@@ -1,5 +1,5 @@
 
-import { Component, Injector, ViewChild, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DepartmentsCardEditPersonComponent } from './departments-card-edit-person.component';
 import { NgForm } from '@angular/forms';
 
@@ -7,24 +7,14 @@ import { NgForm } from '@angular/forms';
     selector: 'eos-departments-card-edit-person-main',
     templateUrl: 'departments-card-edit-person-main.component.html',
 })
-export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditPersonComponent implements OnInit {
+export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditPersonComponent {
     defaultImage = 'url(../assets/images/no-user.png)';
-
-    @ViewChild('mainInfoForm') mainInfoForm: NgForm;
 
     gender = [
         { id: null, title: 'Не указан' },
         { id: 'm', title: 'Мужской' },
         { id: 'f', title: 'Женский' },
     ];
-
-    ngOnInit() {
-        if (this.mainInfoForm) {
-            this.mainInfoForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(this.mainInfoForm.invalid);
-            });
-        }
-    }
 
     newImage(evt) {
         this.defaultImage = 'url(' + evt + ')';
