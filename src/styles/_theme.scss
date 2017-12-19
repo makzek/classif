@@ -96,6 +96,14 @@
     color: $primary-font-color-main-theme;
 }
 
+.usual-border {
+    border-color: $border-color-main-theme;
+}
+
+.active-border {
+    border-color: $button-color-main-theme !important;
+}
+
 .modal-block {
     background: $modal-block-background-main-theme;
     color: $secondary-font-color-main-theme;
@@ -230,14 +238,6 @@
     .active {
         border-color: $button-color-main-theme;
         color: $button-color-main-theme;
-    }
-
-    .usual-border {
-        border-color: $border-color-main-theme;
-    }
-
-    .active-border {
-        border-color: $button-color-main-theme;
     }
 
     .transparent-border {

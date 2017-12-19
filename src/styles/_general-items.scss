@@ -133,7 +133,9 @@ input[type=text]::-ms-clear {
 
     .tab-item {
         display: inline-block;
-        border-bottom: 5px solid transparent;
+        border-bottom-width: 5px;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
         padding: 12px 0 5px;
         position: relative;
         cursor: pointer;
