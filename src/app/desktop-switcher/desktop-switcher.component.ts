@@ -107,22 +107,27 @@ export class DesktopSwitcherComponent {
         if ($evt) {
             $evt.stopPropagation();
         }
-        this.updating = true;
-        let pUpdate: Promise<any>;
-        desk.edited = false;
-        /* todo: re-factor it to inline validation messages */
-        // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
-        // const _tempDeskName = this.deskName;
-        desk.name = this.deskName;
-        if (desk.id) {
-            pUpdate = this._deskSrv.editDesk(desk);
+        if (this._desktopExisted(this.deskName)) {
+            this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
-            pUpdate = this._deskSrv.createDesk(desk);
+            this.updating = true;
+            let pUpdate: Promise<any>;
+
+            desk.edited = false;
+            /* todo: re-factor it to inline validation messages */
+            // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
+            // const _tempDeskName = this.deskName;
+            desk.name = this.deskName;
+            if (desk.id) {
+                pUpdate = this._deskSrv.editDesk(desk);
+            } else {
+                pUpdate = this._deskSrv.createDesk(desk);
+            }
+            pUpdate.then(() => {
+                this.updating = false;
+                this.deskName = '';
+            });
         }
-        pUpdate.then(() => {
-            this.updating = false;
-            this.deskName = '';
-        });
     }
 
     create(evt: Event) {
