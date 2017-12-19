@@ -14,11 +14,7 @@ export class VisaTypeEditComponent extends BaseCardEditComponent {
     }
 
     public changeFinaly(val: boolean) {
-        if (val) {
-            this.data.rec['IS_FINAL'] = 1;
-        } else {
-            this.data.rec['IS_FINAL'] = 0;
-        }
+        this.data.rec['IS_FINAL'] = (val) ? 1 : 0;
         this.onChange.emit(true);
     }
 
