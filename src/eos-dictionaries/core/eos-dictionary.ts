@@ -278,11 +278,11 @@ export class EosDictionary {
      * @param deleted mark as deleted (true), unmarkmark as deleted (false)
      */
     markDeleted(recursive = false, deleted = true): Promise<any> {
-        const nodeSet = this._getMarkedRecords(recursive);
+        const nodeSet = this._getMarkedRecords(false);
         this._resetMarked();
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive);
     }
 
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {

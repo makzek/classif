@@ -305,9 +305,13 @@ export abstract class AbstractDictionaryDescriptor {
             .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
     }
 
-    markDeleted(records: any[], deletedState = 1): Promise<any[]> {
+    markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
         records.forEach((record) => record.DELETED = deletedState);
         const changes = this.apiSrv.changeList(records);
+        if (cascade) {
+            PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: 1 });
+        }
+        console.log('markDeleted ', changes);
         return this.apiSrv.batch(changes, '');
     }
 
