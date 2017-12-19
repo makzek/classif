@@ -11,7 +11,9 @@
             <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)"
             id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">{{field.value}}</span>
             <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
-            id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">{{field.value}}</span>
+            id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">
+                <span *ngIf="customValues">{{customValues[field.key]}}</span>
+            </span>
         </span>
         <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>
