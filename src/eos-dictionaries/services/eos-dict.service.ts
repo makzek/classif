@@ -327,6 +327,8 @@ export class EosDictService {
         // console.log('_setCurrentList', nodes);
         // remove duplicates
         this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
+        // hide root node
+        this._currentList = this._currentList.filter((item) => item.id !== this.dictionary.root.id);
         this._initPaginationConfig(update);
         this._reorderList();
     }
@@ -560,15 +562,9 @@ export class EosDictService {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
                     nodes = this.dictionary.updateNodes(data, false);
-                    // this._setCurrentList(nodes);
-                    // this.viewParameters.searchResults = true;
                     if (showDeleted && mode === 'full') {
                         this.viewParameters.showDeleted = true;
-                        // const filtredNodeList = this._filterList(this._currentList);
-                        // this._updateVisibleNodes(filtredNodeList);
-                        // this._viewParameters$.next(this.viewParameters);
                     }
-                    // this._viewParameters$.next(this.viewParameters);
                 }
                 this._setCurrentList(nodes);
                 this.viewParameters.updating = false;
