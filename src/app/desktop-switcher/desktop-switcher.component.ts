@@ -63,6 +63,9 @@ export class DesktopSwitcherComponent {
     openEditForm(evt: Event, desk: EosDesk) {
         evt.preventDefault();
         evt.stopPropagation();
+        if (this.updating) {
+            return;
+        }
         if (this._moreThenOneEdited()) {
             this._msgSrv.addNewMessage(WARN_DESK_EDITING);
         } else {
@@ -73,6 +76,9 @@ export class DesktopSwitcherComponent {
     }
 
     openCreateForm() {
+        if (this.updating) {
+            return;
+        }
         if (this._moreThenOneEdited() && !this.creating) {
             this._msgSrv.addNewMessage(WARN_DESK_CREATING);
         } else if (!this.creating) {
@@ -153,15 +159,18 @@ export class DesktopSwitcherComponent {
         const _confrm = Object.assign({}, CONFIRM_DESK_DELETE);
         _confrm.body = _confrm.body.replace('{{name}}', desk.name);
 
+        this.updating = true;
         this._confirmSrv
             .confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._deskSrv.removeDesk(desk);
+                    return this._deskSrv.removeDesk(desk);
                 }
                 this.setInnerClick();
             })
-            .catch();
+            .then(() => {
+                this.updating = false;
+            });
     }
 
     cancelCreating($evt: Event) {

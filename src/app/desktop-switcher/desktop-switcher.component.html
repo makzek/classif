@@ -10,6 +10,13 @@
         </span>
     </span>
     <ul class="dropdown-menu" role="menu">
+        <li *ngIf="updating">
+            <div class="spinner-wrapper">
+                <div class="spinner-holder">
+                    <eos-spinner size="md"></eos-spinner>
+                </div>
+            </div>
+        </li>
         <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)">
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
@@ -27,7 +34,7 @@
                     <input type="text" class="form-control light" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}"
                         required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
-                        <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default" [disabled]="!deskName?.length || !nameForm.checkValidity()"
+                        <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default" [disabled]="!deskName?.length || !nameForm.checkValidity() || updating"
                             tooltip="Сохранить" containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
@@ -38,7 +45,7 @@
                 </div>
             </span>
         </li>
-        <ng-container *ngIf="deskList.length < 6 && !updating">
+        <ng-container *ngIf="deskList.length < 6">
             <li class="divider dropdown-divider"></li>
             <li class="menuitem">
                 <span *ngIf="!creating" class="create primary-text" (click)="openCreateForm()">Создать рабочий стол</span>
