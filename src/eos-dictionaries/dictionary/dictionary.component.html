@@ -1,7 +1,7 @@
 <div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
         'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
         'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1] && hideTree,
-        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()">
+        'tree': currentState[0] && !currentState[1] && !hideTree}" (window:resize)="resize()" (transitionend)="transitionEnd($event)">
     <div class="tree-wrapper secondary-block" #tree [ngClass]="{'open-tree': currentState[0] && !hideTree, 'has-spinner': !treeNodes.length }"
         [hidden]="this.dictionary?.descriptor.type === dictTypes.linear">
         <eos-spinner *ngIf="!treeNodes.length" size="lg"></eos-spinner>
@@ -9,9 +9,9 @@
         <!-- new code-->
         <div class="fon highlighted" [style.width]="fonConf.width" [style.height]="fonConf.height" [style.top]="fonConf.top"></div>
     </div>
-    <div class="selected-wrapper" [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
+    <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="selectedNode" class="block selected-node xl-font">
+            <div *ngIf="selectedNode" class="block selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
                 <div class="go-top-wrapper">
                     <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
@@ -24,6 +24,10 @@
                         <span class="secondary-text">{{paginationConfig?.itemsQty}}</span>
                     </span>
                 </div>
+                <button *ngIf="hasCustomTable" class="btn block pull-right config-btn selected-text" tooltip="Настройка отображения" containerClass="tooltip-info"
+                    placement="left" (click)="_configColumns()">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
             </div>
             <div class="first-line block">
                 <div class="controller pull-left">
@@ -33,37 +37,44 @@
                     <eos-dictionary-search></eos-dictionary-search>
                 </div>
             </div>
-            <div class="second-line block selected-text">
-                <div class="second-line-content">
-                    <span *ngIf="params.markItems" class="checkbox-inline">
-                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right"
-                        [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}" containerClass="tooltip-info">
-                            <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
-                            <span></span>
-                        </label>
-                    </span>
-                    <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                            <span class="text" (click)="orderByField(field.key)">{{field.title}}
-                                <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small"
-                                [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
-                            </span>
-                        </span>
-                    </span>
-                    <button class="btn btn-primary-light pull-right config-btn" disabled tooltip="Настройка отображения" containerClass="tooltip-info"
-                        placement="left" (click)="_configColumns()">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
         </div>
         <p *ngIf="selectedNode?.updating" class="text-center">
             <eos-spinner size="lg"></eos-spinner>
         </p>
-        <ng-container *ngIf="!selectedNode?.updating">
-            <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
-            <eos-node-list-pagination [currentState]="[currentState[0] && !hideTree, currentState[1]]"></eos-node-list-pagination>
-        </ng-container>
+        <div class="table-wrapper block">
+                <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
+                        <div class="second-line-content">
+                            <span *ngIf="params.markItems" class="checkbox-inline">
+                                <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right"
+                                [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}" containerClass="tooltip-info">
+                                    <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
+                                    <span></span>
+                                </label>
+                            </span>
+                            <span class="node-title">
+                                <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
+                                    <span class="text" (click)="orderByField(field.key)">{{field.title}}
+                                        <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small"
+                                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                    </span>
+                                </span>
+        
+                                <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
+                                    <span class="text" (click)="orderByField(field.key)">{{field.title}}
+                                        <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small"
+                                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+            <div [ngStyle]="{'width.px': tableWidth}">
+                <ng-container *ngIf="!selectedNode?.updating">
+                    <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating"  [customFields]="customFields" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
+                    <eos-node-list-pagination [currentState]="[currentState[0] && !hideTree, currentState[1]]"></eos-node-list-pagination>
+                </ng-container>
+            </div>
+        </div>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
         <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
@@ -82,7 +93,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
-        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create(false)">Добавить ещё</button>
-        <button class="btn btn-primary-full" [disabled]="formValidated" (click)="create()">Добавить</button>
+        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create(false)">Добавить ещё</button>
+        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create()">Добавить</button>
     </div>
 </ng-template>

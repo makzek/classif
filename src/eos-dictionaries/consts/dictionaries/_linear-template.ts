@@ -52,5 +52,5 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     quickViewFields: ['NOTE'], // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CLASSIF_NAME', 'NOTE'],
+    allVisibleFields: [],
 };
