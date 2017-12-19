@@ -377,6 +377,7 @@ export class EosDictionary {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
             }
         }
+        console.log('params', params);
         if (!params.deleted) {
             critery['DELETED'] = '0';
         }
