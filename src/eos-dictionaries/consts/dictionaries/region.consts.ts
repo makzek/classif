@@ -55,9 +55,10 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CODE',
         title: 'Код региона',
+        pattern: /^\d*$/,
         type: 'number',
         length: 4,
-        invalidMessage: 'Максимальная длина 4 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только цифровые значения.'
     }, {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
