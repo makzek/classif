@@ -490,6 +490,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     validate(invalid: boolean) {
+        console.log('validate invalid', invalid);
         this.formValidated = !invalid;
     }
 

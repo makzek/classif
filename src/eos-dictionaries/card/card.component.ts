@@ -266,6 +266,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 if (this.nodeData[dict] && this._originalData[dict]) {
                     return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
                             return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                                (this.nodeData[dict][key] !== '') && !this._originalData[dict][key] &&
                                 (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
                     });
                 } else {

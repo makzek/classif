@@ -43,7 +43,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
                 });
             }
         }, 0);
-}
+    }
 
     ngOnDestroy() {
         if (this._subscrChanges) {

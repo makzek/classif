@@ -12,10 +12,10 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
         super(injector);
     }
 
-    ngOnChanges() {
+    /*ngOnChanges() {
         // fake data
         const today = new Date();
-        /*this.data['alternates'] = [
+        this.data['alternates'] = [
             {
                 name: 'Иван Иванович',
                 START_DATE: today,
@@ -29,8 +29,8 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
                 START_DATE: today,
                 END_DATE: today,
             }
-        ];*/
-    }
+        ];
+    }*/
 
     OnInvalid(val: any) {
         this.invalid.emit(val);
