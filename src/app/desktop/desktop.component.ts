@@ -147,7 +147,7 @@ export class DesktopComponent implements OnDestroy {
      */
     public goToCard(link: IDeskItem): void {
         const segments: Array<string> = link.url.split('/');
-        this._dictSrv.getNode(segments[2], segments[3])
+        this._dictSrv.getFullNode(segments[2], segments[3])
             .then((node: EosDictionaryNode) => {
                 node ? this._router.navigate([link.url]) : this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
             })
