@@ -8,7 +8,7 @@
 <div class="modal-body">
     <div class="modal-body-container">
         <div class="col">
-            <span class="title unimportant-text">Исходный список</span>
+            <span class="title unimportant-text">Список возможных столбцов таблицы</span>
             <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]="dictionaryFields">
                 <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}">
                     <span class="text">{{item?.customTitle || item?.title}}</span>
@@ -26,7 +26,7 @@
             </span>
         </div>
         <div class="col">
-            <span class="title unimportant-text">Итоговый список</span>
+            <span class="title unimportant-text">Итоговый список столбцов</span>
             <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [dragulaModel]="currentFields">
                 <div class="item" *ngFor="let item of currentFields" (click)="select(item, true)"
                     [ngClass]="{'highlighted': item === selectedCurrItem, 'edited-item': editedItem === item}">
@@ -40,6 +40,7 @@
                         (click)="cancelTitleEdit()"></button>
                 </div>
             </div>
+            <button class="btn btn-primary clear-btn">Вернуть названия по умолчанию</button>
         </div>
     </div>
 </div>

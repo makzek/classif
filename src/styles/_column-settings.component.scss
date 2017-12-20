@@ -1,11 +1,11 @@
 .column-settings-modal {
     .modal-header {
         padding: 0 15px;
+    }
 
-        .btn {
-            text-transform: uppercase;
-            margin-top: 7px;
-        }
+    .btn {
+        text-transform: uppercase;
+        margin-top: 7px;
     }
 
     .title {
@@ -17,7 +17,7 @@
     .info-block {
         border-width: 1px;
         border-style: solid;
-        height: 300px;
+        height: 500px;
         overflow: auto;
 
         .item {
@@ -38,12 +38,17 @@
                 right: 24px;
             }
 
-            .new-title {
+            .new-title,
+            .text {
                 position: absolute;
                 top: 0;
                 left: 0;
                 border-radius: 0;
                 padding-right: 50px;
+            }
+
+            .text {
+                padding: 6px 12px;
             }
 
             &.gu-transit {
@@ -54,6 +59,11 @@
 
     .col {
         width: 405px;
+
+        .clear-btn {
+            margin-top: 20px;
+            width: inherit;
+        }
     }
 
     .driver-col {
