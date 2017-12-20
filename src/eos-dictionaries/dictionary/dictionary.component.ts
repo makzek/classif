@@ -87,7 +87,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     fieldsDescription: any;
     formValidated: boolean;
 
-    customFields: FieldDescriptor[] = [];
+    customFields: IFieldView[] = [];
 
     public length = {}; // Length column
 
@@ -508,8 +508,20 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         const _fldsCurr = [];
         const _allFields = [];
         this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
-        Object.assign(this.creatingModal.content.currentFields, this.customFields);
+        let _selectedItems: IFieldView[] = [];
+        /*this.viewFields.concat(this.customFields).forEach((_field) => {
+            if (!~_selectedItems.findIndex((_item) => _item === _field)) {
+                _selectedItems.push(_field);
+            }
+        });*/
+        if (!this.customFields.length) {
+            _selectedItems = this.viewFields;
+        } else {
+            _selectedItems = this.customFields;
+        }
+        Object.assign(this.creatingModal.content.currentFields, _selectedItems);
         this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
+        this.creatingModal.content.fixedFields = this.viewFields;
         this.creatingModal.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;

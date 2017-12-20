@@ -9,8 +9,9 @@
     <div class="modal-body-container">
         <div class="col">
             <span class="title unimportant-text">Исходный список</span>
-            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
-                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}"></div>
+            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [(dragulaModel)]='dictionaryFields'>
+                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)"
+                    [ngClass]="{'highlighted': item === selectedDictItem}"></div>
             </div>
         </div>
         <div class="driver-col">
@@ -18,15 +19,16 @@
                 <button class="btn btn-primary-light" (click)="addToCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-right"></span>
                 </button>
-                <button class="btn btn-primary-light" (click)="removeToCurrent()">
+                <button class="btn btn-primary-light" (click)="removeFromCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-left"></span>
                 </button>
             </span>
         </div>
         <div class="col">
             <span class="title unimportant-text">Итоговый список</span>
-            <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
-                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item?.title' (click)="select(item, true)" [ngClass]="{'highlighted': item === selectedCurrItem}"></div>
+            <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [(dragulaModel)]='currentFields'>
+                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item?.title' (click)="select(item, true)"
+                    [ngClass]="{'highlighted': item === selectedCurrItem}"></div>
             </div>
         </div>
     </div>
