@@ -24,6 +24,20 @@
             height: 32px;
             padding: 8px;
             cursor: move;
+            position: relative;
+
+            .edit-btn {
+                position: absolute;
+                right: 0;
+                top: 5px;
+            }
+
+            .new-title {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 0;
+            }
 
             &.gu-transit {
                 background-color: $highlight-color-main-theme;

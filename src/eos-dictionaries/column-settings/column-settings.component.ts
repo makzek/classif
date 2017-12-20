@@ -17,6 +17,9 @@ export class ColumnSettingsComponent {
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
 
+    editedItem: IFieldView;
+    newTitle: string;
+
     constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
         // value[3] - src
         // value[1] - droped elem
@@ -77,6 +80,17 @@ export class ColumnSettingsComponent {
         } else {
             this.selectedDictItem = item;
         }
+    }
+
+    edit(item: IFieldView) {
+        this.editedItem = item;
+        this.newTitle = item.title;
+    }
+
+    saveNewTitle(title: string) {
+        this.editedItem.customTitle = this.newTitle;
+        this.editedItem = null;
+        this.newTitle = null;
     }
 
 }
