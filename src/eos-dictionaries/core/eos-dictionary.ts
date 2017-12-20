@@ -139,6 +139,7 @@ export class EosDictionary {
 
         this.root.title = this.descriptor.title;
         this.root.data.rec['DELETED'] = false;
+        this.root.isExpanded = true;
 
         this._nodes.forEach((node) => {
             if (!node.parent && node !== this.root) {
@@ -360,7 +361,7 @@ export class EosDictionary {
         const _criteries = {}
         _searchFields.forEach((fld) => {
             if (data[fld.key]) {
-                _criteries[fld.foreignKey] = '"' + data[fld.key] + '"';
+                _criteries[fld.foreignKey] = '"' + data[fld.key].trim() + '"';
             }
         })
         this._extendCritery(_criteries, params, selectedNode);
