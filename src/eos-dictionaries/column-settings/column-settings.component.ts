@@ -109,6 +109,8 @@ export class ColumnSettingsComponent implements OnDestroy {
     }
 
     cancelTitleEdit() {
+        this.selectedCurrItem = null;
+        this.selectedDictItem = null;
         this.editedItem = null;
         this.newTitle = null;
     }
