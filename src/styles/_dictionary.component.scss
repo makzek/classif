@@ -123,19 +123,18 @@
             min-height: $item-height;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr 150px;
-            grid-template-columns: 48px 1fr 150px;
+            -ms-grid-columns:  48px 1fr minmax(80px,auto);
+            grid-template-columns: 48px 1fr minmax(800px,auto);
 
             &.has-custom {
-                -ms-grid-columns:  48px 1fr 150px 48px;
-                grid-template-columns: 48px 1fr 150px 48px;
+                -ms-grid-columns:  48px 1fr minmax(80px,auto) 48px;
+                grid-template-columns: 48px 1fr minmax(80px,auto) 48px;
             }
 
             .item-count {
                 height: 100%;
-                width: 150px;
+                width: fit-content;
                 display: inline-block;
-                text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
                 grid-column: 3;
@@ -167,6 +166,14 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
+            }
+
+            .item-count-content {
+                padding: 0 $grid-gutter-width / 2;
+            }
+
+            .item-count-found {
+                padding-left: $grid-gutter-width / 2;
             }
 
             .go-top-wrapper {

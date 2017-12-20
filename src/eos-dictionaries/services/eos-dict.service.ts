@@ -515,6 +515,11 @@ export class EosDictService {
         }
     }
 
+    public resetSearch(): Promise<any> {
+        this._srchCriteries = null;
+        return this._reloadList();
+    }
+
     private _reloadList(): Promise<any> {
         // console.log('reloading list');
         let pResult = Promise.resolve([]);
@@ -522,6 +527,7 @@ export class EosDictService {
             if (this._srchCriteries) {
                 pResult = this.dictionary.search(this._srchCriteries);
             } else {
+                this.viewParameters.searchResults = false;
                 pResult = this.dictionary.getChildren(this.selectedNode);
             }
         }
