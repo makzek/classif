@@ -2,7 +2,26 @@
     <a dropdownToggle type="button" class="dropdown-toggle">
         <span class="eos-icon eos-icon-pin-blue small" tooltip="Прикрепить" placement="left" containerClass="tooltip-info"></span>
     </a>
-    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" style="min-width: 280px">
         <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)"><a>{{desk.name}}</a></li>
+        <li class="divider dropdown-divider" *ngIf="deskList.length > 0"></li>
+        <li class="desk" style="margin: 3px 20px">
+                <span *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</span>
+                <span *ngIf="creating">
+                    <div class="input-group">
+                        <input type="text" (click)="op($event)" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                            [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
+                                [disabled]="!deskName?.length || !createForm.checkValidity()">
+                                <span class="eos-icon eos-icon-checkbox-black x-small"></span>
+                            </button>
+                            <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="tooltip-info">
+                                <span class="eos-icon eos-icon-close-black x-small"></span>
+                            </button>
+                        </div>
+                    </div>
+                </span>
+            </li>
     </ul>
 </div>

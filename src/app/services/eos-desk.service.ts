@@ -20,8 +20,7 @@ import { ViewManager } from '../../eos-rest/services/viewManager';
 import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
 import { _ES } from 'eos-rest/core/consts';
 
-
-
+const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
     name: 'Стандартный рабочий стол',
@@ -275,5 +274,27 @@ export class EosDeskService {
                 this._desksList.push(desk);
                 this._desksList$.next(this._desksList);
             });
+    }
+    /**
+     * @description Checks does it exist deskatop with that name
+     * @param name Name of desktop
+     */
+    public desktopExisted(name: string) {
+        /* tslint:disable:no-bitwise */
+        return !!~this._desksList.findIndex((_d) => _d.name === name);
+        /* tslint:enable:no-bitwise */
+    }
+    /**
+     * @description Generate new dektop name bu count.
+     * @returns Name of desktop. Example: 'My desktop 1', 'My desktop 2'.
+     */
+    public generateNewDeskName(): string {
+        let _newName = DEFAULT_DESKTOP_NAME;
+        let _n = 2;
+        while (this.desktopExisted(_newName)) {
+            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
+            _n++;
+        }
+        return _newName;
     }
 }
