@@ -93,13 +93,13 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     notAuthorized(): boolean {
-        console.log('notAuthorized fired');
+        // console.log('notAuthorized fired');
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
         return this._setAuth(false);
     }
 
     private _setUser(user: USER_CL, params: SYS_PARMS) {
-        console.log('_setUser', user, params);
+        // console.log('_setUser', user, params);
         this._user = user;
         this._params = params;
         this._storageSrv.init(this.userId);
