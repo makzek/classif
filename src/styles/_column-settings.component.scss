@@ -26,10 +26,16 @@
             cursor: move;
             position: relative;
 
-            .edit-btn {
+            .edit-btn,
+            .ok-btn,
+            .cancel-btn {
                 position: absolute;
                 right: 0;
                 top: 5px;
+            }
+
+            .ok-btn {
+                right: 24px;
             }
 
             .new-title {
@@ -37,6 +43,7 @@
                 top: 0;
                 left: 0;
                 border-radius: 0;
+                padding-right: 50px;
             }
 
             &.gu-transit {

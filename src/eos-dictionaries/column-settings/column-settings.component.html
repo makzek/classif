@@ -33,9 +33,11 @@
                     <span *ngIf="editedItem !== item" class="text">{{item?.customTitle || item?.title}}</span>
                     <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
                         (click)="edit(item)"></button>
-                    <input *ngIf="editedItem === item" class="form-control new-title" autofocus [(ngModel)]="newTitle"/>
-                    <button [hidden]="editedItem !== item" class="btn-primary-light edit-btn eos-icon eos-icon-checkbox-blue small"
+                    <input *ngIf="editedItem === item" class="form-control highlighted new-title" autofocus [(ngModel)]="newTitle"/>
+                    <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
                         (click)="saveNewTitle()"></button>
+                    <button [hidden]="editedItem !== item" class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
+                        (click)="cancelTitleEdit()"></button>
                 </div>
             </div>
         </div>
