@@ -28,7 +28,8 @@
         <div class="col">
             <span class="title unimportant-text">Итоговый список</span>
             <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [dragulaModel]="currentFields">
-                <div class="item" *ngFor="let item of currentFields" (click)="select(item, true)" [ngClass]="{'highlighted': item === selectedCurrItem}">
+                <div class="item" *ngFor="let item of currentFields" (click)="select(item, true)"
+                    [ngClass]="{'highlighted': item === selectedCurrItem, 'edited-item': editedItem === item}">
                     <span *ngIf="editedItem !== item" class="text">{{item?.customTitle || item?.title}}</span>
                     <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
                         (click)="edit(item)"></button>

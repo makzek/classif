@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 
@@ -8,7 +8,7 @@ import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
-export class ColumnSettingsComponent {
+export class ColumnSettingsComponent implements OnDestroy {
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
     @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
@@ -27,13 +27,24 @@ export class ColumnSettingsComponent {
             if (value[2].id !== value[3].id) {
                 if (value[3].id === 'selected') {
                     this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
-                    this.removeToCurrent();
+                    // this.removeToCurrent();
+                    this.selectedCurrItem = null;
                 } else {
                     this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
-                    this.addToCurrent();
+                    // this.addToCurrent();
+                    this.selectedDictItem = null;
                 }
             }
         });
+        dragulaService.setOptions('bag-one', {
+            moves: (el, source, handle, sibling) => !el.classList.contains('edited-item')
+        });
+    }
+
+    ngOnDestroy() {
+        if (!!this.dragulaService.find('bag-one')) {
+            this.dragulaService.destroy('bag-one');
+        }
     }
 
     public hideModal(): void {
@@ -77,8 +88,10 @@ export class ColumnSettingsComponent {
     select(item: IFieldView, isCurrent: boolean) {
         if (isCurrent) {
             this.selectedCurrItem = item;
+            this.selectedDictItem = null;
         } else {
             this.selectedDictItem = item;
+            this.selectedCurrItem = null;
         }
     }
 
