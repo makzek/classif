@@ -16,7 +16,7 @@
             <ul *ngIf="recentItems" class="recent-list">
                 <li class="recent-item usual-border" *ngFor="let link of recentItems" tooltip="{{link.title}}"
                     [placement]="historyToLeft ? 'right' : 'left'" containerClass="tooltip-info  word-break">
-                    <a class="link-text" [routerLink]="[link.url]">{{link.title}}</a>
+                    <a class="link-text" (click)="goToCard(link)">{{link.title}}</a>
                 </li>
             </ul>
         </div>

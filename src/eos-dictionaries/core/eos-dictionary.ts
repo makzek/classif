@@ -202,34 +202,37 @@ export class EosDictionary {
             .then((nodes) => {
                 this.updateNodes(nodes, true);
                 const node = this._nodes.get(nodeId);
-                switch (this.descriptor.type) {
-                    case E_DICT_TYPE.department:
-                        let orgDUE = '';
-                        orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
-                        if (!orgDUE) {
-                            const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
-                            if (parentNode) {
-                                orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                if (node) {
+                    switch (this.descriptor.type) {
+                        case E_DICT_TYPE.department:
+                            let orgDUE = '';
+                            orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
+                            if (!orgDUE) {
+                                const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
+                                if (parentNode) {
+                                    orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
+                                }
                             }
-                        }
-                        return Promise.all([
-                            this.descriptor.getRelated(node.data.rec, orgDUE),
-                            this.descriptor.getRelatedSev(node.data.rec)
-                        ]).then(([related, sev]) => {
-                            node.data = Object.assign(node.data, related, { sev: sev });
-                            console.log('full node info', node.data);
-                            return node;
-                        });
-                    case E_DICT_TYPE.tree:
-                        return this.descriptor.getRelatedSev(node.data.rec)
-                            .then((sev) => {
-                                node.data = Object.assign(node.data, { sev: sev });
+                            return Promise.all([
+                                this.descriptor.getRelated(node.data.rec, orgDUE),
+                                this.descriptor.getRelatedSev(node.data.rec)
+                            ]).then(([related, sev]) => {
+                                node.data = Object.assign(node.data, related, { sev: sev });
+                                console.log('full node info', node.data);
                                 return node;
                             });
-                    default:
-                        return node;
+                        case E_DICT_TYPE.tree:
+                            return this.descriptor.getRelatedSev(node.data.rec)
+                                .then((sev) => {
+                                    node.data = Object.assign(node.data, { sev: sev });
+                                    return node;
+                                });
+                        default:
+                            return node;
+                    }
+                } else {
+                    return node;
                 }
-
             });
     }
 
@@ -335,7 +338,7 @@ export class EosDictionary {
     private _resetMarked() {
         this._nodes.forEach((node) => {
             if (node.marked) {
-               node.marked = false;
+                node.marked = false;
             }
         });
     }
