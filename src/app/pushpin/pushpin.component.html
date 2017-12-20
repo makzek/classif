@@ -6,8 +6,8 @@
             <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)">
                 <a>{{desk.name}}</a>
             </li>
-            <li class="divider dropdown-divider" *ngIf="deskList.length > 0"></li>
-            <li class="desk create">
+            <li class="divider dropdown-divider" *ngIf="deskList.length > 0 && deskList.length < 5"></li>
+            <li *ngIf="deskList.length === 0 || deskList.length < 5" class="desk create">
                 <span *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</span>
                 <span *ngIf="creating">
                     <div class="input-group">
