@@ -20,6 +20,7 @@ export class AuthService {
         const _url = this._cfg.authSrv + 'Login?app=api&' + 'username=' + user + '&pass=' + passwd;
         const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
             .then((resp) => {
+                console.log('login response', resp.text());
                 if (resp.text() && resp.text().indexOf('error:') > -1) {
                     return null;
                 } else {
