@@ -490,6 +490,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     validate(invalid: boolean) {
+        console.log('validate', invalid);
         this.formValidated = !invalid;
     }
 
@@ -533,7 +534,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     });
                 }
                 this.creatingModal.hide();
-
                 if (!hide) {
                     this._preCreate();
                 }
