@@ -2,20 +2,20 @@ import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core
 import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 
-import { FieldDescriptor } from '../core/field-descriptor';
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
 export class ColumnSettingsComponent {
-    @Input() currentFields: FieldDescriptor[] = [];
-    @Input() dictionaryFields: FieldDescriptor[] = [];
-    @Output() onChoose: EventEmitter<FieldDescriptor[]> = new EventEmitter<FieldDescriptor[]>();
-    @ViewChild('modal') public modal: ModalDirective;
+    @Input() currentFields: IFieldView[] = [];
+    @Input() dictionaryFields: IFieldView[] = [];
+    @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
+    @ViewChild('modal') public modal: IFieldView;
 
-    selectedDictItem: FieldDescriptor;
-    selectedCurrItem: FieldDescriptor;
+    selectedDictItem: IFieldView;
+    selectedCurrItem: IFieldView;
 
     constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
         // value[3] - src
@@ -71,7 +71,7 @@ export class ColumnSettingsComponent {
         }
     }
 
-    select(item: FieldDescriptor, isCurrent: boolean) {
+    select(item: IFieldView, isCurrent: boolean) {
         if (isCurrent) {
             this.selectedCurrItem = item;
         } else {
