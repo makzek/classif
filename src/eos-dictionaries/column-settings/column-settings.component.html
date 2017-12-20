@@ -40,7 +40,25 @@
                         (click)="cancelTitleEdit()"></button>
                 </div>
             </div>
-            <button class="btn btn-primary clear-btn">Вернуть названия по умолчанию</button>
+            <button class="btn btn-primary clear-btn" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
         </div>
     </div>
 </div>
+
+<ng-template #warning>
+    <div class="modal-header warning">
+        <h4 class="modal-title pull-left">Предупреждение</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body warning">
+        <h4>Вернуть все названия по умолчанию?</h4> 
+    </div>
+    <div class="modal-footer warning">
+        <span class="pull-right">
+            <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
+            <button type="button" class="btn btn-primary-full" (click)="moveTitlesBack()">Да</button>
+        </span>
+    </div>
+</ng-template>

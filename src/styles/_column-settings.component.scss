@@ -87,3 +87,13 @@
         display: flex;
     }
 }
+
+
+.warning {
+    &.modal-footer {
+        .btn {
+            padding: 0 20px;
+            text-transform: uppercase;
+        }
+    }
+}

@@ -1,6 +1,7 @@
-import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy, TemplateRef } from '@angular/core';
 import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
@@ -20,7 +21,9 @@ export class ColumnSettingsComponent implements OnDestroy {
     editedItem: IFieldView;
     newTitle: string;
 
-    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
+    modalRef: BsModalRef;
+
+    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef, private modalService: BsModalService) {
         // value[3] - src
         // value[1] - droped elem
         dragulaService.drop.subscribe((value) => {
@@ -102,13 +105,26 @@ export class ColumnSettingsComponent implements OnDestroy {
 
     saveNewTitle(title: string) {
         this.editedItem.customTitle = this.newTitle;
-        this.editedItem = null;
-        this.newTitle = null;
+        this.cancelTitleEdit();
     }
 
     cancelTitleEdit() {
         this.editedItem = null;
         this.newTitle = null;
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    moveTitlesBack() {
+        this.modalRef.hide();
+        this.currentFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
+        this.dictionaryFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
     }
 
 }
