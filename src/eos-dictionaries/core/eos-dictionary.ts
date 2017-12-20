@@ -176,7 +176,7 @@ export class EosDictionary {
                         this._nodes.set(_node.id, _node);
                     }
                 }
-                if (_node) {
+                if (_node && nodeIds.findIndex((id) => id === _node.id) === -1) {
                     nodeIds.push(_node.id);
                 }
             } else {
@@ -335,9 +335,18 @@ export class EosDictionary {
     private _resetMarked() {
         this._nodes.forEach((node) => {
             if (node.marked) {
-               node.marked = false;
+                node.marked = false;
             }
         });
+    }
+
+    search(criteries: any[]): Promise<EosDictionaryNode[]> {
+        return this.descriptor
+            .search(criteries)
+            .then((data) => {
+                const nodes = this.updateNodes(data, false);
+                return nodes;
+            });
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
@@ -374,7 +383,7 @@ export class EosDictionary {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
             }
         }
-        console.log('params', params);
+
         if (!params.deleted) {
             critery['DELETED'] = '0';
         }

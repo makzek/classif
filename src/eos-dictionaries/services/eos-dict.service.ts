@@ -26,14 +26,16 @@ import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class EosDictService {
+    public viewParameters: IDictionaryViewParameters;
+    public currentTab = 0;
+    public customFields: FieldDescriptor[];
+
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
     private _openedNode: EosDictionaryNode; // selected in list of selectedNode children
     private _currentList: EosDictionaryNode[];
     private _visibleListNodes: EosDictionaryNode[];
     private paginationConfig: IPaginationConfig;
-    public viewParameters: IDictionaryViewParameters;
-
     private _dictionary$: BehaviorSubject<EosDictionary>;
     private _selectedNode$: BehaviorSubject<EosDictionaryNode>;
     private _openedNode$: BehaviorSubject<EosDictionaryNode>;
@@ -41,13 +43,9 @@ export class EosDictService {
     private _visibleList$: BehaviorSubject<EosDictionaryNode[]>;
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
     private _paginationConfig$: BehaviorSubject<IPaginationConfig>;
-
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
-
-    public currentTab = 0;
-
-    public customFields: FieldDescriptor[];
+    private _srchCriteries: any[];
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -298,18 +296,6 @@ export class EosDictService {
         }
     }
 
-    /*
-    public reloadNode(node: EosDictionaryNode): Promise<EosDictionaryNode> {
-        node.updating = true;
-        return this.dictionary.descriptor.getRecord(node.originalId)
-            .then((nodeData) => {
-                node.updateData(nodeData);
-                node.updating = false;
-                return node;
-            })
-    }
-    */
-
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }
@@ -392,6 +378,7 @@ export class EosDictService {
     }
 
     private _selectNode(node: EosDictionaryNode) {
+        this._srchCriteries = null;
         if (this.selectedNode !== node) {
             if (this.selectedNode) {
                 if (this.selectedNode.children) {
@@ -520,7 +507,8 @@ export class EosDictService {
                     return true;
                 })
                 .catch((err) => {
-                    return this._reloadList().then(() => this._errHandler(err));
+                    return this._reloadList()
+                        .then(() => this._errHandler(err));
                 });
         } else {
             return Promise.resolve(false);
@@ -529,46 +517,41 @@ export class EosDictService {
 
     private _reloadList(): Promise<any> {
         // console.log('reloading list');
+        let pResult = Promise.resolve([]);
         if (this.dictionary) {
-            return this.dictionary.getChildren(this.selectedNode)
-                .then((list) => this._setCurrentList(list, true))
-                .catch((err) => this._errHandler(err));
-        } else {
-            return Promise.resolve([]);
+            if (this._srchCriteries) {
+                pResult = this.dictionary.search(this._srchCriteries);
+            } else {
+                pResult = this.dictionary.getChildren(this.selectedNode);
+            }
         }
+
+        return pResult
+            .then((list) => this._setCurrentList(list, true))
+            .catch((err) => this._errHandler(err));
     }
 
     public search(searchString: string, params: ISearchSettings): Promise<EosDictionaryNode[]> {
-        const _criteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
-        return this._search(_criteries, params.deleted, 'quick');
+        this._srchCriteries = this.dictionary.getSearchCriteries(searchString, params, this.selectedNode);
+        return this._search();
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
-        const critery = this.dictionary.getFullsearchCriteries(data.rec, params, this.selectedNode);
-        return this._search([critery], params.deleted, 'full');
+        this._srchCriteries = [this.dictionary.getFullsearchCriteries(data.rec, params, this.selectedNode)];
+        return this._search(params.deleted);
     }
 
 
-    private _search(criteries: any[], showDeleted: boolean, mode: string): Promise<EosDictionaryNode[]> {
+    private _search(showDeleted = false): Promise<EosDictionaryNode[]> {
         // console.log('full search', critery);
         this._openNode(null);
         this.viewParameters.updating = true;
-        return this.dictionary.descriptor.search(criteries)
-            .then((data: any[]) => {
-                let nodes = [];
-                if (!data || data.length < 1) {
+        return this.dictionary.search(this._srchCriteries)
+            .then((nodes: any[]) => {
+                if (!nodes || nodes.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    nodes = this.dictionary.updateNodes(data, false);
-                    // this._setCurrentList(nodes);
-                    // this.viewParameters.searchResults = true;
-                    if (showDeleted && mode === 'full') {
-                        this.viewParameters.showDeleted = true;
-                        // const filtredNodeList = this._filterList(this._currentList);
-                        // this._updateVisibleNodes(filtredNodeList);
-                        // this._viewParameters$.next(this.viewParameters);
-                    }
-                    // this._viewParameters$.next(this.viewParameters);
+                    this.viewParameters.showDeleted = this.viewParameters.showDeleted || showDeleted;
                 }
                 this._setCurrentList(nodes);
                 this.viewParameters.updating = false;
