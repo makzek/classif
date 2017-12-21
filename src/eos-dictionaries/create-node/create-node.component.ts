@@ -17,7 +17,8 @@ export class CreateNodeComponent {
     @Output() onHide: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() onOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    formIsValid: boolean;
+    formIsValid = false;
+    hasChanges = false;
 
     constructor(private _deskSrv: EosDeskService,
         private _dictSrv: EosDictService,
@@ -81,5 +82,25 @@ export class CreateNodeComponent {
             msg: errMessage,
             dismissOnTimeout: 100000
         });
+    }
+
+    /**
+     * Check if data was changed
+     * @param data user data
+     */
+    recordChanged(data: any) {
+        if (this.nodeData) {
+            /* tslint:disable:no-bitwise */
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                if (this.nodeData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
+                        this.nodeData[dict][key] && key !== 'IS_NODE');
+                } else {
+                    return false;
+                }
+            });
+            /* tslint:enable:no-bitwise */
+            this.hasChanges = hasChanges;
+        }
     }
 }
