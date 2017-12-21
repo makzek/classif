@@ -6,6 +6,8 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     id: 'visa-type',
     apiInstance: 'VISA_TYPE_CL',
     title: 'Типы виз',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+    'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number',
@@ -47,4 +49,6 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         title: 'Статус визы',
     }],
     quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
+    allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],
+    editFields: ['CLASSIF_NAME', 'NOTE', 'IS_FINAL', 'STATUS']
 });

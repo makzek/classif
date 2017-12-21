@@ -9,7 +9,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
-        'createRepresentative'],
+        'createRepresentative', 'tableCustomization'],
     itemActions: ['edit', 'view', 'slantForForms'],
     groupActions: ['remove', 'removeHard'],
     keyField: 'DUE',
@@ -324,6 +324,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
             'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
+    allVisibleFields: ['ISN_ORGANIZ', 'SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
+    'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

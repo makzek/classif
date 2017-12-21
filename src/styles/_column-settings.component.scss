@@ -1,47 +1,42 @@
 .column-settings-modal {
+    .modal-header {
+        padding: 0 15px;
+
+        .btn {
+            text-transform: uppercase;
+            margin-top: 7px;
+        }
+    }
+
     .title {
         text-transform: uppercase;
         display: inline-block;
         margin-bottom: 8px;
     }
 
-    .modal-title {
-        font-size: 18px;
-    }
-
-    .modal-header {
-        padding: 15px;
-
-        h4 {
-            color: #000;
-        }
-
-        .btn {
-            text-transform: uppercase;
-        }
-    }
-
     .info-block {
-        border: 1px solid transparent;
-        min-height: 300px;
+        border-width: 1px;
+        border-style: solid;
+        height: 300px;
+        overflow: auto;
 
         .item {
             height: 32px;
             padding: 8px;
             cursor: move;
+
+            &.gu-transit {
+                background-color: $highlight-color-main-theme;
+            }
         }
     }
 
-    .col-wrapper {
-        display: flex;
-    }
-
     .col {
-        width: 30%;
+        width: 405px;
     }
 
     .driver-col {
-        width: 12.5%;
+        width: 48px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -53,7 +48,11 @@
         }
     }
 
-    .container {
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-body-container {
         display: flex;
     }
 }

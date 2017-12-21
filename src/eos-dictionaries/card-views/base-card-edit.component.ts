@@ -1,11 +1,11 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 import { Subscription } from 'rxjs/Subscription';
 
-export class BaseCardEditComponent implements OnInit, OnDestroy {
+export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
@@ -35,13 +35,15 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
-        if (this.cardForm) {
-            this.cardForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(this.cardForm.invalid);
-            });
-        }
-    }
+    ngOnChanges() {
+        setTimeout(() => {
+            if (this.cardForm && !this._subscrChanges) {
+                this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
+                    this.invalid.emit(this.cardForm.invalid);
+                });
+            }
+        }, 0);
+}
 
     ngOnDestroy() {
         if (this._subscrChanges) {
