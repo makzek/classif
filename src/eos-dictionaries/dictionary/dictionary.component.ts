@@ -599,9 +599,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-        setTimeout(() => {
+        // setTimeout(() => {
             this._countColumnWidth();
-        }, 0);
+        // }, 0);
     }
 
     private _errHandler(err) {
