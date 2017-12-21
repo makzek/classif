@@ -25,22 +25,25 @@ export class LoginFormComponent {
     }
 
     login(): void {
-        this.inProcess = true;
-        this.errorMessage = null;
-        this._profileSrv
-            .login(this.userName, this.userPassword)
-            .then((logged) => {
-                this.inProcess = false;
-                if (logged) {
-                    this.logged.emit(logged);
-                } else {
+        if (!this.inProcess) {
+            this.inProcess = true;
+            this.errorMessage = null;
+
+            this._profileSrv
+                .login(this.userName, this.userPassword)
+                .then((logged) => {
+                    this.inProcess = false;
+                    if (logged) {
+                        this.logged.emit(logged);
+                    } else {
+                        this.errorMessage = AUTH_REQUIRED.title;
+                    }
+                })
+                .catch((err) => {
+                    this.inProcess = false;
                     this.errorMessage = AUTH_REQUIRED.title;
-                }
-            })
-            .catch((err) => {
-                this.inProcess = false;
-                this.errorMessage = AUTH_REQUIRED.title;
-            });
+                });
+        }
     }
 
     cancel() {
