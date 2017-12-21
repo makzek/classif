@@ -11,7 +11,7 @@
                 <a *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</a>
                 <span *ngIf="creating">
                     <div class="input-group">
-                        <input type="text" (click)="op($event)" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                        <input type="text" (click)="stop($event)" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
                             [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                         <div class="input-group-btn">
                             <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"

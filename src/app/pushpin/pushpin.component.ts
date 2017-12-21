@@ -46,25 +46,9 @@ export class PushpinComponent {
         if (this.updating) {
             return;
         }*/
-        if (this._moreThenOneEdited() && !this.creating) {
-            this._msgSrv.addNewMessage(WARN_DESK_CREATING);
-        } else if (!this.creating) {
+        if (!this.creating) {
             this.creating = true;
             this.deskName = this._deskSrv.generateNewDeskName();
-        }
-    }
-
-    private _moreThenOneEdited(): boolean {
-        if (this.creating) {
-            return true;
-        } else {
-            let edited = 0;
-            this.deskList.forEach((desk) => {
-                if (desk.edited) {
-                    edited++;
-                }
-            });
-            return edited > 0;
         }
     }
 
@@ -93,34 +77,7 @@ export class PushpinComponent {
         this.creating = false;
     }
 
-    public saveDesk(desk: EosDesk, $evt?: Event): void {
-        if ($evt) {
-            $evt.stopPropagation();
-        }
-        if (this._deskSrv.desktopExisted(this.deskName)) {
-            this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
-        } else {
-            // this.updating = true;
-            let pUpdate: Promise<any>;
-
-            desk.edited = false;
-            /* todo: re-factor it to inline validation messages */
-            // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
-            // const _tempDeskName = this.deskName;
-            desk.name = this.deskName;
-            if (desk.id) {
-                pUpdate = this._deskSrv.editDesk(desk);
-            } else {
-                pUpdate = this._deskSrv.createDesk(desk);
-            }
-            pUpdate.then(() => {
-                // this.updating = false;
-                this.deskName = '';
-            });
-        }
-    }
-
-    op(evt: MouseEvent) {
+    public stop(evt: MouseEvent) {
         evt.stopPropagation();
     }
 }
