@@ -23,6 +23,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE
 } from '../consts/messages.consts';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 // import { UUID } from 'angular2-uuid';
@@ -158,8 +159,15 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _getNode() {
         console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((err) => console.log('getNode error', err));
+            .then((node) => {
+                if (node) {
+                    this._update(node)
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            }).catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {

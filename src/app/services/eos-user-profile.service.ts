@@ -93,7 +93,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     notAuthorized(): boolean {
-        /* console.log('notAuthorized fired'); */
+        // console.log('notAuthorized fired');
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
         return this._setAuth(false);
     }
@@ -114,11 +114,12 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     login(name: string, password: string): Promise<any> {
-        return this._authSrv.login(name, password).then((context) => {
-            // todo: fill user profile from response
-            this._setUser(context.user, context.sysParams);
-            return this._setAuth(true);
-        })
+        return this._authSrv
+            .login(name, password)
+            .then((context) => {
+                this._setUser(context.user, context.sysParams);
+                return this._setAuth(true);
+            })
             .catch((err) => {
                 return this.notAuthorized();
             });
