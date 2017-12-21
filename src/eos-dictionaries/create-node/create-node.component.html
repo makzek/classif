@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Добавление записи</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cancelCreate()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="create-new-node modal-body">
+    <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true"
+        (invalid)="validate($event)"></eos-card-edit>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
+    <button class="btn btn-primary-full" [disabled]="!formIsValid" (click)="create(false)">Добавить ещё</button>
+    <button class="btn btn-primary-full" [disabled]="!formIsValid" (click)="create()">Добавить</button>
+</div>

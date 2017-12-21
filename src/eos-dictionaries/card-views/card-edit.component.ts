@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
