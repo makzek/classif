@@ -37,6 +37,17 @@
         z-index: 3;
     }
 
+    .selected-wrapper {
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+            position: relative;
+            top: -3px;
+        }
+    }
+
     &.info {
         .tree-wrapper {
             left: -1 * $dictionary-block-width;
@@ -115,6 +126,11 @@
             -ms-grid-columns:  48px 1fr 150px;
             grid-template-columns: 48px 1fr 150px;
 
+            &.has-custom {
+                -ms-grid-columns:  48px 1fr 150px 48px;
+                grid-template-columns: 48px 1fr 150px 48px;
+            }
+
             .item-count {
                 height: 100%;
                 width: 150px;
@@ -123,6 +139,17 @@
                 border-left-width: 1px;
                 border-left-style: solid;
                 grid-column: 3;
+            }
+
+            .config-btn {
+                height: $item-height;
+                width: $item-width;
+                font-size: 24px;
+                border: 0;
+                border-radius: 0;
+                border-left-width: 1px;
+                border-left-style: solid;
+                grid-column: 4;
             }
 
             .selected-node-title {
@@ -150,7 +177,8 @@
         }
 
         .first-line {
-            height: $item-height;
+            height: $item-height + 6px;
+            padding-top: 1px;
             border: 1px solid transparent;
         }
 
@@ -202,51 +230,46 @@
                 box-shadow: none;
             }
         }
+    }
 
-        .second-line {
-            border: 1px solid transparent;
-            border-top: 0;
+    .second-line {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        width: 100%;
+        height: $item-height;
+        line-height: $item-height;
+
+        .second-line-content {
+            display: flex;
             width: 100%;
-            height: $item-height;
-            line-height: $item-height;
+        }
 
-            .second-line-content {
-                display: flex;
-                width: 100%;
-                position: relative;
-                top: -7px;
-            }
+        .node-title {
+            display: inline-block;
+            width: 100%;
 
-            .config-btn {
-                height: $item-height;
-                width: $item-width;
-                font-size: 24px;
-            }
-
-            .node-title {
+            .item {
                 display: inline-block;
-                width: 100%;
+                padding: 0 20px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
 
-                .item {
-                    display: inline-block;
-                    padding: 0 20px;
-                    white-space: nowrap;
+                .text {
+                    cursor: pointer;
+                }
 
-                    .text {
-                        cursor: pointer;
-                    }
-
-                    .icon {
-                        margin: 0;
-                        vertical-align: sub;
-                    }
+                .icon {
+                    margin: 0;
+                    vertical-align: sub;
                 }
             }
+        }
 
-            .checkbox-inline {
-                line-height: $item-height;
-                width: $item-width;
-            }
+        .checkbox-inline {
+            line-height: $item-height;
+            width: $item-width;
         }
     }
 }

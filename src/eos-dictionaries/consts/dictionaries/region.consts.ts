@@ -9,7 +9,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     dictType: E_DICT_TYPE.tree,
     title: 'Регионы',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
     groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
     keyField: 'DUE',
@@ -55,9 +55,10 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CODE',
         title: 'Код региона',
+        pattern: /^\d*$/,
         type: 'number',
         length: 4,
-        invalidMessage: 'Максимальная длина 4 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
@@ -94,5 +95,5 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['CODE', 'NOTE', 'COD_OKATO'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
+    allVisibleFields: ['CODE', 'NOTE', 'COD_OKATO'],
 };

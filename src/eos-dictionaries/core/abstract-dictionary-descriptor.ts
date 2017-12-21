@@ -163,6 +163,8 @@ export abstract class AbstractDictionaryDescriptor {
         switch (aSet) {
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
             default:
                 return null;
         }
@@ -187,6 +189,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getAllVisibleFields(): FieldDescriptor[] {
+        return this.allVisibleFields;
     }
 
     private _getFullSearchFields() {
@@ -306,16 +312,12 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     search(criteries: any[]): Promise<any[]> {
-        console.log('search critery', criteries);
+        // console.log('search critery', criteries);
 
         const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
         return Promise.all(_search)
-            .then((results) => {
-                const _res = [].concat(...results);
-                // console.log('found', _res);
-                return _res;
-            });
+            .then((results) => [].concat(...results));
     }
 
     updateRecord(originalData: any, updates: any): Promise<any[]> {

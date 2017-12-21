@@ -96,8 +96,6 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
                 return this._getModeSet(this.editFields, values);
             case E_FIELD_SET.list:
                 return this._getModeSet(this.listFields, values);
-            case E_FIELD_SET.allVisible:
-                return this._getFieldSet(E_FIELD_SET.allVisible, values);
             default:
                 throw new Error('Unknown field set');
         }

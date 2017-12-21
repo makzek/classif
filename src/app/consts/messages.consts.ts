@@ -71,3 +71,9 @@ export const AUTH_REQUIRED: IMessage = {
     title: 'Ошибка авторизации',
     msg: ''
 };
+
+export const NAVIGATE_TO_ELEMENT_WARN: IMessage = {
+    title: 'Предупреждение:',
+    msg: 'Запись не найдена.',
+    type: 'warning'
+}
