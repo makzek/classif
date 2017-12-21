@@ -33,7 +33,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        console.log('ngOnChanges', this._subscrChanges);
         setTimeout(() => {
             if (this.cardForm && !this._subscrChanges) {
                 this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
@@ -44,7 +43,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 }
 
     ngOnDestroy() {
-        console.log('ngOnDestroy', this._subscrChanges);
         if (this._subscrChanges) {
             this._subscrChanges.unsubscribe();
         }
