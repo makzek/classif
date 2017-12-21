@@ -22,7 +22,12 @@
     }
 
     .create {
-        margin: 3px 20px;
         cursor: pointer;
+
+        span {
+            div {
+                margin: 3px 20px;
+            }
+        }
     }
 }

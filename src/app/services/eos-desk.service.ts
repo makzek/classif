@@ -146,9 +146,7 @@ export class EosDeskService {
             const col = this.viewManager.addViewColumn(view);
             col.BLOCK_ID = dictionaryURL
             col.LABEL = item.title;
-            this.viewManager.saveView(view).then(() => {
-                this._appCtx.reInit();
-            })
+            this.viewManager.saveView(view).then(() => this._appCtx.reInit());
         }
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
@@ -269,6 +267,7 @@ export class EosDeskService {
 
         return viewMan.saveView(newDesc)
             .then((isn_view) => {
+                console.log(isn_view)
                 // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
                 desk.id = isn_view.toString();
                 this._desksList.push(desk);

@@ -8,7 +8,7 @@
             </li>
             <li class="divider dropdown-divider" *ngIf="deskList.length > 0 && deskList.length < 5"></li>
             <li *ngIf="deskList.length === 0 || deskList.length < 5" class="desk create">
-                <span *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</span>
+                <a *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</a>
                 <span *ngIf="creating">
                     <div class="input-group">
                         <input type="text" (click)="op($event)" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"

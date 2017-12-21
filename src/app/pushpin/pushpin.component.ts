@@ -80,10 +80,11 @@ export class PushpinComponent {
                 references: [],
                 edited: false,
             };
-            this.saveDesk(_desk);
-            this._deskSrv.appendDeskItemToView(_desk);
-
-            this.creating = false;
+            this._deskSrv.createDesk(_desk).then((value) => {
+                console.log(value);
+                this._deskSrv.appendDeskItemToView(_desk);
+                this.creating = false;
+            }).catch((err) => console.log(err));
         }
     }
 
