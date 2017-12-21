@@ -47,6 +47,10 @@
                 padding-right: 50px;
             }
 
+            .new-title::-ms-clear {
+                display: none;
+            }
+
             .text {
                 padding: 6px 12px;
             }

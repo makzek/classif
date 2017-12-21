@@ -100,7 +100,7 @@ export class ColumnSettingsComponent implements OnDestroy {
 
     edit(item: IFieldView) {
         this.editedItem = item;
-        this.newTitle = item.title;
+        this.newTitle = item.customTitle || item.title;
     }
 
     saveNewTitle(title: string) {
