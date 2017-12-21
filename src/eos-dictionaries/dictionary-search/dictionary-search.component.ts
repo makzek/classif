@@ -63,7 +63,7 @@ export class DictionarySearchComponent implements OnDestroy {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
-                    if (this.data[_dict][_field] !== '') {
+                    if (this.data[_dict][_field] && this.data[_dict][_field].trim() !== '') {
                         return false;
                     }
                 }
@@ -101,6 +101,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    public setFocus() {
+        document.getElementById('inpQuick').focus();
+    }
+
     ngOnDestroy() {
         this.dictSubscription.unsubscribe();
     }
@@ -108,7 +112,7 @@ export class DictionarySearchComponent implements OnDestroy {
     quickSearch(evt: KeyboardEvent) {
         if (evt.keyCode === 13) {
             if (this.searchDone) {
-                this.dataQuick = this.dataQuick.trim();
+                this.dataQuick = (this.dataQuick) ? this.dataQuick.trim() : '';
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
                     this.settings.deleted = this._dictSrv.viewParameters.showDeleted;

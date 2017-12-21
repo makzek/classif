@@ -6,7 +6,7 @@ import { ApiCfg } from '../core/api-cfg';
 import { HTTP_OPTIONS } from '../core/consts';
 import { USER_CL, SYS_PARMS } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
-import {AppContext} from './appContext.service'
+import { AppContext } from './appContext.service'
 
 @Injectable()
 export class AuthService {
@@ -18,9 +18,13 @@ export class AuthService {
 
     public login(user: string, passwd: string): Promise<any> {
         const _url = this._cfg.authSrv + 'Login?app=api&' + 'username=' + user + '&pass=' + passwd;
-        const r = this._http.get(_url, HTTP_OPTIONS).toPromise<any>()
-            .then(() => {
-                return this.getContext();
+        const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
+            .then((resp) => {
+                if (resp.text() && resp.text().indexOf('error:') > -1) {
+                    return null;
+                } else {
+                    return this.getContext();
+                }
             });
 
         return r;
@@ -31,7 +35,7 @@ export class AuthService {
         return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
     }
 
-    getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS}> {
+    getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {
         return this.appCtx.init();
         /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
@@ -64,6 +68,6 @@ export class AuthService {
                 debugger;
             })
             */
-            ;
+        ;
     }
 }

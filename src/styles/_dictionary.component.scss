@@ -177,7 +177,8 @@
         }
 
         .first-line {
-            height: $item-height;
+            height: $item-height + 6px;
+            padding-top: 1px;
             border: 1px solid transparent;
         }
 
