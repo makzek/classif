@@ -383,11 +383,13 @@ export class EosDictionary {
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         if (this.descriptor.type !== E_DICT_TYPE.linear) {
             if (params.mode === SEARCH_MODES.totalDictionary) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
+                // critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
             } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
                 critery['ISN_HIGH_NODE'] = selectedNode.data.rec['ISN_NODE'] + '';
             } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
+                const layer = selectedNode.originalId.toString().split('.').length - 1;
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
+                critery['LAYER'] = layer + ':Null';
             }
         }
 
