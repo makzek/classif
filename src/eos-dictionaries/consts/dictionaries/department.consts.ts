@@ -40,7 +40,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Не используется Организация',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'LAYER',
         title: 'LAYER',
@@ -50,7 +50,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Номер вышестоящей вершины',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -139,13 +139,13 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ISN кабинета',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'ORDER_NUM',
         title: 'Порядковый номер в кабинете',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'indexPerson',
         title: 'Индекс ДЛ',
@@ -193,7 +193,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ISN контакта',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',
@@ -243,7 +243,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Кто создал',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'UPD_DATE',
         title: 'Дата и время обновления',
@@ -253,7 +253,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Кто обновил',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только цифровые значения.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'printInfo',
         type: 'dictionary',
