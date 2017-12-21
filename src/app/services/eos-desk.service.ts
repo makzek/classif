@@ -267,11 +267,13 @@ export class EosDeskService {
 
         return viewMan.saveView(newDesc)
             .then((isn_view) => {
-                console.log(isn_view)
-                // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
-                desk.id = isn_view.toString();
-                this._desksList.push(desk);
-                this._desksList$.next(this._desksList);
+                return this._appCtx.init()
+                    .then(() => {
+                        desk.id = isn_view.toString();
+                        this._desksList.push(desk);
+                        this._desksList$.next(this._desksList);
+                        return desk;
+                    });
             });
     }
     /**

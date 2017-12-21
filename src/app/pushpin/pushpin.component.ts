@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { EosDeskService } from '../services/eos-desk.service';
-import { EosDesk } from '../core/eos-desk';
+import { EosDesk, IDesk } from '../core/eos-desk';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
@@ -64,11 +64,11 @@ export class PushpinComponent {
                 references: [],
                 edited: false,
             };
-            this._deskSrv.createDesk(_desk).then((value) => {
-                console.log(value);
-                this._deskSrv.appendDeskItemToView(_desk);
-                this.creating = false;
-            }).catch((err) => console.log(err));
+            this._deskSrv.createDesk(_desk)
+                .then((desk: IDesk) => {
+                    this._deskSrv.appendDeskItemToView(desk);
+                    this.creating = false;
+                }).catch(err => console.log(err));
         }
     }
 
