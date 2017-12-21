@@ -177,7 +177,7 @@ export class EosDictService {
         this._paginationConfig$.next(this.paginationConfig);
     }
 
-    public getDictionariesList(): Promise<any> {
+    public getDictionariesList(): Promise<IDictionaryDescriptor[]> {
         return Promise.resolve(DICTIONARIES);
     }
 
