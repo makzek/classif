@@ -18,6 +18,7 @@ import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface
 import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { IEnt } from 'eos-rest';
+import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -306,7 +307,7 @@ export class EosDictionary {
     /**
      * @description Delete marked records from DB
      */
-    deleteMarked(): Promise<boolean> {
+    deleteMarked(): Promise<IRecordOperationResult[]> {
         const records = this._getMarkedRecords();
         this._nodes.forEach((node) => {
             if (node.marked) {
@@ -315,6 +316,7 @@ export class EosDictionary {
             }
         });
         this._resetMarked();
+        // this.descriptor.record.keyField.foreignKey
         return this.descriptor.deleteRecords(records);
     }
 

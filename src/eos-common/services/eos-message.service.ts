@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { IMessage, DEFAULT_DISMISS_TIMEOUT } from '../core/message.interface';
+import { IMessage, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT, WARN_DISMISS_TIMEOUT } from '../core/message.interface';
 
 @Injectable()
 export class EosMessageService {
@@ -20,8 +20,18 @@ export class EosMessageService {
     }
 
     public addNewMessage(message: IMessage) {
+        console.warn('new message', message);
         if (message.dismissOnTimeout === undefined) {
-            message.dismissOnTimeout = DEFAULT_DISMISS_TIMEOUT;
+            switch (message.type) {
+                case 'danger':
+                    message.dismissOnTimeout = DANGER_DISMISS_TIMEOUT;
+                    break;
+                case 'warning':
+                    message.dismissOnTimeout = WARN_DISMISS_TIMEOUT;
+                    break;
+                default:
+                    message.dismissOnTimeout = DEFAULT_DISMISS_TIMEOUT;
+            }
         }
         this.messages.push(message);
         this._messages$.next(this.messages);
