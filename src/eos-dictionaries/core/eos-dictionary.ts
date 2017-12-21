@@ -112,9 +112,9 @@ export class EosDictionary {
         this._userOrder = userOrder;
     }
 
-    private _updateTree() {
+    private _updateTree(nodes: EosDictionaryNode[]) {
         /* build tree */
-        this._nodes.forEach((_node) => {
+        nodes.forEach((_node) => {
             if (_node.parentId) {
                 const parent = this._nodes.get(_node.parentId);
                 if (parent) {
@@ -123,24 +123,26 @@ export class EosDictionary {
             }
         });
 
-        /* build roots */
-        this._nodes.forEach((_n) => {
-            if (!this.root && _n.parentId === null) {
-                this.root = _n;
-            }
-        });
-
-        /* fallback if root undefined */
+        /* find root */
         if (!this.root) {
-            this.root = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
-            this.root.children = [];
-            this._nodes.set(this.root.id, this.root);
+
+            let rootNode = nodes.find((node) => node.parentId === null);
+
+            /* fallback if root undefined */
+            if (!rootNode) {
+                rootNode = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
+                rootNode.children = [];
+                this._nodes.set(rootNode.id, rootNode);
+            }
+
+            this.root = rootNode;
         }
 
+        /* force set title and visible for root */
         this.root.title = this.descriptor.title;
         this.root.data.rec['DELETED'] = false;
 
-        this._nodes.forEach((node) => {
+        nodes.forEach((node) => {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
@@ -183,11 +185,15 @@ export class EosDictionary {
                 console.log('no data');
             }
         });
-        if (updateTree) {
-            this._updateTree();
-        }
-        return nodeIds.map((id) => this._nodes.get(id))
+
+        const nodes = nodeIds.map((id) => this._nodes.get(id))
             .filter((node) => !!node);
+
+        if (updateTree) {
+            this._updateTree(nodes);
+        }
+
+        return nodes;
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
@@ -343,10 +349,7 @@ export class EosDictionary {
     search(criteries: any[]): Promise<EosDictionaryNode[]> {
         return this.descriptor
             .search(criteries)
-            .then((data) => {
-                const nodes = this.updateNodes(data, false);
-                return nodes;
-            });
+            .then((data) => this.updateNodes(data, false));
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {

@@ -187,7 +187,7 @@ export class EosDictService {
     }
 
     public closeDictionary() {
-        this.dictionary = this.selectedNode = this._openedNode = null;
+        this.dictionary = this.selectedNode = this._openedNode = this._srchCriteries = null;
         this._initViewParameters();
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
@@ -341,6 +341,11 @@ export class EosDictService {
 
         const page = this.paginationConfig;
         const pageList = this._visibleListNodes.slice((page.start - 1) * page.length, page.current * page.length);
+        /* unMark invisible nodes */
+        this._currentList
+            .filter((listNode) => listNode.marked && pageList.findIndex((pageNode) => pageNode.id === listNode.id) === -1)
+            .forEach((listNode) => listNode.marked = false);
+
         if (this._openedNode && pageList.findIndex((node) => node.id === this._openedNode.id) < 0) {
             this._openNode(null);
         }
@@ -378,8 +383,8 @@ export class EosDictService {
     }
 
     private _selectNode(node: EosDictionaryNode) {
-        this._srchCriteries = null;
         if (this.selectedNode !== node) {
+            this._srchCriteries = null;
             if (this.selectedNode) {
                 if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
@@ -485,12 +490,8 @@ export class EosDictService {
         if (this.dictionary) {
             return this.dictionary.markDeleted(recursive, deleted)
                 .then(() => this._reloadList())
-                .then(() => {
-                    return true;
-                })
-                .catch((err) => {
-                    return this._reloadList().then(() => this._errHandler(err));
-                });
+                .then(() => true)
+                .catch((err) => this._reloadList().then(() => this._errHandler(err)));
         } else {
             return Promise.resolve(false);
         }

@@ -312,7 +312,7 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     search(criteries: any[]): Promise<any[]> {
-        console.log('search critery', criteries);
+        // console.log('search critery', criteries);
 
         const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
