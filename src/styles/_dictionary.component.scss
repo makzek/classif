@@ -124,7 +124,7 @@
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
             -ms-grid-columns:  48px 1fr minmax(80px,auto);
-            grid-template-columns: 48px 1fr minmax(800px,auto);
+            grid-template-columns: 48px 1fr minmax(80px,auto);
 
             &.has-custom {
                 -ms-grid-columns:  48px 1fr minmax(80px,auto) 48px;
