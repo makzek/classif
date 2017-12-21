@@ -101,6 +101,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    public setFocus() {
+        document.getElementById('inpQuick').focus();
+    }
+
     ngOnDestroy() {
         this.dictSubscription.unsubscribe();
     }
