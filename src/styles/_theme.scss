@@ -110,6 +110,12 @@
     border-color: $border-color-main-theme;
 }
 
+.block {
+    background-color: $block-color-main-theme;
+    color: $primary-font-color-main-theme;
+    border-color: $border-color-main-theme !important;
+}
+
 .tooltip {
     opacity: 1 !important;
 
@@ -211,12 +217,6 @@
 }
 
 .main-theme {
-    .block {
-        background-color: $block-color-main-theme;
-        color: $primary-font-color-main-theme;
-        border-color: $border-color-main-theme !important;
-    }
-
     .secondary-block {
         background-color: $block-color-main-theme;
         color: $secondary-font-color-main-theme;

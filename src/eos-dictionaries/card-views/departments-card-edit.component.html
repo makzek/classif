@@ -1,10 +1,10 @@
 <div class="eos-departments-card-edit edit-content">
     <form #cardForm="ngForm" *ngIf="data.rec">
-        <div *ngIf="data.rec['IS_NODE'] === undefined" class="mask">
-            <ul class="btn-wrapper">
-                <button class="btn btn-primary xl-font" (click)="data.rec['IS_NODE'] = 0">Подразделение</button>
-                <button class="btn btn-primary xl-font" (click)="data.rec['IS_NODE'] = 1">Должностное лицо</button>
-            </ul>
+        <div *ngIf="data.rec['IS_NODE'] === undefined" class="mask block">
+            <div class="btn-wrapper">
+                <button class="btn btn-primary xl-font" (click)="data.rec['IS_NODE'] = 0">Создать Подразделение</button>
+                <button class="btn btn-primary xl-font" (click)="data.rec['IS_NODE'] = 1">Создать Должностное лицо</button>
+            </div>
         </div>
     <eos-departments-card-edit-person *ngIf="data.rec && data.rec['IS_NODE']" [data]="data"
         [editMode]="editMode" [nodeId]="nodeId" [cardForm]="cardForm" (onChange)="recordChanded($event)"
