@@ -123,11 +123,11 @@
             min-height: $item-height;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr minmax(80px,auto);
+            -ms-grid-columns:  48px 1fr auto;
             grid-template-columns: 48px 1fr minmax(80px,auto);
 
             &.has-custom {
-                -ms-grid-columns:  48px 1fr minmax(80px,auto) 48px;
+                -ms-grid-columns:  48px 1fr auto 48px;
                 grid-template-columns: 48px 1fr minmax(80px,auto) 48px;
             }
 
