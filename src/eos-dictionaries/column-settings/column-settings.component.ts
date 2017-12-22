@@ -56,6 +56,10 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         });
     }
 
+    /**
+     * @description unsubscribe from dragulaService,
+     * destroy dragula bags
+     */
     ngOnDestroy() {
         if (!!this.dragulaService.find('bag-one')) {
             this.dragulaService.destroy('bag-one');
@@ -143,16 +147,27 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         }
     }
 
+    /**
+     * make item edited
+     * @param item edited item
+     */
     edit(item: IFieldView) {
         this.editedItem = item;
         this.newTitle = item.customTitle || item.title;
     }
 
-    saveNewTitle(title: string) {
+    /**
+     * @description set newTitle as customTitle for editedItem
+     */
+    saveNewTitle() {
         this.editedItem.customTitle = this.newTitle;
         this.cancelTitleEdit();
     }
 
+    /**
+     * @description cancel title edit, set selectedCurrItem, selectedDictItem,
+     * editedItem, newTitle equal to null
+     */
     cancelTitleEdit() {
         this.selectedCurrItem = null;
         this.selectedDictItem = null;
@@ -160,10 +175,17 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this.newTitle = null;
     }
 
+    /**
+     * open modal with remove custom titles confirmation
+     * @param template modal template
+     */
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
     }
 
+    /**
+     * remove all custom titles
+     */
     moveTitlesBack() {
         this.modalRef.hide();
         this.currentFields.forEach((_f) => {
