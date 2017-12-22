@@ -124,6 +124,7 @@ export class EosDictService {
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
+            showAllSubnodes: false,
             showDeleted: false,
             userOrdered: false,
             markItems: false,
@@ -387,6 +388,7 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             this._srchCriteries = null;
+            this.viewParameters.showAllSubnodes = false;
             if (this.selectedNode) {
                 if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
@@ -482,6 +484,12 @@ export class EosDictService {
         }
     }
 
+    toggleAllSubnodes(): Promise<EosDictionaryNode[]> {
+        this.viewParameters.showAllSubnodes = !this.viewParameters.showAllSubnodes;
+        this.viewParameters.searchResults = false;
+        this._srchCriteries = null;
+        return this._reloadList();
+    }
     /**
      * @description Marks or unmarks record as deleted
      * @param recursive true if need to delete with children, default false
@@ -524,6 +532,8 @@ export class EosDictService {
         if (this.dictionary) {
             if (this._srchCriteries) {
                 pResult = this.dictionary.search(this._srchCriteries);
+            } else if (this.viewParameters.showAllSubnodes) {
+                pResult = this.dictionary.getAllChildren(this.selectedNode);
             } else {
                 pResult = this.dictionary.getChildren(this.selectedNode);
             }

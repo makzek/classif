@@ -100,23 +100,8 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
-        let _set: E_RECORD_ACTIONS[];
-
-        switch (group) {
-            case E_ACTION_GROUPS.common:
-                _set = this.actions;
-                break;
-            case E_ACTION_GROUPS.item:
-                _set = this.itemActions;
-                break;
-            case E_ACTION_GROUPS.group:
-                _set = this.groupActions;
-                break;
-            default:
-                _set = [];
-        }
         /* tslint:disable:no-bitwise */
-        return !!~_set.findIndex((a) => a === action);
+        return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
     }
 

@@ -295,6 +295,13 @@ export class EosDictionary {
         return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
     }
 
+    getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        const critery = {
+            [node._descriptor.keyField.foreignKey]: node.originalId + '%'
+        };
+        return this.search([critery]);
+    }
+
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
         if (node) {
             node.updating = true;
