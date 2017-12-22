@@ -9,6 +9,9 @@ import { EosStorageService } from '../../app/services/eos-storage.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../consts/messages.consts';
 
 @Component({
     templateUrl: 'desktop.component.html',
@@ -34,7 +37,8 @@ export class DesktopComponent implements OnDestroy {
         private _router: Router,
         private _route: ActivatedRoute,
         private _confirmSrv: ConfirmWindowService,
-        private _storageSrv: EosStorageService
+        private _storageSrv: EosStorageService,
+        private _msgSrv: EosMessageService,
     ) {
         this.referencesList = [];
         this._routerSubscription = this._router.events
@@ -105,10 +109,15 @@ export class DesktopComponent implements OnDestroy {
         itemDiv[index]['draggable'] = false;
     }
 
-    save(evt: Event) {
+    /**
+     * Save new name elements of desktop
+     * @param evt Mouse Event
+     */
+    public save(evt: Event) {
         if (this._newTitle !== this._editingItem.title) {
             this._editingItem.title = this._newTitle;
             this._editingItem.fullTitle = this._newTitle;
+            this._deskSrv.updateName(this._editingItem);
             /* todo: add save service call */
             /* then */
         }
@@ -130,5 +139,17 @@ export class DesktopComponent implements OnDestroy {
     setCursor(event) {
         /* set the cursor position at the end of textarea - special trick for IE and Edge */
         event.target.selectionStart = event.target.value.length;
+    }
+
+    /**
+     * Method check is there node and navigate or get message
+     * @param link item to navigate
+     */
+    public goToCard(link: IDeskItem): void {
+        const segments: Array<string> = link.url.split('/');
+        this._dictSrv.getFullNode(segments[2], segments[3])
+            .then((node: EosDictionaryNode) => {
+                node ? this._router.navigate([link.url]) : this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+            })
     }
 }

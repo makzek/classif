@@ -4,7 +4,7 @@ import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IFieldDesriptor, E_FIE
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
-import { ITypeDef } from 'eos-rest';
+import { ITypeDef, IEnt } from 'eos-rest';
 
 import { FieldDescriptor } from './field-descriptor';
 import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
@@ -12,6 +12,8 @@ import { RecordDescriptor } from './record-descriptor';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
+
+import { EosDictService } from '../services/eos-dict.service';
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
@@ -118,6 +120,10 @@ export abstract class AbstractDictionaryDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
+    get dictionaryType(): E_DICT_TYPE {
+        return this.type;
+    }
+
     getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         return this._getFieldSet(aSet, values);
     }
@@ -127,22 +133,25 @@ export abstract class AbstractDictionaryDescriptor {
             rec: {}
         };
         const _descs = this.getFieldSet(aSet, data);
-        _descs.forEach((_f) => {
-            if (_f.type !== E_FIELD_TYPE.dictionary) {
-                _description.rec[_f.key] = {
-                    title: _f.title,
-                    length: _f.length,
-                    pattern: _f.pattern,
-                    required: _f.required,
-                    invalidMessage: _f.invalidMessage,
-                    isUnic: _f.isUnic,
-                    unicInDict: _f.unicInDict,
+        if (_descs) {
+            _descs.forEach((_f) => {
+                if (_f.type !== E_FIELD_TYPE.dictionary) {
+                    _description.rec[_f.key] = {
+                        title: _f.title,
+                        length: _f.length,
+                        pattern: _f.pattern,
+                        required: _f.required,
+                        invalidMessage: _f.invalidMessage,
+                        isUnic: _f.isUnic,
+                        unicInDict: _f.unicInDict,
+                    }
+                } else {
+                    _description[_f.key] = {};
+                    /* recive other dict description */
+                    // this.dictSrv.getDictionaryField(_f.key);
                 }
-            } else {
-                _description[_f.key] = {};
-                /* recive other dict description */
-            }
-        });
+            });
+        }
         return _description;
     }
 
@@ -152,12 +161,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
-            /*
-            case E_FIELD_SET.list:
-                return this._getListFields();
-            */
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
             default:
                 return null;
         }
@@ -182,6 +189,14 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getAllVisibleFields(): FieldDescriptor[] {
+        return this.allVisibleFields;
+    }
+
+    private _getFullSearchFields() {
+        return this.fullSearchFields;
     }
 
     private _addAction(name: string, group: E_RECORD_ACTIONS[]) {
@@ -215,8 +230,14 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
 
-    deleteRecord(data: any): Promise<any> {
+    deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
+    }
+
+    deleteRecords(records: IEnt[]): Promise<any> {
+        records.forEach((rec) => rec._State = _ES.Deleted);
+        const changes = this.apiSrv.changeList(records);
+        return this.apiSrv.batch(changes, '');
     }
 
     abstract getChildren(...params): Promise<any[]>;
@@ -226,6 +247,8 @@ export abstract class AbstractDictionaryDescriptor {
         if (!query) {
             query = ALL_ROWS;
         }
+
+        // console.warn('getData', query, order, limit);
 
         const req = { [this.apiInstance]: query };
 
@@ -276,22 +299,25 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getRoot(): Promise<any[]>;
 
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
+        // todo: fix hardcode
         return this.apiSrv
             .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
             .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
     }
 
-    search(criteries: any[]): Promise<any> {
-        console.log('search critery', criteries);
+    markDeleted(records: any[], deletedState = 1): Promise<any[]> {
+        records.forEach((record) => record.DELETED = deletedState);
+        const changes = this.apiSrv.changeList(records);
+        return this.apiSrv.batch(changes, '');
+    }
 
-        const _search = criteries.map((critery) => this.getData({ criteries: critery }));
+    search(criteries: any[]): Promise<any[]> {
+        // console.log('search critery', criteries);
+
+        const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
         return Promise.all(_search)
-            .then((results) => {
-                const _res = [].concat(...results);
-                // console.log('found', _res);
-                return _res;
-            });
+            .then((results) => [].concat(...results));
     }
 
     updateRecord(originalData: any, updates: any): Promise<any[]> {

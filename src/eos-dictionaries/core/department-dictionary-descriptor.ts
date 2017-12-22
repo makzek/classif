@@ -96,10 +96,6 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
                 return this._getModeSet(this.editFields, values);
             case E_FIELD_SET.list:
                 return this._getModeSet(this.listFields, values);
-            /* case E_FIELD_SET.fullSearch:
-                return this._getModeSet(this.fullSearchFields, values);*/
-            case E_FIELD_SET.allVisible:
-                return this._getFieldSet(E_FIELD_SET.allVisible, values);
             default:
                 throw new Error('Unknown field set');
         }
@@ -159,9 +155,10 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         const criteries = {
             DUE: record.DUE + '%',
             LAYER: (layer + 1) + ':' + (layer + 2),
-            IS_NODE: '0'
+            // IS_NODE: '0'
         };
-        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: { criteries: criteries }, orderby: 'DUE' });
     }
 
     getRecord(due: string): Promise<any[]> {

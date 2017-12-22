@@ -17,6 +17,8 @@ export enum E_RECORD_ACTIONS {
     restore,
     importPhotos,
     createRepresentative,
+    tableCustomization,
+    // createRepresentative,
     // slantForForms,
     /* to be extended */
 };

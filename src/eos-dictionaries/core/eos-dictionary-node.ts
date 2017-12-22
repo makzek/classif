@@ -1,4 +1,4 @@
-import { IFieldView } from './dictionary.interfaces';
+import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -136,8 +136,9 @@ export class EosDictionaryNode {
         }
     }
 
-    updateEpandabe() {
-        this.expandable = this.isNode && this._children && this._children.findIndex((node) => node.isNode) > -1;
+    updateExpandable(showDeleted = false) {
+        this.expandable = this.isNode && this._children &&
+            this._children.findIndex((node) => !!node.isNode && node.isVisible(showDeleted)) > -1;
     }
 
     private _keyToString(value: any): string {
@@ -179,14 +180,10 @@ export class EosDictionaryNode {
         }
     }
 
-    delete(hard = false) { // TODO: check maybe this is unused
-        if (hard) {
-            if ((!this._children || this._children.length < 1) && this.parent) {
-                this.parent.deleteChild(this);
-                this.isDeleted = true;
-            }
-        } else {
-            this.isDeleted = true;
+    delete() {
+        // console.log('delete children parent', this, this._children, this.parent);
+        if (/* (!this._children || this._children.length < 1) && */this.parent) {
+            this.parent.deleteChild(this);
         }
     }
 
@@ -231,7 +228,7 @@ export class EosDictionaryNode {
     getEditData(): any {
         const _data = {
             rec: {},
-        };
+        }
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
@@ -239,6 +236,18 @@ export class EosDictionaryNode {
                 // console.log('subdictionary', this.data[_f.key]);
                 _data[_f.key] = this.data[_f.key];
                 /* recive other dict data */
+            }
+        });
+        return _data;
+    }
+
+    getCreatingData(): any {
+        const _data = {
+            rec: {},
+        };
+        this._descriptor.getEditView(this.data).forEach((_f) => {
+            if (_f.type === E_FIELD_TYPE.dictionary) {
+                _data[_f.key] = {};
             }
         });
         return _data;
@@ -275,8 +284,8 @@ export class EosDictionaryNode {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {
-                console.log('dictionary', _f);
                 _data[_f.key] = this.data[_f.key] || {};
+                // console.log('dictionary', _data[_f.key]);
                 /* recive other dict data */
             }
         });
@@ -289,6 +298,26 @@ export class EosDictionaryNode {
         } else {
             return [];
         }
+    }
+
+    getAllChildren(): EosDictionaryNode[] {
+        let children = [];
+        if (this._children) {
+            this._children.forEach((chld) => {
+                children = children.concat(chld.getAllChildren());
+            });
+            children = children.concat(this._children);
+        }
+        return children;
+    }
+
+    /**
+     * Get value for field
+     * @param field field which value need recive
+     * @return value of field from node.data.rec
+     */
+    getValue (field: IFieldView): any {
+        return this.data.rec[field.foreignKey];
     }
 }
 

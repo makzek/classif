@@ -23,6 +23,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE
 } from '../consts/messages.consts';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 // import { UUID } from 'angular2-uuid';
@@ -128,7 +129,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => this.nodes = nodes);
+            .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
     ngOnInit() {
@@ -157,8 +158,15 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _getNode() {
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((err) => console.log('getNode error', err));
+            .then((node) => {
+                if (node) {
+                    this._update(node)
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            }).catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
@@ -174,7 +182,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
-            // console.log('recived description', this.fieldsDescription, this.nodeData);
+            console.log('recived description', this.nodeData);
         }
     }
 
@@ -265,7 +273,16 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         if (this.nodeData) {
             // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData.rec).findIndex((key) => this.nodeData.rec[key] !== this._originalData.rec[key]);
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                if (this.nodeData[dict] && this._originalData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
+                        return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
+                    });
+                } else {
+                    return false;
+                }
+            });
             /* tslint:enable:no-bitwise */
             this.isChanged = hasChanges;
         }
@@ -389,10 +406,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 const fullTitle = this._fullTitle(resp);
+                console.log('fullTitle', fullTitle);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
-                    title: resp.data.CLASSIF_NAME,
-                    fullTitle: fullTitle + ' - Редактирование'
+                    title: resp.data.rec.CLASSIF_NAME,
+                    fullTitle: fullTitle
                 });
                 this._clearEditingCardLink();
                 return resp;
@@ -402,12 +420,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _fullTitle(node: EosDictionaryNode) {
         let parent = node.parent;
-        let arr = [node.data.CLASSIF_NAME];
+        let arr = [node.data.rec.CLASSIF_NAME];
         while (parent.parent) {
-            arr.push(parent.data.CLASSIF_NAME);
+            arr.push(parent.data.rec.CLASSIF_NAME);
             parent = parent.parent;
         }
-        arr.push(parent.data.RUBRIC_CODE);
+        arr.push(parent.data.rec.RUBRIC_CODE);
+        arr.push('Справочники');
         arr = arr.reverse();
         const fullTItle = arr.join('/');
         return fullTItle;

@@ -1,15 +1,13 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictService } from '../services/eos-dict.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
-export class BaseCardEditComponent implements OnInit, OnDestroy {
+export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() nodeSet: EosDictionaryNode[];
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -34,13 +32,15 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
-        if (this.cardForm) {
-            this.cardForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(this.cardForm.invalid);
-            });
-        }
-    }
+    ngOnChanges() {
+        setTimeout(() => {
+            if (this.cardForm && !this._subscrChanges) {
+                this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
+                    this.invalid.emit(this.cardForm.invalid);
+                });
+            }
+        }, 0);
+}
 
     ngOnDestroy() {
         if (this._subscrChanges) {
