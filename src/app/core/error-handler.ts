@@ -12,7 +12,8 @@ export class EosErrorHandler implements ErrorHandler {
             this._msgSrv.addNewMessage({
                 type: 'danger',
                 title: 'Ошибка приложения!',
-                msg: ''
+                msg: '',
+                dismissOnTimeout: 30000
             });
         } catch (e) {
             console.error('addNewMessage failed', e);

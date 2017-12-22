@@ -1,8 +1,30 @@
-<div class="pushpin btn-group" dropdown placement="bottom right" container="body" [style.right]="infoOpened ? openStyle : closeStyle">
-    <a dropdownToggle type="button" class="dropdown-toggle">
-        <span class="eos-icon eos-icon-pin-blue small" tooltip="Прикрепить" placement="left" containerClass="tooltip-info"></span>
-    </a>
-    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-        <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)"><a>{{desk.name}}</a></li>
-    </ul>
+<div class="pin" dropdown dropdownToggle container="body" placement="bottom right">
+    <button class="btn pushpin" container="body" tooltip="Прикрепить" placement="left" containerClass="tooltip-info"
+        [style.right]="infoOpened ? openStyle : closeStyle">
+        <span class="eos-icon eos-icon-pin-blue small"></span>
+        <ul *dropdownMenu class="pushdrop dropdown-menu dropdown-menu-right pushdrop" role="menu">
+            <li class="desk" *ngFor="let desk of deskList" (click)="pin(desk)">
+                <a>{{desk.name}}</a>
+            </li>
+            <li class="divider dropdown-divider" *ngIf="deskList.length > 0 && deskList.length < 5"></li>
+            <li *ngIf="deskList.length === 0 || deskList.length < 5" class="desk create">
+                <a *ngIf="!creating" class="create primary-text" (click)="openCreateForm($event)">Создать рабочий стол</a>
+                <span *ngIf="creating">
+                    <div class="input-group">
+                        <input type="text" (click)="stop($event)" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
+                            [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
+                                [disabled]="!deskName?.length || !createForm.checkValidity()">
+                                <span class="eos-icon eos-icon-checkbox-black x-small"></span>
+                            </button>
+                            <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="tooltip-info">
+                                <span class="eos-icon eos-icon-close-black x-small"></span>
+                            </button>
+                        </div>
+                    </div>
+                </span>
+            </li>
+        </ul>
+    </button>
 </div>
