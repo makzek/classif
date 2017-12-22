@@ -308,7 +308,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
     }, {
         key: 'fullTitleRoom',
-        title: 'Краткое наименование кабинета',
+        title: 'Полное наименование кабинета',
         type: 'string',
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',

@@ -70,3 +70,16 @@ export const WARN_LOGIC_DELETE: IMessage = {
     title: 'Предупреждение:',
     msg: 'отмеченные элементы уже были логически удалены!'
 }
+
+export const WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'нет элементов для назначений представителей организации'
+}
+
+export const WARN_NO_ORGANIZATION: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'вверх по иерархии нет организаций'
+}
+

@@ -28,7 +28,9 @@ import {
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
     DANGER_HAVE_NO_ELEMENTS,
-    DANGER_LOGICALY_RESTORE_ELEMENT
+    WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
+    DANGER_LOGICALY_RESTORE_ELEMENT,
+    WARN_NO_ORGANIZATION
 } from '../consts/messages.consts';
 import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
@@ -339,28 +341,43 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
+    /**
+     * @description convert selected persons to list of organization representatives,
+     * add it to department organiztion if it exists upwards to tree
+     */
     private _createRepresentative() {
         if (this.dictionaryId === 'departments') {
-            const _selectedCount = 0;
-            const _selectedList: EosDictionaryNode[] = [];
-            /*if (this.listNodes) {
-                this.listNodes.forEach((_node) => {
-                    _selectedCount++;
-                    _selectedList.push(_node);
-                });
-            }*/
-
-            if (!_selectedCount) {
-                this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS);
-            } else {
-                _selectedList.forEach((_node) => {
-                    if (_node.data.rec['IS_NODE']) {
-                        this._dictSrv.updateNode(_node, Object.assign({}, _node.data, {
-                            /* New data with person data like but not the same!!!
-                            organiz: _node.data.rec*/ }));
+            this._dictSrv.getFullNode(this.dictionaryId, this.selectedNode.id).then((_fullData) => {
+                if (_fullData && _fullData.data && _fullData.data.organization['ISN_NODE']) {
+                    let _selectedCount = 0;
+                    const _represData: any[] = [];
+                    if (this.visibleNodes) {
+                        this.visibleNodes.forEach((_node) => {
+                            if (_node.marked && _node.data.rec['IS_NODE']) {
+                                _selectedCount++;
+                                _represData.push({
+                                    SURNAME: _node.data.rec['SURNAME'],
+                                    DUTY: _node.data.rec['DUTY'],
+                                    PHONE: _node.data.rec['PHONE'],
+                                    PHONE_LOCAL: _node.data.rec['PHONE_LOCAL'],
+                                    E_MAIL: _node.data.rec['E_MAIL'],
+                                    SEV: _node.data.sev['GLOBAL_ID'], // not sure
+                                    ISN_ORGANIZ: _fullData.data.organization['ISN_NODE'],
+                                    DEPARTMENT: _fullData.data.rec['CLASSIF_NAME']
+                                });
+                            }
+                        });
                     }
-                });
-            }
+                    if (!_selectedCount) {
+                        this._msgSrv.addNewMessage(WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE);
+                    } else {
+                        /* call API and save */
+                        console.log('Representatives', _represData);
+                    }
+                } else {
+                    this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);
+                }
+            });
         }
     }
 
