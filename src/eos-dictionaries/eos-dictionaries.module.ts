@@ -43,6 +43,7 @@ import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.compon
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
+import { CreateNodeComponent } from './create-node/create-node.component';
 
 /* services */
 import { EosDictService } from './services/eos-dict.service';
@@ -79,9 +80,11 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         UnicValidatorDirective,
         LongTitleHintComponent,
         VisaTypeEditComponent,
+        CreateNodeComponent,
     ],
     entryComponents: [
         ColumnSettingsComponent,
+        CreateNodeComponent,
     ],
     imports: [
         BrowserModule,

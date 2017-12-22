@@ -98,11 +98,9 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
-        console.log('read', recordDue, 'read from cache', chain);
+        // console.log('read', recordDue, 'read from cache', chain);
         return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
-            .then(([record, parents]) => {
-                return record.concat(parents);
-            });
+            .then(([record, parents]) => record.concat(parents));
     }
 
     getRoot(): Promise<any[]> {
