@@ -53,7 +53,10 @@
             </div>
             <div class="col-2">
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CLASSIF_NAME_DEP">{{fieldsDescription.rec['title']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CLASSIF_NAME_DEP">
+                        {{fieldsDescription.rec['title']?.title}}
+                        <span>*</span>
+                    </label>
                     <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control m-font " [ngModel]="data.rec['CLASSIF_NAME']"
                         (ngModelChange)="change('CLASSIF_NAME', 'rec', $event)" placeholder="{{fieldsDescription.rec['title']?.title}}"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('CLASSIF_NAME_DEP')" (blur)="blur()" required maxlength="{{fieldsDescription.rec['title']?.length}}"
@@ -114,6 +117,9 @@
                         triggers=""></textarea>
                 </div>
             </div>
+        </div>
+        <div class="form-group unimportant-text s-font">
+            <label>* - поля обязательные к заполнению</label>
         </div>
     </form>
 </div>

@@ -3,7 +3,10 @@
         <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
             <div *ngFor="let key of keys(fieldsDescription.rec)">
                 <div *ngIf="!(key === 'STATUS' || key === 'IS_FINAL')" class="form-group">
-                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
+                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">
+                        {{fieldsDescription.rec[key].title}}
+                        <span *ngIf="fieldsDescription.rec[key]?.required">*</span>
+                    </label>
                     <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font" [ngModel]="data.rec[key]"
                         (ngModelChange)="change(key, 'rec', $event)" placeholder="{{fieldsDescription.rec[key].title}}" [readonly]="!editMode"
                         [ngClass]="{'readonly': !editMode }" [required]="fieldsDescription.rec[key]?.required" [pattern]="fieldsDescription.rec[key].pattern"
@@ -24,7 +27,10 @@
             </div>
 
             <div class="form-group">
-                <label for="STATUS" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">СТАТУС ВИЗЫ</label>
+                <label for="STATUS" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">
+                    СТАТУС ВИЗЫ
+                    <span>*</span>
+                </label>
                 <select class="form-control m-font" name="STATUS" id="STATUS" [disabled]="!editMode" [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()"
                     required>
                     <option disabled="disabled" selected="selected" class="hidden">Выберите статус визы</option>
@@ -32,6 +38,10 @@
                     <option value="Отрицательный" name="st2" ngDefaultControl>Отрицательный</option>
                     <option value="Промежуточный" name="st3" ngDefaultControl>Промежуточный</option>
                 </select>
+            </div>
+
+            <div class="form-group unimportant-text s-font">
+                <label>* - поля обязательные к заполнению</label>
             </div>
         </form>
     </article>
