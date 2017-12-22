@@ -18,7 +18,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
 
-    private _subscription: Subscription;
+    private _subscriptionDrop: Subscription;
+    private _subscriptionDrag: Subscription;
 
     editedItem: IFieldView;
     newTitle: string;
@@ -34,19 +35,19 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         // value[3] - src
         // value[2] - dst
         // value[1] - droped elem
-        this._subscription = dragulaService.drop.subscribe((value) => {
+        this._subscriptionDrop = dragulaService.drop.subscribe((value) => {
             if (value[2].id !== value[3].id) {
                 if (value[3].id === 'selected') {
                     this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
-                    // this.removeToCurrent();
-                    this.selectedCurrItem = null;
                 } else {
                     this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
-                    // this.addToCurrent();
-                    this.selectedDictItem = null;
                 }
             }
         });
+        this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
+            this.selectedDictItem = null;
+            this.selectedCurrItem = null;
+        })
         dragulaService.setOptions('bag-one', {
             moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
         });
@@ -68,7 +69,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         if (!!this.dragulaService.find('fixed-bag')) {
             this.dragulaService.destroy('fixed-bag');
         }
-        this._subscription.unsubscribe();
+        this._subscriptionDrop.unsubscribe();
+        this._subscriptionDrag.unsubscribe();
     }
 
     /**
