@@ -60,8 +60,8 @@
                                 </span-->
         
                                 <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                                    <span class="text" (click)="orderByField(field.key)">{{field.title}}
-                                        <span *ngIf="orderBy?.fieldKey === field.key" class="icon eos-icon small"
+                                    <span class="text" (click)="orderByField(field.foreignKey)">{{field.title}}
+                                        <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                     </span>
                                 </span>
@@ -80,20 +80,3 @@
         <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
     </div>
 </div>
-
-<ng-template #createTpl>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Добавление записи</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="cancelCreate()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="create-new-node modal-body">
-        <eos-card-edit [dictionaryId]="dictionaryId" [fieldsDescription]="fieldsDescription" [data]="nodeData" editMode="true" (invalid)="validate($event)"></eos-card-edit>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
-        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create(false)">Добавить ещё</button>
-        <button class="btn btn-primary-full" [disabled]="!formValidated" (click)="create()">Добавить</button>
-    </div>
-</ng-template>

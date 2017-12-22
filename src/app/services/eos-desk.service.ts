@@ -88,7 +88,7 @@ export class EosDeskService {
     }
 
     private readDeskList() {
-        const view = this._appCtx.UserViews.filter(uv => uv.SRCH_KIND_NAME === 'clmanDesc');
+        const view = this._appCtx.UserViews.filter((uv) => uv.SRCH_KIND_NAME === 'clmanDesc');
         for (let i = 0; i < view.length; i++) {
             this._desksList.push(this.readDesc(view[i]));
             this._desksList$.next(this._desksList);
@@ -163,15 +163,17 @@ export class EosDeskService {
      * Update link name on the server
      * @param link editing item
      */
-    public updateName(link: IDeskItem): void {
+    public updateName(link: IDeskItem): Promise<any> {
         const v = this.findView(this._selectedDesk.id)
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
             const col = this.viewManager.updateViewColumn(v, blockId, link.title);
-            this.viewManager.saveView(v).then(() => {
+            return this.viewManager.saveView(v).then(() => {
                 this._appCtx.reInit();
                 this._selectedDesk$.next(this._selectedDesk);
             })
+        } else {
+            return Promise.resolve(null);
         }
     }
 
@@ -216,46 +218,62 @@ export class EosDeskService {
         this._recentItems$.next(this._recentItems);
     }
 
-    removeDesk(desk: EosDesk): void {
+    removeDesk(desk: EosDesk): Promise<any> {
+        let res = Promise.resolve(null);
         const v = this.findView(desk.id);
         if (v !== undefined) {
             v._State = _ES.Deleted;
-            this.viewManager.saveView(v);
+            res = this.viewManager.saveView(v);
         }
-        if (this._selectedDesk === desk) {
-            this._selectedDesk = this._desksList[0]; // system desk
-            this._selectedDesk$.next(this._selectedDesk);
-        }
+        return res.then(() => {
+            if (this._selectedDesk === desk) {
+                this._selectedDesk = this._desksList[0]; // system desk
+                this._selectedDesk$.next(this._selectedDesk);
+            }
 
-        this._desksList = this._desksList.filter((d) => d !== desk);
-        this._desksList$.next(this._desksList);
+            this._desksList = this._desksList.filter((d) => d !== desk);
+            this._desksList$.next(this._desksList);
+
+        });
     }
 
-    editDesk(desk: EosDesk): void {
-        this._desksList.splice(this._desksList.indexOf(desk), 1, desk);
-        this._desksList$.next(this._desksList);
+    editDesk(desk: EosDesk): Promise<any> {
+        const deskView = this.findView(desk.id);
+        console.log('editdesk', deskView);
+
+        let res = Promise.resolve(null);
+        if (deskView) {
+            deskView.VIEW_NAME = desk.name;
+            res = this.viewManager.saveView(deskView);
+        }
+        res.then(() => {
+            this._desksList.splice(this._desksList.indexOf(desk), 1, desk);
+            this._desksList$.next(this._desksList);
+            console.log('editing done');
+        })
+        return res;
     }
 
-    createDesk(desk: EosDesk): void {
+    createDesk(desk: EosDesk): Promise<any> {
         if (this._desksList.length > 5) {// users desk + system desk
             this._msgSrv.addNewMessage({
                 type: 'warning',
                 title: 'Предупреждение: максимальное колличество рабочих столов!',
                 msg: 'У вас может быть не более 5 рабочих столов',
             });
+            return Promise.resolve(null);
         }
 
         const viewMan = this.viewManager;
         const newDesc = viewMan.createView('clmanDesc');
         newDesc.VIEW_NAME = desk.name;
 
-        viewMan.saveView(newDesc).then(isn_view => {
-            //            alert('новый стол сохранен!' + isn_view.toString());
-            // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
-            desk.id = isn_view.toString();
-            this._desksList.push(desk);
-            this._desksList$.next(this._desksList);
-        });
-
+        return viewMan.saveView(newDesc)
+            .then((isn_view) => {
+                // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
+                desk.id = isn_view.toString();
+                this._desksList.push(desk);
+                this._desksList$.next(this._desksList);
+            });
     }
 }
