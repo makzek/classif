@@ -83,10 +83,12 @@ export class NodeActionsComponent implements OnDestroy {
             _show = this.dictionary.descriptor.canDo(button.group, button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
+                    _enabled = _enabled && this._nodeSelected && !this._viewParams.searchResults;
                     _show = this._viewParams.userOrdered;
                     _enabled = this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
+                    _enabled = _enabled && this._nodeSelected && !this._viewParams.searchResults;
                     _show = this._viewParams.userOrdered;
                     _enabled = this._nodeSelected;
                     break;

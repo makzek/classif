@@ -512,15 +512,31 @@ export class EosDictService {
      */
     public deleteMarked(): Promise<boolean> {
         if (this.dictionary) {
+            const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
             return this.dictionary.deleteMarked()
-                .then(() => this._reloadList())
-                .then(() => {
-                    return true;
-                })
-                .catch((err) => {
+                .then((results) => {
+                    console.log('results', results);
+                    let success = true;
+                    results.forEach((result) => {
+                        if (result.error) {
+                            if (result.error.code !== 434) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: 'Ошибка удаления "' + result.record['CLASSIF_NAME'] + '"',
+                                    msg: result.error.message
+                                })
+                                success = false;
+                            } else {
+                                throw result.error;
+                            }
+                        }
+                    })
                     return this._reloadList()
-                        .then(() => this._errHandler(err));
-                });
+                        .then(() => {
+                            return success;
+                        });
+                })
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve(false);
         }
@@ -700,7 +716,7 @@ export class EosDictService {
                 type: 'danger',
                 title: 'Ошибка обработки. Ответ сервера:',
                 msg: errMessage,
-                dismissOnTimeout: 100000
+                dismissOnTimeout: 30000
             });
             return null;
         }

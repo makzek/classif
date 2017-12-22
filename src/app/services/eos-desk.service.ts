@@ -20,8 +20,7 @@ import { ViewManager } from '../../eos-rest/services/viewManager';
 import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
 import { _ES } from 'eos-rest/core/consts';
 
-
-
+const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
     name: 'Стандартный рабочий стол',
@@ -147,9 +146,7 @@ export class EosDeskService {
             const col = this.viewManager.addViewColumn(view);
             col.BLOCK_ID = dictionaryURL
             col.LABEL = item.title;
-            this.viewManager.saveView(view).then(() => {
-                this._appCtx.reInit();
-            })
+            this.viewManager.saveView(view).then(() => this._appCtx.reInit());
         }
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
@@ -270,10 +267,35 @@ export class EosDeskService {
 
         return viewMan.saveView(newDesc)
             .then((isn_view) => {
-                // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
-                desk.id = isn_view.toString();
-                this._desksList.push(desk);
-                this._desksList$.next(this._desksList);
+                return this._appCtx.init()
+                    .then(() => {
+                        desk.id = isn_view.toString();
+                        this._desksList.push(desk);
+                        this._desksList$.next(this._desksList);
+                        return desk;
+                    });
             });
+    }
+    /**
+     * @description Checks does it exist deskatop with that name
+     * @param name Name of desktop
+     */
+    public desktopExisted(name: string) {
+        /* tslint:disable:no-bitwise */
+        return !!~this._desksList.findIndex((_d) => _d.name === name);
+        /* tslint:enable:no-bitwise */
+    }
+    /**
+     * @description Generate new dektop name bu count.
+     * @returns Name of desktop. Example: 'My desktop 1', 'My desktop 2'.
+     */
+    public generateNewDeskName(): string {
+        let _newName = DEFAULT_DESKTOP_NAME;
+        let _n = 2;
+        while (this.desktopExisted(_newName)) {
+            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
+            _n++;
+        }
+        return _newName;
     }
 }
