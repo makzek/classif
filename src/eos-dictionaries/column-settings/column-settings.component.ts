@@ -196,6 +196,9 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this.dictionaryFields.forEach((_f) => {
             _f.customTitle = null;
         });
+        this.fixedFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
     }
 
 }
