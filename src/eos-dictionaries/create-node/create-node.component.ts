@@ -59,7 +59,7 @@ export class CreateNodeComponent {
                     this._deskSrv.addRecentItem({
                         url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                         title: title,
-                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
+                        /* fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME */
                     });
                 }
                 this.onHide.emit(true);

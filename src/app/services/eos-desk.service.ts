@@ -136,7 +136,7 @@ export class EosDeskService {
         const dictionaryURL = this._router.url.split('/')[2];
         const item: IDeskItem = {
             title: this._dictSrv.dictionaryTitle,
-            fullTitle: this._dictSrv.dictionaryTitle,
+            /* fullTitle: this._dictSrv.dictionaryTitle, */
             url: '/spravochniki/' + dictionaryURL
         }
         const view: SRCH_VIEW = this.findView(desk.id);
