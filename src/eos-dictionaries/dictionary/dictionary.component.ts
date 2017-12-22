@@ -470,15 +470,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._confirmSrv.confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._dictSrv.deleteMarked()
-                        .then((success) => {
-                            if (!success) {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
-                        })
-                        .catch((err) => this._errHandler(err));
+                    return this._dictSrv.deleteMarked();
                 }
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     /**
@@ -578,8 +573,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
     }
 }

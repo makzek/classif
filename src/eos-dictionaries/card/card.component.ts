@@ -478,8 +478,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
         return null;
     }
