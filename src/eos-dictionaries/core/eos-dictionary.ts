@@ -297,8 +297,10 @@ export class EosDictionary {
     }
 
     getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        const layer = node.originalId.toString().split('.').length - 1;
         const critery = {
-            [node._descriptor.keyField.foreignKey]: node.originalId + '%'
+            [node._descriptor.keyField.foreignKey]: node.originalId + '%',
+            ['LAYER']: layer + ':Null'
         };
         return this.search([critery]);
     }
