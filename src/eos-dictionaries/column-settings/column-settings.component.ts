@@ -1,5 +1,5 @@
-import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy, TemplateRef } from '@angular/core';
-import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, Input, Output, EventEmitter, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -9,7 +9,7 @@ import { IFieldView } from '../core/dictionary.interfaces';
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
-export class ColumnSettingsComponent implements OnDestroy {
+export class ColumnSettingsComponent implements OnDestroy, OnInit {
     @Input() fixedFields: IFieldView[] = [];
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
@@ -25,6 +25,11 @@ export class ColumnSettingsComponent implements OnDestroy {
 
     modalRef: BsModalRef;
 
+    /**
+     * @description constructor, subscribe on drop in dragulaService for highlighting selected field
+     * @param dragulaService drag'n'drop service
+     * @param bsModalRef reference to modal
+     */
     constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef, private modalService: BsModalService) {
         // value[3] - src
         // value[2] - dst
@@ -61,19 +66,38 @@ export class ColumnSettingsComponent implements OnDestroy {
         this._subscription.unsubscribe();
     }
 
+    /**
+     * @description remove current custom fields from all dictionary fields
+     */
+    ngOnInit() {
+        setTimeout(() => {
+            if (this.dictionaryFields) {
+                this.currentFields.forEach((_curr) => {
+                    this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
+                })
+            }
+        }, 0);
+    }
+
+    /**
+     * @description hide modal
+     */
     public hideModal(): void {
         this.bsModalRef.hide();
     }
 
-    cancel() {
-        this.hideModal();
-    }
-
+    /**
+     * @description emit custom fields and hide modal
+     */
     save() {
         this.onChoose.emit(this.currentFields);
         this.hideModal();
     }
 
+    /**
+     * @description move item from all fields (left) to custom fields (right)
+     * use with arrows
+     */
     addToCurrent() {
         if (this.selectedDictItem) {
             // console.log('addToCurrent, this.selectedDictItem', this.selectedDictItem);
@@ -87,6 +111,10 @@ export class ColumnSettingsComponent implements OnDestroy {
         }
     }
 
+    /**
+     * @description move item from custom fields (right) to all fields (left)
+     * use with arrows
+     */
     removeFromCurrent() {
         if (this.selectedCurrItem) {
             /* tslint:disable:no-bitwise */
@@ -99,6 +127,11 @@ export class ColumnSettingsComponent implements OnDestroy {
         }
     }
 
+    /**
+     * @description highlight selected item
+     * @param item highlighted item
+     * @param isCurrent indicates if item placed in current fields (right)
+     */
     select(item: IFieldView, isCurrent: boolean) {
         if (isCurrent) {
             this.selectedCurrItem = item;
