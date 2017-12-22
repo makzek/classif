@@ -312,16 +312,12 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     search(criteries: any[]): Promise<any[]> {
-        console.log('search critery', criteries);
+        // console.log('search critery', criteries);
 
         const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
         return Promise.all(_search)
-            .then((results) => {
-                const _res = [].concat(...results);
-                // console.log('found', _res);
-                return _res;
-            });
+            .then((results) => [].concat(...results));
     }
 
     updateRecord(originalData: any, updates: any): Promise<any[]> {
