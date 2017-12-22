@@ -132,7 +132,7 @@ export class EosStorageService {
         }
     }
 
-    public getShortPositions() {
+    /*public getShortPositions() {
         return this._data.shortPositions;
     }
 
@@ -153,6 +153,22 @@ export class EosStorageService {
             this._data.fullPositions = {};
         }
         this._data.fullPositions = values;
+        this._updateStorage();
+    }*/
+
+    public getHintLists(): string[][] {
+        return [this._data.shortPositions, this._data.fullPositions];
+    }
+
+    public setHintLists(lists: string[][]) {
+        if (!this._data.shortPositions) {
+            this._data.shortPositions = {};
+        }
+        this._data.shortPositions = lists[0];
+        if (!this._data.fullPositions) {
+            this._data.fullPositions = {};
+        }
+        this._data.fullPositions = lists[1];
         this._updateStorage();
     }
 }

@@ -392,7 +392,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 if (node) {
                     console.log('save', node);
                     this._initNodeData(node);
-                    this._dictSrv.addHintInfo(node);
+                    if (this.dictionaryId === 'departments') {
+                        this._dictSrv.addHintItem(node);
+                    }
                     this._setOriginalData();
                     this.cancel();
                 }
@@ -405,9 +407,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
                 const fullTitle = this._fullTitle(resp);
-                if (this.dictionaryId === 'departments') {
-                    this._dictSrv.setShortPositionsList();
-                }
                 console.log('fullTitle', fullTitle);
                 this._deskSrv.addRecentItem({
                     url: this._router.url,

@@ -27,9 +27,10 @@ export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditP
                 this.invalid.emit(this.mainInfoForm.invalid);
             });
         }
-        this.shortPositionsList = this.dictSrv.getShortPositionsList();
-        this.fullPositionsList = this.dictSrv.getFullPositionsList();
+        this.shortPositionsList = this.dictSrv.getHintLists()[0];
+        this.fullPositionsList = this.dictSrv.getHintLists()[1];
         console.log('this.shortPositionsList', this.shortPositionsList);
+        console.log('this.fullPositionsList', this.fullPositionsList);
     }
 
     newImage(evt) {

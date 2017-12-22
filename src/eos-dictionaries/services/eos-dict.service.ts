@@ -238,10 +238,7 @@ export class EosDictService {
                             this.viewParameters.userOrdered,
                             this._storageSrv.getUserOrder(this.dictionary.id)
                         );
-                        this.dictionary.initHintInfo(
-                            this._storageSrv.getShortPositions(),
-                            this._storageSrv.getFullPositions()
-                        );
+                        this._initHintInfo();
                         this._mDictionaryPromise.delete(dictionaryId);
                         this._dictionary$.next(this.dictionary);
                         return this.dictionary;
@@ -257,6 +254,25 @@ export class EosDictService {
             }
         }
         return _p;
+    }
+
+    private _initHintInfo() {
+        const _dictHint = this.dictionary.initHintLists();
+        const _storageHint = this._storageSrv.getHintLists();
+        /* tslint:disable:no-bitwise */
+        _dictHint[0].forEach((_d) => {
+            if (!~_storageHint[0].findIndex((_s) => _s === _d)) {
+                _storageHint[0].push(_d);
+            }
+        });
+        _dictHint[1].forEach((_d) => {
+            if (!~_storageHint[1].findIndex((_s) => _s === _d)) {
+                _storageHint[1].push(_d);
+            }
+        });
+        /* tslint:enable:no-bitwise */
+        this._storageSrv.setHintLists(_storageHint);
+        this.dictionary.setHintLists(_storageHint);
     }
 
     public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -279,7 +295,10 @@ export class EosDictService {
             } else {
                 return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(data, false);
+                        const _newNodes = this._updateDictNodes(data, false);
+                        _newNodes.forEach((_n) => {
+                            this.addHintItem(_n);
+                        })
                         return this.dictionary.getNode(nodeId);
                     })
                     .then((node) => {
@@ -736,39 +755,16 @@ export class EosDictService {
         this._viewParameters$.next(this.viewParameters);
     }
 
-    /**
-     * @description get shortPositionsList of current dictionary
-     */
-    public getShortPositionsList() {
-        return this.dictionary.shortPositionsList;
+    public addHintItem(node: EosDictionaryNode) {
+        const _val: string[] = [];
+        if (node.data.rec['IS_NODE']) {
+            _val[0] = node.data.rec['DUTY'];
+            _val[1] = node.data.rec['FULLNAME'];
+        }
+        this._storageSrv.setHintLists(this.dictionary.addValueToHint(_val));
     }
 
-    /**
-     * @description get fullPositionsList of current dictionary
-     */
-    public getFullPositionsList() {
-        return this.dictionary.fullPositionsList;
-    }
-
-    /**
-     * @description add short positions list in storage
-     */
-    public setShortPositionsList(values: string[]) {
-        this._storageSrv.setShortPositions(values);
-    }
-
-    /**
-     * @description add full positions list in storage
-     */
-    public setFullPositionsList(values: string[]) {
-        this._storageSrv.setFullPositions(values);
-    }
-
-    /**
-     * @description add value to shortPositionsList and to fullPositionsList of current dictionary
-     * @param node node which is used
-     */
-    public addHintInfo(node: EosDictionaryNode) {
-        this.dictionary.addHintInfo(node);
+    public getHintLists(): string[][] {
+        return this.dictionary.getHintLists();
     }
 }
