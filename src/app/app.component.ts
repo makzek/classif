@@ -16,6 +16,7 @@ export class AppComponent {
     version: string;
     isAuthorized: boolean;
     breadcrumbView = true;
+    firstLoadAuth = false
 
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -24,7 +25,12 @@ export class AppComponent {
         private _route: ActivatedRoute,
     ) {
         this._containerRef = viewContainerRef;
-        this._profileSrv.authorized$.subscribe((auth) => this.isAuthorized = auth);
+        this._profileSrv.authorized$.subscribe((auth) => {
+            this.isAuthorized = auth
+            if (auth !== null) {
+                this.firstLoadAuth = true;
+            }
+        });
         if (!environment.production) {
             this.version = environment.version;
         }
