@@ -482,7 +482,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
+     * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
      */
     private _openCreate() {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
@@ -498,20 +498,20 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
+     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
      */
     public _configColumns() {
         const _fldsCurr = [];
         const _allFields = [];
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        this.modalWindow.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;
             this._countColumnWidth();
             this.modalWindow.hide();
-        })
+        });
     }
 
     /**
