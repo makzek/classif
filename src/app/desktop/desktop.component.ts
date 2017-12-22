@@ -64,6 +64,7 @@ export class DesktopComponent implements OnDestroy {
                 _deskSrv.setSelectedDesk(link.path);
             }
         );
+        this._dictSrv.closeDictionary();
     }
 
     ngOnDestroy() {
