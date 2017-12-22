@@ -88,5 +88,5 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['NOTE', 'MAXDUE', 'CODE'],
+    allVisibleFields: ['NOTE'],
 };

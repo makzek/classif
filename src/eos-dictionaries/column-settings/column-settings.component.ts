@@ -1,5 +1,5 @@
-import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy, TemplateRef } from '@angular/core';
+import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -14,14 +14,18 @@ export class ColumnSettingsComponent implements OnDestroy {
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
     @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
-    @ViewChild('modal') public modal: ModalDirective;
 
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
 
     private _subscription: Subscription;
 
-    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
+    editedItem: IFieldView;
+    newTitle: string;
+
+    modalRef: BsModalRef;
+
+    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef, private modalService: BsModalService) {
         // value[3] - src
         // value[2] - dst
         // value[1] - droped elem
@@ -45,11 +49,16 @@ export class ColumnSettingsComponent implements OnDestroy {
             /* tslint:enable:no-bitwise */
 
         });
+        dragulaService.setOptions('bag-one', {
+            moves: (el, source, handle, sibling) => !el.classList.contains('edited-item')
+        });
     }
 
     ngOnDestroy() {
+        if (!!this.dragulaService.find('bag-one')) {
+            this.dragulaService.destroy('bag-one');
+        }
         this._subscription.unsubscribe();
-
     }
 
     public hideModal(): void {
@@ -98,6 +107,37 @@ export class ColumnSettingsComponent implements OnDestroy {
             this.selectedDictItem = item;
             this.selectedCurrItem = null;
         }
+    }
+
+    edit(item: IFieldView) {
+        this.editedItem = item;
+        this.newTitle = item.customTitle || item.title;
+    }
+
+    saveNewTitle(title: string) {
+        this.editedItem.customTitle = this.newTitle;
+        this.cancelTitleEdit();
+    }
+
+    cancelTitleEdit() {
+        this.selectedCurrItem = null;
+        this.selectedDictItem = null;
+        this.editedItem = null;
+        this.newTitle = null;
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    moveTitlesBack() {
+        this.modalRef.hide();
+        this.currentFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
+        this.dictionaryFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
     }
 
 }

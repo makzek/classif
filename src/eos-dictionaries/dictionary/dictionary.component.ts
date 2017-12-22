@@ -159,9 +159,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
-                    setTimeout(() => {
+                    // setTimeout(() => {
                         this._countColumnWidth();
-                    }, 0);
+                    // }, 0);
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -567,9 +567,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-        setTimeout(() => {
+        // setTimeout(() => {
             this._countColumnWidth();
-        }, 0);
+        // }, 0);
     }
 
     private _errHandler(err) {
