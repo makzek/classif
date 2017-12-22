@@ -62,6 +62,7 @@ export interface IFieldDesriptorBase {
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
+    customTitle?: string;
 };
 
 export interface IDictionaryDescriptor {

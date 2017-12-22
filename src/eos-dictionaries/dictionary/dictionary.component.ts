@@ -79,7 +79,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     allMarked: boolean;
 
     viewFields: IFieldView[] = []; // todo: fill for title
-    customFields: FieldDescriptor[] = [];
+    customFields: IFieldView[] = [];
 
     modalWindow: BsModalRef;
 

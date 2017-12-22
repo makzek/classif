@@ -1,36 +1,53 @@
-import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnDestroy, TemplateRef } from '@angular/core';
 import { ModalDirective, BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { FieldDescriptor } from '../core/field-descriptor';
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
-export class ColumnSettingsComponent {
-    @Input() currentFields: FieldDescriptor[] = [];
-    @Input() dictionaryFields: FieldDescriptor[] = [];
-    @Output() onChoose: EventEmitter<FieldDescriptor[]> = new EventEmitter<FieldDescriptor[]>();
-    @ViewChild('modal') public modal: ModalDirective;
+export class ColumnSettingsComponent implements OnDestroy {
+    @Input() currentFields: IFieldView[] = [];
+    @Input() dictionaryFields: IFieldView[] = [];
+    @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
+    @ViewChild('modal') public modal: IFieldView;
 
-    selectedDictItem: FieldDescriptor;
-    selectedCurrItem: FieldDescriptor;
+    selectedDictItem: IFieldView;
+    selectedCurrItem: IFieldView;
 
-    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef) {
+    editedItem: IFieldView;
+    newTitle: string;
+
+    modalRef: BsModalRef;
+
+    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef, private modalService: BsModalService) {
         // value[3] - src
         // value[1] - droped elem
         dragulaService.drop.subscribe((value) => {
             if (value[2].id !== value[3].id) {
                 if (value[3].id === 'selected') {
                     this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
-                    this.removeToCurrent();
+                    // this.removeToCurrent();
+                    this.selectedCurrItem = null;
                 } else {
                     this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
-                    this.addToCurrent();
+                    // this.addToCurrent();
+                    this.selectedDictItem = null;
                 }
             }
         });
+        dragulaService.setOptions('bag-one', {
+            moves: (el, source, handle, sibling) => !el.classList.contains('edited-item')
+        });
+    }
+
+    ngOnDestroy() {
+        if (!!this.dragulaService.find('bag-one')) {
+            this.dragulaService.destroy('bag-one');
+        }
     }
 
     public hideModal(): void {
@@ -71,12 +88,45 @@ export class ColumnSettingsComponent {
         }
     }
 
-    select(item: FieldDescriptor, isCurrent: boolean) {
+    select(item: IFieldView, isCurrent: boolean) {
         if (isCurrent) {
             this.selectedCurrItem = item;
+            this.selectedDictItem = null;
         } else {
             this.selectedDictItem = item;
+            this.selectedCurrItem = null;
         }
+    }
+
+    edit(item: IFieldView) {
+        this.editedItem = item;
+        this.newTitle = item.customTitle || item.title;
+    }
+
+    saveNewTitle(title: string) {
+        this.editedItem.customTitle = this.newTitle;
+        this.cancelTitleEdit();
+    }
+
+    cancelTitleEdit() {
+        this.selectedCurrItem = null;
+        this.selectedDictItem = null;
+        this.editedItem = null;
+        this.newTitle = null;
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    moveTitlesBack() {
+        this.modalRef.hide();
+        this.currentFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
+        this.dictionaryFields.forEach((_f) => {
+            _f.customTitle = null;
+        });
     }
 
 }
