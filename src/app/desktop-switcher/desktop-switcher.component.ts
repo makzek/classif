@@ -47,9 +47,8 @@ export class DesktopSwitcherComponent {
         private _router: Router
     ) {
         this._deskSrv.desksList.subscribe(
-            (res) => {
-                this.deskList = res;
-            }, (err) => alert('err' + err)
+            (res) => this.deskList = res,
+            (err) => alert('err' + err)
         );
 
         this._deskSrv.selectedDesk.subscribe(
