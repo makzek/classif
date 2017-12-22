@@ -504,6 +504,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         const _fldsCurr = [];
         const _allFields = [];
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
+        this.modalWindow.content.fixedFields = this.viewFields;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
         Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((_fields) => {

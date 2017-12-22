@@ -20,6 +20,15 @@
         height: 500px;
         overflow: auto;
 
+        &.right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .current {
+            height: 100%;
+        }
+
         .item {
             height: 32px;
             padding: 8px;
@@ -52,7 +61,11 @@
             }
 
             .text {
-                padding: 6px 12px;
+                padding: 6px 20px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+                white-space: nowrap;
             }
 
             &.gu-transit {

@@ -46,22 +46,23 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                     this.selectedDictItem = null;
                 }
             }
-            /* tslint:disable:no-bitwise */
-            if (!!~this.fixedFields.findIndex((_f) => _f.title === value[1].innerText) && value[2].id !== 'selected') {
-                dragulaService.find('bag-one').drake.cancel(true);
-                // this.moveBack(value[1].innerText);
-            }
-            /* tslint:enable:no-bitwise */
-
         });
         dragulaService.setOptions('bag-one', {
-            moves: (el, source, handle, sibling) => !el.classList.contains('edited-item')
+            moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
+        });
+
+        dragulaService.setOptions('fixed-bag', {
+            moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
         });
     }
 
     ngOnDestroy() {
         if (!!this.dragulaService.find('bag-one')) {
             this.dragulaService.destroy('bag-one');
+        }
+
+        if (!!this.dragulaService.find('fixed-bag')) {
+            this.dragulaService.destroy('fixed-bag');
         }
         this._subscription.unsubscribe();
     }
