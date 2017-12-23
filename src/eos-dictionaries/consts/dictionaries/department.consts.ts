@@ -216,7 +216,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DUE_LINK_ORGANIZ',
-        title: 'DUE связанной организации',
+        title: 'Организация',
         type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
