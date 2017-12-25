@@ -92,7 +92,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     dictTypes = E_DICT_TYPE;
 
-    currTab = 1;
+    dictMode = 1;
 
     searchStartFlag = false; // flag begin search
 
@@ -162,7 +162,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
                     // setTimeout(() => {
-                        this._countColumnWidth();
+                    this._countColumnWidth();
                     // }, 0);
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
@@ -190,6 +190,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((mode) => {
+                this.dictMode = mode;
+            });
     }
 
     ngOnDestroy() {
@@ -490,7 +495,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
      */
     private _openCreate() {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
-        this.modalWindow.content.fieldsDescription =  this.selectedNode.getEditFieldsDescription();
+        this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
         this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
         this.modalWindow.content.onHide.subscribe(() => {
@@ -573,7 +578,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public resize(): void {
         this._sandwichSrv.resize();
         // setTimeout(() => {
-            this._countColumnWidth();
+        this._countColumnWidth();
         // }, 0);
     }
 
@@ -587,7 +592,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         });
     }
 
-    setTab(tab: number) {
-        this.currTab = tab;
+    setDictMode(mode: number) {
+        this._dictSrv.setDictMode(mode);
     }
 }
