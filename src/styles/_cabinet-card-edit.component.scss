@@ -1,8 +1,5 @@
 .cabinet-card-edit {
     .block-divider {
-        width: 800px;
-        margin: 0 auto;
-
         .divider-text {
             vertical-align: super;
         }
@@ -57,18 +54,22 @@
         }
     }
 
+    .owner-wrapper,
+    .cabinet-access {
+        margin: 0 auto;
+        min-width: 800px;
+        width: fit-content;
+    }
+
     .cabinet-access {
         border-width: 1px;
         border-style: solid;
         position: relative;
         padding: 0;
         border: 0;
-        margin: 0 auto;
-        min-width: 800px;
-        width: fit-content;
 
         .table-wrapper {
-            overflow-x: auto;
+            overflow-x: hidden;
             margin-left: 224px;
             padding: 0;
             width: fit-content;
@@ -95,7 +96,7 @@
             .headcol {
                 border-bottom-width: 1px;
                 border-bottom-style: solid;
-                height: 64px;
+                height: 49px;
             }
         }
 
@@ -126,12 +127,27 @@
         .shadow {
             width: 224px;
             position: absolute;
-            top: 46px;
+            top: 94px;
             bottom: 0;
             box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
-            z-index: 0;
+            z-index: 1;
             border-right-width: 1px;
             border-right-style: solid;
+        }
+
+        .scroll-btn {
+            position: absolute;
+            z-index: 1;
+            left: 176px;
+            width: 48px;
+            height: 48px;
+
+            &.right {
+                left: auto;
+                right: 0;
+                background: linear-gradient(to right, transparent 0%, #fff 45%);
+                border-left: 0;
+            }
         }
     }
 }

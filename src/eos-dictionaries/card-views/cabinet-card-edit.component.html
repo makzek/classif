@@ -31,73 +31,81 @@
                     triggers="">
             </div>
         </div>
-        <div class="block-divider">
-            <span class="divider-text xl-font">Владельцы кабинета</span>
-            <button class="arrow-btn btn-primary-light" *ngIf="showOwners" (click)="showOwners = false">
-                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-            </button>
-            <button class="arrow-btn btn-primary-light" *ngIf="!showOwners" (click)="showOwners = true">
-                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="edit-block-header secondary-block" *ngIf="editMode">
-            <button class="action-btn btn-primary-light" (click)="add()">
-                <span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span>
-            </button>
-            <button class="action-btn btn-primary-light" (click)="remove()">
-                <span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
-            </button>
-            <button class="action-btn btn-primary-light" (click)="moveTop()">
-                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-            </button>
-            <button class="action-btn btn-primary-light" (click)="MoveBottom()">
-                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-            </button>
-        </div>
-        <div class="edit-block-header secondary-block owners" [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
-            <span class="checkbox-inline">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                </label>
-            </span>
-            <span class="text selected-text">Фамилия И.О.</span>
-            <span class="text selected-text">Должность</span>
-        </div>
-        <div class="edit-content owners secondary-block" [hidden]="!showOwners">
-            <div class="owners owners-item" *ngFor="let person of data.owners">
+        <div class="owner-wrapper">
+            <div class="block-divider">
+                <span class="divider-text xl-font">Владельцы кабинета</span>
+                <button class="arrow-btn btn-primary-light" *ngIf="showOwners" (click)="showOwners = false">
+                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+                </button>
+                <button class="arrow-btn btn-primary-light" *ngIf="!showOwners" (click)="showOwners = true">
+                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="edit-block-header secondary-block" *ngIf="editMode">
+                <button class="action-btn btn-primary-light" (click)="add()">
+                    <span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span>
+                </button>
+                <button class="action-btn btn-primary-light" (click)="remove()">
+                    <span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
+                </button>
+                <button class="action-btn btn-primary-light" (click)="moveTop()">
+                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+                </button>
+                <button class="action-btn btn-primary-light" (click)="MoveBottom()">
+                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="edit-block-header secondary-block owners" [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
                 <span class="checkbox-inline">
                     <label>
                         <input type="checkbox">
                         <span></span>
                     </label>
                 </span>
-                <span class="text selected-text">{{person['SURNAME']}}</span>
-                <span class="text">{{person['DUTY']}}</span>
+                <span class="text selected-text">Фамилия И.О.</span>
+                <span class="text selected-text">Должность</span>
             </div>
-            <div class="owners owners-item">
-                <span class="checkbox-inline">
-                    <label>
-                        <input type="checkbox">
-                        <span></span>
-                    </label>
-                </span>
-                <span class="text selected-text">SURNAME</span>
-                <span class="text">DUTY</span>
+            <div class="edit-content owners secondary-block" [hidden]="!showOwners">
+                <div class="owners owners-item" *ngFor="let person of data.owners">
+                    <span class="checkbox-inline">
+                        <label>
+                            <input type="checkbox">
+                            <span></span>
+                        </label>
+                    </span>
+                    <span class="text selected-text">{{person['SURNAME']}}</span>
+                    <span class="text">{{person['DUTY']}}</span>
+                </div>
+                <div class="owners owners-item">
+                    <span class="checkbox-inline">
+                        <label>
+                            <input type="checkbox">
+                            <span></span>
+                        </label>
+                    </span>
+                    <span class="text selected-text">SURNAME</span>
+                    <span class="text">DUTY</span>
+                </div>
             </div>
-        </div>
-        <div class="block-divider">
-            <span class="divider-text xl-font">Доступ пользователей к кабинету</span>
-            <button class="arrow-btn btn-primary-light" *ngIf="showAccessToCabinet" (click)="showAccessToCabinet = false">
-                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-            </button>
-            <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToCabinet" (click)="showAccessToCabinet = true">
-                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-            </button>
         </div>
         <div class="cabinet-access" [hidden]="!showAccessToCabinet">
-            <div class="shadow block"></div>
-            <div class="table-wrapper block">
+            <div class="block-divider">
+                <span class="divider-text xl-font">Доступ пользователей к кабинету</span>
+                <button class="arrow-btn btn-primary-light" *ngIf="showAccessToCabinet" (click)="showAccessToCabinet = false">
+                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+                </button>
+                <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToCabinet" (click)="showAccessToCabinet = true">
+                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="shadow usual-border"></div>
+            <button (mousedown)="startScroll(false)" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn" *ngIf="showScroll">
+                <span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span>
+            </button>
+            <button (mousedown)="startScroll(true)" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn right" *ngIf="showScroll">
+                <span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
+            </button>
+            <div class="table-wrapper block" #tableEl>
                 <table class="cabinet-access-table">
                     <tr *ngFor="let row of rows" [ngClass]="{'first-line usual-border': row.key === 'fio' }">
                         <th class="headcol block">{{row.title}}</th>

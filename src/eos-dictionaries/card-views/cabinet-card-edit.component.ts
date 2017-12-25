@@ -1,6 +1,7 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, ViewChild } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
+import { concat } from 'rxjs/observable/concat';
 
 @Component({
     selector: 'eos-cabinet-card-edit',
@@ -11,6 +12,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     showAccessToCabinet = true;
     showAccessToFolder = true;
     owner: any[] = [];
+
+    moveToRight = false;
+    moveToLeft = false;
 
     rows = [{
             title: '',
@@ -209,8 +213,33 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         onSignature: true
     }];
 
+    @ViewChild('tableEl') tableEl;
 
     constructor(injector: Injector) {
         super(injector);
+    }
+
+    get showScroll(): boolean {
+        if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
+            return this.tableEl.nativeElement.scrollWidth > window.innerWidth - 224 - 40;
+        } else {
+            return false;
+        }
+    }
+
+    startScroll(toRight: boolean) {
+        toRight ? this.moveToRight = true : this.moveToLeft = true;
+        while (this.moveToRight || this.moveToLeft) {
+            setTimeout(() => {
+                console.log(this.tableEl.nativeElement.scrollLeft);
+                this.tableEl.nativeElement.scrollLeft++;
+            }, 100);
+        }
+    }
+
+    endScroll() {
+        console.log('end');
+        this.moveToRight = false;
+        this.moveToLeft = false;
     }
 }
