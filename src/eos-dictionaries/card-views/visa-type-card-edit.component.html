@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label for="STATUS" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">СТАТУС ВИЗЫ</label>
-                <select [ngClass]="{'readonly': !editMode }" class="form-control m-font" name="STATUS" id="STATUS" [disabled]="!editMode" [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()"
+                <select [ngClass]="{'readonly appearance-none': !editMode }" class="form-control m-font" name="STATUS" id="STATUS" [disabled]="!editMode" [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()"
                     required>
                     <option disabled="disabled" selected="selected" class="hidden">Выберите статус визы</option>
                     <option value="Положительный" name="st1" ngDefaultControl>Положительный</option>
