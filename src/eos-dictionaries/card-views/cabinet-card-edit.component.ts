@@ -8,12 +8,209 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 })
 export class CabinetCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
-    showUsers = true;
-    showAccess = true;
+    showAccessToCabinet = true;
+    showAccessToFolder = true;
     owner: any[] = [];
+
+    rows = [{
+            title: '',
+            key: 'fio'
+        }, {
+            title: 'Ограничение доступа РК',
+            key: 'rk'
+        }, {
+            title: 'Ограничение доступа РКПД',
+            key: 'rkpd'
+        }, {
+            title: 'Поступившие',
+            key: 'received'
+        }, {
+            title: 'На исполнении',
+            key: 'inProgress'
+        }, {
+            title: 'На контроле',
+            key: 'inChecking'
+        }, {
+            title: 'У руководства',
+            key: 'boss'
+        }, {
+            title: 'На рассмотрении',
+            key: 'underConsideration'
+        }, {
+            title: 'В дело',
+            key: 'forWork'
+        }, {
+            title: 'Управление проектами',
+            key: 'projManagment'
+        }, {
+            title: 'На визировании',
+            key: 'onSight'
+        }, {
+            title: 'На подписи',
+            key: 'onSignature'
+        }
+    ];
+
+    persons = [{
+        fio: 'Константинопольский К.К.',
+        rk: false,
+        rkpd: true,
+        received: false,
+        inProgress: false,
+        inChecking: true,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: true,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Иванов И.И.',
+        rk: false,
+        rkpd: true,
+        received: false,
+        inProgress: false,
+        inChecking: true,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: true,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Семёнов А.П.',
+        rk: true,
+        rkpd: true,
+        received: true,
+        inProgress: false,
+        inChecking: true,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: false,
+        onSight: false,
+        onSignature: true
+    }, {
+        fio: 'Константинопольский К.К.',
+        rk: false,
+        rkpd: true,
+        received: false,
+        inProgress: true,
+        inChecking: false,
+        boss: false,
+        underConsideration: false,
+        forWork: false,
+        projManagment: true,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Иванов И.И.',
+        rk: false,
+        rkpd: true,
+        received: true,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: false,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Семёнов А.П.',
+        rk: false,
+        rkpd: false,
+        received: false,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: true,
+        projManagment: true,
+        onSight: true,
+        onSignature: true
+    }, {
+        fio: 'Константинопольский К.К.',
+        rk: false,
+        rkpd: true,
+        received: false,
+        inProgress: true,
+        inChecking: false,
+        boss: false,
+        underConsideration: false,
+        forWork: false,
+        projManagment: true,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Иванов И.И.',
+        rk: false,
+        rkpd: true,
+        received: true,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: false,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Семёнов А.П.',
+        rk: false,
+        rkpd: false,
+        received: false,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: true,
+        projManagment: true,
+        onSight: true,
+        onSignature: true
+    }, {
+        fio: 'Константинопольский К.К.',
+        rk: false,
+        rkpd: true,
+        received: false,
+        inProgress: true,
+        inChecking: false,
+        boss: false,
+        underConsideration: false,
+        forWork: false,
+        projManagment: true,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Иванов И.И.',
+        rk: false,
+        rkpd: true,
+        received: true,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: false,
+        projManagment: false,
+        onSight: false,
+        onSignature: false
+    }, {
+        fio: 'Семёнов А.П.',
+        rk: false,
+        rkpd: false,
+        received: false,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: true,
+        projManagment: true,
+        onSight: true,
+        onSignature: true
+    }];
+
 
     constructor(injector: Injector) {
         super(injector);
     }
-
 }

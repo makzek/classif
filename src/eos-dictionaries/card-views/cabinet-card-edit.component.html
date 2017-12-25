@@ -65,7 +65,7 @@
             <span class="text selected-text">Должность</span>
         </div>
         <div class="edit-content owners secondary-block" [hidden]="!showOwners">
-            <div class="owners" *ngFor="let person of data.owners">
+            <div class="owners owners-item" *ngFor="let person of data.owners">
                 <span class="checkbox-inline">
                     <label>
                         <input type="checkbox">
@@ -73,9 +73,42 @@
                     </label>
                 </span>
                 <span class="text selected-text">{{person['SURNAME']}}</span>
-                <span class="text">{{person['DUTY']}}</span> 
+                <span class="text">{{person['DUTY']}}</span>
+            </div>
+            <div class="owners owners-item">
+                <span class="checkbox-inline">
+                    <label>
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                </span>
+                <span class="text selected-text">SURNAME</span>
+                <span class="text">DUTY</span>
             </div>
         </div>
-
+        <div class="block-divider">
+            <span class="divider-text xl-font">Доступ пользователей к кабинету</span>
+            <button class="arrow-btn btn-primary-light" *ngIf="showAccessToCabinet" (click)="showAccessToCabinet = false">
+                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+            </button>
+            <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToCabinet" (click)="showAccessToCabinet = true">
+                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="cabinet-access" [hidden]="!showAccessToCabinet">
+            <div class="shadow block"></div>
+            <div class="table-wrapper block">
+                <table class="cabinet-access-table">
+                    <tr *ngFor="let row of rows" [ngClass]="{'first-line usual-border': row.key === 'fio' }">
+                        <th class="headcol block">{{row.title}}</th>
+                        <td *ngFor="let person of persons" class="cell" align="center">
+                            <span *ngIf="row.key === 'fio'">{{person[row.key]}}</span>
+                            <span *ngIf="person[row.key] && row.key !== 'fio'" class="eos-icon eos-icon-checkbox-grey small" aria-hidden="true"></span>
+                            <span *ngIf="!person[row.key] && row.key !== 'fio'" class="eos-icon eos-icon-minus-grey small" aria-hidden="true"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </form>
 </div>
