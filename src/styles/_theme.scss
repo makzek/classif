@@ -283,15 +283,4 @@
             background-color: $secondary-color-main-theme;
         }
     }
-
-    // spacial templates
-    .eos-departments-card-edit {
-        .block-title {
-            border-color: $border-color-main-theme;
-            color: $primary-font-color-main-theme;
-            &:focus {
-                border-color: transparent;
-            }
-        }
-    }
 }

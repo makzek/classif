@@ -13,7 +13,8 @@
         display: grid; // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 48px 1fr 153px;
         grid-template-columns: 100px 48px 1fr 153px;
-        border-bottom: 1px solid transparent;
+        border-width: 1px;
+        border-style: solid;
 
         &.edited {
             -ms-grid-columns: 0 48px 1fr 195px;
@@ -101,6 +102,9 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        border-width: 1px;
+        border-style: solid;
+        border-top-width: 0;
     }
 
     .edit-aside {
@@ -155,4 +159,7 @@
 
 .simple-card-edit {
     padding: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
 }
