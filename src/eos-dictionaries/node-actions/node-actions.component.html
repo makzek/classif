@@ -1,30 +1,22 @@
 <div class="eos-node-actions">
-    <span *ngFor="let item of buttons let i = index" class="visible-lg-inline-block actions">
-        <div tooltip="{{item.hint}}" #itemTooltip="bs-tooltip" placement="right" containerClass="tooltip-info">
-            <button *ngIf="item.show" [disabled]="!item.enabled" class="btn btn-primary-light {{item.buttonClass}}" [ngClass]="{active: item.isActive}"
-                (click)="itemTooltip.hide(); doAction(item)">
-                <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
-                <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
-            </button>
-        </div>
-    </span>
+    <ng-container *ngFor="let item of buttons">
+        <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
+    </ng-container>
 
-    <span *ngFor="let item of moreButtons let i = index" class="visible-lg-inline-block actions">
-        <div tooltip="{{item.hint}}" #itemTooltip="bs-tooltip" placement="right" containerClass="tooltip-info">
-            <button *ngIf="showMore" [disabled]="!item.enabled" class="btn btn-primary-light {{item.buttonClass}}" [ngClass]="{active: item.isActive}"
-                (click)="itemTooltip.hide(); doAction(item)">
-                <span [hidden]="item.isActive" class="{{item.iconClass}}"></span>
-                <span [hidden]="!item.isActive" class="{{item.activeIconClass}}"></span>
-            </button>
-        </div>
-    </span>
+    <ng-container *ngIf="showMore">
+        <ng-container *ngFor="let item of moreButtons">
+            <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
+        </ng-container>
+    </ng-container>
 
     <span class="visible-lg-inline-block actions">
         <button class="btn btn-primary-light actions" [tooltip]="showMore ? 'Скрыть меню': 'Показать меню'" #itemTooltip="bs-tooltip"
-            placement="right" containerClass="tooltip-info" (click)="itemTooltip.hide(); showMore = !showMore">
+            placement="right" containerClass="tooltip-info" (click)="itemTooltip.hide(); toggleButtonList()">
             <span class="eos-icon eos-icon-fab-blue small" [ngClass]="{'rotate': showMore}"></span>
         </button>
     </span>
+
+    <ng-container *ngTemplateOutlet="btnTpl; context: showSubnodesBtn"></ng-container>
 
     <span class="btn-group hidden-lg" dropdown>
         <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info"
@@ -40,3 +32,15 @@
         </ul>
     </span>
 </div>
+
+<ng-template #btnTpl let-show="show" let-hint="hint" let-enabled="enabled" let-isActive="isActive" let-buttonClass="buttonClass"
+    let-icon="iconClass" let-activeIcon="activeIconClass" let-action="type">
+    <span class="visible-lg-inline-block actions" *ngIf="show">
+        <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="right" containerClass="tooltip-info">
+            <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" [ngClass]="{active: isActive}" (click)="itemTooltip.hide(); doAction(action)">
+                <span [hidden]="isActive" class="{{icon}}"></span>
+                <span [hidden]="!isActive" class="{{activeIcon}}"></span>
+            </button>
+        </div>
+    </span>
+</ng-template>

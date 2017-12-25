@@ -330,6 +330,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.restore:
                 this._restoreItems();
                 break;
+            case E_RECORD_ACTIONS.showAllSubnodes:
+                this._dictSrv.toggleAllSubnodes();
+                break
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
