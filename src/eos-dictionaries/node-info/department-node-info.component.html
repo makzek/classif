@@ -16,7 +16,7 @@
             <div *ngIf="updating" class="no-data full-info usual-border">
                 <eos-spinner [size]="'lg'"></eos-spinner>
             </div>
-            <div [hidden]="!nodeDataFull.rec['IS_NODE']">
+            <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
                 <div *ngIf="nodeDataShort.rec">
                     <span *ngIf="nodeDataShort['print-info'] && nodeDataShort['print-info']['NAME'] && nodeDataShort['print-info']['SURNAME'] && nodeDataShort['print-info']['PATRON'];then fullName else shortName"></span>
                     <ng-template #fullName>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div [hidden]="nodeDataFull.rec['IS_NODE']">
+            <div *ngIf="nodeDataFull && nodeDataFull.rec && !nodeDataFull.rec['IS_NODE']">
                 <div *ngIf="nodeDataShort.rec">
                     <span *ngIf="nodeDataShort['fullTitle'];then fullName else shortName"></span>
                     <ng-template #fullName>

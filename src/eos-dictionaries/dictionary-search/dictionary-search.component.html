@@ -15,7 +15,7 @@
     [isDisabled]="isOpenQuick">
     <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn"
         [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"  [outsideClick]="true"
-        (onShown)="isOpenQuick = true" (onHidden)="isOpenQuick = false">
+        (onShown)="setFocus(); isOpenQuick = true" (onHidden)="isOpenQuick = false">
             <i [hidden]="isOpenQuick" class="eos-icon eos-icon-search-blue small" aria-hidden="true"></i>
             <i [hidden]="!isOpenQuick" class="eos-icon eos-icon-search-white small" aria-hidden="true"></i>
     </button>
@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="quickInput">
-        <input (keydown)="quickSearch($event)" type="text" name="quick" class="form-control quick-search-form usual-border"
+        <input (keydown)="quickSearch($event)" id="inpQuick" type="text" name="quick" class="form-control quick-search-form usual-border"
         [(ngModel)]="dataQuick" required>
         <button class="btn btn-default clear-btn" *ngIf="isOpenQuick" (click)="clearQuickForm()">
             <span class="eos-icon eos-icon-close-blue"></span>

@@ -9,9 +9,9 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     dictType: E_DICT_TYPE.tree,
     title: 'Справочник статусов граждан',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization', 'showAllSubnodes'],
     itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+    groupActions: ['remove', 'removeHard', 'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
@@ -88,5 +88,5 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['NOTE', 'MAXDUE', 'CODE'],
+    allVisibleFields: ['NOTE'],
 };

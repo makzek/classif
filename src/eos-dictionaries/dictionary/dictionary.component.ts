@@ -10,8 +10,6 @@ import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-wi
 import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
 import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
 
-import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
-import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
@@ -42,6 +40,7 @@ import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
 import { RECENT_URL } from '../../app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+import { CreateNodeComponent } from '../create-node/create-node.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 // import { setTimeout } from 'timers';
@@ -53,7 +52,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
-    @ViewChild('createTpl') createTemplate: TemplateRef<any>;
     @ViewChild('tree') treeEl;
 
     @ViewChild('selectedWrapper') selectedEl;
@@ -81,13 +79,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     allMarked: boolean;
 
     viewFields: IFieldView[] = []; // todo: fill for title
+    customFields: IFieldView[] = [];
 
-    nodeData: any = {};
-    creatingModal: BsModalRef;
-    fieldsDescription: any;
-    formValidated: boolean;
-
-    customFields: FieldDescriptor[] = [];
+    modalWindow: BsModalRef;
 
     public length = {}; // Length column
 
@@ -124,8 +118,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _modalSrv: BsModalService,
-        private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _deskSrv: EosDeskService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
     ) {
@@ -167,9 +159,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
-                    setTimeout(() => {
+                    // setTimeout(() => {
                         this._countColumnWidth();
-                    }, 0);
+                    // }, 0);
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -182,7 +174,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
-                console.log('visibleList', nodes);
+                // console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
                 this.updateMarks();
             });
@@ -332,15 +324,22 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.add:
-                this._preCreate();
+                this._openCreate();
                 break;
 
             case E_RECORD_ACTIONS.restore:
                 this._restoreItems();
                 break;
+            case E_RECORD_ACTIONS.showAllSubnodes:
+                this._dictSrv.toggleAllSubnodes();
+                break
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
+    }
+
+    resetSearch() {
+        this._dictSrv.resetSearch();
     }
 
     orderByField(fieldKey: string) {
@@ -478,72 +477,44 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._confirmSrv.confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._dictSrv.deleteMarked()
-                        .then((success) => {
-                            if (!success) {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
-                        })
-                        .catch((err) => this._errHandler(err));
-                }
-            });
-    }
-
-    validate(invalid: boolean) {
-        this.formValidated = !invalid;
-    }
-
-    private _clearForm() {
-        this.formValidated = false;
-        this.nodeData = this.selectedNode.getCreatingData();
-    }
-
-    private _preCreate() {
-        this._clearForm();
-        this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
-        this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
-    }
-
-    public _configColumns() {
-        const _fldsCurr = [];
-        const _allFields = [];
-        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
-        Object.assign(this.creatingModal.content.currentFields, this.customFields);
-        this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
-        this.creatingModal.content.onChoose.subscribe((_fields) => {
-            this.customFields = _fields;
-            this._dictSrv.customFields = this.customFields;
-            this._countColumnWidth();
-            this.creatingModal.hide();
-        })
-    }
-
-    public create(hide = true) {
-        this._dictSrv.addNode(this.nodeData)
-            .then((node) => {
-                if (node) {
-                    let title = '';
-                    node.getShortQuickView().forEach((_f) => {
-                        title += this.nodeData.rec[_f.key];
-                    });
-                    this._deskSrv.addRecentItem({
-                        url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                        title: title,
-                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
-                    });
-                }
-                this.creatingModal.hide();
-
-                if (!hide) {
-                    this._preCreate();
+                    return this._dictSrv.deleteMarked();
                 }
             })
             .catch((err) => this._errHandler(err));
     }
 
-    cancelCreate() {
-        this.creatingModal.hide();
-        this._clearForm();
+    /**
+     * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
+     */
+    private _openCreate() {
+        this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
+        this.modalWindow.content.fieldsDescription =  this.selectedNode.getEditFieldsDescription();
+        this.modalWindow.content.dictionaryId = this.dictionaryId;
+        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
+        this.modalWindow.content.onHide.subscribe(() => {
+            this.modalWindow.hide();
+        });
+        this.modalWindow.content.onOpen.subscribe(() => {
+            this._openCreate();
+        });
+    }
+
+    /**
+     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
+     */
+    public _configColumns() {
+        const _fldsCurr = [];
+        const _allFields = [];
+        this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
+        this.modalWindow.content.fixedFields = this.viewFields;
+        Object.assign(this.modalWindow.content.currentFields, this.customFields);
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
+        this.modalWindow.content.onChoose.subscribe((_fields) => {
+            this.customFields = _fields;
+            this._dictSrv.customFields = this.customFields;
+            this._countColumnWidth();
+            this.modalWindow.hide();
+        });
     }
 
     /**
@@ -599,9 +570,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-        setTimeout(() => {
+        // setTimeout(() => {
             this._countColumnWidth();
-        }, 0);
+        // }, 0);
     }
 
     private _errHandler(err) {
@@ -610,8 +581,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
     }
 }

@@ -107,14 +107,14 @@ export class PipeUtils {
     }
 
     public changeList(entities: IEnt[]) {
-        const startTime = new Date().getTime();
+        // const startTime = new Date().getTime();
 
         const chr: any[] = [];
         for (let i = 0; i < entities.length; i++) {
             const it = entities[i];
             this.appendChange(it, chr, '');
         };
-        console.log('changeList ' + (new Date().getTime() - startTime));
+        // console.log('changeList ' + (new Date().getTime() - startTime));
         return chr;
     }
 

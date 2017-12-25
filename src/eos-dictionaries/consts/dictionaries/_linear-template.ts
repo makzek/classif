@@ -8,10 +8,10 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     apiInstance: '',
     dictType: E_DICT_TYPE.linear,
     title: 'Линейный справочник',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+    actions: [
+        'add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'restore',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard',
+        'edit', 'view', 'remove', 'removeHard', 'userOrder'],
     keyField: 'ISN_LCLASSIF',
     searchConfig: [SEARCH_TYPES.quick],
     fields: [{
