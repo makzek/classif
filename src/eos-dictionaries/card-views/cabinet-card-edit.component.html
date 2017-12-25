@@ -1,170 +1,81 @@
-<div class="cabinet-card-edit" >
-        <form #cardForm="ngForm">
-            <div class="edit-content first-block secondary-block">
-                <div class="form-group">
+<div class="cabinet-card-edit">
+    <form #cardForm="ngForm">
+        <div class="edit-content secondary-block">
+            <div class="form-group">
                 <label for="CABINET_NAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Краткое наименование кабинета</label>
-                    <input [readonly]="!editMode" id="CABINET_NAME" name="CABINET_NAME" type="text" class="form-control m-font"
-                        [ngModel]="data.rec['CABINET_NAME']" (ngModelChange)="change('CABINET_NAME', 'rec', $event)"
-                        placeholder="Краткое наименование кабинета"
-                        [readonly] = "!editMode"
-                        [ngClass]="{'readonly': !editMode }"
-                        required [pattern]="NOT_EMPTY_STRING" maxlength="64"
-                        [eosUnic]="true" [key]="'CABINET_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true"
-                        tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены. Уникально в пределах справочника."
-                        placement="right" containerClass="tooltip-error" container="body"
-                        (focus)="focus('CABINET_NAME')" (blur)="blur()"
-                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'" triggers="">
-                </div>
-                <div class="form-group">
+                <input [readonly]="!editMode" id="CABINET_NAME" name="CABINET_NAME" type="text" class="form-control m-font" [ngModel]="data.rec['CABINET_NAME']"
+                    (ngModelChange)="change('CABINET_NAME', 'rec', $event)" placeholder="Краткое наименование кабинета" [readonly]="!editMode"
+                    [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING" maxlength="64" [eosUnic]="true"
+                    [key]="'CABINET_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true" tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены. Уникально в пределах справочника."
+                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('CABINET_NAME')" (blur)="blur()"
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'"
+                    triggers="">
+            </div>
+            <div class="form-group">
                 <label for="FULLNAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Полное наименование кабинета</label>
-                    <input [readonly]="!editMode" id="FULLNAME" name="FULLNAME" type="text" class="form-control m-font"
-                        [ngModel]="data.rec['FULLNAME']" (ngModelChange)="change('FULLNAME', 'rec', $event)"
-                        placeholder="Краткое наименование кабинета"
-                        [readonly] = "!editMode"
-                        [ngClass]="{'readonly': !editMode }"
-                        required [pattern]="NOT_EMPTY_STRING" maxlength="2000"
-                        [eosUnic]="false" [key]="'FULLNAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false"
-                        tooltip="Обязательное поле. Максимальная длина 2000 символа. Пробелы в начале и в конце строки запрещены."
-                        placement="right" containerClass="tooltip-error" container="body"
-                        (focus)="focus('FULLNAME')" (blur)="blur()"
-                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['FULLNAME']?.dirty && cardForm.controls['FULLNAME']?.invalid && focusedField === 'FULLNAME'" triggers="">
-                </div> 
-                <div class="form-group">
-                <label for="CABINET_NAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-                    <input [readonly]="!editMode" id="CABINET_NAME" name="CABINET_NAME" type="text" class="form-control m-font"
-                        [ngModel]="data.rec['CABINET_NAME']" (ngModelChange)="change('CABINET_NAME', 'rec', $event)"
-                        placeholder="Подразделение"
-                        [readonly] = "!editMode"
-                        [ngClass]="{'readonly': !editMode }"
-                        required [pattern]="NOT_EMPTY_STRING" maxlength="64"
-                        [eosUnic]="true" [key]="'CABINET_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true"
-                        tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
-                        placement="right" containerClass="tooltip-error" container="body"
-                        (focus)="focus('CABINET_NAME')" (blur)="blur()"
-                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'" triggers="">
-                </div> 
+                <input [readonly]="!editMode" id="FULLNAME" name="FULLNAME" type="text" class="form-control m-font" [ngModel]="data.rec['FULLNAME']"
+                    (ngModelChange)="change('FULLNAME', 'rec', $event)" placeholder="Краткое наименование кабинета" [readonly]="!editMode"
+                    [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING" maxlength="2000" [eosUnic]="false"
+                    [key]="'FULLNAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false" tooltip="Обязательное поле. Максимальная длина 2000 символа. Пробелы в начале и в конце строки запрещены."
+                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('FULLNAME')" (blur)="blur()"
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['FULLNAME']?.dirty && cardForm.controls['FULLNAME']?.invalid && focusedField === 'FULLNAME'"
+                    triggers="">
             </div>
-            <div class="block-divider">
-                <span class="divider-text xl-font">Владельцы кабинета</span>
-                <button class="arrow-btn btn-primary-light" *ngIf="showOwners" (click)="showOwners = false">
-                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-                </button>
-                <button class="arrow-btn btn-primary-light" *ngIf="!showOwners" (click)="showOwners = true">
-                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-                </button>
+            <div class="form-group">
+                <label for="DUE" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+                <input [readonly]="!editMode" id="DUE" name="DUE" type="text" class="form-control m-font" [ngModel]="data.rec['DUE']" (ngModelChange)="change('DUE', 'rec', $event)"
+                    placeholder="Подразделение" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING"
+                    maxlength="248" [eosUnic]="true" [key]="'DUE'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true" tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('DUE')" (blur)="blur()"
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['DUE']?.dirty && cardForm.controls['DUE']?.invalid && focusedField === 'DUE'"
+                    triggers="">
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading actions">
-                    <span class="checkbox">
-                        <input (change)="change('fakeField', 'rec', $event)" type="checkbox">
+        </div>
+        <div class="block-divider">
+            <span class="divider-text xl-font">Владельцы кабинета</span>
+            <button class="arrow-btn btn-primary-light" *ngIf="showOwners" (click)="showOwners = false">
+                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+            </button>
+            <button class="arrow-btn btn-primary-light" *ngIf="!showOwners" (click)="showOwners = true">
+                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="edit-block-header secondary-block" *ngIf="editMode">
+            <button class="action-btn btn-primary-light" (click)="add()">
+                <span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span>
+            </button>
+            <button class="action-btn btn-primary-light" (click)="remove()">
+                <span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
+            </button>
+            <button class="action-btn btn-primary-light" (click)="moveTop()">
+                <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+            </button>
+            <button class="action-btn btn-primary-light" (click)="MoveBottom()">
+                <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="edit-block-header secondary-block owners" [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
+            <span class="checkbox-inline">
+                <label>
+                    <input type="checkbox">
+                    <span></span>
+                </label>
+            </span>
+            <span class="text selected-text">Фамилия И.О.</span>
+            <span class="text selected-text">Должность</span>
+        </div>
+        <div class="edit-content owners secondary-block" [hidden]="!showOwners">
+            <div class="owners" *ngFor="let person of data.owners">
+                <span class="checkbox-inline">
+                    <label>
+                        <input type="checkbox">
                         <span></span>
-                    </span>
-                    <span class="action-icons">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <ul *ngIf="data['owner']">
-                        <li *ngFor="let item of owner">
-                            <span class="checkbox">
-                                <label>
-                                    <input (change)="change('fakeField', 'rec', $event)" type="checkbox">
-                                    <span *ngIf="editMode" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    {{data['owner'].fio}} - {{data['owner'].shortPosition}}
-                                </label>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
+                    </label>
+                </span>
+                <span class="text selected-text">{{person['SURNAME']}}</span>
+                <span class="text">{{person['DUTY']}}</span> 
             </div>
+        </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Пользователи кабинета
-                    <span *ngIf="showUsers" (click)="showUsers = false" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                    <span *ngIf="!showUsers" (click)="showUsers = true" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                </div>
-                <div class="panel-body">
-                    <div class="twenty-col-wrapper">
-                        <div class="col-1">Фамилия И.О.</div>
-                        <div class="col-2">Ограничения доступа РК</div>
-                        <div class="col-3">Ограничения доступа РКПД</div>
-                        <div class="col-4">Поступившие</div>
-                        <div class="col-5">На исполнении</div>
-                        <div class="col-6">На контроле</div>
-                        <div class="col-7">У руководства</div>
-                        <div class="col-8">На рассмотрении</div>
-                        <div class="col-9">В дело</div>
-                        <div class="col-10">Управление проектами</div>
-                        <div class="col-11">На визировании</div>
-                        <div class="col-12">На подписи</div>
-                    </div>
-                    <div *ngIf="data['roomUsers']">
-                        <div *ngFor="let user of data['roomUsers']" class="twenty-col-wrapper">
-                            <div class="col-1">{{user.fio}}</div>
-                            <div class="col-2"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-3"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-4"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-5"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-6"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-7"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-8"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-9"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-10"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-11"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                            <div class="col-12"><span class="checkbox"><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Доступ к папкам
-                    <span *ngIf="showAccess" (click)="showAccess = false" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                    <span *ngIf="!showAccess" (click)="showAccess = true" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                </div>
-                <div class="panel-body">
-                    Отметьте те папки, поступление документов в которые должно быть открыто (закрыто)
-                    <div class="three-col-wrapper">
-                        <div class="col-1">
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">Поступившие</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">На исполнении</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">На контроле</label>
-                            </span>
-                        </div>
-                        <div class="col-2">
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">У руководства</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">На рассмотрении</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">В дело</label>
-                            </span>
-                        </div>
-                        <div class="col-3">
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">Управление проектами</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">На визировании</label>
-                            </span>
-                            <span class="checkbox">
-                                <label><input (change)="change('fakeField', 'rec', $event)" [disabled]="!editMode" type="checkbox">На подписи</label>
-                            </span>
-                        </div>
-                    </div>
-                    <button class="btn btn-light" [disabled]="!editMode">Открыть все</button>
-                    <button class="btn btn-light" [disabled]="!editMode">Закрыть все</button>
-                </div>
-            </div>
-        </form>
+    </form>
 </div>

@@ -6,15 +6,19 @@
     border: 1px solid transparent;
     overflow-y: auto;
 
+    .edit-block-header,
     .edit-header {
         min-height: $item-height;
         padding:  0;
+        border-width: 1px;
+        border-style: solid;
+    }
+
+    .edit-header {
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 48px 1fr 153px;
         grid-template-columns: 100px 48px 1fr 153px;
-        border-width: 1px;
-        border-style: solid;
 
         &.edited {
             -ms-grid-columns: 0 48px 1fr 195px;
