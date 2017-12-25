@@ -21,14 +21,14 @@ import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.s
 import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
-import { FieldDescriptor } from '../core/field-descriptor'
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class EosDictService {
     public viewParameters: IDictionaryViewParameters;
     public currentTab = 0;
-    public customFields: FieldDescriptor[];
+    public customFields: IFieldView[] = [];
 
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
@@ -124,6 +124,7 @@ export class EosDictService {
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
+            showAllSubnodes: false,
             showDeleted: false,
             userOrdered: false,
             markItems: false,
@@ -177,7 +178,7 @@ export class EosDictService {
         this._paginationConfig$.next(this.paginationConfig);
     }
 
-    public getDictionariesList(): Promise<any> {
+    public getDictionariesList(): Promise<IDictionaryDescriptor[]> {
         return Promise.resolve(DICTIONARIES);
     }
 
@@ -387,6 +388,7 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             this._srchCriteries = null;
+            this.viewParameters.showAllSubnodes = false;
             if (this.selectedNode) {
                 if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
@@ -482,6 +484,12 @@ export class EosDictService {
         }
     }
 
+    toggleAllSubnodes(): Promise<EosDictionaryNode[]> {
+        this.viewParameters.showAllSubnodes = !this.viewParameters.showAllSubnodes;
+        this.viewParameters.searchResults = false;
+        this._srchCriteries = null;
+        return this._reloadList();
+    }
     /**
      * @description Marks or unmarks record as deleted
      * @param recursive true if need to delete with children, default false
@@ -534,13 +542,21 @@ export class EosDictService {
         }
     }
 
+    public resetSearch(): Promise<any> {
+        this._srchCriteries = null;
+        return this._reloadList();
+    }
+
     private _reloadList(): Promise<any> {
         // console.log('reloading list');
         let pResult = Promise.resolve([]);
         if (this.dictionary) {
             if (this._srchCriteries) {
                 pResult = this.dictionary.search(this._srchCriteries);
+            } else if (this.viewParameters.showAllSubnodes) {
+                pResult = this.dictionary.getAllChildren(this.selectedNode);
             } else {
+                this.viewParameters.searchResults = false;
                 pResult = this.dictionary.getChildren(this.selectedNode);
             }
         }

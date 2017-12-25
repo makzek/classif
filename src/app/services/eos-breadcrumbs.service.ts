@@ -50,12 +50,12 @@ export class EosBreadcrumbsService {
             .then((breadcrumbs) => {
                 // 55: Убрать без title (!?) routing -> showInBreadcrubs
                 this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
-                this._fullTitleGen();
+                /* this._fullTitleGen(); */
                 if (this._breadcrumbs.length) {
                     this._currentLink = {
-                    url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
-                    title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
-                    fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle
+                        url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
+                        title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
+                        /* fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle */
                     }
                 }
                 this._breadcrumbs$.next(this._breadcrumbs);
@@ -75,7 +75,7 @@ export class EosBreadcrumbsService {
                     title: _current.data.title,
                     url: currUrl,
                     params: _current.params,
-                    fullTitle: ''
+                    /* fullTitle: '' */
                 };
                 let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
 
@@ -117,12 +117,13 @@ export class EosBreadcrumbsService {
         return crumbs;
     }
 
+    /*
     private _fullTitleGen() {
         const arr = [];
         for (const bc of this._breadcrumbs) {
             arr.push(bc.title + '/');
         }
-        for (let i = 1; i < this._breadcrumbs.length; i++ ) {
+        for (let i = 1; i < this._breadcrumbs.length; i++) {
             for (let j = 0; j <= i; j++) {
                 this._breadcrumbs[i].fullTitle += arr[j];
             }
@@ -131,4 +132,5 @@ export class EosBreadcrumbsService {
             bc.fullTitle = bc.fullTitle.substring(0, bc.fullTitle.length - 1);
         }
     }
+    */
 }

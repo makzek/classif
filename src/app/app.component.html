@@ -1,4 +1,4 @@
-<div class="main-container main-theme" *ngIf="firstLoadAuth">
+<div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth}">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper block">
         <div class="menu">
