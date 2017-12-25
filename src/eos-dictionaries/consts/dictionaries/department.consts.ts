@@ -311,7 +311,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
+    searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
     listFields: {
         person: ['CODE', 'fio'],
         department: ['CODE', 'title']
