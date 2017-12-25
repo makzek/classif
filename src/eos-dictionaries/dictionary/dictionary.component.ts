@@ -79,7 +79,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     allMarked: boolean;
 
     viewFields: IFieldView[] = []; // todo: fill for title
-    customFields: FieldDescriptor[] = [];
+    customFields: IFieldView[] = [];
 
     modalWindow: BsModalRef;
 
@@ -159,9 +159,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
-                    setTimeout(() => {
+                    // setTimeout(() => {
                         this._countColumnWidth();
-                    }, 0);
+                    // }, 0);
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -481,7 +481,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
+     * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
      */
     private _openCreate() {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
@@ -497,20 +497,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
+     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
      */
     public _configColumns() {
         const _fldsCurr = [];
         const _allFields = [];
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
+        this.modalWindow.content.fixedFields = this.viewFields;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        this.modalWindow.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;
             this._countColumnWidth();
             this.modalWindow.hide();
-        })
+        });
     }
 
     /**
@@ -566,9 +567,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-        setTimeout(() => {
+        // setTimeout(() => {
             this._countColumnWidth();
-        }, 0);
+        // }, 0);
     }
 
     private _errHandler(err) {

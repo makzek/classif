@@ -21,14 +21,14 @@ import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.s
 import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
-import { FieldDescriptor } from '../core/field-descriptor'
+import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class EosDictService {
     public viewParameters: IDictionaryViewParameters;
     public currentTab = 0;
-    public customFields: FieldDescriptor[];
+    public customFields: IFieldView[] = [];
 
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
