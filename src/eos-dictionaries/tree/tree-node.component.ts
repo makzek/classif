@@ -12,13 +12,16 @@ import { IFieldView } from '../core/dictionary.interfaces';
 export class TreeNodeComponent implements OnInit {
     @Input('node') node: EosDictionaryNode;
     @Input('showDeleted') showDeleted: boolean;
-    private viewFields: IFieldView[];
+    @Input() layer: number;
+    viewFields: IFieldView[];
+    public _fonWidth: number;
+    public _fonLeft: number;
+    public _fonTop: number;
 
     constructor(
         private _router: Router,
         private _dictSrv: EosDictService,
-    ) {
-     }
+    ) { }
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
@@ -34,9 +37,8 @@ export class TreeNodeComponent implements OnInit {
         }
     }
 
-    onSelect(evt: Event, isDeleted: boolean) {
+    onSelect(evt: Event, isDeleted: boolean, el: HTMLElement) {
         evt.stopPropagation();
-
         if (!isDeleted) {
             const _path = this._dictSrv.getNodePath(this.node);
             this._router.navigate(_path);

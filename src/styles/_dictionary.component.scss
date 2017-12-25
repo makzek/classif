@@ -6,15 +6,20 @@
     .selected-wrapper {
         position: absolute;
         transition: 300ms ease-in-out;
+
+        .fon {
+            position: absolute;
+            z-index: -1;
+        }
     }
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width + $item-width / 2;
+        width: $dictionary-block-width;
+        overflow-x: hidden;
         overflow-y: auto;
         border-right-width: 1px;
         border-right-style: solid;
-        transform: translateX(-24px);
         margin-top: -1 * $grid-gutter-width / 2;
 
         &.has-spinner {
@@ -30,6 +35,17 @@
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
+    }
+
+    .selected-wrapper {
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+            position: relative;
+            top: -3px;
+        }
     }
 
     &.info {
@@ -106,18 +122,33 @@
             border-bottom: 0;
             min-height: $item-height;
             display: -ms-grid;
-            display: grid; // sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns: 48px 1fr 240px 150px;
-            grid-template-columns: 48px 1fr 240px 150px;
+            display: grid;// sass-lint:disable-line no-duplicate-properties
+            -ms-grid-columns:  48px 1fr auto auto;
+            grid-template-columns: 48px 1fr auto minmax(80px,auto);
+
+            &.has-custom {
+                -ms-grid-columns:  48px 1fr auto auto 48px;
+                grid-template-columns: 48px 1fr auto minmax(80px,auto) 48px;
+            }
 
             .item-count {
                 height: 100%;
-                width: 150px;
+                width: fit-content;
                 display: inline-block;
-                text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
                 grid-column: 4;
+            }
+
+            .config-btn {
+                height: $item-height;
+                width: $item-width;
+                font-size: 24px;
+                border: 0;
+                border-radius: 0;
+                border-left-width: 1px;
+                border-left-style: solid;
+                grid-column: 5;
             }
 
             .selected-node-title {
@@ -126,10 +157,9 @@
 
             .tabs-wrapper {
                 grid-column: 3;
-                width: auto;
+                width: fit-content;
                 margin: 0;
                 border-bottom-width: 0;
-
                 .tabs {
                     .tab-item {
                         margin-right: 20px;
@@ -150,13 +180,24 @@
                 justify-content: space-around;
             }
 
+            .item-count-content {
+                padding: 0 $grid-gutter-width / 2;
+            }
+
+            .item-count-found {
+                padding-left: $grid-gutter-width / 2;
+            }
+
             .go-top-wrapper {
+                width: $item-height;
+                height: $item-height;
                 grid-column: 1;
             }
         }
 
         .first-line {
-            height: $item-height;
+            height: $item-height + 6px;
+            padding-top: 1px;
             border: 1px solid transparent;
         }
 
@@ -208,51 +249,46 @@
                 box-shadow: none;
             }
         }
+    }
 
-        .second-line {
-            border: 1px solid transparent;
-            border-top: 0;
+    .second-line {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        width: 100%;
+        height: $item-height;
+        line-height: $item-height;
+
+        .second-line-content {
+            display: flex;
             width: 100%;
-            height: $item-height;
-            line-height: $item-height;
+        }
 
-            .second-line-content {
-                display: flex;
-                width: 100%;
-                position: relative;
-                top: -7px;
-            }
+        .node-title {
+            display: inline-block;
+            width: 100%;
 
-            .config-btn {
-                height: $item-height;
-                width: $item-width;
-                font-size: 24px;
-            }
-
-            .node-title {
+            .item {
                 display: inline-block;
-                width: 100%;
+                padding: 0 20px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
 
-                .item {
-                    display: inline-block;
-                    padding: 0 20px;
-                    white-space: nowrap;
+                .text {
+                    cursor: pointer;
+                }
 
-                    .text {
-                        cursor: pointer;
-                    }
-
-                    .icon {
-                        margin: 0;
-                        vertical-align: sub;
-                    }
+                .icon {
+                    margin: 0;
+                    vertical-align: sub;
                 }
             }
+        }
 
-            .checkbox-inline {
-                line-height: $item-height;
-                width: $item-width;
-            }
+        .checkbox-inline {
+            line-height: $item-height;
+            width: $item-width;
         }
     }
 }

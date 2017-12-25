@@ -3,6 +3,20 @@ import { URL_LIMIT } from './consts';
 import { IEnt } from '../interfaces/interfaces';
 import { _ES, _T } from '../core/consts';
 
+
+export class Deferred<T> {
+    promise: Promise<T>;
+    resolve: (value?: T | PromiseLike<T>) => void;
+    reject:  (reason?: any) => void;
+
+    constructor() {
+        this.promise = new Promise<T>((resolve, reject) => {
+            this.resolve = resolve;
+            this.reject  = reject;
+        });
+    }
+}
+
 export class PipeUtils {
     protected _metadata: Metadata;
 
@@ -93,14 +107,14 @@ export class PipeUtils {
     }
 
     public changeList(entities: IEnt[]) {
-        const startTime = new Date().getTime();
+        // const startTime = new Date().getTime();
 
         const chr: any[] = [];
         for (let i = 0; i < entities.length; i++) {
             const it = entities[i];
             this.appendChange(it, chr, '');
         };
-        console.log('changeList ' + (new Date().getTime() - startTime));
+        // console.log('changeList ' + (new Date().getTime() - startTime));
         return chr;
     }
 
@@ -110,11 +124,6 @@ export class PipeUtils {
         const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
-        /*
-        if (it._State === _ES.Added && !it[pkn])
-            it[pkn] = SequenceMap.GetTempISN();
-        */
-
 
         if (it._State === _ES.Added || it._State === _ES.Modified || (!it._State && it._orig)) {
             ch.data = {};
@@ -146,9 +155,9 @@ export class PipeUtils {
         if (et.relations && it._State !== _ES.Deleted) {
             for (let i = 0; i < et.relations.length; i++) {
                 const pr = et.relations[i];
-                if (pr.name.indexOf('_List') === -1) {
+                if (pr.name.indexOf('_List') !== -1) {
                     const l = it[pr.name];
-                    if (!l) {
+                    if (l !== undefined) {
 
                         for (let j = 0; j < l.length; j++) {
                             l[j].__metadata = l[j].__metadata || {};
@@ -171,7 +180,44 @@ export class PipeUtils {
     protected PKinfo(it: any) {
         const etn = this._metadata.etn(it);
         const et = this._metadata.typeDesc(etn);
+        if (et.pk.indexOf(' ') !== -1) {
+            const ss = et.pk.split(' ');
+            const pkv = [];
+            for (let i = 0; i < ss.length; i++) {
+                pkv[i] = it[ss[i]];
+            }
+            return '(\'' + pkv.join(' ') + '\')';
+        }
         const v = it[et.pk];
         return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
     };
+
+    protected getAjax(url): Promise<any> {
+        const starttime: any = new Date();
+        const xhr = new XMLHttpRequest();
+        const result = new Deferred<string>();
+        xhr.open('GET', url);
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState > 3 && xhr.status === 200) {
+                console.log('чтение ' + (<any>new Date() - starttime).toString() + 'ms')
+                const ans = xhr.responseText;
+                // const d = JSON.parse(ans);
+                result.resolve(xhr.responseText);
+                /**
+                 Observable.fromPromise(this.getAjax(urls[0]).then(r => {
+            return this.nativeParser(JSON.parse(r));
+        }));
+                 */
+            } // success(xhr.responseText);
+        };
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('MaxDataServiceVersion', '3.0');
+        xhr.setRequestHeader('Accept', 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;');
+        xhr.send();
+        return result.promise;
+    }
+
 }
+

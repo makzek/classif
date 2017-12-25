@@ -1,5 +1,3 @@
-<div class="eos-tree">
-    <div *ngFor="let node of nodes" class="eos-tree-node">
-        <eos-tree-node [node]="node" [showDeleted]="showDeleted"></eos-tree-node>
-    </div>
+<div *ngFor="let node of nodes" class="eos-tree-node">
+    <eos-tree-node [node]="node" [showDeleted]="showDeleted" [layer]="layer"></eos-tree-node>
 </div>

@@ -1,4 +1,4 @@
-<div class="main-container main-theme">
+<div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth}">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper block">
         <div class="menu">
@@ -12,7 +12,7 @@
                 <ng-container *ngIf="isAuthorized">
                     <li *ngFor="let item of modules" class="header-item primary-text">
                         <a class="link-name primary-text xl-font" [routerLink]="item.url" routerLinkActive="active">
-                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
                         </a>
                     </li>
                     <li class="header-item else-dropdown primary-text" dropdown>
@@ -20,7 +20,7 @@
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
                                 <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
-                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
                                 </a>
                             </li>
                         </ul>
@@ -28,11 +28,11 @@
                 </ng-container>
             </ul>
             <ul class="header-content right pull-right">
-                <li class="header-item primary-text" *ngIf="isAuthorized">
+                <!--li class="header-item primary-text" *ngIf="isAuthorized">
                     <button class="btn search-btn">
                         <span class="eos-icon eos-icon-search-blue"></span>
                     </button>
-                </li>
+                </li-->
                 <li class="header-item primary-text" *ngIf="isAuthorized">
                     <eos-notice></eos-notice>
                 </li>
@@ -52,5 +52,11 @@
             <eos-messages></eos-messages>
         </div>
         <div class="text-right text-info version-number" *ngIf="version">Build: {{version}}</div>
+    </div>
+</div>
+
+<div id="loadblock" *ngIf="!firstLoadAuth">
+    <div id="loading">
+        <i class="fa fa-spinner fa-pulse fa-fw selected-text lg bl"></i>
     </div>
 </div>

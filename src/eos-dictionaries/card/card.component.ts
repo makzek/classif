@@ -23,6 +23,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE
 } from '../consts/messages.consts';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 // import { UUID } from 'angular2-uuid';
@@ -52,7 +53,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     nodeData: any = {};
     private _originalData: any = {};
-    private _changed = false;
+    isChanged = false;
     fieldsDescription: any = {};
 
     dictionaryId: string;
@@ -93,7 +94,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             /* cann't handle user answer */
             this._clearEditingCardLink();
         }
-        if (this._changed) {
+        if (this.isChanged) {
             evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
             return false;
         }
@@ -128,11 +129,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes) => this.nodes = nodes);
+            .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
     ngOnInit() {
-        this._init();
+        // this._init();
     }
 
     ngOnDestroy() {
@@ -156,15 +157,24 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
-        return this._dictSrv.getNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((err) => console.log('getNode error', err));
+        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
+            .then((node) => {
+                if (node) {
+                    this._update(node)
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            }).catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
         this.node = node;
 
-        this.nodeData = {};
+        this.nodeData = {
+            rec: {}
+        };
         if (this.node) {
             /* this.fields = this.node.getEditView();
             this.fields.forEach(fld => {
@@ -172,6 +182,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
+            console.log('recived description', this.nodeData);
         }
     }
 
@@ -194,7 +205,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _setOriginalData() {
-        this._originalData = Object.assign({}, this.nodeData);
+        this._originalData = this.cloneData(this.nodeData);
         this.recordChanged(this.nodeData);
     }
 
@@ -260,10 +271,20 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     recordChanged(data: any) {
         if (this.nodeData) {
+            // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((key) => this.nodeData[key] !== this._originalData[key]);
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                if (this.nodeData[dict] && this._originalData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
+                        return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
+                    });
+                } else {
+                    return false;
+                }
+            });
             /* tslint:enable:no-bitwise */
-            this._changed = hasChanges;
+            this.isChanged = hasChanges;
         }
     }
 
@@ -336,7 +357,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _askForSaving(): Promise<boolean> {
-        if (this._changed) {
+        if (this.isChanged) {
             return this._confirmSrv.confirm(Object.assign({}, CONFIRM_SAVE_ON_LEAVE,
                 { confirmDisabled: this.disableSave }))
                 .then((doSave) => {
@@ -384,11 +405,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                /*
                 const fullTitle = this._fullTitle(resp);
+                console.log('fullTitle', fullTitle);
+                */
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
-                    title: resp.data.CLASSIF_NAME,
-                    fullTitle: fullTitle + ' - Редактирование'
+                    title: resp.data.rec.CLASSIF_NAME,
+                    /* fullTitle: fullTitle */
                 });
                 this._clearEditingCardLink();
                 return resp;
@@ -396,23 +420,25 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .catch((err) => this._errHandler(err));
     }
 
+    /*
     private _fullTitle(node: EosDictionaryNode) {
         let parent = node.parent;
-        let arr = [node.data.CLASSIF_NAME];
+        let arr = [node.data.rec.CLASSIF_NAME];
         while (parent.parent) {
-            arr.push(parent.data.CLASSIF_NAME);
+            arr.push(parent.data.rec.CLASSIF_NAME);
             parent = parent.parent;
         }
-        arr.push(parent.data.RUBRIC_CODE);
+        arr.push(parent.data.rec.RUBRIC_CODE);
+        arr.push('Справочники');
         arr = arr.reverse();
         const fullTItle = arr.join('/');
         return fullTItle;
     }
-
+    */
     private _reset(): void {
-        if (this._changed) {
+        if (this.isChanged) {
             /* do reset data */
-            Object.assign(this.nodeData, this._originalData);
+            this.nodeData = this.cloneData(this._originalData);
         }
         if (this.editMode) {
             this.editMode = false;
@@ -455,10 +481,17 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
         return null;
+    }
+
+    private cloneData(src: any): any {
+        try {
+            return JSON.parse(JSON.stringify(src));
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 }

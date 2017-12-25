@@ -15,8 +15,6 @@ import {
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
 
-const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
-
 @Component({
     selector: 'eos-desktop-switcher',
     templateUrl: 'desktop-switcher.component.html',
@@ -27,6 +25,7 @@ export class DesktopSwitcherComponent {
     deskName: string;
     creating = false;
     editing = false;
+    updating = false;
     maxLength = 80;
     innerClick: boolean;
 
@@ -46,9 +45,8 @@ export class DesktopSwitcherComponent {
         private _router: Router
     ) {
         this._deskSrv.desksList.subscribe(
-            (res) => {
-                this.deskList = res;
-            }, (err) => alert('err' + err)
+            (res) => this.deskList = res,
+            (err) => alert('err' + err)
         );
 
         this._deskSrv.selectedDesk.subscribe(
@@ -62,6 +60,9 @@ export class DesktopSwitcherComponent {
     openEditForm(evt: Event, desk: EosDesk) {
         evt.preventDefault();
         evt.stopPropagation();
+        if (this.updating) {
+            return;
+        }
         if (this._moreThenOneEdited()) {
             this._msgSrv.addNewMessage(WARN_DESK_EDITING);
         } else {
@@ -72,52 +73,49 @@ export class DesktopSwitcherComponent {
     }
 
     openCreateForm() {
+        if (this.updating) {
+            return;
+        }
         if (this._moreThenOneEdited() && !this.creating) {
             this._msgSrv.addNewMessage(WARN_DESK_CREATING);
         } else if (!this.creating) {
             this.creating = true;
-            this.deskName = this._generateNewDeskName();
+            this.deskName = this._deskSrv.generateNewDeskName();
         }
-    }
-
-    private _desktopExisted(name: string) {
-        /* tslint:disable:no-bitwise */
-        return !!~this.deskList.findIndex((_d) => _d.name === name);
-        /* tslint:enable:no-bitwise */
-    }
-
-    private _generateNewDeskName(): string {
-        let _newName = DEFAULT_DESKTOP_NAME;
-        let _n = 2;
-        while (this._desktopExisted(_newName)) {
-            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
-            _n++;
-        }
-        return _newName;
     }
 
     saveDesk(desk: EosDesk, $evt?: Event): void {
         if ($evt) {
             $evt.stopPropagation();
         }
-        desk.edited = false;
-        /* todo: re-factor it to inline validation messages */
-        // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
-        // const _tempDeskName = this.deskName;
-        desk.name = this.deskName;
-        if (desk.id) {
-            this._deskSrv.editDesk(desk);
+        if (this._deskSrv.desktopExisted(this.deskName)) {
+            this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
-            this._deskSrv.createDesk(desk);
+            this.updating = true;
+            let pUpdate: Promise<any>;
+
+            desk.edited = false;
+            /* todo: re-factor it to inline validation messages */
+            // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
+            // const _tempDeskName = this.deskName;
+            desk.name = this.deskName;
+            if (desk.id) {
+                pUpdate = this._deskSrv.editDesk(desk);
+            } else {
+                pUpdate = this._deskSrv.createDesk(desk);
+            }
+            pUpdate.then(() => {
+                this.updating = false;
+                this.deskName = '';
+            });
         }
-        this.deskName = '';
     }
 
     create(evt: Event) {
         evt.stopPropagation();
         /* todo: re-factor it to inline validation messages */
-        if (this._desktopExisted(this.deskName)) {
-            this.deskName = this._generateNewDeskName();
+        if (this._deskSrv.desktopExisted(this.deskName)) {
+            this.deskName = this._deskSrv.generateNewDeskName();
             this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             const _desk: EosDesk = {
@@ -147,15 +145,18 @@ export class DesktopSwitcherComponent {
         const _confrm = Object.assign({}, CONFIRM_DESK_DELETE);
         _confrm.body = _confrm.body.replace('{{name}}', desk.name);
 
+        this.updating = true;
         this._confirmSrv
             .confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._deskSrv.removeDesk(desk);
+                    return this._deskSrv.removeDesk(desk);
                 }
                 this.setInnerClick();
             })
-            .catch();
+            .then(() => {
+                this.updating = false;
+            });
     }
 
     cancelCreating($evt: Event) {

@@ -6,22 +6,25 @@ import { ApiCfg } from '../core/api-cfg';
 import { HTTP_OPTIONS } from '../core/consts';
 import { USER_CL, SYS_PARMS } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
+import { AppContext } from './appContext.service'
 
 @Injectable()
 export class AuthService {
     private _cfg: ApiCfg;
 
-    constructor(private _http: Http, private _pipe: PipRX) {
+    constructor(private _http: Http, private _pipe: PipRX, private appCtx: AppContext) {
         this._cfg = _pipe.getConfig();
     }
 
     public login(user: string, passwd: string): Promise<any> {
         const _url = this._cfg.authSrv + 'Login?app=api&' + 'username=' + user + '&pass=' + passwd;
-        const r = this._http.get(_url, HTTP_OPTIONS).toPromise<any>()
-            .then(() => {
-                // tslint:disable-next-line:no-debugger
-                /* debugger; */
-                return this.getContext();
+        const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
+            .then((resp) => {
+                if (resp.text() && resp.text().indexOf('error:') > -1) {
+                    return null;
+                } else {
+                    return this.getContext();
+                }
             });
 
         return r;
@@ -32,8 +35,9 @@ export class AuthService {
         return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
     }
 
-    getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS}> {
-        const p = this._pipe;
+    getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {
+        return this.appCtx.init();
+        /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         // p.errorService.LostConnectionAlerted = false;
 
@@ -64,6 +68,6 @@ export class AuthService {
                 debugger;
             })
             */
-            ;
+        ;
     }
 }

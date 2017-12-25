@@ -33,7 +33,7 @@ export class RestError {
     }
 
     private _defaultErrorHandler(e: any) {
-        console.log('http error', e);
+        // console.log('http error', e);
         let message = e.message || '';
         if (e.data) {
             const error = e.data['odata.error'] || e.data['error'];
@@ -57,6 +57,7 @@ export class RestError {
     }
 
     private _defaultLogicExceptionHandler(e, data) {
+        // console.log('_defaultLogicExceptionHandler');
         if (data.ErrorKind === 'InvalidEntityRef') {
             // TODO: специальное исключени - ссылка на уже не существующий объект, для интерфейса пытались отдать с подробностями
             // из ошибки берем имя сущности и по ее первичному ключу извлекаем его значение
@@ -75,15 +76,21 @@ export class RestError {
     }
 
     private _odataErrorsHandler(err) {
+        // console.log('odataErrorsHandler', err);
         const erl = err.odataErrors;
         let logic = '';
         for (let i = 0; i < erl.length; i++) {
             const e = erl[i].innererror || erl[i];
             if (e.type === 'Eos.Delo.Exceptions.LogicException') {
                 logic += e.message + '\n';
+                // console.log('logic error');
             } else {
                 // console.log('non logic odata error', e);
-                this.message = e.message;
+                if (e.message.value) {
+                    this.message = e.message.value;
+                } else {
+                    this.message = e.message;
+                }
                 return;
                 // this.WriteErrorHtml(e.message, e.stacktrace);
             }

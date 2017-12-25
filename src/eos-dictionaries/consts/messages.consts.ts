@@ -1,10 +1,9 @@
-import { IMessage, DEFAULT_DISMISS_TIMEOUT, LONG_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
+import { IMessage, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
 
 export const WARN_EDIT_ERROR: IMessage = {
     type: 'warning',
     title: 'Ошибка редактирования: ',
-    msg: 'не выбран элемент для редактирования',
-    dismissOnTimeout: LONG_DISMISS_TIMEOUT
+    msg: 'не выбран элемент для редактирования'
 };
 
 export const DANGER_EDIT_ROOT_ERROR: IMessage = {
@@ -34,8 +33,7 @@ export const DANGER_LOGICALY_RESTORE_ELEMENT: IMessage = {
 export const WARN_SEARCH_NOTFOUND: IMessage = {
     type: 'warning',
     title: 'Ничего не найдено: ',
-    msg: 'попробуйте изменить поисковую фразу',
-    dismissOnTimeout: LONG_DISMISS_TIMEOUT
+    msg: 'попробуйте изменить поисковую фразу'
 };
 
 export const DANGER_NAVIGATE_TO_DELETED_ERROR: IMessage = {
@@ -61,18 +59,11 @@ export const INFO_NOTHING_CHANGES: IMessage = {
 export const SUCCESS_SAVE: IMessage = {
     type: 'success',
     title: 'Изменения сохранены',
-    msg: '',
-    dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+    msg: ''
 }
 
 export const WARN_LOGIC_DELETE: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
-    msg: 'элементы {{elem}} были логически удалены ранее! Отметьте неудаленные элементы.',
-}
-
-export const WARN_LOGIC_DELETE_ONE: IMessage = {
-    type: 'warning',
-    title: 'Предупреждение:',
-    msg: 'элемент был логически удален ранее! Отметьте неудаленные элементы.',
+    msg: 'отмеченные элементы уже были логически удалены!'
 }

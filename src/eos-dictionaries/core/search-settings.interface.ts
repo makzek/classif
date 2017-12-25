@@ -1,5 +1,10 @@
+export enum SEARCH_MODES {
+    totalDictionary,
+    onlyCurrentBranch,
+    currentAndSubbranch
+}
+
 export interface ISearchSettings {
-    onlyCurrentNode: boolean;
-    subbranches: boolean;
+    mode: SEARCH_MODES;
     deleted: boolean;
 }

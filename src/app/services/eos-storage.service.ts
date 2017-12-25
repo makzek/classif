@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LS_EDIT_CARD } from '../consts/common.consts';
 
 @Injectable()
 export class EosStorageService {
@@ -7,21 +8,30 @@ export class EosStorageService {
      * Can keep data in localStorage for using in cases when App reboots
      */
     private _data: any;
+    private _userId: string;
 
     constructor() {
+        this.init('nobody');
+    }
+
+    init(userId: string) {
         this._data = {
             __storage: {}
         };
-        const _val = localStorage.getItem('eos');
-        try {
-            this._data.__storage = JSON.parse(_val);
-        } catch (e) {
-            console.log('error parsing', _val);
+        if (userId) {
+            this._userId = userId;
+            const _val = localStorage.getItem(this._userId);
+            try {
+                this._data.__storage = JSON.parse(_val);
+            } catch (e) {
+                console.log('error parsing', _val);
+            }
+            if (!this._data.__storage) {
+                this._data.__storage = {};
+            }
+            Object.assign(this._data, this._data.__storage);
+            this.removeItem(LS_EDIT_CARD);
         }
-        if (!this._data.__storage) {
-            this._data.__storage = {};
-        }
-        Object.assign(this._data, this._data.__storage);
     }
 
     /**
@@ -59,7 +69,7 @@ export class EosStorageService {
             if (this._data.hasOwnProperty(key)) {
                 delete this._data[key];
             }
-            if (this._data.__storage.hasOwnProperty[key]) {
+            if (this._data.__storage.hasOwnProperty(key)) {
                 delete this._data.__storage[key];
                 this._updateStorage();
             }
@@ -70,7 +80,7 @@ export class EosStorageService {
         // todo: implement lazy update
         try {
             const _val = JSON.stringify(this._data.__storage);
-            localStorage.setItem('eos', _val);
+            localStorage.setItem(this._userId, _val);
         } catch (e) {
             console.log('error storing', e, this._data.__storage);
         }
@@ -99,5 +109,26 @@ export class EosStorageService {
             }
         }
         return null;
+    }
+
+    public setUserOrderState(dictionary: string, state: boolean): void {
+        if (!this._data.userOrder) {
+            this._data.userOrder = {};
+        }
+        if (!this._data.userOrder[dictionary]) {
+            this._data.userOrder[dictionary] = {};
+        }
+        this._data.userOrder[dictionary].userOrderOn = state;
+        this._updateStorage();
+    }
+
+    public getUserOrderState(dictionary: string): boolean {
+        if (!this._data.userOrder) {
+            return false;
+        } else if (!this._data.userOrder[dictionary]) {
+            return false;
+        } else {
+            return this._data.userOrder[dictionary].userOrderOn;
+        }
     }
 }

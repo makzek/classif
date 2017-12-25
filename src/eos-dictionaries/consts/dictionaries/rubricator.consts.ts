@@ -9,9 +9,9 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
+        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'
+    ],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
@@ -28,9 +28,10 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 248,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах вершины',
+        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
+        unicInDict: true,
     }, {
         key: 'CLASSIF_NAME',
         title: 'Краткое наименование',
@@ -39,7 +40,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         required: true,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах вершины',
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
@@ -85,25 +86,22 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'WEIGHT',
         type: 'number'
     }, {
-        key: 'sev',
-        title: 'Индекс СЭВ',
-        type: 'number',
-        length: 64,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
-    }, {
-        key: 'fullTitle',
+        key: 'FULLNAME',
         title: 'Полное наименование',
         type: 'text',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
+    }, {
+        key: 'sev',
+        title: 'Индекс СЭВ',
+        type: 'dictionary',
     }],
-    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE', 'fullTitle'*/],
-    quickViewFields: ['fullTitle', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
+    quickViewFields: ['FULLNAME', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle', 'sev'],
+    allVisibleFields: ['NOTE', 'FULLNAME', 'sev'],
 };

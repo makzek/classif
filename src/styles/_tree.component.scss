@@ -1,32 +1,27 @@
 .eos-tree-node {
-    padding-left: 24px;
-    position: relative;
-
-    & > div {
-        display: inline-block;
-        width: 15px;
-    }
-
-    .node-title-wrapper {
-        display: inline-block;
-        width: 100%;
-        position: relative;
-        min-height: $item-height;
+    .node {
         cursor: pointer;
+        width: $dictionary-block-width;
 
-        .icon {
-            cursor: pointer;
-            position: absolute;
-            top: 16px;
-            left: 16px;
+        .fake-padding,
+        .tree-btn,
+        .title {
+            display: inline-block;
         }
 
-        .node-title {
-            cursor: pointer;
-            display: inline-block;
-            margin-left: $item-width;
-            padding: 12px 20px 12px 0;
-            min-height: $item-height;
+        .tree-btn {
+            padding: 13.5px 16px;
+            width: $item-width;
+            vertical-align: top;
+        }
+
+        .title {
+            padding: $item-width / 4 0;
+            word-wrap: break-word;
+
+            .title-item {
+                padding-right: $item-width / 4;
+            }
         }
     }
 }

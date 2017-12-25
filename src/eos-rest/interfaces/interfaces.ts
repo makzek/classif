@@ -18,6 +18,8 @@ export interface ILinearCL extends IEnt {
     PROTECTED: number;
     DELETED: number;
     NOTE: string;
+    STATUS?: string;
+    IS_FINAL?: number;
 }
 /**
  * свойства записи про ее создание и изменение
@@ -64,6 +66,9 @@ export interface ITypeDef {
 
 export interface IRelationDef {
     name: string;
+    __type: string;
+    sf: string;
+    tf: string;
 };
 
 export interface IViewModelResponse {

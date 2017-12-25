@@ -21,6 +21,10 @@ import { EosCommonModule } from '../eos-common/eos-common.module';
 import { CardComponent } from './card/card.component';
 import { CardEditComponent } from './card-views/card-edit.component';
 import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
+import { DepartmentsCardEditPersonComponent } from './card-views/departments-card-edit-person.component';
+import { DepartmentsCardEditPersonContactsComponent } from './card-views/departments-card-edit-person-contacts.component';
+import { DepartmentsCardEditPersonInfoComponent } from './card-views/departments-card-edit-person-info.component';
+import { DepartmentsCardEditPersonMainComponent } from './card-views/departments-card-edit-person-main.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
@@ -37,9 +41,11 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
+import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
+import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
+import { CreateNodeComponent } from './create-node/create-node.component';
 
 /* services */
-import { EosDictApiService } from './services/eos-api.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
@@ -52,6 +58,10 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         CardEditComponent,
         ColumnSettingsComponent,
         DepartmentsCardEditComponent,
+        DepartmentsCardEditPersonComponent,
+        DepartmentsCardEditPersonMainComponent,
+        DepartmentsCardEditPersonInfoComponent,
+        DepartmentsCardEditPersonContactsComponent,
         DictionaryComponent,
         DictionariesComponent,
         DictionarySearchComponent,
@@ -68,9 +78,13 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
         UnicValidatorDirective,
+        LongTitleHintComponent,
+        VisaTypeEditComponent,
+        CreateNodeComponent,
     ],
     entryComponents: [
         ColumnSettingsComponent,
+        CreateNodeComponent,
     ],
     imports: [
         BrowserModule,
@@ -96,7 +110,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ColumnSettingsComponent,
     ],
     providers: [
-        EosDictApiService,
         EosDictService,
         EosSandwichService,
     ],

@@ -16,93 +16,93 @@
             <div *ngIf="updating" class="no-data full-info usual-border">
                 <eos-spinner [size]="'lg'"></eos-spinner>
             </div>
-            <div [hidden]="!nodeDataFull['IS_NODE']">
-                <div *ngIf="nodeDataShort">
-                    <span *ngIf="nodeDataShort['firstName'] && nodeDataShort['fathersName'] && nodeDataShort['lastName'];then fullName else shortName"></span>
+            <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
+                <div *ngIf="nodeDataShort.rec">
+                    <span *ngIf="nodeDataShort['print-info'] && nodeDataShort['print-info']['NAME'] && nodeDataShort['print-info']['SURNAME'] && nodeDataShort['print-info']['PATRON'];then fullName else shortName"></span>
                     <ng-template #fullName>
                         <div class="short-data-wrapper">
                             <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
                             <span class="short-info l-font">
-                                <span>{{nodeDataShort['lastName']}}</span>
-                                <span>{{nodeDataShort['firstName']}}</span>
-                                <span>{{nodeDataShort['fathersName']}}</span>
+                                <span>{{nodeDataShort['print-info']['SURNAME']}}</span>
+                                <span>{{nodeDataShort['print-info']['NAME']}}</span>
+                                <span>{{nodeDataShort['print-info']['PATRON']}}</span>
                             </span>
                         </div>
                     </ng-template>
                     <ng-template #shortName>
                         <div class="flex-wrapper">
                             <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
-                            <span class="short-info l-font">{{nodeDataShort['SURNAME']}}</span>
+                            <span class="short-info l-font">{{nodeDataShort.rec['SURNAME']}}</span>
                         </div>
                     </ng-template>
                 </div>
         
-                <div *ngIf="nodeDataFull" class="full-info usual-border">
-                    <span *ngIf="nodeDataFull['fullPosition'];then fullPosition else shortPosition"></span>
+                <div *ngIf="nodeDataFull.rec" class="full-info usual-border">
+                    <span *ngIf="nodeDataFull.rec['fullPosition'];then fullPosition else shortPosition"></span>
                     <ng-template #fullPosition>
                         <div class="field">
-                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['fullPosition']?.title}}</span>
+                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['fullPosition']?.title}}</span>
                             <br>
                             <span class="flex-wrapper">
-                                <span *ngIf="nodeDataFull['POST_H']" class="eos-icon eos-icon-star-black small field-value boss-icon"></span>
-                                <span class="field-value m-font">{{nodeDataFull['fullPosition']}}</span>
+                                <span *ngIf="nodeDataFull.rec['POST_H']" class="eos-icon eos-icon-star-black small field-value boss-icon"></span>
+                                <span class="field-value m-font">{{nodeDataFull.rec['FULLNAME']}}</span>
                             </span>
                         </div>
                     </ng-template>
                     <ng-template #shortPosition>
                         <div class="field">
-                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['DUTY']?.title}}</span>
+                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['DUTY']?.title}}</span>
                             <br>
                             <span class="flex-wrapper">
-                                <span *ngIf="nodeDataFull['POST_H']" class="eos-icon eos-icon-star-black small field-value boss-icon"></span>
-                                <span class="field-value m-font">{{nodeDataFull['DUTY']}}</span>
+                                <span *ngIf="nodeDataFull.rec['POST_H']" class="eos-icon eos-icon-star-black small field-value boss-icon"></span>
+                                <span class="field-value m-font">{{nodeDataFull.rec['DUTY']}}</span>
                             </span>
                         </div>
                     </ng-template>
 
-                    <span *ngIf="nodeDataFull['PHONE'];then phone else localPhone"></span>
+                    <span *ngIf="nodeDataFull.rec['PHONE'];then phone else localPhone"></span>
                     <ng-template #phone>
                         <div class="field">
-                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['PHONE']?.title}}</span>
+                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['PHONE']?.title}}</span>
                             <br>
-                            <span class="field-value m-font">{{nodeDataFull['PHONE']}}</span>
+                            <span class="field-value m-font">{{nodeDataFull.rec['PHONE']}}</span>
                         </div>
                     </ng-template>
                     <ng-template #localPhone>
                         <div class="field">
-                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['PHONE_LOCAL']?.title}}</span>
+                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['PHONE_LOCAL']?.title}}</span>
                             <br>
-                            <span class="field-value m-font">{{nodeDataFull['PHONE_LOCAL']}}</span>
+                            <span class="field-value m-font">{{nodeDataFull.rec['PHONE_LOCAL']}}</span>
                         </div>
                     </ng-template>
 
                     <div class="field">
-                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['E_MAIL']?.title}}</span>
+                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['E_MAIL']?.title}}</span>
                         <br>
-                        <span class="field-value m-font">{{nodeDataFull['E_MAIL']}}</span>
+                        <span class="field-value m-font">{{nodeDataFull.rec['E_MAIL']}}</span>
                     </div>
                 </div>
             </div>
-            <div [hidden]="nodeDataFull['IS_NODE']">
-                <div *ngIf="nodeDataShort">
+            <div *ngIf="nodeDataFull && nodeDataFull.rec && !nodeDataFull.rec['IS_NODE']">
+                <div *ngIf="nodeDataShort.rec">
                     <span *ngIf="nodeDataShort['fullTitle'];then fullName else shortName"></span>
                     <ng-template #fullName>
-                        <span class="short-info l-font">{{nodeDataShort['fullTitle']}}</span>
+                        <span class="short-info l-font">{{nodeDataShort.rec['fullTitle']}}</span>
                     </ng-template>
                     <ng-template #shortName>
-                        <span class="short-info l-font">{{nodeDataShort['CLASSIF_NAME']}}</span>
+                        <span class="short-info l-font">{{nodeDataShort.rec['CLASSIF_NAME']}}</span>
                     </ng-template>
                 </div>
-                <div *ngIf="nodeDataFull" class="full-info usual-border">
+                <div *ngIf="nodeDataFull.rec" class="full-info usual-border">
                     <div class="field">
-                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['CARD_NAME']?.title}}</span>
+                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['CARD_NAME']?.title}}</span>
                         <br>
-                        <span class="field-value m-font">{{nodeDataFull['CARD_NAME']}}</span>
+                        <span class="field-value m-font">{{nodeDataFull.rec['CARD_NAME']}}</span>
                     </div>
-                    <div class="field">
-                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull['SEV']?.title}}</span>
+                    <div class="field" *ngIf="nodeDataFull['sev-association']">
+                        <span class="field-title unimportant-text s-font">Индекс СЭВ</span>
                         <br>
-                        <span class="field-value m-font">{{nodeDataFull['SEV']}}</span>
+                        <span class="field-value m-font">{{nodeDataFull['sev-association']['GLOBAL_ID']}}</span>
                     </div>
                     <div class="field">
                         <span class="field-title unimportant-text s-font">Фамилия И.О. начальника подразделения</span>

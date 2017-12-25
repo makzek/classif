@@ -9,16 +9,20 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     dictType: E_DICT_TYPE.tree,
     title: 'Регионы',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
-    keyField: 'ISN_NODE',
-    parentField: 'ISN_HIGH_NODE',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization',
+        'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes'],
+    keyField: 'DUE',
+    parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     fields: [{
         key: 'DUE',
         type: 'string',
         title: 'ID',
+        length: 248,
+    }, {
+        key: 'PARENT_DUE',
+        type: 'string',
+        title: 'PARENT ID',
         length: 248,
     }, {
         key: 'ISN_NODE',
@@ -50,9 +54,10 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CODE',
         title: 'Код региона',
+        pattern: /^\d*$/,
         type: 'number',
         length: 4,
-        invalidMessage: 'Максимальная длина 4 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
@@ -84,10 +89,10 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
-    searchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
+    searchFields: [/*'CODE', 'COD_OKATO',*/ 'CLASSIF_NAME', /*'NOTE'*/],
     fullSearchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
     quickViewFields: ['CODE', 'NOTE', 'COD_OKATO'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
+    allVisibleFields: ['CODE', 'NOTE', 'COD_OKATO'],
 };

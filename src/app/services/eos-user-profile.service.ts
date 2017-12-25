@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -10,7 +10,7 @@ import { IUserProfile } from '../core/user-profile.interface';
 import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
-import { IOrderBy, IDictionaryOrder } from '../../eos-dictionaries/core/sort.interface'
+import { EosStorageService } from 'app/services/eos-storage.service';
 
 @Injectable()
 export class EosUserProfileService implements IUserProfile {
@@ -27,6 +27,14 @@ export class EosUserProfileService implements IUserProfile {
     private _settings$: BehaviorSubject<ISettingsItem[]>;
     private _authorized$: BehaviorSubject<boolean>;
     private _authPromise: Promise<boolean>;
+
+    get userId(): string {
+        if (this._user) {
+            return this._user.ISN_LCLASSIF + '';
+        } else {
+            return 'nobody';
+        }
+    }
 
     get shortName(): string {
         if (this._user) {
@@ -54,14 +62,16 @@ export class EosUserProfileService implements IUserProfile {
 
     constructor(
         private _router: Router,
+        private _route: ActivatedRoute,
         private _authSrv: AuthService,
-        private _msgSrv: EosMessageService
+        private _msgSrv: EosMessageService,
+        private _storageSrv: EosStorageService,
     ) {
         Object.assign(this, DEFAURT_USER);
         this.settings = USER_SETTINGS;
         this._isAuthorized = false;
         this._settings$ = new BehaviorSubject<ISettingsItem[]>(this.settings);
-        this._authorized$ = new BehaviorSubject<boolean>(this._isAuthorized);
+        this._authorized$ = new BehaviorSubject<boolean>(null);
     }
 
     checkAuth(): Promise<boolean> {
@@ -83,7 +93,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     notAuthorized(): boolean {
-        /* console.log('notAuthorized fired'); */
+        // console.log('notAuthorized fired');
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
         return this._setAuth(false);
     }
@@ -92,22 +102,26 @@ export class EosUserProfileService implements IUserProfile {
         // console.log('_setUser', user, params);
         this._user = user;
         this._params = params;
+        this._storageSrv.init(this.userId);
     }
 
     private _setAuth(auth: boolean): boolean {
         if (this._isAuthorized !== auth) {
             this._isAuthorized = auth;
             this._authorized$.next(auth);
+        } else {
+            this._authorized$.next(false);
         }
         return auth;
     }
 
     login(name: string, password: string): Promise<any> {
-        return this._authSrv.login(name, password).then((context) => {
-            // todo: fill user profile from response
-            this._setUser(context.user, context.sysParams);
-            return this._setAuth(true);
-        })
+        return this._authSrv
+            .login(name, password)
+            .then((context) => {
+                this._setUser(context.user, context.sysParams);
+                return this._setAuth(true);
+            })
             .catch((err) => {
                 return this.notAuthorized();
             });
@@ -119,7 +133,6 @@ export class EosUserProfileService implements IUserProfile {
             this._params = null;
             this._setAuth(false);
             this._msgSrv.addNewMessage(SESSION_CLOSED);
-            this._router.navigate(['/login']);
             return resp;
         });
     }

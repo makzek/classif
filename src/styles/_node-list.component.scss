@@ -11,7 +11,6 @@
     }
 
     .node-list-item {
-        padding: 5px 0;
         display: flex;
     }
 
@@ -31,10 +30,13 @@
         }
 
         .node-info {
-            align-self: center;
             cursor: pointer;
-            width: calc(100% - 2* 48px); // checkbox and spinner
+            width: calc(100% - 48px); // checkbox
 
+        }
+
+        .checkbox-inline {
+            padding: 5px 0 5px 12px;
         }
 
         .code {
@@ -44,6 +46,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             vertical-align: bottom;
+            padding-top: 14px;
         }
 
         .spinner {
@@ -58,14 +61,40 @@
     }
 
     .list {
-        border: 1px solid transparent;
-        border-top: 0;
-
         &.has-spinner {
             display: flex;
             justify-content: space-around;
             align-items: center;
             height: 100px;
+        }
+
+        .spinner-container {
+            padding: 20px;
+        }
+    }
+}
+
+.eos-node-list {
+    position: relative;
+
+    ul {
+        position: relative;
+    }
+
+    .updating-stub {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, .7);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .spinner {
+            margin: 0 auto;
         }
     }
 }
