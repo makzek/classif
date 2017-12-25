@@ -335,6 +335,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
+    resetSearch() {
+        this._dictSrv.resetSearch();
+    }
+
     orderByField(fieldKey: string) {
         this._dictSrv.toggleUserOrder(false);
         if (!this.orderBy || this.orderBy.fieldKey !== fieldKey) {
