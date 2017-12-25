@@ -5,11 +5,15 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     id: 'cabinet',
     apiInstance: 'CABINET',
     title: 'Кабинеты ',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{
         key: 'ISN_CABINET',
         type: 'number',
         title: 'ISN кабинета',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длинна 10 символов. Только числовые значения. Пробелы запрещены.',
     }, {
         key: 'DUE',
         type: 'string',
@@ -26,4 +30,5 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'Полное наименование',
         length: 2000,
     }],
+    allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
 });

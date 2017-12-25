@@ -17,23 +17,14 @@ import { AppContext } from '../../eos-rest/services/appContext.service';
 import { SRCH_VIEW, USER_CL } from '../../eos-rest/interfaces/structures';
 
 import { ViewManager } from '../../eos-rest/services/viewManager';
+import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
 import { _ES } from 'eos-rest/core/consts';
 
-
-
+const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
 const DEFAULT_DESKS: EosDesk[] = [{
     id: 'system',
     name: 'Стандартный рабочий стол',
     references: [],
-    edited: false,
-}, {
-    id: '2',
-    name: 'Desk2',
-    references: [{
-        url: '/spravochniki/rubricator',
-        title: 'Рубрикатор',
-        fullTitle: 'Рубрикатор'
-    }],
     edited: false,
 }];
 
@@ -96,7 +87,7 @@ export class EosDeskService {
     }
 
     private readDeskList() {
-        const view = this._appCtx.UserViews.filter(uv => uv.SRCH_KIND_NAME === 'clmanDesc');
+        const view = this._appCtx.UserViews.filter((uv) => uv.SRCH_KIND_NAME === 'clmanDesc');
         for (let i = 0; i < view.length; i++) {
             this._desksList.push(this.readDesc(view[i]));
             this._desksList$.next(this._desksList);
@@ -109,6 +100,7 @@ export class EosDeskService {
         for (let i = 0; i !== cols.length; i++) {
             const col = cols[i];
             const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
+            di.title = col.LABEL;
             res.references.push(di);
         }
         return res;
@@ -122,52 +114,64 @@ export class EosDeskService {
         return result;
     }
 
+    /**
+     * Find desktop in the UserView
+     * @param deskId destop ID
+     */
     private findView(deskId: string) {
-        const isn = parseInt(deskId, 0);
-        const v = this._appCtx.UserViews.find(uv => uv.ISN_VIEW === isn)
+        const isn: number = parseInt(deskId, 0);
+        const v: SRCH_VIEW = this._appCtx.UserViews.find((uv: SRCH_VIEW) => uv.ISN_VIEW === isn)
         if (v === undefined) {
             // TODO: может отругаться?
         }
         return v;
     }
 
-    private appendDeskItemToView(deskId: string, item: IDeskItem) {
-        const v = this.findView(deskId);
-        if (v !== undefined) {
-            const col = this.viewManager.addViewColumn(v);
-            col.BLOCK_ID = item.url.split('/')[2];
-            col.LABEL = item.title;
-            this.viewManager.saveView(v);
-        }
-    }
-
-    public addNewItemToDesk(desk: IDesk) {
+    /**
+     * Add dictionary to desktop
+     * @param desk desktop with which add dictionary
+     */
+    public appendDeskItemToView(desk: IDesk) {
+        const dictionaryURL = this._router.url.split('/')[2];
         const item: IDeskItem = {
-            title: null,
-            fullTitle: null,
-            url: this._router.url
+            title: this._dictSrv.dictionaryTitle,
+            /* fullTitle: this._dictSrv.dictionaryTitle, */
+            url: '/spravochniki/' + dictionaryURL
         }
-        const segments = this._router.url.split('/');
-        segments.pop();
-        item.url = segments.join('/');
-        this._dictSrv.openDictionary(segments[2]).then((dictionary: EosDictionary) => {
-            item.fullTitle = dictionary.title;
-            item.title = dictionary.title;
-            // tslint:disable-next-line:no-debugger
-            debugger;
-            this.appendDeskItemToView(desk.id, item);
-        })
-
-            console.warn('remove getNode from deskService');
-            console.warn('remove getNode from deskService');
+        const view: SRCH_VIEW = this.findView(desk.id);
+        if (view !== undefined) {
+            if (view.SRCH_VIEW_DESC_List.find(el => el.BLOCK_ID === item.url.split('/')[2])) {
+                return false;
+            }
+            const col = this.viewManager.addViewColumn(view);
+            col.BLOCK_ID = dictionaryURL
+            col.LABEL = item.title;
+            this.viewManager.saveView(view).then(() => this._appCtx.reInit());
+        }
         /* tslint:disable */
         if (!~desk.references.findIndex((_ref: IDeskItem) => _ref.url === item.url)) {
             desk.references.push(item);
             return true;
-        } else {
-            return false;
         }
         /*tslint:enable*/
+    }
+
+    /**
+     * Update link name on the server
+     * @param link editing item
+     */
+    public updateName(link: IDeskItem): Promise<any> {
+        const v = this.findView(this._selectedDesk.id)
+        if (v !== undefined) {
+            const blockId = link.url.split('/')[2];
+            const col = this.viewManager.updateViewColumn(v, blockId, link.title);
+            return this.viewManager.saveView(v).then(() => {
+                this._appCtx.reInit();
+                this._selectedDesk$.next(this._selectedDesk);
+            })
+        } else {
+            return Promise.resolve(null);
+        }
     }
 
     /* getDesk(id: string): Promise<EosDesk> {
@@ -192,7 +196,11 @@ export class EosDeskService {
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
             this.viewManager.delViewColumn(v, blockId);
-            this.viewManager.saveView(v);
+            this.viewManager.saveView(v)
+                .then(() => {
+                    v.SRCH_VIEW_DESC_List = v.SRCH_VIEW_DESC_List.filter(c => c.BLOCK_ID !== blockId);
+                    // Костыль, рефакторить!
+                });
         }
 
         this._selectedDesk.references = this._selectedDesk.references.filter((r) => r !== link);
@@ -207,46 +215,87 @@ export class EosDeskService {
         this._recentItems$.next(this._recentItems);
     }
 
-    removeDesk(desk: EosDesk): void {
+    removeDesk(desk: EosDesk): Promise<any> {
+        let res = Promise.resolve(null);
         const v = this.findView(desk.id);
         if (v !== undefined) {
             v._State = _ES.Deleted;
-            this.viewManager.saveView(v);
+            res = this.viewManager.saveView(v);
         }
-        if (this._selectedDesk === desk) {
-            this._selectedDesk = this._desksList[0]; // system desk
-            this._selectedDesk$.next(this._selectedDesk);
-        }
+        return res.then(() => {
+            if (this._selectedDesk === desk) {
+                this._selectedDesk = this._desksList[0]; // system desk
+                this._selectedDesk$.next(this._selectedDesk);
+            }
 
-        this._desksList = this._desksList.filter((d) => d !== desk);
-        this._desksList$.next(this._desksList);
+            this._desksList = this._desksList.filter((d) => d !== desk);
+            this._desksList$.next(this._desksList);
+
+        });
     }
 
-    editDesk(desk: EosDesk): void {
-        this._desksList.splice(this._desksList.indexOf(desk), 1, desk);
-        this._desksList$.next(this._desksList);
+    editDesk(desk: EosDesk): Promise<any> {
+        const deskView = this.findView(desk.id);
+        console.log('editdesk', deskView);
+
+        let res = Promise.resolve(null);
+        if (deskView) {
+            deskView.VIEW_NAME = desk.name;
+            res = this.viewManager.saveView(deskView);
+        }
+        res.then(() => {
+            this._desksList.splice(this._desksList.indexOf(desk), 1, desk);
+            this._desksList$.next(this._desksList);
+            console.log('editing done');
+        })
+        return res;
     }
 
-    createDesk(desk: EosDesk): void {
+    createDesk(desk: EosDesk): Promise<any> {
         if (this._desksList.length > 5) {// users desk + system desk
             this._msgSrv.addNewMessage({
                 type: 'warning',
                 title: 'Предупреждение: максимальное колличество рабочих столов!',
                 msg: 'У вас может быть не более 5 рабочих столов',
             });
+            return Promise.resolve(null);
         }
 
         const viewMan = this.viewManager;
         const newDesc = viewMan.createView('clmanDesc');
         newDesc.VIEW_NAME = desk.name;
 
-        viewMan.saveView(newDesc).then(isn_view => {
-            //            alert('новый стол сохранен!' + isn_view.toString());
-            // TODO: надо перечитать AppContext. Здесь или в другом месте не понимаю.
-            desk.id = isn_view.toString();
-            this._desksList.push(desk);
-            this._desksList$.next(this._desksList);
-        });
-
+        return viewMan.saveView(newDesc)
+            .then((isn_view) => {
+                return this._appCtx.init()
+                    .then(() => {
+                        desk.id = isn_view.toString();
+                        this._desksList.push(desk);
+                        this._desksList$.next(this._desksList);
+                        return desk;
+                    });
+            });
+    }
+    /**
+     * @description Checks does it exist deskatop with that name
+     * @param name Name of desktop
+     */
+    public desktopExisted(name: string) {
+        /* tslint:disable:no-bitwise */
+        return !!~this._desksList.findIndex((_d) => _d.name === name);
+        /* tslint:enable:no-bitwise */
+    }
+    /**
+     * @description Generate new dektop name bu count.
+     * @returns Name of desktop. Example: 'My desktop 1', 'My desktop 2'.
+     */
+    public generateNewDeskName(): string {
+        let _newName = DEFAULT_DESKTOP_NAME;
+        let _n = 2;
+        while (this.desktopExisted(_newName)) {
+            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
+            _n++;
+        }
+        return _newName;
     }
 }

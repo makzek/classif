@@ -7,9 +7,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'ORGANIZ_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Организации',
-    actions: ['add'],
-    itemActions: ['edit'],
-    groupActions: ['remove', 'removeHard'],
+    actions: ['add', 'edit', 'remove', 'removeHard'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [],
@@ -22,17 +20,23 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'ISN_NODE',
         type: 'number',
         title: 'ISN организации',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящ вершины',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'LAYER',
         title: 'Номер уровня',
         type: 'number',
+        pattern: /^\d*$/,
         length: 4,
+        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'Признак вершины',
@@ -117,7 +121,9 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'ISN_REGION',
         title: 'Регион',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'OKONH',
         title: 'ОКОНХ',
@@ -132,7 +138,9 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'ISN_ORGANIZ_TYPE',
         title: 'Форма Собственности',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'SERTIFICAT',
         title: 'Регисрационное свидейтельство',
@@ -142,12 +150,15 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'ISN_ADDR_CATEGORY',
         title: 'Категория адресата',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'CODE',
         title: 'поле для формирования выписок для ЦБ',
         type: 'string',
         length: 4,
+        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения.'
     }, {
         key: 'OGRN',
         title: 'ОГРН',
@@ -161,7 +172,9 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'INS_WHO',
         title: 'Кто создал',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'UPD_DATE',
         title: 'Дата и время обновления',
@@ -170,7 +183,9 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'UPD_WHO',
         title: 'Кто обновил',
         type: 'number',
+        pattern: /^\d*$/,
         length: 10,
+        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }],
     editFields: [],
     searchFields: [],

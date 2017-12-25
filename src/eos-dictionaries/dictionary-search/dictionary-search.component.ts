@@ -22,7 +22,9 @@ export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
 
     dictId = '';
-    fieldsDescription = {};
+    fieldsDescription = {
+        rec: {}
+    };
     data = {
         rec: {},
     };
@@ -52,7 +54,6 @@ export class DictionarySearchComponent implements OnDestroy {
     date: Date = new Date();
 
     public mode = 0;
-    public seeDeleted = false;
 
     setTab(key: string) {
         this.currTab = key;
@@ -62,7 +63,7 @@ export class DictionarySearchComponent implements OnDestroy {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
-                    if (this.data[_dict][_field] !== '') {
+                    if (this.data[_dict][_field] && this.data[_dict][_field].trim() !== '') {
                         return false;
                     }
                 }
@@ -100,6 +101,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    public setFocus() {
+        document.getElementById('inpQuick').focus();
+    }
+
     ngOnDestroy() {
         this.dictSubscription.unsubscribe();
     }
@@ -107,7 +112,7 @@ export class DictionarySearchComponent implements OnDestroy {
     quickSearch(evt: KeyboardEvent) {
         if (evt.keyCode === 13) {
             if (this.searchDone) {
-                this.dataQuick = this.dataQuick.trim();
+                this.dataQuick = (this.dataQuick) ? this.dataQuick.trim() : '';
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
                     this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
@@ -136,7 +141,7 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
-        if (this.seeDeleted) { this.settings.deleted = this.seeDeleted; }
+
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
@@ -164,9 +169,13 @@ export class DictionarySearchComponent implements OnDestroy {
     dateFilter(date: Date) {
         if (date !== this.date) {
             this.date = date;
-            this._dictSrv.filter({ date: date }).then(() => {
-                console.log('filtered');
-            }).catch((err) => { console.log(err) });
+            this._dictSrv.filter({ date: date })
+                .then(() => {
+                    console.log('filtered');
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
         }
     }
 

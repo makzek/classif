@@ -23,6 +23,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE
 } from '../consts/messages.consts';
+import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 // import { UUID } from 'angular2-uuid';
@@ -158,8 +159,15 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     private _getNode() {
         console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => this._update(node))
-            .catch((err) => console.log('getNode error', err));
+            .then((node) => {
+                if (node) {
+                    this._update(node)
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            }).catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
@@ -265,8 +273,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
                 if (this.nodeData[dict] && this._originalData[dict]) {
                     return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
-                            return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                                (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
+                        return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
                     });
                 } else {
                     return false;
@@ -394,12 +402,14 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
                 this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                /*
                 const fullTitle = this._fullTitle(resp);
                 console.log('fullTitle', fullTitle);
+                */
                 this._deskSrv.addRecentItem({
                     url: this._router.url,
                     title: resp.data.rec.CLASSIF_NAME,
-                    fullTitle: fullTitle
+                    /* fullTitle: fullTitle */
                 });
                 this._clearEditingCardLink();
                 return resp;
@@ -407,6 +417,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .catch((err) => this._errHandler(err));
     }
 
+    /*
     private _fullTitle(node: EosDictionaryNode) {
         let parent = node.parent;
         let arr = [node.data.rec.CLASSIF_NAME];
@@ -420,7 +431,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         const fullTItle = arr.join('/');
         return fullTItle;
     }
-
+    */
     private _reset(): void {
         if (this.isChanged) {
             /* do reset data */
@@ -467,8 +478,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
         return null;
     }

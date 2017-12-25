@@ -9,9 +9,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
-        'createRepresentative'],
-    itemActions: ['edit', 'view', 'slantForForms'],
-    groupActions: ['remove', 'removeHard'],
+        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'remove', 'removeHard'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
@@ -38,7 +36,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_ORGANIZ',
         title: 'Не используется Организация',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'LAYER',
         title: 'LAYER',
@@ -46,7 +46,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящей вершины',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -133,11 +135,15 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_CABINET',
         title: 'ISN кабинета',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'ORDER_NUM',
         title: 'Порядковый номер в кабинете',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'indexPerson',
         title: 'Индекс ДЛ',
@@ -183,7 +189,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_CONTACT',
         title: 'ISN контакта',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',
@@ -232,6 +240,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'INS_WHO',
         title: 'Кто создал',
         type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'UPD_DATE',
         title: 'Дата и время обновления',
@@ -240,6 +250,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'UPD_WHO',
         title: 'Кто обновил',
         type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'printInfo',
         type: 'dictionary',
@@ -324,6 +336,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
             'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
+    allVisibleFields: ['ISN_ORGANIZ', 'SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
+    'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

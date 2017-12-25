@@ -83,6 +83,25 @@
     }
 }
 
+.highlighted {
+    background: $highlight-color-main-theme;
+    color: $secondary-font-color-main-theme;
+}
+
+.unimportant-text {
+    color: $unimportant-info-color-main-theme;
+}
+
+.primary-text {
+    color: $primary-font-color-main-theme;
+}
+
+.modal-block {
+    background: $modal-block-background-main-theme;
+    color: $secondary-font-color-main-theme;
+    border-color: $border-color-main-theme;
+}
+
 .tooltip {
     opacity: 1 !important;
 
@@ -181,6 +200,10 @@
             border-color: transparent;
         }
     }
+
+    &.highlighted:focus {
+        border-color: $button-color-main-theme !important;
+    }
 }
 
 .main-theme {
@@ -204,16 +227,8 @@
         color: $button-color-main-theme;
     }
 
-    .primary-text {
-        color: $primary-font-color-main-theme;
-    }
-
     .secondary-text {
         color: $secondary-font-color-main-theme;
-    }
-
-    .unimportant-text {
-        color: $unimportant-info-color-main-theme;
     }
 
     .active {
@@ -243,11 +258,6 @@
 
     .deleted {
         color: $disabled-color-main-theme;
-    }
-
-    .highlighted {
-        background: $highlight-color-main-theme;
-        color: $secondary-font-color-main-theme;
     }
 
     // main-layout

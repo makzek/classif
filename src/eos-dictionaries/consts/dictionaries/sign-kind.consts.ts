@@ -8,10 +8,11 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     apiInstance: 'SIGN_KIND_CL',
     dictType: E_DICT_TYPE.linear,
     title: 'Виды подписей (ЭП)',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+    actions: [
+        'add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization', 'edit', 'view',
+        'remove', 'restore'
+    ],
     keyField: 'ISN_LCLASSIF',
     searchConfig: [SEARCH_TYPES.quick],
     fields: [{
@@ -25,7 +26,11 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        /* tslint:disable:max-line-length */
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        /* tslint:enable:max-line-length */
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'SIGN_TEXT',
         title: 'Текст подписи',
@@ -52,5 +57,5 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     quickViewFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
+    allVisibleFields: ['SIGN_TEXT'],
 };

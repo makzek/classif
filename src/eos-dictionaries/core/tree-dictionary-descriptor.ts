@@ -4,6 +4,7 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -23,6 +24,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     protected shortQuickViewFields: FieldDescriptor[];
     protected editFields: FieldDescriptor[];
     protected listFields: FieldDescriptor[];
+    protected allVisibleFields: FieldDescriptor[];
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         const _res = super._getFieldSet(aSet, values);
@@ -40,6 +42,8 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.allVisible:
+                return this.allVisibleFields;
             default:
                 throw new Error('Unknown field set');
         }
@@ -55,6 +59,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             'editFields',
             'listFields',
             'fullSearchFields',
+            'allVisibleFields',
         ], descriptor);
     }
 
@@ -86,17 +91,16 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             LAYER: (layer + 1) + ':' + (layer + 2),
             // IS_NODE: '0'
         };
-        return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
-        console.log('read', recordDue, 'read from cache', chain);
+        // console.log('read', recordDue, 'read from cache', chain);
         return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
-            .then(([record, parents]) => {
-                return record.concat(parents);
-            });
+            .then(([record, parents]) => record.concat(parents));
     }
 
     getRoot(): Promise<any[]> {

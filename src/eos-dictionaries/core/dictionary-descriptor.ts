@@ -88,6 +88,8 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
             DELETED: (isDeleted ? 1 : 0),
             CLASSIF_NAME: '',
             NOTE: null,
+            IS_FINAL: 0,
+            STATUS: ''
         }
 
         return _res;

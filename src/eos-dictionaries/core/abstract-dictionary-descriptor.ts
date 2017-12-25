@@ -15,6 +15,7 @@ import { PrintInfoHelper } from '../../eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
@@ -101,23 +102,8 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
-        let _set: E_RECORD_ACTIONS[];
-
-        switch (group) {
-            case E_ACTION_GROUPS.common:
-                _set = this.actions;
-                break;
-            case E_ACTION_GROUPS.item:
-                _set = this.itemActions;
-                break;
-            case E_ACTION_GROUPS.group:
-                _set = this.groupActions;
-                break;
-            default:
-                _set = [];
-        }
         /* tslint:disable:no-bitwise */
-        return !!~_set.findIndex((a) => a === action);
+        return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
     }
 
@@ -164,6 +150,8 @@ export abstract class AbstractDictionaryDescriptor {
         switch (aSet) {
             case E_FIELD_SET.search:
                 return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
             default:
                 return null;
         }
@@ -188,6 +176,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
+    }
+
+    private _getAllVisibleFields(): FieldDescriptor[] {
+        return this.allVisibleFields;
     }
 
     private _getFullSearchFields() {
@@ -229,10 +221,27 @@ export abstract class AbstractDictionaryDescriptor {
         return this._postChanges(data, { _State: _ES.Deleted });
     }
 
-    deleteRecords(records: IEnt[]): Promise<any> {
-        records.forEach((rec) => rec._State = _ES.Deleted);
-        const changes = this.apiSrv.changeList(records);
-        return this.apiSrv.batch(changes, '');
+    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
+        const pDelete = records.map((record) => {
+            record._State = _ES.Deleted;
+            const changes = this.apiSrv.changeList([record]);
+            return this.apiSrv.batch(changes, '')
+                .then(() => {
+                    return <IRecordOperationResult>{
+                        record: record,
+                        success: true
+                    };
+                })
+                .catch((err) => {
+                    return <IRecordOperationResult>{
+                        record: record,
+                        success: false,
+                        error: err
+                    };
+                });
+        });
+
+        return Promise.all(pDelete);
     }
 
     abstract getChildren(...params): Promise<any[]>;
@@ -307,16 +316,12 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     search(criteries: any[]): Promise<any[]> {
-        console.log('search critery', criteries);
+        // console.log('search critery', criteries);
 
         const _search = criteries.map((critery) => this.getData(PipRX.criteries(critery)));
 
         return Promise.all(_search)
-            .then((results) => {
-                const _res = [].concat(...results);
-                // console.log('found', _res);
-                return _res;
-            });
+            .then((results) => [].concat(...results));
     }
 
     /**

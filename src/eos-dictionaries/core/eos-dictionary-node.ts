@@ -1,4 +1,4 @@
-import { IFieldView } from './dictionary.interfaces';
+import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -182,7 +182,7 @@ export class EosDictionaryNode {
 
     delete() {
         // console.log('delete children parent', this, this._children, this.parent);
-        if ((!this._children || this._children.length < 1) && this.parent) {
+        if (/* (!this._children || this._children.length < 1) && */this.parent) {
             this.parent.deleteChild(this);
         }
     }
@@ -303,12 +303,21 @@ export class EosDictionaryNode {
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
-            children = children.concat(this._children);
             this._children.forEach((chld) => {
                 children = children.concat(chld.getAllChildren());
-            })
+            });
+            children = children.concat(this._children);
         }
         return children;
+    }
+
+    /**
+     * Get value for field
+     * @param field field which value need recive
+     * @return value of field from node.data.rec
+     */
+    getValue (field: IFieldView): any {
+        return this.data.rec[field.foreignKey];
     }
 }
 

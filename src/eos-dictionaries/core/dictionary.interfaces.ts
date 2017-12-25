@@ -62,6 +62,7 @@ export interface IFieldDesriptorBase {
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
+    customTitle?: string;
 };
 
 export interface IDictionaryDescriptor {
@@ -70,8 +71,8 @@ export interface IDictionaryDescriptor {
     apiInstance: string;
     title: string;
     actions: string[];
-    itemActions: string[];
-    groupActions: string[];
+    itemActions?: string[];
+    groupActions?: string[];
     fields: IFieldDesriptor[];
     keyField: string;
     parentField?: string;

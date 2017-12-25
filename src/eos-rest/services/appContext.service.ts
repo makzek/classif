@@ -1,9 +1,9 @@
 import { Injectable, Optional } from '@angular/core';
 import { PipRX } from './pipRX.service';
-import { USER_CL, SYS_PARMS, SRCH_VIEW } from '../interfaces/structures'
+import { USER_CL, SYS_PARMS, SRCH_VIEW, SRCH_VIEW_DESC } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
-import { debug } from 'util';
-import {Deferred} from '../core/pipe-utils';
+import { Deferred } from '../core/pipe-utils';
+import { IDesk } from '../../app/core/eos-desk';
 
 
 @Injectable()
@@ -24,8 +24,7 @@ export class AppContext {
     public workBanches: any[];
     private _ready = new Deferred<any>();
 
-    constructor(private pip: PipRX) {
-    }
+    constructor(private pip: PipRX) {}
 
     ready(): Promise<any> {
         return this._ready.promise;
@@ -67,7 +66,7 @@ export class AppContext {
             .then(([sysParms, curentUser, userViews]) => {
                 this.SysParms = sysParms[0];
                 this.CurrentUser = curentUser[0];
-                this.UserViews = userViews;
+                this.UserViews = userViews.map((userView) => this.pip.entityHelper.prepareForEdit(userView));
                 this._ready.resolve('ready');
                 return [this.CurrentUser, this.SysParms, this.UserViews];
             })
