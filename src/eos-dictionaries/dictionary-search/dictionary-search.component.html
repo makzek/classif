@@ -159,13 +159,14 @@
                             [(ngModel)]="data.rec['CLASSIF_NAME']"
                             placeholder="{{fieldsDescription.rec['titleRoom']?.title}}" >
                     </div>
-
+                    <!--
                     <div class="form-group">
                         <label for="fullTitleRoom" class="primary-text">{{fieldsDescription.rec['fullTitleRoom']?.title}}</label>
                         <input id="fullTitleRoom" name="fullTitleRoom" type="text" class="form-control light"
                             [(ngModel)]="data.rec['fullTitleRoom']"
                             placeholder="{{fieldsDescription.rec['fullTitleRoom']?.title}}" >
                     </div>
+                    -->
                 </div>
                 <div *ngIf="currTab === 'department'" class="row">
                     <div class="col-md-3 col-lg-3 col-xl-3">
@@ -220,6 +221,7 @@
                             placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
                             maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
                     </div>
+                    <!--
                     <div class="form-group">
                         <label for="fullTitle" class="primary-text">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
                         <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
@@ -235,9 +237,11 @@
                             placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
                             maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
                     </div>
+                -->
                 </div>
             </div>
             <div [hidden]="dictId !== 'region'"  *ngIf="data.rec" class="full-search-form">
+                <!--
                 <div class="form-group">
                     <label for="code" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                     <input id="code" name="code" type="text" class="form-control"
@@ -245,6 +249,8 @@
                         placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                         maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                 </div>
+                -->
+                <!--
                 <div class="form-group">
                     <label for="cod-okato" class="primary-text">{{fieldsDescription.rec['COD_OKATO']?.title}}</label>
                     <input id="cod-okato" name="cod-okato" type="text" class="form-control"
@@ -252,6 +258,7 @@
                         placeholder="{{fieldsDescription.rec['COD_OKATO']?.title}}"
                         maxlength="{{fieldsDescription.rec['COD_OKATO']?.length}}">
                 </div>
+                -->
                 <div class="form-group">
                     <label for="name" class="primary-text">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
                     <input id="name" name="name" type="text" class="form-control"
@@ -259,6 +266,7 @@
                         placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
                         maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="note" class="primary-text">{{fieldsDescription.rec['NOTE']?.title}}</label>
                     <input id="note" name="note" type="text" class="form-control"
@@ -266,6 +274,7 @@
                         placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
                         maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
                 </div>
+                -->
             </div>
         </form>
         <div class="full-search-bottom usual-border">
