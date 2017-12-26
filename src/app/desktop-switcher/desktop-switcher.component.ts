@@ -15,8 +15,6 @@ import {
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
 
-const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
-
 @Component({
     selector: 'eos-desktop-switcher',
     templateUrl: 'desktop-switcher.component.html',
@@ -47,9 +45,8 @@ export class DesktopSwitcherComponent {
         private _router: Router
     ) {
         this._deskSrv.desksList.subscribe(
-            (res) => {
-                this.deskList = res;
-            }, (err) => alert('err' + err)
+            (res) => this.deskList = res,
+            (err) => alert('err' + err)
         );
 
         this._deskSrv.selectedDesk.subscribe(
@@ -83,31 +80,15 @@ export class DesktopSwitcherComponent {
             this._msgSrv.addNewMessage(WARN_DESK_CREATING);
         } else if (!this.creating) {
             this.creating = true;
-            this.deskName = this._generateNewDeskName();
+            this.deskName = this._deskSrv.generateNewDeskName();
         }
-    }
-
-    private _desktopExisted(name: string) {
-        /* tslint:disable:no-bitwise */
-        return !!~this.deskList.findIndex((_d) => _d.name === name);
-        /* tslint:enable:no-bitwise */
-    }
-
-    private _generateNewDeskName(): string {
-        let _newName = DEFAULT_DESKTOP_NAME;
-        let _n = 2;
-        while (this._desktopExisted(_newName)) {
-            _newName = DEFAULT_DESKTOP_NAME + ' ' + _n;
-            _n++;
-        }
-        return _newName;
     }
 
     saveDesk(desk: EosDesk, $evt?: Event): void {
         if ($evt) {
             $evt.stopPropagation();
         }
-        if (this._desktopExisted(this.deskName)) {
+        if (this._deskSrv.desktopExisted(this.deskName)) {
             this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             this.updating = true;
@@ -133,8 +114,8 @@ export class DesktopSwitcherComponent {
     create(evt: Event) {
         evt.stopPropagation();
         /* todo: re-factor it to inline validation messages */
-        if (this._desktopExisted(this.deskName)) {
-            this.deskName = this._generateNewDeskName();
+        if (this._deskSrv.desktopExisted(this.deskName)) {
+            this.deskName = this._deskSrv.generateNewDeskName();
             this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             const _desk: EosDesk = {

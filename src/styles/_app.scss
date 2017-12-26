@@ -141,3 +141,13 @@
     color: inherit;
     vertical-align: super;
 }
+#loading {
+    position: absolute;
+    top: 46%;
+    left: 48%;
+}
+
+.bl {
+  color: $active-field-color-main-theme;
+  font-size: 36px;
+}

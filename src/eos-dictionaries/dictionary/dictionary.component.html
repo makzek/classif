@@ -18,11 +18,20 @@
                     </button>
                 </div>
                 <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
-                <div class="item-count pull-right usual-border m-font">
-                    <span class="item-count-content">
-                        Записей:
-                        <span class="secondary-text">{{paginationConfig?.itemsQty}}</span>
-                    </span>
+                <div class="item-count usual-border m-font">
+                    <ng-container *ngIf="params.searchResults; then foundRecords; else records"></ng-container>
+                    <ng-template #records>
+                        <span class="item-count-content">
+                            Записей:
+                            <span class="secondary-text">{{paginationConfig?.itemsQty}}</span>
+                        </span>
+                    </ng-template>
+                    <ng-template #foundRecords>
+                        <span class="item-count-found">
+                            Найдено <span class="secondary-text">{{paginationConfig?.itemsQty}}</span> записей
+                            <button class="btn btn-primary-light" (click)=resetSearch()><span class="eos-icon eos-icon-close-blue small"></span></button>
+                        </span>
+                    </ng-template>
                 </div>
                 <button *ngIf="hasCustomTable" class="btn block pull-right config-btn selected-text" tooltip="Настройка отображения" containerClass="tooltip-info"
                     placement="left" (click)="_configColumns()">
@@ -42,35 +51,40 @@
             <eos-spinner size="lg"></eos-spinner>
         </p>
         <div class="table-wrapper block">
-                <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
-                        <div class="second-line-content">
-                            <span *ngIf="params.markItems" class="checkbox-inline">
-                                <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right"
-                                [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}" containerClass="tooltip-info">
-                                    <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
-                                    <span></span>
-                                </label>
+            <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
+                <div class="second-line-content">
+                    <span *ngIf="params.markItems" class="checkbox-inline">
+                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                            containerClass="tooltip-info">
+                            <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
+                            <span></span>
+                        </label>
+                    </span>
+                    <span class="node-title">
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
+                                    <span class="text" (click)="orderByField(field.foreignKey)"
+                                        tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                                        {{field.customTitle || field.title}}
+                                        <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
+                                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
-                            <span class="node-title">
-                                <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                                    <span class="text" (click)="orderByField(field.foreignKey)">{{field.title}}
+                        </span>
+        
+                        <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
+                                    <span class="text" (click)="orderByField(field.foreignKey)"
+                                        tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                                        {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                     </span>
-                                </span>
-
-                                <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                                    <span class="text" (click)="orderByField(field.foreignKey)">{{field.title}}
-                                        <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
-                                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
-                                    </span>
-                                </span>
-                            </span>
-                        </div>
-                    </div>
+                        </span>
+                    </span>
+                </div>
+            </div>
             <div [ngStyle]="{'width.px': tableWidth}">
                 <ng-container *ngIf="!selectedNode?.updating">
-                    <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating"  [customFields]="customFields" (checked)="updateMarks()" (reordered)="userOrdered($event)"></eos-node-list>
+                    <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating" [customFields]="customFields" (checked)="updateMarks()"
+                        (reordered)="userOrdered($event)"></eos-node-list>
                     <eos-node-list-pagination [currentState]="[currentState[0] && !hideTree, currentState[1]]"></eos-node-list-pagination>
                 </ng-container>
             </div>
