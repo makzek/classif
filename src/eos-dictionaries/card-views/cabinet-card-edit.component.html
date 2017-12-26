@@ -99,10 +99,10 @@
                 </button>
             </div>
             <div class="shadow usual-border"></div>
-            <button (mousedown)="startScroll(false)" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn" *ngIf="showScroll">
+            <button (mousedown)="startScrollToLeft()" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn" *ngIf="showScroll">
                 <span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span>
             </button>
-            <button (mousedown)="startScroll(true)" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn right" *ngIf="showScroll">
+            <button (mousedown)="startScrollToRight()" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn right" *ngIf="showScroll">
                 <span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
             </button>
             <div class="table-wrapper block" #tableEl>

@@ -1,7 +1,6 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
-import { concat } from 'rxjs/observable/concat';
 
 @Component({
     selector: 'eos-cabinet-card-edit',
@@ -215,6 +214,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
 
     @ViewChild('tableEl') tableEl;
 
+    private _interval: any;
+
     constructor(injector: Injector) {
         super(injector);
     }
@@ -227,17 +228,20 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         }
     }
 
-    startScroll(toRight: boolean) {
-        toRight ? this.moveToRight = true : this.moveToLeft = true;
-        while (this.moveToRight || this.moveToLeft) {
-            setTimeout(() => {
-                console.log(this.tableEl.nativeElement.scrollLeft);
-                this.tableEl.nativeElement.scrollLeft++;
-            }, 100);
-        }
+    startScrollToLeft() {
+        this._interval = setInterval(() => {
+            this.tableEl.nativeElement.scrollLeft++;
+        }, 20);
+    }
+
+    startScrollToRight() {
+        this._interval = setInterval(() => {
+            this.tableEl.nativeElement.scrollLeft--;
+        }, 20);
     }
 
     endScroll() {
+        window.clearInterval(this._interval);
         console.log('end');
         this.moveToRight = false;
         this.moveToLeft = false;
