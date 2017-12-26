@@ -1,16 +1,18 @@
 <div class="modal-header">
-    <h4 class="xl-font primary-text pull-left">Настройка отображения элементов справочника</h4>
+    <h4 class="xl-font primary-text pull-left">Настройка столбцов таблицы</h4>
     <span class="pull-right">
-        <button type="button" class="btn btn-primary upper" (click)="cancel()">Отменить</button>
+        <button type="button" class="btn btn-primary" (click)="hideModal()">Отменить</button>
         <button type="button" class="btn btn-primary-full upper" (click)="save()">Сохранить</button>
     </span>
 </div>
 <div class="modal-body">
     <div class="modal-body-container">
         <div class="col">
-            <span class="title unimportant-text upper">Исходный список</span>
-            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]='dictionaryFields'>
-                <div class="item" *ngFor="let item of dictionaryFields" [innerHtml]='item.title' (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}"></div>
+            <span class="title unimportant-text">Список возможных столбцов таблицы</span>
+            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]="dictionaryFields">
+                <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}">
+                    <span class="text">{{item?.customTitle || item?.title}}</span>
+                </div>
             </div>
         </div>
         <div class="driver-col">
@@ -18,16 +20,61 @@
                 <button class="btn btn-primary-light" (click)="addToCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-right"></span>
                 </button>
-                <button class="btn btn-primary-light" (click)="removeToCurrent()">
+                <button class="btn btn-primary-light" (click)="removeFromCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-left"></span>
                 </button>
             </span>
         </div>
         <div class="col">
-            <span class="title unimportant-text upper">Итоговый список</span>
-            <div class="info-block modal-block" id="selected" [dragula]='"bag-one"' [dragulaModel]='currentFields'>
-                <div class="item" *ngFor="let item of currentFields" [innerHtml]='item?.title' (click)="select(item, true)" [ngClass]="{'highlighted': item === selectedCurrItem}"></div>
+            <span class="title unimportant-text">Итоговый список столбцов</span>
+            <div class="info-block right modal-block">
+                <div [dragula]='"fixed-bag"'>
+                    <div class="item fixed-item" *ngFor="let item of fixedFields" (click)="select(item, true)"
+                        [ngClass]="{'highlighted': item === selectedCurrItem}">
+                        <i class="fa fa-lock unimportant-text" aria-hidden="true"></i>
+                        <span *ngIf="editedItem !== item" class="text fixed">{{item?.customTitle || item?.title}}</span>
+                        <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
+                            (click)="edit(item)"></button>
+                        <input *ngIf="editedItem === item" class="form-control highlighted new-title" autofocus [(ngModel)]="newTitle"/>
+                        <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
+                            (click)="saveNewTitle()"></button>
+                        <button [hidden]="editedItem !== item" class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
+                            (click)="cancelTitleEdit()"></button>
+                    </div>
+                </div>
+                <div class="current" [dragula]='"bag-one"' id="selected" [dragulaModel]="currentFields">
+                    <div class="item" *ngFor="let item of currentFields" (click)="select(item, true)"
+                        [ngClass]="{'highlighted': item === selectedCurrItem, 'fixed-item': editedItem === item}">
+                        <span *ngIf="editedItem !== item" class="text">{{item?.customTitle || item?.title}}</span>
+                        <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
+                            (click)="edit(item)"></button>
+                        <input *ngIf="editedItem === item" class="form-control highlighted new-title" autofocus [(ngModel)]="newTitle"/>
+                        <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
+                            (click)="saveNewTitle()"></button>
+                        <button [hidden]="editedItem !== item" class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
+                            (click)="cancelTitleEdit()"></button>
+                    </div>
+                </div>
             </div>
+            <button class="btn btn-primary clear-btn" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
         </div>
     </div>
 </div>
+
+<ng-template #warning>
+    <div class="modal-header warning">
+        <h4 class="modal-title pull-left">Предупреждение</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body warning">
+        <h4>Вернуть все названия по умолчанию?</h4> 
+    </div>
+    <div class="modal-footer warning">
+        <span class="pull-right">
+            <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
+            <button type="button" class="btn btn-primary-full" (click)="moveTitlesBack()">Да</button>
+        </span>
+    </div>
+</ng-template>

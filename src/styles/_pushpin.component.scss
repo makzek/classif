@@ -1,17 +1,33 @@
-.pushpin {
-    margin: auto 12px;
+.pin {
+    display: inline-block;
 
-    a {
-        color: inherit;
-        height: 100%;
-        display: inline-block;
+    .pushdrop {
+        min-width: 280px !important;
+    }
+
+    .pushpin:focus {
+        border: none;
+    }
+
+    .eos-icon-pin-blue {
+        cursor: pointer;
     }
 }
 
-.desk {
-    cursor: pointer;
-}
+.pushdrop {
+    min-width: 280px;
 
-.eos-icon-pin-blue {
-    cursor: pointer;
+    .desk {
+        cursor: pointer;
+    }
+
+    .create {
+        cursor: pointer;
+
+        span {
+            div {
+                margin: 3px 20px;
+            }
+        }
+    }
 }

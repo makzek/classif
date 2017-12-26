@@ -18,6 +18,7 @@ import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface
 import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { IEnt } from 'eos-rest';
+import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -295,6 +296,15 @@ export class EosDictionary {
         return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
     }
 
+    getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        const layer = node.originalId.toString().split('.').length - 1;
+        const critery = {
+            [node._descriptor.keyField.foreignKey]: node.originalId + '%',
+            ['LAYER']: layer + ':Null'
+        };
+        return this.search([critery]);
+    }
+
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
         if (node) {
             node.updating = true;
@@ -312,7 +322,7 @@ export class EosDictionary {
     /**
      * @description Delete marked records from DB
      */
-    deleteMarked(): Promise<boolean> {
+    deleteMarked(): Promise<IRecordOperationResult[]> {
         const records = this._getMarkedRecords();
         this._nodes.forEach((node) => {
             if (node.marked) {
@@ -321,6 +331,7 @@ export class EosDictionary {
             }
         });
         this._resetMarked();
+        // this.descriptor.record.keyField.foreignKey
         return this.descriptor.deleteRecords(records);
     }
 
@@ -383,11 +394,13 @@ export class EosDictionary {
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         if (this.descriptor.type !== E_DICT_TYPE.linear) {
             if (params.mode === SEARCH_MODES.totalDictionary) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
+                // critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
             } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
+                critery['ISN_HIGH_NODE'] = selectedNode.data.rec['ISN_NODE'] + '';
             } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
+                const layer = selectedNode.originalId.toString().split('.').length - 1;
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
+                critery['LAYER'] = layer + ':Null';
             }
         }
 

@@ -44,10 +44,12 @@
     }
 
     .pushpin {
-        top: 11px;
+        width: 48px;
+        height: 48px;
         position: relative;
         transition: right .25s ease-in-out;
         right: 0;
+        background: $block-color-main-theme;
     }
 
     .left-sandwich {
@@ -56,11 +58,4 @@
             margin-bottom: -7px;
         }
     }
-
-    .right-sandwich {
-        .btn {
-            margin-bottom: -19px;
-        }
-    }
-
 }

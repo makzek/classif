@@ -200,6 +200,10 @@
             border-color: transparent;
         }
     }
+
+    &.highlighted:focus {
+        border-color: $button-color-main-theme !important;
+    }
 }
 
 .main-theme {

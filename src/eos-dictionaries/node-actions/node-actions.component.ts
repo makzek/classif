@@ -7,9 +7,10 @@ import 'rxjs/add/operator/combineLatest';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import { E_RECORD_ACTIONS } from '../core/record-action';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS } from '../consts/record-actions.consts';
+import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES } from '../consts/record-actions.consts';
 import { IActionButton, IAction } from '../core/action.interface';
 import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
+import { E_DICT_TYPE } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-actions',
@@ -24,6 +25,8 @@ export class NodeActionsComponent implements OnDestroy {
     buttons: IActionButton[];
     ddButtons: IActionButton[];
     moreButtons: IActionButton[];
+    showSubnodesBtn: IActionButton;
+    ctx = { item: this.showSubnodesBtn };
     showMore = false;
 
     private dictionary: EosDictionary;
@@ -42,12 +45,14 @@ export class NodeActionsComponent implements OnDestroy {
                 this._viewParams = params;
                 this._update();
             });
+        /*
         _dictSrv.viewParameters$
             .takeUntil(this.ngUnsubscribe)
             .subscribe((params) => {
                 this._viewParams = params;
                 this._update();
             })
+        */
     }
 
     ngOnDestroy() {
@@ -59,39 +64,41 @@ export class NodeActionsComponent implements OnDestroy {
         this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.moreButtons = MORE_RECORD_ACTIONS.map(act => this._actionToButton(act));
+        this.showSubnodesBtn = this._actionToButton(SHOW_ALL_SUBNODES);
     }
 
     private _update() {
         this.buttons.forEach(btn => this._updateButton(btn));
         this.ddButtons.forEach(btn => this._updateButton(btn));
         this.moreButtons.forEach(btn => this._updateButton(btn));
+        this._updateButton(this.showSubnodesBtn);
     }
 
     private _updateButton(button: IActionButton) {
-        let _enabled = false;
+        let _enabled = true;
         let _active = false;
-        let _show = true;
+        let _show = false;
 
         if (this.dictionary && this._viewParams) {
-            _enabled = this.dictionary.descriptor.canDo(button.group, button.type);
+            _show = this.dictionary.descriptor.canDo(button.group, button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
-                    _enabled = _enabled && this._nodeSelected;
-                    _show = this._viewParams.userOrdered;
+                    _show = this._viewParams.userOrdered && !this._viewParams.searchResults;
+                    _enabled = this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
-                    _enabled = _enabled && this._nodeSelected;
-                    _show = this._viewParams.userOrdered;
+                    _show = this._viewParams.userOrdered && !this._viewParams.searchResults;
+                    _enabled = this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.restore:
-                    _enabled = this._viewParams.showDeleted;
+                    _enabled = this._viewParams.haveMarked;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
                     _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
-                    _active = this._viewParams.userOrdered;
                     _enabled = !this._viewParams.searchResults;
+                    _active = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.edit:
                     _enabled = _enabled && this._nodeSelected;
@@ -102,11 +109,19 @@ export class NodeActionsComponent implements OnDestroy {
                 case E_RECORD_ACTIONS.removeHard:
                     _enabled = this._viewParams.haveMarked;
                     break;
+                case E_RECORD_ACTIONS.showAllSubnodes:
+                    _enabled = !this._viewParams.searchResults;
+                    _active = this._viewParams.showAllSubnodes && !this._viewParams.searchResults;
+                    break;
             }
         }
         button.show = _show;
         button.enabled = _enabled;
         button.isActive = _active;
+    }
+
+    toggleButtonList() {
+        this.showMore = !this.showMore;
     }
 
     private _actionToButton(action: IAction): IActionButton {
@@ -119,7 +134,7 @@ export class NodeActionsComponent implements OnDestroy {
         return _btn;
     }
 
-    doAction(action: IAction) {
-        this.action.emit(action.type);
+    doAction(action: E_RECORD_ACTIONS) {
+        this.action.emit(action);
     }
 }
