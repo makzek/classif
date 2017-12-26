@@ -3,9 +3,8 @@
         <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
             <div *ngFor="let key of keys(fieldsDescription.rec)">
                 <div *ngIf="!(key === 'STATUS' || key === 'IS_FINAL')" class="form-group">
-                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">
+                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                         {{fieldsDescription.rec[key].title}}
-                        <span *ngIf="fieldsDescription.rec[key]?.required">*</span>
                     </label>
                     <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font" [ngModel]="data.rec[key]"
                         (ngModelChange)="change(key, 'rec', $event)" placeholder="{{fieldsDescription.rec[key].title}}" [readonly]="!editMode"
@@ -27,9 +26,8 @@
             </div>
 
             <div class="form-group">
-                <label for="STATUS" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">
+                <label for="STATUS" class="primary-text required" [ngClass]="{'unimportant-text': !editMode}">
                     СТАТУС ВИЗЫ
-                    <span>*</span>
                 </label>
                 <select class="form-control m-font" name="STATUS" id="STATUS" [disabled]="!editMode" [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()"
                     required>
