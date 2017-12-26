@@ -118,5 +118,79 @@
                 </table>
             </div>
         </div>
+        <div class="folder-access-wrapper">
+            <div class="block-divider">
+                <span class="divider-text xl-font">Настройка доступа к папкам кабинета</span>
+                <button class="arrow-btn btn-primary-light" *ngIf="showAccessToFolder" (click)="showAccessToFolder = false">
+                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
+                </button>
+                <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToFolder" (click)="showAccessToFolder = true">
+                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="edit-block-header secondary-block">
+                <span class="checkbox-inline">
+                    <label [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}">
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                </span>
+                <span class="s-font primary-text">Полный доступ</span>
+                <span class="upper s-font unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
+            </div>
+            <div class="edit-content secondary-block" [hidden]="!showAccessToFolder">
+                <div class="folder-access-item">
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.received">
+                            <span></span>Поступившие</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.inProgress">
+                            <span></span>На исполнении</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.inChecking">
+                            <span></span>На контроле</label>
+                    </div>
+                </div>
+                <div class="folder-access-item">
+                    <div class="minus-checkbox primary-text s-font">
+                        <label class="checkbox">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.boss">
+                            <span></span>У руководства</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.underConsideration">
+                            <span></span>На рассмотрении</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.forWork">
+                            <span></span>В дело</label>
+                    </div>
+                </div>
+                <div class="folder-access-item">
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.projManagment">
+                            <span></span>Управление проектами</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.onSight">
+                            <span></span>На визировании</label>
+                    </div>
+                    <div class="minus-checkbox">
+                        <label class="checkbox primary-text s-font">
+                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.onSignature">
+                            <span></span>На подписи</label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>

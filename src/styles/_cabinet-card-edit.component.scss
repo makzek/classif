@@ -55,7 +55,8 @@
     }
 
     .owner-wrapper,
-    .cabinet-access {
+    .cabinet-access,
+    .folder-access-wrapper {
         margin: 0 auto;
         min-width: 800px;
         width: fit-content;
@@ -147,6 +148,45 @@
                 right: 0;
                 background: linear-gradient(to right, transparent 0%, #fff 45%);
                 border-left: 0;
+            }
+        }
+    }
+
+    .folder-access-wrapper {
+        .edit-block-header {
+            padding: 11px 20px;
+
+            .unimportant-text {
+                position: relative;
+                top: 5px;
+            }
+        }
+
+        .edit-content {
+            display: flex;
+
+            .folder-access-item {
+                display: flex;
+                flex-direction: column;
+
+                &:not(:last-child) {
+                    margin-right: 40px;
+                }
+
+                .minus-checkbox {
+                    margin: 0;
+                    padding: 0;
+                    height: 32px;
+                    padding-top: 4px;
+
+                    &:not(:first-child) {
+                        margin-top: 30px;
+                    }
+
+                    input[type="checkbox"] + span {
+                        margin-right: 12px;
+                    }
+                }
             }
         }
     }

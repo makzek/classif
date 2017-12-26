@@ -12,9 +12,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     showAccessToFolder = true;
     owner: any[] = [];
 
-    moveToRight = false;
-    moveToLeft = false;
-
     rows = [{
             title: '',
             key: 'fio'
@@ -212,6 +209,18 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         onSignature: true
     }];
 
+    folderConfig = {
+        received: false,
+        inProgress: false,
+        inChecking: false,
+        boss: true,
+        underConsideration: false,
+        forWork: true,
+        projManagment: true,
+        onSight: true,
+        onSignature: true
+    }
+
     @ViewChild('tableEl') tableEl;
 
     private _interval: any;
@@ -228,6 +237,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         }
     }
 
+    /*get anyUnmarked(): boolean {
+    }*/
+
     startScrollToLeft() {
         this._interval = setInterval(() => {
             this.tableEl.nativeElement.scrollLeft++;
@@ -242,8 +254,5 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
 
     endScroll() {
         window.clearInterval(this._interval);
-        console.log('end');
-        this.moveToRight = false;
-        this.moveToLeft = false;
     }
 }

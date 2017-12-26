@@ -5,7 +5,8 @@
 }
 
 .checkbox-inline,
-.checkbox {
+.checkbox,
+.minus-checkbox {
     input[type="checkbox"] {
         opacity: 0;
         cursor: pointer;
@@ -41,6 +42,20 @@
         // padding-left: 0;
         // position: relative;
         margin: 0;
+    }
+}
+
+.minus-checkbox {
+    input[type="checkbox"] {
+        &[disabled] {
+            & + span {
+                background-image: url("../assets/icons/Minus-Grey.svg");
+            }
+
+            &:checked + span {
+                background-image: url("../assets/icons/Checkbox-Grey.svg");
+            }
+        }
     }
 }
 
@@ -171,4 +186,8 @@ input[type=text]::-ms-clear {
 .xl-font {
     line-height: 26px;
     font-size: 18px;
+}
+
+.upper {
+    text-transform: uppercase;
 }
