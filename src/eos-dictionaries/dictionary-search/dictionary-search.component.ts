@@ -145,6 +145,19 @@ export class DictionarySearchComponent implements OnDestroy {
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
+            if (this.dictId === 'departments') {
+                switch (this.currTab) {
+                    case 'department':
+                        this.data.rec['IS_NODE'] = '0';
+                        break;
+                    case 'person':
+                        this.data.rec['IS_NODE'] = '1';
+                        break;
+                    case 'cabinet':
+                        this.data['dict-mode'] = 'CABINET';
+                        break;
+                }
+            }
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then((nodes) => {
                     this.searchDone = true;

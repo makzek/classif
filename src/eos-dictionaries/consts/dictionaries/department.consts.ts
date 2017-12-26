@@ -18,7 +18,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'department',
         title: 'Подразделение',
     }, {
-        key: 'room',
+        key: 'cabinet',
         title: 'Кабинет',
     }, {
         key: 'person',
@@ -317,8 +317,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['CODE', 'title']
     },
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'E_MAIL'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        person: ['CODE', 'PHONE', 'E_MAIL', 'IS_NODE'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', 'IS_NODE'],
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {

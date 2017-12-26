@@ -328,7 +328,7 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
-        console.log('_postChanges', data, updates);
+        // console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);
