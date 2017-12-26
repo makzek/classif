@@ -10,7 +10,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     title: 'Регионы',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization',
-        'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes'],
+        'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes', 'restore'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],

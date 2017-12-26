@@ -9,7 +9,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
-        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'remove', 'removeHard'],
+        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
