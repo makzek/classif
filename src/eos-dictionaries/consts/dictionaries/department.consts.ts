@@ -9,7 +9,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
-        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'remove', 'removeHard'],
+        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
@@ -18,7 +18,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'department',
         title: 'Подразделение',
     }, {
-        key: 'room',
+        key: 'cabinet',
         title: 'Кабинет',
     }, {
         key: 'person',
@@ -311,14 +311,14 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
+    searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
     listFields: {
         person: ['CODE', 'fio'],
         department: ['CODE', 'title']
     },
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'E_MAIL'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        person: ['CODE', 'PHONE', 'E_MAIL', 'IS_NODE'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', 'IS_NODE'],
         room: ['titleRoom', 'fullTitleRoom']
     },
     quickViewFields: {

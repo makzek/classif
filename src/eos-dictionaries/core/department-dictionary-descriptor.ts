@@ -41,7 +41,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             } else {
                 return E_DEPT_MODE.person;
             }*/
-            if (values[this.modeField.key]) { // 0 - department, 1 - person !!!
+            if (values.rec[this.modeField.key]) { // 0 - department, 1 - person !!!
                 return E_DEPT_MODE.person;
             } else {
                 return E_DEPT_MODE.department;
@@ -54,12 +54,12 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
 
 export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: DepartmentRecordDescriptor;
-    fullSearchFields: ModeFieldSet;
-    quickViewFields: ModeFieldSet;
-    shortQuickViewFields: ModeFieldSet;
-    editFields: ModeFieldSet;
-    listFields: ModeFieldSet;
-    allVisibleFields: FieldDescriptor[];
+    protected fullSearchFields: ModeFieldSet;
+    protected quickViewFields: ModeFieldSet;
+    protected shortQuickViewFields: ModeFieldSet;
+    protected editFields: ModeFieldSet;
+    protected listFields: ModeFieldSet;
+    protected allVisibleFields: FieldDescriptor[];
 
     _init(descriptor: IDepartmentDictionaryDescriptor) {
         if (descriptor.fields) {
