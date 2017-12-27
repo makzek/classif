@@ -4,7 +4,8 @@ import { LINEAR_TEMPLATE } from './_linear-template';
 export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'cabinet',
     apiInstance: 'CABINET',
-    title: 'Кабинеты ',
+    title: 'Кабинеты',
+    keyField: 'ISN_CABINET',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{

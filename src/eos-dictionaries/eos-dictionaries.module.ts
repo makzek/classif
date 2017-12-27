@@ -33,7 +33,7 @@ import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
 import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
-import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
+import { CabinetCardEditComponent } from './card-views/cabinet-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
@@ -70,7 +70,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         NodeListComponent,
         NodeListItemComponent,
         NodeListPaginationComponent,
-        RoomsCardEditComponent,
+        CabinetCardEditComponent,
         SandwichComponent,
         SimpleCardEditComponent,
         TreeComponent,
