@@ -17,8 +17,12 @@
             margin-bottom: 0;
         }
 
-        &.owners {
+        &.owners-content {
             padding: 0;
+        }
+
+        &.hidden {
+            display: none !important;
         }
     }
 
@@ -40,7 +44,7 @@
         }
 
         .text {
-            width: 50%;
+            width: 45%;
             padding: 13px 0;
         }
 
@@ -51,6 +55,10 @@
 
         .selected-text {
             cursor: pointer;
+        }
+
+        .fake-padding {
+            width: 64px;
         }
     }
 
@@ -72,6 +80,7 @@
         .table-wrapper {
             overflow-x: hidden;
             margin-left: 224px;
+            margin-bottom: 20px;
             padding: 0;
             width: fit-content;
             border-width: 1px;
@@ -159,6 +168,16 @@
             .unimportant-text {
                 position: relative;
                 top: 5px;
+            }
+
+            .checkbox-inline {
+                padding: 0;
+            }
+
+            .fake-checkbox {
+                position: relative;
+                top: 2px;
+                margin-right: 12px;
             }
         }
 

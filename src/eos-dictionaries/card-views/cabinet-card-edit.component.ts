@@ -10,7 +10,19 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showAccessToCabinet = true;
     showAccessToFolder = true;
-    owner: any[] = [];
+    owners: any[] = [{
+        SURNAME: 'Константинопольский К.К.',
+        DUTY: 'Директор департамента',
+        marked: false
+    }, {
+        SURNAME: 'Иванов К.К.',
+        DUTY: 'Директор департамента',
+        marked: false
+    }, {
+        SURNAME: 'Семёнов К.К.',
+        DUTY: 'Директор департамента',
+        marked: false
+    }];
 
     rows = [{
             title: '',
@@ -211,19 +223,22 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
 
     folderConfig = {
         received: false,
-        inProgress: false,
+        inProgress: true,
         inChecking: false,
         boss: true,
         underConsideration: false,
         forWork: true,
-        projManagment: true,
-        onSight: true,
-        onSignature: true
+        projManagment: false,
+        onSight: false,
+        onSignature: false
     }
 
     @ViewChild('tableEl') tableEl;
 
     private _interval: any;
+
+    allMarkedAccess = false;
+    allMarkedOwners = false;
 
     constructor(injector: Injector) {
         super(injector);
@@ -237,8 +252,51 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         }
     }
 
-    /*get anyUnmarked(): boolean {
-    }*/
+    /* tslint:disable:no-bitwise */
+    get anyUnmarkedAccess(): boolean {
+        return !!~Object.keys(this.folderConfig).findIndex((_key) => !this.folderConfig[_key]);
+    }
+
+    get anyMarkedAccess(): boolean {
+        this.allMarkedAccess = !!~Object.keys(this.folderConfig).findIndex((_key) => this.folderConfig[_key]);
+        return this.allMarkedAccess;
+    }
+    /* tslint:enable:no-bitwise */
+
+    toggleAllAccessMarks() {
+        if (this.allMarkedAccess) {
+            Object.keys(this.folderConfig).forEach((_key) => {
+                this.folderConfig[_key] = true;
+            });
+        } else {
+            Object.keys(this.folderConfig).forEach((_key) => {
+                this.folderConfig[_key] = false;
+            });
+        }
+    }
+
+    /* tslint:disable:no-bitwise */
+    get anyUnmarkedOwners(): boolean {
+        return !!~this.owners.findIndex((_person) => !_person.marked);
+    }
+
+    get anyMarkedOwners(): boolean {
+        this.allMarkedOwners = !!~this.owners.findIndex((_person) => _person.marked);
+        return this.allMarkedOwners;
+    }
+    /* tslint:enable:no-bitwise */
+
+    toggleAllOwnersMarks() {
+        if (this.allMarkedOwners) {
+            this.owners.forEach((_person) => {
+                _person.marked = true;
+            });
+        } else {
+            this.owners.forEach((_person) => {
+                _person.marked = false;
+            });
+        }
+    }
 
     startScrollToLeft() {
         this._interval = setInterval(() => {

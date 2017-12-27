@@ -56,35 +56,27 @@
                 </button>
             </div>
             <div class="edit-block-header secondary-block owners" [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
-                <span class="checkbox-inline">
-                    <label>
-                        <input type="checkbox">
+                <span class="checkbox-inline" *ngIf="editMode">
+                    <label [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
+                        <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
                         <span></span>
                     </label>
                 </span>
+                <span class="fake-padding" *ngIf="!editMode"></span>
                 <span class="text selected-text">Фамилия И.О.</span>
                 <span class="text selected-text">Должность</span>
             </div>
-            <div class="edit-content owners secondary-block" [hidden]="!showOwners">
-                <div class="owners owners-item" *ngFor="let person of data.owners">
-                    <span class="checkbox-inline">
+            <div class="edit-content owners-content secondary-block" [hidden]="!showOwners">
+                <div class="owners owners-item highlight-on-hover" *ngFor="let person of owners">
+                    <span class="checkbox-inline" *ngIf="editMode">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" name="person" [(ngModel)]="person.marked">
                             <span></span>
                         </label>
                     </span>
+                    <span class="fake-padding" *ngIf="!editMode"></span>
                     <span class="text selected-text">{{person['SURNAME']}}</span>
                     <span class="text">{{person['DUTY']}}</span>
-                </div>
-                <div class="owners owners-item">
-                    <span class="checkbox-inline">
-                        <label>
-                            <input type="checkbox">
-                            <span></span>
-                        </label>
-                    </span>
-                    <span class="text selected-text">SURNAME</span>
-                    <span class="text">DUTY</span>
                 </div>
             </div>
         </div>
@@ -130,63 +122,65 @@
             </div>
             <div class="edit-block-header secondary-block">
                 <span class="checkbox-inline">
-                    <label [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}">
-                        <input type="checkbox">
+                    <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
+                        <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
                         <span></span>
                     </label>
+                    <span *ngIf="!editMode && anyUnmarkedAccess" class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
+                    <span *ngIf="!editMode && !anyUnmarkedAccess" class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
                 </span>
                 <span class="s-font primary-text">Полный доступ</span>
                 <span class="upper s-font unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
             </div>
-            <div class="edit-content secondary-block" [hidden]="!showAccessToFolder">
+            <div class="edit-content secondary-block" [ngClass]="{'hidden': !showAccessToFolder}">
                 <div class="folder-access-item">
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.received">
+                            <input type="checkbox" [disabled]="!editMode" name="received" [(ngModel)]="folderConfig.received">
                             <span></span>Поступившие</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.inProgress">
+                            <input type="checkbox" [disabled]="!editMode" name="inProgress" [(ngModel)]="folderConfig.inProgress">
                             <span></span>На исполнении</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.inChecking">
+                            <input type="checkbox" [disabled]="!editMode" name="inChecking" [(ngModel)]="folderConfig.inChecking">
                             <span></span>На контроле</label>
                     </div>
                 </div>
                 <div class="folder-access-item">
                     <div class="minus-checkbox primary-text s-font">
                         <label class="checkbox">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.boss">
+                            <input type="checkbox" [disabled]="!editMode" name="boss" [(ngModel)]="folderConfig.boss">
                             <span></span>У руководства</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.underConsideration">
+                            <input type="checkbox" [disabled]="!editMode" name="underConsideration" [(ngModel)]="folderConfig.underConsideration">
                             <span></span>На рассмотрении</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.forWork">
+                            <input type="checkbox" [disabled]="!editMode" name="forWork" [(ngModel)]="folderConfig.forWork">
                             <span></span>В дело</label>
                     </div>
                 </div>
                 <div class="folder-access-item">
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.projManagment">
+                            <input type="checkbox" [disabled]="!editMode" name="projManagment" [(ngModel)]="folderConfig.projManagment">
                             <span></span>Управление проектами</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.onSight">
+                            <input type="checkbox" [disabled]="!editMode" name="onSight" [(ngModel)]="folderConfig.onSight">
                             <span></span>На визировании</label>
                     </div>
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
-                            <input type="checkbox" [disabled]="!editMode" [(ngModel)]="folderConfig.onSignature">
+                            <input type="checkbox" [disabled]="!editMode" name="onSignature" [(ngModel)]="folderConfig.onSignature">
                             <span></span>На подписи</label>
                     </div>
                 </div>

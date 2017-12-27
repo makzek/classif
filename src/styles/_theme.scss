@@ -260,6 +260,12 @@
         color: $disabled-color-main-theme;
     }
 
+    .highlight-on-hover {
+        &:hover {
+            background-color: $highlight-color-main-theme;
+        }
+    }
+
     // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
