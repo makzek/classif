@@ -380,17 +380,7 @@ export class EosDictionary {
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries = {};
-        _searchFields.forEach((fld) => {
-            if (data[fld.foreignKey]) {
-                if (fld.foreignKey !== 'IS_NODE') {
-                    _criteries[fld.foreignKey] = '"' + data[fld.foreignKey].trim() + '"';
-                } else {
-                    _criteries[fld.foreignKey] = data[fld.foreignKey];
-                }
-            }
-        })
+        const _criteries = this.descriptor.getFullSearchCriteries(data);
         this._extendCritery(_criteries, params, selectedNode);
         return _criteries;
     }

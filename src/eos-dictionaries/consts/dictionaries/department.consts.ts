@@ -317,9 +317,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         department: ['CODE', 'title']
     },
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'E_MAIL', 'IS_NODE'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', 'IS_NODE'],
-        room: ['titleRoom', 'fullTitleRoom']
+        person: ['CODE', 'PHONE', 'E_MAIL'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
     quickViewFields: {
         person: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H'], // 'SURNAME', 'firstName', 'fathersName', 'lastName', 'photo' is in shortQuickViewFields
@@ -337,7 +337,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     },
     allVisibleFields: ['ISN_ORGANIZ', 'SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
-    'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+        'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
 'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

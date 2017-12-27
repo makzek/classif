@@ -141,6 +141,17 @@ export abstract class AbstractDictionaryDescriptor {
         return _description;
     }
 
+    getFullSearchCriteries(data: any): any {
+        const _searchFields = this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries = {};
+        _searchFields.forEach((fld) => {
+            if (data.rec[fld.foreignKey]) {
+                _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+            }
+        });
+        return _criteries;
+    }
+
     getSearchConfig(): SEARCH_TYPES[] {
         return this.searchConfig;
     }

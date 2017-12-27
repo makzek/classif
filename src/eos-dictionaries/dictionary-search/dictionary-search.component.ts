@@ -27,6 +27,8 @@ export class DictionarySearchComponent implements OnDestroy {
     };
     data = {
         rec: {},
+        cabinet: {},
+        printInfo: {},
     };
     public settings: ISearchSettings = {
         mode: SEARCH_MODES.totalDictionary,
@@ -81,7 +83,10 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.loading = false;
                 this.dictId = _d.id;
                 if (this.dictId) {
-                    this.data['printInfo'] = {};
+                    Object.assign(this.data, {
+                        printInfo: {},
+                        cabinet: {}
+                    });
                 }
                 this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.type = _d.descriptor.dictionaryType;
@@ -146,17 +151,7 @@ export class DictionarySearchComponent implements OnDestroy {
         if (this.searchDone) {
             this.searchDone = false;
             if (this.dictId === 'departments') {
-                switch (this.currTab) {
-                    case 'department':
-                        this.data.rec['IS_NODE'] = '0';
-                        break;
-                    case 'person':
-                        this.data.rec['IS_NODE'] = '1';
-                        break;
-                    case 'cabinet':
-                        this.data['dict-mode'] = 'CABINET';
-                        break;
-                }
+                this.data['srchMode'] = this.currTab;
             }
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then((nodes) => {
