@@ -166,7 +166,7 @@
 </div>
 <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
 <div class="form-group">
-    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PRINT_DUTY">{{fieldsDescription['printInfo']['PRINT_DUTY']?.title}}</label>
+    <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="PRINT_DUTY">{{fieldsDescription['printInfo']['PRINT_DUTY']?.title}}</label>
     <input [readonly]="!editMode" id="PRINT_DUTY" name="PRINT_DUTY" type="text" class="form-control m-font " [ngModel]="data['printInfo']['PRINT_DUTY']"
         (ngModelChange)="change('PRINT_DUTY', 'printInfo', $event)" placeholder="{{fieldsDescription['printInfo']['PRINT_DUTY']?.title}}"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('PRINT_DUTY')" (blur)="blur()" required maxlength="{{fieldsDescription['printInfo']['PRINT_DUTY']?.length}}"

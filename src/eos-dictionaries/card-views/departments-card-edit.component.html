@@ -5,7 +5,8 @@
         <div *ngIf="data.rec && !data.rec['IS_NODE']" class="wrapper">
             <div class="col-1">
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CODE">{{fieldsDescription.rec['CODE']?.title}}</label>
+                    <label class="primary-text" for="CODE"
+                        [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['CODE']?.required }">{{fieldsDescription.rec['CODE']?.title}}</label>
                     <input [readonly]="!editMode" id="CODE_DEP" name="CODE_DEP" type="text" class="form-control m-font " [ngModel]="data.rec['CODE']"
                         (ngModelChange)="change('CODE', 'rec', $event)" placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('CODE_DEP')" (blur)="blur()" maxlength="{{fieldsDescription.rec['CODE']?.length}}"
@@ -16,7 +17,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexDep">{{fieldsDescription.rec['indexDep']?.title}}</label>
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['DEPARTMENT_INDEX']?.required }" for="indexDep">{{fieldsDescription.rec['indexDep']?.title}}</label>
                     <input [readonly]="!editMode" id="indexDep" name="indexDep" type="text" class="form-control m-font " [ngModel]="data.rec['DEPARTMENT_INDEX']"
                         (ngModelChange)="change('DEPARTMENT_INDEX', 'rec', $event)" placeholder="{{fieldsDescription.rec['indexDep']?.title}}"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('DEPARTMENT_INDEX')" (blur)="blur()" maxlength="{{fieldsDescription.rec['indexDep']?.length}}"
@@ -53,7 +54,9 @@
             </div>
             <div class="col-2">
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CLASSIF_NAME_DEP">{{fieldsDescription.rec['title']?.title}}</label>
+                    <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode}" for="CLASSIF_NAME_DEP">
+                        {{fieldsDescription.rec['title']?.title}}
+                    </label>
                     <input [readonly]="!editMode" id="CLASSIF_NAME_DEP" name="CLASSIF_NAME_DEP" type="text" class="form-control m-font " [ngModel]="data.rec['CLASSIF_NAME']"
                         (ngModelChange)="change('CLASSIF_NAME', 'rec', $event)" placeholder="{{fieldsDescription.rec['title']?.title}}"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('CLASSIF_NAME_DEP')" (blur)="blur()" required maxlength="{{fieldsDescription.rec['title']?.length}}"
@@ -114,6 +117,9 @@
                         triggers=""></textarea>
                 </div>
             </div>
+        </div>
+        <div class="form-group unimportant-text s-font">
+            <label>* - поля обязательные к заполнению</label>
         </div>
     </form>
 </div>
