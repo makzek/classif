@@ -349,6 +349,8 @@ export class EosDictService {
         }
     }
 
+        // console.log('reloadNode', node);
+                // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }

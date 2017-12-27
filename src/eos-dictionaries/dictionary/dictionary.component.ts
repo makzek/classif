@@ -82,6 +82,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     customFields: IFieldView[] = [];
 
     modalWindow: BsModalRef;
+    formValidated = false;
+    hasChanges = false;
 
     public length = {}; // Length column
 
