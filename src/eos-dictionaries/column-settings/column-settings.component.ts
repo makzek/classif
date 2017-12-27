@@ -17,6 +17,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
 
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
+    selectedFixedItem: IFieldView;
 
     private _subscriptionDrop: Subscription;
     private _subscriptionDrag: Subscription;
@@ -137,15 +138,27 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     /**
      * @description highlight selected item
      * @param item highlighted item
-     * @param isCurrent indicates if item placed in current fields (right)
+     * @param type indicates where item is placed
+     * 1 - current
+     * 2 - dictionary
+     * 3 - fixed
      */
-    select(item: IFieldView, isCurrent: boolean) {
-        if (isCurrent) {
-            this.selectedCurrItem = item;
-            this.selectedDictItem = null;
-        } else {
-            this.selectedDictItem = item;
-            this.selectedCurrItem = null;
+    select(item: IFieldView, type: number) {
+        switch (type) {
+            case 1:
+                this.selectedCurrItem = item;
+                this.selectedDictItem = null;
+                this.selectedFixedItem = null;
+                break;
+            case 2:
+                this.selectedDictItem = item;
+                this.selectedCurrItem = null;
+                this.selectedFixedItem = null;
+                break;
+            case 3:
+                this.selectedFixedItem = item;
+                this.selectedCurrItem = null;
+                this.selectedDictItem = null;
         }
     }
 
