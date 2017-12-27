@@ -86,6 +86,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getSubtree(record: IHierCL): Promise<IHierCL[]> {
         const layer = record.DUE.split('.').length - 1; // calc layer with DUE
+        console.log('layer', layer);
         const criteries = {
             DUE: record.DUE + '%',
             LAYER: (layer + 1) + ':' + (layer + 2),
@@ -104,7 +105,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     }
 
     getRoot(): Promise<any[]> {
-        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }, 'DUE');
+        return this.getData({ criteries: { LAYER: '0:2'/*, IS_NODE: '0'*/ } }, 'DUE');
     }
 
     private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
