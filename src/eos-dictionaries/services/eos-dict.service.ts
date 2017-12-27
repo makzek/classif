@@ -28,7 +28,6 @@ import { RestError } from 'eos-rest/core/rest-error';
 export class EosDictService {
     public viewParameters: IDictionaryViewParameters;
     public currentTab = 0;
-    public customFields: IFieldView[] = [];
 
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
@@ -46,6 +45,7 @@ export class EosDictService {
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
     private _srchCriteries: any[];
+    private _customFields: any;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -88,6 +88,28 @@ export class EosDictService {
 
     get dictionaryTitle(): string {
         return this.dictionary.title;
+    }
+
+    get customFields(): IFieldView[] {
+        const _storageData = this._storageSrv.getItem('customFields');
+        if (_storageData) {
+            this._customFields = _storageData;
+            if (this._customFields[this.dictionary.id]) {
+                return this._customFields[this.dictionary.id];
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    }
+
+    set customFields(val: IFieldView[]) {
+        if (!this._customFields) {
+            this._customFields = {};
+        }
+        this._customFields[this.dictionary.id] = val;
+        this._storageSrv.setItem('customFields', this._customFields, true);
     }
 
     constructor(

@@ -136,9 +136,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
-                    if (this.dictionaryId !== dictionary.id) {
-                        this._dictSrv.customFields = [];
-                    }
                     this.customFields = this._dictSrv.customFields;
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
