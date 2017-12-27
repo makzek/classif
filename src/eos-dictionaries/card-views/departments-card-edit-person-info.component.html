@@ -1,19 +1,12 @@
-<form #printInfoForm="ngForm">
+<form #cardForm="ngForm">
 <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
 <div class="form-group">
-    <!--label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY_RP">{{fieldsDescription['printInfo']['DUTY_RP']?.title}}</label>
-    <input [readonly]="!editMode" id="DUTY_RP" name="DUTY_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['DUTY_RP']"
-        (ngModelChange)="change('DUTY_RP', 'printInfo', $event)" placeholder="{{fieldsDescription['printInfo']['DUTY_RP']?.title}}"
-        [ngClass]="{'readonly': !editMode }" (focus)="focus('DUTY_RP')" (blur)="blur()" [pattern]="fieldsDescription['printInfo']['DUTY_RP']?.pattern"
-        tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['DUTY_RP']?.invalid && printInfoForm.controls['DUTY_RP']?.dirty && focusedField === 'DUTY_RP'"
-        triggers=""-->
     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUTY_RP">Родительный падеж (кого, чего)</label>
     <input [readonly]="!editMode" id="DUTY_RP" name="DUTY_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['DUTY_RP']"
         (ngModelChange)="change('DUTY_RP', 'printInfo', $event)" placeholder="Родительный падеж (кого, чего)"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('DUTY_RP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['DUTY_RP']?.invalid && printInfoForm.controls['DUTY_RP']?.dirty && focusedField === 'DUTY_RP'"
+        container="body" [isOpen]="cardForm.controls['DUTY_RP']?.invalid && cardForm.controls['DUTY_RP']?.dirty && focusedField === 'DUTY_RP'"
         triggers="">
 </div>
 
@@ -23,7 +16,7 @@
         (ngModelChange)="change('DUTY_DP', 'printInfo', $event)" placeholder="Дательный падеж (кому, чему?)"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('DUTY_DP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['DUTY_DP']?.invalid && printInfoForm.controls['DUTY_DP']?.dirty && focusedField === 'DUTY_DP'"
+        container="body" [isOpen]="cardForm.controls['DUTY_DP']?.invalid && cardForm.controls['DUTY_DP']?.dirty && focusedField === 'DUTY_DP'"
         triggers="">
 </div>
 
@@ -33,7 +26,7 @@
         (ngModelChange)="change('DUTY_VP', 'printInfo', $event)" placeholder="Винительный падеж (кого, что?)"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('DUTY_VP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['DUTY_VP']?.invalid && printInfoForm.controls['DUTY_VP']?.dirty && focusedField === 'DUTY_VP'"
+        container="body" [isOpen]="cardForm.controls['DUTY_VP']?.invalid && cardForm.controls['DUTY_VP']?.dirty && focusedField === 'DUTY_VP'"
         triggers="">
 </div>
 
@@ -44,7 +37,7 @@
         (ngModelChange)="change('PRINT_SURNAME_DP', 'printInfo', $event)" placeholder="Фамилия И.О. в дательном падеже"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('PRINT_SURNAME_DP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['PRINT_SURNAME_DP']?.invalid && printInfoForm.controls['PRINT_SURNAME_DP']?.dirty && focusedField === 'PRINT_SURNAME_DP'"
+        container="body" [isOpen]="cardForm.controls['PRINT_SURNAME_DP']?.invalid && cardForm.controls['PRINT_SURNAME_DP']?.dirty && focusedField === 'PRINT_SURNAME_DP'"
         triggers="">
 </div>
 <div class="form-group">
@@ -53,7 +46,7 @@
         (ngModelChange)="change('PRINT_SURNAME', 'printInfo', $event)" placeholder="И.О. Фамилия в дательном падеже"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('PRINT_SURNAME')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-        container="body" [isOpen]="printInfoForm.controls['PRINT_SURNAME']?.invalid && printInfoForm.controls['PRINT_SURNAME']?.dirty && focusedField === 'PRINT_SURNAME'"
+        container="body" [isOpen]="cardForm.controls['PRINT_SURNAME']?.invalid && cardForm.controls['PRINT_SURNAME']?.dirty && focusedField === 'PRINT_SURNAME'"
         triggers="">
 </div>
 
@@ -64,19 +57,19 @@
             (ngModelChange)="change('SURNAME_RP', 'printInfo', $event)" placeholder="Фамилия"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME_RP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['SURNAME_RP']?.invalid && printInfoForm.controls['SURNAME_RP']?.dirty && focusedField === 'SURNAME_RP'"
+            container="body" [isOpen]="cardForm.controls['SURNAME_RP']?.invalid && cardForm.controls['SURNAME_RP']?.dirty && focusedField === 'SURNAME_RP'"
             triggers="">
         <input [readonly]="!editMode" id="NAME_RP" name="NAME_RP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['NAME_RP']"
             (ngModelChange)="change('NAME_RP', 'printInfo', $event)" placeholder="Имя"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME_RP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['NAME_RP']?.invalid && printInfoForm.controls['NAME_RP']?.dirty && focusedField === 'NAME_RP'"
+            container="body" [isOpen]="cardForm.controls['NAME_RP']?.invalid && cardForm.controls['NAME_RP']?.dirty && focusedField === 'NAME_RP'"
             triggers="">
         <input [readonly]="!editMode" id="PATRON_RP" name="PATRON_RP" type="text" class="form-control m-font  last" [ngModel]="data['printInfo']['PATRON_RP']"
             (ngModelChange)="change('PATRON_RP', 'printInfo', $event)" placeholder="Отчество"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON_RP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['PATRON_RP']?.invalid && printInfoForm.controls['PATRON_RP']?.dirty && focusedField === 'PATRON_RP'"
+            container="body" [isOpen]="cardForm.controls['PATRON_RP']?.invalid && cardForm.controls['PATRON_RP']?.dirty && focusedField === 'PATRON_RP'"
             triggers="">
     </div>
 </div>
@@ -87,19 +80,19 @@
             (ngModelChange)="change('SURNAME_DP', 'printInfo', $event)" placeholder="Фамилия"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME_DP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['SURNAME_DP']?.invalid && printInfoForm.controls['SURNAME_DP']?.dirty && focusedField === 'SURNAME_DP'"
+            container="body" [isOpen]="cardForm.controls['SURNAME_DP']?.invalid && cardForm.controls['SURNAME_DP']?.dirty && focusedField === 'SURNAME_DP'"
             triggers="">
         <input [readonly]="!editMode" id="NAME_DP" name="NAME_DP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['NAME_DP']"
             (ngModelChange)="change('NAME_DP', 'printInfo', $event)" placeholder="Имя"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME_DP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['NAME_DP']?.invalid && printInfoForm.controls['NAME_DP']?.dirty && focusedField === 'NAME_DP'"
+            container="body" [isOpen]="cardForm.controls['NAME_DP']?.invalid && cardForm.controls['NAME_DP']?.dirty && focusedField === 'NAME_DP'"
             triggers="">
         <input [readonly]="!editMode" id="PATRON_DP" name="PATRON_DP" type="text" class="form-control m-font  last" [ngModel]="data['printInfo']['PATRON_DP']"
             (ngModelChange)="change('PATRON_DP', 'printInfo', $event)" placeholder="Отчество"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON_DP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['PATRON_DP']?.invalid && printInfoForm.controls['PATRON_DP']?.dirty && focusedField === 'PATRON_DP'"
+            container="body" [isOpen]="cardForm.controls['PATRON_DP']?.invalid && cardForm.controls['PATRON_DP']?.dirty && focusedField === 'PATRON_DP'"
             triggers="">
     </div>
 </div>
@@ -110,19 +103,19 @@
             (ngModelChange)="change('SURNAME_VP', 'printInfo', $event)" placeholder="Фамилия"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME_VP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['SURNAME_VP']?.invalid && printInfoForm.controls['SURNAME_VP']?.dirty && focusedField === 'SURNAME_VP'"
+            container="body" [isOpen]="cardForm.controls['SURNAME_VP']?.invalid && cardForm.controls['SURNAME_VP']?.dirty && focusedField === 'SURNAME_VP'"
             triggers="">
         <input [readonly]="!editMode" id="NAME_VP" name="NAME_VP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['NAME_VP']"
             (ngModelChange)="change('NAME_VP', 'printInfo', $event)" placeholder="Имя"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME_VP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['NAME_VP']?.invalid && printInfoForm.controls['NAME_VP']?.dirty && focusedField === 'NAME_VP'"
+            container="body" [isOpen]="cardForm.controls['NAME_VP']?.invalid && cardForm.controls['NAME_VP']?.dirty && focusedField === 'NAME_VP'"
             triggers="">
         <input [readonly]="!editMode" id="PATRON_VP" name="PATRON_VP" type="text" class="form-control m-font  last" [ngModel]="data['printInfo']['PATRON_VP']"
             (ngModelChange)="change('PATRON_VP', 'printInfo', $event)" placeholder="Отчество"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON_VP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['PATRON_VP']?.invalid && printInfoForm.controls['PATRON_VP']?.dirty && focusedField === 'PATRON_VP'"
+            container="body" [isOpen]="cardForm.controls['PATRON_VP']?.invalid && cardForm.controls['PATRON_VP']?.dirty && focusedField === 'PATRON_VP'"
             triggers="">
     </div>
 </div>
@@ -133,19 +126,19 @@
             (ngModelChange)="change('SURNAME_TP', 'printInfo', $event)" placeholder="Фамилия"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME_TP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['SURNAME_TP']?.invalid && printInfoForm.controls['SURNAME_TP']?.dirty && focusedField === 'SURNAME_TP'"
+            container="body" [isOpen]="cardForm.controls['SURNAME_TP']?.invalid && cardForm.controls['SURNAME_TP']?.dirty && focusedField === 'SURNAME_TP'"
             triggers="">
         <input [readonly]="!editMode" id="NAME_TP" name="NAME_TP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['NAME_TP']"
             (ngModelChange)="change('NAME_TP', 'printInfo', $event)" placeholder="Имя"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME_TP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['NAME_TP']?.invalid && printInfoForm.controls['NAME_TP']?.dirty && focusedField === 'NAME_TP'"
+            container="body" [isOpen]="cardForm.controls['NAME_TP']?.invalid && cardForm.controls['NAME_TP']?.dirty && focusedField === 'NAME_TP'"
             triggers="">
         <input [readonly]="!editMode" id="PATRON_TP" name="PATRON_TP" type="text" class="form-control m-font  last" [ngModel]="data['printInfo']['PATRON_TP']"
             (ngModelChange)="change('PATRON_TP', 'printInfo', $event)" placeholder="Отчество"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON_TP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['PATRON_TP']?.invalid && printInfoForm.controls['PATRON_TP']?.dirty && focusedField === 'PATRON_TP'"
+            container="body" [isOpen]="cardForm.controls['PATRON_TP']?.invalid && cardForm.controls['PATRON_TP']?.dirty && focusedField === 'PATRON_TP'"
             triggers="">
     </div>
 </div>
@@ -156,30 +149,30 @@
             (ngModelChange)="change('SURNAME_PP', 'printInfo', $event)" placeholder="Фамилия"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME_PP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['SURNAME_PP']?.invalid && printInfoForm.controls['SURNAME_PP']?.dirty && focusedField === 'SURNAME_PP'"
+            container="body" [isOpen]="cardForm.controls['SURNAME_PP']?.invalid && cardForm.controls['SURNAME_PP']?.dirty && focusedField === 'SURNAME_PP'"
             triggers="">
         <input [readonly]="!editMode" id="NAME_PP" name="NAME_PP" type="text" class="form-control m-font " [ngModel]="data['printInfo']['NAME_PP']"
             (ngModelChange)="change('NAME_PP', 'printInfo', $event)" placeholder="Имя"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME_PP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['NAME_PP']?.invalid && printInfoForm.controls['NAME_PP']?.dirty && focusedField === 'NAME_PP'"
+            container="body" [isOpen]="cardForm.controls['NAME_PP']?.invalid && cardForm.controls['NAME_PP']?.dirty && focusedField === 'NAME_PP'"
             triggers="">
         <input [readonly]="!editMode" id="PATRON_PP" name="PATRON_PP" type="text" class="form-control m-font  last" [ngModel]="data['printInfo']['PATRON_PP']"
             (ngModelChange)="change('PATRON_PP', 'printInfo', $event)" placeholder="Отчество"
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON_PP')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
             tooltip="Пробелы в начале и в конце строки запрещены." [isDisabled]="!editMode" placement="right" containerClass="tooltip-error"
-            container="body" [isOpen]="printInfoForm.controls['PATRON_PP']?.invalid && printInfoForm.controls['PATRON_PP']?.dirty && focusedField === 'PATRON_PP'"
+            container="body" [isOpen]="cardForm.controls['PATRON_PP']?.invalid && cardForm.controls['PATRON_PP']?.dirty && focusedField === 'PATRON_PP'"
             triggers="">
     </div>
 </div>
 <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
 <div class="form-group">
-    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PRINT_DUTY">Должность</label>
+    <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="PRINT_DUTY">Должность</label>
     <input [readonly]="!editMode" id="PRINT_DUTY" name="PRINT_DUTY" type="text" class="form-control m-font " [ngModel]="data['printInfo']['PRINT_DUTY']"
         (ngModelChange)="change('PRINT_DUTY', 'printInfo', $event)" placeholder="Должность"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('PRINT_DUTY')" (blur)="blur()" required maxlength="255"
         [pattern]="NOT_EMPTY_STRING" tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-        containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="printInfoForm.controls['PRINT_DUTY']?.invalid && printInfoForm.controls['PRINT_DUTY']?.dirty && focusedField === 'PRINT_DUTY'"
+        containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['PRINT_DUTY']?.invalid && cardForm.controls['PRINT_DUTY']?.dirty && focusedField === 'PRINT_DUTY'"
         triggers="">
 
 </div>
@@ -189,7 +182,7 @@
         (ngModelChange)="change('PRINT_DEPARTMENT', 'printInfo', $event)" placeholder="Подразделение"
         [ngClass]="{'readonly': !editMode }" (focus)="focus('PRINT_DEPARTMENT')" (blur)="blur()" [pattern]="NOT_EMPTY_STRING"
         tooltip="Пробелы в начале и в конце строки запрещены." containerClass="tooltip-error" container="body" [isDisabled]="!editMode"
-        placement="right" [isOpen]="printInfoForm.controls['PRINT_DEPARTMENT']?.invalid && printInfoForm.controls['PRINT_DEPARTMENT']?.dirty && focusedField === 'PRINT_DEPARTMENT'"
+        placement="right" [isOpen]="cardForm.controls['PRINT_DEPARTMENT']?.invalid && cardForm.controls['PRINT_DEPARTMENT']?.dirty && focusedField === 'PRINT_DEPARTMENT'"
         triggers="">
 </div>
 </form>

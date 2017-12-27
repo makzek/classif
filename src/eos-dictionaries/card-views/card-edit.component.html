@@ -1,8 +1,6 @@
 <ng-container [ngSwitch]="dictionaryId">
     <eos-departments-card-edit *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
         (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit>
-    <eos-rooms-card-edit  *ngSwitchCase="'rooms'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
-        (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-rooms-card-edit>
     <eos-visa-type-card-edit *ngSwitchCase="'visa-type'" [data]="data" [fieldsDescription]="fieldsDescription"[editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-visa-type-card-edit>
     <eos-simple-card-edit *ngSwitchDefault [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
