@@ -48,6 +48,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
             this.selectedDictItem = null;
             this.selectedCurrItem = null;
+            this.selectedFixedItem = null;
         })
         dragulaService.setOptions('bag-one', {
             moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
