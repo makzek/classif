@@ -14,6 +14,7 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 import { EosDictService } from '../services/eos-dict.service';
+import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
@@ -100,23 +101,8 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
-        let _set: E_RECORD_ACTIONS[];
-
-        switch (group) {
-            case E_ACTION_GROUPS.common:
-                _set = this.actions;
-                break;
-            case E_ACTION_GROUPS.item:
-                _set = this.itemActions;
-                break;
-            case E_ACTION_GROUPS.group:
-                _set = this.groupActions;
-                break;
-            default:
-                _set = [];
-        }
         /* tslint:disable:no-bitwise */
-        return !!~_set.findIndex((a) => a === action);
+        return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
     }
 
@@ -234,10 +220,27 @@ export abstract class AbstractDictionaryDescriptor {
         return this._postChanges(data, { _State: _ES.Deleted });
     }
 
-    deleteRecords(records: IEnt[]): Promise<any> {
-        records.forEach((rec) => rec._State = _ES.Deleted);
-        const changes = this.apiSrv.changeList(records);
-        return this.apiSrv.batch(changes, '');
+    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
+        const pDelete = records.map((record) => {
+            record._State = _ES.Deleted;
+            const changes = this.apiSrv.changeList([record]);
+            return this.apiSrv.batch(changes, '')
+                .then(() => {
+                    return <IRecordOperationResult>{
+                        record: record,
+                        success: true
+                    };
+                })
+                .catch((err) => {
+                    return <IRecordOperationResult>{
+                        record: record,
+                        success: false,
+                        error: err
+                    };
+                });
+        });
+
+        return Promise.all(pDelete);
     }
 
     abstract getChildren(...params): Promise<any[]>;

@@ -71,8 +71,8 @@ export interface IDictionaryDescriptor {
     apiInstance: string;
     title: string;
     actions: string[];
-    itemActions: string[];
-    groupActions: string[];
+    itemActions?: string[];
+    groupActions?: string[];
     fields: IFieldDesriptor[];
     keyField: string;
     parentField?: string;

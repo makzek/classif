@@ -159,9 +159,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
-                    // setTimeout(() => {
-                        this._countColumnWidth();
-                    // }, 0);
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -176,6 +173,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((nodes: EosDictionaryNode[]) => {
                 // console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
+                setTimeout(() => {
+                    this._countColumnWidth();
+                }, 0);
                 this.updateMarks();
             });
 
@@ -210,7 +210,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _countColumnWidth() {
+        // console.log('start _countColWidth');
         let _totalWidth = 0;
+        const length = {};
         this.viewFields.forEach((_f) => {
             if (_f.length) {
                 _totalWidth += _f.length;
@@ -228,22 +230,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
         }
-
         /*Use Math.floor() to be be sure that there is enough space */
         this.viewFields.forEach((_f) => {
             if (_f.length) {
-                this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
+                length[_f.key] = _f.length / _totalWidth;
             } else {
-                this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
+                length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
             }
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
                 if (_f.length) {
-                    this.length[_f.key] = Math.floor(_f.length / _totalWidth * 100);
+                    length[_f.key] = _f.length / _totalWidth;
                 } else {
-                    this.length[_f.key] = Math.floor(this.DEFAULT_FIELD_LEN / _totalWidth * 100);
+                    length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
                 }
             });
         }
@@ -252,18 +253,20 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
             this.tableWidth = _selectedWidth;
             if (this.customFields && this.customFields.length) {
+                let w: number;
                 this.viewFields.forEach((_f) => {
-                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    w = this.MIN_COL_WIDTH / (length[_f.key]);
+                    if (this.tableWidth < w) {
+                        this.tableWidth = w;
                     }
                 });
 
                 this.customFields.forEach((_f) => {
-                    if (this.length[_f.key] * 0.01 * this.tableWidth < this.MIN_COL_WIDTH) {
-                        this.tableWidth = this.MIN_COL_WIDTH / (this.length[_f.key] * 0.01);
+                    w = this.MIN_COL_WIDTH / (length[_f.key]);
+                    if (this.tableWidth < w) {
+                        this.tableWidth = w;
                     }
                 });
-
                 if (this.tableWidth <= _selectedWidth) {
                     this.tableWidth = _selectedWidth - 2;
                 }
@@ -271,6 +274,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this.tableWidth = _selectedWidth - 2;
             }
         }
+        Object.keys(length).forEach((key) => {
+            length[key] = Math.floor(length[key] * 100);
+        });
+        this.length = length;
+        // console.log('end _countColWidth');
     }
 
     private _selectNode() {
@@ -330,9 +338,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.restore:
                 this._restoreItems();
                 break;
+            case E_RECORD_ACTIONS.showAllSubnodes:
+                this._dictSrv.toggleAllSubnodes();
+                break
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
+    }
+
+    resetSearch() {
+        this._dictSrv.resetSearch();
     }
 
     orderByField(fieldKey: string) {
@@ -470,15 +485,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._confirmSrv.confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._dictSrv.deleteMarked()
-                        .then((success) => {
-                            if (!success) {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
-                        })
-                        .catch((err) => this._errHandler(err));
+                    return this._dictSrv.deleteMarked();
                 }
-            });
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     /**
@@ -486,7 +496,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
      */
     private _openCreate() {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
-        this.modalWindow.content.fieldsDescription =  this.selectedNode.getEditFieldsDescription();
+        this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
         this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
         this.modalWindow.content.onHide.subscribe(() => {
@@ -568,9 +578,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public resize(): void {
         this._sandwichSrv.resize();
-        // setTimeout(() => {
-            this._countColumnWidth();
-        // }, 0);
     }
 
     private _errHandler(err) {
@@ -579,8 +586,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
     }
 }

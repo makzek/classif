@@ -124,6 +124,7 @@ export class EosDictService {
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
+            showAllSubnodes: false,
             showDeleted: false,
             userOrdered: false,
             markItems: false,
@@ -177,7 +178,7 @@ export class EosDictService {
         this._paginationConfig$.next(this.paginationConfig);
     }
 
-    public getDictionariesList(): Promise<any> {
+    public getDictionariesList(): Promise<IDictionaryDescriptor[]> {
         return Promise.resolve(DICTIONARIES);
     }
 
@@ -387,6 +388,7 @@ export class EosDictService {
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
             this._srchCriteries = null;
+            this.viewParameters.showAllSubnodes = false;
             if (this.selectedNode) {
                 if (this.selectedNode.children) {
                     this.selectedNode.children.forEach((child) => child.marked = false);
@@ -482,6 +484,12 @@ export class EosDictService {
         }
     }
 
+    toggleAllSubnodes(): Promise<EosDictionaryNode[]> {
+        this.viewParameters.showAllSubnodes = !this.viewParameters.showAllSubnodes;
+        this.viewParameters.searchResults = false;
+        this._srchCriteries = null;
+        return this._reloadList();
+    }
     /**
      * @description Marks or unmarks record as deleted
      * @param recursive true if need to delete with children, default false
@@ -504,18 +512,39 @@ export class EosDictService {
      */
     public deleteMarked(): Promise<boolean> {
         if (this.dictionary) {
+            const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
             return this.dictionary.deleteMarked()
-                .then(() => this._reloadList())
-                .then(() => {
-                    return true;
-                })
-                .catch((err) => {
+                .then((results) => {
+                    console.log('results', results);
+                    let success = true;
+                    results.forEach((result) => {
+                        if (result.error) {
+                            if (result.error.code !== 434) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: 'Ошибка удаления "' + result.record['CLASSIF_NAME'] + '"',
+                                    msg: result.error.message
+                                })
+                                success = false;
+                            } else {
+                                throw result.error;
+                            }
+                        }
+                    })
                     return this._reloadList()
-                        .then(() => this._errHandler(err));
-                });
+                        .then(() => {
+                            return success;
+                        });
+                })
+                .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve(false);
         }
+    }
+
+    public resetSearch(): Promise<any> {
+        this._srchCriteries = null;
+        return this._reloadList();
     }
 
     private _reloadList(): Promise<any> {
@@ -524,7 +553,10 @@ export class EosDictService {
         if (this.dictionary) {
             if (this._srchCriteries) {
                 pResult = this.dictionary.search(this._srchCriteries);
+            } else if (this.viewParameters.showAllSubnodes) {
+                pResult = this.dictionary.getAllChildren(this.selectedNode);
             } else {
+                this.viewParameters.searchResults = false;
                 pResult = this.dictionary.getChildren(this.selectedNode);
             }
         }
@@ -690,7 +722,7 @@ export class EosDictService {
                 type: 'danger',
                 title: 'Ошибка обработки. Ответ сервера:',
                 msg: errMessage,
-                dismissOnTimeout: 100000
+                dismissOnTimeout: 30000
             });
             return null;
         }
