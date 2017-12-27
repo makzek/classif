@@ -28,7 +28,6 @@ import { RestError } from 'eos-rest/core/rest-error';
 export class EosDictService {
     public viewParameters: IDictionaryViewParameters;
     public currentTab = 0;
-    public customFields: IFieldView[] = [];
 
     private dictionary: EosDictionary;
     private selectedNode: EosDictionaryNode; // selected in tree
@@ -46,6 +45,10 @@ export class EosDictService {
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
     private _dictionaries: Map<string, IDictionaryDescriptor>
     private _srchCriteries: any[];
+    private _customFields: any;
+    private _customTitles: any;
+    private _dictMode: number;
+    private _dictMode$: BehaviorSubject<number>;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -90,6 +93,54 @@ export class EosDictService {
         return this.dictionary.title;
     }
 
+    get customFields(): IFieldView[] {
+        const _storageData = this._storageSrv.getItem('customFields');
+        if (_storageData) {
+            this._customFields = _storageData;
+            if (this._customFields[this.dictionary.id]) {
+                return this._customFields[this.dictionary.id];
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    }
+
+    get customTitles(): IFieldView[] {
+        const _storageData = this._storageSrv.getItem('customTitles');
+        if (_storageData) {
+            this._customTitles = _storageData;
+            if (this._customTitles[this.dictionary.id]) {
+                return this._customTitles[this.dictionary.id];
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    }
+
+    set customFields(val: IFieldView[]) {
+        if (!this._customFields) {
+            this._customFields = {};
+        }
+        this._customFields[this.dictionary.id] = val;
+        this._storageSrv.setItem('customFields', this._customFields, true);
+    }
+
+    set customTitles(val: IFieldView[]) {
+        if (!this._customTitles) {
+            this._customTitles = {};
+        }
+        this._customTitles[this.dictionary.id] = val;
+        this._storageSrv.setItem('customTitles', this._customTitles, true);
+    }
+
+    get dictMode$(): Observable<number> {
+        return this._dictMode$.asObservable();
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -108,6 +159,7 @@ export class EosDictService {
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._dictionaries = new Map<string, IDictionaryDescriptor>();
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
+        this._dictMode$ = new BehaviorSubject(0);
         DICTIONARIES
             .sort((a, b) => {
                 if (a.title > b.title) {
@@ -297,6 +349,8 @@ export class EosDictService {
         }
     }
 
+        // console.log('reloadNode', node);
+                // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }
@@ -645,6 +699,13 @@ export class EosDictService {
             this._storageSrv.setUserOrderState(this.dictionary.id, this.dictionary.userOrdered);
         }
         this._reorderList();
+    }
+
+    setDictMode(mode: number) {
+        this._dictMode = mode;
+        console.log('dictionary mode', mode);
+        /* todo: implement additional dictionary logic */
+        this._dictMode$.next(mode);
     }
 
     setUserOrder(ordered: EosDictionaryNode[]) {

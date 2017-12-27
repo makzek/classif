@@ -1,6 +1,7 @@
-import { IDictionaryDescriptor, E_FIELD_SET, IFieldView } from './dictionary.interfaces';
+import { IDictionaryDescriptor, E_FIELD_SET, IFieldView, IFieldDesriptor } from './dictionary.interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
+import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class RecordDescriptor {
     protected dictionary: AbstractDictionaryDescriptor;
@@ -43,23 +44,23 @@ export class RecordDescriptor {
     }
 
     getListView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.list), data.rec);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.list), data);
     }
 
     getQuickView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data.rec), data.rec);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.quickView, data), data);
     }
 
     getShortQuickView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data.rec), data.rec);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
     }
 
     getEditView(data: any): IFieldView[] {
-        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.edit, data.rec), data.rec);
+        return this._bindData(this.dictionary.getFieldSet(E_FIELD_SET.edit, data), data);
     }
 
     getEditFieldDescription(data: any): any {
-        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data.rec);
+        return this.dictionary.getFieldDescription(E_FIELD_SET.edit, data);
     }
 
     getShortQuickFieldDescription(data: any): any {
@@ -71,7 +72,19 @@ export class RecordDescriptor {
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
-        return fields.map((fld) => Object.assign({}, fld, { value: data[fld.foreignKey] }));
+        if (data.rec) {
+            return fields.map((fld) => {
+                let _res: IFieldView;
+                if (fld.type === E_FIELD_TYPE.dictionary) {
+                    _res = Object.assign({}, fld, { value: data[fld.foreignKey] });
+                } else {
+                    _res = (Object.assign({}, fld, { value: data.rec[fld.foreignKey] }));
+                }
+                return _res;
+            });
+        } else {
+            return [];
+        }
     }
 }
 
