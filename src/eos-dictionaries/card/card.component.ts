@@ -274,7 +274,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 if (this.nodeData[dict] && this._originalData[dict]) {
                     return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
                         ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                        (this.nodeData[dict][key] || this._originalData[dict][key])) &&
+                            (this.nodeData[dict][key] || this._originalData[dict][key])) &&
                         (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
                     );
                 } else {
@@ -402,17 +402,25 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         // console.log('save', data);
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
-                this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                /*
-                const fullTitle = this._fullTitle(resp);
-                console.log('fullTitle', fullTitle);
-                */
-                this._deskSrv.addRecentItem({
-                    url: this._router.url,
-                    title: resp.data.rec.CLASSIF_NAME,
-                    /* fullTitle: fullTitle */
-                });
-                this._clearEditingCardLink();
+                if (resp) {
+                    this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                    /*
+                    const fullTitle = this._fullTitle(resp);
+                    console.log('fullTitle', fullTitle);
+                    */
+                    this._deskSrv.addRecentItem({
+                        url: this._router.url,
+                        title: resp.data.rec.CLASSIF_NAME,
+                        /* fullTitle: fullTitle */
+                    });
+                    this._clearEditingCardLink();
+                } else {
+                    this._msgSrv.addNewMessage({
+                        type: 'warning',
+                        title: 'Ошибка операции',
+                        msg: ''
+                    });
+                }
                 return resp;
             })
             .catch((err) => this._errHandler(err));
