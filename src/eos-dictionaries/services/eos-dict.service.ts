@@ -46,6 +46,7 @@ export class EosDictService {
     private _dictionaries: Map<string, IDictionaryDescriptor>
     private _srchCriteries: any[];
     private _customFields: any;
+    private _customTitles: any;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -104,12 +105,34 @@ export class EosDictService {
         }
     }
 
+    get customTitles(): IFieldView[] {
+        const _storageData = this._storageSrv.getItem('customTitles');
+        if (_storageData) {
+            this._customTitles = _storageData;
+            if (this._customTitles[this.dictionary.id]) {
+                return this._customTitles[this.dictionary.id];
+            } else {
+                return [];
+            }
+        } else {
+            return [];
+        }
+    }
+
     set customFields(val: IFieldView[]) {
         if (!this._customFields) {
             this._customFields = {};
         }
         this._customFields[this.dictionary.id] = val;
         this._storageSrv.setItem('customFields', this._customFields, true);
+    }
+
+    set customTitles(val: IFieldView[]) {
+        if (!this._customTitles) {
+            this._customTitles = {};
+        }
+        this._customTitles[this.dictionary.id] = val;
+        this._storageSrv.setItem('customTitles', this._customTitles, true);
     }
 
     constructor(

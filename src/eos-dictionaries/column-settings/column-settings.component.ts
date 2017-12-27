@@ -18,7 +18,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
 
-    private _subscription: Subscription;
+    private _subscriptionDrop: Subscription;
+    private _subscriptionDrag: Subscription;
 
     editedItem: IFieldView;
     newTitle: string;
@@ -34,19 +35,19 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         // value[3] - src
         // value[2] - dst
         // value[1] - droped elem
-        this._subscription = dragulaService.drop.subscribe((value) => {
+        this._subscriptionDrop = dragulaService.drop.subscribe((value) => {
             if (value[2].id !== value[3].id) {
                 if (value[3].id === 'selected') {
                     this.selectedCurrItem = this.currentFields.find((_f) => _f.title === value[1].innerText);
-                    // this.removeToCurrent();
-                    this.selectedCurrItem = null;
                 } else {
                     this.selectedDictItem = this.dictionaryFields.find((_f) => _f.title === value[1].innerText);
-                    // this.addToCurrent();
-                    this.selectedDictItem = null;
                 }
             }
         });
+        this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
+            this.selectedDictItem = null;
+            this.selectedCurrItem = null;
+        })
         dragulaService.setOptions('bag-one', {
             moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
         });
@@ -56,6 +57,10 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         });
     }
 
+    /**
+     * @description unsubscribe from dragulaService,
+     * destroy dragula bags
+     */
     ngOnDestroy() {
         if (!!this.dragulaService.find('bag-one')) {
             this.dragulaService.destroy('bag-one');
@@ -64,7 +69,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         if (!!this.dragulaService.find('fixed-bag')) {
             this.dragulaService.destroy('fixed-bag');
         }
-        this._subscription.unsubscribe();
+        this._subscriptionDrop.unsubscribe();
+        this._subscriptionDrag.unsubscribe();
     }
 
     /**
@@ -143,16 +149,27 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         }
     }
 
+    /**
+     * make item edited
+     * @param item edited item
+     */
     edit(item: IFieldView) {
         this.editedItem = item;
         this.newTitle = item.customTitle || item.title;
     }
 
-    saveNewTitle(title: string) {
-        this.editedItem.customTitle = this.newTitle;
+    /**
+     * @description set newTitle as customTitle for editedItem
+     */
+    saveNewTitle() {
+        this.editedItem.customTitle = this.newTitle.trim();
         this.cancelTitleEdit();
     }
 
+    /**
+     * @description cancel title edit, set selectedCurrItem, selectedDictItem,
+     * editedItem, newTitle equal to null
+     */
     cancelTitleEdit() {
         this.selectedCurrItem = null;
         this.selectedDictItem = null;
@@ -160,10 +177,17 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this.newTitle = null;
     }
 
+    /**
+     * open modal with remove custom titles confirmation
+     * @param template modal template
+     */
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
     }
 
+    /**
+     * remove all custom titles
+     */
     moveTitlesBack() {
         this.modalRef.hide();
         this.currentFields.forEach((_f) => {

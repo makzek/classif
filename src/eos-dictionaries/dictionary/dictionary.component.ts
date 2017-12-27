@@ -156,6 +156,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
+                    const _customTitles = this._dictSrv.customTitles;
+                    _customTitles.forEach((_title) => {
+                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
+                    });
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -517,6 +521,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;
+            this._dictSrv.customTitles = this.viewFields;
+            /* tslint:enable:no-bitwise */
             this._countColumnWidth();
             this.modalWindow.hide();
         });
