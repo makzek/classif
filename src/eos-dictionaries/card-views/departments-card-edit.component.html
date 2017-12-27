@@ -97,13 +97,16 @@
                         triggers="">
                 </div>
                 <div class="form-group">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUE_LINK_ORGANIZ">DUE связанной организации</label>
-                    <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control m-font " [ngModel]="data.rec['DUE_LINK_ORGANIZ']"
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="DUE_LINK_ORGANIZ">Организация</label>
+                    <!-- <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control m-font " [ngModel]="data.rec['DUE_LINK_ORGANIZ']"
                         (ngModelChange)="change('DUE_LINK_ORGANIZ', 'rec', $event)" placeholder="DUE связанной организации}"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('DUE_LINK_ORGANIZ')" (blur)="blur()" maxlength="248"
                         [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['DUE_LINK_ORGANIZ']?.invalid && cardForm.controls['DUE_LINK_ORGANIZ']?.dirty && focusedField === 'DUE_LINK_ORGANIZ'"
-                        triggers="">
+                        triggers=""> -->
+                        <div>{{data.organization.CLASSIF_NAME}} <button (click)="chooseOrganiz(data)">выбрать</button></div>
+
+
                 </div>
                 <div class="form-group">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CARD_NAME">Наименование картотеки</label>
