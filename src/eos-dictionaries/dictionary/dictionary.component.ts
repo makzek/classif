@@ -521,10 +521,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;
-            /* tslint:disable:no-bitwise */
-            if (!!~this.viewFields.findIndex((_field) => !!_field.customTitle)) {
-                this._dictSrv.customTitles = this.viewFields;
-            }
+            this._dictSrv.customTitles = this.viewFields;
             /* tslint:enable:no-bitwise */
             this._countColumnWidth();
             this.modalWindow.hide();
