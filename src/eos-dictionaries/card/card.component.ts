@@ -394,9 +394,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 if (node) {
                     console.log('save', node);
                     this._initNodeData(node);
-                    if (this.dictionaryId === 'departments') {
-                        this._dictSrv.addHintItem(node);
-                    }
                     this._setOriginalData();
                     this.cancel();
                 }
