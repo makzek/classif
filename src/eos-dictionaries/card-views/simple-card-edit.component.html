@@ -14,6 +14,7 @@
                         [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                         placement="right" containerClass="tooltip-error" container="body"
                         (focus)="focus(key)" (blur)="blur()"
+                        autocomplete="off"
                         [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
                         <!--pre>{{fieldsDescription[key] | json}}</pre-->
                     </div>
