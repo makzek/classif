@@ -129,6 +129,7 @@
     position: fixed;
     bottom: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
+    z-index: 3;
 }
 
 .btn-transparent {
