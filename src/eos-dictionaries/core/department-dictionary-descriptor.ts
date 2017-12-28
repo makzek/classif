@@ -2,9 +2,6 @@ import {
     E_FIELD_SET,
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
-    IDictionaryDescriptor,
-    ITreeDictionaryDescriptor,
-    IRecordMode,
     IRecordModeDescription,
 } from './dictionary.interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';

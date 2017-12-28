@@ -41,14 +41,3 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         this.unicInDict = !!data.unicInDict;
     }
 }
-
-export class FieldGroup {
-    /* readonly index: number; */
-    readonly title: string;
-    fields: FieldDescriptor[];
-
-    constructor(title: string) {
-        this.title = title;
-        this.fields = [];
-    }
-}
