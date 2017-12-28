@@ -626,7 +626,7 @@ export class EosDictService {
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
-        this._srchCriteries = [this.dictionary.getFullsearchCriteries(data.rec, params, this.selectedNode)];
+        this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.selectedNode)];
         return this._search(params.deleted);
     }
 

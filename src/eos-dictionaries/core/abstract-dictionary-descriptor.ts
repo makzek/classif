@@ -53,6 +53,17 @@ export abstract class AbstractDictionaryDescriptor {
         this.metadata = metadata[this.apiInstance];
     }
 
+    getFullSearchCriteries(data: any): any {
+        const _searchFields = this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries = {};
+        _searchFields.forEach((fld) => {
+            if (data.rec[fld.foreignKey]) {
+                _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+            }
+        });
+        return _criteries;
+    }
+
     abstract _init(descriptor: IDictionaryDescriptor);
 
     abstract addRecord(...params): Promise<any>;

@@ -147,6 +147,30 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         return this.getData({ criteries: _children });
     }
 
+    getFullSearchCriteries(data: any): any {
+        const _criteries = {};
+        const _searchFields = this.fullSearchFields[data['srchMode']]; // this.getFieldSet(E_FIELD_SET.fullSearch);
+        switch (data['srchMode']) {
+            case 'department':
+                _criteries['IS_NODE'] = '0';
+                break;
+            case 'person':
+                _criteries['IS_NODE'] = '1';
+                break;
+            case 'cabinet':
+                _criteries['department.cabinet.CABINET_NAME'] = '"' + data.cabinet['CABINET_NAME'].trim() + '"';
+                break;
+        }
+        if (data['srchMode'] !== 'cabinet') {
+            _searchFields.forEach((fld) => {
+                if (data.rec[fld.foreignKey]) {
+                    _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+                }
+            })
+        }
+        return _criteries;
+    }
+
     getSubtree(record: IHierCL): Promise<IHierCL[]> {
         const layer = record.DUE.split('.').length - 1; // calc layer with DUE
         const criteries = {

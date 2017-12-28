@@ -2,7 +2,8 @@ import { SEARCH_TYPES } from '../consts/search-types';
 
 export enum E_DEPT_MODE {
     person,
-    department
+    department,
+    cabinet
 };
 
 export enum E_DICT_TYPE {
