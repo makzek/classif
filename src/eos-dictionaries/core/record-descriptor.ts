@@ -1,6 +1,6 @@
 import {
     IDictionaryDescriptor, IFieldView, IFieldDesriptor,
-    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, E_ACTION_GROUPS
+    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, E_ACTION_GROUPS, IRecordModeDescription
 } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
@@ -54,13 +54,14 @@ export class RecordDescriptor {
      */
     protected allVisibleFields: FieldDescriptor[];
 
+    protected modeList: IRecordModeDescription[];
 
     constructor(dictionary: AbstractDictionaryDescriptor, data: IDictionaryDescriptor) {
         const fields = data.fields;
         this.dictionary = dictionary;
         this.fieldsMap = new Map<string, FieldDescriptor>();
         this.fields = [];
-
+        this.searchConfig = data.searchConfig;
         fields.forEach((f) => {
             if (!f.foreignKey) {
                 f.foreignKey = f.key;
@@ -81,6 +82,10 @@ export class RecordDescriptor {
             'listFields',
             'fullSearchFields',
         ], data);
+    }
+
+    addFieldToSet(name: string, fieldSet: FieldDescriptor[]) {
+        this._addFieldToSet(name, fieldSet);
     }
 
     canDo(action: E_RECORD_ACTIONS): boolean {
@@ -121,8 +126,8 @@ export class RecordDescriptor {
         return this.searchConfig;
     }
 
-    getModeList() {
-        return null;
+    getModeList(): IRecordModeDescription[] {
+        return this.modeList;
     }
 
     getFieldView(aSet: E_FIELD_SET, mode?: string) {
@@ -264,5 +269,71 @@ export class RecordDescriptor {
             }
         })
     }
+
+    /* departments part
+        _init(descriptor: IDepartmentDictionaryDescriptor) {
+        if (descriptor.fields) {
+            this.record = new DepartmentRecordDescriptor(this, descriptor);
+        }
+
+        this._initModeSets([
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields',
+            'listFields'
+        ], descriptor);
+    }
+
+    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+        const _res = super._getFieldSet(aSet, values);
+        if (_res) {
+            return _res;
+        }
+        switch (aSet) {
+            case E_FIELD_SET.fullSearch:
+                let __res = [];
+                Object.keys(this.fullSearchFields).forEach((mode) => {
+                    __res = __res.concat(__res, this.fullSearchFields[mode]);
+                })
+                return __res;
+            case E_FIELD_SET.quickView:
+                return this._getModeSet(this.quickViewFields, values);
+            case E_FIELD_SET.shortQuickView:
+                return this._getModeSet(this.shortQuickViewFields, values);
+            case E_FIELD_SET.edit:
+                return this._getModeSet(this.editFields, values);
+            case E_FIELD_SET.list:
+                return this._getModeSet(this.listFields, values);
+            default:
+                throw new Error('Unknown field set');
+        }
+    }
+
+    private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
+        //  todo: fix hardcode to data, need better solution
+        let _mode: string = E_DEPT_MODE[this.record.getMode(values)];
+
+        if (!_mode) {
+            _mode = E_DEPT_MODE[E_DEPT_MODE.department];
+        }
+
+        if (_mode && _set[_mode]) {
+            return _set[_mode];
+        } else {
+            return [];
+        }
+    }
+
+    private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
+        setNames.forEach((setName) => {
+            if (!this[setName]) {
+                this[setName] = new ModeFieldSet(this.record, descriptor[setName]);
+            }
+        })
+    }
+
+*/
 }
 

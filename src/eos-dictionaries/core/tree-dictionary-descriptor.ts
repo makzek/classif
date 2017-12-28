@@ -19,49 +19,6 @@ export class TreeRecordDescriptor extends RecordDescriptor {
 
 export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: TreeRecordDescriptor;
-    protected fullSearchFields: FieldDescriptor[];
-    protected quickViewFields: FieldDescriptor[];
-    protected shortQuickViewFields: FieldDescriptor[];
-    protected editFields: FieldDescriptor[];
-    protected listFields: FieldDescriptor[];
-    protected allVisibleFields: FieldDescriptor[];
-
-    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
-        const _res = super._getFieldSet(aSet, values);
-        if (_res) {
-            return _res;
-        }
-        switch (aSet) {
-            case E_FIELD_SET.fullSearch:
-                return this.fullSearchFields;
-            case E_FIELD_SET.quickView:
-                return this.quickViewFields;
-            case E_FIELD_SET.shortQuickView:
-                return this.shortQuickViewFields;
-            case E_FIELD_SET.edit:
-                return this.editFields;
-            case E_FIELD_SET.list:
-                return this.listFields;
-            case E_FIELD_SET.allVisible:
-                return this.allVisibleFields;
-            default:
-                throw new Error('Unknown field set');
-        }
-    }
-
-    _init(descriptor: ITreeDictionaryDescriptor) {
-        if (descriptor.fields) {
-            this.record = new TreeRecordDescriptor(this, descriptor);
-        }
-        this._initFieldSets([
-            'quickViewFields',
-            'shortQuickViewFields',
-            'editFields',
-            'listFields',
-            'fullSearchFields',
-            'allVisibleFields',
-        ], descriptor);
-    }
 
     addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
@@ -84,18 +41,6 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData({ criteries: _children }, 'DUE');
     }
 
-    getSubtree(record: IHierCL): Promise<IHierCL[]> {
-        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
-        console.log('layer', layer);
-        const criteries = {
-            DUE: record.DUE + '%',
-            LAYER: (layer + 1) + ':' + (layer + 2),
-            // IS_NODE: '0'
-        };
-        return this.getData(PipRX.criteries(criteries));
-        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
-    }
-
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
@@ -106,6 +51,18 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getRoot(): Promise<any[]> {
         return this.getData({ criteries: { LAYER: '0:2'/*, IS_NODE: '0'*/ } }, 'DUE');
+    }
+
+    getSubtree(record: IHierCL): Promise<IHierCL[]> {
+        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
+        console.log('layer', layer);
+        const criteries = {
+            DUE: record.DUE + '%',
+            LAYER: (layer + 1) + ':' + (layer + 2),
+            // IS_NODE: '0'
+        };
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
     private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {

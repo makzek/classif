@@ -11,6 +11,11 @@ import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 
 export abstract class AbstractDictionaryDescriptor {
+    /**
+     * decription of dictionary fields
+     */
+    abstract record: RecordDescriptor;
+
     readonly id: string;
     readonly title: string;
     readonly type: E_DICT_TYPE;
@@ -23,11 +28,6 @@ export abstract class AbstractDictionaryDescriptor {
      * api service endpoint
      */
     protected apiSrv: PipRX;
-
-    /**
-     * decription of dictionary fields
-     */
-    abstract record: RecordDescriptor;
 
     get dictionaryType(): E_DICT_TYPE {
         return this.type;
@@ -56,19 +56,6 @@ export abstract class AbstractDictionaryDescriptor {
     merge(metadata: any) {
         this.metadata = metadata[this.apiInstance];
     }
-
-    getFullSearchCriteries(data: any): any {
-        const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries = {};
-        _searchFields.forEach((fld) => {
-            if (data.rec[fld.foreignKey]) {
-                _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
-            }
-        });
-        return _criteries;
-    }
-
-    abstract _init(descriptor: IDictionaryDescriptor);
 
     abstract addRecord(...params): Promise<any>;
 
@@ -125,6 +112,17 @@ export abstract class AbstractDictionaryDescriptor {
                 this.prepareForEdit(data);
                 return data;
             });
+    }
+
+    getFullSearchCriteries(data: any): any {
+        const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries = {};
+        _searchFields.forEach((fld) => {
+            if (data.rec[fld.foreignKey]) {
+                _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+            }
+        });
+        return _criteries;
     }
 
     getRelated(rec: any, ...args): Promise<any> {
