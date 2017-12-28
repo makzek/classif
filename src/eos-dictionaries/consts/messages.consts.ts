@@ -2,7 +2,7 @@ import { IMessage, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT } from '../..
 
 export const WARN_EDIT_ERROR: IMessage = {
     type: 'warning',
-    title: 'Ошибка редактирования: ',
+    title: 'Предупреждение: ',
     msg: 'не выбран элемент для редактирования'
 };
 
@@ -60,6 +60,12 @@ export const SUCCESS_SAVE: IMessage = {
     type: 'success',
     title: 'Изменения сохранены',
     msg: ''
+}
+
+export const WARN_SAVE_FAILED: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'изменения не сохранены!'
 }
 
 export const WARN_LOGIC_DELETE: IMessage = {
