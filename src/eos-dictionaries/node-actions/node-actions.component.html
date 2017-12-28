@@ -26,7 +26,7 @@
         <ul *dropdownMenu class="dropdown-menu" role="menu">
             <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
                 <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
-                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item)">{{item.title}}</button>
+                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item.type)">{{item.title}}</button>
                 </li>
             </ng-template>
         </ul>
