@@ -1,4 +1,4 @@
-import { E_FIELD_SET, IDictionaryDescriptor, ITreeDictionaryDescriptor } from './dictionary.interfaces';
+import { E_FIELD_SET, IDictionaryDescriptor, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';

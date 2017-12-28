@@ -1,8 +1,7 @@
-import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;

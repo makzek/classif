@@ -1,4 +1,4 @@
-import { IDictionaryDescriptor, E_DICT_TYPE } from '../../core/dictionary.interfaces';
+import { IDictionaryDescriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 /*

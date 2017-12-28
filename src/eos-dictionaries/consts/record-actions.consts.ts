@@ -1,5 +1,4 @@
-import { IAction } from '../core/action.interface';
-import { E_RECORD_ACTIONS, E_ACTION_GROUPS } from '../core/record-action';
+import { IAction , E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/interfaces';
 
 export const RECORD_ACTIONS_EDIT = {
     type: E_RECORD_ACTIONS.edit,

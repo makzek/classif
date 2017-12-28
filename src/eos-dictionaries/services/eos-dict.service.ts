@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
-import { ISearchSettings } from '../core/search-settings.interface';
+import { IDictionaryViewParameters, ISearchSettings, IOrderBy, IDictionaryDescriptor, IFieldView } from 'eos-dictionaries/interfaces';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
@@ -15,13 +14,10 @@ import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts
 import { LS_USE_USER_ORDER } from '../consts/common';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosUserProfileService } from 'app/services/eos-user-profile.service';
-import { IOrderBy } from '../core/sort.interface'
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
 import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
-import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
@@ -349,8 +345,8 @@ export class EosDictService {
         }
     }
 
-        // console.log('reloadNode', node);
-                // console.log('reloadNode', nodeData);
+    // console.log('reloadNode', node);
+    // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }

@@ -1,4 +1,4 @@
-import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from './dictionary.interfaces';
+import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;

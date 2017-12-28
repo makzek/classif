@@ -1,9 +1,10 @@
-import { IDictionaryDescriptor, E_FIELD_SET, IFieldView, IFieldDesriptor } from './dictionary.interfaces';
+import {
+    IDictionaryDescriptor, IFieldView, IFieldDesriptor,
+    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, E_ACTION_GROUPS
+} from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 import { SEARCH_TYPES } from 'eos-dictionaries/consts/search-types';
-import { E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/core/record-action';
 
 export class RecordDescriptor {
     protected dictionary: AbstractDictionaryDescriptor;
@@ -71,10 +72,18 @@ export class RecordDescriptor {
 
         this._setCustomField('keyField', data);
         this._initActions(data);
-        this._initFieldSets(['searchFields', 'allVisibleFields'], data);
-}
+        this._initFieldSets([
+            'searchFields',
+            'allVisibleFields',
+            'quickViewFields',
+            'shortQuickViewFields',
+            'editFields',
+            'listFields',
+            'fullSearchFields',
+        ], data);
+    }
 
-    canDo(group: E_ACTION_GROUPS, action: E_RECORD_ACTIONS): boolean {
+    canDo(action: E_RECORD_ACTIONS): boolean {
         /* tslint:disable:no-bitwise */
         return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
@@ -157,7 +166,19 @@ export class RecordDescriptor {
                 return this._getSearchFields();
             case E_FIELD_SET.allVisible:
                 return this._getAllVisibleFields();
+            case E_FIELD_SET.fullSearch:
+                return this.fullSearchFields;
+            case E_FIELD_SET.quickView:
+                return this.quickViewFields;
+            case E_FIELD_SET.shortQuickView:
+                return this.shortQuickViewFields;
+            case E_FIELD_SET.edit:
+                return this.editFields;
+            case E_FIELD_SET.list:
+                return this.listFields;
             default:
+                // throw new Error('Unknown field set');
+                console.warn('Unknown field set', aSet);
                 return null;
         }
     }

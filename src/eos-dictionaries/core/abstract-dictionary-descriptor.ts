@@ -1,4 +1,6 @@
-import { E_DICT_TYPE, IDictionaryDescriptor } from './dictionary.interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult  } from 'eos-dictionaries/interfaces';
+import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
+
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
@@ -7,8 +9,6 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
-import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
-import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export abstract class AbstractDictionaryDescriptor {
     readonly id: string;
@@ -43,7 +43,11 @@ export abstract class AbstractDictionaryDescriptor {
             this.apiSrv = apiSrv;
             commonMergeMeta(this);
 
-            this._init(descriptor);
+            if (descriptor.fields) {
+                this.record = new RecordDescriptor(this, descriptor);
+            }
+
+            /* this._init(descriptor); */
         } else {
             return undefined;
         }
@@ -54,7 +58,7 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     getFullSearchCriteries(data: any): any {
-        const _searchFields = this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
         const _criteries = {};
         _searchFields.forEach((fld) => {
             if (data.rec[fld.foreignKey]) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EosDictService } from '../services/eos-dict.service';
-import { IDictionaryDescriptor } from 'eos-dictionaries/core/dictionary.interfaces';
+import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-dictionaries',

@@ -3,7 +3,7 @@ import {
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
-} from './dictionary.interfaces';
+} from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';

@@ -3,7 +3,7 @@ import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView } from '../core/dictionary.interfaces';
+import { IFieldView } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-column-settings',

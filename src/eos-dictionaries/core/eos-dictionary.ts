@@ -4,21 +4,20 @@ import {
     IDictionaryDescriptor,
     IDepartmentDictionaryDescriptor,
     ITreeDictionaryDescriptor,
-    IFieldView,
-    E_FIELD_TYPE
-} from './dictionary.interfaces';
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
+    E_FIELD_TYPE,
+    ISearchSettings,
+    SEARCH_MODES,
+    IOrderBy,
+    IRecordOperationResult,
+    E_RECORD_ACTIONS,
+} from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 
-import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { IEnt } from 'eos-rest';
-import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -76,7 +75,7 @@ export class EosDictionary {
     }
 
     get canMarkItems(): boolean {
-        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
+        return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
     constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
@@ -368,7 +367,7 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
+        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
                 [fld.foreignKey]: '"' + search + '"'

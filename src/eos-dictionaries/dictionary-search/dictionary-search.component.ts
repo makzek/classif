@@ -5,13 +5,11 @@ import { NgForm } from '@angular/forms';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
+import { E_DICT_TYPE, E_FIELD_SET, IFieldView, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -88,14 +86,14 @@ export class DictionarySearchComponent implements OnDestroy {
                         cabinet: {}
                     });
                 }
-                this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
+                this.fieldsDescription = _d.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.type = _d.descriptor.dictionaryType;
-                this.modes = _d.descriptor.getModeList();
+                this.modes = _d.descriptor.record.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
                 }
 
-                const _config = _d.descriptor.getSearchConfig();
+                const _config = _d.descriptor.record.getSearchConfig();
                 /* tslint:disable:no-bitwise */
                 this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
