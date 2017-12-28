@@ -10,7 +10,7 @@
         <div class="col">
             <span class="title unimportant-text">Список возможных столбцов таблицы</span>
             <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]="dictionaryFields">
-                <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, false)" [ngClass]="{'highlighted': item === selectedDictItem}">
+                <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, 2)" [ngClass]="{'highlighted': item === selectedDictItem}">
                     <span class="text">{{item?.customTitle || item?.title}}</span>
                 </div>
             </div>
@@ -29,11 +29,11 @@
             <span class="title unimportant-text">Итоговый список столбцов</span>
             <div class="info-block right modal-block">
                 <div [dragula]='"fixed-bag"'>
-                    <div class="item fixed-item" *ngFor="let item of fixedFields" (click)="select(item, true)"
-                        [ngClass]="{'highlighted': item === selectedCurrItem}">
+                    <div class="item fixed-item" *ngFor="let item of fixedFields" (click)="select(item, 3)"
+                        [ngClass]="{'highlighted': item === selectedFixedItem}">
                         <i class="fa fa-lock unimportant-text" aria-hidden="true"></i>
                         <span *ngIf="editedItem !== item" class="text fixed">{{item?.customTitle || item?.title}}</span>
-                        <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
+                        <button [hidden]="item !== selectedFixedItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
                             (click)="edit(item)"></button>
                         <input *ngIf="editedItem === item" class="form-control highlighted new-title" autofocus [(ngModel)]="newTitle"/>
                         <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="current" [dragula]='"bag-one"' id="selected" [dragulaModel]="currentFields">
-                    <div class="item" *ngFor="let item of currentFields" (click)="select(item, true)"
+                    <div class="item" *ngFor="let item of currentFields" (click)="select(item, 1)"
                         [ngClass]="{'highlighted': item === selectedCurrItem, 'fixed-item': editedItem === item}">
                         <span *ngIf="editedItem !== item" class="text">{{item?.customTitle || item?.title}}</span>
                         <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
