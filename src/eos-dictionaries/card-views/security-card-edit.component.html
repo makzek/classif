@@ -1,0 +1,70 @@
+<div class="simple-card-edit security-card-edit">
+        <article class="edit-content">
+            <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
+                <div class="form-group">
+                    <label for="SEC_INDEX" class="primary-text" [ngClass]="{'unimportant-text': !editMode}">
+                        Индекс грифа
+                    </label>
+                    <input [readonly]="!editMode" id="SEC_INDEX" name="SEC_INDEX" type="text" class="form-control m-font" [ngModel]="data.rec['SEC_INDEX']"
+                        (ngModelChange)="change('SEC_INDEX', 'rec', $event)" placeholder="Индекс грифа" [readonly]="!editMode"
+                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString"
+                        maxlength="24" [eosUnic]="false"
+                        [tooltip]="'Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены.'"
+                        placement="right" containerClass="tooltip-error" container="body" (focus)="focus('SEC_INDEX')" (blur)="blur()"
+                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['SEC_INDEX']?.dirty && cardForm.controls['SEC_INDEX']?.invalid && focusedField === 'SEC_INDEX'"
+                        triggers="">
+                </div>
+
+                <div class="form-group">
+                    <label for="GRIF_NAME" class="primary-text required" [ngClass]="{'unimportant-text': !editMode}">
+                        Наименование грифа
+                    </label>
+                    <input [readonly]="!editMode" id="GRIF_NAME" name="GRIF_NAME" type="text" class="form-control m-font" [ngModel]="data.rec['GRIF_NAME']"
+                        (ngModelChange)="change('GRIF_NAME', 'rec', $event)" placeholder="Наименование грифа" [readonly]="!editMode"
+                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString" required
+                        maxlength="64" [eosUnic]="true" [key]="'GRIF_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true"
+                        [tooltip]="'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника'"
+                        placement="right" containerClass="tooltip-error" container="body" (focus)="focus('GRIF_NAME')" (blur)="blur()"
+                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['GRIF_NAME']?.dirty && cardForm.controls['GRIF_NAME']?.invalid && focusedField === 'GRIF_NAME'"
+                        triggers="">
+                </div>
+
+                <div class="form-group">
+                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode}">
+                        Требуется
+                    </label>
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="checkbox" name="EDS_FLAG" [(ngModel)]="data.rec['EDS_FLAG']" [disabled]="!editMode">
+                                <span></span>ЭП</label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="checkbox" name="ENCRYPT_FLAG" [(ngModel)]="data.rec['ENCRYPT_FLAG']" [disabled]="!editMode">
+                                <span></span>шифрование</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="NOTE" class="primary-text" [ngClass]="{'unimportant-text': !editMode}">
+                        Примечание
+                    </label>
+                    <input [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control m-font" [ngModel]="data.rec['NOTE']"
+                        (ngModelChange)="change('NOTE', 'rec', $event)" placeholder="Примечание" [readonly]="!editMode"
+                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString"
+                        maxlength="255" [eosUnic]="false"
+                        [tooltip]="'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'"
+                        placement="right" containerClass="tooltip-error" container="body" (focus)="focus('NOTE')" (blur)="blur()"
+                        [isDisabled]="!editMode" [isOpen]="cardForm.controls['NOTE']?.dirty && cardForm.controls['NOTE']?.invalid && focusedField === 'GRIF_NAME'"
+                        triggers="">
+                </div>
+    
+                <div class="form-group unimportant-text s-font">
+                    <label>* - поля обязательные к заполнению</label>
+                </div>
+            </form>
+        </article>
+    </div>
+    
