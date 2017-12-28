@@ -31,6 +31,9 @@ export class EosDictionary {
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
     private _showDeleted: boolean;
 
+    public shortPositionsList: string[] = [];
+    public fullPositionsList: string[] = [];
+
     get showDeleted(): boolean {
         return this._showDeleted;
     }
@@ -183,6 +186,7 @@ export class EosDictionary {
                 if (_node && nodeIds.findIndex((id) => id === _node.id) === -1) {
                     nodeIds.push(_node.id);
                 }
+
             } else {
                 console.log('no data');
             }
@@ -196,6 +200,55 @@ export class EosDictionary {
         }
 
         return nodes;
+    }
+
+    public initHintLists(): string[][] {
+        console.log('init');
+        this.nodes.forEach((node) => {
+            if (node.data.rec['IS_NODE']) {
+                /* tslint:disable:no-bitwise */
+                if (!this.shortPositionsList.length || !!~this.shortPositionsList.findIndex((_title) =>
+                    _title !== node.data.rec['DUTY'])) {
+                    this.shortPositionsList.push(node.data.rec['DUTY']);
+                }
+
+                if (!this.fullPositionsList.length || !!~this.fullPositionsList.findIndex((_title) =>
+                    _title !== node.data.rec['FULLNAME'])) {
+                    this.fullPositionsList.push(node.data.rec['FULLNAME']);
+                }
+                /* tslint:enable:no-bitwise */
+            }
+        });
+        return [this.shortPositionsList, this.fullPositionsList];
+    }
+
+    public addValueToHint(newValue: string[]): string[][] {
+        if (this.shortPositionsList) {
+            if (this.shortPositionsList.findIndex((_title) => _title !== newValue[0])) {
+                this.shortPositionsList.push(newValue[0]);
+            }
+        } else {
+            this.shortPositionsList.push(newValue[0]);
+        }
+
+        if (this.fullPositionsList) {
+            if (this.fullPositionsList.findIndex((_title) => _title !== newValue[1])) {
+                this.fullPositionsList.push(newValue[1]);
+            }
+        } else {
+            this.fullPositionsList.push(newValue[1]);
+        }
+
+        return [this.shortPositionsList, this.fullPositionsList];
+    }
+
+    public getHintLists(): string[][] {
+        return [this.shortPositionsList, this.fullPositionsList];
+    }
+
+    public setHintLists(lists: string[][]) {
+        this.shortPositionsList = lists[0];
+        this.fullPositionsList = lists[1];
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
