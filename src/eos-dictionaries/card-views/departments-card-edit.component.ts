@@ -1,5 +1,5 @@
 
-import { Component, OnChanges, Injector } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { EosDictService } from '../services/eos-dict.service';
 
@@ -7,15 +7,15 @@ import { EosDictService } from '../services/eos-dict.service';
     selector: 'eos-departments-card-edit',
     templateUrl: 'departments-card-edit.component.html',
 })
-export class DepartmentsCardEditComponent extends BaseCardEditComponent implements OnChanges {
+export class DepartmentsCardEditComponent extends BaseCardEditComponent {
     constructor(injector: Injector) {
         super(injector);
     }
 
-    ngOnChanges() {
+    /*ngOnChanges() {
         // fake data
         const today = new Date();
-        /*this.data['alternates'] = [
+        this.data['alternates'] = [
             {
                 name: 'Иван Иванович',
                 START_DATE: today,
@@ -29,6 +29,14 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent implemen
                 START_DATE: today,
                 END_DATE: today,
             }
-        ];*/
+        ];
+    }*/
+
+    OnInvalid(val: any) {
+        this.invalid.emit(val);
+    }
+
+    recordChanded(data: any) {
+        this.onChange.emit(data);
     }
 }

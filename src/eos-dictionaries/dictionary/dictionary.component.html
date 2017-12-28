@@ -18,6 +18,18 @@
                     </button>
                 </div>
                 <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
+                <div class="tabs-wrapper usual-border m-font">
+                    <ul class="tabs" *ngIf="dictionary.id === 'departments'">
+                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active-border secondary-text': dictMode === 1}"
+                            (click)="setDictMode(1)">
+                            <span class="tab-title">Кабинеты</span>
+                        </li>
+                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active-border secondary-text': dictMode === 0}"
+                            (click)="setDictMode(0)">
+                            <span class="tab-title">Подразделения</span>
+                        </li>
+                    </ul>
+                </div>
                 <div class="item-count usual-border m-font">
                     <ng-container *ngIf="params.searchResults; then foundRecords; else records"></ng-container>
                     <ng-template #records>
@@ -69,7 +81,7 @@
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
                         </span>
-        
+
                         <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
@@ -94,3 +106,4 @@
         <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
     </div>
 </div>
+

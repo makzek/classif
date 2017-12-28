@@ -82,6 +82,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     customFields: IFieldView[] = [];
 
     modalWindow: BsModalRef;
+    formValidated = false;
+    hasChanges = false;
 
     public length = {}; // Length column
 
@@ -91,6 +93,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     _treeScrollTop = 0;
 
     dictTypes = E_DICT_TYPE;
+
+    dictMode = 1;
 
     searchStartFlag = false; // flag begin search
 
@@ -189,6 +193,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((mode) => {
+                this.dictMode = mode;
+            });
     }
 
     ngOnDestroy() {
@@ -591,5 +600,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             title: 'Ошибка операции',
             msg: errMessage
         });
+    }
+
+    setDictMode(mode: number) {
+        this._dictSrv.setDictMode(mode);
     }
 }
