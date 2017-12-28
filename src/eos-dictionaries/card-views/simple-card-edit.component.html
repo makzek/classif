@@ -5,7 +5,7 @@
                 <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                     {{fieldsDescription.rec[key].title}}
                 </label>
-                <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
+                <!--input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
                     [(ngModel)]="data.rec[key]"
                     placeholder="{{fieldsDescription.rec[key].title}}"
                     [readonly] = "!editMode"
@@ -16,7 +16,8 @@
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                     placement="right" containerClass="tooltip-error" container="body"
                     (focus)="focus(key)" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers=""-->
+                    <eos-text-input (change)="change($event)"></eos-text-input>
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
             </div>
 

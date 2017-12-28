@@ -16,6 +16,10 @@ import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
+import { TextInputComponent } from './text-input/text-input.component';
+
+/* directives */
+import { UnicValidatorDirective } from './directives/unic-validator.directive';
 
 @NgModule({
     declarations: [
@@ -26,6 +30,8 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
+        TextInputComponent,
+        UnicValidatorDirective,
     ],
     imports: [
         BrowserModule,
@@ -45,6 +51,8 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
+        TextInputComponent,
+        UnicValidatorDirective,
     ],
     entryComponents: [
         ConfirmWindowComponent,

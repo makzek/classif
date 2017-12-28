@@ -49,9 +49,6 @@ import { CreateNodeComponent } from './create-node/create-node.component';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
-/* directives */
-import { UnicValidatorDirective } from './directives/unic-validator.directive';
-
 @NgModule({
     declarations: [
         CardComponent,
@@ -77,7 +74,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
-        UnicValidatorDirective,
         LongTitleHintComponent,
         VisaTypeEditComponent,
         CreateNodeComponent,

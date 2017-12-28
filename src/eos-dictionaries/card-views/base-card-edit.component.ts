@@ -60,6 +60,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         this.focusedField = null;
     }
 
+    change(data: any) {
+        this.onChange.emit(data);
+    }
+
     /* clean(field: string, value: string) {
         this.change(field, value);
     }*/

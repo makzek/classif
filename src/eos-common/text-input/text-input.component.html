@@ -1,0 +1,13 @@
+<input #inputEl id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
+    [(ngModel)]="data"
+    placeholder="{{placeholder}}"
+    [readonly]="readonly"
+    [ngClass]="{'readonly': readonly }"
+    [required]="required"
+    [pattern]="pattern" maxlength="maxlength"
+    [eosUnic]="eosUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="inDict"
+    [tooltip]="tooltipMessage"
+    placement="right" containerClass="tooltip-error" container="body"
+    (focus)="focus()" (blur)="blur()"
+    (change)="onChange()"
+    [isOpen]="dirty && invalid && focusedField === key" triggers="">
