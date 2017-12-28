@@ -21,7 +21,8 @@ import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
     INFO_NOTHING_CHANGES,
     DANGER_EDIT_DELETED_ERROR,
-    SUCCESS_SAVE
+    SUCCESS_SAVE,
+    WARN_SAVE_FAILED
 } from '../consts/messages.consts';
 import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
@@ -415,11 +416,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     });
                     this._clearEditingCardLink();
                 } else {
-                    this._msgSrv.addNewMessage({
-                        type: 'warning',
-                        title: 'Ошибка операции',
-                        msg: ''
-                    });
+                    this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
+                    Promise.reject(resp);
                 }
                 return resp;
             })
