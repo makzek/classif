@@ -6,7 +6,7 @@
                     {{fieldsDescription.rec[key].title}}
                 </label>
                 <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
-                    [ngModel]="data.rec[key]" (ngModelChange)="change(key, 'rec', $event)"
+                    [(ngModel)]="data.rec[key]"
                     placeholder="{{fieldsDescription.rec[key].title}}"
                     [readonly] = "!editMode"
                     [ngClass]="{'readonly': !editMode }"

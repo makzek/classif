@@ -173,8 +173,15 @@
     }
 }
 
-.simple-card-edit {
+.simple-card-edit,
+.visa-type-card-edit {
     padding: 20px;
+}
+
+.visa-type-card-edit {
+    .checkbox {
+        padding-left: 0;
+    }
 }
 
 .appearance-none {

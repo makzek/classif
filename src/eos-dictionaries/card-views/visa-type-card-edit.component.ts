@@ -12,13 +12,4 @@ export class VisaTypeEditComponent extends BaseCardEditComponent {
     constructor(injector: Injector) {
         super(injector);
     }
-
-    public changeFinaly(val: boolean) {
-        this.data.rec['IS_FINAL'] = (val) ? 1 : 0;
-        this.onChange.emit(true);
-    }
-
-    public changed() {
-        this.onChange.emit(true);
-    }
 }
