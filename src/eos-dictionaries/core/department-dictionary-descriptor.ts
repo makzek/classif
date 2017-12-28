@@ -200,7 +200,7 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
     }
 
     getRoot(): Promise<any[]> {
-        return this.getData({ criteries: { LAYER: '0:2', IS_NODE: '0' } }, 'DUE');
+        return this.getData({ criteries: { LAYER: '0:2' /*, IS_NODE: '0'*/ } }, 'DUE');
     }
 
     private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
