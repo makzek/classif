@@ -388,6 +388,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     save(): void {
+        this.disableSave = true;
         this._save(this.nodeData)
             .then((node) => {
                 if (node) {
@@ -395,6 +396,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     this._setOriginalData();
                     this.cancel();
                 }
+                this.disableSave = false;
             });
     }
 
