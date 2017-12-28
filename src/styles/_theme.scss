@@ -124,18 +124,22 @@
         border-color: $active-field-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $active-field-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $active-field-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $active-field-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $active-field-color-main-theme;
     }
@@ -148,18 +152,22 @@
         border-color: $invalid-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $invalid-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $invalid-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $invalid-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $invalid-color-main-theme;
     }
