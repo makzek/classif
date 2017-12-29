@@ -5,4 +5,5 @@ export const RESPRJ_PRIORITY_DICT: IDictionaryDescriptor = Object.assign({}, LIN
     id: 'reprj-priority',
     apiInstance: 'RESPRJ_PRIORITY_CL',
     title: 'Приоритеты проекта поручения',
+    visible: true,
 });

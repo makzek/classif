@@ -8,8 +8,8 @@ import { SEARCH_TYPES } from 'eos-dictionaries/consts/search-types';
 
 export class RecordDescriptor {
     protected dictionary: AbstractDictionaryDescriptor;
-    parentField?: FieldDescriptor;
     keyField: FieldDescriptor;
+    parentField?: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
@@ -72,6 +72,7 @@ export class RecordDescriptor {
         });
 
         this._setCustomField('keyField', data);
+
         this._initActions(data);
         this._initFieldSets([
             'searchFields',
@@ -80,7 +81,7 @@ export class RecordDescriptor {
             'shortQuickViewFields',
             'editFields',
             'listFields',
-            'fullSearchFields',
+            // 'fullSearchFields',
         ], data);
     }
 

@@ -5,4 +5,5 @@ export const DELIVERY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
     id: 'delivery',
     apiInstance: 'DELIVERY_CL',
     title: 'Виды доставки',
+    visible: true,
 });

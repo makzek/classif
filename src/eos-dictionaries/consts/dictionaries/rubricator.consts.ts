@@ -8,6 +8,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'RUBRIC_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
         'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'

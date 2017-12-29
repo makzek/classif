@@ -18,6 +18,8 @@ import { DepartmentDictionaryDescriptor } from './department-dictionary-descript
 import { EosDictionaryNode } from './eos-dictionary-node';
 
 import { PipRX } from 'eos-rest/services/pipRX.service';
+import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { Injector } from '@angular/core/src/di/injector';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -78,21 +80,8 @@ export class EosDictionary {
         return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
-        switch (descData.dictType) {
-            case E_DICT_TYPE.linear:
-                this.descriptor = new DictionaryDescriptor(descData, apiSrv);
-                break;
-            case E_DICT_TYPE.tree:
-                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData, apiSrv);
-                break;
-            case E_DICT_TYPE.department:
-                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData, apiSrv);
-                break;
-            default:
-                throw new Error('No API instance');
-        }
-
+    constructor(dictId: string, dictDescr: DictionaryDescriptorService) {
+        this.descriptor = dictDescr.getDescriptorClass(dictId);
         this._nodes = new Map<string, EosDictionaryNode>();
         this.defaultOrder();
     }
@@ -126,7 +115,7 @@ export class EosDictionary {
         /* find root */
         if (!this.root) {
 
-            let rootNode = nodes.find((node) => node.parentId === null);
+            let rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
 
             /* fallback if root undefined */
             if (!rootNode) {

@@ -71,9 +71,8 @@ export interface IDictionaryDescriptor {
     dictType: E_DICT_TYPE;
     apiInstance: string;
     title: string;
+    visible?: boolean;
     actions: string[];
-    itemActions?: string[];
-    groupActions?: string[];
     fields: IFieldDesriptor[];
     keyField: string;
     parentField?: string;
@@ -113,9 +112,9 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
     modeField: string;
     modeList: IRecordModeDescription[];
+    quickViewFields: string[];
+    shortQuickViewFields: string[];
+    editFields: string[];
+    listFields: string[];
     fullSearchFields: IRecordMode;
-    quickViewFields: IRecordMode;
-    shortQuickViewFields: IRecordMode;
-    editFields: IRecordMode;
-    listFields: IRecordMode;
 };

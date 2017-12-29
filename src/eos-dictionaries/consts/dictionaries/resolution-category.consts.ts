@@ -5,4 +5,5 @@ export const RESOLUTION_CATEGORY_DICT: IDictionaryDescriptor = Object.assign({},
     id: 'resolution-category',
     apiInstance: 'RESOLUTION_CATEGORY_CL',
     title: 'Категории поручений',
+    visible: true,
 });

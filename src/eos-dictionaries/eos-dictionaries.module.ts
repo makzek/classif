@@ -46,6 +46,7 @@ import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.componen
 import { CreateNodeComponent } from './create-node/create-node.component';
 
 /* services */
+import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
@@ -110,6 +111,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ColumnSettingsComponent,
     ],
     providers: [
+        DictionaryDescriptorService,
         EosDictService,
         EosSandwichService,
     ],

@@ -3,6 +3,8 @@ import {
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
+    IDictionaryDescriptor,
+    ITreeDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
@@ -11,6 +13,7 @@ import { ModeFieldSet } from './record-mode';
 import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
+import { TreeRecordDescriptor, TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -23,21 +26,20 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         this.dictionary = dictionary;
         this._setCustomField('parentField', descriptor);
         this.modeField = this.fieldsMap.get(descriptor.modeField);
+
         if (!this.modeField) {
             throw new Error('No field decribed for "' + descriptor.modeField + '"');
         }
 
         this.modeList = descriptor.modeList;
+        this._initModeSets([
+            'fullSearchFields',
+        ], descriptor);
     }
 
     getMode(values: any): E_DEPT_MODE {
         /* if IS_NODE or another boolean field */
         if (values) {
-            /*if (values[this.modeField.key]) {
-                return E_DEPT_MODE.department;
-            } else {
-                return E_DEPT_MODE.person;
-            }*/
             if (values.rec[this.modeField.key]) { // 0 - department, 1 - person !!!
                 return E_DEPT_MODE.person;
             } else {
@@ -47,9 +49,57 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             return undefined;
         }
     }
+
+    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+        const _res = super._getFieldSet(aSet, values);
+        if (_res) {
+            return _res;
+        }
+        switch (aSet) {
+            case E_FIELD_SET.fullSearch:
+                let __res = [];
+                Object.keys(this.fullSearchFields).forEach((mode) => {
+                    __res = __res.concat(__res, this.fullSearchFields[mode]);
+                })
+                return __res;
+            case E_FIELD_SET.quickView:
+                return this._getModeSet(this.quickViewFields, values);
+            case E_FIELD_SET.shortQuickView:
+                return this._getModeSet(this.shortQuickViewFields, values);
+            case E_FIELD_SET.edit:
+                return this._getModeSet(this.editFields, values);
+            case E_FIELD_SET.list:
+                return this._getModeSet(this.listFields, values);
+            default:
+                throw new Error('Unknown field set');
+        }
+    }
+
+    private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
+        //  todo: fix hardcode to data, need better solution
+        let _mode: string = E_DEPT_MODE[this.getMode(values)];
+
+        if (!_mode) {
+            _mode = E_DEPT_MODE[E_DEPT_MODE.department];
+        }
+
+        if (_mode && _set[_mode]) {
+            return _set[_mode];
+        } else {
+            return [];
+        }
+    }
+
+    private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
+        setNames.forEach((setName) => {
+            if (!this[setName]) {
+                this[setName] = new ModeFieldSet(this, descriptor[setName]);
+            }
+        })
+    }
 }
 
-export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor {
+export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
     record: DepartmentRecordDescriptor;
     protected fullSearchFields: ModeFieldSet;
     protected quickViewFields: ModeFieldSet;
@@ -156,7 +206,11 @@ export class DepartmentDictionaryDescriptor extends AbstractDictionaryDescriptor
         return this.getData({ criteries: { LAYER: '0:2' /*, IS_NODE: '0'*/ } }, 'DUE');
     }
 
-    private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    protected _initRecord(data: IDictionaryDescriptor) {
+        this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
+    }
+
+    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;
 

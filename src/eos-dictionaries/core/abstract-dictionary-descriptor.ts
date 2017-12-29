@@ -42,22 +42,15 @@ export abstract class AbstractDictionaryDescriptor {
 
             this.apiSrv = apiSrv;
             commonMergeMeta(this);
-
-            if (descriptor.fields) {
-                this.record = new RecordDescriptor(this, descriptor);
-            }
-
-            /* this._init(descriptor); */
+            this._initRecord(descriptor);
         } else {
             return undefined;
         }
     }
 
-    merge(metadata: any) {
-        this.metadata = metadata[this.apiInstance];
-    }
-
     abstract addRecord(...params): Promise<any>;
+    abstract getChildren(...params): Promise<any[]>;
+    abstract getSubtree(...params): Promise<any[]>;
 
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
@@ -86,8 +79,9 @@ export abstract class AbstractDictionaryDescriptor {
         return Promise.all(pDelete);
     }
 
-    abstract getChildren(...params): Promise<any[]>;
-    abstract getSubtree(...params): Promise<any[]>;
+    merge(metadata: any) {
+        this.metadata = metadata[this.apiInstance];
+    }
 
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
@@ -235,6 +229,12 @@ export abstract class AbstractDictionaryDescriptor {
             .read(query)
             .then((items: any[]) => this.apiSrv.entityHelper.prepareForEdit(items[0]));
     }
+
+    protected _initRecord(descriptorData: IDictionaryDescriptor) {
+        if (descriptorData.fields) {
+            this.record = new RecordDescriptor(this, descriptorData);
+        }
+    };
 
     protected prepareForEdit(records: any[]): any[] {
         return records.map((record) => this.apiSrv.entityHelper.prepareForEdit(record));

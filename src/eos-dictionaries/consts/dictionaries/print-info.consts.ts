@@ -8,6 +8,7 @@ export const PRINT_INFO_DICT: IDictionaryDescriptor = {
     apiInstance: 'CB_PRINT_INFO',
     dictType: E_DICT_TYPE.linear,
     title: '',
+    visible: false,
     actions: ['add', 'edit', 'remove', 'removeHard'],
     keyField: 'ISN_OWNER',
     parentField: 'PARENT_DUE',

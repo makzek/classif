@@ -8,6 +8,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'REGION_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Регионы',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization',
         'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes', 'restore'],

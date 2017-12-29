@@ -5,4 +5,5 @@ export const RESPRJ_STATUS_DICT: IDictionaryDescriptor = Object.assign({}, LINEA
     id: 'reprj-status',
     apiInstance: 'RESPRJ_STATUS_CL',
     title: 'Статусы проекта поручения',
+    visible: true,
 });

@@ -10,9 +10,7 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: RecordDescriptor;
 
-    _init(descriptor: IDictionaryDescriptor) {
-    }
-
+    protected _initFields(data: IDictionaryDescriptor) { }
     addRecord(data: any, useless: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);

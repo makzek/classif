@@ -7,6 +7,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'ORGANIZ_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Организации',
+    visible: true,
     actions: ['add', 'edit', 'remove', 'removeHard'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',

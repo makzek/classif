@@ -14,6 +14,9 @@ export class TreeRecordDescriptor extends RecordDescriptor {
         super(dictionary, descriptor);
         this.dictionary = dictionary;
         this._setCustomField('parentField', descriptor);
+        this._initFieldSets([
+            'fullSearchFields',
+        ], descriptor);
     }
 }
 
@@ -65,7 +68,11 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
-    private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    protected _initRecord(data: ITreeDictionaryDescriptor) {
+        this.record = new TreeRecordDescriptor(this, data);
+    }
+
+    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;
 

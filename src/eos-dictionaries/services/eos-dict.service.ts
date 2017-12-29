@@ -9,16 +9,13 @@ import { IDictionaryViewParameters, ISearchSettings, IOrderBy, IDictionaryDescri
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
-import { DICTIONARIES } from '../consts/dictionaries.consts';
 import { WARN_SEARCH_NOTFOUND, DANGER_LOGICALY_RESTORE_ELEMENT } from '../consts/messages.consts';
-import { LS_USE_USER_ORDER } from '../consts/common';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
-import { PipRX } from 'eos-rest/services/pipRX.service';
 import { RestError } from 'eos-rest/core/rest-error';
+import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 
 @Injectable()
 export class EosDictService {
@@ -39,7 +36,6 @@ export class EosDictService {
     private _viewParameters$: BehaviorSubject<IDictionaryViewParameters>;
     private _paginationConfig$: BehaviorSubject<IPaginationConfig>;
     private _mDictionaryPromise: Map<string, Promise<EosDictionary>>;
-    private _dictionaries: Map<string, IDictionaryDescriptor>
     private _srchCriteries: any[];
     private _customFields: any;
     private _customTitles: any;
@@ -142,7 +138,7 @@ export class EosDictService {
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService,
-        private _pipeSrv: PipRX,
+        private _descrSrv: DictionaryDescriptorService,
         private _router: Router,
     ) {
         this._initViewParameters();
@@ -153,20 +149,8 @@ export class EosDictService {
         this._currentList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
-        this._dictionaries = new Map<string, IDictionaryDescriptor>();
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode$ = new BehaviorSubject(0);
-        DICTIONARIES
-            .sort((a, b) => {
-                if (a.title > b.title) {
-                    return 1;
-                } else if (a.title < b.title) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            })
-            .forEach((dict) => this._dictionaries.set(dict.id, dict));
     }
 
     private _initViewParameters() {
@@ -227,7 +211,7 @@ export class EosDictService {
     }
 
     public getDictionariesList(): Promise<IDictionaryDescriptor[]> {
-        return Promise.resolve(DICTIONARIES);
+        return Promise.resolve(this._descrSrv.visibleDictionaries());
     }
 
     public defaultOrder() {
@@ -271,9 +255,8 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            const descriptor = this._dictionaries.get(dictionaryId);
-            if (descriptor) {
-                this.dictionary = new EosDictionary(descriptor, this._pipeSrv);
+            this.dictionary = new EosDictionary(dictionaryId, this._descrSrv);
+            if (this.dictionary) {
                 _p = this.dictionary.init()
                     .then((root) => {
                         this._initViewParameters();
@@ -296,7 +279,7 @@ export class EosDictService {
                     });
                 this._mDictionaryPromise.set(dictionaryId, _p);
             } else {
-                _p = Promise.reject({ message: 'No dictionary' });
+                _p = Promise.reject({ message: 'Unknown dictionary "' + dictionaryId + '"' });
             }
         }
         return _p;

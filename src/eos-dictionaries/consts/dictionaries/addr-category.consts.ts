@@ -5,4 +5,5 @@ export const ADDR_CATEGORY_DICT: IDictionaryDescriptor = Object.assign({}, LINEA
     id: 'addr-category',
     apiInstance: 'ADDR_CATEGORY_CL',
     title: 'Категории адресатов',
+    visible: true,
 });

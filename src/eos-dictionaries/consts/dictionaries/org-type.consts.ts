@@ -5,4 +5,5 @@ export const ORG_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
     id: 'org-type',
     apiInstance: 'ORG_TYPE_CL',
     title: 'Формы собственности',
+    visible: true,
 });

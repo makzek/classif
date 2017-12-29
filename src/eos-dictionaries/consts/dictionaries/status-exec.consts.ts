@@ -5,4 +5,5 @@ export const STATUS_EXEC_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_
     id: 'status-exec',
     apiInstance: 'STATUS_EXEC_CL',
     title: 'Состояния исполнения (Контролера)',
+    visible: true,
 });

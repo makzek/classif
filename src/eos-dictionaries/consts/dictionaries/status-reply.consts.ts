@@ -5,4 +5,5 @@ export const STATUS_REPLY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR
     id: 'status-reply',
     apiInstance: 'STATUS_REPLY_CL',
     title: 'Состояния исполнения (Исполнителя)',
+    visible: true,
 });

@@ -7,6 +7,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     apiInstance: 'VISA_TYPE_CL',
     title: 'Типы виз',
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
+    visible: true,
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number',
