@@ -2,6 +2,7 @@ import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
+import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -20,11 +21,15 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     focusedField: string;
 
     protected dictSrv;
+    protected dataSrv;
 
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
+    inputs: any[];
+
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
+        this.dataSrv = injector.get(DataConvertService);
     }
 
     keys(data: Object): string[] {
@@ -44,6 +49,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
                 });
             }
         }, 0);
+        this.inputs = this.dataSrv.getInputs(this.fieldsDescription);
     }
 
     ngOnDestroy() {

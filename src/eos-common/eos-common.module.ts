@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { NgModule} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -16,7 +17,11 @@ import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
-import { TextInputComponent } from './text-input/text-input.component';
+// import { TextInputComponent } from './text-input/text-input.component';
+import { DynamicFormComponent } from './text-input/dynamic-form.component';
+import { DynamicFormInputComponent } from './text-input/dynamic-form-input.component';
+import { InputControlService } from './text-input/input-control.service';
+import { DataConvertService } from './text-input/data-convert.service';
 
 /* directives */
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
@@ -30,8 +35,10 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
-        TextInputComponent,
+        // TextInputComponent,
         UnicValidatorDirective,
+        DynamicFormInputComponent,
+        DynamicFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -40,6 +47,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         TooltipModule.forRoot(),
         AlertModule.forRoot(),
         ModalModule.forRoot(),
+        ReactiveFormsModule,
     ],
     exports: [
         ConfirmWindowComponent,
@@ -51,8 +59,10 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
-        TextInputComponent,
+        // TextInputComponent,
         UnicValidatorDirective,
+        DynamicFormComponent,
+        // DataConvertService,
     ],
     entryComponents: [
         ConfirmWindowComponent,
@@ -60,6 +70,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
     providers: [
         ConfirmWindowService,
         EosMessageService,
+        InputControlService,
+        DataConvertService,
     ]
 })
 export class EosCommonModule { }

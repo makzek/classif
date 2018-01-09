@@ -16,9 +16,10 @@
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                     placement="right" containerClass="tooltip-error" container="body"
                     (focus)="focus(key)" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers=""-->
-                    <eos-text-input (change)="change($event)"></eos-text-input>
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
+                    <eos-text-input (change)="change($event)"></eos-text-input-->
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
+                    <eos-dynamic-form [inputs]="inputs"></eos-dynamic-form>
             </div>
 
             <div class="form-group" *ngIf="data && data['sev']">
