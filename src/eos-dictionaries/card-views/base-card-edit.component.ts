@@ -12,6 +12,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() dutysList: string[];
+    @Input() fullNamesList: string[];
 
     @ViewChild('cardForm') cardForm: NgForm;
     private _subscrChanges: Subscription;

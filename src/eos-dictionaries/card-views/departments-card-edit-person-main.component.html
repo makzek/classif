@@ -112,7 +112,7 @@
                     (focus)="focus('DUTY')" (blur)="blur()" required maxlength="255" [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                     containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
-                    autocomplete="on"
+                    autocomplete="off" [typeahead]="dutysList"
                     triggers="">
 
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
@@ -128,7 +128,7 @@
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('fullPosition')" (blur)="blur()" maxlength="2000"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
-                autocomplete="on"
+                autocomplete="off" [typeahead]="fullNamesList"
                 triggers="">
         </div>
         <div class="form-group">
