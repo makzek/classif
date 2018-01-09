@@ -14,6 +14,7 @@ import { STATUS_EXEC_DICT } from './dictionaries/status-exec.consts';
 import { STATUS_REPLY_DICT } from './dictionaries/status-reply.consts';
 import { VISA_TYPE_DICT } from './dictionaries/visa-type.consts';
 import { CABINET_DICT } from './dictionaries/cabinet.consts';
+import { ORGANIZ_DICT } from './dictionaries/organiz.consts';
 
 export const DICTIONARIES = [
     /* tree dictionaries */
@@ -33,4 +34,5 @@ export const DICTIONARIES = [
     STATUS_REPLY_DICT,
     VISA_TYPE_DICT,
     CABINET_DICT,
+    ORGANIZ_DICT,
 ];
