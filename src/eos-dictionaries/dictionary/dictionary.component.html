@@ -59,9 +59,6 @@
                 </div>
             </div>
         </div>
-        <p *ngIf="selectedNode?.updating" class="text-center">
-            <eos-spinner size="lg"></eos-spinner>
-        </p>
         <div class="table-wrapper block">
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
@@ -94,8 +91,8 @@
                 </div>
             </div>
             <div [ngStyle]="{'width.px': tableWidth}">
-                <ng-container *ngIf="!selectedNode?.updating">
-                    <eos-node-list [nodes]="visibleNodes" [length]="length" [update]="params.updating" [customFields]="customFields" (checked)="updateMarks()"
+                <ng-container>
+                    <eos-node-list [nodes]="visibleNodes" [length]="length" [customFields]="customFields" (checked)="updateMarks()"
                         (reordered)="userOrdered($event)"></eos-node-list>
                     <eos-node-list-pagination [currentState]="[currentState[0] && !hideTree, currentState[1]]"></eos-node-list-pagination>
                 </ng-container>

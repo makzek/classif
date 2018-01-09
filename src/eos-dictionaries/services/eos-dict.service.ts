@@ -352,7 +352,15 @@ export class EosDictService {
         // console.log('reloadNode', node);
                 // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
+        if (this.selectedNode.id === nodeId) {
+            this.viewParameters.updating = true;
+            this._viewParameters$.next(this.viewParameters);
+        }
+        return this.dictionary.expandNode(nodeId).then((val) => {
+            this.viewParameters.updating = false;
+            this._viewParameters$.next(this.viewParameters);
+            return val
+        }).catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -416,6 +424,7 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
+            this.viewParameters.updating = true;
             // console.log('selectNode', nodeId, this.selectedNode);
             if (!this.selectedNode || this.selectedNode.id !== nodeId) {
                 // console.log('getting node');

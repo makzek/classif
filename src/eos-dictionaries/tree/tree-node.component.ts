@@ -32,8 +32,12 @@ export class TreeNodeComponent implements OnInit {
         if (this.node.isExpanded) {
             this.node.isExpanded = false;
         } else {
+            this.node.updating = true;
             this._dictSrv.expandNode(this.node.id)
-                .then((node) => node.isExpanded = true);
+                .then((node) => {
+                    node.isExpanded = true
+                    this.node.updating = false
+                });
         }
     }
 
