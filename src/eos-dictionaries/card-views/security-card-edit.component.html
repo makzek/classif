@@ -1,4 +1,4 @@
-<div class="simple-card-edit security-card-edit">
+<div class="simple-card-edit security-card-edit secondary-block">
         <article class="edit-content">
             <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
                 <div class="form-group">
@@ -36,12 +36,12 @@
                     <div class="checkbox-wrapper">
                         <div class="checkbox-inline">
                             <label>
-                                <input type="checkbox" name="EDS_FLAG" [(ngModel)]="data.rec['EDS_FLAG']" [disabled]="!editMode">
+                                <input type="checkbox" name="EDS_FLAG" (ngModelChange)="change('EDS_FLAG', 'rec', $event)" [disabled]="!editMode" [ngModel]="data.rec['EDS_FLAG']">
                                 <span></span>ЭП</label>
                         </div>
                         <div class="checkbox-inline">
                             <label>
-                                <input type="checkbox" name="ENCRYPT_FLAG" [(ngModel)]="data.rec['ENCRYPT_FLAG']" [disabled]="!editMode">
+                                <input type="checkbox" name="ENCRYPT_FLAG"  (ngModelChange)="change('ENCRYPT_FLAG', 'rec', $event)" [disabled]="!editMode" [ngModel]="data.rec['ENCRYPT_FLAG']">
                                 <span></span>шифрование</label>
                         </div>
                     </div>
