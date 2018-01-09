@@ -73,18 +73,18 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                                    <span class="text" (click)="orderByField(field.foreignKey)"
-                                        tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
+                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                                    <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                             </span>
                         </span>
 
-                        <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}">
-                                    <span class="text" (click)="orderByField(field.foreignKey)"
-                                        tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                        <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
+                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                                    <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>

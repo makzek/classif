@@ -91,7 +91,7 @@
         </div>
 
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['SURNAME']?.required }" for="SURNAME">
+            <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="SURNAME">
                 Фамилия И.О.
             </label>
             <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control m-font " [ngModel]="data.rec['SURNAME']"
@@ -103,7 +103,7 @@
                 triggers="">
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['DUTY']?.required }" for="DUTY">
+            <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="DUTY">
                 Краткое наименование должности
             </label>
             <div class="row-wrapper">
