@@ -10,14 +10,19 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     title: 'Организации',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
-        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore'],
+        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'],
     keyField: 'DUE',
-    parentField: 'ISN_HIGH_NODE',
+    parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
     fields: [{
         key: 'DUE',
         type: 'string',
         title: 'Код Дьюи организации',
+        length: 248,
+    }, {
+        key: 'PARENT_DUE',
+        type: 'string',
+        title: 'Код родительской организации',
         length: 248,
     }, {
         key: 'ISN_NODE',
