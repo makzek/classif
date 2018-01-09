@@ -80,8 +80,8 @@
                 </span>
                 <div class="form-group full-position">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullTitle">Полное наименование подразделения</label>
-                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control m-font " [ngModel]="data.rec['fullTitle']"
-                        (ngModelChange)="change('fullTitle', 'rec', $event)" placeholder="Полное наименование подразделения"
+                    <input [readonly]="!editMode" id="fullTitle" name="fullTitle" type="text" class="form-control m-font " [ngModel]="data['printInfo']['PRINT_DEPARTMENT']"
+                        (ngModelChange)="change('PRINT_DEPARTMENT', 'printInfo', $event)" placeholder="Полное наименование подразделения"
                         [ngClass]="{'readonly': !editMode }" (focus)="focus('fullTitle')" (blur)="blur()" maxlength="2000"
                         [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
                         [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullTitle']?.invalid && cardForm.controls['fullTitle']?.dirty && focusedField === 'fullTitle'"
