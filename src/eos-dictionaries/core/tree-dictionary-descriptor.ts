@@ -1,6 +1,5 @@
-import { E_FIELD_SET, IDictionaryDescriptor, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
+import { ITreeDictionaryDescriptor, E_FIELD_SET } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
@@ -23,9 +22,9 @@ export class TreeRecordDescriptor extends RecordDescriptor {
 export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: TreeRecordDescriptor;
 
-    addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+    addRecord<T extends IHierCL>(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
-        _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
+        _newRec = this.apiSrv.entityHelper.prepareAdded<T>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
@@ -57,11 +56,11 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     }
 
     getSubtree(record: IHierCL): Promise<IHierCL[]> {
-        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
-        console.log('layer', layer);
+        const layer = record.DUE.split('.').length - 1; // calc child layer with DUE
+        // console.log('child layers', layer, layer + 1);
         const criteries = {
             DUE: record.DUE + '%',
-            LAYER: (layer + 1) + ':' + (layer + 2),
+            LAYER: (layer) + ':' + (layer + 1),
             // IS_NODE: '0'
         };
         return this.getData(PipRX.criteries(criteries));
@@ -72,7 +71,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         this.record = new TreeRecordDescriptor(this, data);
     }
 
-    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    protected preCreate<T>(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;
 
