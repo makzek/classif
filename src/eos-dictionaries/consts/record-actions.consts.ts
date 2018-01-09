@@ -131,7 +131,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
-    title: 'Добавить элемент',
+    title: 'Создать новый',
     hint: null,
     iconClass: null,
     activeIconClass: null,
