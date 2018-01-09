@@ -2,10 +2,8 @@
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper block">
         <div class="menu">
+            <div class="eos-title primary-text"><eos-title></eos-title></div>
             <ul class="header-content left">
-                <li class="header-item primary-text">
-                    <eos-title></eos-title>
-                </li>
                 <li class="header-item primary-text" *ngIf="isAuthorized">
                     <eos-desktop-switcher></eos-desktop-switcher>
                 </li>
@@ -16,7 +14,9 @@
                         </a>
                     </li>
                     <li class="header-item else-dropdown primary-text" dropdown>
-                        <span class="link-name xl-font" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
+                        <span class="link-name xl-font" dropdownToggle>Ещё
+                            <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info>
+                        </span>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
                                 <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
@@ -24,11 +24,6 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="header-item">
-                        <span class="link-name xl-font">
-                            <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info>
-                        </span>
                     </li>
                 </ng-container>
             </ul>
