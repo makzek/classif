@@ -21,7 +21,8 @@ import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
     INFO_NOTHING_CHANGES,
     DANGER_EDIT_DELETED_ERROR,
-    SUCCESS_SAVE
+    SUCCESS_SAVE,
+    WARN_SAVE_FAILED
 } from '../consts/messages.consts';
 import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
@@ -157,6 +158,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
+        console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 if (node) {
@@ -182,7 +184,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
-            console.log('recived description', this.nodeData);
+            // console.log('recived description', this.nodeData);
         }
     }
 
@@ -257,10 +259,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             const backUrl = urlSegments.join('/');
             this.goTo(backUrl);*/
         }
-        if (window.innerWidth > 1500) {
-            /*this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openTree);
-            this._dictActSrv.emitAction(DICTIONARY_ACTIONS.openInfo);*/
-        }
     }
 
 
@@ -275,10 +273,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             /* tslint:disable:no-bitwise */
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
                 if (this.nodeData[dict] && this._originalData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) => {
-                        return (this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                            (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig');
-                    });
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
+                        ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (this.nodeData[dict][key] || this._originalData[dict][key])) &&
+                        (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
+                    );
                 } else {
                     return false;
                 }
@@ -404,17 +403,22 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         // console.log('save', data);
         return this._dictSrv.updateNode(this.node, data)
             .then((resp: EosDictionaryNode) => {
-                this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                /*
-                const fullTitle = this._fullTitle(resp);
-                console.log('fullTitle', fullTitle);
-                */
-                this._deskSrv.addRecentItem({
-                    url: this._router.url,
-                    title: resp.data.rec.CLASSIF_NAME,
-                    /* fullTitle: fullTitle */
-                });
-                this._clearEditingCardLink();
+                if (resp) {
+                    this._msgSrv.addNewMessage(SUCCESS_SAVE);
+                    /*
+                    const fullTitle = this._fullTitle(resp);
+                    console.log('fullTitle', fullTitle);
+                    */
+                    this._deskSrv.addRecentItem({
+                        url: this._router.url,
+                        title: resp.data.rec.CLASSIF_NAME,
+                        /* fullTitle: fullTitle */
+                    });
+                    this._clearEditingCardLink();
+                } else {
+                    this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
+                    Promise.reject(resp);
+                }
                 return resp;
             })
             .catch((err) => this._errHandler(err));
