@@ -86,7 +86,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getFullSearchCriteries(data: any): any {
         const _criteries = {};
-        const _searchFields = this.record.fullSearchFields[data['srchMode']]; // this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _searchFields = this.record.fullSearchFields[data['srchMode']];
         switch (data['srchMode']) {
             case 'department':
                 _criteries['IS_NODE'] = '0';

@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult  } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -148,6 +148,10 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     abstract getRoot(): Promise<any[]>;
+
+    getIdByDictionaryMode(mode: number): string {
+        return this.id;
+    }
 
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
         // todo: fix hardcode

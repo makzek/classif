@@ -41,6 +41,7 @@ export class EosDictService {
     private _customTitles: any;
     private _dictMode: number;
     private _dictMode$: BehaviorSubject<number>;
+    private _dictionaries: EosDictionary[];
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -222,6 +223,8 @@ export class EosDictService {
     public closeDictionary() {
         this.dictionary = this.selectedNode = this._openedNode = this._srchCriteries = null;
         this._initViewParameters();
+        this._dictionaries = [];
+        this._dictMode = 0;
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);
@@ -683,7 +686,12 @@ export class EosDictService {
     setDictMode(mode: number) {
         this._dictMode = mode;
         console.log('dictionary mode', mode);
+        if (!this._dictionaries[mode]) {
+            const dictionaryId = this.dictionary.getDictionaryIdByMode(mode);
+            this._dictionaries[mode] = new EosDictionary(dictionaryId, this._descrSrv);
+        }
         /* todo: implement additional dictionary logic */
+        // this._reloadList();
         this._dictMode$.next(mode);
     }
 
@@ -758,11 +766,11 @@ export class EosDictService {
             */
         } else {
             const errMessage = err.message ? err.message : err;
+            console.warn(err);
             this._msgSrv.addNewMessage({
                 type: 'danger',
                 title: 'Ошибка обработки. Ответ сервера:',
-                msg: errMessage,
-                dismissOnTimeout: 30000
+                msg: errMessage
             });
             return null;
         }

@@ -31,6 +31,8 @@ export class EosDictionary {
     private _userOrdered: boolean;
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
     private _showDeleted: boolean;
+    private _mode: number;
+    private _dictionaries: { [key: string]: EosDictionary };
 
     get showDeleted(): boolean {
         return this._showDeleted;
@@ -80,8 +82,8 @@ export class EosDictionary {
         return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(dictId: string, dictDescr: DictionaryDescriptorService) {
-        this.descriptor = dictDescr.getDescriptorClass(dictId);
+    constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
+        this.descriptor = dictDescrSrv.getDescriptorClass(dictId);
         this._nodes = new Map<string, EosDictionaryNode>();
         this.defaultOrder();
     }
@@ -321,6 +323,14 @@ export class EosDictionary {
         this._resetMarked();
         // this.descriptor.record.keyField.foreignKey
         return this.descriptor.deleteRecords(records);
+    }
+
+    getDictionaryIdByMode(mode: number): EosDictionary {
+        const dictId = this.descriptor.getIdByDictionaryMode(mode);
+        if (!this._dictionaries[dictId]) {
+            this._dictionaries[dictId] = new EosDictionary(dictId, this.dictDescrSrv);
+        }
+        return this._dictionaries[dictId];
     }
 
     /**
