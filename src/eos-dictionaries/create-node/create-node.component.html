@@ -10,6 +10,6 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" (click)="cancelCreate()">Отмена</button>
-    <button class="btn btn-primary-full" [disabled]="!formIsValid || !hasChanges" (click)="create(false)">Добавить ещё</button>
-    <button class="btn btn-primary-full" [disabled]="!formIsValid || !hasChanges" (click)="create()">Добавить</button>
+    <button class="btn btn-primary-full" [disabled]="!formIsValid || !hasChanges || upadating"(click)="create(false)">Добавить ещё</button>
+    <button class="btn btn-primary-full" [disabled]="!formIsValid || !hasChanges || upadating" (click)="create()">Добавить</button>
 </div>
