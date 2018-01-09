@@ -11,7 +11,6 @@ export class BaseNodeInfoComponent {
     @Input() nodeDataShort: any;
     @Input() fieldsDescriptionFull: any;
     @Input() nodeDataFull: any;
-    @Input() updating: boolean;
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     actionEdit = RECORD_ACTIONS_EDIT;

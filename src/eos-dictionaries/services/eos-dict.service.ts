@@ -182,6 +182,7 @@ export class EosDictService {
             markItems: false,
             searchResults: false,
             updating: false,
+            updatingFields: false,
             haveMarked: false
         };
     }
@@ -489,13 +490,19 @@ export class EosDictService {
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
             if (!this._openedNode || this._openedNode.id !== nodeId) {
+                this.viewParameters.updatingFields = true;
+                this._viewParameters$.next(this.viewParameters);
                 return this.dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
                         this._openNode(node);
+                        this.viewParameters.updatingFields = false;
+                        this._viewParameters$.next(this.viewParameters);
                         return node;
                     })
                     .catch((err) => this._errHandler(err));
             } else {
+                this.viewParameters.updatingFields = false;
+                this._viewParameters$.next(this.viewParameters);
                 return Promise.resolve(this._openedNode);
             }
         } else {

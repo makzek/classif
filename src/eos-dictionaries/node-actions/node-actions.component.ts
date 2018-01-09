@@ -45,14 +45,6 @@ export class NodeActionsComponent implements OnDestroy {
                 this._viewParams = params;
                 this._update();
             });
-        /*
-        _dictSrv.viewParameters$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((params) => {
-                this._viewParams = params;
-                this._update();
-            })
-        */
     }
 
     ngOnDestroy() {
