@@ -124,10 +124,11 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                     OWNER_KIND: '104'
                 })
             })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0], 'CB_PRINT_INFO'));
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(items[0], 'CB_PRINT_INFO'));
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
+                console.log('got printInfo', printInfo, printInfo['_State'])
                 return {
                     user: user,
                     organization: org,

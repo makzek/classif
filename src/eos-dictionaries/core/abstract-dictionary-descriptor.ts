@@ -153,7 +153,7 @@ export abstract class AbstractDictionaryDescriptor {
         // todo: fix hardcode
         return this.apiSrv
             .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
-            .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
+            .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
     }
 
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
@@ -184,28 +184,23 @@ export abstract class AbstractDictionaryDescriptor {
     updateRecord(originalData: any, updates: any): Promise<any[]> {
         const _res = [];
         const changeData = [];
-        for (const key in originalData) {
+        Object.keys(originalData).forEach((key) => {
             if (originalData[key]) {
-                if (originalData[key]['_State'] === 'STUB') {
-                    if (key === 'sev') {
-                        if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
-                            changeData.push(Object.assign({}, originalData[key], updates[key]));
-                        }
-                    } else if (key === 'printInfo') {
-                        if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
-                            changeData.push(Object.assign({}, originalData[key], updates[key]));
-                        }
-                    } else {
+                if (key === 'sev') {
+                    if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
                     }
-                    // _res.push(this._postChanges(originalData[key], updates[key]));
+                } else if (key === 'printInfo') {
+                    if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                        changeData.push(Object.assign({}, originalData[key], updates[key]));
+                    }
                 } else {
                     changeData.push(Object.assign({}, originalData[key], updates[key]));
-                    // _res.push(this._postChanges(originalData[key], updates[key]));
                 }
             }
-        }
-        console.log('changedData originalData', changeData, originalData);
+        });
+        console.log('originalData', originalData);
+        console.log('changeData', changeData);
         return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
         // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
