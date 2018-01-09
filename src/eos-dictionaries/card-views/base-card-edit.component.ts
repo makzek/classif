@@ -1,6 +1,7 @@
 import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
+import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -20,6 +21,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     protected dictSrv;
 
+    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
+
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
     }
@@ -34,13 +37,14 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     ngOnChanges() {
         setTimeout(() => {
-            if (this.cardForm && !this._subscrChanges) {
+            if (this.cardForm) {
                 this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
+                    console.log('emit invalid = ', this.cardForm.invalid);
                     this.invalid.emit(this.cardForm.invalid);
                 });
             }
         }, 0);
-}
+    }
 
     ngOnDestroy() {
         if (this._subscrChanges) {
@@ -48,7 +52,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
-    change(fldKey: string, dict: string, value: string) {
+    change(fldKey: string, dict: string, value: any) {
+        if (typeof value === 'boolean') {
+            value = +value;
+        }
         if (this.data[dict][fldKey] !== value) {
             this.data[dict][fldKey] = value;
             this.onChange.emit(this.data);
