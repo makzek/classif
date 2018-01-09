@@ -10,7 +10,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     title: 'Организации',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
-        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore'],
+        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'],
     keyField: 'DUE',
     parentField: 'ISN_HIGH_NODE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
@@ -146,7 +146,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'LAW_ADRESS',
-        title: 'Юридический Адресс',
+        title: 'Юридический адрес',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
@@ -159,7 +159,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'SERTIFICAT',
-        title: 'Регисрационное свидейтельство',
+        title: 'Регистрационное свидетельство',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
