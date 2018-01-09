@@ -109,7 +109,10 @@
             margin-bottom: 10px;
         }
 
-        .simple-card-edit {
+        .simple-card-edit,
+        .eos-departments-card-edit,
+        .cabinet-card-edit .middle-block,
+        .cabinet-card-edit .edit-content {
             border-width: 0;
         }
     }
