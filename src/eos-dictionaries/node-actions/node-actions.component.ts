@@ -132,6 +132,7 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     doAction(action: E_RECORD_ACTIONS) {
+        console.log('action', E_RECORD_ACTIONS[action]);
         this.action.emit(action);
     }
 }

@@ -27,6 +27,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
 
     modalRef: BsModalRef;
 
+    readonly MAX_LEN = 80;
+
     /**
      * @description constructor, subscribe on drop in dragulaService for highlighting selected field
      * @param dragulaService drag'n'drop service
