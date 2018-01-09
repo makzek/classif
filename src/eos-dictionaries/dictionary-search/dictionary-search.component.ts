@@ -94,7 +94,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 }
 
                 const _config = _d.descriptor.record.getSearchConfig();
-                console.log('search config', _config);
+                // console.log('search config', _config);
                 /* tslint:disable:no-bitwise */
                 this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
