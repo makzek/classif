@@ -11,7 +11,7 @@ import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from './record-action';
 import { RecordDescriptor } from './record-descriptor';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
-import { PrintInfoHelper } from '../../eos-rest/services/printInfo-helper';
+import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -332,28 +332,38 @@ export abstract class AbstractDictionaryDescriptor {
      */
     updateRecord(originalData: any, updates: any): Promise<any[]> {
         const _res = [];
+        const changeData = [];
         for (const key in originalData) {
             if (originalData[key]) {
                 if (originalData[key]['_State'] === 'STUB') {
                     if (key === 'sev') {
-                        SevIndexHelper.PrepareForSave(originalData[key], originalData.rec);
+                        if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                            changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        }
                     } else if (key === 'printInfo') {
-                        PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec);
+                        if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                            changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        }
+                    } else {
+                        changeData.push(Object.assign({}, originalData[key], updates[key]));
                     }
-                    _res.push(this._postChanges(originalData[key], updates[key]));
+                    // _res.push(this._postChanges(originalData[key], updates[key]));
                 } else {
-                    _res.push(this._postChanges(originalData[key], updates[key]));
+                    changeData.push(Object.assign({}, originalData[key], updates[key]));
+                    // _res.push(this._postChanges(originalData[key], updates[key]));
                 }
             }
         }
-        return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
+        console.log('changedData originalData', changeData, originalData);
+        return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
+        // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
-        // console.log('_postChanges', data, updates);
+        console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
-        // console.log('changes', changes);
+        console.log('changes', changes);
         return this.apiSrv.batch(changes, '');
     }
 

@@ -199,7 +199,7 @@ const commonMeta = {
         ]
     },
     CB_PRINT_INFO: {
-        pk: 'ISN_OWNER',
+        pk: 'ISN_OWNER OWNER_KIND',
         properties: {
             ISN_OWNER: _t.i,
             OWNER_KIND: _t.i,
@@ -1168,7 +1168,7 @@ const commonMeta = {
         ]
     },
     SEV_ASSOCIATION: {
-        pk: 'OBJECT_ID',
+        pk: 'OBJECT_ID OBJECT_NAME',
         properties: {
             OBJECT_ID: _t.s,
             OBJECT_NAME: _t.s,

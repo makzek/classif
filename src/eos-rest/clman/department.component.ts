@@ -177,6 +177,16 @@ export class DepartmentComponent implements OnInit {
         return true;
     }
 
+    onPreparePrintInfo() {
+        const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', GENDER: 2, DUTY: 'начальника'};
+        // вызов в случае GENDER=null - его надо опустить. Вообще, пустые поля походе надо опускать
+        // const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', DUTY: 'начальника'};
+
+        this.pip.read<CB_PRINT_INFO>({PreparePrintInfo: PipRX.args(q)})
+        .then(res => {
+            console.log(res);
+        })
+    }
 }
 
 
