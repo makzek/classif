@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
-import { ISearchSettings } from '../core/search-settings.interface';
+import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
@@ -349,8 +349,8 @@ export class EosDictService {
         }
     }
 
-        // console.log('reloadNode', node);
-                // console.log('reloadNode', nodeData);
+    // console.log('reloadNode', node);
+    // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
     }
@@ -521,7 +521,33 @@ export class EosDictService {
     }
 
     public addNode(data: any): Promise<any> {
+        // !!! hard for regions
         if (this.selectedNode) {
+            if (this.dictionary.id === 'region') {
+                const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.selectedNode);
+                return this.dictionary.descriptor.search(_srchCriteries).then((nodes: EosDictionaryNode[]) => {
+                    const node = nodes.find((el: EosDictionaryNode) => {
+                        return el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME
+                    });
+                    if (node) {
+                        this._errHandler('Запись с этим именем уже существует!');
+                        return Promise.resolve(null);
+                    } else {
+                        return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
+                            .then((newNodeId) => {
+                                // console.log('created node', newNodeId);
+                                return this._reloadList()
+                                    .then(() => {
+                                        this._selectedNode$.next(this.selectedNode);
+                                        return this.dictionary.getNode(newNodeId + '');
+                                    });
+                            })
+                            .catch((err) => this._errHandler(err));
+                    }
+                })
+            }
+
             // console.log('addNode', data, this.selectedNode.data);
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
