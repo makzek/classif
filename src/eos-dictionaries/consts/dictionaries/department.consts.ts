@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 
@@ -8,6 +8,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     apiInstance: 'DEPARTMENT',
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard'],
     keyField: 'DUE',
@@ -312,32 +313,21 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'fullTitleRoom',
     }],
     searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
-    listFields: {
-        person: ['CODE', 'fio'],
-        department: ['CODE', 'title']
-    },
+    listFields: ['CODE', 'title'],
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'E_MAIL', 'IS_NODE'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', 'IS_NODE'],
-        room: ['titleRoom', 'fullTitleRoom']
+        person: ['CODE', 'PHONE', 'E_MAIL'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
-    quickViewFields: {
-        person: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H'], // 'SURNAME', 'firstName', 'fathersName', 'lastName', 'photo' is in shortQuickViewFields
-        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'] // title is in shortQuickViewFields
-    },
-    shortQuickViewFields: {
-        person: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo'],
-        department: ['title']
-    },
-    editFields: { // TODO: remove IS_NODE!!!
-        person: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-            'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
-        department: ['IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-            'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
-        // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
-    },
+    quickViewFields: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'], // title is in shortQuickViewFields
+    shortQuickViewFields: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo', 'title'],
+    editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
+        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
+        'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
+        'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
+    // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     allVisibleFields: ['ISN_ORGANIZ', 'SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
-    'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+        'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
 'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

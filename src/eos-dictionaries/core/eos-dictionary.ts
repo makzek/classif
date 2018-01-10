@@ -4,21 +4,22 @@ import {
     IDictionaryDescriptor,
     IDepartmentDictionaryDescriptor,
     ITreeDictionaryDescriptor,
-    IFieldView,
-    E_FIELD_TYPE
-} from './dictionary.interfaces';
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
+    E_FIELD_TYPE,
+    ISearchSettings,
+    SEARCH_MODES,
+    IOrderBy,
+    IRecordOperationResult,
+    E_RECORD_ACTIONS,
+} from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 
-import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { IEnt } from 'eos-rest';
-import { IRecordOperationResult } from 'eos-dictionaries/core/record-operation-result.interface';
+import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { Injector } from '@angular/core/src/di/injector';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -76,24 +77,11 @@ export class EosDictionary {
     }
 
     get canMarkItems(): boolean {
-        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
+        return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
-        switch (descData.dictType) {
-            case E_DICT_TYPE.linear:
-                this.descriptor = new DictionaryDescriptor(descData, apiSrv);
-                break;
-            case E_DICT_TYPE.tree:
-                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData, apiSrv);
-                break;
-            case E_DICT_TYPE.department:
-                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData, apiSrv);
-                break;
-            default:
-                throw new Error('No API instance');
-        }
-
+    constructor(dictId: string, dictDescr: DictionaryDescriptorService) {
+        this.descriptor = dictDescr.getDescriptorClass(dictId);
         this._nodes = new Map<string, EosDictionaryNode>();
         this.defaultOrder();
     }
@@ -127,7 +115,7 @@ export class EosDictionary {
         /* find root */
         if (!this.root) {
 
-            let rootNode = nodes.find((node) => node.parentId === null);
+            let rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
 
             /* fallback if root undefined */
             if (!rootNode) {
@@ -289,11 +277,11 @@ export class EosDictionary {
      * @param deleted mark as deleted (true), unmarkmark as deleted (false)
      */
     markDeleted(recursive = false, deleted = true): Promise<any> {
-        const nodeSet = this._getMarkedRecords(recursive);
+        const nodeSet = this._getMarkedRecords(false);
         this._resetMarked();
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive);
     }
 
     getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
@@ -368,7 +356,7 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
+        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
                 [fld.foreignKey]: '"' + search + '"'
@@ -380,17 +368,7 @@ export class EosDictionary {
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries = {};
-        _searchFields.forEach((fld) => {
-            if (data[fld.foreignKey]) {
-                if (fld.foreignKey !== 'IS_NODE') {
-                    _criteries[fld.foreignKey] = '"' + data[fld.foreignKey].trim() + '"';
-                } else {
-                    _criteries[fld.foreignKey] = data[fld.foreignKey];
-                }
-            }
-        })
+        const _criteries = this.descriptor.getFullSearchCriteries(data);
         this._extendCritery(_criteries, params, selectedNode);
         return _criteries;
     }

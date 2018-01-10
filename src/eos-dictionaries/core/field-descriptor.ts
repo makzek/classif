@@ -1,4 +1,4 @@
-import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from './dictionary.interfaces';
+import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
@@ -39,16 +39,5 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         this.isUnic = !!data.isUnic;
 
         this.unicInDict = !!data.unicInDict;
-    }
-}
-
-export class FieldGroup {
-    /* readonly index: number; */
-    readonly title: string;
-    fields: FieldDescriptor[];
-
-    constructor(title: string) {
-        this.title = title;
-        this.fields = [];
     }
 }

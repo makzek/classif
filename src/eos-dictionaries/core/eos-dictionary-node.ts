@@ -1,8 +1,7 @@
-import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -125,13 +124,13 @@ export class EosDictionaryNode {
             };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
+                this.parentId = this._keyToString(data[this._descriptor.parentField.foreignKey]);
             }
 
             // console.log('constructing node with parent', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
-                this.id = this._keyToString(data[this._descriptor.keyField.key]);
+                this.id = this._keyToString(data[this._descriptor.keyField.foreignKey]);
             }
         }
     }
