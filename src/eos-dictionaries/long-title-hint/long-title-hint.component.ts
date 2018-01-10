@@ -65,7 +65,7 @@ export class LongTitleHintComponent {
     public viewNode() {
         if (!this._dictSrv.isRoot(this._node.id)) {
             this._storageSrv.setItem(RECENT_URL, this._router.url);
-            const _path = this._dictSrv.getNodePath(this._node);
+            const _path = this._node.getPath();
             _path.push('view')
             this._router.navigate(_path);
         }

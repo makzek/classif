@@ -147,7 +147,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
 
-        _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
+        _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
@@ -402,7 +402,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
                 const url = this._router.url;
                 this._storageSrv.setItem(RECENT_URL, url);
-                const _path = this._dictSrv.getNodePath(node);
+                const _path = node.getPath();
                 _path.push('edit');
                 this._router.navigate(_path);
             }
@@ -435,7 +435,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     goUp() {
         if (this.selectedNode && this.selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
+            const path = this.selectedNode.parent.getPath();
             this._router.navigate(path);
         }
     }

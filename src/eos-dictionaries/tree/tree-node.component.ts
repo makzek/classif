@@ -40,7 +40,7 @@ export class TreeNodeComponent implements OnInit {
     onSelect(evt: Event, isDeleted: boolean, el: HTMLElement) {
         evt.stopPropagation();
         if (!isDeleted) {
-            const _path = this._dictSrv.getNodePath(this.node);
+            const _path = this.node.getPath();
             this._router.navigate(_path);
         }
     }

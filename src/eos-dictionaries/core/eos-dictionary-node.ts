@@ -299,6 +299,19 @@ export class EosDictionaryNode {
         }
     }
 
+    getPath(): string[] {
+        const dictionary = this._dictionary;
+        const _path = [
+            'spravochniki',
+            dictionary.id,
+        ];
+
+        if (dictionary.root !== this) {
+            _path.push(this.id);
+        }
+        return _path;
+    }
+
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
@@ -315,7 +328,7 @@ export class EosDictionaryNode {
      * @param field field which value need recive
      * @return value of field from node.data.rec
      */
-    getValue (field: IFieldView): any {
+    getValue(field: IFieldView): any {
         return this.data.rec[field.foreignKey];
     }
 }

@@ -190,16 +190,8 @@ export class EosDictionary {
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
         // console.log('getFullNodeInfo fired', nodeId);
-        let id: any = nodeId;
-
-        if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
-            id = id * 1;
-        }
-
-        return this.descriptor.getRecord(id)
-            .then((nodes) => {
-                this.updateNodes(nodes, true);
-                const node = this._nodes.get(nodeId);
+        return this.getNodeByNodeId(nodeId)
+            .then((node) => {
                 if (node) {
                     switch (this.descriptor.type) {
                         case E_DICT_TYPE.department:
@@ -231,6 +223,20 @@ export class EosDictionary {
                 } else {
                     return node;
                 }
+            });
+    }
+
+    getNodeByNodeId(nodeId: string): Promise<EosDictionaryNode> {
+        let id: any = nodeId;
+
+        if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
+            id = id * 1;
+        }
+
+        return this.descriptor.getRecord(id)
+            .then((records) => {
+                this.updateNodes(records, true);
+                return this._nodes.get(nodeId);
             });
     }
 
