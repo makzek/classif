@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { E_DICT_TYPE, E_FIELD_SET, IDictionaryDescriptor } from './dictionary.interfaces';
+import { E_DICT_TYPE, E_FIELD_SET, IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
@@ -9,46 +9,8 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 
 export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: RecordDescriptor;
-    protected fullSearchFields: FieldDescriptor[];
-    protected quickViewFields: FieldDescriptor[];
-    protected shortQuickViewFields: FieldDescriptor[];
-    protected editFields: FieldDescriptor[];
-    protected listFields: FieldDescriptor[];
 
-    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
-        const _res = super._getFieldSet(aSet, values);
-        if (_res) {
-            return _res;
-        }
-        switch (aSet) {
-            case E_FIELD_SET.fullSearch:
-                return this.fullSearchFields;
-            case E_FIELD_SET.quickView:
-                return this.quickViewFields;
-            case E_FIELD_SET.shortQuickView:
-                return this.shortQuickViewFields;
-            case E_FIELD_SET.edit:
-                return this.editFields;
-            case E_FIELD_SET.list:
-                return this.listFields;
-            default:
-                throw new Error('Unknown field set');
-        }
-    }
-
-    _init(descriptor: IDictionaryDescriptor) {
-        if (descriptor.fields) {
-            this.record = new RecordDescriptor(this, descriptor);
-        }
-        this._initFieldSets([
-            'quickViewFields',
-            'shortQuickViewFields',
-            'editFields',
-            'listFields',
-            'fullSearchFields'
-        ], descriptor);
-    }
-
+    protected _initFields(data: IDictionaryDescriptor) { }
     addRecord(data: any, useless: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);

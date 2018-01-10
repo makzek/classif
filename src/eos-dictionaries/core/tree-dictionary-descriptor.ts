@@ -1,6 +1,5 @@
-import { E_FIELD_SET, IDictionaryDescriptor, ITreeDictionaryDescriptor } from './dictionary.interfaces';
+import { ITreeDictionaryDescriptor, E_FIELD_SET } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
@@ -14,58 +13,18 @@ export class TreeRecordDescriptor extends RecordDescriptor {
         super(dictionary, descriptor);
         this.dictionary = dictionary;
         this._setCustomField('parentField', descriptor);
+        this._initFieldSets([
+            'fullSearchFields',
+        ], descriptor);
     }
 }
 
 export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: TreeRecordDescriptor;
-    protected fullSearchFields: FieldDescriptor[];
-    protected quickViewFields: FieldDescriptor[];
-    protected shortQuickViewFields: FieldDescriptor[];
-    protected editFields: FieldDescriptor[];
-    protected listFields: FieldDescriptor[];
-    protected allVisibleFields: FieldDescriptor[];
 
-    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
-        const _res = super._getFieldSet(aSet, values);
-        if (_res) {
-            return _res;
-        }
-        switch (aSet) {
-            case E_FIELD_SET.fullSearch:
-                return this.fullSearchFields;
-            case E_FIELD_SET.quickView:
-                return this.quickViewFields;
-            case E_FIELD_SET.shortQuickView:
-                return this.shortQuickViewFields;
-            case E_FIELD_SET.edit:
-                return this.editFields;
-            case E_FIELD_SET.list:
-                return this.listFields;
-            case E_FIELD_SET.allVisible:
-                return this.allVisibleFields;
-            default:
-                throw new Error('Unknown field set');
-        }
-    }
-
-    _init(descriptor: ITreeDictionaryDescriptor) {
-        if (descriptor.fields) {
-            this.record = new TreeRecordDescriptor(this, descriptor);
-        }
-        this._initFieldSets([
-            'quickViewFields',
-            'shortQuickViewFields',
-            'editFields',
-            'listFields',
-            'fullSearchFields',
-            'allVisibleFields',
-        ], descriptor);
-    }
-
-    addRecord(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+    addRecord<T extends IHierCL>(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
-        _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
+        _newRec = this.apiSrv.entityHelper.prepareAdded<T>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
@@ -84,18 +43,6 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData({ criteries: _children }, 'DUE');
     }
 
-    getSubtree(record: IHierCL): Promise<IHierCL[]> {
-        const layer = record.DUE.split('.').length - 1; // calc layer with DUE
-        console.log('layer', layer);
-        const criteries = {
-            DUE: record.DUE + '%',
-            LAYER: (layer + 1) + ':' + (layer + 2),
-            // IS_NODE: '0'
-        };
-        return this.getData(PipRX.criteries(criteries));
-        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
-    }
-
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
         const recordDue = chain.pop();
@@ -108,7 +55,23 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData({ criteries: { LAYER: '0:2'/*, IS_NODE: '0'*/ } }, 'DUE');
     }
 
-    private preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    getSubtree(record: IHierCL): Promise<IHierCL[]> {
+        const layer = record.DUE.split('.').length - 1; // calc child layer with DUE
+        // console.log('child layers', layer, layer + 1);
+        const criteries = {
+            DUE: record.DUE + '%',
+            LAYER: (layer) + ':' + (layer + 1),
+            // IS_NODE: '0'
+        };
+        return this.getData(PipRX.criteries(criteries));
+        // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+    }
+
+    protected _initRecord(data: ITreeDictionaryDescriptor) {
+        this.record = new TreeRecordDescriptor(this, data);
+    }
+
+    protected preCreate<T>(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _parentDue = parent.DUE;
 

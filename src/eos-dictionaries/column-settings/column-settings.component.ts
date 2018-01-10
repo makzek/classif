@@ -3,7 +3,7 @@ import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView } from '../core/dictionary.interfaces';
+import { IFieldView } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-column-settings',
@@ -17,6 +17,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
 
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
+    selectedFixedItem: IFieldView;
 
     private _subscriptionDrop: Subscription;
     private _subscriptionDrag: Subscription;
@@ -25,6 +26,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     newTitle: string;
 
     modalRef: BsModalRef;
+
+    readonly MAX_LEN = 80;
 
     /**
      * @description constructor, subscribe on drop in dragulaService for highlighting selected field
@@ -47,6 +50,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
             this.selectedDictItem = null;
             this.selectedCurrItem = null;
+            this.selectedFixedItem = null;
         })
         dragulaService.setOptions('bag-one', {
             moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
@@ -137,15 +141,27 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     /**
      * @description highlight selected item
      * @param item highlighted item
-     * @param isCurrent indicates if item placed in current fields (right)
+     * @param type indicates where item is placed
+     * 1 - current
+     * 2 - dictionary
+     * 3 - fixed
      */
-    select(item: IFieldView, isCurrent: boolean) {
-        if (isCurrent) {
-            this.selectedCurrItem = item;
-            this.selectedDictItem = null;
-        } else {
-            this.selectedDictItem = item;
-            this.selectedCurrItem = null;
+    select(item: IFieldView, type: number) {
+        switch (type) {
+            case 1:
+                this.selectedCurrItem = item;
+                this.selectedDictItem = null;
+                this.selectedFixedItem = null;
+                break;
+            case 2:
+                this.selectedDictItem = item;
+                this.selectedCurrItem = null;
+                this.selectedFixedItem = null;
+                break;
+            case 3:
+                this.selectedFixedItem = item;
+                this.selectedCurrItem = null;
+                this.selectedDictItem = null;
         }
     }
 
