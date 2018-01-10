@@ -22,7 +22,7 @@
                     <eos-dynamic-form-input [input]="input" [form]="form" [readonly]="!editMode"></eos-dynamic-form-input>
             </div>
 
-            <div class="form-group" *ngIf="data && data['sev']">
+            <!--div class="form-group" *ngIf="data && data['sev']">
                 <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Индекс СЭВ</label>
                 <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
                     [ngModel]="data['sev']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
@@ -35,7 +35,7 @@
                     (focus)="focus('GLOBAL_ID')" (blur)="blur()"
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
-            </div>
+            <!--/div-->
             <div class="form-group unimportant-text s-font">
                 <label>* - поля обязательные к заполнению</label>
             </div>

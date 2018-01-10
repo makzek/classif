@@ -53,27 +53,37 @@ export class DataConvertService {
       })*/
     ];
 
-    if (fieldsDescription['rec']) {
-      Object.keys(fieldsDescription['rec']).forEach((_key) => {
-        switch (fieldsDescription['rec'][_key].type) {
-          case E_FIELD_TYPE.string:
+    if (fieldsDescription) {
+      Object.keys(fieldsDescription).forEach((_dict) => {
+        Object.keys(fieldsDescription[_dict]).forEach((_key) => {
+          switch (fieldsDescription[_dict][_key].type) {
+            case E_FIELD_TYPE.string:
+              inputs.push(new TextInput({
+                key: _key,
+                label: fieldsDescription[_dict][_key].title,
+                required: fieldsDescription[_dict][_key].required,
+                invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
+                value: '',
+              }));
+              break;
+            case  E_FIELD_TYPE.text:
             inputs.push(new TextInput({
               key: _key,
-              label: fieldsDescription['rec'][_key].title,
-              required: fieldsDescription['rec'][_key].required,
-              invalidMessage: fieldsDescription['rec'][_key].invalidMessage,
+              label: fieldsDescription[_dict][_key].title,
+              required: fieldsDescription[_dict][_key].required,
+              invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
+              value: '',
             }));
             break;
-          case  E_FIELD_TYPE.text:
-          inputs.push(new TextInput({
-            key: _key,
-            label: fieldsDescription['rec'][_key].title,
-            required: fieldsDescription['rec'][_key].required,
-            invalidMessage: fieldsDescription['rec'][_key].invalidMessage,
-          }));
-          break;
-        }
+            case  E_FIELD_TYPE.boolean:
+            inputs.push(new CheckboxInput({
+              key: _key,
+            }));
+            break;
+          }
+        });
       });
+
     }
 
     return inputs;

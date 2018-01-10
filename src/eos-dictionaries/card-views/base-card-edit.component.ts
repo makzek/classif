@@ -51,9 +51,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             }*/
         }, 0);
         this.form = new FormGroup({});
-        if (this.fieldsDescription && this.fieldsDescription.rec) {
-            Object.keys(this.fieldsDescription.rec).forEach((_key) => {
-                this.form.controls[_key] =  new FormControl();
+        if (this.fieldsDescription) {
+            Object.keys(this.fieldsDescription).forEach((_dict) => {
+                Object.keys(this.fieldsDescription[_dict]).forEach((_key) => {
+                    this.form.controls[_key] =  new FormControl();
+                });
             });
         }
         this.inputs = this.dataSrv.getInputs(this.fieldsDescription);

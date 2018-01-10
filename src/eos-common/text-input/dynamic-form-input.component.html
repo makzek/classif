@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-    <div [ngSwitch]="input.controlType" class="form-group">
+    <div [ngSwitch]="input.controlType">
         <label *ngSwitchCase="'text'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
         <input *ngSwitchCase="'text'"
             [formControlName]="input.key"
@@ -8,6 +8,7 @@
             required="{{input.required}}"
             [pattern]="input.pattern"
             [readonly]="readonly"
+            [ngClass]="{'readonly': readonly}"
             placeholder="{{input.label}}"
             class="form-control m-font"
             [tooltip]="input.invalidMessage"
