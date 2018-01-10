@@ -10,6 +10,13 @@ import { InputBase } from './input-base';
 export class DynamicFormInputComponent {
   @Input() input: InputBase<any>;
   @Input() form: FormGroup;
-  get isValid() { return this.form.controls[this.input.key].valid; }
-  get isDirty() { return this.form.controls[this.input.key].dirty; }
+  @Input() readonly: boolean;
+
+  get isValid() {
+    return this.form.controls[this.input.key].valid;
+  }
+
+  get isDirty() {
+    return this.form.controls[this.input.key].dirty;
+  }
 }

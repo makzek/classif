@@ -62,6 +62,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         // TextInputComponent,
         UnicValidatorDirective,
         DynamicFormComponent,
+        DynamicFormInputComponent,
         // DataConvertService,
     ],
     entryComponents: [

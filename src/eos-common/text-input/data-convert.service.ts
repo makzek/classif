@@ -53,16 +53,29 @@ export class DataConvertService {
       })*/
     ];
 
-    console.log('fieldsDescription', fieldsDescription);
-    console.log(E_FIELD_TYPE, E_FIELD_TYPE.string);
-    /*fieldsDescription.forEach((_descr) => {
-      switch (E_FIELD_TYPE[_descr.type]) {
-        case E_FIELD_TYPE['string']:
-          console.log('text');
+    if (fieldsDescription['rec']) {
+      Object.keys(fieldsDescription['rec']).forEach((_key) => {
+        switch (fieldsDescription['rec'][_key].type) {
+          case E_FIELD_TYPE.string:
+            inputs.push(new TextInput({
+              key: _key,
+              label: fieldsDescription['rec'][_key].title,
+              required: fieldsDescription['rec'][_key].required,
+              invalidMessage: fieldsDescription['rec'][_key].invalidMessage,
+            }));
+            break;
+          case  E_FIELD_TYPE.text:
+          inputs.push(new TextInput({
+            key: _key,
+            label: fieldsDescription['rec'][_key].title,
+            required: fieldsDescription['rec'][_key].required,
+            invalidMessage: fieldsDescription['rec'][_key].invalidMessage,
+          }));
           break;
-      }
-    });*/
+        }
+      });
+    }
 
-    return inputs.sort((a, b) => a.order - b.order);
+    return inputs;
   }
 }

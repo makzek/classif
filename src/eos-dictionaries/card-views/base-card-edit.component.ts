@@ -1,5 +1,5 @@
 import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
@@ -14,7 +14,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('cardForm') cardForm: NgForm;
+    // @ViewChild('cardForm') cardForm: NgForm;
+    form: FormGroup;
     private _subscrChanges: Subscription;
 
     tooltipText = '';
@@ -42,14 +43,21 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     ngOnChanges() {
         setTimeout(() => {
-            if (this.cardForm) {
+            /*if (this.cardForm) {
                 this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
                     this.invalid.emit(this.cardForm.invalid);
                     this.onChange.emit(this.data);
                 });
-            }
+            }*/
         }, 0);
+        this.form = new FormGroup({});
+        if (this.fieldsDescription && this.fieldsDescription.rec) {
+            Object.keys(this.fieldsDescription.rec).forEach((_key) => {
+                this.form.controls[_key] =  new FormControl();
+            });
+        }
         this.inputs = this.dataSrv.getInputs(this.fieldsDescription);
+        console.log('this.inputs', this.inputs);
     }
 
     ngOnDestroy() {
