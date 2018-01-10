@@ -156,17 +156,19 @@ export abstract class AbstractDictionaryDescriptor {
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
         // todo: fix hardcode
         return this.apiSrv
-            .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
+            .read<SEV_ASSOCIATION>({
+                SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'] || rec['ISN_LCLASSIF'], this.apiInstance)]
+            })
             .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
     }
 
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
         records.forEach((record) => record.DELETED = deletedState);
         const changes = this.apiSrv.changeList(records);
-        if (cascade) {
-            PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: 1 });
+        if (1 !== 1 && cascade) { // blocked while cascade operations disabled
+            PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: deletedState });
         }
-        console.log('markDeleted ', changes);
+        // console.log('markDeleted ', changes);
         return this.apiSrv.batch(changes, '');
     }
 
@@ -186,7 +188,6 @@ export abstract class AbstractDictionaryDescriptor {
      * @returns Promise<any[]>
      */
     updateRecord(originalData: any, updates: any): Promise<any[]> {
-        const _res = [];
         const changeData = [];
         Object.keys(originalData).forEach((key) => {
             if (originalData[key]) {
@@ -203,8 +204,8 @@ export abstract class AbstractDictionaryDescriptor {
                 }
             }
         });
-        console.log('originalData', originalData);
-        console.log('changeData', changeData);
+        // console.log('originalData', originalData);
+        // console.log('changeData', changeData);
         return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
         // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }

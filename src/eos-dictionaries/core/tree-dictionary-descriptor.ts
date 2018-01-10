@@ -1,9 +1,11 @@
 import { ITreeDictionaryDescriptor, E_FIELD_SET } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
-import { IHierCL } from 'eos-rest';
+import { IHierCL, SEV_ASSOCIATION, CB_PRINT_INFO } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
 import { PipRX } from 'eos-rest/services/pipRX.service';
+import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
+import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -29,7 +31,43 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
                 if (resp && resp[0]) {
-                    return resp[0].ID;
+                    data.rec = Object.assign(_newRec, data.rec);
+                    if (resp[0].ID !== undefined) {
+                        data.rec['DUE'] = resp[0].ID;
+                    }
+                    if (resp[0].FixedISN !== undefined) {
+                        data.rec['ISN_LCLASSIF'] = resp[0].FixedISN;
+                    }
+                    const changeData = [];
+
+                    Object.keys(data).forEach((key) => {
+                        if (key !== 'rec' && data[key]) {
+                            switch (key) {
+                                case 'sev':
+                                    const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
+                                    data[key] = Object.assign(sevRec, data[key]);
+                                    if (SevIndexHelper.PrepareForSave(data[key], data.rec)) {
+                                        changeData.push(data[key]);
+                                    }
+                                    break;
+                                case 'printInfo':
+                                    const printInfoRec = this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(undefined, 'CB_PRINT_INFO');
+                                    data[key] = Object.assign(printInfoRec, data[key]);
+                                    if (PrintInfoHelper.PrepareForSave(data[key], data.rec)) {
+                                        changeData.push(data[key]);
+                                        break;
+                                    }
+                            }
+                        }
+                    });
+                    if (changeData.length) {
+                        return this.apiSrv.batch(this.apiSrv.changeList(changeData), '')
+                            .then(() => {
+                                return resp[0].ID;
+                            });
+                    } else {
+                        return resp[0].ID;
+                    }
                 } else {
                     return null;
                 }

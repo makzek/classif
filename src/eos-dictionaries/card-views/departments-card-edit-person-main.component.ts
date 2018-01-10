@@ -12,10 +12,17 @@ export class DepartmentsCardEditPersonMainComponent extends DepartmentsCardEditP
 
     gender = [
         { id: null, title: 'Не указан' },
-        { id: 'm', title: 'Мужской' },
-        { id: 'f', title: 'Женский' },
+        { id: 0, title: 'Мужской' },
+        { id: 1, title: 'Женский' },
     ];
 
+    getGender(id: any): string {
+        let sGender = this.gender.find((elem) => elem.id === id)
+        if (!sGender) {
+            sGender = this.gender[0];
+        }
+        return sGender.title;
+    }
     newImage(evt) {
         this.defaultImage = 'url(' + evt + ')';
         // send it on server
