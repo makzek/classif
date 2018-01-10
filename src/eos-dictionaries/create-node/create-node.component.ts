@@ -19,6 +19,7 @@ export class CreateNodeComponent {
 
     formIsValid = false;
     hasChanges = false;
+    upadating= false;
 
     constructor(private _deskSrv: EosDeskService,
         private _dictSrv: EosDictService,
@@ -49,6 +50,7 @@ export class CreateNodeComponent {
      * @param hide indicates whether to close the modal window after or open new one
      */
     public create(hide = true) {
+        this.upadating = true;
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 if (node) {
@@ -62,6 +64,7 @@ export class CreateNodeComponent {
                         /* fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME */
                     });
                 }
+                this.upadating = false;
                 this.onHide.emit(true);
                 if (!hide) {
                     this.onOpen.emit(true);
