@@ -112,7 +112,7 @@
                     (focus)="focus('DUTY')" (blur)="blur()" required maxlength="255" [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                     containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
-                    autocomplete="off" [typeahead]="dutysList"
+                    autocomplete="off" [typeahead]="dutysList" container="body"
                     triggers="">
 
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
