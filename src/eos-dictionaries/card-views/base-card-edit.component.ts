@@ -41,7 +41,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         setTimeout(() => {
             if (this.cardForm) {
                 this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
-                    console.log('emit invalid = ', this.cardForm.invalid);
                     this.invalid.emit(this.cardForm.invalid);
                 });
             }
