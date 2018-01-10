@@ -33,7 +33,7 @@ import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
 import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
 import { NodeInfoComponent } from './node-info/node-info.component';
-import { RoomsCardEditComponent } from './card-views/rooms-card-edit.component';
+import { CabinetCardEditComponent } from './card-views/cabinet-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
@@ -43,9 +43,11 @@ import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.compon
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
+import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { CreateNodeComponent } from './create-node/create-node.component';
 
 /* services */
+import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
@@ -70,7 +72,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         NodeListComponent,
         NodeListItemComponent,
         NodeListPaginationComponent,
-        RoomsCardEditComponent,
+        CabinetCardEditComponent,
         SandwichComponent,
         SimpleCardEditComponent,
         TreeComponent,
@@ -80,6 +82,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         UnicValidatorDirective,
         LongTitleHintComponent,
         VisaTypeEditComponent,
+        SecurityCardEditComponent,
         CreateNodeComponent,
     ],
     entryComponents: [
@@ -110,6 +113,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ColumnSettingsComponent,
     ],
     providers: [
+        DictionaryDescriptorService,
         EosDictService,
         EosSandwichService,
     ],

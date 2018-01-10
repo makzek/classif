@@ -6,11 +6,8 @@ import 'rxjs/add/operator/combineLatest';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { E_RECORD_ACTIONS } from '../core/record-action';
 import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES } from '../consts/record-actions.consts';
-import { IActionButton, IAction } from '../core/action.interface';
-import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
-import { E_DICT_TYPE } from 'eos-dictionaries/core/dictionary.interfaces';
+import { IActionButton, IAction, IDictionaryViewParameters, E_DICT_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-node-actions',
@@ -72,7 +69,7 @@ export class NodeActionsComponent implements OnDestroy {
         let _show = false;
 
         if (this.dictionary && this._viewParams) {
-            _show = this.dictionary.descriptor.canDo(button.group, button.type);
+            _show = this.dictionary.descriptor.record.canDo(button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                     _show = this._viewParams.userOrdered && !this._viewParams.searchResults;

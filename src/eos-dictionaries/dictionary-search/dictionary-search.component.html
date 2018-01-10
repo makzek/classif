@@ -156,7 +156,7 @@
                     <div class="form-group">
                         <label for="titleRoom" class="primary-text">{{fieldsDescription.rec['titleRoom']?.title}}</label>
                         <input id="titleRoom" name="titleRoom" type="text" class="form-control light"
-                            [(ngModel)]="data.rec['CLASSIF_NAME']"
+                            [(ngModel)]="data.cabinet['CABINET_NAME']"
                             placeholder="{{fieldsDescription.rec['titleRoom']?.title}}" >
                     </div>
                     <!--
@@ -279,8 +279,8 @@
         </form>
         <div class="full-search-bottom usual-border">
             <span class="pull-right">
-                <button [disabled]="noSearchData" class="btn btn-primary s-font" (click)="clearForm()">Сбросить</button>
-                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full s-font">Найти</button>
+                <button [disabled]="noSearchData" class="btn btn-primary s-font upper" (click)="clearForm()">Сбросить</button>
+                <button [disabled]="noSearchData" (click)="fullSearch()" class="btn btn-primary-full s-font upper">Найти</button>
             </span>
         </div>
     </div>

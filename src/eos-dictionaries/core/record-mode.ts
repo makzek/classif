@@ -1,4 +1,4 @@
-import { IRecordMode } from './dictionary.interfaces';
+import { IRecordMode } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 
