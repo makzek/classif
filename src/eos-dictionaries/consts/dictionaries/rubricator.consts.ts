@@ -35,7 +35,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CLASSIF_NAME',
         title: 'Краткое наименование',
-        type: 'text',
+        type: 'string',
         length: 2000,
         required: true,
         pattern: NOT_EMPTY_STRING,
@@ -88,7 +88,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'FULLNAME',
         title: 'Полное наименование',
-        type: 'text',
+        type: 'string',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'

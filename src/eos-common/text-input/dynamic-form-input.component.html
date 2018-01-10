@@ -1,10 +1,10 @@
 <div [formGroup]="form">
     <div [ngSwitch]="input.controlType">
-        <label *ngSwitchCase="'text'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
-        <input *ngSwitchCase="'text'"
+        <label class="primary-text" *ngSwitchCase="'string'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
+        <input *ngSwitchCase="'string'"
             [formControlName]="input.key"
             [id]="input.key"
-            type="text"
+            type="string"
             required="{{input.required}}"
             [pattern]="input.pattern"
             [readonly]="readonly"
@@ -16,6 +16,23 @@
             containerClass="tooltip-error" container="body"
             [isDisabled]="readonly"
             [isOpen]="isDirty && !isValid" triggers="">
+
+        <label class="primary-text" *ngSwitchCase="'text'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
+        <textarea *ngSwitchCase="'text'"
+            [formControlName]="input.key"
+            [id]="input.key"
+            type="string"
+            required="{{input.required}}"
+            [pattern]="input.pattern"
+            [readonly]="readonly"
+            [ngClass]="{'readonly': readonly}"
+            placeholder="{{input.label}}"
+            class="form-control m-font"
+            [tooltip]="input.invalidMessage"
+            placement="right"
+            containerClass="tooltip-error" container="body"
+            [isDisabled]="readonly"
+            [isOpen]="isDirty && !isValid" triggers=""></textarea>
 
         <label *ngSwitchCase="'dropdown'" [attr.for]="input.key">{{input.label}}</label>
         <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">

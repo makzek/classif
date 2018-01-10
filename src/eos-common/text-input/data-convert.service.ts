@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { StringInput } from './string-input';
 import { TextInput } from './text-input';
 import { InputBase } from './input-base';
 import { DropdownInput } from './select-input';
@@ -58,7 +59,7 @@ export class DataConvertService {
         Object.keys(fieldsDescription[_dict]).forEach((_key) => {
           switch (fieldsDescription[_dict][_key].type) {
             case E_FIELD_TYPE.string:
-              inputs.push(new TextInput({
+              inputs.push(new StringInput({
                 key: _key,
                 label: fieldsDescription[_dict][_key].title,
                 required: fieldsDescription[_dict][_key].required,
