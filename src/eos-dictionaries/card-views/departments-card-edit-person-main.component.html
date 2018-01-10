@@ -5,12 +5,12 @@
         </div>
         <div class="form-group gender">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="GENDER">Пол</label>
-            <select *ngIf="editMode" name="GENDER" id="GENDER" class="form-control m-font gender-select" [ngModel]="data['printInfo']['GENDER']"
-                (ngModelChange)="change('GENDER', 'printInfo', $event)" [ngClass]="{'readonly': !editMode }">
+            <select name="GENDER" id="GENDER" class="form-control m-font gender-select" [ngModel]="data['printInfo']['GENDER']"
+                (ngModelChange)="change('GENDER', 'printInfo', $event)" [ngClass]="{'readonly hidden': !editMode }">
                 <option *ngFor="let g of gender" [value]="g.id">{{g.title}}</option>
             </select>
-            <input *ngIf="!data['printInfo']['GENDER'] && !editMode" readonly name="GENDER" type="text" class="form-control m-font readonly" [ngClass]="{'GENDER-placeholder': editMode }"
-                placeholder="Пол" />
+            <input *ngIf="data['printInfo'] && !editMode" name="GENDER" type="text" class="form-control m-font readonly" [ngClass]="{'GENDER-placeholder': editMode }"
+                placeholder="Пол" [value]="getGender(data['printInfo']['GENDER'])"/>
         </div>
         <div class="form-group">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CODE">Код</label>
@@ -115,8 +115,8 @@
         </div>
         <div class="form-group">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Полное наименование должности</label>
-            <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font " [ngModel]="data.rec['fullPosition']"
-                (ngModelChange)="change('fullPosition', 'rec', $event)" placeholder="Полное наименование должности"
+            <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font " [ngModel]="data.rec['FULLNAME']"
+                (ngModelChange)="change('FULLNAME', 'rec', $event)" placeholder="Полное наименование должности"
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('fullPosition')" (blur)="blur()" maxlength="2000"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
