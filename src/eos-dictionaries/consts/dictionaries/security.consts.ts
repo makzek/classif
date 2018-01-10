@@ -7,6 +7,7 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
     apiInstance: 'SECURITY_CL',
     keyField: 'SECURLEVEL',
     title: 'Грифы доступа',
+    visible: true,
     fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'SECURLEVEL',
         type: 'number',
