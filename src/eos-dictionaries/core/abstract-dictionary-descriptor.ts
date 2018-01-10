@@ -152,7 +152,9 @@ export abstract class AbstractDictionaryDescriptor {
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
         // todo: fix hardcode
         return this.apiSrv
-            .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'], this.apiInstance)] })
+            .read<SEV_ASSOCIATION>({
+                SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'] || rec['ISN_LCLASSIF'], this.apiInstance)]
+            })
             .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
     }
 
@@ -162,7 +164,7 @@ export abstract class AbstractDictionaryDescriptor {
         if (cascade) {
             PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: 1 });
         }
-        console.log('markDeleted ', changes);
+        // console.log('markDeleted ', changes);
         return this.apiSrv.batch(changes, '');
     }
 
@@ -182,7 +184,6 @@ export abstract class AbstractDictionaryDescriptor {
      * @returns Promise<any[]>
      */
     updateRecord(originalData: any, updates: any): Promise<any[]> {
-        const _res = [];
         const changeData = [];
         Object.keys(originalData).forEach((key) => {
             if (originalData[key]) {

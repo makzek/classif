@@ -55,13 +55,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     change(fldKey: string, dict: string, value: any) {
         if (typeof value === 'boolean') {
             value = +value;
+        } else if (value === 'null') {
+            value = null;
         }
         if (this.data[dict][fldKey] !== value) {
-            if (value === 'null') {
-                this.data[dict][fldKey] = null;
-            } else {
-                this.data[dict][fldKey] = value;
-            }
+            this.data[dict][fldKey] = value;
             this.onChange.emit(this.data);
         }
     }
