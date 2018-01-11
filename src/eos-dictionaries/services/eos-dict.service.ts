@@ -514,9 +514,7 @@ export class EosDictService {
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
         return this.dictionary.descriptor.updateRecord(node.data, data)
             .then(() => this._reloadList())
-            .then(() => {
-                return this.dictionary.getNode(node.id);
-            })
+            .then(() => this.dictionary.getNode(node.id))
             .catch((err) => this._errHandler(err));
     }
 
@@ -528,11 +526,9 @@ export class EosDictService {
                 const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.selectedNode);
 
                 return this.dictionary.descriptor.search(_srchCriteries)
-                    .then((nodes: EosDictionaryNode[]) => {
-                        return nodes.find((el: EosDictionaryNode) => {
-                            return el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME;
-                        })
-                    })
+                    .then((nodes: EosDictionaryNode[]) =>
+                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                    )
                     .then((node: EosDictionaryNode) => {
                         if (node) {
                             return Promise.reject('Запись с этим именем уже существует!');
@@ -544,7 +540,7 @@ export class EosDictService {
                         return this._reloadList()
                             .then(() => {
                                 this._selectedNode$.next(this.selectedNode);
-                                return Promise.resolve(this.dictionary.getNode(nodeId + ''));  // Вернет созданный узел
+                                return this.dictionary.getNode(nodeId + '');  // Вернет созданный узел
                             });
                     })
                     .catch(err => this._errHandler(err));
