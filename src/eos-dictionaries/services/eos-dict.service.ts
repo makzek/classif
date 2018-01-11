@@ -309,7 +309,7 @@ export class EosDictService {
             } else {
                 return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(data, false);
+                        const _newNodes = this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
                     })
                     .then((node) => {
