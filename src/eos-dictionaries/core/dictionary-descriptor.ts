@@ -35,7 +35,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
         return this.apiSrv
             .read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['ISN_LCLASSIF'], this.apiInstance)] })
-            .then((sev) => SevIndexHelper.PrepareStub(sev[0], this.apiSrv));
+            .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
     }
 
     getRoot(): Promise<any[]> {
