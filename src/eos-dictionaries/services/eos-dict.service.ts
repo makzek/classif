@@ -519,11 +519,13 @@ export class EosDictService {
     public addNode(data: any): Promise<any> {
         // Проверка существования записи для регионов.
         if (this.selectedNode) {
+            let p: Promise<string>;
+
             if (this.dictionary.id === 'region') {
                 const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
                 const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.selectedNode);
 
-                return this.dictionary.descriptor.search(_srchCriteries)
+                p = this.dictionary.descriptor.search(_srchCriteries)
                     .then((nodes: EosDictionaryNode[]) =>
                         nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
                     )
@@ -533,28 +535,22 @@ export class EosDictService {
                         } else {
                             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data);
                         }
-                    })
-                    .then((nodeId) => {
-                        return this._reloadList()
-                            .then(() => {
-                                this._selectedNode$.next(this.selectedNode);
-                                return this.dictionary.getNode(nodeId + '');  // Вернет созданный узел
-                            });
-                    })
-                    .catch(err => this._errHandler(err));
+                    });
+            } else {
+                // console.log('addNode', data, this.selectedNode.data);
+                p = this.dictionary.descriptor.addRecord(data, this.selectedNode.data);
             }
 
-            // console.log('addNode', data, this.selectedNode.data);
-            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
-                .then((newNodeId) => {
-                    // console.log('created node', newNodeId);
-                    return this._reloadList()
-                        .then(() => {
-                            this._selectedNode$.next(this.selectedNode);
-                            return this.dictionary.getNode(newNodeId + '');
-                        });
-                })
+            return p.then((newNodeId) => {
+                // console.log('created node', newNodeId);
+                return this._reloadList()
+                    .then(() => {
+                        this._selectedNode$.next(this.selectedNode);
+                        return this.dictionary.getNode(newNodeId + '');
+                    });
+            })
                 .catch((err) => this._errHandler(err));
+
         } else {
             return Promise.reject('No selected node');
         }
