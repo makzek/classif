@@ -430,6 +430,7 @@ export class EosDictService {
 
     private _selectNode(node: EosDictionaryNode) {
         if (this.selectedNode !== node) {
+            this.selectedNode = node;
             this._srchCriteries = null;
             this.viewParameters.showAllSubnodes = false;
             if (this.selectedNode) {
@@ -443,7 +444,6 @@ export class EosDictService {
                 this._setCurrentList(node.children);
             }
             this._openNode(null);
-            this.selectedNode = node;
             this._selectedNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);
