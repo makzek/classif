@@ -4,19 +4,19 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputBase } from './input-base';
 
 @Component({
-  selector: 'eos-dynamic-form-input',
-  templateUrl: 'dynamic-form-input.component.html'
+    selector: 'eos-dynamic-form-input',
+    templateUrl: 'dynamic-form-input.component.html'
 })
 export class DynamicFormInputComponent {
-  @Input() input: InputBase<any>;
-  @Input() form: FormGroup;
-  @Input() readonly: boolean;
+    @Input() input: InputBase<any>;
+    @Input() form: FormGroup;
+    @Input() readonly: boolean;
 
-  get isValid() {
-    return this.form.controls[this.input.key].valid;
-  }
+    get isValid() {
+        return this.form.controls[this.input.key].valid;
+    }
 
-  get isDirty() {
-    return this.form.controls[this.input.key].dirty;
-  }
+    get isDirty() {
+        return this.form.controls[this.input.key].dirty;
+    }
 }

@@ -5,15 +5,21 @@ import { InputBase } from './input-base';
 
 @Injectable()
 export class InputControlService {
-  constructor() { }
+    constructor() { }
 
-  toFormGroup(questions: InputBase<any>[] ) {
-    const group: any = {};
+    toFormGroup(inputs: InputBase<any>[]) {
+        const group: any = {};
 
-    questions.forEach(question => {
-      group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
-                                              : new FormControl(question.value || '');
-    });
-    return new FormGroup(group);
-  }
+        inputs.forEach(input => {
+            group[input.key] = input.required ? new FormControl(input.value || '', Validators.required)
+                                              : new FormControl(input.value || '');
+        });
+        return new FormGroup(group);
+    }
+
+    compareData(formData: any, orginalData: any): any {
+        Object.keys(orginalData).forEach((_dict) => {
+            console.log('orginalData', orginalData._dict);
+        });
+    }
 }

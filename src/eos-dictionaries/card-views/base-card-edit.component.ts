@@ -1,12 +1,11 @@
-import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnChanges, ViewChild, Injector } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
+import { InputControlService } from '../../eos-common/text-input/input-control.service';
 
-import { Subscription } from 'rxjs/Subscription';
-
-export class BaseCardEditComponent implements OnChanges, OnDestroy {
+export class BaseCardEditComponent implements OnChanges {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
@@ -16,13 +15,14 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     // @ViewChild('cardForm') cardForm: NgForm;
     form: FormGroup;
-    private _subscrChanges: Subscription;
-
     tooltipText = '';
     focusedField: string;
 
     protected dictSrv;
-    protected dataSrv;
+    private _dataSrv;
+    private _inputCtrlSrv;
+
+    private currentFormStatus;
 
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
@@ -30,7 +30,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
-        this.dataSrv = injector.get(DataConvertService);
+        this._dataSrv = injector.get(DataConvertService);
+        this._inputCtrlSrv = injector.get(InputControlService);
     }
 
     keys(data: Object): string[] {
@@ -42,29 +43,35 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        setTimeout(() => {
-            /*if (this.cardForm) {
-                this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
-                    this.invalid.emit(this.cardForm.invalid);
-                    this.onChange.emit(this.data);
-                });
-            }*/
-        }, 0);
-        this.form = new FormGroup({});
         if (this.fieldsDescription) {
+            /*this.form = new FormGroup({});
             Object.keys(this.fieldsDescription).forEach((_dict) => {
-                Object.keys(this.fieldsDescription[_dict]).forEach((_key) => {
-                    this.form.controls[_key] =  new FormControl();
-                });
+                switch (_dict) {
+                    case 'rec':
+                        Object.keys(this.fieldsDescription[_dict]).forEach((_key) => {
+                            this.form.controls[_key] = new FormControl();
+                        });
+                        break;
+                    case 'sev':
+                        this.form.controls['sev'] = new FormControl();
+                        break;
+                }
+            });*/
+            this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
+            this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
+            this.form.statusChanges.subscribe((status) => {
+                if (this.currentFormStatus !== status) {
+                    this.invalid.emit(status === 'INVALID');
+                }
+                this.currentFormStatus = status;
             });
-        }
-        this.inputs = this.dataSrv.getInputs(this.fieldsDescription);
-        console.log('this.inputs', this.inputs);
-    }
-
-    ngOnDestroy() {
-        if (this._subscrChanges) {
-            this._subscrChanges.unsubscribe();
+            this.form.valueChanges.subscribe((newVal) => {
+                console.log('this.form ', this.form.value, this.data);
+                const _newData = this._inputCtrlSrv.compareData(this.form.value, this.data);
+                if (_newData) {
+                    this.onChange.emit(_newData);
+                }
+            });
         }
     }
 

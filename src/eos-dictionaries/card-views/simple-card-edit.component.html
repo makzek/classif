@@ -1,6 +1,6 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
-        <form [formGroup]="form" *ngIf="data && data.rec && fieldsDescription.rec" class="form form-horizontal">
+        <form [formGroup]="form" class="form form-horizontal">
             <div class="form-group" *ngFor="let input of inputs">
                 <!--label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                     {{fieldsDescription.rec[key].title}}
@@ -19,25 +19,14 @@
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
                     <eos-text-input (change)="change($event)"></eos-text-input-->
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
-                    <eos-dynamic-form-input [input]="input" [form]="form" [readonly]="!editMode"></eos-dynamic-form-input>
+                    <eos-dynamic-form-input [input]="input" [form]="form" [readonly]="!editMode">
+                    </eos-dynamic-form-input>
             </div>
-
-            <!--div class="form-group" *ngIf="data && data['sev']">
-                <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Индекс СЭВ</label>
-                <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
-                    [ngModel]="data['sev']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
-                    placeholder="Индекс СЭВ"
-                    [readonly] = "!editMode"
-                    [ngClass]="{'readonly': !editMode }"
-                    [pattern]="notEmptyString" maxlength="255"
-                    [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
-                    placement="right" containerClass="tooltip-error" container="body"
-                    (focus)="focus('GLOBAL_ID')" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
-                    <!--pre>{{fieldsDescription[key] | json}}</pre-->
-            <!--/div-->
             <div class="form-group unimportant-text s-font">
                 <label>* - поля обязательные к заполнению</label>
+            </div>
+            <div class="form-row">
+                form.valid {{form.valid}}
             </div>
         </form>
     </article>
