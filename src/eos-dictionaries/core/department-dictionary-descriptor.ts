@@ -137,9 +137,11 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
+                /*
                 if (!printInfo['_State']) {
                     printInfo._State = _ES.Stub;
                 }
+                */
                 return {
                     user: user,
                     organization: org,
