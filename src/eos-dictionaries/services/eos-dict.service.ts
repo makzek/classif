@@ -5,7 +5,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { IDictionaryViewParameters, ISearchSettings, IOrderBy, IDictionaryDescriptor, IFieldView } from 'eos-dictionaries/interfaces';
+import {
+    IDictionaryViewParameters, ISearchSettings, IOrderBy,
+    IDictionaryDescriptor, IFieldView, SEARCH_MODES
+} from 'eos-dictionaries/interfaces';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
@@ -162,6 +165,7 @@ export class EosDictService {
             markItems: false,
             searchResults: false,
             updating: false,
+            updatingFields: false,
             haveMarked: false
         };
     }
@@ -305,7 +309,7 @@ export class EosDictService {
             } else {
                 return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(data, false);
+                        const _newNodes = this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
                     })
                     .then((node) => {
@@ -331,7 +335,15 @@ export class EosDictService {
     // console.log('reloadNode', node);
     // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
+        if (this.selectedNode.id === nodeId) {
+            this.viewParameters.updating = true;
+            this._viewParameters$.next(this.viewParameters);
+        }
+        return this.dictionary.expandNode(nodeId).then((val) => {
+            this.viewParameters.updating = false;
+            this._viewParameters$.next(this.viewParameters);
+            return val
+        }).catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -395,6 +407,7 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
+            this.viewParameters.updating = true;
             // console.log('selectNode', nodeId, this.selectedNode);
             if (!this.selectedNode || this.selectedNode.id !== nodeId) {
                 // console.log('getting node');
@@ -459,13 +472,19 @@ export class EosDictService {
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
             if (!this._openedNode || this._openedNode.id !== nodeId) {
+                this.viewParameters.updatingFields = true;
+                this._viewParameters$.next(this.viewParameters);
                 return this.dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
                         this._openNode(node);
+                        this.viewParameters.updatingFields = false;
+                        this._viewParameters$.next(this.viewParameters);
                         return node;
                     })
                     .catch((err) => this._errHandler(err));
             } else {
+                this.viewParameters.updatingFields = false;
+                this._viewParameters$.next(this.viewParameters);
                 return Promise.resolve(this._openedNode);
             }
         } else {
@@ -493,25 +512,45 @@ export class EosDictService {
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
         return this.dictionary.descriptor.updateRecord(node.data, data)
             .then(() => this._reloadList())
-            .then(() => {
-                return this.dictionary.getNode(node.id);
-            })
+            .then(() => this.dictionary.getNode(node.id))
             .catch((err) => this._errHandler(err));
     }
 
     public addNode(data: any): Promise<any> {
+        // Проверка существования записи для регионов.
         if (this.selectedNode) {
-            // console.log('addNode', data, this.selectedNode.data);
-            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
-                .then((newNodeId) => {
-                    // console.log('created node', newNodeId);
-                    return this._reloadList()
-                        .then(() => {
-                            this._selectedNode$.next(this.selectedNode);
-                            return this.dictionary.getNode(newNodeId + '');
-                        });
-                })
+            let p: Promise<string>;
+
+            if (this.dictionary.id === 'region') {
+                const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.selectedNode);
+
+                p = this.dictionary.descriptor.search(_srchCriteries)
+                    .then((nodes: EosDictionaryNode[]) =>
+                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                    )
+                    .then((node: EosDictionaryNode) => {
+                        if (node) {
+                            return Promise.reject('Запись с этим именем уже существует!');
+                        } else {
+                            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data);
+                        }
+                    });
+            } else {
+                // console.log('addNode', data, this.selectedNode.data);
+                p = this.dictionary.descriptor.addRecord(data, this.selectedNode.data);
+            }
+
+            return p.then((newNodeId) => {
+                // console.log('created node', newNodeId);
+                return this._reloadList()
+                    .then(() => {
+                        this._selectedNode$.next(this.selectedNode);
+                        return this.dictionary.getNode(newNodeId + '');
+                    });
+            })
                 .catch((err) => this._errHandler(err));
+
         } else {
             return Promise.reject('No selected node');
         }

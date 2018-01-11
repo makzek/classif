@@ -15,13 +15,13 @@
 }
 
 .content-outlet {
-    margin: 0 $grid-gutter-width / 2 0 $grid-gutter-width / 2;
+    margin: 0 ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2);
 }
 
 .header-wrapper {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, .15);
+    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, 0.15);
 
     .menu {
         height: 60px;
@@ -52,10 +52,7 @@
         height: 100%;
 
         &.left {
-            .header-item:not(:first-child) {
-                position: relative;
-                top: -27px;
-            }
+            margin-left: 240px;
         }
 
         &.right {
@@ -65,8 +62,6 @@
         .header-item {
             display: inline-block;
             height: 100%;
-            margin: auto;
-            margin-left: -4px;
 
             .link-name {
                 position: relative;
@@ -89,17 +84,20 @@
             }
 
             &.else-dropdown {
+                position: relative;
+
                 .dropdown-menu {
                     width: 250px;
                     padding: 0;
                     top: 45px;
+                    left: 40px;
 
                     .else-item {
                         height: $item-height;
-                        padding: 12px 20px;
+                        padding: 12px 0;
 
                         & > a {
-                            padding: 0;
+                            padding: 0 20px;
                             font-size: inherit;
                             line-height: inherit;
                         }
@@ -129,6 +127,7 @@
     position: fixed;
     bottom: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
+    z-index: 3;
 }
 
 .btn-transparent {
@@ -141,6 +140,7 @@
     color: inherit;
     /* vertical-align: super; */
 }
+
 #loading {
     position: absolute;
     top: 46%;
@@ -148,6 +148,16 @@
 }
 
 .bl {
-  color: $active-field-color-main-theme;
-  font-size: 36px;
+    color: $active-field-color-main-theme;
+    font-size: 36px;
+}
+
+@media (max-width: 1250px) {
+    .header-wrapper{
+        .header-content {
+            &.left {
+                margin-left: 90px;
+            }
+        }
+    }
 }

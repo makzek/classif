@@ -50,6 +50,7 @@ export class EosStorageService {
      * @param saveToLocalStorage boolean data, force store data in localStorage
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
+        console.log('storage', key, data);
         if (key && key !== '__storage' && key !== 'userOrder') {
             this._data[key] = data;
             // console.log('set to LS', key, typeof data, data);

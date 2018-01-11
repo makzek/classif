@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult  } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -161,8 +161,8 @@ export abstract class AbstractDictionaryDescriptor {
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
         records.forEach((record) => record.DELETED = deletedState);
         const changes = this.apiSrv.changeList(records);
-        if (cascade) {
-            PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: 1 });
+        if (1 !== 1 && cascade) { // blocked while cascade operations disabled
+            PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: deletedState });
         }
         // console.log('markDeleted ', changes);
         return this.apiSrv.batch(changes, '');
@@ -200,8 +200,8 @@ export abstract class AbstractDictionaryDescriptor {
                 }
             }
         });
-        console.log('originalData', originalData);
-        console.log('changeData', changeData);
+        // console.log('originalData', originalData);
+        // console.log('changeData', changeData);
         return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
         // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
