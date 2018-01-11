@@ -5,7 +5,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { IDictionaryViewParameters, ISearchSettings, IOrderBy, IDictionaryDescriptor, IFieldView } from 'eos-dictionaries/interfaces';
+import {
+    IDictionaryViewParameters, ISearchSettings, IOrderBy,
+    IDictionaryDescriptor, IFieldView, SEARCH_MODES
+} from 'eos-dictionaries/interfaces';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
@@ -493,14 +496,38 @@ export class EosDictService {
     public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
         return this.dictionary.descriptor.updateRecord(node.data, data)
             .then(() => this._reloadList())
-            .then(() => {
-                return this.dictionary.getNode(node.id);
-            })
+            .then(() => this.dictionary.getNode(node.id))
             .catch((err) => this._errHandler(err));
     }
 
     public addNode(data: any): Promise<any> {
+        // Проверка существования записи для регионов.
         if (this.selectedNode) {
+            if (this.dictionary.id === 'region') {
+                const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.selectedNode);
+
+                return this.dictionary.descriptor.search(_srchCriteries)
+                    .then((nodes: EosDictionaryNode[]) =>
+                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                    )
+                    .then((node: EosDictionaryNode) => {
+                        if (node) {
+                            return Promise.reject('Запись с этим именем уже существует!');
+                        } else {
+                            return this.dictionary.descriptor.addRecord(data, this.selectedNode.data);
+                        }
+                    })
+                    .then((nodeId) => {
+                        return this._reloadList()
+                            .then(() => {
+                                this._selectedNode$.next(this.selectedNode);
+                                return this.dictionary.getNode(nodeId + '');  // Вернет созданный узел
+                            });
+                    })
+                    .catch(err => this._errHandler(err));
+            }
+
             // console.log('addNode', data, this.selectedNode.data);
             return this.dictionary.descriptor.addRecord(data, this.selectedNode.data)
                 .then((newNodeId) => {
