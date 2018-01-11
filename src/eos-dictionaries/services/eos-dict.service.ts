@@ -147,6 +147,7 @@ export class EosDictService {
         private _router: Router,
     ) {
         this._initViewParameters();
+        this._dictionaries = [];
         this._treeNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._listNode$ = new BehaviorSubject<EosDictionaryNode>(null);
         this._dictionary$ = new BehaviorSubject<EosDictionary>(null);
@@ -229,7 +230,6 @@ export class EosDictService {
     public closeDictionary() {
         this.dictionary = this.treeNode = this._listNode = this._srchCriteries = null;
         this._initViewParameters();
-        this._dictionaries = [];
         this._dictMode = 0;
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
@@ -526,31 +526,39 @@ export class EosDictService {
 
     public addNode(data: any): Promise<any> {
         // Проверка существования записи для регионов.
-        // console.log('addNode', data, this.treeNode.data);
-        if (this.dictionary.id === 'region') {
-            const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
-            const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
+        if (this.treeNode) {
+            let p: Promise<string>;
 
-            return this.dictionary.descriptor.search(_srchCriteries)
-                .then((nodes: EosDictionaryNode[]) =>
-                    nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
-                )
-                .then((node: EosDictionaryNode) => {
-                    if (node) {
-                        return Promise.reject('Запись с этим именем уже существует!');
-                    } else {
-                        return this.dictionary.descriptor.addRecord(data, this.treeNode.data);
-                    }
-                })
-                .then((newNodeId) => {
-                    // console.log('created node', newNodeId);
-                    return this._reloadList()
-                        .then(() => {
-                            this._treeNode$.next(this.treeNode);
-                            return this.dictionary.getNode(newNodeId + '');
-                        });
-                })
+            if (this.dictionary.id === 'region') {
+                const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
+
+                p = this.dictionary.descriptor.search(_srchCriteries)
+                    .then((nodes: EosDictionaryNode[]) =>
+                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                    )
+                    .then((node: EosDictionaryNode) => {
+                        if (node) {
+                            return Promise.reject('Запись с этим именем уже существует!');
+                        } else {
+                            return this.dictionary.descriptor.addRecord(data, this.treeNode.data);
+                        }
+                    });
+            } else {
+                // console.log('addNode', data, this.treeNode.data);
+                p = this.dictionary.descriptor.addRecord(data, this.treeNode.data);
+            }
+
+            return p.then((newNodeId) => {
+                // console.log('created node', newNodeId);
+                return this._reloadList()
+                    .then(() => {
+                        this._treeNode$.next(this.treeNode);
+                        return this.dictionary.getNode(newNodeId + '');
+                    });
+            })
                 .catch((err) => this._errHandler(err));
+
         } else {
             return Promise.reject('No selected node');
         }
