@@ -50,6 +50,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
+    listDictionary: EosDictionary;
+
     dictionaryName: string;
     public dictionaryId: string;
 
@@ -129,24 +131,34 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
             .subscribe((state: boolean[]) => this.currentState = state);
 
-        _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
+        _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
+                    this.dictionaryId = dictionary.id;
+                    if (dictionary.root) {
+                        this.dictionaryName = dictionary.root.title;
+                        this.treeNodes = [dictionary.root];
+                    }
+                } else {
+                    this.treeNodes = [];
+                }
+            });
+
+        _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
+            .subscribe((dictionary: EosDictionary) => {
+                if (dictionary) {
+                    this.dictMode = this._dictSrv.dictMode;
+                    console.log('dict mode', this.dictMode);
                     this.customFields = this._dictSrv.customFields;
                     this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {
                         this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
                     });
-                    this.dictionaryId = dictionary.id;
-                    this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
-                    if (dictionary.root) {
-                        this.dictionaryName = dictionary.root.title;
-                        this.treeNodes = [dictionary.root];
-                    }
-                    this.params.markItems = dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords);
-                    this.hasCustomTable = this.dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.tableCustomization);
+                    this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
+                    this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }

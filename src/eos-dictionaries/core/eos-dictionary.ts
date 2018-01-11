@@ -87,6 +87,11 @@ export class EosDictionary {
         this._nodes = new Map<string, EosDictionaryNode>();
         this._dictionaries = {};
         this.defaultOrder();
+        console.log('created', dictId);
+    }
+
+    canDo(action: E_RECORD_ACTIONS): boolean {
+        return this.descriptor.record.canDo(action);
     }
 
     init(): Promise<EosDictionaryNode> {
@@ -94,7 +99,7 @@ export class EosDictionary {
         return this.descriptor.getRoot()
             .then((data: any[]) => {
                 this.updateNodes(data, true);
-                // console.log('this.r00t', this.root, this._nodes);
+                console.log('this.r00t', this.root, this._nodes);
                 return this.root;
             })
     }
@@ -370,6 +375,16 @@ export class EosDictionary {
         return this.descriptor
             .search(criteries)
             .then((data) => this.updateNodes(data, false));
+    }
+
+    searchByParentData(dictionary: EosDictionary, node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        if (dictionary.id === 'departments') {
+            const critery = {
+                'DUE': node.id
+            }
+            return this.search([critery]);
+        }
+        return Promise.resolve([]);
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {

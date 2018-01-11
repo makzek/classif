@@ -142,6 +142,10 @@ export class EosDictService {
         return this._dictMode$.asObservable();
     }
 
+    get dictMode(): number {
+        return this._dictMode;
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         private _profileSrv: EosUserProfileService,
@@ -162,6 +166,7 @@ export class EosDictService {
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode$ = new BehaviorSubject(0);
+        this._dictMode = 0;
     }
 
     private _initViewParameters() {
@@ -286,7 +291,6 @@ export class EosDictService {
                         this._mDictionaryPromise.delete(dictionaryId);
                         this._dictionary$.next(this.dictionary);
                         this._dictionaries[0] = this.dictionary;
-                        this._emitListDictionary(0);
                         return this.dictionary;
                     })
                     .catch((err) => {
@@ -454,16 +458,19 @@ export class EosDictService {
                 }
                 this.treeNode.isActive = false;
             }
+            this.treeNode = node;
             if (node) {
                 node.isActive = true;
-                this._setCurrentList(node.children);
+                this.setDictMode(this._dictMode);
+                // this._reloadList();
+                //                this._setCurrentList(node.children);
             }
             this._openNode(null);
-            this.treeNode = node;
             this._treeNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);
         }
+        /*
         if (this._currentList === undefined) {
             if (node) {
                 this._setCurrentList(node.children);
@@ -471,6 +478,7 @@ export class EosDictService {
                 this._setCurrentList([]);
             }
         }
+        */
     }
 
     private _selectRoot(): EosDictionaryNode {
@@ -637,7 +645,9 @@ export class EosDictService {
         let pResult = Promise.resolve([]);
         const dictionary = this._dictionaries[this._dictMode];
         if (dictionary) {
-            if (this._srchCriteries) {
+            if (this._dictMode !== 0) {
+                pResult = dictionary.searchByParentData(this.dictionary, this.treeNode);
+            } else if (this._srchCriteries) {
                 pResult = dictionary.search(this._srchCriteries);
             } else if (this.viewParameters.showAllSubnodes) {
                 pResult = dictionary.getAllChildren(this.treeNode);
@@ -723,12 +733,12 @@ export class EosDictService {
 
     setDictMode(mode: number) {
         this._dictMode = mode;
-        console.log('dictionary mode', mode);
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this.dictionary.getDictionaryIdByMode(mode);
         }
         /* todo: implement additional dictionary logic */
-        this._reloadList();
+        this._reloadList()
+            .then(() => this._emitListDictionary(mode));
         this._dictMode$.next(mode);
     }
 
