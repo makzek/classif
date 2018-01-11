@@ -5,7 +5,7 @@ import { TextInput } from './text-input';
 import { InputBase } from './input-base';
 import { DropdownInput } from './select-input';
 import { CheckboxInput } from './checkbox-input';
-import { E_FIELD_TYPE } from '../../eos-dictionaries/core/dictionary.interfaces';
+import { E_FIELD_TYPE } from '../../eos-dictionaries/interfaces';
 
 @Injectable()
 export class DataConvertService {

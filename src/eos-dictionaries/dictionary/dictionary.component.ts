@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -6,21 +6,22 @@ import 'rxjs/add/operator/takeUntil';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
-import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
+import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
+import { IConfirmWindow } from 'eos-common/core/confirm-window.interface';
 
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
+import {
+    IDictionaryViewParameters, E_FIELD_SET, IFieldView, INodeListParams,
+    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS
+} from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
 
-import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
-import { INodeListParams } from '../core/node-list.interfaces';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
@@ -30,20 +31,12 @@ import {
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
-import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
-import { FieldDescriptor } from '../core/field-descriptor'
-
-import { IOrderBy } from '../core/sort.interface'
-
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
-import { RECENT_URL } from '../../app/consts/common.consts';
+import { RECENT_URL } from 'app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 import { CreateNodeComponent } from '../create-node/create-node.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
-import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
-// import { setTimeout } from 'timers';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -147,9 +140,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.dictionaryName = dictionary.root.title;
                         this.treeNodes = [dictionary.root];
                     }
-                    this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                    this.hasCustomTable = this.dictionary.descriptor.canDo(E_ACTION_GROUPS.common,
-                        E_RECORD_ACTIONS.tableCustomization);
+                    this.params.markItems = dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = this.dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }
@@ -526,7 +518,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         this.modalWindow.content.fixedFields = this.viewFields;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;

@@ -93,7 +93,7 @@
 }
 
 .primary-text {
-    color: $primary-font-color-main-theme;
+    color: $primary-font-color-main-theme !important;
 }
 
 .usual-border {
@@ -138,18 +138,22 @@
         border-color: $active-field-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $active-field-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $active-field-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $active-field-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $active-field-color-main-theme;
     }
@@ -162,18 +166,22 @@
         border-color: $invalid-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $invalid-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $invalid-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $invalid-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $invalid-color-main-theme;
     }
@@ -260,6 +268,12 @@
         color: $disabled-color-main-theme;
     }
 
+    .highlight-on-hover {
+        &:hover {
+            background-color: $highlight-color-main-theme;
+        }
+    }
+
     // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
@@ -285,17 +299,6 @@
 
         &:active {
             background-color: $secondary-color-main-theme;
-        }
-    }
-
-    // spacial templates
-    .eos-departments-card-edit {
-        .block-title {
-            border-color: $border-color-main-theme;
-            color: $primary-font-color-main-theme;
-            &:focus {
-                border-color: transparent;
-            }
         }
     }
 }

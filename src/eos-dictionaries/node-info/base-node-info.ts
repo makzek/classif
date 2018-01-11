@@ -1,10 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
-import { IFieldView, E_FIELD_TYPE } from '../core/dictionary.interfaces';
+import { IFieldView, E_FIELD_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
-import { E_RECORD_ACTIONS } from '../core/record-action';
-
 
 export class BaseNodeInfoComponent {
     @Input() fieldsDescriptionShort: any;

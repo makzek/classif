@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 
@@ -8,6 +8,7 @@ export const PRINT_INFO_DICT: IDictionaryDescriptor = {
     apiInstance: 'CB_PRINT_INFO',
     dictType: E_DICT_TYPE.linear,
     title: '',
+    visible: false,
     actions: ['add', 'edit', 'remove', 'removeHard'],
     keyField: 'ISN_OWNER',
     parentField: 'PARENT_DUE',

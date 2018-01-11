@@ -1,5 +1,5 @@
-<div class="eos-card secondary-block">
-    <header class="edit-header usual-border" [ngClass]="{'edited': editMode}">
+<div class="eos-card">
+    <header class="edit-header secondary-block" [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <div>
                 <button *ngIf="node && !editMode" [disabled]="disManager(true, tt1)" #tt1="bs-tooltip" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
@@ -21,8 +21,8 @@
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
             <div>
-                <button class="btn btn-primary" (click)="cancel()">Отменить</button>
-                <button class="btn btn-primary-full" [disabled]="!isChanged || disableSave" (click)="save()">Сохранить</button>
+                <button class="btn btn-primary upper" (click)="cancel()">Отменить</button>
+                <button class="btn btn-primary-full upper" [disabled]="!isChanged || disableSave" (click)="save()">Сохранить</button>
             </div>
         </div>
         <div class="action-wrapper" *ngIf="!editMode">
@@ -42,7 +42,7 @@
         </div>
     </header>
 
-    <div *ngIf="!node || node.updating" class="spinner-wrapper">
+    <div *ngIf="!node || node.updating" class="spinner-wrapper secondary-block">
         <eos-spinner [size]="'lg'"></eos-spinner>
     </div>
     <eos-card-edit
