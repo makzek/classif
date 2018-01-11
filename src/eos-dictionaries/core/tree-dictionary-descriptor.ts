@@ -36,7 +36,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                         data.rec['DUE'] = resp[0].ID;
                     }
                     if (resp[0].FixedISN !== undefined) {
-                        data.rec['ISN_LCLASSIF'] = resp[0].FixedISN;
+                        data.rec['ISN_NODE'] = resp[0].FixedISN;
                     }
                     const changeData = [];
 
