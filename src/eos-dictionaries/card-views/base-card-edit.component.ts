@@ -58,6 +58,7 @@ export class BaseCardEditComponent implements OnChanges {
                 }
             });*/
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
+            this._inputCtrlSrv.initNodeId(this.nodeId);
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             this.form.statusChanges.subscribe((status) => {
                 if (this.currentFormStatus !== status) {
@@ -66,11 +67,7 @@ export class BaseCardEditComponent implements OnChanges {
                 this.currentFormStatus = status;
             });
             this.form.valueChanges.subscribe((newVal) => {
-                console.log('this.form ', this.form.value, this.data);
-                const _newData = this._inputCtrlSrv.compareData(this.form.value, this.data);
-                if (_newData) {
-                    this.onChange.emit(_newData);
-                }
+                // console.log('this.form ', this.form.value, this.data);
             });
         }
     }

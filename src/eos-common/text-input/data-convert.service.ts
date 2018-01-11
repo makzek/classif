@@ -7,6 +7,8 @@ import { DropdownInput } from './select-input';
 import { CheckboxInput } from './checkbox-input';
 import { E_FIELD_TYPE } from '../../eos-dictionaries/interfaces';
 
+const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;
+
 @Injectable()
 export class DataConvertService {
     // Todo: get from a remote source of question metadata
@@ -27,6 +29,9 @@ export class DataConvertService {
                                         label: fieldsDescription[_dict][_key].title,
                                         required: fieldsDescription[_dict][_key].required,
                                         invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
+                                        pattern: fieldsDescription[_dict][_key].pattern,
+                                        isUnic: fieldsDescription[_dict][_key].isUnic,
+                                        unicInDict: fieldsDescription[_dict][_key].inDict,
                                         value: data[_dict][_key],
                                     }));
                                     break;
@@ -50,9 +55,11 @@ export class DataConvertService {
                         break;
                     case 'sev':
                         inputs.push(new StringInput({
-                            key: 'sev',
+                            key: 'GLOBAL_ID',
                             label: 'Индекс СЭВ',
+                            dict: 'sev',
                             value: data['sev']['GLOBAL_ID'],
+                            pattern: NOT_EMPTY_STRING,
                         }));
                         break;
                 }
