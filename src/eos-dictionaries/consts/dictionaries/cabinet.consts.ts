@@ -32,6 +32,6 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'Полное наименование',
         length: 2000,
     }],
-    listFields: ['CABINET_NAME', 'DUE'],
+    listFields: ['DUE', 'CABINET_NAME'],
     allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
 });

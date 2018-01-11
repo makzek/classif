@@ -52,6 +52,10 @@ export class EosDictService {
         return this._dictionary$.asObservable();
     }
 
+    get listDictionary$(): Observable<EosDictionary> {
+        return this._listDictionary$.asObservable();
+    }
+
     /* Observable treeNode for subscribing on updates in components */
     get treeNode$(): Observable<EosDictionaryNode> {
         return this._treeNode$.asObservable();
@@ -231,6 +235,7 @@ export class EosDictService {
         this.dictionary = this.treeNode = this._listNode = this._srchCriteries = null;
         this._initViewParameters();
         this._dictMode = 0;
+        this._dictionaries = [];
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
         this._currentList$.next([]);

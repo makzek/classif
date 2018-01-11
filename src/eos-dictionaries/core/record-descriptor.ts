@@ -22,17 +22,17 @@ export class RecordDescriptor {
     /**
      *  set of visible fields in list mode
      */
-    protected listFields: any;
+    protected listFields: FieldDescriptor[];
 
     /**
      * set of visible fields in quick view mode
      */
-    protected quickViewFields: any;
+    protected quickViewFields: FieldDescriptor[];
 
     /**
      *  set of visible fields in quick view (short) mode
      */
-    protected shortQuickViewFields: any;
+    protected shortQuickViewFields: FieldDescriptor[];
 
     /**
      * search fields
@@ -47,7 +47,7 @@ export class RecordDescriptor {
     /**
      *  set of fields for edit form
      */
-    protected editFields: any;
+    protected editFields: FieldDescriptor[];
 
     /**
      *  user configurable fields
@@ -233,19 +233,15 @@ export class RecordDescriptor {
     }
 
     private _bindData(fields: FieldDescriptor[], data: any): IFieldView[] {
-        if (data.rec) {
-            return fields.map((fld) => {
-                let _res: IFieldView;
-                if (fld.type === E_FIELD_TYPE.dictionary) {
-                    _res = Object.assign({}, fld, { value: data[fld.foreignKey] });
-                } else {
-                    _res = (Object.assign({}, fld, { value: data.rec[fld.foreignKey] }));
-                }
-                return _res;
-            });
-        } else {
-            return [];
-        }
+        return fields.map((fld) => {
+            let _res: IFieldView;
+            if (fld.type === E_FIELD_TYPE.dictionary) {
+                _res = Object.assign({}, fld, { value: data ? data[fld.foreignKey] : null });
+            } else {
+                _res = (Object.assign({}, fld, { value: data && data.rec ? data.rec[fld.foreignKey] : null }));
+            }
+            return _res;
+        });
     }
 
     private _getAllVisibleFields(): FieldDescriptor[] {

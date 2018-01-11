@@ -108,6 +108,15 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         return _criteries;
     }
 
+    getIdByDictionaryMode(mode: number): string {
+        switch (mode) {
+            case 1:
+                return 'cabinet';
+            default:
+                return this.id;
+        }
+    }
+
     getRelated(rec: any, orgDUE: string): Promise<any> {
         const pUser = this.apiSrv
             .read({ 'USER_CL': PipRX.criteries({ 'DUE_DEP': rec['DUE'] }) })

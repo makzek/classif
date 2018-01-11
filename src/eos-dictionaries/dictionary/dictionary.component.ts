@@ -129,11 +129,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
             .subscribe((state: boolean[]) => this.currentState = state);
 
-        _dictSrv.dictionary$.takeUntil(this.ngUnsubscribe)
+        _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
                     this.customFields = this._dictSrv.customFields;
+                    this.viewFields = dictionary.getListView();
+                    const _customTitles = this._dictSrv.customTitles;
+                    _customTitles.forEach((_title) => {
+                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
+                    });
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
@@ -151,11 +156,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
-                    this.viewFields = node.getListView();
-                    const _customTitles = this._dictSrv.customTitles;
-                    _customTitles.forEach((_title) => {
-                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
-                    });
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
