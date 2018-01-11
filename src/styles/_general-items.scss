@@ -197,3 +197,9 @@ input[type=text]::-ms-clear {
 .no-drag {
     background-color: red !important;
 }
+
+typeahead-container {
+    .dropdown-menu {
+        z-index: 1100;
+    }
+}

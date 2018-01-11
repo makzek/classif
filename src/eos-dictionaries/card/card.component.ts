@@ -79,6 +79,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     disableSave = false;
 
+    dutysList: string[] = [];
+    fullNamesList: string[] = [];
+
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
 
     /* todo: check tasks for reson
@@ -185,6 +188,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
             // console.log('recived description', this.nodeData);
+
+            if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
+                this.dutysList = this._storageSrv.getItem('dutysList') || [];
+                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
+            }
         }
     }
 
@@ -390,9 +398,23 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     save(): void {
         this.disableSave = true;
+        if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
+            /* tslint:disable */
+            if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
+                this.dutysList.push(this.nodeData.rec.DUTY);
+            }
+
+            if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
+                this.fullNamesList.push(this.nodeData.rec.FULLNAME)
+            }
+            /* tslint:enable */
+            this._storageSrv.setItem('dutysList', this.dutysList, true);
+            this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
+        }
         this._save(this.nodeData)
             .then((node) => {
                 if (node) {
+                    console.log('save', node);
                     this._initNodeData(node);
                     this._setOriginalData();
                     this.cancel();

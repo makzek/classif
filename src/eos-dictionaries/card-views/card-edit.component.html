@@ -1,5 +1,6 @@
 <ng-container [ngSwitch]="dictionaryId">
-    <eos-departments-card-edit *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
+    <eos-departments-card-edit *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" 
+        [dutysList]="dutysList" [fullNamesList]="fullNamesList"
         (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit>
     <eos-cabinet-card-edit  *ngSwitchCase="'cabinet'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-cabinet-card-edit>
