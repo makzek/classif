@@ -1,19 +1,24 @@
 .eos-card {
     // min-height: 450px;
     max-height: calc(100vh - 108px - 60px);
-    width: 800px;
-    margin: 0 auto;
     border: 1px solid transparent;
     overflow-y: auto;
 
+    .edit-block-header,
     .edit-header {
         min-height: $item-height;
         padding:  0;
+        border-width: 1px;
+        border-style: solid;
+        width: 800px;
+        margin: 0 auto;
+    }
+
+    .edit-header {
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 48px 1fr 153px;
         grid-template-columns: 100px 48px 1fr 153px;
-        border-bottom: 1px solid transparent;
 
         &.edited {
             -ms-grid-columns: 0 48px 1fr 195px;
@@ -70,10 +75,6 @@
             grid-column: 4;
             grid-row: 1;
             height: 48px;
-
-            .btn {
-                text-transform: uppercase;
-            }
         }
 
         .action-wrapper {
@@ -101,6 +102,11 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        border-width: 1px;
+        border-style: solid;
+        border-top-width: 0;
+        width: 800px;
+        margin: 0 auto;
     }
 
     .edit-aside {
@@ -125,6 +131,26 @@
             margin-bottom: 8px;
             text-transform: uppercase;
             white-space: nowrap;
+        }
+    }
+
+    .mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .btn-wrapper {
+            text-align: center;
+
+            .btn {
+                text-transform: uppercase;
+            }
         }
     }
 
@@ -155,4 +181,21 @@
 
 .simple-card-edit {
     padding: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.security-card-edit {
+    .checkbox-inline {
+        padding-left: 0;
+    }
+}
+
+.appearance-none {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }

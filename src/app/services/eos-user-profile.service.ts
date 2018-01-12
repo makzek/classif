@@ -71,7 +71,7 @@ export class EosUserProfileService implements IUserProfile {
         this.settings = USER_SETTINGS;
         this._isAuthorized = false;
         this._settings$ = new BehaviorSubject<ISettingsItem[]>(this.settings);
-        this._authorized$ = new BehaviorSubject<boolean>(this._isAuthorized);
+        this._authorized$ = new BehaviorSubject<boolean>(null);
     }
 
     checkAuth(): Promise<boolean> {
@@ -93,7 +93,7 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     notAuthorized(): boolean {
-        /* console.log('notAuthorized fired'); */
+        // console.log('notAuthorized fired');
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
         return this._setAuth(false);
     }
@@ -109,16 +109,19 @@ export class EosUserProfileService implements IUserProfile {
         if (this._isAuthorized !== auth) {
             this._isAuthorized = auth;
             this._authorized$.next(auth);
+        } else {
+            this._authorized$.next(false);
         }
         return auth;
     }
 
     login(name: string, password: string): Promise<any> {
-        return this._authSrv.login(name, password).then((context) => {
-            // todo: fill user profile from response
-            this._setUser(context.user, context.sysParams);
-            return this._setAuth(true);
-        })
+        return this._authSrv
+            .login(name, password)
+            .then((context) => {
+                this._setUser(context.user, context.sysParams);
+                return this._setAuth(true);
+            })
             .catch((err) => {
                 return this.notAuthorized();
             });

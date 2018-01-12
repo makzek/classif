@@ -1,26 +1,26 @@
-<div class="main-container main-theme">
+<div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth}">
     <!-- DON'T USE class="container" with display: grid -->
     <div class="header-wrapper block">
         <div class="menu">
+            <div class="eos-title primary-text"><eos-title></eos-title></div>
             <ul class="header-content left">
-                <li class="header-item primary-text">
-                    <eos-title></eos-title>
-                </li>
                 <li class="header-item primary-text" *ngIf="isAuthorized">
                     <eos-desktop-switcher></eos-desktop-switcher>
                 </li>
                 <ng-container *ngIf="isAuthorized">
                     <li *ngFor="let item of modules" class="header-item primary-text">
                         <a class="link-name primary-text xl-font" [routerLink]="item.url" routerLinkActive="active">
-                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
                         </a>
                     </li>
                     <li class="header-item else-dropdown primary-text" dropdown>
-                        <span class="link-name xl-font" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info">Ещё</span>
+                        <span class="link-name xl-font" dropdownToggle>Ещё
+                            <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info>
+                        </span>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
                                 <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
-                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info" [hidden]="hideMenu">{{item.title}}</span>
+                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
                                 </a>
                             </li>
                         </ul>
@@ -52,5 +52,11 @@
             <eos-messages></eos-messages>
         </div>
         <div class="text-right text-info version-number" *ngIf="version">Build: {{version}}</div>
+    </div>
+</div>
+
+<div id="loadblock" *ngIf="!firstLoadAuth">
+    <div id="loading">
+        <i class="fa fa-spinner fa-pulse fa-fw selected-text lg bl"></i>
     </div>
 </div>

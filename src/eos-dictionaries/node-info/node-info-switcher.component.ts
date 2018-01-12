@@ -1,9 +1,8 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView } from '../core/dictionary.interfaces';
+import { IFieldView, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
-import { E_RECORD_ACTIONS } from '../core/record-action';
 
 @Component({
     selector: 'eos-node-info-switcher',

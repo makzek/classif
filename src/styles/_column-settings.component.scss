@@ -1,47 +1,89 @@
 .column-settings-modal {
-    .title {
+    .modal-header {
+        padding: 0 15px;
+    }
+
+    .btn {
         text-transform: uppercase;
+        margin-top: 7px;
+    }
+
+    .title {
         display: inline-block;
         margin-bottom: 8px;
     }
 
-    .modal-title {
-        font-size: 18px;
-    }
-
-    .modal-header {
-        padding: 15px;
-
-        h4 {
-            color: #000;
-        }
-
-        .btn {
-            text-transform: uppercase;
-        }
-    }
-
     .info-block {
-        border: 1px solid transparent;
-        min-height: 300px;
+        border-width: 1px;
+        border-style: solid;
+        height: 500px;
+        overflow: auto;
+
+        &.right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .current {
+            height: 100%;
+        }
 
         .item {
             height: 32px;
             padding: 8px;
             cursor: move;
+            position: relative;
+
+            .edit-btn,
+            .ok-btn,
+            .cancel-btn {
+                position: absolute;
+                right: 0;
+                top: 5px;
+            }
+
+            .ok-btn {
+                right: 24px;
+            }
+
+            .new-title,
+            .text {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 0;
+                padding-right: 50px;
+            }
+
+            .new-title::-ms-clear {
+                display: none;
+            }
+
+            .text {
+                padding: 6px 20px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+                white-space: nowrap;
+            }
+
+            &.gu-transit {
+                background-color: $highlight-color-main-theme;
+            }
         }
     }
 
-    .col-wrapper {
-        display: flex;
-    }
-
     .col {
-        width: 30%;
+        width: 405px;
+
+        .clear-btn {
+            margin-top: 20px;
+            width: inherit;
+        }
     }
 
     .driver-col {
-        width: 12.5%;
+        width: 48px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -53,7 +95,21 @@
         }
     }
 
-    .container {
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-body-container {
         display: flex;
+    }
+}
+
+
+.warning {
+    &.modal-footer {
+        .btn {
+            padding: 0 20px;
+            text-transform: uppercase;
+        }
     }
 }

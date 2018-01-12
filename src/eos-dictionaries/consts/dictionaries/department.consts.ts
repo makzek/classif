@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 
@@ -8,10 +8,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     apiInstance: 'DEPARTMENT',
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения (unstable)',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
-        'createRepresentative'],
-    itemActions: ['edit', 'view', 'slantForForms', 'moveUp', 'moveDown'],
-    groupActions: ['remove', 'removeHard', /*'userOrder',*/ 'showDeleted'],
+        'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard',
+        'showDeleted'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     modeField: 'IS_NODE',
@@ -20,7 +20,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'department',
         title: 'Подразделение',
     }, {
-        key: 'room',
+        key: 'cabinet',
         title: 'Кабинет',
     }, {
         key: 'person',
@@ -38,7 +38,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_ORGANIZ',
         title: 'Не используется Организация',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'LAYER',
         title: 'LAYER',
@@ -46,7 +48,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящей вершины',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -133,11 +137,15 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_CABINET',
         title: 'ISN кабинета',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'ORDER_NUM',
         title: 'Порядковый номер в кабинете',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'indexPerson',
         title: 'Индекс ДЛ',
@@ -183,7 +191,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_CONTACT',
         title: 'ISN контакта',
-        type: 'number'
+        type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',
@@ -216,7 +226,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'DUE_LINK_ORGANIZ',
-        title: 'DUE связанной организации',
+        title: 'Организация',
         type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
@@ -232,6 +242,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'INS_WHO',
         title: 'Кто создал',
         type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'UPD_DATE',
         title: 'Дата и время обновления',
@@ -240,6 +252,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'UPD_WHO',
         title: 'Кто обновил',
         type: 'number',
+        pattern: /^\d*$/,
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'printInfo',
         type: 'dictionary',
@@ -299,31 +313,22 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    searchFields: [/* 'RUBRIC_CODE', */'CLASSIF_NAME'/*, 'NOTE'*/],
-    listFields: {
-        person: ['CODE', 'fio'],
-        department: ['CODE', 'title']
-    },
+    searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
+    listFields: ['CODE', 'title'],
     fullSearchFields: {
         person: ['CODE', 'PHONE', 'E_MAIL'],
         department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
-        room: ['titleRoom', 'fullTitleRoom']
+        cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
-    quickViewFields: {
-        person: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H'], // 'SURNAME', 'firstName', 'fathersName', 'lastName', 'photo' is in shortQuickViewFields
-        department: ['CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'] // title is in shortQuickViewFields
-    },
-    shortQuickViewFields: {
-        person: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo'],
-        department: ['title']
-    },
-    editFields: { // TODO: remove IS_NODE!!!
-        person: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-            'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
-        department: ['IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-            'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
-        // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
-    },
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE', 'fullTitle'],
+    quickViewFields: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'], // title is in shortQuickViewFields
+    shortQuickViewFields: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo', 'title'],
+    editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
+        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
+        'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
+        'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
+    // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
+    allVisibleFields: ['ISN_ORGANIZ', 'SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
+        'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

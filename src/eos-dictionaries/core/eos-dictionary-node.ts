@@ -1,8 +1,7 @@
-import { IFieldView } from './dictionary.interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -125,13 +124,13 @@ export class EosDictionaryNode {
             };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
+                this.parentId = this._keyToString(data[this._descriptor.parentField.foreignKey]);
             }
 
             // console.log('constructing node with parent', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
-                this.id = this._keyToString(data[this._descriptor.keyField.key]);
+                this.id = this._keyToString(data[this._descriptor.keyField.foreignKey]);
             }
         }
     }
@@ -182,7 +181,7 @@ export class EosDictionaryNode {
 
     delete() {
         // console.log('delete children parent', this, this._children, this.parent);
-        if ((!this._children || this._children.length < 1) && this.parent) {
+        if (/* (!this._children || this._children.length < 1) && */this.parent) {
             this.parent.deleteChild(this);
         }
     }
@@ -309,6 +308,15 @@ export class EosDictionaryNode {
             children = children.concat(this._children);
         }
         return children;
+    }
+
+    /**
+     * Get value for field
+     * @param field field which value need recive
+     * @return value of field from node.data.rec
+     */
+    getValue (field: IFieldView): any {
+        return this.data.rec[field.foreignKey];
     }
 }
 

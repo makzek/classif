@@ -1,5 +1,4 @@
-import { IAction } from '../core/action.interface';
-import { E_RECORD_ACTIONS, E_ACTION_GROUPS } from '../core/record-action';
+import { IAction , E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/interfaces';
 
 export const RECORD_ACTIONS_EDIT = {
     type: E_RECORD_ACTIONS.edit,
@@ -131,7 +130,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
-    title: 'Добавить элемент',
+    title: 'Создать новый',
     hint: null,
     iconClass: null,
     activeIconClass: null,
@@ -174,3 +173,14 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     hoverIconClass: null,
     buttonClass: 'hidden-lg'
 }];
+
+export const  SHOW_ALL_SUBNODES: IAction = {
+    type: E_RECORD_ACTIONS.showAllSubnodes,
+    group: E_ACTION_GROUPS.common,
+    title: null,
+    hint: 'Отобразить все дочерние записи единым списком',
+    iconClass: 'eos-icon eos-icon-tree-blue small',
+    activeIconClass: 'eos-icon eos-icon-tree-white small',
+    hoverIconClass: '',
+    buttonClass: null
+};

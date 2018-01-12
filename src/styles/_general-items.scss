@@ -5,7 +5,8 @@
 }
 
 .checkbox-inline,
-.checkbox {
+.checkbox,
+.minus-checkbox {
     input[type="checkbox"] {
         opacity: 0;
         cursor: pointer;
@@ -28,7 +29,7 @@
 
         &[disabled] {
             & + span {
-                background-image: url("../assets/icons/Minus-Grey.svg");
+                background-image: url("../assets/icons/Checkbox-Square-Grey.svg");
             }
 
             &:checked + span {
@@ -41,6 +42,20 @@
         // padding-left: 0;
         // position: relative;
         margin: 0;
+    }
+}
+
+.minus-checkbox {
+    input[type="checkbox"] {
+        &[disabled] {
+            & + span {
+                background-image: url("../assets/icons/Minus-Grey.svg");
+            }
+
+            &:checked + span {
+                background-image: url("../assets/icons/Checkbox-Grey.svg");
+            }
+        }
     }
 }
 
@@ -133,7 +148,9 @@ input[type=text]::-ms-clear {
 
     .tab-item {
         display: inline-block;
-        border-bottom: 5px solid transparent;
+        border-bottom-width: 5px;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
         padding: 12px 0 5px;
         position: relative;
         cursor: pointer;
@@ -171,4 +188,18 @@ input[type=text]::-ms-clear {
 .xl-font {
     line-height: 26px;
     font-size: 18px;
+}
+
+.upper {
+    text-transform: uppercase;
+}
+
+.no-drag {
+    background-color: red !important;
+}
+
+typeahead-container {
+    .dropdown-menu {
+        z-index: 1100;
+    }
 }

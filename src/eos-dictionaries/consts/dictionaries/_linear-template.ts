@@ -1,17 +1,16 @@
-import { IDictionaryDescriptor, E_DICT_TYPE } from '../../core/dictionary.interfaces';
+import { IDictionaryDescriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
-/*
-*/
+
 export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     id: '',
     apiInstance: '',
     dictType: E_DICT_TYPE.linear,
     title: 'Линейный справочник',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+    actions: [
+        'add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'restore',
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard',
+        'edit', 'view', 'remove', 'removeHard', 'userOrder'],
     keyField: 'ISN_LCLASSIF',
     searchConfig: [SEARCH_TYPES.quick],
     fields: [{
@@ -25,7 +24,11 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        /* tslint:disable:max-line-length */
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        /* tslint:enable:max-line-length */
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'NOTE',
         title: 'Примечание',
@@ -52,5 +55,5 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     quickViewFields: ['NOTE'], // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CLASSIF_NAME'],
-    allVisibleFields: ['CLASSIF_NAME', 'NOTE'],
+    allVisibleFields: [],
 };

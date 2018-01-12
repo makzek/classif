@@ -5,13 +5,11 @@ import { NgForm } from '@angular/forms';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { E_FIELD_SET, IFieldView, IRecordModeDescription } from '../core/dictionary.interfaces';
+import { E_DICT_TYPE, E_FIELD_SET, IFieldView, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -22,9 +20,13 @@ export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
 
     dictId = '';
-    fieldsDescription = {};
+    fieldsDescription = {
+        rec: {}
+    };
     data = {
         rec: {},
+        cabinet: {},
+        printInfo: {},
     };
     public settings: ISearchSettings = {
         mode: SEARCH_MODES.totalDictionary,
@@ -52,7 +54,6 @@ export class DictionarySearchComponent implements OnDestroy {
     date: Date = new Date();
 
     public mode = 0;
-    public seeDeleted = false;
 
     setTab(key: string) {
         this.currTab = key;
@@ -62,7 +63,7 @@ export class DictionarySearchComponent implements OnDestroy {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
-                    if (this.data[_dict][_field] !== '') {
+                    if (this.data[_dict][_field] && this.data[_dict][_field].trim() !== '') {
                         return false;
                     }
                 }
@@ -80,16 +81,20 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.loading = false;
                 this.dictId = _d.id;
                 if (this.dictId) {
-                    this.data['printInfo'] = {};
+                    Object.assign(this.data, {
+                        printInfo: {},
+                        cabinet: {}
+                    });
                 }
-                this.fieldsDescription = _d.descriptor.getFieldDescription(E_FIELD_SET.fullSearch);
+                this.fieldsDescription = _d.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
                 this.type = _d.descriptor.dictionaryType;
-                this.modes = _d.descriptor.getModeList();
+                this.modes = _d.descriptor.record.getModeList();
                 if (this.modes) {
                     this.currTab = this.modes[0].key;
                 }
 
-                const _config = _d.descriptor.getSearchConfig();
+                const _config = _d.descriptor.record.getSearchConfig();
+                // console.log('search config', _config);
                 /* tslint:disable:no-bitwise */
                 this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
@@ -100,6 +105,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    public setFocus() {
+        document.getElementById('inpQuick').focus();
+    }
+
     ngOnDestroy() {
         this.dictSubscription.unsubscribe();
     }
@@ -107,7 +116,7 @@ export class DictionarySearchComponent implements OnDestroy {
     quickSearch(evt: KeyboardEvent) {
         if (evt.keyCode === 13) {
             if (this.searchDone) {
-                this.dataQuick = this.dataQuick.trim();
+                this.dataQuick = (this.dataQuick) ? this.dataQuick.trim() : '';
                 if (this.dataQuick !== '') {
                     this.searchDone = false;
                     this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
@@ -136,10 +145,13 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
-        if (this.seeDeleted) { this.settings.deleted = this.seeDeleted; }
+
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
+            if (this.dictId === 'departments') {
+                this.data['srchMode'] = this.currTab;
+            }
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then((nodes) => {
                     this.searchDone = true;
@@ -164,9 +176,13 @@ export class DictionarySearchComponent implements OnDestroy {
     dateFilter(date: Date) {
         if (date !== this.date) {
             this.date = date;
-            this._dictSrv.filter({ date: date }).then(() => {
-                console.log('filtered');
-            }).catch((err) => { console.log(err) });
+            this._dictSrv.filter({ date: date })
+                .then(() => {
+                    console.log('filtered');
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
         }
     }
 

@@ -1,6 +1,11 @@
 .eos-departments-card-edit {
     overflow-y: auto;
     overflow-x: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    width: 800px;
+    margin: 0 auto;
 
     .block-title {
         border-bottom-width: 1px;

@@ -1,16 +1,19 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
+import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 import { Subscription } from 'rxjs/Subscription';
 
-export class BaseCardEditComponent implements OnInit, OnDestroy {
+export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() dutysList: string[];
+    @Input() fullNamesList: string[];
 
     @ViewChild('cardForm') cardForm: NgForm;
     private _subscrChanges: Subscription;
@@ -19,6 +22,8 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
     focusedField: string;
 
     protected dictSrv;
+
+    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
@@ -32,12 +37,14 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
-        if (this.cardForm) {
-            this.cardForm.control.valueChanges.subscribe(() => {
-                this.invalid.emit(this.cardForm.invalid);
-            });
-        }
+    ngOnChanges() {
+        setTimeout(() => {
+            if (this.cardForm) {
+                this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
+                    this.invalid.emit(this.cardForm.invalid);
+                });
+            }
+        }, 0);
     }
 
     ngOnDestroy() {
@@ -46,7 +53,12 @@ export class BaseCardEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    change(fldKey: string, dict: string, value: string) {
+    change(fldKey: string, dict: string, value: any) {
+        if (typeof value === 'boolean') {
+            value = +value;
+        } else if (value === 'null') {
+            value = null;
+        }
         if (this.data[dict][fldKey] !== value) {
             this.data[dict][fldKey] = value;
             this.onChange.emit(this.data);

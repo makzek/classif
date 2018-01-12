@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 /*
@@ -8,10 +8,10 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'CITSTATUS_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Справочник статусов граждан',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
+        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
@@ -88,5 +88,5 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
+    allVisibleFields: ['NOTE'],
 };

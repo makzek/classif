@@ -1,32 +1,34 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosStorageService } from 'app/services/eos-storage.service';
 
-import { RECENT_URL } from '../../app/consts/common.consts';
+import { RECENT_URL } from 'app/consts/common.consts';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
+import { IDictionaryViewParameters, IFieldView } from 'eos-dictionaries/interfaces';
 import { createElement } from '@angular/core/src/view/element';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
-import { IFieldView } from 'eos-dictionaries/core/dictionary.interfaces';
 
 @Component({
     selector: 'eos-node-list-item',
     templateUrl: 'node-list-item.component.html'
 })
 
-export class NodeListItemComponent implements OnInit {
+export class NodeListItemComponent implements OnInit, OnChanges {
     @ViewChild('item') item: ElementRef;
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
+    @Input('customFields') customFields: IFieldView[];
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 
     viewFields: IFieldView[];
+
+    customValues: any = {};
 
     constructor(
         private _storageSrv: EosStorageService,
@@ -36,6 +38,14 @@ export class NodeListItemComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
+    }
+
+    ngOnChanges() {
+        if (this.customFields) {
+            this.customFields.forEach((_field) => {
+                this.customValues[_field.key] = this.node.getValue(_field);
+            });
+        }
     }
 
     selectNode(): void {

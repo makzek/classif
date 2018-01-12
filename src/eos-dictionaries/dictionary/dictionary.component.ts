@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -6,23 +6,22 @@ import 'rxjs/add/operator/takeUntil';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
-import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
+import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
+import { IConfirmWindow } from 'eos-common/core/confirm-window.interface';
 
-import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
-import { EosDeskService } from '../../app/services/eos-desk.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
+import {
+    IDictionaryViewParameters, E_FIELD_SET, IFieldView, INodeListParams,
+    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS
+} from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
 
-import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
-import { INodeListParams } from '../core/node-list.interfaces';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
@@ -32,18 +31,12 @@ import {
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
-import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
-import { FieldDescriptor } from '../core/field-descriptor'
-
-import { IOrderBy } from '../core/sort.interface'
-
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
-import { RECENT_URL } from '../../app/consts/common.consts';
+import { RECENT_URL } from 'app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+import { CreateNodeComponent } from '../create-node/create-node.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
-import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -52,8 +45,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
-    @ViewChild('createTpl') createTemplate: TemplateRef<any>;
     @ViewChild('tree') treeEl;
+
+    @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
     dictionaryName: string;
@@ -78,13 +72,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     allMarked: boolean;
 
     viewFields: IFieldView[] = []; // todo: fill for title
+    customFields: IFieldView[] = [];
 
-    nodeData: any = {};
-    creatingModal: BsModalRef;
-    fieldsDescription: any;
-    formValidated: boolean;
-
-    customFields: FieldDescriptor[] = [];
+    modalWindow: BsModalRef;
+    formValidated = false;
+    hasChanges = false;
 
     public length = {}; // Length column
 
@@ -94,6 +86,16 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     _treeScrollTop = 0;
 
     dictTypes = E_DICT_TYPE;
+
+    dictMode = 1;
+
+    searchStartFlag = false; // flag begin search
+
+    readonly MIN_COL_WIDTH = 90; // 40px - paddings, 50px - content
+    readonly DEFAULT_FIELD_LEN = 200;
+
+    tableWidth: number;
+    hasCustomTable: boolean;
 
     public fonConf = {
         width: 0 + 'px',
@@ -113,8 +115,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _modalSrv: BsModalService,
-        private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _deskSrv: EosDeskService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
     ) {
@@ -133,13 +133,15 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
+                    this.customFields = this._dictSrv.customFields;
                     this.dictionaryId = dictionary.id;
                     this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
                         this.dictionaryName = dictionary.root.title;
                         this.treeNodes = [dictionary.root];
                     }
-                    this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
+                    this.params.markItems = dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = this.dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }
@@ -150,11 +152,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (node) {
                     this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
+                    const _customTitles = this._dictSrv.customTitles;
+                    _customTitles.forEach((_title) => {
+                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
+                    });
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
-                    this._countColumnWidth();
                 }
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
@@ -163,8 +168,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
-                console.log('visibleList', nodes);
+                // console.log('visibleList', nodes);
                 this.visibleNodes = nodes;
+                setTimeout(() => {
+                    this._countColumnWidth();
+                }, 0);
                 this.updateMarks();
             });
 
@@ -177,6 +185,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((mode) => {
+                this.dictMode = mode;
+            });
     }
 
     ngOnDestroy() {
@@ -194,23 +207,80 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
     }
 
+    transitionEnd(e: Event) {
+        this._countColumnWidth();
+    }
+
     private _countColumnWidth() {
+        // console.log('start _countColWidth');
         let _totalWidth = 0;
+        const length = {};
         this.viewFields.forEach((_f) => {
             if (_f.length) {
                 _totalWidth += _f.length;
             } else {
-                _totalWidth += 200;
+                _totalWidth += this.DEFAULT_FIELD_LEN;
             }
         });
 
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    _totalWidth += _f.length;
+                } else {
+                    _totalWidth += this.DEFAULT_FIELD_LEN;
+                }
+            });
+        }
+        /*Use Math.floor() to be be sure that there is enough space */
         this.viewFields.forEach((_f) => {
             if (_f.length) {
-                this.length[_f.key] = _f.length / _totalWidth * 100;
+                length[_f.key] = _f.length / _totalWidth;
             } else {
-                this.length[_f.key] = 200 / _totalWidth * 100;
+                length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
             }
         });
+
+        if (this.customFields) {
+            this.customFields.forEach((_f) => {
+                if (_f.length) {
+                    length[_f.key] = _f.length / _totalWidth;
+                } else {
+                    length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
+                }
+            });
+        }
+
+        if (this.selectedEl) {
+            const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
+            this.tableWidth = _selectedWidth;
+            if (this.customFields && this.customFields.length) {
+                let w: number;
+                this.viewFields.forEach((_f) => {
+                    w = this.MIN_COL_WIDTH / (length[_f.key]);
+                    if (this.tableWidth < w) {
+                        this.tableWidth = w;
+                    }
+                });
+
+                this.customFields.forEach((_f) => {
+                    w = this.MIN_COL_WIDTH / (length[_f.key]);
+                    if (this.tableWidth < w) {
+                        this.tableWidth = w;
+                    }
+                });
+                if (this.tableWidth <= _selectedWidth) {
+                    this.tableWidth = _selectedWidth - 2;
+                }
+            } else {
+                this.tableWidth = _selectedWidth - 2;
+            }
+        }
+        Object.keys(length).forEach((key) => {
+            length[key] = Math.floor(length[key] * 100);
+        });
+        this.length = length;
+        // console.log('end _countColWidth');
     }
 
     private _selectNode() {
@@ -264,15 +334,22 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.add:
-                this._preCreate();
+                this._openCreate();
                 break;
 
             case E_RECORD_ACTIONS.restore:
                 this._restoreItems();
                 break;
+            case E_RECORD_ACTIONS.showAllSubnodes:
+                this._dictSrv.toggleAllSubnodes();
+                break
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[action]);
         }
+    }
+
+    resetSearch() {
+        this._dictSrv.resetSearch();
     }
 
     orderByField(fieldKey: string) {
@@ -410,71 +487,46 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._confirmSrv.confirm(_confrm)
             .then((confirmed: boolean) => {
                 if (confirmed) {
-                    this._dictSrv.deleteMarked()
-                        .then((success) => {
-                            if (!success) {
-                                this._msgSrv.addNewMessage(DANGER_DELETE_ELEMENT);
-                            }
-                        })
-                        .catch((err) => this._errHandler(err));
-                }
-            });
-    }
-
-    validate(valid: boolean) {
-        this.formValidated = valid;
-    }
-
-    private _clearForm() {
-        this.formValidated = false;
-        this.nodeData = this.selectedNode.getCreatingData();
-    }
-
-    private _preCreate() {
-        this._clearForm();
-        this.fieldsDescription = this.selectedNode.getEditFieldsDescription();
-        this.creatingModal = this._modalSrv.show(this.createTemplate, { class: 'creating-modal modal-lg' });
-    }
-
-    public _configColumns() {
-        const _fldsCurr = [];
-        const _allFields = [];
-        this.creatingModal = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
-        Object.assign(this.creatingModal.content.currentFields, this.customFields);
-        this.creatingModal.content.dictionaryFields = this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible);
-        this.creatingModal.content.onChoose.subscribe((_fields) => {
-            this.customFields = _fields;
-            console.log(this.customFields);
-            this.creatingModal.hide();
-        })
-    }
-
-    public create(hide = true) {
-        this._dictSrv.addNode(this.nodeData)
-            .then((node) => {
-                if (node) {
-                    let title = '';
-                    node.getShortQuickView().forEach((_f) => {
-                        title += this.nodeData.rec[_f.key];
-                    });
-                    this._deskSrv.addRecentItem({
-                        url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                        title: title,
-                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
-                    });
-                }
-                this.creatingModal.hide();
-
-                if (!hide) {
-                    this._preCreate();
+                    return this._dictSrv.deleteMarked();
                 }
             })
             .catch((err) => this._errHandler(err));
     }
 
-    cancelCreate() {
-        this.creatingModal.hide();
-        this._clearForm();
+    /**
+     * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
+     */
+    private _openCreate() {
+        this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
+        this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
+        this.modalWindow.content.dictionaryId = this.dictionaryId;
+        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
+        this.modalWindow.content.onHide.subscribe(() => {
+            this.modalWindow.hide();
+        });
+        this.modalWindow.content.onOpen.subscribe(() => {
+            this._openCreate();
+        });
+    }
+
+    /**
+     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
+     */
+    public _configColumns() {
+        const _fldsCurr = [];
+        const _allFields = [];
+        this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
+        this.modalWindow.content.fixedFields = this.viewFields;
+        Object.assign(this.modalWindow.content.currentFields, this.customFields);
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
+        this.modalWindow.content.onChoose.subscribe((_fields) => {
+            this.customFields = _fields;
+            this._dictSrv.customFields = this.customFields;
+            this._dictSrv.customTitles = this.viewFields;
+            /* tslint:enable:no-bitwise */
+            this._countColumnWidth();
+            this.modalWindow.hide();
+        });
     }
 
     /**
@@ -538,8 +590,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
+            msg: errMessage
         });
+    }
+
+    setDictMode(mode: number) {
+        this._dictSrv.setDictMode(mode);
     }
 }

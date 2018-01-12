@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 /*
@@ -8,10 +8,11 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'RUBRIC_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
+        'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'
+    ],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
@@ -103,5 +104,5 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     quickViewFields: ['FULLNAME', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['RUBRIC_CODE', 'CLASSIF_NAME'],
-    allVisibleFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
+    allVisibleFields: ['NOTE', 'FULLNAME', 'sev'],
 };

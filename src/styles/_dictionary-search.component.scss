@@ -33,6 +33,10 @@
     .quickInput {
         position: relative;
 
+        .usual-border:focus {
+            border: 1px solid $active-field-color-main-theme
+        }
+
         .clear-btn {
             position: absolute;
             top: 0;
@@ -91,7 +95,7 @@
 
     .date-filter-wrapper {
         display: inline-block;
-        height: 47px;
+        height: 43px;
         position: relative;
         top: -7px;
 
@@ -149,7 +153,6 @@
     .btn {
         width: 82px;
         height: 32px;
-        text-transform: uppercase;
     }
 }
 
