@@ -87,7 +87,6 @@ export class EosDictionary {
         this._nodes = new Map<string, EosDictionaryNode>();
         this._dictionaries = {};
         this.defaultOrder();
-        console.log('created', dictId);
     }
 
     canDo(action: E_RECORD_ACTIONS): boolean {
@@ -99,7 +98,6 @@ export class EosDictionary {
         return this.descriptor.getRoot()
             .then((data: any[]) => {
                 this.updateNodes(data, true);
-                console.log('this.r00t', this.root, this._nodes);
                 return this.root;
             })
     }
@@ -122,8 +120,10 @@ export class EosDictionary {
 
         /* find root */
         if (!this.root) {
-
-            let rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
+            let rootNode: EosDictionaryNode;
+            if (this.descriptor.dictionaryType !== E_DICT_TYPE.linear) {
+                rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
+            }
 
             /* fallback if root undefined */
             if (!rootNode) {

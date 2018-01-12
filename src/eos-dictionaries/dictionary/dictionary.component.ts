@@ -149,7 +149,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictMode = this._dictSrv.dictMode;
-                    console.log('dict mode', this.dictMode);
                     this.customFields = this._dictSrv.customFields;
                     this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
@@ -197,11 +196,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
-
-        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
-            .subscribe((mode) => {
-                this.dictMode = mode;
-            });
     }
 
     ngOnDestroy() {

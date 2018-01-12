@@ -137,7 +137,6 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
-                console.log('got printInfo', printInfo, printInfo['_State'])
                 return {
                     user: user,
                     organization: org,
