@@ -179,6 +179,7 @@ export class EosDictionary {
                 if (_node && nodeIds.findIndex((id) => id === _node.id) === -1) {
                     nodeIds.push(_node.id);
                 }
+
             } else {
                 console.log('no data');
             }

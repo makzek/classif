@@ -8,7 +8,8 @@
         </ul>
     </div>
     <div *ngIf="currTab === 0">
-        <eos-departments-card-edit-person-main [cardForm]="cardForm" [data]="data" [editMode]="editMode" [cardForm]="cardForm"
+        <eos-departments-card-edit-person-main [cardForm]="cardForm" [data]="data" [editMode]="editMode" [cardForm]="cardForm" 
+            [dutysList]="dutysList" [fullNamesList]="fullNamesList"
             [nodeId]="nodeId" (onChange)="recordChanded($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit-person-main>
     </div>
     <div *ngIf="currTab === 1">
