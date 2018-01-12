@@ -19,20 +19,22 @@ export class RecordDescriptor {
      */
     private actions: E_RECORD_ACTIONS[];
 
+    protected treeFields: FieldDescriptor[];
+
     /**
      *  set of visible fields in list mode
      */
-    protected listFields: any;
+    protected listFields: FieldDescriptor[];
 
     /**
      * set of visible fields in quick view mode
      */
-    protected quickViewFields: any;
+    protected quickViewFields: FieldDescriptor[];
 
     /**
      *  set of visible fields in quick view (short) mode
      */
-    protected shortQuickViewFields: any;
+    protected shortQuickViewFields: FieldDescriptor[];
 
     /**
      * search fields
@@ -47,7 +49,7 @@ export class RecordDescriptor {
     /**
      *  set of fields for edit form
      */
-    protected editFields: any;
+    protected editFields: FieldDescriptor[];
 
     /**
      *  user configurable fields
@@ -75,6 +77,7 @@ export class RecordDescriptor {
 
         this._initActions(data);
         this._initFieldSets([
+            'treeFields',
             'searchFields',
             'allVisibleFields',
             'quickViewFields',
@@ -93,6 +96,10 @@ export class RecordDescriptor {
         /* tslint:disable:no-bitwise */
         return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
+    }
+
+    getTreeView(data: any): IFieldView[] {
+        return this._bindData(this.getFieldSet(E_FIELD_SET.tree), data);
     }
 
     getListView(data: any): IFieldView[] {
@@ -168,6 +175,7 @@ export class RecordDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
+            case E_FIELD_SET.tree:
             case E_FIELD_SET.search:
                 return this._getSearchFields();
             case E_FIELD_SET.allVisible:
@@ -182,6 +190,8 @@ export class RecordDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.tree:
+                return this.treeFields;
             default:
                 // throw new Error('Unknown field set');
                 console.warn('Unknown field set', aSet);

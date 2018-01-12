@@ -150,7 +150,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
-                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                    this._selectedNodeText = node.getTreeView().map((fld) => fld.value).join(' ');
                     this.viewFields = node.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {

@@ -24,7 +24,7 @@ export class TreeNodeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.viewFields = this.node.getShortQuickView();
+        this.viewFields = this.node.getTreeView();
     }
 
     onExpand(evt: Event, isDeleted: boolean) {
