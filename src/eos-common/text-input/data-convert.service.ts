@@ -45,7 +45,7 @@ export class DataConvertService {
                                     break;
                                 case E_FIELD_TYPE.boolean:
                                     inputs[_dict + '.' + _key] = new CheckboxInput({
-                                        key: _dict + '.' + _key,
+                                        key: _dict + '.' + _key + '.boolean',
                                         label: fieldsDescription[_dict][_key].title,
                                         value: data[_dict][_key],
                                     });

@@ -53,7 +53,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     ngOnChanges() {
         if (this.fieldsDescription) {
-            console.log('has fieldsDescription');
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             if (this._validationSubscr) {
@@ -76,8 +75,12 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._validationSubscr.unsubscribe();
-        this._changeSubscr.unsubscribe();
+        if (this._validationSubscr) {
+            this._validationSubscr.unsubscribe();
+        }
+        if (this._changeSubscr) {
+            this._changeSubscr.unsubscribe();
+        }
     }
 
     private _makeSavingData(formData: any): any {
@@ -88,7 +91,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
                 if (!result[_way[0]]) {
                     result[_way[0]] = {};
                 }
-                result[_way[0]][_way[1]] = formData[_ctrl];
+                if (_way[2] === 'boolean') {
+                    result[_way[0]][_way[1]] = formData[_ctrl] ? 1 : 0;
+                } else {
+                    result[_way[0]][_way[1]] = formData[_ctrl];
+                }
             });
         }
         return result;

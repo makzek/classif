@@ -35,7 +35,7 @@
             <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.value}}</option>
         </select>
     
-        <label class="primary-text" *ngSwitchCase="'checkbox'" class="checkbox">
+        <label class="primary-text checkbox" *ngSwitchCase="'checkbox'">
             <input type="checkbox"
                 [formControlName]="input.key"
                 [id]="input.key">
