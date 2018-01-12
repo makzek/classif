@@ -10,7 +10,7 @@ export class BaseCardEditComponent implements OnChanges {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeId: string;
-    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     // @ViewChild('cardForm') cardForm: NgForm;
@@ -27,6 +27,8 @@ export class BaseCardEditComponent implements OnChanges {
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     inputs: any[];
+
+    newData: any;
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
@@ -57,6 +59,7 @@ export class BaseCardEditComponent implements OnChanges {
                         break;
                 }
             });*/
+            // this.newData = this.data;
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             this.form.statusChanges.subscribe((status) => {
@@ -66,12 +69,9 @@ export class BaseCardEditComponent implements OnChanges {
                 this.currentFormStatus = status;
             });
             this.form.valueChanges.subscribe((newVal) => {
-                const _newData = this._makeSavingData(this.form.value);
-                if (this._notEqual(_newData, this.data)) {
-                    this.onChange.emit(_newData);
-                } else {
-                    this.onChange.emit(null);
-                }
+                this.newData = this._makeSavingData(this.form.value);
+                console.log('_notEqual', this._notEqual(this.newData, this.data));
+                this.onChange.emit(this._notEqual(this.newData, this.data));
             });
         }
     }
@@ -110,7 +110,7 @@ export class BaseCardEditComponent implements OnChanges {
     }
 
     change(data: any) {
-        this.onChange.emit(data);
+        // this.onChange.emit(data);
     }
 
     /* clean(field: string, value: string) {
@@ -123,5 +123,9 @@ export class BaseCardEditComponent implements OnChanges {
         } else {
             return null;
         }
+    }
+
+    getNewData(): any {
+        return this.newData;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs/Subject';
@@ -27,6 +27,8 @@ import {
 import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
+
+import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.component';
 // import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
@@ -46,7 +48,7 @@ export class EditedCard {
     selector: 'eos-card',
     templateUrl: 'card.component.html',
 })
-export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
+export class CardComponent implements CanDeactivateGuard, OnDestroy {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     node: EosDictionaryNode;
@@ -80,6 +82,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     disableSave = false;
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
+    @ViewChild('cardEditEl') cardEditRef: CardEditComponent;
 
     /* todo: check tasks for reson
     @HostListener('document:blur')
@@ -133,10 +136,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
-    ngOnInit() {
-        // this._init();
-    }
-
     ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
@@ -158,7 +157,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
-        console.log('_getNode', this.dictionaryId, this.nodeId);
+        // console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 if (node) {
@@ -178,10 +177,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             rec: {}
         };
         if (this.node) {
-            /* this.fields = this.node.getEditView();
-            this.fields.forEach(fld => {
-                this.nodeData[fld.key] = fld.value;
-            });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.getEditData();
             // console.log('recived description', this.nodeData);
@@ -199,16 +194,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
         if (_canEdit) {
             this._setEditingCardLink();
-            this._setOriginalData();
         }
 
         this.editMode = _canEdit;
         this._updateBorders();
-    }
-
-    private _setOriginalData() {
-        this._originalData = this.cloneData(this.nodeData);
-        this.recordChanged(this.nodeData);
     }
 
     forceView() {
@@ -263,30 +252,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
 
     cancel(): void {
+        this.isChanged = false;
         /* _askForSaving fired on route change */
         this._openNode(this.node, EDIT_CARD_MODES.view);
     }
 
-    recordChanged(data: any) {
-        console.log('recordChanged', data);
-        this.isChanged = !!data;
-        /*if (this.nodeData) {
-            // console.log('recordChanged', this.nodeData, this._originalData);
-            /* tslint:disable:no-bitwise */
-            /*const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
-                if (this.nodeData[dict] && this._originalData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
-                        ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                            (this.nodeData[dict][key] || this._originalData[dict][key])) &&
-                        (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
-                    );
-                } else {
-                    return false;
-                }
-            });
-            /* tslint:enable:no-bitwise */
-           /* this.isChanged = hasChanges;
-        }*/
+    recordChanged(isChanged: boolean) {
+        this.isChanged = isChanged;
     }
 
     private _updateBorders() {
@@ -366,7 +338,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                         return false;
                     } else {
                         if (doSave) {
-                            return this._save(this.nodeData)
+                            return this._save()
                                 .then((node) => {
                                     if (node) {
                                         return true;
@@ -375,7 +347,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                                     }
                                 });
                         } else {
-                            this._reset();
                             return true;
                         }
                     }
@@ -385,27 +356,26 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     return false;
                 });
         } else {
-            this._reset();
             return Promise.resolve(true);
         }
     }
 
     save(): void {
         this.disableSave = true;
-        this._save(this.nodeData)
+        this._save()
             .then((node) => {
                 if (node) {
                     this._initNodeData(node);
-                    this._setOriginalData();
                     this.cancel();
                 }
                 this.disableSave = false;
             });
     }
 
-    private _save(data: any): Promise<any> {
+    private _save(): Promise<any> {
         // console.log('save', data);
-        return this._dictSrv.updateNode(this.node, data)
+        const _data = this.cardEditRef.baseCardEditRef.getNewData();
+        return this._dictSrv.updateNode(this.node, _data)
             .then((resp: EosDictionaryNode) => {
                 if (resp) {
                     this._msgSrv.addNewMessage(SUCCESS_SAVE);
@@ -443,16 +413,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         return fullTItle;
     }
     */
-    private _reset(): void {
-        if (this.isChanged) {
-            /* do reset data */
-            this.nodeData = this.cloneData(this._originalData);
-        }
-        if (this.editMode) {
-            this.editMode = false;
-            this._clearEditingCardLink();
-        }
-    }
 
     private _setEditingCardLink() {
         this.getLastEditedCard();
@@ -493,13 +453,4 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         });
         return null;
     }
-
-    private cloneData(src: any): any {
-        try {
-            return JSON.parse(JSON.stringify(src));
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
 }

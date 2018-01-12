@@ -2,6 +2,7 @@ import { Component, Output, Input, EventEmitter, ViewChild } from '@angular/core
 import { NgForm } from '@angular/forms';
 
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-card-edit',
@@ -13,8 +14,10 @@ export class CardEditComponent {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    @ViewChild('cardEditEl') baseCardEditRef: BaseCardEditComponent;
 
     recordChanged(data: any) {
         this.onChange.emit(data);

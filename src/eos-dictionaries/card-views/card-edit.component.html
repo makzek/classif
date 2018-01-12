@@ -1,12 +1,12 @@
 <ng-container [ngSwitch]="dictionaryId">
-    <eos-departments-card-edit *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
+    <eos-departments-card-edit #cardEditEl *ngSwitchCase="'departments'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId"
         (onChange)="recordChanged($event)" (invalid)="onInvalid($event)"></eos-departments-card-edit>
-    <eos-cabinet-card-edit  *ngSwitchCase="'cabinet'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+    <eos-cabinet-card-edit  #cardEditEl *ngSwitchCase="'cabinet'" [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-cabinet-card-edit>
-    <eos-visa-type-card-edit *ngSwitchCase="'visa-type'" [data]="data" [fieldsDescription]="fieldsDescription"[editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+    <eos-visa-type-card-edit #cardEditEl *ngSwitchCase="'visa-type'" [data]="data" [fieldsDescription]="fieldsDescription"[editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-visa-type-card-edit>
-    <eos-security-card-edit *ngSwitchCase="'security'" [data]="data" [fieldsDescription]="fieldsDescription"[editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+    <eos-security-card-edit #cardEditEl *ngSwitchCase="'security'" [data]="data" [fieldsDescription]="fieldsDescription"[editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-security-card-edit>
-    <eos-simple-card-edit *ngSwitchDefault [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
+    <eos-simple-card-edit #cardEditEl *ngSwitchDefault [data]="data" [fieldsDescription]="fieldsDescription" [editMode]="editMode" [nodeId]="nodeId" (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-simple-card-edit>
 </ng-container>
