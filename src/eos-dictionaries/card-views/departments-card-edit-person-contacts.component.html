@@ -6,7 +6,8 @@
             (focus)="focus('NUM_CAB')" (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NUM_CAB']?.invalid && cardForm.controls['NUM_CAB']?.dirty && focusedField === 'NUM_CAB'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
 
     <div class="form-group phone">
@@ -16,7 +17,8 @@
             (focus)="focus('PHONE')" (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PHONE']?.invalid && cardForm.controls['PHONE']?.dirty && focusedField === 'PHONE'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
 
     <div class="form-group phone-local">
@@ -26,7 +28,8 @@
             [ngClass]="{'readonly': !editMode }" (focus)="focus('PHONE_LOCAL')" (blur)="blur()" maxlength="24"
             [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PHONE_LOCAL']?.invalid && cardForm.controls['PHONE_LOCAL']?.dirty && focusedField === 'PHONE_LOCAL'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
 
     <div class="form-group fax">
@@ -36,7 +39,8 @@
             (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['FAX']?.invalid && cardForm.controls['FAX']?.dirty && focusedField === 'FAX'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
 
     <div class="form-group email">
@@ -46,7 +50,8 @@
             (focus)="focus('E_MAIL')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['E_MAIL']?.invalid && cardForm.controls['E_MAIL']?.dirty && focusedField === 'E_MAIL'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
     <div class="form-group skype">
         <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SKYPE">Skype</label>
@@ -55,6 +60,7 @@
             (focus)="focus('SKYPE')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
             tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
             [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SKYPE']?.invalid && cardForm.controls['SKYPE']?.dirty && focusedField === 'SKYPE'"
-            triggers="">
+            triggers=""
+            autocomplete="off">
     </div>
 </form>

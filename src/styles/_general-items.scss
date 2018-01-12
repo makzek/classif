@@ -201,3 +201,10 @@ input[type=text]::-ms-clear {
 textarea {
     resize: none;
 }
+
+typeahead-container {
+    .dropdown-menu {
+        z-index: 1100;
+    }
+}
+

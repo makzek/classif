@@ -16,6 +16,8 @@ export class CardEditComponent {
     @Input() fieldsDescription: any;
     @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() dutysList: string[];
+    @Input() fullNamesList: string[];
 
     @ViewChild('cardEditEl') baseCardEditRef: BaseCardEditComponent;
 

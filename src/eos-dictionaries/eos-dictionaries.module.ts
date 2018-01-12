@@ -9,6 +9,7 @@ import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DragulaModule } from 'ng2-dragula';
 
@@ -100,6 +101,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         BsDropdownModule.forRoot(),
+        TypeaheadModule.forRoot(),
         DragulaModule,
     ],
     exports: [

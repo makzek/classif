@@ -5,12 +5,12 @@
         </div>
         <div class="form-group gender">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="GENDER">Пол</label>
-            <select *ngIf="editMode" name="GENDER" id="GENDER" class="form-control m-font gender-select" [(ngModel)]="data['printInfo']['GENDER']"
-                [ngClass]="{'readonly': !editMode }">
+            <select name="GENDER" id="GENDER" class="form-control m-font gender-select" [(ngModel)]="data['printInfo']['GENDER']"
+                [ngClass]="{'readonly hidden': !editMode }">
                 <option *ngFor="let g of gender" [value]="g.id">{{g.title}}</option>
             </select>
-            <input *ngIf="!data['printInfo']['GENDER'] && !editMode" readonly name="GENDER" type="text" class="form-control m-font readonly" [ngClass]="{'GENDER-placeholder': editMode }"
-                placeholder="Пол" />
+            <input *ngIf="data['printInfo'] && !editMode" name="GENDER" type="text" class="form-control m-font readonly" [ngClass]="{'GENDER-placeholder': editMode }"
+                placeholder="Пол" [value]="getGender(data['printInfo']['GENDER'])"/>
         </div>
         <div class="form-group">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CODE">Код</label>
@@ -20,6 +20,7 @@
                 [eosUnic]="true" [key]="'CODE'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false"
                 tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['CODE_PERSON']?.invalid && cardForm.controls['CODE_PERSON']?.dirty && focusedField === 'CODE_PERSON'"
+                autocomplete="off"
                 triggers="">
 
         </div>
@@ -31,6 +32,7 @@
                 (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
                 tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['indexPerson']?.invalid && cardForm.controls['indexPerson']?.dirty && focusedField === 'DEPARTMENT_INDEX'"
+                autocomplete="off"
                 triggers="">
         </div>
         <div class="form-group sev">
@@ -40,6 +42,7 @@
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SEV')" (blur)="blur()" maxlength="255"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SEV']?.invalid && cardForm.controls['SEV']?.dirty && focusedField === 'SEV'"
+                autocomplete="off"
                 triggers="">
         </div>
         <div class="form-group">
@@ -61,6 +64,7 @@
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" maxlength="64"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME_PRINT']?.invalid && cardForm.controls['SURNAME_PRINT']?.dirty && focusedField === 'SURNAME'"
+                autocomplete="off"
                 triggers="">
         </div>
         <div class="names row-wrapper">
@@ -71,6 +75,7 @@
                     [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME')" (blur)="blur()" maxlength="64"
                     [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NAME']?.invalid && cardForm.controls['NAME']?.dirty && focusedField === 'NAME'"
+                    autocomplete="off"
                     triggers="">
             </div>
             <div class="form-group fathers-name">
@@ -80,6 +85,7 @@
                     [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON')" (blur)="blur()" maxlength="64"
                     [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PATRON']?.invalid && cardForm.controls['PATRON']?.dirty && focusedField === 'PATRON'"
+                    autocomplete="off"
                     triggers="">
             </div>
         </div>
@@ -93,6 +99,7 @@
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" required maxlength="64"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME']?.invalid && cardForm.controls['SURNAME']?.dirty && focusedField === 'SURNAME'"
+                autocomplete="off"
                 triggers="">
         </div>
         <div class="form-group">
@@ -105,6 +112,7 @@
                     (focus)="focus('DUTY')" (blur)="blur()" required maxlength="255" [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                     containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
+                    autocomplete="off" [typeahead]="dutysList" container="body"
                     triggers="">
 
                 <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
@@ -115,11 +123,12 @@
         </div>
         <div class="form-group">
             <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Полное наименование должности</label>
-            <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font " [(ngModel)]="data.rec['fullPosition']"
+            <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font " [(ngModel)]="data.rec['FULLNAME']"
                 placeholder="Полное наименование должности"
                 [ngClass]="{'readonly': !editMode }" (focus)="focus('fullPosition')" (blur)="blur()" maxlength="2000"
                 [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
+                autocomplete="off" [typeahead]="fullNamesList"
                 triggers="">
         </div>
         <div class="form-group">
@@ -128,6 +137,7 @@
                 placeholder="Примечание" [ngClass]="{'readonly': !editMode }"
                 (focus)="focus('NOTE')" (blur)="blur()" maxlength="255" tooltip="Максимальная длина 255 символов."
                 [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NOTE']?.invalid && cardForm.controls['NOTE']?.dirty && focusedField === 'NOTE'"
+                autocomplete="off"
                 triggers=""></textarea>
         </div>
     </div>

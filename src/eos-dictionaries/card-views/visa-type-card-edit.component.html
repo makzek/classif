@@ -13,6 +13,7 @@
                         [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict" [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                         placement="right" containerClass="tooltip-error" container="body" (focus)="focus(key)" (blur)="blur()"
                         [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key"
+                        autocomplete="off"
                         triggers="">
                 </div>
             </div>

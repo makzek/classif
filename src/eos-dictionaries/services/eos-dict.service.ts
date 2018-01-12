@@ -162,6 +162,7 @@ export class EosDictService {
             markItems: false,
             searchResults: false,
             updating: false,
+            updatingFields: false,
             haveMarked: false
         };
     }
@@ -305,7 +306,7 @@ export class EosDictService {
             } else {
                 return this.dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(data, false);
+                        const _newNodes = this._updateDictNodes(data, false);
                         return this.dictionary.getNode(nodeId);
                     })
                     .then((node) => {
@@ -331,7 +332,15 @@ export class EosDictService {
     // console.log('reloadNode', node);
     // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
-        return this.dictionary.expandNode(nodeId).catch((err) => this._errHandler(err));
+        if (this.selectedNode.id === nodeId) {
+            this.viewParameters.updating = true;
+            this._viewParameters$.next(this.viewParameters);
+        }
+        return this.dictionary.expandNode(nodeId).then((val) => {
+            this.viewParameters.updating = false;
+            this._viewParameters$.next(this.viewParameters);
+            return val
+        }).catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -395,6 +404,7 @@ export class EosDictService {
      */
     public selectNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
+            this.viewParameters.updating = true;
             // console.log('selectNode', nodeId, this.selectedNode);
             if (!this.selectedNode || this.selectedNode.id !== nodeId) {
                 // console.log('getting node');
@@ -459,13 +469,19 @@ export class EosDictService {
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.dictionary) {
             if (!this._openedNode || this._openedNode.id !== nodeId) {
+                this.viewParameters.updatingFields = true;
+                this._viewParameters$.next(this.viewParameters);
                 return this.dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
                         this._openNode(node);
+                        this.viewParameters.updatingFields = false;
+                        this._viewParameters$.next(this.viewParameters);
                         return node;
                     })
                     .catch((err) => this._errHandler(err));
             } else {
+                this.viewParameters.updatingFields = false;
+                this._viewParameters$.next(this.viewParameters);
                 return Promise.resolve(this._openedNode);
             }
         } else {

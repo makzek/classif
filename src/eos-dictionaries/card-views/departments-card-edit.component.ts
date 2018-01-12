@@ -17,26 +17,6 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent {
         super(injector);
     }
 
-    /*ngOnChanges() {
-        // fake data
-        const today = new Date();
-        this.data['alternates'] = [
-            {
-                name: 'Иван Иванович',
-                START_DATE: today,
-                END_DATE: today,
-            }, {
-                name: 'Пётр Иванович',
-                START_DATE: today,
-                END_DATE: today,
-            }, {
-                name: 'Иван Петрович',
-                START_DATE: today,
-                END_DATE: today,
-            }
-        ];
-    }*/
-
     OnInvalid(val: any) {
         this.invalid.emit(val);
     }
