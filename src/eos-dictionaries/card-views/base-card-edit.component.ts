@@ -6,6 +6,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
 import { InputControlService } from '../../eos-common/text-input/input-control.service';
+import { InputBase } from '../../eos-common/text-input/input-base';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
@@ -30,7 +31,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
-    inputs: any[];
+    inputs: InputBase<any>[];
 
     newData: any;
 

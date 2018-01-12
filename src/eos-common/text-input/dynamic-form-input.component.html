@@ -29,18 +29,17 @@
             [isDisabled]="readonly"
             [isOpen]="isDirty && !isValid" triggers=""></textarea>
 
-        <label *ngSwitchCase="'dropdown'" [attr.for]="input.key">{{input.label}}</label>
-        <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">
-            <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
+        <label class="primary-text" *ngSwitchCase="'select'" [attr.for]="input.key">{{input.label}}</label>
+        <select [id]="input.key" *ngSwitchCase="'select'" [formControlName]="input.key" class="form-control m-font">
+            <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
+            <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.value}}</option>
         </select>
-
-        <label *ngSwitchCase="'checkbox'" class="checkbox">
+    
+        <label class="primary-text" *ngSwitchCase="'checkbox'" class="checkbox">
             <input type="checkbox"
                 [formControlName]="input.key"
-                [id]="input.key"
-                [disabled]="readonly">
+                [id]="input.key">
             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}
         </label>
-
     </div>
 </div>

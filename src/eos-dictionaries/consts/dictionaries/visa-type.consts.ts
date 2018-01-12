@@ -15,7 +15,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     }, {
         key: 'CLASSIF_NAME',
         title: 'Наименование',
-        type: 'text',
+        type: 'string',
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
@@ -45,8 +45,19 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         title: 'Признак финальной визы',
     }, {
         key: 'STATUS',
-        type: 'string',
+        type: 'select',
         title: 'Статус визы',
+        options: [{
+                key: 'st1',
+                value: 'Положительный',
+            }, {
+                key: 'st2',
+                value: 'Отрицательный',
+            }, {
+                key: 'st3',
+                value: 'Промежуточный',
+            }
+        ]
     }],
     quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],

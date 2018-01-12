@@ -156,6 +156,7 @@ export class RecordDescriptor {
                         isUnic: _f.isUnic,
                         unicInDict: _f.unicInDict,
                         type: _f.type,
+                        options: _f.options,
                     }
                 } else {
                     _description[_f.key] = {};

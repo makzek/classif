@@ -30,7 +30,8 @@ export enum E_FIELD_TYPE {
     date,
     icon,
     boolean,
-    dictionary
+    dictionary,
+    select
 };
 
 export interface IFieldDesriptor {
@@ -45,6 +46,7 @@ export interface IFieldDesriptor {
     invalidMessage?: string;
     isUnic?: boolean;
     unicInDict?: boolean;
+    options?: {key: string, value: string}[];
 };
 
 export interface IFieldDesriptorBase {
@@ -59,6 +61,7 @@ export interface IFieldDesriptorBase {
     readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
+    readonly options?: {key: string, value: string}[];
 };
 
 export interface IFieldView extends IFieldDesriptorBase {

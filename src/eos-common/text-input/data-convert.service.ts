@@ -14,6 +14,7 @@ export class DataConvertService {
     // Todo: get from a remote source of question metadata
     // Todo: make asynchronous
     getInputs(fieldsDescription: any[], data: any) {
+        console.log('fieldsDescription', fieldsDescription);
 
         const inputs: InputBase<any>[] = [];
 
@@ -47,6 +48,16 @@ export class DataConvertService {
                                 case E_FIELD_TYPE.boolean:
                                     inputs.push(new CheckboxInput({
                                         key: _dict + '.' + _key,
+                                        label: fieldsDescription[_dict][_key].title,
+                                        value: data[_dict][_key],
+                                    }));
+                                    break;
+                                case E_FIELD_TYPE.select:
+                                    inputs.push(new DropdownInput({
+                                        key: _dict + '.' + _key,
+                                        label: fieldsDescription[_dict][_key].title,
+                                        options: fieldsDescription[_dict][_key].options,
+                                        required: fieldsDescription[_dict][_key].required,
                                         value: data[_dict][_key],
                                     }));
                                     break;
