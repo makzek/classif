@@ -11,16 +11,16 @@ export class InputControlService {
     toFormGroup(inputs: InputBase<any>[]) {
         const group: any = {};
 
-        inputs.forEach(input => {
-            group[input.key] = input.required ?
-                new FormControl(input.value || '', [
+        Object.keys(inputs).forEach(input => {
+            group[inputs[input].key] = inputs[input].required ?
+                new FormControl(inputs[input].value || '', [
                     Validators.required,
-                    Validators.pattern(input.pattern),
-                    this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+                    Validators.pattern(inputs[input].pattern),
+                    this.unicValueValidator(inputs[input].isUnic, inputs[input].key, inputs[input].unicInDict)
                 ])
-                : new FormControl(input.value || '', [
-                    Validators.pattern(input.pattern),
-                    this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+                : new FormControl(inputs[input].value || '', [
+                    Validators.pattern(inputs[input].pattern),
+                    this.unicValueValidator(inputs[input].isUnic, inputs[input].key, inputs[input].unicInDict)
                 ]);
             /*group[input.key] = input.required ? new FormControl('', [Validators.required, Validators.pattern(input.pattern)])
                                               : new FormControl('', Validators.pattern(input.pattern));*/

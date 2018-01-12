@@ -29,7 +29,7 @@
             [isDisabled]="readonly"
             [isOpen]="isDirty && !isValid" triggers=""></textarea>
 
-        <label class="primary-text" *ngSwitchCase="'select'" [attr.for]="input.key">{{input.label}}</label>
+        <label class="primary-text" *ngSwitchCase="'select'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
         <select [id]="input.key" *ngSwitchCase="'select'" [formControlName]="input.key" class="form-control m-font">
             <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
             <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.value}}</option>

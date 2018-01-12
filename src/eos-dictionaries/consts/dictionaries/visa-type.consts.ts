@@ -57,7 +57,8 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
                 key: 'st3',
                 value: 'Промежуточный',
             }
-        ]
+        ],
+        required: true,
     }],
     quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],
