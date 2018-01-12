@@ -76,7 +76,7 @@ export class EosDictionaryNode {
     set title(title: string) {
         const _rec = this.getListView();
         if (_rec && _rec.length) {
-            this.data.rec[_rec[0].key] = title;
+            _rec.forEach((fld) => this.data.rec[fld.key] = title);
         }
     }
 

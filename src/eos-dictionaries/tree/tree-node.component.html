@@ -1,11 +1,11 @@
 <div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
-        <div class="node" #el (click)="onSelect($event, node.isDeleted, el)" [ngClass]="{'highlighted' : node.isActive}">
-            <span class="fake-padding" [ngStyle]="{'width.px': layer*24}"></span>
-            <div class="tree-btn">
-                <span *ngIf="node.expandable" (click)="onExpand($event, node.isDeleted)" class="eos-icon x-small icon"
+        <div class="node s-font" #el (click)="onSelect($event, node.isDeleted, el)" [ngClass]="{'highlighted' : node.isActive}">
+            <span class="fake-padding" [ngStyle]="{'width.px': layer*12}"></span>
+            <div class="tree-btn" (click)="onExpand($event, node.isDeleted)" >
+                <span *ngIf="node.expandable" class="eos-icon x-small icon"
                 [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"></span>
             </div>
-            <div class="title primary-text l-font" [ngClass]="{'deleted': node.isDeleted}" [ngStyle]="{'width.px': 205 - layer*24}">
+            <div class="title primary-text" [ngClass]="{'deleted': node.isDeleted}" [ngStyle]="{'width.px': 205 - layer*24}">
                 <span *ngFor="let field of viewFields" class="title-item">{{field.value || ''}}&nbsp;</span>
                 <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
             </div>
