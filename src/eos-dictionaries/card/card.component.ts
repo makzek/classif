@@ -268,10 +268,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     recordChanged(data: any) {
-        if (this.nodeData) {
+        console.log('recordChanged', data);
+        this.isChanged = !!data;
+        /*if (this.nodeData) {
             // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+            /*const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
                 if (this.nodeData[dict] && this._originalData[dict]) {
                     return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
                         ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
@@ -283,8 +285,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 }
             });
             /* tslint:enable:no-bitwise */
-            this.isChanged = hasChanges;
-        }
+           /* this.isChanged = hasChanges;
+        }*/
     }
 
     private _updateBorders() {

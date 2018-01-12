@@ -25,7 +25,7 @@ export class DataConvertService {
                             switch (fieldsDescription[_dict][_key].type) {
                                 case E_FIELD_TYPE.string:
                                     inputs.push(new StringInput({
-                                        key: _key,
+                                        key: _dict + '.' + _key,
                                         label: fieldsDescription[_dict][_key].title,
                                         required: fieldsDescription[_dict][_key].required,
                                         invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
@@ -37,7 +37,7 @@ export class DataConvertService {
                                     break;
                                 case E_FIELD_TYPE.text:
                                     inputs.push(new TextInput({
-                                        key: _key,
+                                        key: _dict + '.' + _key,
                                         label: fieldsDescription[_dict][_key].title,
                                         required: fieldsDescription[_dict][_key].required,
                                         invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
@@ -46,7 +46,7 @@ export class DataConvertService {
                                     break;
                                 case E_FIELD_TYPE.boolean:
                                     inputs.push(new CheckboxInput({
-                                        key: _key,
+                                        key: _dict + '.' + _key,
                                         value: data[_dict][_key],
                                     }));
                                     break;
@@ -55,7 +55,7 @@ export class DataConvertService {
                         break;
                     case 'sev':
                         inputs.push(new StringInput({
-                            key: 'GLOBAL_ID',
+                            key: 'sev.GLOBAL_ID',
                             label: 'Индекс СЭВ',
                             dict: 'sev',
                             value: data['sev']['GLOBAL_ID'],

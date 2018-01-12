@@ -768,11 +768,12 @@ export class EosDictService {
         }
     }
 
-    isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
+    isUnic(val: string, key: string, inDict?: boolean): { [key: string]: any } {
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
-                if (_node.data.rec[key] === val && _node.id !== nodeId) {
+                /* check solution with this.selectedNode */
+                if (_node.data.rec[key] === val && this.selectedNode && _node.id !== this.selectedNode.id) {
                     _hasMatch = true;
                 }
             });

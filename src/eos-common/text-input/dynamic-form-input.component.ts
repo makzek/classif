@@ -12,7 +12,6 @@ export class DynamicFormInputComponent {
     @Input() input: InputBase<any>;
     @Input() form: FormGroup;
     @Input() readonly: boolean;
-    @Input() data: any;
 
     get isValid() {
         return this.form.controls[this.input.key].valid;

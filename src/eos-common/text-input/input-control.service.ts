@@ -6,7 +6,6 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 
 @Injectable()
 export class InputControlService {
-    nodeId: string;
     constructor(private _dictSrv: EosDictService) { }
 
     toFormGroup(inputs: InputBase<any>[]) {
@@ -29,11 +28,6 @@ export class InputControlService {
         return new FormGroup(group);
     }
 
-    initNodeId(nodeId: string) {
-        this.nodeId = nodeId;
-    }
-
-
     unicValueValidator(isUnic: boolean, key: string, inDict: boolean): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             if (isUnic) {
@@ -45,6 +39,6 @@ export class InputControlService {
     }
 
     checkUnic(val: any, key: string, inDict?: boolean) {
-        return this._dictSrv.isUnic(val, key, inDict, this.nodeId);
+        return this._dictSrv.isUnic(val, key, inDict);
     }
 }

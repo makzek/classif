@@ -58,7 +58,6 @@ export class BaseCardEditComponent implements OnChanges {
                 }
             });*/
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
-            this._inputCtrlSrv.initNodeId(this.nodeId);
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             this.form.statusChanges.subscribe((status) => {
                 if (this.currentFormStatus !== status) {
@@ -67,8 +66,38 @@ export class BaseCardEditComponent implements OnChanges {
                 this.currentFormStatus = status;
             });
             this.form.valueChanges.subscribe((newVal) => {
-                // console.log('this.form ', this.form.value, this.data);
+                const _newData = this._makeSavingData(this.form.value);
+                if (this._notEqual(_newData, this.data)) {
+                    this.onChange.emit(_newData);
+                } else {
+                    this.onChange.emit(null);
+                }
             });
+        }
+    }
+
+    private _makeSavingData(formData: any): any {
+        const result = {};
+        if (formData) {
+            Object.keys(formData).forEach((_ctrl) => {
+                const _way = _ctrl.split('.');
+                if (!result[_way[0]]) {
+                    result[_way[0]] = {};
+                }
+                result[_way[0]][_way[1]] = formData[_ctrl];
+            });
+        }
+        return result;
+    }
+
+    private _notEqual(newObj: any, oldObj: any): boolean {
+        if (newObj) {
+            return Object.keys(newObj).findIndex((_dict) =>
+                Object.keys(newObj[_dict]).findIndex((_key) =>
+                    ((newObj[_dict][_key] || oldObj[_dict][_key]) && newObj[_dict][_key] !== oldObj[_dict][_key])) > -1
+            ) > -1;
+        } else {
+            return false;
         }
     }
 
