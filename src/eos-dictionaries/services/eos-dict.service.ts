@@ -529,7 +529,8 @@ export class EosDictService {
 
                 p = this.dictionary.descriptor.search(_srchCriteries)
                     .then((nodes: EosDictionaryNode[]) =>
-                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                        nodes.find((el: EosDictionaryNode) =>
+                            el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase())
                     )
                     .then((node: EosDictionaryNode) => {
                         if (node) {
