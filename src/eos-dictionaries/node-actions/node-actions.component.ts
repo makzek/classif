@@ -33,23 +33,15 @@ export class NodeActionsComponent implements OnDestroy {
     constructor(_dictSrv: EosDictService) {
         this._initButtons();
 
-        _dictSrv.dictionary$
+        _dictSrv.listDictionary$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
-            .subscribe(([dict, node, params]) => {
+            .combineLatest(_dictSrv.openedNode$)
+            .subscribe(([dict, node]) => {
                 this.dictionary = dict;
                 this._nodeSelected = !!node;
-                this._viewParams = params;
+                this._viewParams = _dictSrv.viewParameters;
                 this._update();
             });
-        /*
-        _dictSrv.viewParameters$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((params) => {
-                this._viewParams = params;
-                this._update();
-            })
-        */
     }
 
     ngOnDestroy() {
@@ -77,7 +69,7 @@ export class NodeActionsComponent implements OnDestroy {
         let _show = false;
 
         if (this.dictionary && this._viewParams) {
-            _show = this.dictionary.descriptor.record.canDo(button.type);
+            _show = this.dictionary.canDo(button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                     _show = this._viewParams.userOrdered && !this._viewParams.searchResults;

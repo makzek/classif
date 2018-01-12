@@ -49,13 +49,15 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
             } else {
                 this._initInfo();
             }
-        }, (error) => alert(error));
+        });
 
+        /*
         this._dictSubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             if (dict && dict.id !== this.dictionaryId) {
                 this._initInfo();
             }
         });
+        */
     }
 
     private _initInfo() {
@@ -67,7 +69,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
 
     ngOnDestroy() {
         this._openedNodeSubscription.unsubscribe();
-        this._dictSubscription.unsubscribe();
+        // this._dictSubscription.unsubscribe();
     }
 
     onAction(action: E_RECORD_ACTIONS) {

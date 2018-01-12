@@ -86,7 +86,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getFullSearchCriteries(data: any): any {
         const _criteries = {};
-        const _searchFields = this.record.fullSearchFields[data['srchMode']]; // this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _searchFields = this.record.fullSearchFields[data['srchMode']];
         switch (data['srchMode']) {
             case 'department':
                 _criteries['IS_NODE'] = '0';
@@ -108,6 +108,15 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         return _criteries;
     }
 
+    getIdByDictionaryMode(mode: number): string {
+        switch (mode) {
+            case 1:
+                return 'cabinet';
+            default:
+                return this.id;
+        }
+    }
+
     getRelated(rec: any, orgDUE: string): Promise<any> {
         const pUser = this.apiSrv
             .read({ 'USER_CL': PipRX.criteries({ 'DUE_DEP': rec['DUE'] }) })
@@ -124,7 +133,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                     OWNER_KIND: '104'
                 })
             })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit(items[0], 'CB_PRINT_INFO'));
+            .then((items) => this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(items[0], 'CB_PRINT_INFO'));
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {

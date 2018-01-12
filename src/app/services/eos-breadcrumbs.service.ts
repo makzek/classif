@@ -10,6 +10,7 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
+import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 
 @Injectable()
 export class EosBreadcrumbsService {
@@ -22,7 +23,8 @@ export class EosBreadcrumbsService {
         private _router: Router,
         private _route: ActivatedRoute,
         private _dictSrv: EosDictService,
-        private _deskSrv: EosDeskService
+        private _descrSrv: DictionaryDescriptorService,
+        private _deskSrv: EosDeskService,
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
@@ -77,11 +79,13 @@ export class EosBreadcrumbsService {
                     params: _current.params,
                     /* fullTitle: '' */
                 };
-                let _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
+                const _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
 
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
+                        bc.title = this._descrSrv.getDescriptorData(_dictId).title;
+                        /*
                         _crumbPromise = this._dictSrv.getDictionariesList()
                             .then((list) => {
                                 const _d = list.find((e: any) => e.id === _dictId);
@@ -90,24 +94,7 @@ export class EosBreadcrumbsService {
                                 }
                                 return bc;
                             });
-                    } else if (_current.params.nodeId && subpath !== 'edit' && subpath !== 'view') {
-                        const _dictId = _current.params.dictionaryId;
-                        const _nodeId = _current.params.nodeId;
-                        console.warn('remove node from breadcrumbs');
-                        _crumbPromise = this._dictSrv.getNode(_dictId, _nodeId)
-                            .then((node) => {
-                                if (node) {
-                                    if (this._dictSrv.isRoot(node.id)) { // remove root node from bc
-                                        bc.title = null;
-                                    } else {
-                                        const _titleView = node.getShortQuickView()[0];
-                                        if (_titleView) {
-                                            bc.title = _titleView.value;
-                                        }
-                                    }
-                                }
-                                return bc;
-                            });
+                        */
                     }
                 }
                 crumbs.push(_crumbPromise);

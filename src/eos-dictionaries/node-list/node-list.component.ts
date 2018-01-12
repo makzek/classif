@@ -19,7 +19,6 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     @Input() nodes: EosDictionaryNode[];
     @Input() length: any;
-    @Input() update: boolean; // flag bigin search
     @Input() customFields: IFieldView[];
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
@@ -27,12 +26,6 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
     params: IDictionaryViewParameters;
-
-    get updating() {
-        /* tslint:disable:no-bitwise */
-        return !!~this.nodes.findIndex((_n) => _n.updating);
-        /* tslint:enable:no-bitwise */
-    }
 
     constructor(private _dictSrv: EosDictService) { }
 
