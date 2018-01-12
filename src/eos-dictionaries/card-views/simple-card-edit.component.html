@@ -1,6 +1,6 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
-        <form [formGroup]="form" class="form form-horizontal">
+        <form *ngIf="form" [formGroup]="form" class="form form-horizontal">
             <div class="form-group" *ngFor="let input of inputs">
                 <!--label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                     {{fieldsDescription.rec[key].title}}

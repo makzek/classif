@@ -54,6 +54,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     ngOnChanges() {
         if (this.fieldsDescription) {
+            console.log('has fieldsDescription');
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             if (this._validationSubscr) {

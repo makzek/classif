@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.component';
 
 @Component({
     selector: 'eos-create-node',
@@ -17,6 +18,8 @@ export class CreateNodeComponent {
     @Input() nodeData: any;
     @Output() onHide: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() onOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    @ViewChild('cardEditEl') cardEditRef: CardEditComponent;
 
     formIsValid = false;
     hasChanges = false;
@@ -77,7 +80,7 @@ export class CreateNodeComponent {
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         }
-        this._dictSrv.addNode(this.nodeData)
+        this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
             .then((node) => {
                 if (node) {
                     let title = '';
@@ -114,22 +117,10 @@ export class CreateNodeComponent {
     }
 
     /**
-     * Check if data was changed
-     * @param data user data
+     * Set hasChanges
+     * @param hasChanges recived value
      */
-    recordChanged(data: any) {
-        if (this.nodeData) {
-            /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
-                if (this.nodeData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
-                        this.nodeData[dict][key] && key !== 'IS_NODE');
-                } else {
-                    return false;
-                }
-            });
-            /* tslint:enable:no-bitwise */
-            this.hasChanges = hasChanges;
-        }
+    recordChanged(hasChanges: boolean) {
+        this.hasChanges = hasChanges;
     }
 }
