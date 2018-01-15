@@ -1,6 +1,6 @@
 <div [formGroup]="form">
     <div [ngSwitch]="input.controlType">
-        <label class="primary-text" *ngSwitchCase="'string'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
+        <label [hidden]="input.hideLabel" class="primary-text" *ngSwitchCase="'string'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
         <input *ngSwitchCase="'string'"
             [formControlName]="input.key"
             [id]="input.key"
@@ -13,7 +13,8 @@
             placement="right"
             containerClass="tooltip-error" container="body"
             [isDisabled]="readonly"
-            [isOpen]="isDirty && !isValid" triggers="">
+            [isOpen]="isDirty && !isValid" triggers=""
+            autocomplete="off">
 
         <label class="primary-text" *ngSwitchCase="'text'" [attr.for]="input.key" [ngClass]="{'required': input.required}">{{input.label}}</label>
         <textarea *ngSwitchCase="'text'"
@@ -21,6 +22,7 @@
             [id]="input.key"
             [readonly]="readonly"
             [ngClass]="{'readonly': readonly}"
+            [ngStyle]="{'height.px': input.height}"
             placeholder="{{input.label}}"
             class="form-control m-font"
             [tooltip]="input.invalidMessage"
@@ -41,5 +43,9 @@
                 [id]="input.key">
             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}
         </label>
+
+        <label class="primary-text" *ngSwitchCase="'date'" [attr.for]="input.key">{{input.label}}</label>
+        <eos-datepicker  *ngSwitchCase="'date'" [placeholder]="input.label" [value]="input.value"
+            [readonly]="readonly" [ngClass]="{'readonly': readonly }"></eos-datepicker>
     </div>
 </div>

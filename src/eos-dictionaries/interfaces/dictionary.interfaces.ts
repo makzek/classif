@@ -47,6 +47,7 @@ export interface IFieldDesriptor {
     isUnic?: boolean;
     unicInDict?: boolean;
     options?: {key: string, value: string}[];
+    height?: number;
 };
 
 export interface IFieldDesriptorBase {
@@ -62,6 +63,7 @@ export interface IFieldDesriptorBase {
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
     readonly options?: {key: string, value: string}[];
+    readonly height?: number;
 };
 
 export interface IFieldView extends IFieldDesriptorBase {

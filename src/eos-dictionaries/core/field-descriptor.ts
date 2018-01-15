@@ -12,6 +12,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
     readonly options?: {key: string, value: string}[];
+    readonly height?: number;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -43,6 +44,10 @@ export class FieldDescriptor implements IFieldDesriptorBase {
 
         if (data.options) {
             this.options = data.options;
+        }
+
+        if (data.height) {
+            this.height = data.height;
         }
     }
 }

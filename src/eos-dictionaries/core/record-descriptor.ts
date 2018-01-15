@@ -157,6 +157,8 @@ export class RecordDescriptor {
                         unicInDict: _f.unicInDict,
                         type: _f.type,
                         options: _f.options,
+                        height: _f.height,
+                        foreignKey: _f.foreignKey,
                     }
                 } else {
                     _description[_f.key] = {};

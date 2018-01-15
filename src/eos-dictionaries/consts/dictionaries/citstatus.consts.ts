@@ -40,7 +40,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CLASSIF_NAME',
         title: 'Наименование статуса',
-        type: 'text',
+        type: 'string',
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,

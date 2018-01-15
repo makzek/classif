@@ -22,8 +22,6 @@ export class InputControlService {
                     Validators.pattern(inputs[input].pattern),
                     this.unicValueValidator(inputs[input].isUnic, inputs[input].key, inputs[input].unicInDict)
                 ]);
-            /*group[input.key] = input.required ? new FormControl('', [Validators.required, Validators.pattern(input.pattern)])
-                                              : new FormControl('', Validators.pattern(input.pattern));*/
         });
         return new FormGroup(group);
     }

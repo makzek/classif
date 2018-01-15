@@ -1,14 +1,15 @@
 
 import { Component, Injector, Input } from '@angular/core';
 import { DepartmentsCardEditComponent } from './departments-card-edit.component';
-import { NgForm } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
     templateUrl: 'departments-card-edit-person.component.html',
 })
 export class DepartmentsCardEditPersonComponent extends DepartmentsCardEditComponent {
-    @Input('cardForm') cardForm: NgForm;
+    @Input('form') form: FormGroup;
+    @Input('inputs') inputs: any;
     fieldGroups: string[];
     currTab = 0;
 

@@ -17,13 +17,13 @@ export class DepartmentsCardEditComponent extends BaseCardEditComponent {
         super(injector);
     }
 
-    OnInvalid(val: any) {
+    /* OnInvalid(val: any) {
         this.invalid.emit(val);
     }
 
     recordChanded(data: any) {
         this.onChange.emit(data);
-    }
+    }*/
 
     chooseOrganiz(data: any) {
         const pip = <PipRX>this.dictSrv['_pipeSrv'];

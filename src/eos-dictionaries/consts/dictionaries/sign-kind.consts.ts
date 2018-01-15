@@ -23,7 +23,7 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     }, {
         key: 'CLASSIF_NAME',
         title: 'Наименование',
-        type: 'text',
+        type: 'string',
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,

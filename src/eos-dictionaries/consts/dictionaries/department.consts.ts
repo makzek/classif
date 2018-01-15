@@ -75,6 +75,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        required: true,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',
@@ -88,12 +89,14 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
+        required: true,
     }, {
         key: 'DUTY',
         title: 'Краткое наименование должности',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        required: true,
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
@@ -149,7 +152,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'indexPerson',
         title: 'Индекс ДЛ',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'DEPARTMENT_INDEX',
@@ -180,6 +183,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        height: 212,
     }, {
         key: 'START_DATE',
         title: 'Начало действия',
@@ -323,7 +327,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     quickViewFields: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'], // title is in shortQuickViewFields
     shortQuickViewFields: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo', 'title'],
     editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
+        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'CLASSIF_NAME',
         'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
         'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']

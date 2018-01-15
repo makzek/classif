@@ -1,144 +1,65 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="inputs">
     <div class="col-1">
         <div class="current-image" [ngStyle]="{'background-image': defaultImage}">
             <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
         </div>
         <div class="form-group gender">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="GENDER">Пол</label>
-            <select name="GENDER" id="GENDER" class="form-control m-font gender-select" [(ngModel)]="data['printInfo']['GENDER']"
-                [ngClass]="{'readonly hidden': !editMode }">
-                <option *ngFor="let g of gender" [value]="g.id">{{g.title}}</option>
-            </select>
-            <input *ngIf="data['printInfo'] && !editMode" name="GENDER" type="text" class="form-control m-font readonly" [ngClass]="{'GENDER-placeholder': editMode }"
-                placeholder="Пол" [value]="getGender(data['printInfo']['GENDER'])"/>
+            <eos-dynamic-form-input *ngIf="inputs['printInfo.GENDER']" [input]="inputs['printInfo.GENDER']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="CODE">Код</label>
-            <input [readonly]="!editMode" id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control m-font" [(ngModel)]="data.rec['CODE']"
-                placeholder="Код" [ngClass]="{'readonly': !editMode }"
-                (focus)="focus('CODE_PERSON')" (blur)="blur()" maxlength="64" [pattern]="NOT_EMPTY_STRING"
-                [eosUnic]="true" [key]="'CODE'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false"
-                tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['CODE_PERSON']?.invalid && cardForm.controls['CODE_PERSON']?.dirty && focusedField === 'CODE_PERSON'"
-                autocomplete="off"
-                triggers="">
-
+            <eos-dynamic-form-input *ngIf="inputs['rec.CODE']" [input]="inputs['rec.CODE']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="indexPerson">Индекс ДЛ</label>
-            <input [readonly]="!editMode" id="indexPerson" name="indexPerson" type="text" class="form-control m-font" [(ngModel)]="data.rec['DEPARTMENT_INDEX']"
-                placeholder="Индекс ДЛ"
-                [ngClass]="{'readonly': !editMode }" (focus)="focus('DEPARTMENT_INDEX')"
-                (blur)="blur()" maxlength="24" [pattern]="NOT_EMPTY_STRING"
-                tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['indexPerson']?.invalid && cardForm.controls['indexPerson']?.dirty && focusedField === 'DEPARTMENT_INDEX'"
-                autocomplete="off"
-                triggers="">
+            <eos-dynamic-form-input *ngIf="inputs['rec.indexPerson']" [input]="inputs['rec.indexPerson']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group sev">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SEV">Индекс СЭВ</label>
-            <input [readonly]="!editMode" id="SEV" name="SEV" type="text" class="form-control m-font " [(ngModel)]="data['sev']['GLOBAL_ID']"
-                placeholder="Индекс СЭВ"
-                [ngClass]="{'readonly': !editMode }" (focus)="focus('SEV')" (blur)="blur()" maxlength="255"
-                [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SEV']?.invalid && cardForm.controls['SEV']?.dirty && focusedField === 'SEV'"
-                autocomplete="off"
-                triggers="">
+            <eos-dynamic-form-input *ngIf="inputs['sev.GLOBAL_ID']" [input]="inputs['sev.GLOBAL_ID']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="START_DATE">Начало действия</label>
-            <eos-datepicker [placeholder]="'Начало действия'" [value]="data.rec['START_DATE']"
-                [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
+            <eos-dynamic-form-input *ngIf="inputs['rec.START_DATE']" [input]="inputs['rec.START_DATE']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="END_DATE">Окончание действия</label>
-            <eos-datepicker [placeholder]="'Окончание действия'" [value]="data.rec['END_DATE']"
-                [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="top"></eos-datepicker>
+            <eos-dynamic-form-input *ngIf="inputs['rec.END_DATE']" [input]="inputs['rec.END_DATE']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
     </div>
     <div class="col-2">
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="SURNAME_PRINT">Фамилия</label>
-            <input [readonly]="!editMode" id="SURNAME_PRINT" name="SURNAME_PRINT" type="text" class="form-control m-font " [(ngModel)]="data['printInfo']['SURNAME']"
-                placeholder="Фамилия"
-                [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" maxlength="64"
-                [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME_PRINT']?.invalid && cardForm.controls['SURNAME_PRINT']?.dirty && focusedField === 'SURNAME'"
-                autocomplete="off"
-                triggers="">
+            <eos-dynamic-form-input *ngIf="inputs['printInfo.SURNAME']" [input]="inputs['printInfo.SURNAME']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="names row-wrapper">
             <div class="form-group first-name">
-                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NAME">Имя</label>
-                <input [readonly]="!editMode" id="NAME" name="NAME" type="text" class="form-control m-font " [(ngModel)]="data['printInfo']['NAME']"
-                    placeholder="Имя"
-                    [ngClass]="{'readonly': !editMode }" (focus)="focus('NAME')" (blur)="blur()" maxlength="64"
-                    [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NAME']?.invalid && cardForm.controls['NAME']?.dirty && focusedField === 'NAME'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['printInfo.NAME']" [input]="inputs['printInfo.NAME']" [form]="form" [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group fathers-name">
-                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="PATRON">Отчество</label>
-                <input [readonly]="!editMode" id="PATRON" name="PATRON" type="text" class="form-control m-font " [(ngModel)]="data['printInfo']['PATRON']"
-                    placeholder="Отчество"
-                    [ngClass]="{'readonly': !editMode }" (focus)="focus('PATRON')" (blur)="blur()" maxlength="64"
-                    [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['PATRON']?.invalid && cardForm.controls['PATRON']?.dirty && focusedField === 'PATRON'"
-                    autocomplete="off"
-                    triggers="">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="SURNAME">
-                Фамилия И.О.
-            </label>
-            <input [readonly]="!editMode" id="SURNAME" name="SURNAME" type="text" class="form-control m-font " [(ngModel)]="data.rec['SURNAME']"
-                placeholder="Фамилия И.О."
-                [ngClass]="{'readonly': !editMode }" (focus)="focus('SURNAME')" (blur)="blur()" required maxlength="64"
-                [pattern]="NOT_EMPTY_STRING" tooltip="Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['SURNAME']?.invalid && cardForm.controls['SURNAME']?.dirty && focusedField === 'SURNAME'"
-                autocomplete="off"
-                triggers="">
-        </div>
-        <div class="form-group">
-            <label class="primary-text required" [ngClass]="{'unimportant-text': !editMode }" for="DUTY">
-                Краткое наименование должности
-            </label>
-            <div class="row-wrapper">
-                <input [readonly]="!editMode" id="DUTY" name="DUTY" type="text" class="form-control m-font  duty" [(ngModel)]="data.rec['DUTY']"
-                    placeholder="Краткое наименование должности" [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DUTY')" (blur)="blur()" required maxlength="255" [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                    containerClass="tooltip-error" container="body" [isDisabled]="!editMode" placement="right" [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
-                    autocomplete="off" [typeahead]="dutysList" container="body"
-                    triggers="">
-
-                <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox boss">
-                    <input type="checkbox" name="POST_H" [disabled]="!editMode" [(ngModel)]="data.rec['POST_H']">
-                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
-                </label>
+                <eos-dynamic-form-input *ngIf="inputs['printInfo.PATRON']" [input]="inputs['printInfo.PATRON']" [form]="form" [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Полное наименование должности</label>
-            <input [readonly]="!editMode" id="fullPosition" name="fullPosition" type="text" class="form-control m-font " [(ngModel)]="data.rec['FULLNAME']"
-                placeholder="Полное наименование должности"
-                [ngClass]="{'readonly': !editMode }" (focus)="focus('fullPosition')" (blur)="blur()" maxlength="2000"
-                [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
-                autocomplete="off" [typeahead]="fullNamesList"
-                triggers="">
+            <eos-dynamic-form-input *ngIf="inputs['rec.SURNAME']" [input]="inputs['rec.SURNAME']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
+        <div class="form-group dytu-row">
+            <eos-dynamic-form-input class="text-input" *ngIf="inputs['rec.DUTY']" [input]="inputs['rec.DUTY']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
+            <eos-dynamic-form-input class="checkbox-input" *ngIf="inputs['rec.POST_H']" [input]="inputs['rec.POST_H']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
         <div class="form-group">
-            <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="NOTE">Примечание</label>
-            <textarea [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control m-font  note-person" rows="5" [(ngModel)]="data.rec['NOTE']"
-                placeholder="Примечание" [ngClass]="{'readonly': !editMode }"
-                (focus)="focus('NOTE')" (blur)="blur()" maxlength="255" tooltip="Максимальная длина 255 символов."
-                [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['NOTE']?.invalid && cardForm.controls['NOTE']?.dirty && focusedField === 'NOTE'"
-                autocomplete="off"
-                triggers=""></textarea>
+            <eos-dynamic-form-input *ngIf="inputs['rec.fullPosition']" [input]="inputs['rec.fullPosition']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']" [input]="inputs['rec.NOTE']" [form]="form" [readonly]="!editMode">
+            </eos-dynamic-form-input>
         </div>
     </div>
 </div>

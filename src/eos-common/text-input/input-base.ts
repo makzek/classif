@@ -11,6 +11,7 @@ export class InputBase<T>{
     isUnic: boolean;
     unicInDict: boolean;
     invalidMessage: string;
+    hideLabel: boolean;
 
     constructor(options: {
         value?: T,
@@ -25,6 +26,7 @@ export class InputBase<T>{
         isUnic?: boolean,
         unicInDict?: boolean,
         invalidMessage?: string,
+        hideLabel?: boolean,
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';
@@ -38,5 +40,6 @@ export class InputBase<T>{
         this.isUnic = !!options.isUnic;
         this.unicInDict = !!options.unicInDict;
         this.invalidMessage = options.invalidMessage || '';
+        this.hideLabel = !!options.hideLabel;
     }
 }

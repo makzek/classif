@@ -43,7 +43,6 @@ import { ColumnSettingsComponent } from './column-settings/column-settings.compo
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
-import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { CreateNodeComponent } from './create-node/create-node.component';
 
@@ -78,7 +77,6 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
         LongTitleHintComponent,
-        VisaTypeEditComponent,
         SecurityCardEditComponent,
         CreateNodeComponent,
     ],

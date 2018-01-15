@@ -80,8 +80,17 @@
             }
         }
 
-        .duty {
-            margin-right: 40px;
+        &.dytu-row {
+            display: flex;
+            align-items: flex-end;
+
+            .text-input {
+                width: 72%;
+            }
+
+            .checkbox-input {
+                padding: 0 0 6px 40px;
+            }
         }
 
         .boss {

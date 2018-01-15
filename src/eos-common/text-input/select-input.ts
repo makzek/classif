@@ -6,7 +6,6 @@ export class DropdownInput extends InputBase<string> {
 
   constructor(options: {} = {}) {
     super(options);
-    console.log('options', options);
     this.options = options['options'] || [];
   }
 }
