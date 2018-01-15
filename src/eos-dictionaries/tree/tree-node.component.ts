@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-
-import { IFieldView } from '../core/dictionary.interfaces';
+import { IFieldView } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-tree-node',
@@ -32,15 +32,19 @@ export class TreeNodeComponent implements OnInit {
         if (this.node.isExpanded) {
             this.node.isExpanded = false;
         } else {
+            this.node.updating = true;
             this._dictSrv.expandNode(this.node.id)
-                .then((node) => node.isExpanded = true);
+                .then((node) => {
+                    node.isExpanded = true
+                    this.node.updating = false
+                });
         }
     }
 
     onSelect(evt: Event, isDeleted: boolean, el: HTMLElement) {
         evt.stopPropagation();
         if (!isDeleted) {
-            const _path = this._dictSrv.getNodePath(this.node);
+            const _path = this.node.getPath();
             this._router.navigate(_path);
         }
     }

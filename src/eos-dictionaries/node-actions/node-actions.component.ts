@@ -6,11 +6,12 @@ import 'rxjs/add/operator/combineLatest';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { E_RECORD_ACTIONS } from '../core/record-action';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES } from '../consts/record-actions.consts';
-import { IActionButton, IAction } from '../core/action.interface';
-import { IDictionaryViewParameters } from 'eos-dictionaries/core/eos-dictionary.interfaces';
-import { E_DICT_TYPE } from 'eos-dictionaries/core/dictionary.interfaces';
+import {
+    RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES,
+    COMMON_ADD_MENU, DEPARTMENT_ADD_MENU
+} from '../consts/record-actions.consts';
+import { IActionButton, IAction, IDictionaryViewParameters, E_DICT_TYPE,
+    E_RECORD_ACTIONS, IActionEvent } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-node-actions',
@@ -20,7 +21,7 @@ export class NodeActionsComponent implements OnDestroy {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     // @Input('params') params: INodeListParams;
-    @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+    @Output('action') action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
 
     buttons: IActionButton[];
     ddButtons: IActionButton[];
@@ -29,6 +30,11 @@ export class NodeActionsComponent implements OnDestroy {
     ctx = { item: this.showSubnodesBtn };
     showMore = false;
 
+    ADD_ACTION = E_RECORD_ACTIONS.add;
+    isTree: boolean;
+
+    addMenu: any;
+
     private dictionary: EosDictionary;
     private _nodeSelected = false;
     private _viewParams: IDictionaryViewParameters;
@@ -36,23 +42,15 @@ export class NodeActionsComponent implements OnDestroy {
     constructor(_dictSrv: EosDictService) {
         this._initButtons();
 
-        _dictSrv.dictionary$
+        _dictSrv.listDictionary$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
-            .subscribe(([dict, node, params]) => {
+            .combineLatest(_dictSrv.openedNode$)
+            .subscribe(([dict, node]) => {
                 this.dictionary = dict;
                 this._nodeSelected = !!node;
-                this._viewParams = params;
+                this._viewParams = _dictSrv.viewParameters;
                 this._update();
             });
-        /*
-        _dictSrv.viewParameters$
-            .takeUntil(this.ngUnsubscribe)
-            .subscribe((params) => {
-                this._viewParams = params;
-                this._update();
-            })
-        */
     }
 
     ngOnDestroy() {
@@ -68,6 +66,15 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     private _update() {
+        this.isTree = false;
+        if (this.dictionary) {
+            this.isTree = this.dictionary && this.dictionary.descriptor.dictionaryType !== E_DICT_TYPE.linear;
+            if (this.dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
+                this.addMenu = DEPARTMENT_ADD_MENU;
+            } else {
+                this.addMenu = COMMON_ADD_MENU;
+            }
+        }
         this.buttons.forEach(btn => this._updateButton(btn));
         this.ddButtons.forEach(btn => this._updateButton(btn));
         this.moreButtons.forEach(btn => this._updateButton(btn));
@@ -80,7 +87,7 @@ export class NodeActionsComponent implements OnDestroy {
         let _show = false;
 
         if (this.dictionary && this._viewParams) {
-            _show = this.dictionary.descriptor.canDo(button.group, button.type);
+            _show = this.dictionary.canDo(button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.moveUp:
                     _show = this._viewParams.userOrdered && !this._viewParams.searchResults;
@@ -134,8 +141,8 @@ export class NodeActionsComponent implements OnDestroy {
         return _btn;
     }
 
-    doAction(action: E_RECORD_ACTIONS) {
-        console.log('action', E_RECORD_ACTIONS[action]);
-        this.action.emit(action);
+    doAction(action: E_RECORD_ACTIONS, params?: any) {
+        console.log('action', E_RECORD_ACTIONS[action], params);
+        this.action.emit({ action: action, params: params });
     }
 }

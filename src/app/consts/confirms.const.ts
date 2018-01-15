@@ -29,8 +29,8 @@ export const CONFIRM_NODES_DELETE: IConfirmWindow = {
 }
 
 export const CONFIRM_SUBNODES_RESTORE: IConfirmWindow = {
-    title: 'Подтверждение востановления',
-    body: 'Востановить дочерние элементы для {{name}}',
-    okTitle: 'Востановить дочерние',
-    cancelTitle: 'Не востанавливать дочерние'
+    title: 'Подтверждение восстановления',
+    body: 'Восстановить дочерние элементы для {{name}}',
+    okTitle: 'Восстановить дочерние',
+    cancelTitle: 'Не восстанавливать дочерние'
 }

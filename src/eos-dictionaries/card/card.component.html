@@ -52,7 +52,9 @@
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"
         (onChange)="recordChanged($event)"
-        (invalid)="turnOffSave($event)" ></eos-card-edit>
+        (invalid)="turnOffSave($event)"
+        [dutysList]="dutysList"
+        [fullNamesList]="fullNamesList"></eos-card-edit>
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true"
         (onHide)="forceView()">
         <div class="modal-dialog modal-md">

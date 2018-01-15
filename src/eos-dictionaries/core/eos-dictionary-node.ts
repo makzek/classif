@@ -1,8 +1,7 @@
-import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -125,13 +124,13 @@ export class EosDictionaryNode {
             };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
+                this.parentId = this._keyToString(data[this._descriptor.parentField.foreignKey]);
             }
 
             // console.log('constructing node with parent', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
-                this.id = this._keyToString(data[this._descriptor.keyField.key]);
+                this.id = this._keyToString(data[this._descriptor.keyField.foreignKey]);
             }
         }
     }
@@ -189,7 +188,7 @@ export class EosDictionaryNode {
 
     addChild(node: EosDictionaryNode) {
         /* remove old parent if exist */
-        if (node.parent) {
+        if (node.parent && node.parent !== this) {
             node.parent.deleteChild(node);
             node.parent = null;
         }
@@ -203,6 +202,7 @@ export class EosDictionaryNode {
             node.parent = this;
         }
         /* tslint:enable:no-bitwise */
+        this.updateExpandable();
     }
 
     getListView(): IFieldView[] {
@@ -250,6 +250,14 @@ export class EosDictionaryNode {
                 _data[_f.key] = {};
             }
         });
+
+        if (this._dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
+            _data['printInfo']['GENDER'] = null;
+            _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
+            _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
+            _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
+        }
+
         return _data;
     }
 
@@ -292,12 +300,37 @@ export class EosDictionaryNode {
         return _data;
     }
 
+    getParentData(fieldName: string, recName = 'rec'): any {
+        let res = this.data[recName][fieldName];
+        if (res === undefined) {
+            if (this.parent) {
+                res = this.parent.getParentData(fieldName, recName);
+            } else {
+                res = null;
+            }
+        }
+        return res;
+    }
+
     getParents(): EosDictionaryNode[] {
         if (this.parent) {
             return [this.parent].concat(this.parent.getParents());
         } else {
             return [];
         }
+    }
+
+    getPath(): string[] {
+        const dictionary = this._dictionary;
+        const _path = [
+            'spravochniki',
+            dictionary.id,
+        ];
+
+        if (dictionary.root !== this) {
+            _path.push(this.id);
+        }
+        return _path;
     }
 
     getAllChildren(): EosDictionaryNode[] {
@@ -316,9 +349,10 @@ export class EosDictionaryNode {
      * @param field field which value need recive
      * @return value of field from node.data.rec
      */
-    getValue (field: IFieldView): any {
+    getValue(field: IFieldView): any {
         return this.data.rec[field.foreignKey];
     }
+
 }
 
 

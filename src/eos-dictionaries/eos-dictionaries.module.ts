@@ -9,6 +9,7 @@ import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DragulaModule } from 'ng2-dragula';
 
@@ -44,9 +45,11 @@ import { DepartmentNodeInfoComponent } from './node-info/department-node-info.co
 import { CabinetNodeInfoComponent } from './node-info/cabinet-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
+import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { CreateNodeComponent } from './create-node/create-node.component';
 
 /* services */
+import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
 
@@ -82,6 +85,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         UnicValidatorDirective,
         LongTitleHintComponent,
         VisaTypeEditComponent,
+        SecurityCardEditComponent,
         CreateNodeComponent,
     ],
     entryComponents: [
@@ -103,6 +107,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         BsDropdownModule.forRoot(),
+        TypeaheadModule.forRoot(),
         DragulaModule,
     ],
     exports: [
@@ -112,6 +117,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ColumnSettingsComponent,
     ],
     providers: [
+        DictionaryDescriptorService,
         EosDictService,
         EosSandwichService,
     ],

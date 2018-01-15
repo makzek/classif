@@ -5,5 +5,6 @@ export interface IDictionaryViewParameters {
     markItems: boolean;
     searchResults: boolean;
     updating: boolean;
+    updatingFields: boolean;
     haveMarked: boolean;
 }

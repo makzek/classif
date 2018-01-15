@@ -1,5 +1,4 @@
-import { IAction } from '../core/action.interface';
-import { E_RECORD_ACTIONS, E_ACTION_GROUPS } from '../core/record-action';
+import { IAction, E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/interfaces';
 
 export const RECORD_ACTIONS_EDIT = {
     type: E_RECORD_ACTIONS.edit,
@@ -175,7 +174,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     buttonClass: 'hidden-lg'
 }];
 
-export const  SHOW_ALL_SUBNODES: IAction = {
+export const SHOW_ALL_SUBNODES: IAction = {
     type: E_RECORD_ACTIONS.showAllSubnodes,
     group: E_ACTION_GROUPS.common,
     title: null,
@@ -185,3 +184,23 @@ export const  SHOW_ALL_SUBNODES: IAction = {
     hoverIconClass: '',
     buttonClass: null
 };
+
+export const COMMON_ADD_MENU = [{
+    params: { 'IS_NODE': 0 },
+    title: 'Создать вершину'
+},
+{
+    params: { 'IS_NODE': 1 },
+    title: 'Создать лист'
+}];
+
+export const DEPARTMENT_ADD_MENU = [
+    {
+        params: { 'IS_NODE': 0 },
+        title: 'Создать подразделение'
+    },
+    {
+        params: { 'IS_NODE': 1 },
+        title: 'Создать должностное лицо'
+    }
+];
