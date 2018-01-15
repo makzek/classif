@@ -138,6 +138,7 @@ export class EosDictionary {
             }
             node.updateExpandable(this._showDeleted);
         });
+        // this.root.expandable = false;
         this.root.updateExpandable(this._showDeleted);
     }
 
@@ -215,7 +216,7 @@ export class EosDictionary {
                                 this.descriptor.getRelatedSev(node.data.rec)
                             ]).then(([related, sev]) => {
                                 node.data = Object.assign(node.data, related, { sev: sev });
-                                console.log('full node info', node.data);
+                                // console.log('full node info', node.data);
                                 return node;
                             });
                         case E_DICT_TYPE.tree:
