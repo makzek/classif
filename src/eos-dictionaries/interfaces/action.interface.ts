@@ -46,3 +46,8 @@ export interface IActionButton extends IAction {
     enabled: boolean
     show: boolean
 }
+
+export interface IActionEvent {
+    action: E_RECORD_ACTIONS;
+    params?: any;
+}

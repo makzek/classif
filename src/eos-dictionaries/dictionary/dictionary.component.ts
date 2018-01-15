@@ -15,7 +15,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import {
     IDictionaryViewParameters, E_FIELD_SET, IFieldView, INodeListParams,
-    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS
+    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS, IActionEvent
 } from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
@@ -52,6 +52,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
+    listDictionary: EosDictionary;
+
     dictionaryName: string;
     public dictionaryId: string;
 
@@ -135,29 +137,38 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
-                    this.customFields = this._dictSrv.customFields;
                     this.dictionaryId = dictionary.id;
-                    this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
                         this.dictionaryName = dictionary.root.title;
                         this.treeNodes = [dictionary.root];
                     }
-                    this.params.markItems = dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords);
-                    this.hasCustomTable = this.dictionary.descriptor.record.canDo(E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }
             });
 
-        _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
-            .subscribe((node: EosDictionaryNode) => {
-                if (node) {
-                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
-                    this.viewFields = node.getListView();
+        _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
+            .subscribe((dictionary: EosDictionary) => {
+                if (dictionary) {
+                    this.dictMode = this._dictSrv.dictMode;
+                    this.customFields = this._dictSrv.customFields;
+                    this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {
                         this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
                     });
+                    this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
+                    this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
+                } else {
+                    this.treeNodes = [];
+                }
+            });
+
+        _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((node: EosDictionaryNode) => {
+                if (node) {
+                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -187,11 +198,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
-
-        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
-            .subscribe((mode) => {
-                this.dictMode = mode;
-            });
     }
 
     ngOnDestroy() {
@@ -296,8 +302,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
-    doAction(action: E_RECORD_ACTIONS) {
-        switch (action) {
+    doAction(evt: IActionEvent) {
+        switch (evt.action) {
             case E_RECORD_ACTIONS.navigateDown:
                 this._openNodeNavigate(false);
                 break;
@@ -336,7 +342,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
 
             case E_RECORD_ACTIONS.add:
-                this._openCreate();
+                this._openCreate(evt.params);
                 break;
 
             case E_RECORD_ACTIONS.restore:
@@ -350,7 +356,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this._createRepresentative();
                 break;
             default:
-                console.log('unhandled action', E_RECORD_ACTIONS[action]);
+                console.log('unhandled action', E_RECORD_ACTIONS[evt.action]);
         }
     }
 
@@ -448,7 +454,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
                 const url = this._router.url;
                 this._storageSrv.setItem(RECENT_URL, url);
-                const _path = this._dictSrv.getNodePath(node);
+                const _path = node.getPath();
                 _path.push('edit');
                 this._router.navigate(_path);
             }
@@ -481,7 +487,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     goUp() {
         if (this.selectedNode && this.selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
+            const path = this.selectedNode.parent.getPath();
             this._router.navigate(path);
         }
     }
@@ -542,16 +548,19 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     /**
      * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
      */
-    private _openCreate() {
+    private _openCreate(params: any) {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
         this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
         this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
+        if (params) {
+            Object.assign(this.modalWindow.content.nodeData.rec, params);
+        }
         this.modalWindow.content.onHide.subscribe(() => {
             this.modalWindow.hide();
         });
         this.modalWindow.content.onOpen.subscribe(() => {
-            this._openCreate();
+            this._openCreate(params);
         });
     }
 
