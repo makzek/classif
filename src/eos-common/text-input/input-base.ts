@@ -12,6 +12,7 @@ export class InputBase<T>{
     unicInDict: boolean;
     invalidMessage: string;
     hideLabel: boolean;
+    forNode: boolean;
 
     constructor(options: {
         value?: T,
@@ -27,6 +28,7 @@ export class InputBase<T>{
         unicInDict?: boolean,
         invalidMessage?: string,
         hideLabel?: boolean,
+        forNode?: boolean,
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';
@@ -41,5 +43,6 @@ export class InputBase<T>{
         this.unicInDict = !!options.unicInDict;
         this.invalidMessage = options.invalidMessage || '';
         this.hideLabel = !!options.hideLabel;
+        this.forNode = !!options.forNode;
     }
 }

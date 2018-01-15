@@ -90,6 +90,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 64,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        forNode: true,
     }, {
         key: 'DUTY',
         title: 'Краткое наименование должности',
@@ -97,6 +98,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 255,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        forNode: true,
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',

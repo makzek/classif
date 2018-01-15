@@ -20,6 +20,10 @@ export class DepartmentsCardEditPersonComponent extends DepartmentsCardEditCompo
         this.currTab = this.dictSrv.currentTab;
     }
 
+    /**
+     * switch tabs
+     * @param i tab number
+     */
     setTab(i: number) {
         this.currTab = i;
         this.dictSrv.currentTab = this.currTab;

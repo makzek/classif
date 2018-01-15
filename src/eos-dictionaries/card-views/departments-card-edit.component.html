@@ -7,7 +7,7 @@
             </div>
         </div>
     <eos-departments-card-edit-person *ngIf="data.rec && data.rec['IS_NODE']" [data]="data" [inputs]="inputs"
-        [editMode]="editMode" [nodeId]="nodeId" [form]="form" [dutysList]="dutysList" [fullNamesList]="fullNamesList" (onChange)="recordChanded($event)"
+        [editMode]="editMode" [form]="form" [dutysList]="dutysList" [fullNamesList]="fullNamesList" (onChange)="recordChanded($event)"
         (invalid)="OnInvalid($event)"></eos-departments-card-edit-person>
         <div *ngIf="data.rec && !data.rec['IS_NODE']" class="wrapper">
             <div class="col-1">

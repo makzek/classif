@@ -159,6 +159,7 @@ export class RecordDescriptor {
                         options: _f.options,
                         height: _f.height,
                         foreignKey: _f.foreignKey,
+                        forNode: _f.forNode,
                     }
                 } else {
                     _description[_f.key] = {};

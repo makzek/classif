@@ -14,6 +14,13 @@ const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;
 export class DataConvertService {
     // Todo: get from a remote source of question metadata
     // Todo: make asynchronous
+
+    /**
+     * convert fields description and data in same object
+     * but with Input for use it in dynamic form
+     * @param fieldsDescription node fields description
+     * @param data node data
+     */
     getInputs(fieldsDescription: any[], data: any) {
     const inputs: any = {};
         if (fieldsDescription) {
@@ -31,6 +38,7 @@ export class DataConvertService {
                                         pattern: fieldsDescription[_dict][_key].pattern,
                                         isUnic: fieldsDescription[_dict][_key].isUnic,
                                         unicInDict: fieldsDescription[_dict][_key].inDict,
+                                        forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;
@@ -41,6 +49,7 @@ export class DataConvertService {
                                         required: fieldsDescription[_dict][_key].required,
                                         invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
                                         height: fieldsDescription[_dict][_key].height,
+                                        forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;
@@ -48,6 +57,7 @@ export class DataConvertService {
                                     inputs[_dict + '.' + _key] = new CheckboxInput({
                                         key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey + '.boolean',
                                         label: fieldsDescription[_dict][_key].title,
+                                        forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;
@@ -57,6 +67,7 @@ export class DataConvertService {
                                         label: fieldsDescription[_dict][_key].title,
                                         options: fieldsDescription[_dict][_key].options,
                                         required: fieldsDescription[_dict][_key].required,
+                                        forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;
@@ -64,6 +75,7 @@ export class DataConvertService {
                                     inputs[_dict + '.' + _key] = new DateInput({
                                         key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
                                         label: fieldsDescription[_dict][_key].title,
+                                        forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;

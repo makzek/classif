@@ -8,35 +8,59 @@ import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service
 export class InputControlService {
     constructor(private _dictSrv: EosDictService) { }
 
-    toFormGroup(inputs: InputBase<any>[]) {
+    /**
+     * make FormGroup from array of InputBase<any>
+     * @param inputs input which added to form
+     * @param isNode flag for node
+     */
+    toFormGroup(inputs: InputBase<any>[], isNode?: boolean) {
         const group: any = {};
 
         Object.keys(inputs).forEach(input => {
-            group[inputs[input].key] = inputs[input].required ?
-                new FormControl(inputs[input].value || '', [
-                    Validators.required,
-                    Validators.pattern(inputs[input].pattern),
-                    this.unicValueValidator(inputs[input].isUnic, inputs[input].key, inputs[input].unicInDict)
-                ])
-                : new FormControl(inputs[input].value || '', [
-                    Validators.pattern(inputs[input].pattern),
-                    this.unicValueValidator(inputs[input].isUnic, inputs[input].key, inputs[input].unicInDict)
-                ]);
+            console.log('toFormGroup', inputs[input].forNode, isNode);
+            if (inputs[input].forNode) {
+                if (isNode) {
+                    this._addInput(group, inputs[input]);
+                }
+            } else {
+                this._addInput(group, inputs[input]);
+            }
         });
         return new FormGroup(group);
     }
 
+    /**
+     * add input to group
+     * @param group data for FormGroup
+     * @param input input which is added to group
+     */
+    private _addInput(group: any, input: InputBase<any>) {
+        group[input.key] = input.required ?
+        new FormControl(input.value || '', [
+            Validators.required,
+            Validators.pattern(input.pattern),
+            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+        ])
+        : new FormControl(input.value || '', [
+            Validators.pattern(input.pattern),
+            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+        ]);
+    }
+
+    /**
+     * custom validation function
+     * check if value is unic
+     * @param isUnic show if value must be unic
+     * @param key key of checked value
+     * @param inDict must it be unic in dictionary
+     */
     unicValueValidator(isUnic: boolean, key: string, inDict: boolean): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             if (isUnic) {
-                return this.checkUnic(control.value, key, inDict) ? { 'isUnic': false } : null;
+                return this._dictSrv.isUnic(control.value, key, inDict) ? { 'isUnic': false } : null;
             } else {
                 return null;
             }
         }
-    }
-
-    checkUnic(val: any, key: string, inDict?: boolean) {
-        return this._dictSrv.isUnic(val, key, inDict);
     }
 }

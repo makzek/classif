@@ -17,8 +17,6 @@ import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
-// import { TextInputComponent } from './text-input/text-input.component';
-import { DynamicFormComponent } from './text-input/dynamic-form.component';
 import { DynamicFormInputComponent } from './text-input/dynamic-form-input.component';
 import { InputControlService } from './text-input/input-control.service';
 import { DataConvertService } from './text-input/data-convert.service';
@@ -35,10 +33,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
-        // TextInputComponent,
         UnicValidatorDirective,
         DynamicFormInputComponent,
-        DynamicFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -61,7 +57,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         DatepickerComponent,
         // TextInputComponent,
         UnicValidatorDirective,
-        DynamicFormComponent,
         DynamicFormInputComponent,
         // DataConvertService,
     ],

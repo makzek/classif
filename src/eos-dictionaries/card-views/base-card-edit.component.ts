@@ -11,27 +11,22 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() nodeId: string;
-    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
+    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    // @ViewChild('cardForm') cardForm: NgForm;
     form: FormGroup;
-    tooltipText = '';
-    focusedField: string;
 
     protected dictSrv;
     private _dataSrv;
     private _inputCtrlSrv;
 
-    private currentFormStatus;
+    private _currentFormStatus;
 
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     inputs: any;
-
     newData: any;
 
     private _validationSubscr: Subscription;
@@ -43,6 +38,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         this._inputCtrlSrv = injector.get(InputControlService);
     }
 
+    /**
+     * make string[] from object keys
+     * @param data object which keys is used
+     */
     keys(data: Object): string[] {
         if (data) {
             return Object.keys(data);
@@ -51,19 +50,30 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
+    /**
+     * generates inputs object, construct form,
+     * subscribe on statusChanges and valueChanges
+     */
     ngOnChanges() {
-        if (this.fieldsDescription) {
+        if (this.fieldsDescription && this.data) {
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
-            this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
+
+            if (this.data.rec && this.data.rec.IS_NODE) {
+                this.form = this._inputCtrlSrv.toFormGroup(this.inputs, true);
+            } else {
+                this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
+            }
+
             if (this._validationSubscr) {
                 this._validationSubscr.unsubscribe();
             }
             this._validationSubscr = this.form.statusChanges.subscribe((status) => {
-                if (this.currentFormStatus !== status) {
+                if (this._currentFormStatus !== status) {
                     this.invalid.emit(status === 'INVALID');
                 }
-                this.currentFormStatus = status;
+                this._currentFormStatus = status;
             });
+
             if (this._changeSubscr) {
                 this._changeSubscr.unsubscribe();
             }
@@ -74,6 +84,9 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
+    /**
+     * unsubscribe
+     */
     ngOnDestroy() {
         if (this._validationSubscr) {
             this._validationSubscr.unsubscribe();
@@ -83,6 +96,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
+    /**
+     * convert form data in object suitable for saving
+     * @param formData form data which is converted
+     */
     private _makeSavingData(formData: any): any {
         const result = {};
         if (formData) {
@@ -101,6 +118,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         return result;
     }
 
+    /**
+     * compare two objects
+     * @param newObj one object
+     * @param oldObj other object
+     */
     private _notEqual(newObj: any, oldObj: any): boolean {
         if (newObj) {
             return Object.keys(newObj).findIndex((_dict) =>
@@ -112,30 +134,13 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
-    focus(name: string) {
-        this.focusedField = name;
-    }
-
-    blur() {
-        this.focusedField = null;
-    }
-
-    change(data: any) {
-        // this.onChange.emit(data);
-    }
-
     /* clean(field: string, value: string) {
         this.change(field, value);
     }*/
 
-    checkUnic(val: any, key: string, inDict?: boolean) {
-        if (this.focusedField === key) {
-            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
-        } else {
-            return null;
-        }
-    }
-
+    /**
+     * return new data, used by parent component
+     */
     getNewData(): any {
         return this.newData;
     }
