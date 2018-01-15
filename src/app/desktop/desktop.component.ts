@@ -64,6 +64,7 @@ export class DesktopComponent implements OnDestroy {
                 _deskSrv.setSelectedDesk(link.path);
             }
         );
+        this._dictSrv.closeDictionary();
     }
 
     ngOnDestroy() {
@@ -116,10 +117,9 @@ export class DesktopComponent implements OnDestroy {
     public save(evt: Event) {
         if (this._newTitle !== this._editingItem.title) {
             this._editingItem.title = this._newTitle;
-            this._editingItem.fullTitle = this._newTitle;
+            /* this._editingItem.fullTitle = this._newTitle; */
             this._deskSrv.updateName(this._editingItem);
-            /* todo: add save service call */
-            /* then */
+            /* then ??? */
         }
         this.cancel(evt);
     }

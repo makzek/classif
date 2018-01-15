@@ -38,9 +38,12 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        if (this.value && typeof this.value !== 'object') {
+            this.value = new Date(this.value);
+        }
         window.addEventListener('scroll', this._handler = () => {
-            this.datePicker.hide();
-        }, true);
+                this.datePicker.hide();
+            }, true);
     }
 
     ngOnDestroy() {

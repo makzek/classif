@@ -1,4 +1,4 @@
-import { IDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { NOT_EMPTY_STRING } from '../input-validation';
 
@@ -6,8 +6,8 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     id: 'visa-type',
     apiInstance: 'VISA_TYPE_CL',
     title: 'Типы виз',
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-    'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
+    actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
+    visible: true,
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number',

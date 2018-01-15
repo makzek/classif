@@ -1,11 +1,11 @@
 
-export const DEFAULT_DISMISS_TIMEOUT = 2000;
-export const SHORT_DISMISS_TIMEOUT = 1000;
-export const LONG_DISMISS_TIMEOUT = 3000;
+export const DEFAULT_DISMISS_TIMEOUT = 3000;
+export const WARN_DISMISS_TIMEOUT = 5000;
+export const DANGER_DISMISS_TIMEOUT = 15000;
 
 export interface IMessage {
-    type: 'success' | 'info' | 'warning' | 'danger',
-    title: string,
-    msg: string,
-    dismissOnTimeout?: number,
+    type: 'success' | 'info' | 'warning' | 'danger';
+    title: string;
+    msg: string;
+    dismissOnTimeout?: number;
 }

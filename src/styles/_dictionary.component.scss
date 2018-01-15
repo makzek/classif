@@ -123,22 +123,21 @@
             min-height: $item-height;
             display: -ms-grid;
             display: grid;// sass-lint:disable-line no-duplicate-properties
-            -ms-grid-columns:  48px 1fr 150px;
-            grid-template-columns: 48px 1fr 150px;
+            -ms-grid-columns:  48px 1fr auto auto;
+            grid-template-columns: 48px 1fr auto minmax(80px,auto);
 
             &.has-custom {
-                -ms-grid-columns:  48px 1fr 150px 48px;
-                grid-template-columns: 48px 1fr 150px 48px;
+                -ms-grid-columns:  48px 1fr auto auto 48px;
+                grid-template-columns: 48px 1fr auto minmax(80px,auto) 48px;
             }
 
             .item-count {
                 height: 100%;
-                width: 150px;
+                width: fit-content;
                 display: inline-block;
-                text-align: center;
                 border-left-width: 1px;
                 border-left-style: solid;
-                grid-column: 3;
+                grid-column: 4;
             }
 
             .config-btn {
@@ -149,11 +148,27 @@
                 border-radius: 0;
                 border-left-width: 1px;
                 border-left-style: solid;
-                grid-column: 4;
+                grid-column: 5;
             }
 
             .selected-node-title {
                 grid-column: 2;
+            }
+
+            .tabs-wrapper {
+                grid-column: 3;
+                width: auto;
+                margin: 0;
+                border-bottom-width: 0;
+                .tabs {
+                    .tab-item {
+                        margin: 0 20px;
+                    }
+                    .tab-title {
+                        font-size: 16px;
+                        line-height: 26px;
+                    }
+                }
             }
 
             .btn {
@@ -167,6 +182,14 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
+            }
+
+            .item-count-content {
+                padding: 0 $grid-gutter-width / 2;
+            }
+
+            .item-count-found {
+                padding-left: $grid-gutter-width / 2;
             }
 
             .go-top-wrapper {

@@ -1,37 +1,44 @@
-<div class="simple-card-edit">
+<div class="simple-card-edit secondary-block">
     <article class="edit-content">
         <form #cardForm="ngForm" *ngIf="data && data.rec && fieldsDescription.rec" class="form form-horizontal">
-                <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
-                    <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">{{fieldsDescription.rec[key].title}}</label>
-                    <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
-                        [ngModel]="data.rec[key]" (ngModelChange)="change(key, 'rec', $event)"
-                        placeholder="{{fieldsDescription.rec[key].title}}"
-                        [readonly] = "!editMode"
-                        [ngClass]="{'readonly': !editMode }"
-                        [required]="fieldsDescription.rec[key]?.required"
-                        [pattern]="fieldsDescription.rec[key].pattern" maxlength="{{fieldsDescription.rec[key].length}}"
-                        [eosUnic]="fieldsDescription.rec[key].isUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict"
-                        [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
-                        placement="right" containerClass="tooltip-error" container="body"
-                        (focus)="focus(key)" (blur)="blur()"
-                        [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
-                        <!--pre>{{fieldsDescription[key] | json}}</pre-->
-                    </div>
+            <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
+                <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
+                    {{fieldsDescription.rec[key].title}}
+                </label>
+                <input [readonly]="!editMode" id="{{key}}" name="{{key}}" type="text" class="form-control m-font"
+                    [ngModel]="data.rec[key]" (ngModelChange)="change(key, 'rec', $event)"
+                    placeholder="{{fieldsDescription.rec[key].title}}"
+                    [readonly] = "!editMode"
+                    [ngClass]="{'readonly': !editMode }"
+                    [required]="fieldsDescription.rec[key]?.required"
+                    [pattern]="fieldsDescription.rec[key].pattern" maxlength="{{fieldsDescription.rec[key].length}}"
+                    [eosUnic]="fieldsDescription.rec[key].isUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict"
+                    [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
+                    placement="right" containerClass="tooltip-error" container="body"
+                    (focus)="focus(key)" (blur)="blur()"
+                    autocomplete="off"
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
+                    <!--pre>{{fieldsDescription[key] | json}}</pre-->
+            </div>
 
-                    <div class="form-group" *ngIf="data && data['sev']">
-                        <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Индекс СЭВ</label>
-                        <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
-                            [ngModel]="data['sev']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
-                            placeholder="Индекс СЭВ"
-                            [readonly] = "!editMode"
-                            [ngClass]="{'readonly': !editMode }"
-                            [pattern]="notEmptyString" maxlength="255"
-                            [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
-                            placement="right" containerClass="tooltip-error" container="body"
-                            (focus)="focus('GLOBAL_ID')" (blur)="blur()"
-                            [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
-                            <!--pre>{{fieldsDescription[key] | json}}</pre-->
-                    </div>
+            <div class="form-group" *ngIf="data && data['sev']">
+                <label for="GLOBAL_ID" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Индекс СЭВ</label>
+                <input [readonly]="!editMode" id="GLOBAL_ID" name="GLOBAL_ID" type="text" class="form-control m-font"
+                    [ngModel]="data['sev']['GLOBAL_ID']" (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
+                    placeholder="Индекс СЭВ"
+                    [readonly] = "!editMode"
+                    [ngClass]="{'readonly': !editMode }"
+                    [pattern]="notEmptyString" maxlength="255"
+                    [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
+                    placement="right" containerClass="tooltip-error" container="body"
+                    (focus)="focus('GLOBAL_ID')" (blur)="blur()"
+                    autocomplete="off"
+                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
+                    <!--pre>{{fieldsDescription[key] | json}}</pre-->
+            </div>
+            <div class="form-group unimportant-text s-font">
+                <label>* - поля обязательные к заполнению</label>
+            </div>
         </form>
     </article>
 </div>

@@ -5,7 +5,7 @@ import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_C
 import { ALL_ROWS, _ES } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 import { IEnt } from 'eos-rest';
-import {SevIndexHelper} from '../services/sevIndex-helper'
+import { SevIndexHelper } from '../services/sevIndex-helper'
 //
 
 // tslint:disable-next-line:class-name
@@ -30,7 +30,7 @@ class vmDEPARTMENT {
         // загружаем от корня дерева до запрашиваемой вершины
         // поскольку органицация, картотека и чтото еще могут быть определены выше по дереву
 
-        const rParents = pip.cache.read<DEPARTMENT>({ DEPARTMENT: treeDues(parentDue(due))});
+        const rParents = pip.cache.read<DEPARTMENT>({ DEPARTMENT: treeDues(parentDue(due)) });
 
         const rDeps = Promise.all([rDep, rParents])
             .then(([dep, parents]) => {
@@ -45,49 +45,52 @@ class vmDEPARTMENT {
         // или Pipe для крепкости переписать на промисы
 
         // ищем пользователя ассоцированного с показываемым дл
-        const rUser = pip.read<USER_CL>({USER_CL : PipRX.criteries({DUE_DEP: due})});
-        const rDopInfo = rDeps.then( d => {
+        const rUser = pip.read<USER_CL>({ USER_CL: PipRX.criteries({ DUE_DEP: due }) });
+        const rDopInfo = rDeps.then(d => {
             const l = d.length - 1;
             // загружаем доп. инфо о ДЛ и подразделении
-            const rPrintInfo = pip.read<CB_PRINT_INFO>({ CB_PRINT_INFO: PipRX.criteries({
-                ISN_OWNER: d[l].ISN_NODE.toString() + '|' + d[l].ISN_HIGH_NODE.toString(),
-                OWNER_KIND: '104' })});
+            const rPrintInfo = pip.read<CB_PRINT_INFO>({
+                CB_PRINT_INFO: PipRX.criteries({
+                    ISN_OWNER: d[l].ISN_NODE.toString() + '|' + d[l].ISN_HIGH_NODE.toString(),
+                    OWNER_KIND: '104'
+                })
+            });
             let rOrg = Promise.resolve<ORGANIZ_CL[]>([]);
             for (let i = l; i !== -1; i--) {
-                if ( d[i].DUE_LINK_ORGANIZ !== null) {
-                    rOrg = pip.cache.read<ORGANIZ_CL>({ORGANIZ_CL: [d[i].DUE_LINK_ORGANIZ]});
+                if (d[i].DUE_LINK_ORGANIZ !== null) {
+                    rOrg = pip.cache.read<ORGANIZ_CL>({ ORGANIZ_CL: [d[i].DUE_LINK_ORGANIZ] });
                     break;
                 }
             }
             const rCab = d[l].ISN_CABINET === null ? Promise.resolve<CABINET[]>([])
-                : pip.cache.read<CABINET>({CABINET: [d[l].ISN_CABINET]});
+                : pip.cache.read<CABINET>({ CABINET: [d[l].ISN_CABINET] });
             return Promise.all([rPrintInfo, rOrg, rCab]);
         });
         // загружаем индекс СЭВ
-        const rSevIndex = pip.read<SEV_ASSOCIATION>({SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')]})
+        const rSevIndex = pip.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')] })
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
-        .then(([a, b, [pi, org, cab ], d]) => {
-            console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
-            const result = new vmDEPARTMENT();
-            result.row = a[a.length - 1];
-            // tslint:disable-next-line:no-debugger
-            // debugger;
+            .then(([a, b, [pi, org, cab], d]) => {
+                console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
+                const result = new vmDEPARTMENT();
+                result.row = a[a.length - 1];
+                // tslint:disable-next-line:no-debugger
+                // debugger;
 
-            // TODO: решить нужно ли делать стабы, пока сделал
-            // решил делать стабы(запись со всеми нужными properties), тогда биндинг проще
-            // и можно сразу разобраться, что делать
-            // ничего - если не заполнили ценных полей или ничего не изменили
-            // INSERT, если записи нет, но чтото заполнили
-            // UPDATE, если чтото изменили
-            result.CB_PRINT_INFO = pip.entityHelper.prepareForEdit( pi[0], 'CB_PRINT_INFO' );
-            result.ORGANIZ = pip.entityHelper.prepareForEdit(org[0], 'ORGANIZ_CL' );
-            // Здесь врапить не надо - запись кабинете мы редатировать не должны
-            // а ссылку на него можно и по другому поставить.
-            result.cabinet = <CABINET>cab[0];
-            result.SEV_ASSOCIATION = SevIndexHelper.PrepareStub(d[0], pip);
+                // TODO: решить нужно ли делать стабы, пока сделал
+                // решил делать стабы(запись со всеми нужными properties), тогда биндинг проще
+                // и можно сразу разобраться, что делать
+                // ничего - если не заполнили ценных полей или ничего не изменили
+                // INSERT, если записи нет, но чтото заполнили
+                // UPDATE, если чтото изменили
+                result.CB_PRINT_INFO = pip.entityHelper.prepareForEdit(pi[0], 'CB_PRINT_INFO');
+                result.ORGANIZ = pip.entityHelper.prepareForEdit(org[0], 'ORGANIZ_CL');
+                // Здесь врапить не надо - запись кабинете мы редатировать не должны
+                // а ссылку на него можно и по другому поставить.
+                result.cabinet = <CABINET>cab[0];
+                result.SEV_ASSOCIATION = pip.entityHelper.prepareForEdit<SEV_ASSOCIATION>(d[0], 'SEV_ASSOCIATION');
 
-            return result;
-        });
+                return result;
+            });
     }
 }
 
@@ -164,7 +167,7 @@ export class DepartmentComponent implements OnInit {
         // удаление CB_PRINT_INFO, если все поля в нем пустые
         // как сраснить все поля не пишу - они разные для подразделения и ДЛ.
         // это пример создания, редактирования, удаления записи
-        if ((rec.SURNAME_DP === null) || (rec.SURNAME_DP.trim() === '') ) {
+        if ((rec.SURNAME_DP === null) || (rec.SURNAME_DP.trim() === '')) {
             // tslint:disable-next-line:curly
             if (rec._State === _ES.Stub) return false;
             rec._State = _ES.Deleted;
@@ -177,6 +180,16 @@ export class DepartmentComponent implements OnInit {
         return true;
     }
 
+    onPreparePrintInfo() {
+        const q = { SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', GENDER: 2, DUTY: 'начальника' };
+        // вызов в случае GENDER=null - его надо опустить. Вообще, пустые поля походе надо опускать
+        // const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', DUTY: 'начальника'};
+
+        this.pip.read<CB_PRINT_INFO>({ PreparePrintInfo: PipRX.args(q) })
+            .then(res => {
+                console.log(res);
+            })
+    }
 }
 
 

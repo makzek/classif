@@ -93,13 +93,27 @@
 }
 
 .primary-text {
-    color: $primary-font-color-main-theme;
+    color: $primary-font-color-main-theme !important;
+}
+
+.usual-border {
+    border-color: $border-color-main-theme;
+}
+
+.active-border {
+    border-color: $button-color-main-theme !important;
 }
 
 .modal-block {
     background: $modal-block-background-main-theme;
     color: $secondary-font-color-main-theme;
     border-color: $border-color-main-theme;
+}
+
+.block {
+    background-color: $block-color-main-theme;
+    color: $primary-font-color-main-theme;
+    border-color: $border-color-main-theme !important;
 }
 
 .tooltip {
@@ -124,18 +138,22 @@
         border-color: $active-field-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $active-field-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $active-field-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $active-field-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $active-field-color-main-theme;
     }
@@ -148,18 +166,22 @@
         border-color: $invalid-color-main-theme;
     }
 
+    &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $invalid-color-main-theme;
     }
 
+    &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $invalid-color-main-theme;
     }
 
+    &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $invalid-color-main-theme;
     }
 
+    &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $invalid-color-main-theme;
     }
@@ -200,15 +222,13 @@
             border-color: transparent;
         }
     }
+
+    &.highlighted:focus {
+        border-color: $button-color-main-theme !important;
+    }
 }
 
 .main-theme {
-    .block {
-        background-color: $block-color-main-theme;
-        color: $primary-font-color-main-theme;
-        border-color: $border-color-main-theme !important;
-    }
-
     .secondary-block {
         background-color: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
@@ -232,14 +252,6 @@
         color: $button-color-main-theme;
     }
 
-    .usual-border {
-        border-color: $border-color-main-theme;
-    }
-
-    .active-border {
-        border-color: $button-color-main-theme;
-    }
-
     .transparent-border {
         border-color: transparent;
     }
@@ -254,6 +266,12 @@
 
     .deleted {
         color: $disabled-color-main-theme;
+    }
+
+    .highlight-on-hover {
+        &:hover {
+            background-color: $highlight-color-main-theme;
+        }
     }
 
     // main-layout
@@ -281,17 +299,6 @@
 
         &:active {
             background-color: $secondary-color-main-theme;
-        }
-    }
-
-    // spacial templates
-    .eos-departments-card-edit {
-        .block-title {
-            border-color: $border-color-main-theme;
-            color: $primary-font-color-main-theme;
-            &:focus {
-                border-color: transparent;
-            }
         }
     }
 }

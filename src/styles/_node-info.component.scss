@@ -1,9 +1,12 @@
 .eos-node-info {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .opened-node-wrapper {
-        height: 100%;
         width: $dictionary-block-width;
+        height: calc(100vh - 108px);
+        overflow-y: auto;
     }
 
     .short-info {

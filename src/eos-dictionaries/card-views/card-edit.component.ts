@@ -15,6 +15,8 @@ export class CardEditComponent {
     @Input() fieldsDescription: any;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() dutysList: string[];
+    @Input() fullNamesList: string[];
 
     recordChanged(data: any) {
         this.onChange.emit(data);

@@ -4,6 +4,7 @@ import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { EosStorageService } from '../../app/services/eos-storage.service';
 
 @Component({
     selector: 'eos-create-node',
@@ -19,11 +20,24 @@ export class CreateNodeComponent {
 
     formIsValid = false;
     hasChanges = false;
+    upadating = false;
+
+    dutysList: string[] = [];
+    fullNamesList: string[] = [];
 
     constructor(private _deskSrv: EosDeskService,
         private _dictSrv: EosDictService,
         private _breadcrumbsSrv: EosBreadcrumbsService,
-        private _msgSrv: EosMessageService) {
+        private _msgSrv: EosMessageService,
+        private _storageSrv: EosStorageService,
+        ) {
+        setTimeout(() => {
+            if (this.dictionaryId === 'departments') {
+                this.dutysList = this._storageSrv.getItem('dutysList') || [];
+                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
+            }
+            // console.log('this.dutysList', this.dutysList);
+        }, 0);
     }
 
     /**
@@ -49,6 +63,20 @@ export class CreateNodeComponent {
      * @param hide indicates whether to close the modal window after or open new one
      */
     public create(hide = true) {
+        this.upadating = true;
+        if (this.dictionaryId === 'departments' && this.nodeData && this.nodeData.rec && this.nodeData.rec.IS_NODE) {
+            /* tslint:disable */
+            if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
+                this.dutysList.push(this.nodeData.rec.DUTY);
+            }
+
+            if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
+                this.fullNamesList.push(this.nodeData.rec.FULLNAME)
+            }
+            /* tslint:enable */
+            this._storageSrv.setItem('dutysList', this.dutysList, true);
+            this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
+        }
         this._dictSrv.addNode(this.nodeData)
             .then((node) => {
                 if (node) {
@@ -59,9 +87,10 @@ export class CreateNodeComponent {
                     this._deskSrv.addRecentItem({
                         url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                         title: title,
-                        fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME
+                        /* fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME */
                     });
                 }
+                this.upadating = false;
                 this.onHide.emit(true);
                 if (!hide) {
                     this.onOpen.emit(true);

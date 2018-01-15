@@ -4,20 +4,22 @@ import {
     IDictionaryDescriptor,
     IDepartmentDictionaryDescriptor,
     ITreeDictionaryDescriptor,
-    IFieldView,
-    E_FIELD_TYPE
-} from './dictionary.interfaces';
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
+    E_FIELD_TYPE,
+    ISearchSettings,
+    SEARCH_MODES,
+    IOrderBy,
+    IRecordOperationResult,
+    E_RECORD_ACTIONS,
+} from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
-import { ISearchSettings, SEARCH_MODES } from '../core/search-settings.interface';
 
-import { IOrderBy } from '../core/sort.interface'
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { IEnt } from 'eos-rest';
+import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { Injector } from '@angular/core/src/di/injector';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -75,24 +77,11 @@ export class EosDictionary {
     }
 
     get canMarkItems(): boolean {
-        return this.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords)
+        return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(descData: IDictionaryDescriptor, apiSrv: PipRX) {
-        switch (descData.dictType) {
-            case E_DICT_TYPE.linear:
-                this.descriptor = new DictionaryDescriptor(descData, apiSrv);
-                break;
-            case E_DICT_TYPE.tree:
-                this.descriptor = new TreeDictionaryDescriptor(<ITreeDictionaryDescriptor>descData, apiSrv);
-                break;
-            case E_DICT_TYPE.department:
-                this.descriptor = new DepartmentDictionaryDescriptor(<IDepartmentDictionaryDescriptor>descData, apiSrv);
-                break;
-            default:
-                throw new Error('No API instance');
-        }
-
+    constructor(dictId: string, dictDescr: DictionaryDescriptorService) {
+        this.descriptor = dictDescr.getDescriptorClass(dictId);
         this._nodes = new Map<string, EosDictionaryNode>();
         this.defaultOrder();
     }
@@ -126,7 +115,7 @@ export class EosDictionary {
         /* find root */
         if (!this.root) {
 
-            let rootNode = nodes.find((node) => node.parentId === null);
+            let rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
 
             /* fallback if root undefined */
             if (!rootNode) {
@@ -182,6 +171,7 @@ export class EosDictionary {
                 if (_node && nodeIds.findIndex((id) => id === _node.id) === -1) {
                     nodeIds.push(_node.id);
                 }
+
             } else {
                 console.log('no data');
             }
@@ -288,11 +278,20 @@ export class EosDictionary {
      * @param deleted mark as deleted (true), unmarkmark as deleted (false)
      */
     markDeleted(recursive = false, deleted = true): Promise<any> {
-        const nodeSet = this._getMarkedRecords(recursive);
+        const nodeSet = this._getMarkedRecords(false);
         this._resetMarked();
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0));
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive);
+    }
+
+    getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        const layer = node.originalId.toString().split('.').length - 1;
+        const critery = {
+            [node._descriptor.keyField.foreignKey]: node.originalId + '%',
+            ['LAYER']: layer + ':Null'
+        };
+        return this.search([critery]);
     }
 
     getChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
@@ -312,7 +311,7 @@ export class EosDictionary {
     /**
      * @description Delete marked records from DB
      */
-    deleteMarked(): Promise<boolean> {
+    deleteMarked(): Promise<IRecordOperationResult[]> {
         const records = this._getMarkedRecords();
         this._nodes.forEach((node) => {
             if (node.marked) {
@@ -321,6 +320,7 @@ export class EosDictionary {
             }
         });
         this._resetMarked();
+        // this.descriptor.record.keyField.foreignKey
         return this.descriptor.deleteRecords(records);
     }
 
@@ -357,7 +357,7 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.search);
+        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
             const _crit: any = {
                 [fld.foreignKey]: '"' + search + '"'
@@ -369,13 +369,7 @@ export class EosDictionary {
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
-        const _searchFields = this.descriptor.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries = {}
-        _searchFields.forEach((fld) => {
-            if (data[fld.key]) {
-                _criteries[fld.foreignKey] = '"' + data[fld.key].trim() + '"';
-            }
-        })
+        const _criteries = this.descriptor.getFullSearchCriteries(data);
         this._extendCritery(_criteries, params, selectedNode);
         return _criteries;
     }
@@ -383,11 +377,13 @@ export class EosDictionary {
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
         if (this.descriptor.type !== E_DICT_TYPE.linear) {
             if (params.mode === SEARCH_MODES.totalDictionary) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
+                // critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId.toString().split('.')[0] + '.%';
             } else if (params.mode === SEARCH_MODES.onlyCurrentBranch) {
-                critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId;
+                critery['ISN_HIGH_NODE'] = selectedNode.data.rec['ISN_NODE'] + '';
             } else if (params.mode === SEARCH_MODES.currentAndSubbranch) {
+                const layer = selectedNode.originalId.toString().split('.').length - 1;
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
+                critery['LAYER'] = layer + ':Null';
             }
         }
 

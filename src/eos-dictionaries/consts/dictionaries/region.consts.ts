@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 /*
@@ -8,10 +8,10 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'REGION_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Регионы',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
-    itemActions: ['edit', 'view', 'moveUp', 'moveDown', 'navigateUp', 'navigateDown'],
-    groupActions: ['remove', 'removeHard', 'userOrder', 'showDeleted'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization',
+        'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes', 'restore'],
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
@@ -63,6 +63,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
         type: 'string',
+        pattern: /^\S{0,11}$/,
         length: 11,
         invalidMessage: 'Максимальная длина 11 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
