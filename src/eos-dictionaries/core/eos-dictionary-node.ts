@@ -257,7 +257,6 @@ export class EosDictionaryNode {
             _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
         }
 
-        console.log('data', _data);
         return _data;
     }
 
