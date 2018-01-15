@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
-import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
-import { InputControlService } from '../../eos-common/text-input/input-control.service';
+import { EosDataConvertService } from '../services/eos-data-convert.service';
+import { InputControlService } from '../../eos-common/services/input-control.service';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
@@ -34,7 +34,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
-        this._dataSrv = injector.get(DataConvertService);
+        this._dataSrv = injector.get(EosDataConvertService);
         this._inputCtrlSrv = injector.get(InputControlService);
     }
 

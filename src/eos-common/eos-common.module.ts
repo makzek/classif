@@ -18,8 +18,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { DynamicFormInputComponent } from './text-input/dynamic-form-input.component';
-import { InputControlService } from './text-input/input-control.service';
-import { DataConvertService } from './text-input/data-convert.service';
+import { InputControlService } from './services/input-control.service';
 
 /* directives */
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
@@ -67,7 +66,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ConfirmWindowService,
         EosMessageService,
         InputControlService,
-        DataConvertService,
     ]
 })
 export class EosCommonModule { }

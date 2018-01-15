@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { StringInput } from './string-input';
-import { TextInput } from './text-input';
-import { InputBase } from './input-base';
-import { DropdownInput } from './select-input';
-import { CheckboxInput } from './checkbox-input';
-import { DateInput } from './date-input';
-import { E_FIELD_TYPE } from '../../eos-dictionaries/interfaces';
+import { StringInput } from '../../eos-common/core/inputs/string-input';
+import { TextInput } from '../../eos-common/core/inputs/text-input';
+import { InputBase } from '../../eos-common/core/inputs/input-base';
+import { DropdownInput } from '../../eos-common/core/inputs/select-input';
+import { CheckboxInput } from '../../eos-common/core/inputs/checkbox-input';
+import { DateInput } from '../../eos-common/core/inputs/date-input';
+import { E_FIELD_TYPE } from '../interfaces';
 
 const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;
 
 @Injectable()
-export class DataConvertService {
+export class EosDataConvertService {
     // Todo: get from a remote source of question metadata
     // Todo: make asynchronous
 
@@ -359,7 +359,7 @@ export class DataConvertService {
             });
 
         }
-        console.log('inputs', inputs);
+        // console.log('inputs', inputs);
         return inputs;
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
-import { InputBase } from './input-base';
+import { InputBase } from '../core/inputs/input-base';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 
 @Injectable()
@@ -17,7 +17,6 @@ export class InputControlService {
         const group: any = {};
 
         Object.keys(inputs).forEach(input => {
-            console.log('toFormGroup', inputs[input].forNode, isNode);
             if (inputs[input].forNode) {
                 if (isNode) {
                     this._addInput(group, inputs[input]);

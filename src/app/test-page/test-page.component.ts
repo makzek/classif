@@ -5,8 +5,6 @@ import { PipRX } from '../../eos-rest/services/pipRX.service';
 import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
 import { debug } from 'util';
 
-import { DataConvertService } from '../../eos-common/text-input/data-convert.service';
-
 @Component({
     selector: 'eos-test-page',
     templateUrl: './test-page.component.html',
