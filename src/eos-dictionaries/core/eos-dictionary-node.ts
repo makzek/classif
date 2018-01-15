@@ -188,7 +188,7 @@ export class EosDictionaryNode {
 
     addChild(node: EosDictionaryNode) {
         /* remove old parent if exist */
-        if (node.parent) {
+        if (node.parent && node.parent !== this) {
             node.parent.deleteChild(node);
             node.parent = null;
         }
@@ -202,6 +202,7 @@ export class EosDictionaryNode {
             node.parent = this;
         }
         /* tslint:enable:no-bitwise */
+        this.updateExpandable();
     }
 
     getListView(): IFieldView[] {

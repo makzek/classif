@@ -103,13 +103,12 @@ export class CreateNodeComponent {
      * Separate error massage from error and show it to user by using EosMessageService
      */
     private _errHandler(err) {
-        console.error(err);
+        // console.error(err);
         const errMessage = err.message ? err.message : err;
         this._msgSrv.addNewMessage({
             type: 'danger',
-            title: 'Ошибка операции',
+            title: 'Ошибка добавления записи',
             msg: errMessage,
-            dismissOnTimeout: 100000
         });
     }
 
