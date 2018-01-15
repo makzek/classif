@@ -86,7 +86,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getFullSearchCriteries(data: any): any {
         const _criteries = {};
-        const _searchFields = this.record.fullSearchFields[data['srchMode']]; // this.getFieldSet(E_FIELD_SET.fullSearch);
+        const _searchFields = this.record.fullSearchFields[data['srchMode']];
         switch (data['srchMode']) {
             case 'department':
                 _criteries['IS_NODE'] = '0';
@@ -106,6 +106,15 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
             })
         }
         return _criteries;
+    }
+
+    getIdByDictionaryMode(mode: number): string {
+        switch (mode) {
+            case 1:
+                return 'cabinet';
+            default:
+                return this.id;
+        }
     }
 
     getRelated(rec: any, orgDUE: string): Promise<any> {
@@ -128,7 +137,6 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
-                console.log('got printInfo', printInfo, printInfo['_State'])
                 return {
                     user: user,
                     organization: org,

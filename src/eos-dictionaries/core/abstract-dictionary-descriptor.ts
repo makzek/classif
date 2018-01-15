@@ -149,6 +149,10 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract getRoot(): Promise<any[]>;
 
+    getIdByDictionaryMode(mode: number): string {
+        return this.id;
+    }
+
     getRelatedSev(rec: any): Promise<SEV_ASSOCIATION> {
         // todo: fix hardcode
         return this.apiSrv
