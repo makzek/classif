@@ -175,7 +175,6 @@ export class RecordDescriptor {
 
     protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
         switch (aSet) {
-            case E_FIELD_SET.tree:
             case E_FIELD_SET.search:
                 return this._getSearchFields();
             case E_FIELD_SET.allVisible:
