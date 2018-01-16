@@ -61,7 +61,8 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     viewNode() {
         if (!this._dictSrv.isRoot(this.node.id)) {
             this._storageSrv.setItem(RECENT_URL, this._router.url);
-            const _path = this._dictSrv.getNodePath(this.node);
+            console.log('node', this.node)
+            const _path = this.node.getPath();
             _path.push('view')
             this._router.navigate(_path);
         }

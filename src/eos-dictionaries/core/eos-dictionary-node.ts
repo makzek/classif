@@ -65,7 +65,7 @@ export class EosDictionaryNode {
     }
 
     get title(): string {
-        const _rec = this.getShortQuickView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
             return _rec.map((fld) => fld.value).join(' ');
         } else {
@@ -74,9 +74,9 @@ export class EosDictionaryNode {
     }
 
     set title(title: string) {
-        const _rec = this.getListView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
-            this.data.rec[_rec[0].key] = title;
+            this.data.rec[_rec[0].foreignKey] = title;
         }
     }
 
@@ -204,6 +204,10 @@ export class EosDictionaryNode {
         /* tslint:enable:no-bitwise */
     }
 
+    getTreeView(): IFieldView[] {
+        return this._descriptor.getTreeView(this.data);
+    }
+
     getListView(): IFieldView[] {
         return this._descriptor.getListView(this.data);
     }
@@ -299,6 +303,19 @@ export class EosDictionaryNode {
         }
     }
 
+    getPath(): string[] {
+        const dictionary = this._dictionary;
+        const _path = [
+            'spravochniki',
+            dictionary.id,
+        ];
+
+        if (dictionary.root !== this) {
+            _path.push(this.id);
+        }
+        return _path;
+    }
+
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
@@ -315,7 +332,7 @@ export class EosDictionaryNode {
      * @param field field which value need recive
      * @return value of field from node.data.rec
      */
-    getValue (field: IFieldView): any {
+    getValue(field: IFieldView): any {
         return this.data.rec[field.foreignKey];
     }
 }

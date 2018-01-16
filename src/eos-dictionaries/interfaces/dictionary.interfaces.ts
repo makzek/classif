@@ -13,6 +13,7 @@ export enum E_DICT_TYPE {
 };
 
 export enum E_FIELD_SET {
+    tree,
     list,
     quickView,
     shortQuickView,
@@ -50,6 +51,7 @@ export interface IFieldDesriptor {
 export interface IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
+    customTitle?: string;
     readonly type: E_FIELD_TYPE;
     readonly length?: number;
     readonly format?: string;
@@ -63,7 +65,6 @@ export interface IFieldDesriptorBase {
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
-    customTitle?: string;
 };
 
 export interface IDictionaryDescriptor {
@@ -81,6 +82,7 @@ export interface IDictionaryDescriptor {
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
     allVisibleFields: string[];
+    treeFields: string[];
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;
