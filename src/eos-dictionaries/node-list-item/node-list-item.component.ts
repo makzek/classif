@@ -66,7 +66,10 @@ export class NodeListItemComponent implements OnInit, OnChanges {
             this._router.navigate(_path);
         }
     }
-
+    /**
+     * @param el
+     * @description Draw hint for a long title
+     */
     public showHint(el: HTMLElement) {
         const span = document.createElement('span'),
             body = document.getElementsByTagName('body');
@@ -91,6 +94,17 @@ export class NodeListItemComponent implements OnInit, OnChanges {
             })
         }
         body[0].removeChild(span)
+    }
+
+    /**
+     * @param node EosDictionaryNode
+     * @description Navigate to param node. Open element as node
+     */
+    public openAsFoolder(node: EosDictionaryNode) {
+        console.log(`Open node ${node.id}`);
+        console.log(this.length);
+        const path = this._dictSrv.getNodePath(node);
+        this._router.navigate(path);
     }
 
 }

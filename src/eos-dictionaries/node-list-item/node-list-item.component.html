@@ -7,6 +7,9 @@
                 <input type="checkbox"[(ngModel)]="node.marked" (change)="markNode()"><span></span>
             </label>
         </span>
+        <span *ngIf="node.expandable">
+            <span class="foolder eos-icon eos-icon-folder-blue" (click)="openAsFoolder(node)"></span>
+        </span>
         <span class="node-info">
             <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)"
             id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">{{field.value}}</span>
