@@ -7,6 +7,7 @@ import { HTTP_OPTIONS } from '../core/consts';
 import { USER_CL, SYS_PARMS } from '../interfaces/structures'
 import { ALL_ROWS } from '../core/consts';
 import { AppContext } from './appContext.service'
+import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class AuthService {
@@ -25,14 +26,16 @@ export class AuthService {
                 } else {
                     return this.getContext();
                 }
-            });
+            })
+            .catch((err) => Promise.reject(new RestError({ http: err })));
 
         return r;
     }
 
     public logout() {
         const _url = this._cfg.authSrv + 'Logoff';
-        return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
+        return this._http.get(_url, HTTP_OPTIONS).toPromise<any>()
+            .catch((err) => Promise.reject(new RestError({ http: err })));
     }
 
     getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {

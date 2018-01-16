@@ -65,7 +65,7 @@ export class EosDictionaryNode {
     }
 
     get title(): string {
-        const _rec = this.getShortQuickView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
             return _rec.map((fld) => fld.value).join(' ');
         } else {
@@ -74,9 +74,9 @@ export class EosDictionaryNode {
     }
 
     set title(title: string) {
-        const _rec = this.getListView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
-            this.data.rec[_rec[0].key] = title;
+            this.data.rec[_rec[0].foreignKey] = title;
         }
     }
 
@@ -204,6 +204,10 @@ export class EosDictionaryNode {
         /* tslint:enable:no-bitwise */
     }
 
+    getTreeView(): IFieldView[] {
+        return this._descriptor.getTreeView(this.data);
+    }
+
     getListView(): IFieldView[] {
         return this._descriptor.getListView(this.data);
     }
@@ -317,6 +321,19 @@ export class EosDictionaryNode {
         } else {
             return [];
         }
+    }
+
+    getPath(): string[] {
+        const dictionary = this._dictionary;
+        const _path = [
+            'spravochniki',
+            dictionary.id,
+        ];
+
+        if (dictionary.root !== this) {
+            _path.push(this.id);
+        }
+        return _path;
     }
 
     getAllChildren(): EosDictionaryNode[] {
