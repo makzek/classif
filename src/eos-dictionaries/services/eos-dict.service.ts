@@ -760,32 +760,19 @@ export class EosDictService {
     }
 
     private _errHandler(err: RestError | any) {
-        if (err instanceof RestError && err.code === 434) {
+        if (err instanceof RestError && (err.code === 434) || err.code === 0) {
             this._router.navigate(['login'], {
                 queryParams: {
                     returnUrl: this._router.url
                 }
             });
-            /*
-            // login in modal window
-            this.modalRef = this._modalSrv.show(LoginFormComponent, {
-                keyboard: false,
-                backdrop: true,
-                ignoreBackdropClick: true
-            });
-            this.modalRef.content.logged.subscribe((success) => {
-                if (success) {
-                    this.modalRef.hide();
-                }
-            });
-            */
+            return null;
         } else {
             const errMessage = err.message ? err.message : err;
             this._msgSrv.addNewMessage({
                 type: 'danger',
                 title: 'Ошибка обработки. Ответ сервера:',
-                msg: errMessage,
-                dismissOnTimeout: 30000
+                msg: errMessage
             });
             return null;
         }
