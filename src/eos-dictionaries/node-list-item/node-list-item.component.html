@@ -7,12 +7,12 @@
                 <input type="checkbox"[(ngModel)]="node.marked" (change)="markNode()"><span></span>
             </label>
         </span>
-        <span #ell class="foolder" *ngIf="node.expandable">
-            <span class="eos-icon eos-icon-folder-blue" (click)="openAsFoolder(node)"></span>
+        <span  class="folder" *ngIf="node.expandable">
+            <span class="eos-icon eos-icon-folder-blue" (click)="openAsFolder(node)"></span>
         </span>
         <span class="node-info">
             <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)"
-            id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': node.expandable ? length[field.key] - length.foolder : length[field.key]}">{{field.value}}</span>
+            id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': node.expandable ? length[field.key] - length.folder : length[field.key]}">{{field.value}}</span>
             <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
             id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">
                 <span *ngIf="customValues">{{customValues[field.key]}}</span>

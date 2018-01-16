@@ -257,10 +257,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
         }
         let fld;
-        const foolderIcoSize = 42; // Size for block ico foolder + rigth padding
+        const folderIcoSize = 42; // Size for block ico folder + rigth padding
         if (this.selectedEl) {
             const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
-            fld = foolderIcoSize * 100 / _selectedWidth;
+            fld = folderIcoSize * 100 / _selectedWidth;
             this.tableWidth = _selectedWidth;
             if (this.customFields && this.customFields.length) {
                 let w: number;
@@ -288,7 +288,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             length[key] = Math.floor(length[key] * 100);
         });
         this.length = length;
-        this.length['foolder'] = fld;
+        this.length['folder'] = fld;
         // console.log('end _countColWidth');
     }
 
