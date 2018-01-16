@@ -438,12 +438,12 @@ export class EosDictService {
                 }
                 this.selectedNode.isActive = false;
             }
+            this.selectedNode = node;
             if (node) {
                 node.isActive = true;
                 this._setCurrentList(node.children);
             }
             this._openNode(null);
-            this.selectedNode = node;
             this._selectedNode$.next(node);
             this.viewParameters.searchResults = false;
             this._viewParameters$.next(this.viewParameters);
