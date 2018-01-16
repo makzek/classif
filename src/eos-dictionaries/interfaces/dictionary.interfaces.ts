@@ -2,7 +2,8 @@ import { SEARCH_TYPES } from '../consts/search-types';
 
 export enum E_DEPT_MODE {
     person,
-    department
+    department,
+    cabinet
 };
 
 export enum E_DICT_TYPE {
@@ -12,6 +13,7 @@ export enum E_DICT_TYPE {
 };
 
 export enum E_FIELD_SET {
+    tree,
     list,
     quickView,
     shortQuickView,
@@ -49,6 +51,7 @@ export interface IFieldDesriptor {
 export interface IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
+    customTitle?: string;
     readonly type: E_FIELD_TYPE;
     readonly length?: number;
     readonly format?: string;
@@ -62,7 +65,6 @@ export interface IFieldDesriptorBase {
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
-    customTitle?: string;
 };
 
 export interface IDictionaryDescriptor {
@@ -70,9 +72,8 @@ export interface IDictionaryDescriptor {
     dictType: E_DICT_TYPE;
     apiInstance: string;
     title: string;
+    visible?: boolean;
     actions: string[];
-    itemActions?: string[];
-    groupActions?: string[];
     fields: IFieldDesriptor[];
     keyField: string;
     parentField?: string;
@@ -81,6 +82,7 @@ export interface IDictionaryDescriptor {
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
     allVisibleFields: string[];
+    treeFields: string[];
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;
@@ -112,9 +114,9 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
     modeField: string;
     modeList: IRecordModeDescription[];
+    quickViewFields: string[];
+    shortQuickViewFields: string[];
+    editFields: string[];
+    listFields: string[];
     fullSearchFields: IRecordMode;
-    quickViewFields: IRecordMode;
-    shortQuickViewFields: IRecordMode;
-    editFields: IRecordMode;
-    listFields: IRecordMode;
 };

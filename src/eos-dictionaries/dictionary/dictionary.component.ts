@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, TemplateRef, ViewContainerRef, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -6,21 +6,22 @@ import 'rxjs/add/operator/takeUntil';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
-import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from '../../app/consts/confirms.const';
-import { IConfirmWindow } from '../../eos-common/core/confirm-window.interface';
+import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
+import { IConfirmWindow } from 'eos-common/core/confirm-window.interface';
 
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
+import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { IDictionaryViewParameters } from '../core/eos-dictionary.interfaces';
+import {
+    IDictionaryViewParameters, E_FIELD_SET, IFieldView, INodeListParams,
+    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS
+} from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { EosStorageService } from '../../app/services/eos-storage.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
 
-import { E_FIELD_SET, IFieldView } from '../core/dictionary.interfaces';
-import { INodeListParams } from '../core/node-list.interfaces';
 import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
@@ -30,20 +31,12 @@ import {
     DANGER_HAVE_NO_ELEMENTS,
     DANGER_LOGICALY_RESTORE_ELEMENT
 } from '../consts/messages.consts';
-import { E_DICT_TYPE } from '../core/dictionary.interfaces';
 
-import { FieldDescriptor } from '../core/field-descriptor'
-
-import { IOrderBy } from '../core/sort.interface'
-
-import { E_ACTION_GROUPS, E_RECORD_ACTIONS } from '../core/record-action';
-import { RECENT_URL } from '../../app/consts/common.consts';
+import { RECENT_URL } from 'app/consts/common.consts';
 import { NodeListComponent } from '../node-list/node-list.component';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
 import { CreateNodeComponent } from '../create-node/create-node.component';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
-import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
-// import { setTimeout } from 'timers';
 
 @Component({
     templateUrl: 'dictionary.component.html',
@@ -57,6 +50,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
+    listDictionary: EosDictionary;
+
     dictionaryName: string;
     public dictionaryId: string;
 
@@ -140,30 +135,38 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             .subscribe((dictionary: EosDictionary) => {
                 if (dictionary) {
                     this.dictionary = dictionary;
-                    this.customFields = this._dictSrv.customFields;
                     this.dictionaryId = dictionary.id;
-                    this.params = Object.assign({}, this.params, { userSort: this.dictionary.userOrdered })
                     if (dictionary.root) {
                         this.dictionaryName = dictionary.root.title;
                         this.treeNodes = [dictionary.root];
                     }
-                    this.params.markItems = dictionary.descriptor.canDo(E_ACTION_GROUPS.common, E_RECORD_ACTIONS.markRecords);
-                    this.hasCustomTable = this.dictionary.descriptor.canDo(E_ACTION_GROUPS.common,
-                        E_RECORD_ACTIONS.tableCustomization);
                 } else {
                     this.treeNodes = [];
                 }
             });
 
-        _dictSrv.selectedNode$.takeUntil(this.ngUnsubscribe)
-            .subscribe((node: EosDictionaryNode) => {
-                if (node) {
-                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
-                    this.viewFields = node.getListView();
+        _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
+            .subscribe((dictionary: EosDictionary) => {
+                if (dictionary) {
+                    this.dictMode = this._dictSrv.dictMode;
+                    this.customFields = this._dictSrv.customFields;
+                    this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {
                         this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
                     });
+                    this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
+                    this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
+                    this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
+                } else {
+                    this.treeNodes = [];
+                }
+            });
+
+        _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((node: EosDictionaryNode) => {
+                if (node) {
+                    this._selectedNodeText = node.getTreeView().map((fld) => fld.value).join(' ');
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -193,11 +196,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
-
-        _dictSrv.dictMode$.takeUntil(this.ngUnsubscribe)
-            .subscribe((mode) => {
-                this.dictMode = mode;
-            });
     }
 
     ngOnDestroy() {
@@ -410,7 +408,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             } else /*(!node.data.PROTECTED && !node.isDeleted) */ {
                 const url = this._router.url;
                 this._storageSrv.setItem(RECENT_URL, url);
-                const _path = this._dictSrv.getNodePath(node);
+                const _path = node.getPath();
                 _path.push('edit');
                 this._router.navigate(_path);
             }
@@ -443,7 +441,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     goUp() {
         if (this.selectedNode && this.selectedNode.parent) {
-            const path = this._dictSrv.getNodePath(this.selectedNode.parent);
+            const path = this.selectedNode.parent.getPath();
             this._router.navigate(path);
         }
     }
@@ -526,7 +524,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         this.modalWindow.content.fixedFields = this.viewFields;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.getFieldSet(E_FIELD_SET.allVisible));
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((_fields) => {
             this.customFields = _fields;
             this._dictSrv.customFields = this.customFields;

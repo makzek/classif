@@ -1,8 +1,7 @@
-import { IFieldView, IFieldDesriptor } from './dictionary.interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
-import { E_FIELD_TYPE } from './dictionary.interfaces';
 
 export class EosDictionaryNode {
     readonly id: any;
@@ -66,7 +65,7 @@ export class EosDictionaryNode {
     }
 
     get title(): string {
-        const _rec = this.getShortQuickView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
             return _rec.map((fld) => fld.value).join(' ');
         } else {
@@ -75,9 +74,9 @@ export class EosDictionaryNode {
     }
 
     set title(title: string) {
-        const _rec = this.getListView();
+        const _rec = this.getTreeView();
         if (_rec && _rec.length) {
-            this.data.rec[_rec[0].key] = title;
+            this.data.rec[_rec[0].foreignKey] = title;
         }
     }
 
@@ -125,13 +124,13 @@ export class EosDictionaryNode {
             };
 
             if (this.parentId === undefined && this._descriptor.parentField) {
-                this.parentId = this._keyToString(data[this._descriptor.parentField.key]);
+                this.parentId = this._keyToString(data[this._descriptor.parentField.foreignKey]);
             }
 
             // console.log('constructing node with parent', this.parentId);
 
             if (this.id === undefined && this._descriptor.keyField) {
-                this.id = this._keyToString(data[this._descriptor.keyField.key]);
+                this.id = this._keyToString(data[this._descriptor.keyField.foreignKey]);
             }
         }
     }
@@ -203,6 +202,10 @@ export class EosDictionaryNode {
             node.parent = this;
         }
         /* tslint:enable:no-bitwise */
+    }
+
+    getTreeView(): IFieldView[] {
+        return this._descriptor.getTreeView(this.data);
     }
 
     getListView(): IFieldView[] {
@@ -300,6 +303,19 @@ export class EosDictionaryNode {
         }
     }
 
+    getPath(): string[] {
+        const dictionary = this._dictionary;
+        const _path = [
+            'spravochniki',
+            dictionary.id,
+        ];
+
+        if (dictionary.root !== this) {
+            _path.push(this.id);
+        }
+        return _path;
+    }
+
     getAllChildren(): EosDictionaryNode[] {
         let children = [];
         if (this._children) {
@@ -316,7 +332,7 @@ export class EosDictionaryNode {
      * @param field field which value need recive
      * @return value of field from node.data.rec
      */
-    getValue (field: IFieldView): any {
+    getValue(field: IFieldView): any {
         return this.data.rec[field.foreignKey];
     }
 }

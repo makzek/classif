@@ -1,4 +1,4 @@
-<div class="simple-card-edit">
+<div class="simple-card-edit secondary-block">
     <article class="edit-content">
         <form #cardForm="ngForm" *ngIf="data && data.rec && fieldsDescription.rec" class="form form-horizontal">
             <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
@@ -16,6 +16,7 @@
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                     placement="right" containerClass="tooltip-error" container="body"
                     (focus)="focus(key)" (blur)="blur()"
+                    autocomplete="off"
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
             </div>
@@ -31,6 +32,7 @@
                     [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
                     placement="right" containerClass="tooltip-error" container="body"
                     (focus)="focus('GLOBAL_ID')" (blur)="blur()"
+                    autocomplete="off"
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
             </div>

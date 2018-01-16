@@ -12,6 +12,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() dutysList: string[];
+    @Input() fullNamesList: string[];
 
     @ViewChild('cardForm') cardForm: NgForm;
     private _subscrChanges: Subscription;
@@ -39,7 +41,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         setTimeout(() => {
             if (this.cardForm) {
                 this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
-                    console.log('emit invalid = ', this.cardForm.invalid);
                     this.invalid.emit(this.cardForm.invalid);
                 });
             }
@@ -55,6 +56,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     change(fldKey: string, dict: string, value: any) {
         if (typeof value === 'boolean') {
             value = +value;
+        } else if (value === 'null') {
+            value = null;
         }
         if (this.data[dict][fldKey] !== value) {
             this.data[dict][fldKey] = value;

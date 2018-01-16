@@ -1,8 +1,7 @@
-import { IDictionaryDescriptor, E_DICT_TYPE } from '../../core/dictionary.interfaces';
+import { IDictionaryDescriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
-/*
-*/
+
 export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     id: '',
     apiInstance: '',
@@ -50,6 +49,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         title: 'Вес',
         type: 'number'
     }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'NOTE'],
     searchFields: ['CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['CLASSIF_NAME', 'NOTE'],

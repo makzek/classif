@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, ITreeDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
 /*
@@ -8,6 +8,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'REGION_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Регионы',
+    visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization',
         'edit', 'view', 'remove', 'userOrder', 'showAllSubnodes', 'restore'],
@@ -89,6 +90,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
     }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],
     searchFields: [/*'CODE', 'COD_OKATO',*/ 'CLASSIF_NAME', /*'NOTE'*/],
     fullSearchFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],

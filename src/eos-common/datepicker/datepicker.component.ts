@@ -32,15 +32,18 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             containerClass: 'theme-dark-blue',
             dateInputFormat: 'DD.MM.YYYY',
             isDisabled: true,
-            minDate: new Date('01.01.1900'),
-            maxDate: new Date('12.31.2100'),
+            minDate: new Date('01/01/1900'),
+            maxDate: new Date('12/31/2100'),
         };
     }
 
     ngOnInit() {
+        if (this.value && typeof this.value !== 'object') {
+            this.value = new Date(this.value);
+        }
         window.addEventListener('scroll', this._handler = () => {
-            this.datePicker.hide();
-        }, true);
+                this.datePicker.hide();
+            }, true);
     }
 
     ngOnDestroy() {

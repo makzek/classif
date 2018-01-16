@@ -1,10 +1,11 @@
-import { IDictionaryDescriptor } from '../../core/dictionary.interfaces';
+import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 
-export const  SEV_ASSOCIATION_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
+export const SEV_ASSOCIATION_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-association',
     apiInstance: 'SEV_ASSOCIATION',
     title: 'Индексы СЭВ',
+    visible: false,
     fields: [{
         key: 'OBJECT_ID',
         type: 'string',
@@ -31,5 +32,6 @@ export const  SEV_ASSOCIATION_DICT: IDictionaryDescriptor = Object.assign({}, LI
         title: 'Отправитель документа',
         length: 255,
     }],
+    treeFields: [],
     editFields: ['GLOBAL_ID'],
 });

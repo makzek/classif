@@ -13,7 +13,7 @@
             </button>
         </span>
         <div class="opened-node-wrapper">
-            <div *ngIf="updating" class="no-data full-info usual-border">
+            <div *ngIf="update" class="no-data full-info usual-border">
                 <eos-spinner [size]="'lg'"></eos-spinner>
             </div>
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
@@ -36,7 +36,7 @@
                         </div>
                     </ng-template>
                 </div>
-        
+
                 <div *ngIf="nodeDataFull.rec" class="full-info usual-border">
                     <span *ngIf="nodeDataFull.rec['fullPosition'];then fullPosition else shortPosition"></span>
                     <ng-template #fullPosition>
