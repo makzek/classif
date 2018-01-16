@@ -35,11 +35,11 @@ export class NodeActionsComponent implements OnDestroy {
 
         _dictSrv.listDictionary$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(_dictSrv.openedNode$)
-            .subscribe(([dict, node]) => {
+            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
+            .subscribe(([dict, node, params]) => {
                 this.dictionary = dict;
                 this._nodeSelected = !!node;
-                this._viewParams = _dictSrv.viewParameters;
+                this._viewParams = params;
                 this._update();
             });
     }
