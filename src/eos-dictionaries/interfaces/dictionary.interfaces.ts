@@ -13,6 +13,7 @@ export enum E_DICT_TYPE {
 };
 
 export enum E_FIELD_SET {
+    tree,
     list,
     quickView,
     shortQuickView,
@@ -81,6 +82,7 @@ export interface IDictionaryDescriptor {
     searchFields: string[];
     searchConfig: SEARCH_TYPES[],
     allVisibleFields: string[];
+    treeFields: string[];
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;

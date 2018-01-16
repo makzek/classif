@@ -2,25 +2,22 @@
     .node {
         cursor: pointer;
         width: $dictionary-block-width;
-
+        padding: $item-width / 4 0;
         .fake-padding,
         .tree-btn,
         .title {
             display: inline-block;
         }
-
         .tree-btn {
-            padding: 13.5px 16px;
-            width: $item-width;
+            /* padding: 13.5px 16px; */
+            /* width: $item-width; */
+            width: 20px;
             vertical-align: top;
         }
-
         .title {
-            padding: $item-width / 4 0;
             word-wrap: break-word;
-
             .title-item {
-                padding-right: $item-width / 4;
+                padding-right: $item-width / 6;
             }
         }
     }
