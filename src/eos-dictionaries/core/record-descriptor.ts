@@ -190,7 +190,6 @@ export class RecordDescriptor {
             case E_FIELD_SET.list:
                 return this.listFields;
             case E_FIELD_SET.tree:
-                console.log(this.treeFields);
                 return this.treeFields;
             default:
                 // throw new Error('Unknown field set');
