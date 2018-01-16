@@ -585,8 +585,15 @@ export class EosDictService {
     toggleAllSubnodes(): Promise<EosDictionaryNode[]> {
         this.viewParameters.showAllSubnodes = !this.viewParameters.showAllSubnodes;
         this.viewParameters.searchResults = false;
+        this.viewParameters.updating = true;
+        this._viewParameters$.next(this.viewParameters);
         this._srchCriteries = null;
-        return this._reloadList();
+        return this._reloadList()
+            .then((val) => {
+                this.viewParameters.updating = false;
+                this._viewParameters$.next(this.viewParameters);
+                return val;
+            });
     }
     /**
      * @description Marks or unmarks record as deleted
