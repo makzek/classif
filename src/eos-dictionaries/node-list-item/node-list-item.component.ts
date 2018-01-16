@@ -102,10 +102,7 @@ export class NodeListItemComponent implements OnInit, OnChanges {
      * @description Navigate to param node. Open element as node
      */
     public openAsFoolder(node: EosDictionaryNode) {
-        console.log(`Open node ${node.id}`);
-        console.log(this.length);
-        const path = this._dictSrv.getNodePath(node);
-        this._router.navigate(path);
+        this._router.navigate([`${this._router.url}/${node.id}`]);
     }
 
 }
