@@ -31,6 +31,8 @@ export class EosDictionary {
     private _userOrdered: boolean;
     private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
     private _showDeleted: boolean;
+    private _mode: number;
+    private _dictionaries: { [key: string]: EosDictionary };
 
     get showDeleted(): boolean {
         return this._showDeleted;
@@ -80,10 +82,15 @@ export class EosDictionary {
         return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
     }
 
-    constructor(dictId: string, dictDescr: DictionaryDescriptorService) {
-        this.descriptor = dictDescr.getDescriptorClass(dictId);
+    constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
+        this.descriptor = dictDescrSrv.getDescriptorClass(dictId);
         this._nodes = new Map<string, EosDictionaryNode>();
+        this._dictionaries = {};
         this.defaultOrder();
+    }
+
+    canDo(action: E_RECORD_ACTIONS): boolean {
+        return this.descriptor.record.canDo(action);
     }
 
     init(): Promise<EosDictionaryNode> {
@@ -91,7 +98,6 @@ export class EosDictionary {
         return this.descriptor.getRoot()
             .then((data: any[]) => {
                 this.updateNodes(data, true);
-                // console.log('this.r00t', this.root, this._nodes);
                 return this.root;
             })
     }
@@ -114,8 +120,10 @@ export class EosDictionary {
 
         /* find root */
         if (!this.root) {
-
-            let rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
+            let rootNode: EosDictionaryNode;
+            if (this.descriptor.dictionaryType !== E_DICT_TYPE.linear) {
+                rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
+            }
 
             /* fallback if root undefined */
             if (!rootNode) {
@@ -189,16 +197,8 @@ export class EosDictionary {
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
         // console.log('getFullNodeInfo fired', nodeId);
-        let id: any = nodeId;
-
-        if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
-            id = id * 1;
-        }
-
-        return this.descriptor.getRecord(id)
-            .then((nodes) => {
-                this.updateNodes(nodes, true);
-                const node = this._nodes.get(nodeId);
+        return this.getNodeByNodeId(nodeId)
+            .then((node) => {
                 if (node) {
                     switch (this.descriptor.type) {
                         case E_DICT_TYPE.department:
@@ -230,6 +230,20 @@ export class EosDictionary {
                 } else {
                     return node;
                 }
+            });
+    }
+
+    getNodeByNodeId(nodeId: string): Promise<EosDictionaryNode> {
+        let id: any = nodeId;
+
+        if (this.descriptor.record.keyField.type === E_FIELD_TYPE.number) {
+            id = id * 1;
+        }
+
+        return this.descriptor.getRecord(id)
+            .then((records) => {
+                this.updateNodes(records, true);
+                return this._nodes.get(nodeId);
             });
     }
 
@@ -324,6 +338,14 @@ export class EosDictionary {
         return this.descriptor.deleteRecords(records);
     }
 
+    getDictionaryIdByMode(mode: number): EosDictionary {
+        const dictId = this.descriptor.getIdByDictionaryMode(mode);
+        if (!this._dictionaries[dictId]) {
+            this._dictionaries[dictId] = new EosDictionary(dictId, this.dictDescrSrv);
+        }
+        return this._dictionaries[dictId];
+    }
+
     /**
      * @description Prepare array of marked records for group operation
      * @param recursive if true adds all loaded children into array
@@ -356,6 +378,16 @@ export class EosDictionary {
             .then((data) => this.updateNodes(data, false));
     }
 
+    searchByParentData(dictionary: EosDictionary, node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
+        if (dictionary.id === 'departments') {
+            const critery = {
+                'DUE': node.id
+            }
+            return this.search([critery]);
+        }
+        return Promise.resolve([]);
+    }
+
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
         const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
         const _criteries = _searchFields.map((fld) => {
@@ -372,6 +404,33 @@ export class EosDictionary {
         const _criteries = this.descriptor.getFullSearchCriteries(data);
         this._extendCritery(_criteries, params, selectedNode);
         return _criteries;
+    }
+
+
+    getNodeUserOrder(nodeId: string): string[] {
+        if (this._userOrder && this._userOrder[nodeId]) {
+            return this._userOrder[nodeId];
+        }
+        return null;
+    }
+
+    getListView() {
+        return this.descriptor.record.getListView({});
+    }
+
+    setNodeUserOrder(nodeId: string, order: string[]) {
+        if (!this._userOrder) {
+            this._userOrder = {};
+        }
+        this._userOrder[nodeId] = order;
+    }
+
+    reorderList(nodes: EosDictionaryNode[], parentId?: string): EosDictionaryNode[] {
+        if (this._userOrdered) {
+            return this._doUserOrder(nodes, parentId);
+        } else {
+            return this._orderByField(nodes);
+        }
     }
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {
@@ -392,27 +451,25 @@ export class EosDictionary {
         }
     }
 
+    private _doUserOrder(nodes: EosDictionaryNode[], parentId: string): EosDictionaryNode[] {
+        const userOrderedIDs = this._userOrder ? this._userOrder[parentId] : null;
+        if (userOrderedIDs) {
+            const orderedNodes = [];
+            userOrderedIDs.forEach((nodeId) => {
+                const node = nodes.find((item) => item.id === nodeId);
+                if (node) {
+                    orderedNodes.push(node);
+                }
+            });
+            nodes.forEach((node) => {
+                if (orderedNodes.findIndex((item) => item.id === node.id) === -1) {
+                    orderedNodes.push(node);
+                }
 
-    getNodeUserOrder(nodeId: string): string[] {
-        if (this._userOrder && this._userOrder[nodeId]) {
-            return this._userOrder[nodeId];
+            })
+            return orderedNodes;
         }
-        return null;
-    }
-
-    setNodeUserOrder(nodeId: string, order: string[]) {
-        if (!this._userOrder) {
-            this._userOrder = {};
-        }
-        this._userOrder[nodeId] = order;
-    }
-
-    reorderList(nodes: EosDictionaryNode[], parentId?: string): EosDictionaryNode[] {
-        if (this._userOrdered) {
-            return this._doUserOrder(nodes, parentId);
-        } else {
-            return this._orderByField(nodes);
-        }
+        return nodes;
     }
 
     private _orderByField(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
@@ -435,26 +492,5 @@ export class EosDictionary {
                 return 0;
             }
         });
-    }
-
-    private _doUserOrder(nodes: EosDictionaryNode[], parentId: string): EosDictionaryNode[] {
-        const userOrderedIDs = this._userOrder ? this._userOrder[parentId] : null;
-        if (userOrderedIDs) {
-            const orderedNodes = [];
-            userOrderedIDs.forEach((nodeId) => {
-                const node = nodes.find((item) => item.id === nodeId);
-                if (node) {
-                    orderedNodes.push(node);
-                }
-            });
-            nodes.forEach((node) => {
-                if (orderedNodes.findIndex((item) => item.id === node.id) === -1) {
-                    orderedNodes.push(node);
-                }
-
-            })
-            return orderedNodes;
-        }
-        return nodes;
     }
 }
