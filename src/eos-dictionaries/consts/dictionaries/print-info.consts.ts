@@ -185,6 +185,7 @@ export const PRINT_INFO_DICT: IDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         length: 255,
     }],
+    treeFields: [],
     searchFields: [],
     listFields: [],
     fullSearchFields: [],

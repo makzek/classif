@@ -19,6 +19,8 @@ export class RecordDescriptor {
      */
     private actions: E_RECORD_ACTIONS[];
 
+    protected treeFields: FieldDescriptor[];
+
     /**
      *  set of visible fields in list mode
      */
@@ -75,6 +77,7 @@ export class RecordDescriptor {
 
         this._initActions(data);
         this._initFieldSets([
+            'treeFields',
             'searchFields',
             'allVisibleFields',
             'quickViewFields',
@@ -93,6 +96,10 @@ export class RecordDescriptor {
         /* tslint:disable:no-bitwise */
         return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
+    }
+
+    getTreeView(data: any): IFieldView[] {
+        return this._bindData(this.getFieldSet(E_FIELD_SET.tree), data);
     }
 
     getListView(data: any): IFieldView[] {
@@ -182,6 +189,9 @@ export class RecordDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.tree:
+                console.log(this.treeFields);
+                return this.treeFields;
             default:
                 // throw new Error('Unknown field set');
                 console.warn('Unknown field set', aSet);

@@ -135,6 +135,7 @@ export class EosDictionary {
             this.root = rootNode;
         }
 
+        console.log('this root', this.root);
         /* force set title and visible for root */
         this.root.title = this.descriptor.title;
         this.root.data.rec['DELETED'] = false;
