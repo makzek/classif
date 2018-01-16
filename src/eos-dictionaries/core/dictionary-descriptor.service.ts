@@ -40,18 +40,20 @@ export class DictionaryDescriptorService {
         let res = this._mDictClasses.get(name);
         if (!res) {
             const descr = this.getDescriptorData(name);
-            switch (descr.dictType) {
-                case E_DICT_TYPE.linear:
-                    res = new DictionaryDescriptor(descr, this.apiSrv);
-                    break;
-                case E_DICT_TYPE.tree:
-                    res = new TreeDictionaryDescriptor(descr, this.apiSrv);
-                    break;
-                case E_DICT_TYPE.department:
-                    res = new DepartmentDictionaryDescriptor(descr, this.apiSrv);
-                    break;
-                default:
-                    throw new Error('No API instance');
+            if (descr) {
+                switch (descr.dictType) {
+                    case E_DICT_TYPE.linear:
+                        res = new DictionaryDescriptor(descr, this.apiSrv);
+                        break;
+                    case E_DICT_TYPE.tree:
+                        res = new TreeDictionaryDescriptor(descr, this.apiSrv);
+                        break;
+                    case E_DICT_TYPE.department:
+                        res = new DepartmentDictionaryDescriptor(descr, this.apiSrv);
+                        break;
+                    default:
+                        throw new Error('No API instance');
+                }
             }
         }
         return res;

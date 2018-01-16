@@ -362,7 +362,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     /**
      * @description convert selected persons to list of organization representatives,
-     * add it to department organiztion if it exists upwards to tree
+     * add it to department organization if it exists upwards to tree
      */
     private _createRepresentative() {
         if (this.dictionaryId === 'departments') {
@@ -392,6 +392,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     } else {
                         /* call API and save */
                         console.log('Representatives', _represData);
+                        return this._dictSrv.createRepresentative(_represData);
                     }
                 } else {
                     this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);

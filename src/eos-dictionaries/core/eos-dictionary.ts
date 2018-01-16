@@ -93,6 +93,21 @@ export class EosDictionary {
         return this.descriptor.record.canDo(action);
     }
 
+    createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<any> {
+        const orgISN = node.data['organization']['ISN_NODE'];
+        if (orgISN) {
+            const dContact = this.dictDescrSrv.getDescriptorClass('contact');
+            return dContact.getData({ criteries: { 'ISN_ORGANIZ': orgISN + '' } })
+                .then((contacts) => {
+                    console.log('organization exist contacts', contacts);
+                    const _contacts = [];
+                    return true;
+                });
+        } else {
+            return Promise.resolve([]);
+        }
+    }
+
     init(): Promise<EosDictionaryNode> {
         this._nodes.clear();
         return this.descriptor.getRoot()
@@ -203,14 +218,7 @@ export class EosDictionary {
                 if (node) {
                     switch (this.descriptor.type) {
                         case E_DICT_TYPE.department:
-                            let orgDUE = '';
-                            orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
-                            if (!orgDUE) {
-                                const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
-                                if (parentNode) {
-                                    orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
-                                }
-                            }
+                            const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
                             return Promise.all([
                                 this.descriptor.getRelated(node.data.rec, orgDUE),
                                 this.descriptor.getRelatedSev(node.data.rec)

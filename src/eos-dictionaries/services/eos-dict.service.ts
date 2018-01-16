@@ -165,6 +165,15 @@ export class EosDictService {
         this._dictMode = 0;
     }
 
+    createRepresentative(represData: any[]): Promise<any> {
+        if (this.dictionary) {
+            return this.dictionary.createRepresentative(represData, this.treeNode)
+                .catch((err) => this._errHandler(err));
+        } else {
+            return Promise.resolve(false)
+        }
+    }
+
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
@@ -346,18 +355,18 @@ export class EosDictService {
         }
     }
 
-    // console.log('reloadNode', node);
-    // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.treeNode.id === nodeId) {
             this.viewParameters.updating = true;
             this._viewParameters$.next(this.viewParameters);
         }
-        return this.dictionary.expandNode(nodeId).then((val) => {
-            this.viewParameters.updating = false;
-            this._viewParameters$.next(this.viewParameters);
-            return val
-        }).catch((err) => this._errHandler(err));
+        return this.dictionary.expandNode(nodeId)
+            .then((val) => {
+                this.viewParameters.updating = false;
+                this._viewParameters$.next(this.viewParameters);
+                return val
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {

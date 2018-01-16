@@ -111,7 +111,7 @@ export class NodeActionsComponent implements OnDestroy {
                     _enabled = _enabled && this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.createRepresentative:
-                    _show = this.dictionary.descriptor.canDo(button.group, button.type);
+                    _show = this.dictionary.canDo(button.type);
                     break;
                 case E_RECORD_ACTIONS.remove:
                     _enabled = this._viewParams.haveMarked;
