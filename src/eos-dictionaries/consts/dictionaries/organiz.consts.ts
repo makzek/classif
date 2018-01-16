@@ -226,7 +226,8 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'dictionary',
         title: '',
 
-    }],
+        }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'CLASSIF_NAME_SEARCH', 'FULLNAME', 'ZIPCODE', 'CITY', 'ADDRESS', 'MAIL_FOR_ALL', 'NOTE', 'OKPO',
         'INN', 'ISN_REGION', 'OKONH', 'LAW_ADRESS', 'ISN_ORGANIZ_TYPE', 'SERTIFICAT', 'ISN_ADDR_CATEGORY', 'CODE', 'OGRN',
         'contact', 'bank-recvisit', 'ar-organiz-value'],
