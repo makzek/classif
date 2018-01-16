@@ -313,7 +313,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
     }],
-    treeFields: ['CLASSIF_NAME'],
+    treeFields: ['title'],
     searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
     listFields: ['CODE', 'title'],
     fullSearchFields: {
