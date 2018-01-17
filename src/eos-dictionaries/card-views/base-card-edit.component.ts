@@ -54,13 +54,19 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     }
 
     change(fldKey: string, dict: string, value: any) {
+        let _value = null;
         if (typeof value === 'boolean') {
-            value = +value;
+            _value = +value;
         } else if (value === 'null') {
-            value = null;
+            _value = null;
+        } else if (value instanceof Date) {
+            _value = this.dateToString(value);
+        } else {
+            _value = value;
         }
-        if (this.data[dict][fldKey] !== value) {
-            this.data[dict][fldKey] = value;
+
+        if (this.data[dict][fldKey] !== _value) {
+            this.data[dict][fldKey] = _value;
             this.onChange.emit(this.data);
         }
     }
@@ -83,5 +89,15 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             return null;
         }
+    }
+
+    private dateToString(d: Date): string {
+        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
+        return d.getFullYear() +
+            '-' + pad(d.getMonth() + 1) +
+            '-' + pad(d.getDate()) +
+            'T' + pad(d.getHours()) +
+            ':' + pad(d.getMinutes()) +
+            ':' + pad(d.getSeconds());
     }
 }
