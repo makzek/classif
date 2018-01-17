@@ -82,6 +82,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
     }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     searchFields: ['CODE', 'CLASSIF_NAME', /*'NOTE'*/],
     fullSearchFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],

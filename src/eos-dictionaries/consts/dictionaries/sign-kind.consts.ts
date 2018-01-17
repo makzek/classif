@@ -51,7 +51,8 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
         key: 'WEIGHT',
         title: 'Вес',
         type: 'number'
-    }],
+        }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
     searchFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
     fullSearchFields: ['CLASSIF_NAME', 'SIGN_TEXT'],

@@ -12,6 +12,7 @@ import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
+import { _ES } from 'eos-rest/core/consts';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -126,17 +127,30 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
 
+        let owner = rec['ISN_NODE'].toString();
+        if (!rec['IS_NODE']) {
+            owner += '|' + rec['ISN_HIGH_NODE'].toString();
+        }
+
         const pPrintInfo = this.apiSrv
             .read<CB_PRINT_INFO>({
                 CB_PRINT_INFO: PipRX.criteries({
-                    ISN_OWNER: rec['ISN_NODE'].toString() + '|' + rec['ISN_HIGH_NODE'].toString(),
+                    ISN_OWNER: owner,
                     OWNER_KIND: '104'
                 })
             })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(items[0], 'CB_PRINT_INFO'));
+            .then((items) => {
+                const info = items.find((item) => item.ISN_OWNER === rec['ISN_NODE']);
+                return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
+            });
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
+                /*
+                if (!printInfo['_State']) {
+                    printInfo._State = _ES.Stub;
+                }
+                */
                 return {
                     user: user,
                     organization: org,
