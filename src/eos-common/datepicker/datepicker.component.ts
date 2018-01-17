@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, 
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/bs-moment';
 import { ru } from 'ngx-bootstrap/locale';
-defineLocale('ru', ru);
 
 @Component({
     selector: 'eos-datepicker',
@@ -10,7 +9,7 @@ defineLocale('ru', ru);
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() value: Date;
-    @Input() readonly;
+    @Input() isReadonly: boolean;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
@@ -19,8 +18,6 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     placement = 'bottom';
 
     private _handler;
-
-    isDisabled = false;
 
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
@@ -31,19 +28,23 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             showWeekNumbers: false,
             containerClass: 'theme-dark-blue',
             dateInputFormat: 'DD.MM.YYYY',
-            isDisabled: true,
+            isDisabled: this.isReadonly,
             minDate: new Date('01/01/1900'),
             maxDate: new Date('12/31/2100'),
         };
     }
 
     ngOnInit() {
+        defineLocale('ru', ru);
+        this.bsConfig = Object.assign({}, this.bsConfig, {
+            isDisabled: this.isReadonly,
+        });
         if (this.value && typeof this.value !== 'object') {
             this.value = new Date(this.value);
         }
         window.addEventListener('scroll', this._handler = () => {
-                this.datePicker.hide();
-            }, true);
+            this.datePicker.hide();
+        }, true);
     }
 
     ngOnDestroy() {
@@ -51,7 +52,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     emitChange(date: Date) {
-        if (this.value !== date) {
+        if (this.value.getTime() - date.getTime()) {
             this.change.emit(date);
         }
     }

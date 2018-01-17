@@ -245,9 +245,9 @@ export class EosDictionaryNode {
         return _data;
     }
 
-    getCreatingData(): any {
+    getCreatingData(recParams: any): any {
         const _data = {
-            rec: {},
+            rec: recParams || {},
         };
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type === E_FIELD_TYPE.dictionary) {
@@ -257,9 +257,15 @@ export class EosDictionaryNode {
 
         if (this._dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
             _data['printInfo']['GENDER'] = null;
-            _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
+            if (_data.rec['IS_NODE'] === 0) {
+                _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
+            }
             _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
             _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
+            if (_data['rec']['START_DATE']) {
+                _data['rec']['START_DATE'] = new Date(_data['rec']['START_DATE']);
+            }
+            console.log(typeof _data['rec']['START_DATE'], _data['rec']['START_DATE']);
         }
 
         return _data;

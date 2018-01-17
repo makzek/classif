@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -104,6 +104,8 @@ export abstract class AbstractDictionaryDescriptor {
             .read(req)
             .then((data: any[]) => {
                 this.prepareForEdit(data);
+                this.StringToDate(data);
+                console.log('getData', data);
                 return data;
             });
     }
@@ -191,6 +193,7 @@ export abstract class AbstractDictionaryDescriptor {
         const changeData = [];
         Object.keys(originalData).forEach((key) => {
             if (originalData[key]) {
+                this.DateToString(originalData[key]);
                 if (key === 'sev') {
                     if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
@@ -248,5 +251,26 @@ export abstract class AbstractDictionaryDescriptor {
         const related = {};
         this.metadata.relations.forEach((relation, idx) => related[relation.name] = responses[idx]);
         return related;
+    }
+
+    protected DateToString(rec: any) {
+        Object.keys((key) => {
+            if ((rec[key]) instanceof Date) {
+                rec[key] = <Date>rec[key].toJSON().replace('Z', '');
+            }
+        })
+    }
+
+    protected StringToDate(records: any[]) {
+        this.record.fields.forEach((fld) => {
+            if (fld.type === E_FIELD_TYPE.date) {
+                records.forEach((rec, idx) => {
+                    if (rec[fld.foreignKey]) {
+                        records[idx][fld.foreignKey] = new Date(rec[fld.foreignKey] + 'Z');
+                        console.log(records[idx][fld.foreignKey], rec[fld.foreignKey]);
+                    }
+                })
+            }
+        });
     }
 }

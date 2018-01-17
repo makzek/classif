@@ -28,6 +28,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<T>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
+        this.DateToString(data.rec);
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
                 if (resp && resp[0]) {
@@ -42,6 +43,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
                     Object.keys(data).forEach((key) => {
                         if (key !== 'rec' && data[key]) {
+                            this.DateToString(data[key]);
                             switch (key) {
                                 case 'sev':
                                     const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
