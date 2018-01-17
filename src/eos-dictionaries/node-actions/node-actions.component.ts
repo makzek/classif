@@ -6,8 +6,12 @@ import 'rxjs/add/operator/combineLatest';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
-import { RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES } from '../consts/record-actions.consts';
-import { IActionButton, IAction, IDictionaryViewParameters, E_DICT_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import {
+    RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES,
+    COMMON_ADD_MENU, DEPARTMENT_ADD_MENU
+} from '../consts/record-actions.consts';
+import { IActionButton, IAction, IDictionaryViewParameters, E_DICT_TYPE,
+    E_RECORD_ACTIONS, IActionEvent } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-node-actions',
@@ -17,7 +21,7 @@ export class NodeActionsComponent implements OnDestroy {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     // @Input('params') params: INodeListParams;
-    @Output('action') action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+    @Output('action') action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
 
     buttons: IActionButton[];
     ddButtons: IActionButton[];
@@ -25,6 +29,11 @@ export class NodeActionsComponent implements OnDestroy {
     showSubnodesBtn: IActionButton;
     ctx = { item: this.showSubnodesBtn };
     showMore = false;
+
+    ADD_ACTION = E_RECORD_ACTIONS.add;
+    isTree: boolean;
+
+    addMenu: any;
 
     private dictionary: EosDictionary;
     private _nodeSelected = false;
@@ -35,11 +44,11 @@ export class NodeActionsComponent implements OnDestroy {
 
         _dictSrv.listDictionary$
             .takeUntil(this.ngUnsubscribe)
-            .combineLatest(_dictSrv.openedNode$)
-            .subscribe(([dict, node]) => {
+            .combineLatest(_dictSrv.openedNode$, _dictSrv.viewParameters$)
+            .subscribe(([dict, node, params]) => {
                 this.dictionary = dict;
                 this._nodeSelected = !!node;
-                this._viewParams = _dictSrv.viewParameters;
+                this._viewParams = params;
                 this._update();
             });
     }
@@ -57,6 +66,15 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     private _update() {
+        this.isTree = false;
+        if (this.dictionary) {
+            this.isTree = this.dictionary && this.dictionary.descriptor.dictionaryType !== E_DICT_TYPE.linear;
+            if (this.dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
+                this.addMenu = DEPARTMENT_ADD_MENU;
+            } else {
+                this.addMenu = COMMON_ADD_MENU;
+            }
+        }
         this.buttons.forEach(btn => this._updateButton(btn));
         this.ddButtons.forEach(btn => this._updateButton(btn));
         this.moreButtons.forEach(btn => this._updateButton(btn));
@@ -127,8 +145,8 @@ export class NodeActionsComponent implements OnDestroy {
         return _btn;
     }
 
-    doAction(action: E_RECORD_ACTIONS) {
-        console.log('action', E_RECORD_ACTIONS[action]);
-        this.action.emit(action);
+    doAction(action: E_RECORD_ACTIONS, params?: any) {
+        console.log('action', E_RECORD_ACTIONS[action], params);
+        this.action.emit({ action: action, params: params });
     }
 }
