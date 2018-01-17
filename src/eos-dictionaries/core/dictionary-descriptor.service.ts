@@ -6,6 +6,7 @@ import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptor } from 'eos-dictionaries/core/dictionary-descriptor';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from 'eos-dictionaries/core/department-dictionary-descriptor';
+import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
 
 @Injectable()
 export class DictionaryDescriptorService {
@@ -41,18 +42,28 @@ export class DictionaryDescriptorService {
         if (!res) {
             const descr = this.getDescriptorData(name);
             if (descr) {
-                switch (descr.dictType) {
-                    case E_DICT_TYPE.linear:
-                        res = new DictionaryDescriptor(descr, this.apiSrv);
-                        break;
-                    case E_DICT_TYPE.tree:
-                        res = new TreeDictionaryDescriptor(descr, this.apiSrv);
-                        break;
-                    case E_DICT_TYPE.department:
+                switch (descr.id) {
+                    case 'departments':
                         res = new DepartmentDictionaryDescriptor(descr, this.apiSrv);
                         break;
-                    default:
-                        throw new Error('No API instance');
+                    case 'contact':
+                        res = new ContactDictionaryDescriptor(descr, this.apiSrv);
+                        break;
+                }
+
+                if (!res) {
+                    switch (descr.dictType) {
+                        case E_DICT_TYPE.linear:
+                            res = new DictionaryDescriptor(descr, this.apiSrv);
+                            break;
+                        case E_DICT_TYPE.tree:
+                            res = new TreeDictionaryDescriptor(descr, this.apiSrv);
+                            break;
+                        case E_DICT_TYPE.department:
+                            break;
+                        default:
+                            throw new Error('No API instance');
+                    }
                 }
             }
         }

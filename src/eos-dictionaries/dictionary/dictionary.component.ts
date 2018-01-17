@@ -392,7 +392,15 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     } else {
                         /* call API and save */
                         console.log('Representatives', _represData);
-                        return this._dictSrv.createRepresentative(_represData);
+                        return this._dictSrv.createRepresentative(_represData).then((results) => {
+                            results.forEach((result) =>
+                                this._msgSrv.addNewMessage({
+                                    type: result.success ? 'success' : 'warning',
+                                    title: result.record['SURNAME'],
+                                    msg: result.success ? 'Контакт создан' : result.error.message
+                                })
+                            );
+                        });
                     }
                 } else {
                     this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);

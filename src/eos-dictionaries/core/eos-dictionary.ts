@@ -20,6 +20,8 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { Injector } from '@angular/core/src/di/injector';
+import { RestError } from 'eos-rest/core/rest-error';
+import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -93,16 +95,11 @@ export class EosDictionary {
         return this.descriptor.record.canDo(action);
     }
 
-    createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<any> {
+    createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
         const orgISN = node.data['organization']['ISN_NODE'];
         if (orgISN) {
-            const dContact = this.dictDescrSrv.getDescriptorClass('contact');
-            return dContact.getData({ criteries: { 'ISN_ORGANIZ': orgISN + '' } })
-                .then((contacts) => {
-                    console.log('organization exist contacts', contacts);
-                    const _contacts = [];
-                    return true;
-                });
+            const dContact = <ContactDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('contact');
+            return dContact.createContacts(newContacts, orgISN);
         } else {
             return Promise.resolve([]);
         }
