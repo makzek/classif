@@ -7,6 +7,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
     templateUrl: 'cabinet-node-info.component.html',
 })
 export class CabinetNodeInfoComponent extends BaseNodeInfoComponent {
+    update: boolean;
     constructor() {
         super();
     }
