@@ -5,6 +5,7 @@ import {
     IRecordModeDescription,
     IDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
@@ -162,5 +163,9 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     protected _initRecord(data: IDictionaryDescriptor) {
         this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
+    }
+
+    public onPreparePrintInfo(dec: FieldsDecline): Promise<any> {
+        return this.apiSrv.read({ PreparePrintInfo: PipRX.args(dec) });
     }
 }
