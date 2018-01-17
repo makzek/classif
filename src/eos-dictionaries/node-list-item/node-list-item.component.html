@@ -10,7 +10,7 @@
         <span class="node-info">
             <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)"id="{{field.foreignKey}}" class="code"
                 [ngStyle]="{'width.%': length[field.key]}">
-                <span *ngIf="node.expandable && field.key === 'CLASSIF_NAME'" (click)="openAsFolder(node)"
+                <span *ngIf="node.isNode && field.key === 'CLASSIF_NAME'" (click)="openAsFolder(node)"
                     class="folder eos-icon eos-icon-folder-blue"></span>
                 <span>{{field.value}}</span>
             </span>
