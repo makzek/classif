@@ -13,34 +13,73 @@
         <button class="btn btn-primary-light actions" [tooltip]="showMore ? 'Скрыть меню': 'Показать меню'" #itemTooltip="bs-tooltip"
             placement="right" containerClass="tooltip-info" (click)="itemTooltip.hide(); toggleButtonList()">
             <span class="eos-icon eos-icon-fab-blue small" [ngClass]="{'rotate': showMore}"></span>
-        </button>
+    </button>
     </span>
 
     <ng-container *ngTemplateOutlet="btnTpl; context: showSubnodesBtn"></ng-container>
 
-    <span class="btn-group hidden-lg" dropdown>
+    <span class="btn-group hidden-lg"
+        dropdown>
         <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info"
             #itemTooltip="bs-tooltip" (click)="itemTooltip.hide();">
             <span class="eos-icon eos-icon-fab-blue small"></span>
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
-                <li role="menuitem" class="{{item.buttonClass}}" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
-                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}" class="dropdown-item btn btn-primary-light" (click)="doAction(item.type)">{{item.title}}</button>
-                </li>
-            </ng-template>
-        </ul>
+    </button>
+    <ul *dropdownMenu
+        class="dropdown-menu"
+        role="menu">
+        <ng-template ngFor
+            let-item
+            let-i="index"
+            [ngForOf]="ddButtons">
+            <li role="menuitem"
+                class="{{item.buttonClass}}"
+                tooltip="{{item.hint}}"
+                placement="right"
+                containerClass="tooltip-info">
+                <button [disabled]="!item.enabled"
+                    [ngClass]="{active: item.isActive}"
+                    class="dropdown-item btn btn-primary-light"
+                    (click)="doAction(item.type)">{{item.title}}</button>
+            </li>
+        </ng-template>
+    </ul>
     </span>
 </div>
 
-<ng-template #btnTpl let-show="show" let-hint="hint" let-enabled="enabled" let-isActive="isActive" let-buttonClass="buttonClass"
-    let-icon="iconClass" let-activeIcon="activeIconClass" let-action="type">
-    <span class="visible-lg-inline-block actions" *ngIf="show">
+<ng-template #btnTpl
+    let-show="show"
+    let-hint="hint"
+    let-enabled="enabled"
+    let-isActive="isActive"
+    let-buttonClass="buttonClass"
+    let-icon="iconClass"
+    let-activeIcon="activeIconClass"
+    let-action="type">
+    <span class="visible-lg-inline-block actions"
+        *ngIf="show">
         <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="right" containerClass="tooltip-info">
-            <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" [ngClass]="{active: isActive}" (click)="itemTooltip.hide(); doAction(action)">
-                <span [hidden]="isActive" class="{{icon}}"></span>
-                <span [hidden]="!isActive" class="{{activeIcon}}"></span>
+        <ng-container *ngIf="action === ADD_ACTION && isTree">
+            <span class="btn-group"dropdown>
+            <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
+                <span [hidden]="isActive" [ngClass]="icon"></span>
+                <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
             </button>
+            <ul *dropdownMenu
+            class="dropdown-menu"
+            role="menu">
+                <li *ngFor="let item of addMenu" role="menuitem">
+                    <button class="dropdown-item btn btn-primary-light"
+                        (click)="doAction(action,item.params)">{{item.title}}</button>
+                </li>
+            </ul>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="action !== ADD_ACTION || !isTree">
+            <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" [ngClass]="{active: isActive}" (click)="itemTooltip.hide(); doAction(action)">
+                <span [hidden]="isActive" [ngClass]="icon"></span>
+                <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
+            </button>
+        </ng-container>
         </div>
     </span>
 </ng-template>
