@@ -21,11 +21,8 @@ import { EosCommonModule } from '../eos-common/eos-common.module';
 /* components */
 import { CardComponent } from './card/card.component';
 import { CardEditComponent } from './card-views/card-edit.component';
-import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
+import { DepartmentsCardEditDepartmentComponent } from './card-views/departments-card-edit-department.component';
 import { DepartmentsCardEditPersonComponent } from './card-views/departments-card-edit-person.component';
-import { DepartmentsCardEditPersonContactsComponent } from './card-views/departments-card-edit-person-contacts.component';
-import { DepartmentsCardEditPersonInfoComponent } from './card-views/departments-card-edit-person-info.component';
-import { DepartmentsCardEditPersonMainComponent } from './card-views/departments-card-edit-person-main.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
@@ -60,11 +57,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         CardComponent,
         CardEditComponent,
         ColumnSettingsComponent,
-        DepartmentsCardEditComponent,
+        DepartmentsCardEditDepartmentComponent,
         DepartmentsCardEditPersonComponent,
-        DepartmentsCardEditPersonMainComponent,
-        DepartmentsCardEditPersonInfoComponent,
-        DepartmentsCardEditPersonContactsComponent,
         DictionaryComponent,
         DictionariesComponent,
         DictionarySearchComponent,

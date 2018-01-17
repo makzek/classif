@@ -1,4 +1,4 @@
-import { E_FIELD_TYPE, IFieldView, IFieldDesriptor } from 'eos-dictionaries/interfaces';
+import { E_FIELD_TYPE, IFieldView, IFieldDesriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -254,6 +254,14 @@ export class EosDictionaryNode {
                 _data[_f.key] = {};
             }
         });
+
+        if (this._dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
+            _data['printInfo']['GENDER'] = null;
+            _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
+            _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
+            _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
+        }
+
         return _data;
     }
 
@@ -296,6 +304,18 @@ export class EosDictionaryNode {
         return _data;
     }
 
+    getParentData(fieldName: string, recName = 'rec'): any {
+        let res = this.data[recName][fieldName];
+        if (res === undefined) {
+            if (this.parent) {
+                res = this.parent.getParentData(fieldName, recName);
+            } else {
+                res = null;
+            }
+        }
+        return res;
+    }
+
     getParents(): EosDictionaryNode[] {
         if (this.parent) {
             return [this.parent].concat(this.parent.getParents());
@@ -336,6 +356,7 @@ export class EosDictionaryNode {
     getValue(field: IFieldView): any {
         return this.data.rec[field.foreignKey];
     }
+
 }
 
 

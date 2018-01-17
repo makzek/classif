@@ -8,7 +8,6 @@ import { NOT_EMPTY_STRING } from '../consts/input-validation';
     templateUrl: 'security-card-edit.component.html',
 })
 export class SecurityCardEditComponent extends BaseCardEditComponent {
-    readonly notEmptyString = NOT_EMPTY_STRING;
     constructor(injector: Injector) {
         super(injector);
     }
