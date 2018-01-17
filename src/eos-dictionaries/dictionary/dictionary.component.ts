@@ -166,7 +166,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
-                    this._selectedNodeText = node.getListView().map((fld) => fld.value).join(' ');
+                    this._selectedNodeText = node.getTreeView().map((fld) => fld.value).join(' ');
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }

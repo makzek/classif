@@ -1,7 +1,7 @@
 <div class="eos-node-list">
     <div class="block list">
         <ng-container>
-            <p *ngIf="params.updating" class="text-center"><eos-spinner size="lg"></eos-spinner></p>
+            <p *ngIf="params.updating" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
             <p *ngIf="!nodes?.length && !params.updating" class="text-center text-info">Нет записей.</p>
             <!--Sortable list-->
             <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updating " class="elements secondary-text">

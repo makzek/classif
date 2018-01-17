@@ -576,8 +576,15 @@ export class EosDictService {
     toggleAllSubnodes(): Promise<EosDictionaryNode[]> {
         this.viewParameters.showAllSubnodes = !this.viewParameters.showAllSubnodes;
         this.viewParameters.searchResults = false;
+        this.viewParameters.updating = true;
+        this._viewParameters$.next(this.viewParameters);
         this._srchCriteries = null;
-        return this._reloadList();
+        return this._reloadList()
+            .then((val) => {
+                this.viewParameters.updating = false;
+                this._viewParameters$.next(this.viewParameters);
+                return val;
+            });
     }
     /**
      * @description Marks or unmarks record as deleted
@@ -787,25 +794,13 @@ export class EosDictService {
     }
 
     private _errHandler(err: RestError | any) {
-        if (err instanceof RestError && err.code === 434) {
+        if (err instanceof RestError && (err.code === 434) || err.code === 0) {
             this._router.navigate(['login'], {
                 queryParams: {
                     returnUrl: this._router.url
                 }
             });
-            /*
-            // login in modal window
-            this.modalRef = this._modalSrv.show(LoginFormComponent, {
-                keyboard: false,
-                backdrop: true,
-                ignoreBackdropClick: true
-            });
-            this.modalRef.content.logged.subscribe((success) => {
-                if (success) {
-                    this.modalRef.hide();
-                }
-            });
-            */
+            return null;
         } else {
             const errMessage = err.message ? err.message : err;
             console.warn(err);

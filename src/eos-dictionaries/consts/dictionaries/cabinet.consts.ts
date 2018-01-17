@@ -39,6 +39,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         key: 'department',
         type: 'dictionary'
     }],
+    treeFields: ['CABINET_NAME'],
     listFields: ['CABINET_NAME', 'DUE'],
     allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
     shortQuickViewFields: ['CABINET_NAME', 'FULLNAME'],

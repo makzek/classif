@@ -7,7 +7,7 @@
                     </label>
                     <input [readonly]="!editMode" id="SEC_INDEX" name="SEC_INDEX" type="text" class="form-control m-font" [ngModel]="data.rec['SEC_INDEX']"
                         (ngModelChange)="change('SEC_INDEX', 'rec', $event)" placeholder="Индекс грифа" [readonly]="!editMode"
-                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString"
+                        [ngClass]="{'readonly': !editMode }" [pattern]="NOT_EMPTY_STRING"
                         maxlength="24" [eosUnic]="false"
                         [tooltip]="'Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены.'"
                         placement="right" containerClass="tooltip-error" container="body" (focus)="focus('SEC_INDEX')" (blur)="blur()"
@@ -21,7 +21,7 @@
                     </label>
                     <input [readonly]="!editMode" id="GRIF_NAME" name="GRIF_NAME" type="text" class="form-control m-font" [ngModel]="data.rec['GRIF_NAME']"
                         (ngModelChange)="change('GRIF_NAME', 'rec', $event)" placeholder="Наименование грифа" [readonly]="!editMode"
-                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString" required
+                        [ngClass]="{'readonly': !editMode }" [pattern]="NOT_EMPTY_STRING" required
                         maxlength="64" [eosUnic]="true" [key]="'GRIF_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true"
                         [tooltip]="'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника'"
                         placement="right" containerClass="tooltip-error" container="body" (focus)="focus('GRIF_NAME')" (blur)="blur()"
@@ -53,18 +53,17 @@
                     </label>
                     <input [readonly]="!editMode" id="NOTE" name="NOTE" type="text" class="form-control m-font" [ngModel]="data.rec['NOTE']"
                         (ngModelChange)="change('NOTE', 'rec', $event)" placeholder="Примечание" [readonly]="!editMode"
-                        [ngClass]="{'readonly': !editMode }" [pattern]="notEmptyString"
+                        [ngClass]="{'readonly': !editMode }" [pattern]="NOT_EMPTY_STRING"
                         maxlength="255" [eosUnic]="false"
                         [tooltip]="'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'"
                         placement="right" containerClass="tooltip-error" container="body" (focus)="focus('NOTE')" (blur)="blur()"
                         [isDisabled]="!editMode" [isOpen]="cardForm.controls['NOTE']?.dirty && cardForm.controls['NOTE']?.invalid && focusedField === 'GRIF_NAME'"
                         triggers="">
                 </div>
-    
+
                 <div class="form-group unimportant-text s-font">
                     <label>* - поля обязательные к заполнению</label>
                 </div>
             </form>
         </article>
     </div>
-    
