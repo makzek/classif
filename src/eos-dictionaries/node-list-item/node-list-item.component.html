@@ -8,11 +8,11 @@
             </label>
         </span>
         <span class="node-info">
-            <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)"id="{{field.foreignKey}}" class="code"
+            <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
                 [ngStyle]="{'width.%': length[field.key]}">
-                <span *ngIf="node.isNode && field.key === 'CLASSIF_NAME'" (click)="openAsFolder(node)"
-                    class="folder eos-icon eos-icon-folder-blue"></span>
-                <span>{{field.value}}</span>
+                <span *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')"
+                    (click)="openAsFolder(node)" class="folder eos-icon eos-icon-folder-blue"></span>
+                <span (click)="test(node)">{{field.value}}</span>
             </span>
             <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
                 id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.%': length[field.key]}">
