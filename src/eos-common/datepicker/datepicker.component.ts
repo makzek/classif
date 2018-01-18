@@ -6,7 +6,7 @@ import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepic
     templateUrl: 'datepicker.component.html',
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
-    @Input() value: Date;
+    @Input() value: any;
     @Input() isReadonly: boolean;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
@@ -37,9 +37,10 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         this.bsConfig = Object.assign({}, this.bsConfig, {
             isDisabled: this.isReadonly,
         });
+
         if (this.value instanceof Date) {
             this.aDate = this.value;
-        } else {
+        } else if (this.value) {
             this.aDate = new Date(this.value);
         }
         window.addEventListener('scroll', this._handler = () => {

@@ -262,10 +262,6 @@ export class EosDictionaryNode {
             }
             _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
             _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
-            if (_data['rec']['START_DATE']) {
-                _data['rec']['START_DATE'] = new Date(_data['rec']['START_DATE']);
-            }
-            console.log(typeof _data['rec']['START_DATE'], _data['rec']['START_DATE']);
         }
 
         return _data;
