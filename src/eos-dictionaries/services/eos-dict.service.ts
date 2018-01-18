@@ -248,14 +248,18 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
+        this.viewParameters.updating = true;
+        this._viewParameters$.next(this.viewParameters);
         return this._profileSrv.checkAuth()
             .then((authorized: boolean) => {
                 if (authorized) {
                     if (this.dictionary && this.dictionary.id === dictionaryId) {
+                        this.viewParameters.updating = false;
+                        this._viewParameters$.next(this.viewParameters);
                         return this.dictionary;
                     } else {
-                        // this.viewParameters.showDeleted = false;
-                        // this._viewParameters$.next(this.viewParameters);
+                        this.viewParameters.showDeleted = false;
+                        this._viewParameters$.next(this.viewParameters);
                         if (this.dictionary) {
                             this.closeDictionary();
                         }
@@ -301,12 +305,6 @@ export class EosDictService {
             }
         }
         return _p;
-    }
-
-    public getNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        console.warn('direct getNode');
-        return this.openDictionary(dictionaryId)
-            .then(() => this._getNode(nodeId));
     }
 
     private _getNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -393,7 +391,7 @@ export class EosDictService {
         this._updateVisibleNodes();
     }
 
-    private _updateVisibleNodes() {
+    private _updateVisibleNodes(): void {
         // console.log('_updateVisibleNodes');
         this._visibleListNodes = this._currentList;
 
@@ -446,7 +444,7 @@ export class EosDictService {
         }
     }
 
-    private _selectNode(node: EosDictionaryNode) {
+    private _selectNode(node: EosDictionaryNode): void {
         if (this.treeNode !== node) {
             this._srchCriteries = null;
             this.viewParameters.showAllSubnodes = false;
@@ -700,7 +698,7 @@ export class EosDictService {
         return Promise.reject('not implemeted')
     }
 
-    getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
+    public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
             .catch((err) => this._errHandler(err));
