@@ -20,6 +20,8 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { Injector } from '@angular/core/src/di/injector';
+import { RestError } from 'eos-rest/core/rest-error';
+import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -91,6 +93,16 @@ export class EosDictionary {
 
     canDo(action: E_RECORD_ACTIONS): boolean {
         return this.descriptor.record.canDo(action);
+    }
+
+    createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
+        const orgISN = node.data['organization']['ISN_NODE'];
+        if (orgISN) {
+            const dContact = <ContactDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('contact');
+            return dContact.createContacts(newContacts, orgISN);
+        } else {
+            return Promise.resolve([]);
+        }
     }
 
     init(): Promise<EosDictionaryNode> {
@@ -203,14 +215,7 @@ export class EosDictionary {
                 if (node) {
                     switch (this.descriptor.type) {
                         case E_DICT_TYPE.department:
-                            let orgDUE = '';
-                            orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
-                            if (!orgDUE) {
-                                const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
-                                if (parentNode) {
-                                    orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
-                                }
-                            }
+                            const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
                             return Promise.all([
                                 this.descriptor.getRelated(node.data.rec, orgDUE),
                                 this.descriptor.getRelatedSev(node.data.rec)

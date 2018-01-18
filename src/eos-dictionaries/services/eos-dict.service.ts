@@ -7,7 +7,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
     IDictionaryViewParameters, ISearchSettings, IOrderBy,
-    IDictionaryDescriptor, IFieldView, SEARCH_MODES
+    IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
@@ -163,6 +163,15 @@ export class EosDictService {
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode$ = new BehaviorSubject(0);
         this._dictMode = 0;
+    }
+
+    createRepresentative(represData: any[]): Promise<IRecordOperationResult[]> {
+        if (this.dictionary) {
+            return this.dictionary.createRepresentative(represData, this.treeNode)
+                .catch((err) => this._errHandler(err));
+        } else {
+            return Promise.resolve([]);
+        }
     }
 
     private _initViewParameters() {
@@ -346,18 +355,18 @@ export class EosDictService {
         }
     }
 
-    // console.log('reloadNode', node);
-    // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.treeNode.id === nodeId) {
             this.viewParameters.updating = true;
             this._viewParameters$.next(this.viewParameters);
         }
-        return this.dictionary.expandNode(nodeId).then((val) => {
-            this.viewParameters.updating = false;
-            this._viewParameters$.next(this.viewParameters);
-            return val
-        }).catch((err) => this._errHandler(err));
+        return this.dictionary.expandNode(nodeId)
+            .then((val) => {
+                this.viewParameters.updating = false;
+                this._viewParameters$.next(this.viewParameters);
+                return val
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -611,7 +620,6 @@ export class EosDictService {
             const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
             return this.dictionary.deleteMarked()
                 .then((results) => {
-                    console.log('results', results);
                     let success = true;
                     results.forEach((result) => {
                         if (result.error) {

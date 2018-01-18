@@ -22,7 +22,7 @@ export class AuthService {
         const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
             .then((resp) => {
                 if (resp.text() && resp.text().indexOf('error:') > -1) {
-                    return null;
+                    return {};
                 } else {
                     return this.getContext();
                 }

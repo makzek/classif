@@ -1,7 +1,4 @@
-import { Injector } from '@angular/core';
-import { E_DICT_TYPE, E_FIELD_SET, IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
-import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ILinearCL } from 'eos-rest';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
@@ -10,7 +7,6 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: RecordDescriptor;
 
-    protected _initFields(data: IDictionaryDescriptor) { }
     addRecord(data: any, useless: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
