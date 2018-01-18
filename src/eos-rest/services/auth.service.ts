@@ -39,7 +39,13 @@ export class AuthService {
     }
 
     getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {
-        return this.appCtx.init();
+        return this.appCtx.init()
+            .then((arr) => {
+                return {
+                    user: arr[0],
+                    sysParams: arr[1]
+                }
+            });
         /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         // p.errorService.LostConnectionAlerted = false;
