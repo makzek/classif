@@ -56,4 +56,8 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
         return _res;
     };
+
+    public onPreparePrintInfo(): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
+    }
 }

@@ -2,6 +2,7 @@ import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -83,5 +84,24 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             return null;
         }
+    }
+
+    fill() {
+        const field: FieldsDecline = {
+            DUTY: this.data['printInfo']['DUTY'] || 'начальника',
+            GENDER: this.data['printInfo']['GENDER'] || 2,
+            NAME: this.data['printInfo']['NAME'] || 'Иван',
+            PATRON: this.data['printInfo']['PATRON'] || 'Иванович',
+            SURNAME: this.data['printInfo']['SURNAME'] || 'Иванов',
+        }
+
+        this.dictSrv.incline(field)
+            .then((res: Array<Object>) => {
+                console.log(res[0]); /*
+                for (const key in Object.keys(res[0])) {
+                    this.data['printInfo'][key] = res[0][key];
+                }*/
+            })
+            .catch(err => console.log(err));
     }
 }
