@@ -20,7 +20,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     }, {
         key: 'DUE',
         type: 'string',
-        title: 'Подразделение',
+        title: 'Код подразделения',
         length: 248,
     }, {
         key: 'CABINET_NAME',
@@ -33,13 +33,19 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'Полное наименование',
         length: 2000,
     }, {
+        key: 'DEPARTMENT_NAME',
+        title: 'Подразделение',
+        type: 'text',
+        length: 255
+    }, {
         key: 'department',
-        type: 'dictionary'
+        type: 'dictionary',
+        title: 'Подразделение'
     }],
     treeFields: ['CABINET_NAME'],
-    listFields: ['CABINET_NAME', 'DUE'],
-    allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
+    listFields: ['CABINET_NAME', 'DEPARTMENT_NAME'],
+    allVisibleFields: ['FULLNAME'],
     shortQuickViewFields: ['CABINET_NAME', 'FULLNAME'],
-    quickViewFields: ['DUE', 'department'],
-    editFields: ['DUE', 'CABINET_NAME', 'FULLNAME'],
+    quickViewFields: ['CABINET_NAME', 'DEPARTMENT_NAME', 'department'],
+    editFields: ['CABINET_NAME', 'FULLNAME'],
 });

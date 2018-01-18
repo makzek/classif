@@ -29,6 +29,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
         this._initInfo();
 
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
+            console.log('node', node);
             if (node) {
                 this.dictionaryId = node.dictionaryId;
                 this.updating = node.updating;

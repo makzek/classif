@@ -213,8 +213,8 @@ export class EosDictionary {
         return this.getNodeByNodeId(nodeId)
             .then((node) => {
                 if (node) {
-                    switch (this.descriptor.type) {
-                        case E_DICT_TYPE.department:
+                    switch (this.descriptor.id) {
+                        case 'department':
                             const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
                             return Promise.all([
                                 this.descriptor.getRelated(node.data.rec, orgDUE),
@@ -224,14 +224,18 @@ export class EosDictionary {
                                 // console.log('full node info', node.data);
                                 return node;
                             });
-                        case E_DICT_TYPE.tree:
+                        case 'rubricator':
                             return this.descriptor.getRelatedSev(node.data.rec)
                                 .then((sev) => {
                                     node.data = Object.assign(node.data, { sev: sev });
                                     return node;
                                 });
                         default:
-                            return node;
+                            return this.descriptor.getRelated(node.data.rec)
+                                .then((related) => {
+                                    node.data = Object.assign(node.data, related)
+                                    return node;
+                                });
                     }
                 } else {
                     return node;

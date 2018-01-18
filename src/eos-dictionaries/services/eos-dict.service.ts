@@ -496,11 +496,12 @@ export class EosDictService {
     }
 
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
-        if (this.dictionary) {
+        const dictionary = this._dictionaries[this._dictMode];
+        if (dictionary) {
             if (!this._listNode || this._listNode.id !== nodeId) {
                 this.viewParameters.updatingFields = true;
                 this._viewParameters$.next(this.viewParameters);
-                return this.dictionary.getFullNodeInfo(nodeId)
+                return dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
                         this._openNode(node);
                         this.viewParameters.updatingFields = false;

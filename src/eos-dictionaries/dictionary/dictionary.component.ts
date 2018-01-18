@@ -155,7 +155,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {
-                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
+                        const vField = this.viewFields.find((_field) => _field.key === _title.key);
+                        if (vField) {
+                            vField.customTitle = _title.customTitle;
+                        }
                     });
                     this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
