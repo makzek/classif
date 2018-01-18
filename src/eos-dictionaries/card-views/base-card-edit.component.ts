@@ -4,6 +4,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 import { Subscription } from 'rxjs/Subscription';
+import { EosUtils } from 'eos-common/core/utils';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
@@ -60,7 +61,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else if (value === 'null') {
             _value = null;
         } else if (value instanceof Date) {
-            _value = this.dateToString(value);
+            _value = EosUtils.dateToString(value);
         } else {
             _value = value;
         }
@@ -89,15 +90,5 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             return null;
         }
-    }
-
-    private dateToString(d: Date): string {
-        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
-        return d.getFullYear() +
-            '-' + pad(d.getMonth() + 1) +
-            '-' + pad(d.getDate()) +
-            'T' + pad(d.getHours()) +
-            ':' + pad(d.getMinutes()) +
-            ':' + pad(d.getSeconds());
     }
 }
