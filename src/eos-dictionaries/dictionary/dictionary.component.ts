@@ -256,9 +256,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
         }
-
+        let fld;
+        const folderIcoSize = 42; // Size for block ico folder + rigth padding
         if (this.selectedEl) {
             const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
+            fld = folderIcoSize * 100 / _selectedWidth;
             this.tableWidth = _selectedWidth;
             if (this.customFields && this.customFields.length) {
                 let w: number;
@@ -286,6 +288,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             length[key] = Math.floor(length[key] * 100);
         });
         this.length = length;
+        this.length['folder'] = fld;
         // console.log('end _countColWidth');
     }
 
@@ -507,9 +510,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
         this.modalWindow.content.nodeData = this.selectedNode.getCreatingData(params);
-        if (params) {
-            Object.assign(this.modalWindow.content.nodeData.rec, params);
-        }
+
         this.modalWindow.content.onHide.subscribe(() => {
             this.modalWindow.hide();
         });
