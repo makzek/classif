@@ -12,7 +12,7 @@
         <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
 </div>
 
-<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" [readonly]="false" (change)="change($event)"></eos-datepicker>
+<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" [isReadonly]="false" (change)="change($event)"></eos-datepicker>
 
 <div>
     выбор из справочника<button (click)="chooseCL($event)">выбор из справочника</button>

@@ -561,7 +561,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
         this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
-        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData();
+        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData(params);
         if (params) {
             Object.assign(this.modalWindow.content.nodeData.rec, params);
         }
