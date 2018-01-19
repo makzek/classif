@@ -30,7 +30,7 @@
                 <label for="STATUS" class="primary-text required" [ngClass]="{'unimportant-text': !editMode}">
                     СТАТУС ВИЗЫ
                 </label>
-                <select class="form-control m-font" name="STATUS" id="STATUS" required
+                <select class="form-control m-font visa-type-select" name="STATUS" id="STATUS" [ngClass]="{'visa-select-edit' : !editMode}" required
                     [disabled]="!editMode" [(ngModel)]="data.rec['STATUS']" (ngModelChange)="changed()">
                     <option disabled="disabled" selected="selected" class="hidden">Выберите статус визы</option>
                     <option value="Положительный" name="st1" ngDefaultControl>Положительный</option>
