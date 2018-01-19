@@ -11,9 +11,6 @@ import { EosDictService } from '../services/eos-dict.service';
 export class NodeInfoSwitcherComponent implements OnDestroy {
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
-    // viewFields: IFieldView[];
-    // shortViewFields: IFieldView[];
-    updating = false;
     fieldsDescriptionShort: any = {};
     nodeDataShort: any = {};
     fieldsDescriptionFull: any = {};
@@ -29,16 +26,14 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
         this._initInfo();
 
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
-            console.log('node', node);
             if (node) {
                 this.dictionaryId = node.dictionaryId;
-                this.updating = node.updating;
 
                 this.fieldsDescriptionShort = node.getShortViewFieldsDescription();
                 this.nodeDataShort = node.getShortViewData();
                 this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
                 this.nodeDataFull = node.getFullViewData();
-                console.log('nodeDataFull', this.nodeDataFull);
+
                 if (this.dictionaryId === 'departments' && !node.data.rec['IS_NODE'] && node.children) {
                     const _boss = node.children.find((_chld) => _chld.data.rec['POST_H']);
                     if (_boss) {
@@ -62,6 +57,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     }
 
     private _initInfo() {
+        this.dictionaryId = null;
         this.fieldsDescriptionFull = {};
         this.fieldsDescriptionShort = {};
         this.nodeDataFull = {};

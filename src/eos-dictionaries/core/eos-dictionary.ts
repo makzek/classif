@@ -214,14 +214,14 @@ export class EosDictionary {
             .then((node) => {
                 if (node) {
                     switch (this.descriptor.id) {
-                        case 'department':
+                        case 'departments':
                             const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
                             return Promise.all([
                                 this.descriptor.getRelated(node.data.rec, orgDUE),
                                 this.descriptor.getRelatedSev(node.data.rec)
                             ]).then(([related, sev]) => {
                                 node.data = Object.assign(node.data, related, { sev: sev });
-                                // console.log('full node info', node.data);
+                                console.log('full department info', node.data);
                                 return node;
                             });
                         case 'rubricator':
