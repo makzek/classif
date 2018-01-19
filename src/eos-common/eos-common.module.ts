@@ -3,6 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { NgModule} from '@angular/core';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/bs-moment';
+import { ru } from 'ngx-bootstrap/locale';
+defineLocale('ru', ru);
+
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';

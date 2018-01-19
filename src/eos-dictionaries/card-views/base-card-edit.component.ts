@@ -5,6 +5,7 @@ import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 
 import { Subscription } from 'rxjs/Subscription';
+import { EosUtils } from 'eos-common/core/utils';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
@@ -55,13 +56,19 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     }
 
     change(fldKey: string, dict: string, value: any) {
+        let _value = null;
         if (typeof value === 'boolean') {
-            value = +value;
+            _value = +value;
         } else if (value === 'null') {
-            value = null;
+            _value = null;
+        } else if (value instanceof Date) {
+            _value = EosUtils.dateToString(value);
+        } else {
+            _value = value;
         }
-        if (this.data[dict][fldKey] !== value) {
-            this.data[dict][fldKey] = value;
+
+        if (this.data[dict][fldKey] !== _value) {
+            this.data[dict][fldKey] = _value;
             this.onChange.emit(this.data);
         }
     }

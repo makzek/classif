@@ -2,16 +2,17 @@
     <input placeholder="{{placeholder}}"
         type="text" readonly class="form-control"
         bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig"
-        [bsValue]="value" placement="{{placement}}"
+        [bsValue]="aDate" placement="{{placement}}"
         (bsValueChange)="emitChange($event)"
-        [ngClass]="{'hidden': readonly}"
+        [ngClass]="{'hidden': isReadonly}"
         (click)="measureDistance()"
         [minDate]="bsConfig.minDate"
         [maxDate]="bsConfig.maxDate"
-        [isDisabled]="isDisabled">
-    <input class="form-control readonly" 
-        value="{{value | date:'dd.MM.yyyy'}}" 
-        readonly 
-        [ngClass]="{'hidden': !readonly}"
+        [isDisabled]="isReadonly"
+        value="{{aDate | date:'dd.MM.yyyy'}}">
+    <input class="form-control readonly"
+        value="{{aDate | date:'dd.MM.yyyy'}}"
+        readonly
+        [ngClass]="{'hidden': !isReadonly}"
         placeholder="{{placeholder}}">
 </div>
