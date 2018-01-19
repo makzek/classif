@@ -25,19 +25,19 @@
 
             <div *ngIf="nodeDataFull && nodeDataFull.department" class="full-info usual-border">
                 <div class="field">
-                    <span class="field-title unimportant-text s-font">Подразделение</span>
+                    <span class="field-title unimportant-text s-font">Подразделение</span><br>
                     <a class="selected-text" [routerLink]="'/spravochniki/departments/'+nodeDataFull.department['DUE']">
                         <!-->Needs routerLink<-->
                         {{nodeDataFull.department['FULLNAME'] || nodeDataFull.department['CLASSIF_NAME']}}
                     </a>
                 </div>
                 <div class="field">
-                    <span class="field-title unimportant-text s-font">Владельцы кабинета</span>
+                    <span class="field-title unimportant-text s-font">Владельцы кабинета</span><br>
                     <a class="selected-text" > <!-->Needs routerLink, ngIf, ngFor and content<-->
                     </a>
                 </div>
                 <div class="field">
-                    <span class="field-title unimportant-text s-font">Пользователи кабинета</span>
+                    <span class="field-title unimportant-text s-font">Пользователи кабинета</span><br>
                     <a class="selected-text" ><!-->Needs routerLink, ngIf, ngFor and content<-->
                     </a>
                 </div>

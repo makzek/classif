@@ -60,7 +60,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({
                 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }),
-                _moreJSON: { 'USER_CL': PipRX.criteries({'ISN_LCLASSIF': 'ISN_LCLASSIF'})}
+                _moreJSON: {}
             })
         ]
         return Promise.all(reqs)
