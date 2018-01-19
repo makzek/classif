@@ -1,7 +1,7 @@
 <div class="eos-dictionary-search">
     <div [ngClass]="{'hidden': !hasDate}" class="date-filter-wrapper">
         <span class="date">Состояние на: </span>
-        <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [readonly]="false"></eos-datepicker>
+        <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [isReadonly]="false"></eos-datepicker>
     </div>
     <span tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info">
         <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
