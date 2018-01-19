@@ -257,24 +257,16 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        return this._profileSrv.checkAuth()
-            .then((authorized: boolean) => {
-                if (authorized) {
-                    if (this.dictionary && this.dictionary.id === dictionaryId) {
-                        return this.dictionary;
-                    } else {
-                        // this.viewParameters.showDeleted = false;
-                        // this._viewParameters$.next(this.viewParameters);
-                        if (this.dictionary) {
-                            this.closeDictionary();
-                        }
-                        return this._openDictionary(dictionaryId);
-                    }
-                } else {
-                    this.closeDictionary();
-                    return null;
-                }
-            });
+        if (this.dictionary && this.dictionary.id === dictionaryId) {
+            return Promise.resolve(this.dictionary);
+        } else {
+            // this.viewParameters.showDeleted = false;
+            // this._viewParameters$.next(this.viewParameters);
+            if (this.dictionary) {
+                this.closeDictionary();
+            }
+            return this._openDictionary(dictionaryId);
+        }
     }
 
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -293,10 +285,10 @@ export class EosDictService {
                             this.viewParameters.userOrdered,
                             this._storageSrv.getUserOrder(this.dictionary.id)
                         );
-                        this._mDictionaryPromise.delete(dictionaryId);
-                        this._dictionary$.next(this.dictionary);
                         this._dictMode = 0;
                         this._dictionaries[0] = this.dictionary;
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        this._dictionary$.next(this.dictionary);
                         return this.dictionary;
                     })
                     .catch((err) => {
