@@ -247,8 +247,9 @@ export class EosDictionaryNode {
 
     getCreatingData(recParams: any): any {
         const _data = {
-            rec: recParams || {},
+            rec: Object.assign({}, recParams),
         };
+
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type === E_FIELD_TYPE.dictionary) {
                 _data[_f.key] = {};

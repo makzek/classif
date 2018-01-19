@@ -803,7 +803,7 @@ export class EosDictService {
     }
 
     private _errHandler(err: RestError | any) {
-        if (err instanceof RestError && (err.code === 434) || err.code === 0) {
+        if (err instanceof RestError && (err.code === 434 || err.code === 0)) {
             this._router.navigate(['login'], {
                 queryParams: {
                     returnUrl: this._router.url
