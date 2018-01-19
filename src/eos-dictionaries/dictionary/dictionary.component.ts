@@ -507,9 +507,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
         this.modalWindow.content.dictionaryId = this.dictionaryId;
         this.modalWindow.content.nodeData = this.selectedNode.getCreatingData(params);
-        if (params) {
-            Object.assign(this.modalWindow.content.nodeData.rec, params);
-        }
+
         this.modalWindow.content.onHide.subscribe(() => {
             this.modalWindow.hide();
         });
