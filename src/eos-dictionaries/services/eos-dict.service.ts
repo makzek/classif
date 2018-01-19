@@ -842,12 +842,10 @@ export class EosDictService {
         this._listDictionary$.next(this._dictionaries[this.dictMode]);
     }
 
-    public incline(dec: FieldsDecline): Promise <any> {
-        console.log(`Method incline: ${dec}`);
-        return this.dictionary.descriptor.onPreparePrintInfo(dec)
-            .then(res => {
-                return res;
-            })
-            .catch(err => console.log(err));
+    public inclineFields(fields: FieldsDecline): Promise <any[]> {
+        console.log(`Method inclineFields: ${fields}`);
+        return this.dictionary.descriptor.onPreparePrintInfo(fields)
+            .then(res => res)
+            .catch(err => this._errHandler(err));
     }
 }

@@ -165,7 +165,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
     }
 
-    onPreparePrintInfo(dec: FieldsDecline): Promise<any> {
+    public onPreparePrintInfo(dec: FieldsDecline): Promise<any[]> {
         return this.apiSrv.read({ PreparePrintInfo: PipRX.args(dec) });
     }
 }

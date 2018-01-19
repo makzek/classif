@@ -86,22 +86,21 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
-    fill() {
+    public fillDeclineFields(): void {
         const field: FieldsDecline = {
-            DUTY: this.data['printInfo']['DUTY'] || 'начальника',
-            GENDER: this.data['printInfo']['GENDER'] || 2,
-            NAME: this.data['printInfo']['NAME'] || 'Иван',
-            PATRON: this.data['printInfo']['PATRON'] || 'Иванович',
-            SURNAME: this.data['printInfo']['SURNAME'] || 'Иванов',
+            DUTY: this.data['rec']['DUTY'] || '',
+            GENDER: Number(this.data['printInfo']['GENDER']),
+            NAME: this.data['printInfo']['NAME'] || '',
+            PATRON: this.data['printInfo']['PATRON'] || '',
+            SURNAME: this.data['printInfo']['SURNAME'] || ''
         }
 
-        this.dictSrv.incline(field)
-            .then((res: Array<Object>) => {
-                console.log(res[0]); /*
-                for (const key in Object.keys(res[0])) {
-                    this.data['printInfo'][key] = res[0][key];
-                }*/
-            })
-            .catch(err => console.log(err));
+        this.dictSrv.inclineFields(field)
+            .then((res: Array<any>) => {
+                /* tslint:disable */
+                for (const key in res[0]) {
+                    this.data.printInfo[key] = res[0][key];
+                } /* tslint:enabled */
+            });
     }
 }

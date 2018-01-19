@@ -576,7 +576,8 @@
             </div>
         </div>
         <div [hidden]="currTab !== 2">
-            <button class="btn btn-primary-light" (click)="fill()">Заполнить</button>
+            <button class="btn btn-primary-full alternate-button" (click)="fillDeclineFields()"
+                containerClass="tooltip-info" tooltip="Проверка API склонения">Заполнить поля</button>
             <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
             <div class="form-group">
                 <label class="primary-text"

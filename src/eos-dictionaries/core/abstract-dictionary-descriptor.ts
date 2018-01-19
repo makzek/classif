@@ -149,7 +149,7 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     abstract getRoot(): Promise<any[]>;
-    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any>;
+    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
 
     getIdByDictionaryMode(mode: number): string {
         return this.id;
