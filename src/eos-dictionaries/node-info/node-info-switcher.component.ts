@@ -1,7 +1,8 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
-import { IFieldView, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
+import { IFieldView, E_RECORD_ACTIONS, IDictionaryViewParameters } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
 
     // viewFields: IFieldView[];
     // shortViewFields: IFieldView[];
-    updating = false;
+    private ngUnsubscribe: Subject<any> = new Subject();
+    public updating: boolean;
     fieldsDescriptionShort: any = {};
     nodeDataShort: any = {};
     fieldsDescriptionFull: any = {};
@@ -27,29 +29,31 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
 
     constructor(private _dictSrv: EosDictService) {
         this._initInfo();
+        _dictSrv.openedNode$.takeUntil(this.ngUnsubscribe)
+            .subscribe((node) => {
+                if (node) {
+                    this.dictionaryId = node.dictionaryId;
 
-        this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
-            if (node) {
-                this.dictionaryId = node.dictionaryId;
-                this.updating = node.updating;
-
-                this.fieldsDescriptionShort = node.getShortViewFieldsDescription();
-                this.nodeDataShort = node.getShortViewData();
-                this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
-                this.nodeDataFull = node.getFullViewData();
-                // console.log('fieldsDescriptionFull', this.fieldsDescriptionFull);
-                if (this.dictionaryId === 'departments' && !node.data.rec['IS_NODE'] && node.children) {
-                    const _boss = node.children.find((_chld) => _chld.data.rec['POST_H']);
-                    if (_boss) {
-                        this.bossName = _boss.data.rec['SURNAME'];
-                    } else {
-                        this.bossName = '';
+                    this.fieldsDescriptionShort = node.getShortViewFieldsDescription();
+                    this.nodeDataShort = node.getShortViewData();
+                    this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
+                    this.nodeDataFull = node.getFullViewData();
+                    // console.log('fieldsDescriptionFull', this.fieldsDescriptionFull);
+                    if (this.dictionaryId === 'departments' && !node.data.rec['IS_NODE'] && node.children) {
+                        const _boss = node.children.find((_chld) => _chld.data.rec['POST_H']);
+                        if (_boss) {
+                            this.bossName = _boss.data.rec['SURNAME'];
+                        } else {
+                            this.bossName = '';
+                        }
                     }
+                } else {
+                    this._initInfo();
                 }
-            } else {
-                this._initInfo();
-            }
-        });
+            });
+
+            _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
+                .subscribe((viewParameters: IDictionaryViewParameters) => this.updating = viewParameters.updatingList);
 
         /*
         this._dictSubscription = this._dictSrv.dictionary$.subscribe((dict) => {
@@ -68,8 +72,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._openedNodeSubscription.unsubscribe();
-        // this._dictSubscription.unsubscribe();
     }
 
     onAction(action: E_RECORD_ACTIONS) {

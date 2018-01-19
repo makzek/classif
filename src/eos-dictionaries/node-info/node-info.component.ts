@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { EosDictService } from '../services/eos-dict.service';
-import { IDictionaryViewParameters } from '../interfaces/eos-dictionary.interfaces';
-
-
 import { BaseNodeInfoComponent } from './base-node-info';
 
 @Component({
@@ -11,10 +7,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
 })
 
 export class NodeInfoComponent extends BaseNodeInfoComponent {
-    public update: boolean;
-
-    constructor(private _dictSrv: EosDictService) {
+    constructor() {
         super();
-        _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingInfo);
     }
  }
