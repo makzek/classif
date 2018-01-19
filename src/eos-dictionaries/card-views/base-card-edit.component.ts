@@ -92,22 +92,4 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             return null;
         }
     }
-
-    public fillDeclineFields(): void {
-        const field: FieldsDecline = {
-            DUTY: this.data['rec']['DUTY'] || '',
-            GENDER: Number(this.data['printInfo']['GENDER']),
-            NAME: this.data['printInfo']['NAME'] || '',
-            PATRON: this.data['printInfo']['PATRON'] || '',
-            SURNAME: this.data['printInfo']['SURNAME'] || ''
-        }
-
-        this.dictSrv.inclineFields(field)
-            .then((res: Array<any>) => {
-                /* tslint:disable */
-                for (const key in res[0]) {
-                    this.data.printInfo[key] = res[0][key];
-                } /* tslint:enabled */
-            });
-    }
 }
