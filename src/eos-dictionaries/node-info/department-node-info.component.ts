@@ -16,6 +16,6 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent {
 
     constructor(private _dictSrv: EosDictService) {
         super();
-        _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingFields);
+        _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingInfo);
     }
 }

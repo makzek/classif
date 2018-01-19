@@ -90,38 +90,38 @@ export class NodeActionsComponent implements OnDestroy {
             _show = this.dictionary.canDo(button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.add:
-                    _enabled = !this._viewParams.updating;
+                    _enabled = !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.moveUp:
                     _show = this._viewParams.userOrdered && !this._viewParams.searchResults;
-                    _enabled = this._nodeSelected && !this._viewParams.updating;
+                    _enabled = this._nodeSelected && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.moveDown:
                     _show = this._viewParams.userOrdered && !this._viewParams.searchResults;
-                    _enabled = this._nodeSelected && !this._viewParams.updating;
+                    _enabled = this._nodeSelected && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.restore:
-                    _enabled = this._viewParams.haveMarked && !this._viewParams.updating;
+                    _enabled = this._viewParams.haveMarked && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
-                    _enabled = !this._viewParams.updating;
+                    _enabled = !this._viewParams.updatingList;
                     _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
-                    _enabled = !this._viewParams.searchResults && !this._viewParams.updating;
+                    _enabled = !this._viewParams.searchResults && !this._viewParams.updatingList;
                     _active = this._viewParams.userOrdered;
                     break;
                 case E_RECORD_ACTIONS.edit:
-                    _enabled = _enabled && this._nodeSelected && !this._viewParams.updating;
+                    _enabled = _enabled && this._nodeSelected && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.remove:
-                    _enabled = this._viewParams.haveMarked && !this._viewParams.updating;
+                    _enabled = this._viewParams.haveMarked && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.removeHard:
-                    _enabled = this._viewParams.haveMarked && !this._viewParams.updating;
+                    _enabled = this._viewParams.haveMarked && !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.showAllSubnodes:
-                    _enabled = !this._viewParams.searchResults && !this._viewParams.updating;
+                    _enabled = !this._viewParams.searchResults && !this._viewParams.updatingList;
                     _active = this._viewParams.showAllSubnodes && !this._viewParams.searchResults;
                     break;
             }
