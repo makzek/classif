@@ -1,10 +1,10 @@
 <div class="eos-node-list">
     <div class="block list">
         <ng-container>
-            <p *ngIf="params.updating" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
-            <p *ngIf="!nodes?.length && !params.updating" class="text-center text-info">Нет записей.</p>
+            <p *ngIf="params.updatingList" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
+            <p *ngIf="!nodes?.length && !params.updatingList" class="text-center text-info">Нет записей.</p>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updating " class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList " class="elements secondary-text">
                 <li class="child">
                     <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
                         placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
@@ -16,7 +16,7 @@
                 (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updating || params.searchResults && !params.updating" class="elements secondary-text">
+            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList" class="elements secondary-text">
                 <li *ngFor="let item of nodes" class="child">
                     <eos-node-list-item [node]="item" [params]="params" [length]="length" [customFields]="customFields"
                     (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>

@@ -592,9 +592,16 @@ export class EosDictService {
      */
     public markDeleted(recursive = false, deleted = true): Promise<boolean> {
         if (this.dictionary) {
+            const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+            this.viewParameters.updatingList = true;
+            this._viewParameters$.next(this.viewParameters);
             return this.dictionary.markDeleted(recursive, deleted)
                 .then(() => this._reloadList())
-                .then(() => true)
+                .then(() => {
+                    this.viewParameters.updatingList = false;
+                    this._viewParameters$.next(this.viewParameters);
+                    return true;
+                })
                 .catch((err) => this._reloadList().then(() => this._errHandler(err)));
         } else {
             return Promise.resolve(false);
@@ -607,6 +614,8 @@ export class EosDictService {
     public deleteMarked(): Promise<boolean> {
         if (this.dictionary) {
             const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+            this.viewParameters.updatingList = true;
+            this._viewParameters$.next(this.viewParameters);
             return this.dictionary.deleteMarked()
                 .then((results) => {
                     console.log('results', results);
@@ -627,6 +636,8 @@ export class EosDictService {
                     })
                     return this._reloadList()
                         .then(() => {
+                            this.viewParameters.updatingList = false;
+                            this._viewParameters$.next(this.viewParameters);
                             return success;
                         });
                 })

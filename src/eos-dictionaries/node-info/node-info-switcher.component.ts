@@ -33,7 +33,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
             .subscribe((node) => {
                 if (node) {
                     this.dictionaryId = node.dictionaryId;
-
                     this.fieldsDescriptionShort = node.getShortViewFieldsDescription();
                     this.nodeDataShort = node.getShortViewData();
                     this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
