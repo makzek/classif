@@ -16,6 +16,7 @@ export enum E_RECORD_ACTIONS {
     navigateDown,
     restore,
     importPhotos,
+    createRepresentative,
     tableCustomization,
     showAllSubnodes,
     // createRepresentative,

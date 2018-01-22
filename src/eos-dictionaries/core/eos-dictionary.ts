@@ -20,6 +20,8 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { Injector } from '@angular/core/src/di/injector';
+import { RestError } from 'eos-rest/core/rest-error';
+import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -93,6 +95,16 @@ export class EosDictionary {
         return this.descriptor.record.canDo(action);
     }
 
+    createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
+        const orgISN = node.data['organization']['ISN_NODE'];
+        if (orgISN) {
+            const dContact = <ContactDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('contact');
+            return dContact.createContacts(newContacts, orgISN);
+        } else {
+            return Promise.resolve([]);
+        }
+    }
+
     init(): Promise<EosDictionaryNode> {
         this._nodes.clear();
         return this.descriptor.getRoot()
@@ -146,8 +158,15 @@ export class EosDictionary {
             }
             node.updateExpandable(this._showDeleted);
         });
-        // this.root.expandable = false;
+
         this.root.updateExpandable(this._showDeleted);
+
+        const treeOrderKey = this.root.getTreeView()[0];
+        this.nodes.forEach((node) => {
+            if (treeOrderKey && node.children && node.children.length > 0) {
+                node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
+            }
+        });
     }
 
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -201,32 +220,29 @@ export class EosDictionary {
         return this.getNodeByNodeId(nodeId)
             .then((node) => {
                 if (node) {
-                    switch (this.descriptor.type) {
-                        case E_DICT_TYPE.department:
-                            let orgDUE = '';
-                            orgDUE = node.data.rec['DUE_LINK_ORGANIZ'];
-                            if (!orgDUE) {
-                                const parentNode = node.getParents().find((parent) => parent.data.rec['DUE_LINK_ORGANIZ']);
-                                if (parentNode) {
-                                    orgDUE = parentNode.data.rec['DUE_LINK_ORGANIZ'];
-                                }
-                            }
+                    switch (this.descriptor.id) {
+                        case 'departments':
+                            const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
                             return Promise.all([
                                 this.descriptor.getRelated(node.data.rec, orgDUE),
                                 this.descriptor.getRelatedSev(node.data.rec)
                             ]).then(([related, sev]) => {
                                 node.data = Object.assign(node.data, related, { sev: sev });
-                                // console.log('full node info', node.data);
+                                console.log('full department info', node.data);
                                 return node;
                             });
-                        case E_DICT_TYPE.tree:
+                        case 'rubricator':
                             return this.descriptor.getRelatedSev(node.data.rec)
                                 .then((sev) => {
                                     node.data = Object.assign(node.data, { sev: sev });
                                     return node;
                                 });
                         default:
-                            return node;
+                            return this.descriptor.getRelated(node.data.rec)
+                                .then((related) => {
+                                    node.data = Object.assign(node.data, related)
+                                    return node;
+                                });
                     }
                 } else {
                     return node;
@@ -473,8 +489,8 @@ export class EosDictionary {
         return nodes;
     }
 
-    private _orderByField(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
-        const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
+    private _orderByField(nodes: EosDictionaryNode[], orderBy?: IOrderBy): EosDictionaryNode[] {
+        const _orderBy = orderBy || this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
         return nodes.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
             let _a = a.data.rec[_orderBy.fieldKey];
             let _b = b.data.rec[_orderBy.fieldKey];

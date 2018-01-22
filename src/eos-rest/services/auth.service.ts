@@ -22,7 +22,7 @@ export class AuthService {
         const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
             .then((resp) => {
                 if (resp.text() && resp.text().indexOf('error:') > -1) {
-                    return null;
+                    return {};
                 } else {
                     return this.getContext();
                 }
@@ -39,7 +39,13 @@ export class AuthService {
     }
 
     getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {
-        return this.appCtx.init();
+        return this.appCtx.init()
+            .then((arr) => {
+                return {
+                    user: arr[0],
+                    sysParams: arr[1]
+                }
+            });
         /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         // p.errorService.LostConnectionAlerted = false;

@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -50,6 +50,7 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
     abstract getChildren(...params): Promise<any[]>;
+    abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
 
     deleteRecord(data: IEnt): Promise<any> {
@@ -125,11 +126,7 @@ export abstract class AbstractDictionaryDescriptor {
             if (rec[relation.sf]) {
                 reqs.push(this.apiSrv
                     .read({
-                        [relation.__type]: {
-                            criteries: PipRX.criteries({
-                                [relation.tf]: rec[relation.sf] + ''
-                            })
-                        }
+                        [relation.__type]: PipRX.criteries({ [relation.tf]: rec[relation.sf] + '' })
                     })
                     .then((records) => this.prepareForEdit(records))
                 );
@@ -146,8 +143,6 @@ export abstract class AbstractDictionaryDescriptor {
     getRecord(nodeId: string | number): Promise<any> {
         return this.getData([nodeId]);
     }
-
-    abstract getRoot(): Promise<any[]>;
 
     getIdByDictionaryMode(mode: number): string {
         return this.id;
