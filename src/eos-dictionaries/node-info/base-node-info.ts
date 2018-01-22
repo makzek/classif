@@ -26,10 +26,7 @@ export class BaseNodeInfoComponent {
     constructor(injector: Injector) {
         this._dictSrv = injector.get(EosDictService);
         this._dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
-            .subscribe(params => {
-                this.updating = params.updatingInfo
-                console.log(this.updating)
-            });
+            .subscribe(params => this.updating = params.updatingInfo)
     }
 
     actionHandler(type: E_RECORD_ACTIONS) {
