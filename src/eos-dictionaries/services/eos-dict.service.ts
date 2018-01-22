@@ -272,7 +272,11 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            this.dictionary = new EosDictionary(dictionaryId, this._descrSrv);
+            try {
+                this.dictionary = new EosDictionary(dictionaryId, this._descrSrv);
+            } catch (e) {
+                return Promise.reject(e);
+            }
             if (this.dictionary) {
                 _p = this.dictionary.init()
                     .then((root) => {
@@ -804,10 +808,9 @@ export class EosDictService {
             return null;
         } else {
             const errMessage = err.message ? err.message : err;
-            console.warn(err);
             this._msgSrv.addNewMessage({
                 type: 'danger',
-                title: 'Ошибка обработки. Ответ сервера:',
+                title: 'Ошибка обработки.',
                 msg: errMessage
             });
             return null;

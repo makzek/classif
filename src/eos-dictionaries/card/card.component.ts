@@ -107,7 +107,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     get nodeName() {
         let _nodeName = '';
         if (this.node) {
-            this.node.getShortQuickView()
+            this.node.getTreeView()
                 .forEach((_f) => {
                     _nodeName += _f.value;
                 });
@@ -161,11 +161,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
-        console.log('_getNode', this.dictionaryId, this.nodeId);
+        // console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 if (node) {
-                    this._update(node)
+                    this._update(node);
                 } else {
                     const segments: Array<string> = this._router.url.split('/');
                     this._router.navigate(['spravochniki/' + segments[2]]);

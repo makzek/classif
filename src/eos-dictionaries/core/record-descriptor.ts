@@ -106,8 +106,8 @@ export class RecordDescriptor {
         return this._bindData(this.getFieldSet(E_FIELD_SET.list), data);
     }
 
-    getQuickView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.quickView, data), data);
+    getInfoView(data: any): IFieldView[] {
+        return this._bindData(this.getFieldSet(E_FIELD_SET.info, data), data);
     }
 
     getShortQuickView(data: any): IFieldView[] {
@@ -127,7 +127,7 @@ export class RecordDescriptor {
     }
 
     getQuickFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.quickView, data);
+        return this.getFieldDescription(E_FIELD_SET.info, data);
     }
 
     getSearchConfig(): SEARCH_TYPES[] {
@@ -181,7 +181,7 @@ export class RecordDescriptor {
                 return this._getAllVisibleFields();
             case E_FIELD_SET.fullSearch:
                 return this._getFullSearchFields();
-            case E_FIELD_SET.quickView:
+            case E_FIELD_SET.info:
                 return this.quickViewFields;
             case E_FIELD_SET.shortQuickView:
                 return this.shortQuickViewFields;

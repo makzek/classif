@@ -85,10 +85,16 @@ export class EosDictionary {
     }
 
     constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
-        this.descriptor = dictDescrSrv.getDescriptorClass(dictId);
-        this._nodes = new Map<string, EosDictionaryNode>();
-        this._dictionaries = {};
-        this.defaultOrder();
+        const descriptor = dictDescrSrv.getDescriptorClass(dictId);
+        if (descriptor) {
+            this.descriptor = descriptor;
+            this._nodes = new Map<string, EosDictionaryNode>();
+            this._dictionaries = {};
+            this.defaultOrder();
+            return this;
+        } else {
+            throw new Error('Словарь не поддерживается');
+        }
     }
 
     canDo(action: E_RECORD_ACTIONS): boolean {

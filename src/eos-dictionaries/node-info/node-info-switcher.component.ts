@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { IFieldView, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
+import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-node-info-switcher',
@@ -11,6 +12,7 @@ import { EosDictService } from '../services/eos-dict.service';
 export class NodeInfoSwitcherComponent implements OnDestroy {
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
+    node: EosDictionaryNode;
     fieldsDescriptionShort: any = {};
     nodeDataShort: any = {};
     fieldsDescriptionFull: any = {};
@@ -27,20 +29,19 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
 
         this._openedNodeSubscription = this._dictSrv.openedNode$.subscribe((node) => {
             if (node) {
+                this.node = node;
                 this.dictionaryId = node.dictionaryId;
-
                 this.fieldsDescriptionShort = node.getShortViewFieldsDescription();
                 this.nodeDataShort = node.getShortViewData();
                 this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
                 this.nodeDataFull = node.getFullViewData();
 
+                console.log('fds', this.fieldsDescriptionShort);
+                console.log('short data', this.nodeDataShort);
+                console.log('fdf', this.fieldsDescriptionFull);
+                console.log('full data', this.nodeDataFull);
+
                 if (this.dictionaryId === 'departments' && !node.data.rec['IS_NODE'] && node.children) {
-                    const _boss = node.children.find((_chld) => _chld.data.rec['POST_H']);
-                    if (_boss) {
-                        this.bossName = _boss.data.rec['SURNAME'];
-                    } else {
-                        this.bossName = '';
-                    }
                 }
             } else {
                 this._initInfo();
@@ -49,6 +50,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     }
 
     private _initInfo() {
+        this.node = null;
         this.dictionaryId = null;
         this.fieldsDescriptionFull = {};
         this.fieldsDescriptionShort = {};

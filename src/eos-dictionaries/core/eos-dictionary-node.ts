@@ -213,15 +213,15 @@ export class EosDictionaryNode {
         return this._descriptor.getListView(this.data);
     }
 
-    /*getQuickView(): IFieldView[] {
-        return this._descriptor.getQuickView(this.data);
-    }*/
+    /*getInfoView(): IFieldView[] {
+        return this._descriptor.getInfoView(this.data);
+    }
 
     getShortQuickView(): IFieldView[] {
         return this._descriptor.getShortQuickView(this.data);
     }
 
-    /*getEditView(): any {
+    getEditView(): any {
         return this._descriptor.getEditView(this.data);
     }*/
 
@@ -295,7 +295,7 @@ export class EosDictionaryNode {
         const _data = {
             rec: {},
         };
-        this._descriptor.getQuickView(this.data).forEach((_f) => {
+        this._descriptor.getInfoView(this.data).forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
             } else {

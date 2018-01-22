@@ -126,6 +126,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         const pOrganization = (orgDUE) ? this.getCachedRecord({ ORGANIZ_CL: [orgDUE] }) : Promise.resolve(null);
 
         const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
+        const pCabinets = this.getCachedRecord({ 'CABINET': { 'criteries': { DUE: rec.DUE } } });
 
         let owner = rec['ISN_NODE'].toString();
         if (!rec['IS_NODE']) {
@@ -144,17 +145,13 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
             });
 
-        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
-            .then(([user, org, cabinet, printInfo]) => {
-                /*
-                if (!printInfo['_State']) {
-                    printInfo._State = _ES.Stub;
-                }
-                */
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets])
+            .then(([user, org, cabinet, printInfo, cabinets]) => {
                 return {
                     user: user,
                     organization: org,
                     cabinet: cabinet,
+                    cabinets: cabinets,
                     printInfo: printInfo
                 };
             });
