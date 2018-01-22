@@ -143,10 +143,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 } else {
                     this.treeNodes = [];
                 }
+                console.log(this.treeNodes);
             });
 
         _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
             .subscribe((dictionary: EosDictionary) => {
+                console.log(dictionary)
                 if (dictionary) {
                     this.dictMode = this._dictSrv.dictMode;
                     this.customFields = this._dictSrv.customFields;
@@ -158,6 +160,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
                     this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
+                    if (dictionary.root) {
+                        this.dictionaryName = dictionary.root.title;
+                        this.treeNodes = [dictionary.root];
+                    }
                 } else {
                     this.treeNodes = [];
                 }
