@@ -7,17 +7,13 @@ import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dic
 import { SEARCH_TYPES } from 'eos-dictionaries/consts/search-types';
 
 export class RecordDescriptor {
-    protected dictionary: AbstractDictionaryDescriptor;
+    readonly searchConfig: SEARCH_TYPES[];
     keyField: FieldDescriptor;
     parentField?: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    readonly searchConfig: SEARCH_TYPES[];
-    /**
-     * set of actions available for dictionary
-     */
-    private actions: E_RECORD_ACTIONS[];
+    protected dictionary: AbstractDictionaryDescriptor;
 
     protected treeFields: FieldDescriptor[];
 
@@ -57,6 +53,10 @@ export class RecordDescriptor {
     protected allVisibleFields: FieldDescriptor[];
 
     protected modeList: IRecordModeDescription[];
+    /**
+     * set of actions available for dictionary
+     */
+    private actions: E_RECORD_ACTIONS[];
 
     constructor(dictionary: AbstractDictionaryDescriptor, data: IDictionaryDescriptor) {
         const fields = data.fields;
@@ -162,7 +162,7 @@ export class RecordDescriptor {
                         invalidMessage: _f.invalidMessage,
                         isUnic: _f.isUnic,
                         unicInDict: _f.unicInDict,
-                    }
+                    };
                 } else {
                     _description[_f.key] = {};
                     /* recive other dict description */
@@ -230,7 +230,7 @@ export class RecordDescriptor {
             group.push(_action);
         }
         /* tslint:enable:no-bitwise */
-    };
+    }
 
     private _addFieldToSet(name: string, fieldSet: FieldDescriptor[]) {
         const fld = this.fieldsMap.get(name);
@@ -273,6 +273,6 @@ export class RecordDescriptor {
             if (descriptor[foreignKey]) {
                 descriptor[foreignKey].forEach((actName) => this._addAction(actName, this[foreignKey]));
             }
-        })
+        });
     }
 }

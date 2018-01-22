@@ -55,10 +55,6 @@ export class DictionarySearchComponent implements OnDestroy {
 
     public mode = 0;
 
-    setTab(key: string) {
-        this.currTab = key;
-    }
-
     get noSearchData(): boolean {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
@@ -105,6 +101,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    setTab(key: string) {
+        this.currTab = key;
+    }
+
     public setFocus() {
         document.getElementById('inpQuick').focus();
     }
@@ -128,7 +128,7 @@ export class DictionarySearchComponent implements OnDestroy {
                     title: 'Идет поиск!',
                     type: 'warning',
                     msg: 'Пожалуйста подождите.'
-                })
+                });
             }
         }
     }
@@ -161,7 +161,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 title: 'Идет поиск!',
                 type: 'danger',
                 msg: 'Пожалуйста подождите.'
-            })
+            });
         }
     }
 
@@ -175,6 +175,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dateFilter(date: Date) {
         if (date !== this.date) {
+            /*
             this.date = date;
             this._dictSrv.filter({ date: date })
                 .then(() => {
@@ -183,6 +184,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 .catch((err) => {
                     console.log(err)
                 });
+            */
         }
     }
 

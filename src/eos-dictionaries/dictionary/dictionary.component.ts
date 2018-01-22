@@ -44,8 +44,6 @@ import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.
     templateUrl: 'dictionary.component.html',
 })
 export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
-    private ngUnsubscribe: Subject<any> = new Subject();
-
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('tree') treeEl;
 
@@ -60,8 +58,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public params: IDictionaryViewParameters;
     public selectedNode: EosDictionaryNode;
     public _selectedNodeText: string;
-    private _nodeId: string;
-
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
     paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
@@ -105,11 +101,15 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         width: 0 + 'px',
         height: 0 + 'px',
         top: 0 + 'px'
-    }
+    };
 
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
     }
+
+    private _nodeId: string;
+
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private _route: ActivatedRoute,
@@ -160,7 +160,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                             vField.customTitle = _title.customTitle;
                         }
                     });
-                    this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
+                    this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered });
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
                     this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
                 } else {
@@ -220,6 +220,171 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     transitionEnd(e: Event) {
         this._countColumnWidth();
+    }
+
+    doAction(evt: IActionEvent) {
+        switch (evt.action) {
+            case E_RECORD_ACTIONS.navigateDown:
+                this._openNodeNavigate(false);
+                break;
+
+            case E_RECORD_ACTIONS.navigateUp:
+                this._openNodeNavigate(true);
+                break;
+
+            case E_RECORD_ACTIONS.edit:
+                this._editNode();
+                break;
+
+            case E_RECORD_ACTIONS.showDeleted:
+                this._dictSrv.toggleDeleted();
+                break;
+
+            case E_RECORD_ACTIONS.userOrder:
+                this._dictSrv.toggleUserOrder();
+                this.orderBy = this._dictSrv.order;
+                break;
+
+            case E_RECORD_ACTIONS.moveUp:
+                this._moveUp();
+                break;
+
+            case E_RECORD_ACTIONS.moveDown:
+                this._moveDown();
+                break;
+
+            case E_RECORD_ACTIONS.remove:
+                this._deleteItems();
+                break;
+
+            case E_RECORD_ACTIONS.removeHard:
+                this.physicallyDelete();
+                break;
+
+            case E_RECORD_ACTIONS.add:
+                this._openCreate(evt.params);
+                break;
+
+            case E_RECORD_ACTIONS.restore:
+                this._restoreItems();
+                break;
+            case E_RECORD_ACTIONS.showAllSubnodes:
+                this._dictSrv.toggleAllSubnodes();
+                break;
+
+            case E_RECORD_ACTIONS.createRepresentative:
+                this._createRepresentative();
+                break;
+            default:
+                console.warn('unhandled action', E_RECORD_ACTIONS[evt.action]);
+        }
+    }
+
+    resetSearch() {
+        this._dictSrv.resetSearch();
+    }
+
+    orderByField(fieldKey: string) {
+        this._dictSrv.toggleUserOrder(false);
+        if (!this.orderBy || this.orderBy.fieldKey !== fieldKey) {
+            this.orderBy = {
+                fieldKey: fieldKey,
+                ascend: true,
+            };
+        } else {
+            this.orderBy.ascend = !this.orderBy.ascend;
+        }
+        this._dictSrv.orderBy(this.orderBy);
+    }
+
+    userOrdered(nodes: EosDictionaryNode[]) {
+        this._dictSrv.setUserOrder(nodes);
+    }
+
+    onClick() {
+        if (window.innerWidth <= 1500) {
+            this._sandwichSrv.changeDictState(false, false);
+            this._sandwichSrv.changeDictState(false, true);
+        }
+    }
+
+    goUp() {
+        if (this.selectedNode && this.selectedNode.parent) {
+            const path = this.selectedNode.parent.getPath();
+            this._router.navigate(path);
+        }
+    }
+
+    updateMarks(): void {
+        this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
+        this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
+        this.allMarked = this.anyMarked;
+        this._dictSrv.markItem(this.allMarked);
+    }
+
+    /**
+     * Toggle checkbox checked all
+     */
+    public toggleAllMarks(): void {
+        this.anyMarked = this.allMarked;
+        this.anyUnmarked = !this.allMarked;
+        this.visibleNodes.forEach((node) => node.marked = this.allMarked);
+        this._dictSrv.markItem(this.allMarked);
+    }
+
+    /**
+     * Physical delete marked elements on page
+     */
+    public physicallyDelete(): void {
+        let list = '', j = 0;
+        this.visibleNodes.forEach((node: EosDictionaryNode) => {
+            if (node.marked) {
+                j++;
+                list += '"' + node.title + '", ';
+            }
+        });
+
+        list = list.slice(0, list.length - 2);
+        if (j === 0) {
+            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS);
+            return;
+        } else if (j === 1) {
+            const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
+        } else {
+            const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
+            _confrm.body = _confrm.body.replace('{{name}}', list);
+            this._callDelWindow(_confrm);
+        }
+    }
+
+    /**
+     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
+     */
+    public _configColumns() {
+        const _fldsCurr = [];
+        const _allFields = [];
+        this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
+        this.modalWindow.content.fixedFields = this.viewFields;
+        Object.assign(this.modalWindow.content.currentFields, this.customFields);
+        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
+        this.modalWindow.content.onChoose.subscribe((_fields) => {
+            this.customFields = _fields;
+            this._dictSrv.customFields = this.customFields;
+            this._dictSrv.customTitles = this.viewFields;
+            /* tslint:enable:no-bitwise */
+            this._countColumnWidth();
+            this.modalWindow.hide();
+        });
+    }
+
+    public resize(): void {
+        this._sandwichSrv.resize();
+    }
+
+    setDictMode(mode: number) {
+        this._dictSrv.setDictMode(mode);
     }
 
     private _countColumnWidth() {
@@ -308,64 +473,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
     }
 
-    doAction(evt: IActionEvent) {
-        switch (evt.action) {
-            case E_RECORD_ACTIONS.navigateDown:
-                this._openNodeNavigate(false);
-                break;
-
-            case E_RECORD_ACTIONS.navigateUp:
-                this._openNodeNavigate(true);
-                break;
-
-            case E_RECORD_ACTIONS.edit:
-                this._editNode();
-                break;
-
-            case E_RECORD_ACTIONS.showDeleted:
-                this._dictSrv.toggleDeleted();
-                break;
-
-            case E_RECORD_ACTIONS.userOrder:
-                this._dictSrv.toggleUserOrder();
-                this.orderBy = this._dictSrv.order;
-                break;
-
-            case E_RECORD_ACTIONS.moveUp:
-                this._moveUp();
-                break;
-
-            case E_RECORD_ACTIONS.moveDown:
-                this._moveDown();
-                break;
-
-            case E_RECORD_ACTIONS.remove:
-                this._deleteItems();
-                break;
-
-            case E_RECORD_ACTIONS.removeHard:
-                this.physicallyDelete();
-                break;
-
-            case E_RECORD_ACTIONS.add:
-                this._openCreate(evt.params);
-                break;
-
-            case E_RECORD_ACTIONS.restore:
-                this._restoreItems();
-                break;
-            case E_RECORD_ACTIONS.showAllSubnodes:
-                this._dictSrv.toggleAllSubnodes();
-                break;
-
-            case E_RECORD_ACTIONS.createRepresentative:
-                this._createRepresentative();
-                break;
-            default:
-                console.log('unhandled action', E_RECORD_ACTIONS[evt.action]);
-        }
-    }
-
     /**
      * @description convert selected persons to list of organization representatives,
      * add it to department organization if it exists upwards to tree
@@ -397,7 +504,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this._msgSrv.addNewMessage(WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE);
                     } else {
                         /* call API and save */
-                        console.log('Representatives', _represData);
+                        // console.log('Representatives', _represData);
                         return this._dictSrv.createRepresentative(_represData).then((results) => {
                             results.forEach((result) =>
                                 this._msgSrv.addNewMessage({
@@ -413,27 +520,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 }
             });
         }
-    }
-
-    resetSearch() {
-        this._dictSrv.resetSearch();
-    }
-
-    orderByField(fieldKey: string) {
-        this._dictSrv.toggleUserOrder(false);
-        if (!this.orderBy || this.orderBy.fieldKey !== fieldKey) {
-            this.orderBy = {
-                fieldKey: fieldKey,
-                ascend: true,
-            };
-        } else {
-            this.orderBy.ascend = !this.orderBy.ascend;
-        }
-        this._dictSrv.orderBy(this.orderBy);
-    }
-
-    userOrdered(nodes: EosDictionaryNode[]) {
-        this._dictSrv.setUserOrder(nodes);
     }
 
     private _moveUp(): void {
@@ -493,63 +579,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.openNode(this.visibleNodes[_idx].id);
     }
 
-    onClick() {
-        if (window.innerWidth <= 1500) {
-            this._sandwichSrv.changeDictState(false, false);
-            this._sandwichSrv.changeDictState(false, true);
-        }
-    }
-
-    goUp() {
-        if (this.selectedNode && this.selectedNode.parent) {
-            const path = this.selectedNode.parent.getPath();
-            this._router.navigate(path);
-        }
-    }
-
-    updateMarks(): void {
-        this.anyMarked = this.visibleNodes.findIndex((node) => node.marked) > -1;
-        this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
-        this.allMarked = this.anyMarked;
-        this._dictSrv.markItem(this.allMarked);
-    }
-
-    /**
-     * Toggle checkbox checked all
-     */
-    public toggleAllMarks(): void {
-        this.anyMarked = this.allMarked;
-        this.anyUnmarked = !this.allMarked;
-        this.visibleNodes.forEach((node) => node.marked = this.allMarked);
-        this._dictSrv.markItem(this.allMarked);
-    }
-
-    /**
-     * Physical delete marked elements on page
-     */
-    public physicallyDelete(): void {
-        let list = '', j = 0;
-        this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) {
-                j++;
-                list += '"' + node.title + '", ';
-            }
-        })
-        list = list.slice(0, list.length - 2);
-        if (j === 0) {
-            this._msgSrv.addNewMessage(DANGER_HAVE_NO_ELEMENTS)
-            return;
-        } else if (j === 1) {
-            const _confrm = Object.assign({}, CONFIRM_NODE_DELETE);
-            _confrm.body = _confrm.body.replace('{{name}}', list);
-            this._callDelWindow(_confrm);
-        } else {
-            const _confrm = Object.assign({}, CONFIRM_NODES_DELETE);
-            _confrm.body = _confrm.body.replace('{{name}}', list);
-            this._callDelWindow(_confrm);
-        }
-    }
-
     private _callDelWindow(_confrm: IConfirmWindow): void {
         this._confirmSrv.confirm(_confrm)
             .then((confirmed: boolean) => {
@@ -578,34 +607,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /**
-     * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
-     */
-    public _configColumns() {
-        const _fldsCurr = [];
-        const _allFields = [];
-        this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
-        this.modalWindow.content.fixedFields = this.viewFields;
-        Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
-        this.modalWindow.content.onChoose.subscribe((_fields) => {
-            this.customFields = _fields;
-            this._dictSrv.customFields = this.customFields;
-            this._dictSrv.customTitles = this.viewFields;
-            /* tslint:enable:no-bitwise */
-            this._countColumnWidth();
-            this.modalWindow.hide();
-        });
-    }
-
-    /**
      * Logic delete marked elements on page
      */
     private _deleteItems(): void {
         let delCount = 0, allCount = 0;
         this.visibleNodes.forEach((node: EosDictionaryNode) => {
-            if (node.marked) { allCount++ }
-            if (node.marked && node.isDeleted) { delCount++ }
-        })
+            if (node.marked) { allCount++; }
+            if (node.marked && node.isDeleted) { delCount++; }
+        });
         if (delCount === allCount) {
             this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
         }
@@ -648,21 +657,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.allMarked = false;
     }
 
-    public resize(): void {
-        this._sandwichSrv.resize();
-    }
-
     private _errHandler(err) {
-        console.error(err);
+        console.warn(err);
         const errMessage = err.message ? err.message : err;
         this._msgSrv.addNewMessage({
             type: 'danger',
             title: 'Ошибка операции',
             msg: errMessage
         });
-    }
-
-    setDictMode(mode: number) {
-        this._dictSrv.setDictMode(mode);
     }
 }

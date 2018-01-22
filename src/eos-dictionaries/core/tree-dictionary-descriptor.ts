@@ -123,7 +123,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             DELETED: (isDeleted ? 1 : 0),
             CLASSIF_NAME: 'new_classif_name',
             NOTE: null,
-        }
+        };
 
         if (parent) {
             _res.DUE = parent.DUE + _res.DUE;
@@ -131,5 +131,5 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             _res.ISN_HIGH_NODE = parent.ISN_NODE;
         }
         return _res;
-    };
+    }
 }

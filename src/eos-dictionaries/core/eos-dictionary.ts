@@ -149,9 +149,6 @@ export class EosDictionary {
                 if (_node && nodeIds.findIndex((id) => id === _node.id) === -1) {
                     nodeIds.push(_node.id);
                 }
-
-            } else {
-                console.log('no data');
             }
         });
 
@@ -178,7 +175,7 @@ export class EosDictionary {
                                 this.descriptor.getRelatedSev(node.data.rec)
                             ]).then(([related, sev]) => {
                                 node.data = Object.assign(node.data, related, { sev: sev });
-                                console.log('full department info', node.data);
+                                // console.log('full department info', node.data);
                                 return node;
                             });
                         case 'rubricator':
@@ -190,7 +187,7 @@ export class EosDictionary {
                         default:
                             return this.descriptor.getRelated(node.data.rec)
                                 .then((related) => {
-                                    node.data = Object.assign(node.data, related)
+                                    node.data = Object.assign(node.data, related);
                                     return node;
                                 });
                     }
@@ -283,7 +280,7 @@ export class EosDictionary {
                     const res = this.updateNodes(nodes, true);
                     node.updating = false;
                     return res;
-                })
+                });
         } else {
             return Promise.resolve([]);
         }
@@ -324,7 +321,7 @@ export class EosDictionary {
         if (dictionary.id === 'departments') {
             const critery = {
                 'DUE': node.id
-            }
+            };
             return this.search([critery]);
         }
         return Promise.resolve([]);
@@ -484,7 +481,7 @@ export class EosDictionary {
                     orderedNodes.push(node);
                 }
 
-            })
+            });
             return orderedNodes;
         }
         return nodes;
