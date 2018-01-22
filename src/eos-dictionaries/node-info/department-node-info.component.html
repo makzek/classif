@@ -104,7 +104,7 @@
             </div>
             <div *ngIf="nodeDataFull && nodeDataFull.rec && !nodeDataFull.rec['IS_NODE']">
                 <div>
-                    <span *ngIf="nodeDataFull['FULLNAME'];then fullName else shortName"></span>
+                    <span *ngIf="nodeDataFull.rec['FULLNAME'];then fullName else shortName"></span>
                     <ng-template #fullName>
                         <span class="short-info l-font">{{nodeDataFull.rec['FULLNAME']}}</span>
                     </ng-template>

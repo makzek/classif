@@ -1,5 +1,5 @@
 <ng-container *ngIf="node">
-    <ng-container [ngSwitch]="dictionaryId">
+    <ng-container [ngSwitch]="node.dictionaryId">
         <eos-department-node-info *ngSwitchCase="'departments'"
             [node]="node"
             (action)="onAction($event)">
