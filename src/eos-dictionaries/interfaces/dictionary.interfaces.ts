@@ -4,13 +4,13 @@ export enum E_DEPT_MODE {
     person,
     department,
     cabinet
-};
+}
 
 export enum E_DICT_TYPE {
     linear,
     tree,
     department
-};
+}
 
 export enum E_FIELD_SET {
     tree,
@@ -21,7 +21,7 @@ export enum E_FIELD_SET {
     fullSearch,
     edit,
     allVisible
-};
+}
 
 export enum E_FIELD_TYPE {
     string,
@@ -32,7 +32,7 @@ export enum E_FIELD_TYPE {
     icon,
     boolean,
     dictionary
-};
+}
 
 export interface IFieldDesriptor {
     key: string;
@@ -46,7 +46,7 @@ export interface IFieldDesriptor {
     invalidMessage?: string;
     isUnic?: boolean;
     unicInDict?: boolean;
-};
+}
 
 export interface IFieldDesriptorBase {
     readonly key: string;
@@ -61,11 +61,11 @@ export interface IFieldDesriptorBase {
     readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
-};
+}
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
-};
+}
 
 export interface IDictionaryDescriptor {
     id: string;
@@ -90,7 +90,7 @@ export interface IDictionaryDescriptor {
     shortQuickViewFields: any;
     editFields: any;
     listFields: any;
-};
+}
 
 export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
@@ -98,17 +98,17 @@ export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
     shortQuickViewFields: string[];
     editFields: string[];
     listFields: string[];
-};
+}
 
 /* mode for department-like ditionary */
 export interface IRecordMode {
     [mode: string]: string[];
-};
+}
 
 export interface IRecordModeDescription {
     key: string;
     title: string;
-};
+}
 
 export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
@@ -119,4 +119,4 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     editFields: string[];
     listFields: string[];
     fullSearchFields: IRecordMode;
-};
+}
