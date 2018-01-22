@@ -37,11 +37,11 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         key: 'CLASSIF_NAME',
         title: 'Краткое наименование',
         type: 'text',
-        length: 250,
+        length: 2000,
         required: true,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 250 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
@@ -90,9 +90,9 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         key: 'FULLNAME',
         title: 'Полное наименование',
         type: 'text',
-        length: 1500,
+        length: 2000,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 1500 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
         key: 'sev',
         title: 'Индекс СЭВ',
