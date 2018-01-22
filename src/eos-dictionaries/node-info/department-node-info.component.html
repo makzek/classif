@@ -13,9 +13,6 @@
             </button>
         </span>
         <div class="opened-node-wrapper">
-            <div *ngIf="updating" class="no-data full-info usual-border">
-                <eos-spinner size="lg"></eos-spinner>
-            </div>
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
                 <div *ngIf="nodeDataShort.rec">
                     <span *ngIf="nodeDataShort['print-info'] && nodeDataShort['print-info']['NAME'] && nodeDataShort['print-info']['SURNAME'] && nodeDataShort['print-info']['PATRON'];then fullName else shortName"></span>

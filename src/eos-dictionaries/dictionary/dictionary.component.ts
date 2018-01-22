@@ -147,7 +147,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)
             .subscribe((dictionary: EosDictionary) => {
-                console.log(dictionary)
                 if (dictionary) {
                     this.dictMode = this._dictSrv.dictMode;
                     this.customFields = this._dictSrv.customFields;

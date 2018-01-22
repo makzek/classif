@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Injector } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { IFieldView, E_FIELD_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
@@ -21,13 +21,7 @@ export class BaseNodeInfoComponent {
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
     fieldTypes = E_FIELD_TYPE;
 
-    protected _dictSrv: EosDictService;
-
-    constructor(injector: Injector) {
-        this._dictSrv = injector.get(EosDictService);
-        this._dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
-            .subscribe(params => this.updating = params.updatingInfo)
-    }
+    constructor() { }
 
     actionHandler(type: E_RECORD_ACTIONS) {
         this.action.emit(type);
