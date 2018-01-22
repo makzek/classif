@@ -75,56 +75,15 @@ export class EosDeskService {
 
                 if (this._selectedDesk$ && this._selectedDesk) {
                     if (this._selectedDesk.id === 'system') {
-                        this._selectedDesk$.next(this._desksList[0])
+                        this._selectedDesk$.next(this._desksList[0]);
                     }
-                };
+                }
             });
 
         this._recentItems = [];
         this._appCtx.ready().then(x => {
             this.readDeskList();
-        })
-    }
-
-    private readDeskList() {
-        const view = this._appCtx.UserViews.filter((uv) => uv.SRCH_KIND_NAME === 'clmanDesc');
-        for (let i = 0; i < view.length; i++) {
-            this._desksList.push(this.readDesc(view[i]));
-            this._desksList$.next(this._desksList);
-        }
-    }
-
-    private readDesc(v: SRCH_VIEW): EosDesk {
-        const res = <EosDesk>{ id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: [] };
-        const cols = v.SRCH_VIEW_DESC_List;
-        for (let i = 0; i !== cols.length; i++) {
-            const col = cols[i];
-            const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
-            di.title = col.LABEL;
-            res.references.push(di);
-        }
-        return res;
-    }
-
-    private mapToDefaultDescItem(blockId: string): IDeskItem {
-        const defaults = this._desksList[0].references;
-        const s = '/spravochniki/' + blockId;
-        const result = defaults.find(it => it.url === s);
-        // TODO: clone?
-        return result;
-    }
-
-    /**
-     * Find desktop in the UserView
-     * @param deskId destop ID
-     */
-    private findView(deskId: string) {
-        const isn: number = parseInt(deskId, 0);
-        const v: SRCH_VIEW = this._appCtx.UserViews.find((uv: SRCH_VIEW) => uv.ISN_VIEW === isn)
-        if (v === undefined) {
-            // TODO: может отругаться?
-        }
-        return v;
+        });
     }
 
     /**
@@ -137,14 +96,14 @@ export class EosDeskService {
             title: this._dictSrv.dictionaryTitle,
             /* fullTitle: this._dictSrv.dictionaryTitle, */
             url: '/spravochniki/' + dictionaryURL
-        }
+        };
         const view: SRCH_VIEW = this.findView(desk.id);
         if (view !== undefined) {
             if (view.SRCH_VIEW_DESC_List.find(el => el.BLOCK_ID === item.url.split('/')[2])) {
                 return false;
             }
             const col = this.viewManager.addViewColumn(view);
-            col.BLOCK_ID = dictionaryURL
+            col.BLOCK_ID = dictionaryURL;
             col.LABEL = item.title;
             this.viewManager.saveView(view).then(() => this._appCtx.reInit());
         }
@@ -161,14 +120,14 @@ export class EosDeskService {
      * @param link editing item
      */
     public updateName(link: IDeskItem): Promise<any> {
-        const v = this.findView(this._selectedDesk.id)
+        const v = this.findView(this._selectedDesk.id);
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
             const col = this.viewManager.updateViewColumn(v, blockId, link.title);
             return this.viewManager.saveView(v).then(() => {
                 this._appCtx.reInit();
                 this._selectedDesk$.next(this._selectedDesk);
-            })
+            });
         } else {
             return Promise.resolve(null);
         }
@@ -192,7 +151,7 @@ export class EosDeskService {
     }
 
     unpinRef(link: IDeskItem): void {
-        const v = this.findView(this._selectedDesk.id)
+        const v = this.findView(this._selectedDesk.id);
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
             this.viewManager.delViewColumn(v, blockId);
@@ -236,7 +195,7 @@ export class EosDeskService {
 
     editDesk(desk: EosDesk): Promise<any> {
         const deskView = this.findView(desk.id);
-        console.log('editdesk', deskView);
+        // console.log('editdesk', deskView);
 
         let res = Promise.resolve(null);
         if (deskView) {
@@ -246,8 +205,8 @@ export class EosDeskService {
         res.then(() => {
             this._desksList.splice(this._desksList.indexOf(desk), 1, desk);
             this._desksList$.next(this._desksList);
-            console.log('editing done');
-        })
+            // console.log('editing done');
+        });
         return res;
     }
 
@@ -297,5 +256,46 @@ export class EosDeskService {
             _n++;
         }
         return _newName;
+    }
+
+    private readDeskList() {
+        const view = this._appCtx.UserViews.filter((uv) => uv.SRCH_KIND_NAME === 'clmanDesc');
+        for (let i = 0; i < view.length; i++) {
+            this._desksList.push(this.readDesc(view[i]));
+            this._desksList$.next(this._desksList);
+        }
+    }
+
+    private readDesc(v: SRCH_VIEW): EosDesk {
+        const res = <EosDesk>{ id: v.ISN_VIEW.toString(), name: v.VIEW_NAME, edited: false, references: [] };
+        const cols = v.SRCH_VIEW_DESC_List;
+        for (let i = 0; i !== cols.length; i++) {
+            const col = cols[i];
+            const di = this.mapToDefaultDescItem(cols[i].BLOCK_ID);
+            di.title = col.LABEL;
+            res.references.push(di);
+        }
+        return res;
+    }
+
+    private mapToDefaultDescItem(blockId: string): IDeskItem {
+        const defaults = this._desksList[0].references;
+        const s = '/spravochniki/' + blockId;
+        const result = defaults.find(it => it.url === s);
+        // TODO: clone?
+        return result;
+    }
+
+    /**
+     * Find desktop in the UserView
+     * @param deskId destop ID
+     */
+    private findView(deskId: string) {
+        const isn: number = parseInt(deskId, 0);
+        const v: SRCH_VIEW = this._appCtx.UserViews.find((uv: SRCH_VIEW) => uv.ISN_VIEW === isn);
+        if (v === undefined) {
+            // TODO: может отругаться?
+        }
+        return v;
     }
 }

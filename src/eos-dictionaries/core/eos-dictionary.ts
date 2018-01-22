@@ -69,19 +69,12 @@ export class EosDictionary {
         this._orderBy = order;
     }
 
-    public defaultOrder() {
-        this._orderBy = {
-            ascend: true,
-            fieldKey: 'CLASSIF_NAME'
-        };
-    }
-
     get orderBy() {
         return this._orderBy;
     }
 
     get canMarkItems(): boolean {
-        return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords)
+        return this.descriptor.record.canDo(E_RECORD_ACTIONS.markRecords);
     }
 
     constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
@@ -89,6 +82,13 @@ export class EosDictionary {
         this._nodes = new Map<string, EosDictionaryNode>();
         this._dictionaries = {};
         this.defaultOrder();
+    }
+
+    public defaultOrder() {
+        this._orderBy = {
+            ascend: true,
+            fieldKey: 'CLASSIF_NAME'
+        };
     }
 
     canDo(action: E_RECORD_ACTIONS): boolean {
@@ -111,62 +111,12 @@ export class EosDictionary {
             .then((data: any[]) => {
                 this.updateNodes(data, true);
                 return this.root;
-            })
+            });
     }
 
     initUserOrder(userOrdered: boolean, userOrder: any) {
         this._userOrdered = userOrdered;
         this._userOrder = userOrder;
-    }
-
-    private _updateTree(nodes: EosDictionaryNode[]) {
-        /* build tree */
-        nodes.forEach((_node) => {
-            if (_node.parentId) {
-                const parent = this._nodes.get(_node.parentId);
-                if (parent) {
-                    parent.addChild(_node);
-                }
-            }
-        });
-
-        /* find root */
-        if (!this.root) {
-            let rootNode: EosDictionaryNode;
-            if (this.descriptor.dictionaryType !== E_DICT_TYPE.linear) {
-                rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
-            }
-
-            /* fallback if root undefined */
-            if (!rootNode) {
-                rootNode = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
-                rootNode.children = [];
-                this._nodes.set(rootNode.id, rootNode);
-            }
-
-            this.root = rootNode;
-        }
-
-        /* force set title and visible for root */
-        this.root.title = this.descriptor.title;
-        this.root.data.rec['DELETED'] = false;
-        this.root.isExpanded = true;
-
-        nodes.forEach((node) => {
-            if (!node.parent && node !== this.root) {
-                this.root.addChild(node);
-            }
-            node.updateExpandable(this._showDeleted);
-        });
-
-        this.root.updateExpandable(this._showDeleted);
-
-        const treeOrderKey = this.root.getTreeView()[0];
-        this.nodes.forEach((node) => {
-            if (treeOrderKey && node.children && node.children.length > 0) {
-                node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
-            }
-        });
     }
 
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -363,31 +313,6 @@ export class EosDictionary {
         return this._dictionaries[dictId];
     }
 
-    /**
-     * @description Prepare array of marked records for group operation
-     * @param recursive if true adds all loaded children into array
-     */
-    private _getMarkedRecords(recursive = false): any[] {
-        const records: any[] = [];
-
-        this._nodes.forEach((node) => {
-            if (node.marked) {
-                if (recursive) {
-                    node.getAllChildren().forEach((chld) => records.push(chld.data.rec));
-                }
-                records.push(node.data.rec);
-            }
-        });
-        return records;
-    }
-
-    private _resetMarked() {
-        this._nodes.forEach((node) => {
-            if (node.marked) {
-                node.marked = false;
-            }
-        });
-    }
 
     search(criteries: any[]): Promise<EosDictionaryNode[]> {
         return this.descriptor
@@ -448,6 +373,82 @@ export class EosDictionary {
         } else {
             return this._orderByField(nodes);
         }
+    }
+
+    private _updateTree(nodes: EosDictionaryNode[]) {
+        /* build tree */
+        nodes.forEach((_node) => {
+            if (_node.parentId) {
+                const parent = this._nodes.get(_node.parentId);
+                if (parent) {
+                    parent.addChild(_node);
+                }
+            }
+        });
+
+        /* find root */
+        if (!this.root) {
+            let rootNode: EosDictionaryNode;
+            if (this.descriptor.dictionaryType !== E_DICT_TYPE.linear) {
+                rootNode = nodes.find((node) => node.parentId === null || node.parentId === undefined);
+            }
+
+            /* fallback if root undefined */
+            if (!rootNode) {
+                rootNode = new EosDictionaryNode(this, { IS_NODE: 0, POTECTED: 1 });
+                rootNode.children = [];
+                this._nodes.set(rootNode.id, rootNode);
+            }
+
+            this.root = rootNode;
+        }
+
+        /* force set title and visible for root */
+        this.root.title = this.descriptor.title;
+        this.root.data.rec['DELETED'] = false;
+        this.root.isExpanded = true;
+
+        nodes.forEach((node) => {
+            if (!node.parent && node !== this.root) {
+                this.root.addChild(node);
+            }
+            node.updateExpandable(this._showDeleted);
+        });
+
+        this.root.updateExpandable(this._showDeleted);
+
+        const treeOrderKey = this.root.getTreeView()[0];
+        this.nodes.forEach((node) => {
+            if (treeOrderKey && node.children && node.children.length > 0) {
+                node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
+            }
+        });
+    }
+
+    /**
+     * @description Prepare array of marked records for group operation
+     * @param recursive if true adds all loaded children into array
+     */
+    private _getMarkedRecords(recursive = false): any[] {
+        const records: any[] = [];
+
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+                if (recursive) {
+                    node.getAllChildren().forEach((chld) => records.push(chld.data.rec));
+                }
+                records.push(node.data.rec);
+            }
+        });
+        return records;
+    }
+
+    private _resetMarked() {
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+                node.marked = false;
+            }
+        });
     }
 
     private _extendCritery(critery: any, params: ISearchSettings, selectedNode?: EosDictionaryNode) {

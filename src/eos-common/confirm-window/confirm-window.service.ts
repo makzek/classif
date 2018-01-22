@@ -19,10 +19,10 @@ export class ConfirmWindowService {
                 if (reason === 'backdrop-click' || reason === 'esc') {
                     res(false);
                 }
-            })
+            });
             _wnd.confirmEvt.subscribe((confirm: boolean) => {
                 res(confirm);
             });
-        })
+        });
     }
 }

@@ -206,10 +206,10 @@ export abstract class AbstractDictionaryDescriptor {
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
-        console.log('_postChanges', data, updates);
+        // console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
-        console.log('changes', changes);
+        // console.log('changes', changes);
         return this.apiSrv.batch(changes, '');
     }
 
@@ -217,9 +217,9 @@ export abstract class AbstractDictionaryDescriptor {
         const chain: string[] = due.split('.').filter((elem) => !!elem);
         let prefix = '';
         chain.forEach((elem, idx, arr) => {
-            arr[idx] = prefix + elem + '.'
+            arr[idx] = prefix + elem + '.';
             prefix = arr[idx];
-        })
+        });
         return chain;
     }
 
@@ -233,7 +233,7 @@ export abstract class AbstractDictionaryDescriptor {
         if (descriptorData.fields) {
             this.record = new RecordDescriptor(this, descriptorData);
         }
-    };
+    }
 
     protected prepareForEdit(records: any[]): any[] {
         return records.map((record) => this.apiSrv.entityHelper.prepareForEdit(record));

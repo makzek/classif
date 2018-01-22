@@ -1,4 +1,4 @@
-import { IMessage, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
+import { IMessage } from '../../eos-common/core/message.interface';
 
 export const WARN_EDIT_ERROR: IMessage = {
     type: 'warning',
@@ -48,7 +48,7 @@ export const DANGER_HAVE_NO_ELEMENTS: IMessage = {
     type: 'warning',
     title: 'Элементы не выбраны!',
     msg: 'Удалять нечего.'
-}
+};
 
 export const INFO_NOTHING_CHANGES: IMessage = {
     type: 'info',
@@ -60,29 +60,29 @@ export const SUCCESS_SAVE: IMessage = {
     type: 'success',
     title: 'Изменения сохранены',
     msg: ''
-}
+};
 
 export const WARN_SAVE_FAILED: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
     msg: 'изменения не сохранены!'
-}
+};
 
 export const WARN_LOGIC_DELETE: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
     msg: 'отмеченные элементы уже были логически удалены!'
-}
+};
 
 export const WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
     msg: 'нет элементов для назначений представителей организации'
-}
+};
 
 export const WARN_NO_ORGANIZATION: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
     msg: 'вверх по иерархии нет организаций'
-}
+};
 

@@ -22,7 +22,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getChildren(): Promise<any[]> {
         return this.getData();
-    };
+    }
 
     getSubtree(): Promise<any[]> {
         return Promise.resolve([]);
@@ -48,8 +48,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
             NOTE: null,
             IS_FINAL: 0,
             STATUS: ''
-        }
-
+        };
         return _res;
-    };
+    }
 }

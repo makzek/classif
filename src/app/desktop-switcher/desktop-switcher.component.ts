@@ -31,14 +31,6 @@ export class DesktopSwitcherComponent {
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
-    @HostListener('window:click', [])
-    clickout() {
-        if (!this.innerClick) {
-            this._dropDown.toggle(false);
-        }
-        this.innerClick = false;
-    }
-
     constructor(private _deskSrv: EosDeskService,
         private _msgSrv: EosMessageService,
         private _confirmSrv: ConfirmWindowService,
@@ -54,6 +46,14 @@ export class DesktopSwitcherComponent {
                 if (res) { this.selectedDesk = res; }
             }, (err) => alert('err' + err)
         );
+    }
+
+    @HostListener('window:click', [])
+    clickout() {
+        if (!this.innerClick) {
+            this._dropDown.toggle(false);
+        }
+        this.innerClick = false;
     }
 
 
@@ -169,6 +169,13 @@ export class DesktopSwitcherComponent {
         this.innerClick = true;
     }
 
+    route(desk: EosDesk): void {
+        if (desk.edited === false) {
+            this._router.navigate(['/desk', desk.id]);
+            this.hideDropDown();
+        }
+    }
+
     private _moreThenOneEdited(): boolean {
         if (this.creating) {
             return true;
@@ -180,12 +187,6 @@ export class DesktopSwitcherComponent {
                 }
             });
             return edited > 0;
-        }
-    }
-    private route(desk: EosDesk): void {
-        if (desk.edited === false) {
-            this._router.navigate(['/desk', desk.id]);
-            this.hideDropDown();
         }
     }
 }

@@ -12,11 +12,10 @@ export class PhotoUploaderComponent implements OnInit {
     @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('fileInput') inputEl: ElementRef;
-    @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
-    contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
-    uploading = false;
-    multiple = false;
+    // contactUrl = 'http://localhost/Eos.Delo.OData/Services/DELO_BLOB.asmx/Upload';
+    // uploading = false;
+    // multiple = false;
 
     imageSrc = '';
     // currentUrl = '';
@@ -24,10 +23,8 @@ export class PhotoUploaderComponent implements OnInit {
     nativeInputEl: HTMLInputElement;
     // fileCount: number;
     file: File;
+    @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
-
-    constructor() {
-    }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;

@@ -58,7 +58,7 @@ export class EosBreadcrumbsService {
                         url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
                         title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
                         /* fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle */
-                    }
+                    };
                 }
                 this._breadcrumbs$.next(this._breadcrumbs);
             });

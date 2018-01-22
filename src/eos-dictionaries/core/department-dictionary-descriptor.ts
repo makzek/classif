@@ -54,7 +54,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         let __res = [];
         Object.keys(this.fullSearchFields).forEach((mode) => {
             __res = __res.concat(this.fullSearchFields[mode]);
-        })
+        });
         return __res;
     }
 
@@ -78,7 +78,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             if (!this[setName]) {
                 this[setName] = new ModeFieldSet(this, descriptor[setName]);
             }
-        })
+        });
     }
 }
 
@@ -104,7 +104,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 if (data.rec[fld.foreignKey]) {
                     _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
                 }
-            })
+            });
         }
         return _criteries;
     }

@@ -6,7 +6,7 @@ export class ErrorService /*implements IErrorService*/ {
 
     httpCatch = (e) => {
         return this.errorHandler({ http: e });
-    };
+    }
 
     errorHandler(err) {
         if (err.http) {

@@ -58,21 +58,21 @@ export class TestPageComponent implements OnInit {
                 title: 'Ошибка сохранения фото на сервере:',
                 msg: 'сервер ответил: ' + this.pip.sequenceMap.GetFixed(delo_blob.ISN_BLOB),
             });
-        })
+        });
     }
 
     change(evt) {
-        console.log('evt', evt)
+        // console.log('evt', evt)
         this.date = evt;
     }
 
     chooseCL(evt) {
         const siteUrl = 'http://localhost/v175.WebSite.Publish/';
-        const pageUrl = siteUrl + 'Pages/Classif/ChooseClassif.aspx?'
+        const pageUrl = siteUrl + 'Pages/Classif/ChooseClassif.aspx?';
         const params = 'Classif=DEPARTMENT&value_id=__ClassifIds&skip_deleted=True&select_nodes=True&select_leaf=True&return_due=True';
         window.open(pageUrl + params , 'clhoose', 'width=1050,height=800,resizable=1,status=1,top=20,left=20');
         window['endPopup'] = function (result) {
-            console.log(result);
-        }
+            console.warn(result);
+        };
     }
 }

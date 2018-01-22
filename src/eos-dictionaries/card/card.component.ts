@@ -32,7 +32,7 @@ import { LS_EDIT_CARD } from '../consts/common';
 export enum EDIT_CARD_MODES {
     edit,
     view,
-};
+}
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -47,32 +47,20 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
-    private ngUnsubscribe: Subject<any> = new Subject();
-
     node: EosDictionaryNode;
     nodes: EosDictionaryNode[];
 
     nodeData: any = {};
-    private _originalData: any = {};
     isChanged = false;
     fieldsDescription: any = {};
 
     dictionaryId: string;
-    private nodeId: string;
-    private _uuid: string;
-
-    private _urlSegments: string[];
-    private nodeIndex: number = -1;
-
     isFirst: boolean;
     isLast: boolean;
 
     lastEditedCard: EditedCard;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
 
-    private nextRoute: string;
-
-    private _mode: EDIT_CARD_MODES;
     editMode: boolean;
 
     selfLink = null;
@@ -83,26 +71,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     fullNamesList: string[] = [];
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
-
     /* todo: check tasks for reson
     @HostListener('document:blur')
     private _blur(): boolean {
         return this.canDeactivate();
     }
     */
-
-    @HostListener('window:beforeunload', ['$event'])
-    private _canWndUnload(evt: BeforeUnloadEvent): any {
-        if (this.editMode) {
-            /* clean link on close or reload */
-            /* cann't handle user answer */
-            this._clearEditingCardLink();
-        }
-        if (this.isChanged) {
-            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
-            return false;
-        }
-    }
 
     get nodeName() {
         let _nodeName = '';
@@ -114,6 +88,18 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
         return _nodeName;
     }
+
+    private _originalData: any = {};
+    private nodeId: string;
+    private _uuid: string;
+
+    private _urlSegments: string[];
+    private nodeIndex: number = -1;
+
+    private nextRoute: string;
+
+    private _mode: EDIT_CARD_MODES;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private _storageSrv: EosStorageService,
@@ -136,6 +122,19 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
+    @HostListener('window:beforeunload', ['$event'])
+    canWndUnload(evt: BeforeUnloadEvent): any {
+        if (this.editMode) {
+            /* clean link on close or reload */
+            /* cann't handle user answer */
+            this._clearEditingCardLink();
+        }
+        if (this.isChanged) {
+            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
+            return false;
+        }
+    }
+
     ngOnInit() {
         // this._init();
     }
@@ -153,95 +152,9 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this.disableSave = val;
     }
 
-    private _init() {
-        this.nextRoute = this._router.url;
-        this._urlSegments = this._router.url.split('/');
-        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-        this._getNode();
-    }
-
-    private _getNode() {
-        console.log('_getNode', this.dictionaryId, this.nodeId);
-        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => {
-                if (node) {
-                    this._update(node)
-                } else {
-                    const segments: Array<string> = this._router.url.split('/');
-                    this._router.navigate(['spravochniki/' + segments[2]]);
-                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
-                }
-            }).catch((err) => console.log('getNode error', err));
-    }
-
-    private _initNodeData(node: EosDictionaryNode) {
-        this.node = node;
-
-        this.nodeData = {
-            rec: {}
-        };
-        if (this.node) {
-            /* this.fields = this.node.getEditView();
-            this.fields.forEach(fld => {
-                this.nodeData[fld.key] = fld.value;
-            });*/
-            this.fieldsDescription = this.node.getEditFieldsDescription();
-            this.nodeData = this.node.getEditData();
-            // console.log('recived description', this.nodeData);
-
-            if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
-                this.dutysList = this._storageSrv.getItem('dutysList') || [];
-                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
-            }
-        }
-    }
-
-    private _update(node: EosDictionaryNode) {
-        let _canEdit: boolean;
-
-        this._initNodeData(node);
-
-        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
-            this._preventDeletedEdit() &&
-            this._preventMultiEdit();
-
-        if (_canEdit) {
-            this._setEditingCardLink();
-            this._setOriginalData();
-        }
-
-        this.editMode = _canEdit;
-        this._updateBorders();
-    }
-
-    private _setOriginalData() {
-        this._originalData = this.cloneData(this.nodeData);
-        this.recordChanged(this.nodeData);
-    }
-
     forceView() {
         if (this._mode === EDIT_CARD_MODES.edit) {
             this._openNode(this.node, EDIT_CARD_MODES.view);
-        }
-    }
-
-    private _preventMultiEdit(): boolean {
-        /* prevent editing multiple cards */
-        this.getLastEditedCard();
-        if (this.lastEditedCard && this.lastEditedCard.id !== this.nodeId /* && this.lastEditedCard.uuid !== this._uuid*/) {
-            this.modalOnlyRef.show();
-            return false;
-        }
-        return true;
-    }
-
-    private _preventDeletedEdit(): boolean {
-        if (!this.node.isDeleted) {
-            return true;
-        } else {
-            /* show warn */
-            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-            return false;
         }
     }
 
@@ -295,12 +208,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
     }
 
-    private _updateBorders() {
-        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
-        this.isFirst = this.nodeIndex <= 0;
-        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
-    }
-
     next() {
         if (this.nodeIndex < this.nodes.length - 1) {
             this.nodeIndex++;
@@ -318,19 +225,124 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     disManager(mod: boolean, tooltip: any): boolean {
         if (mod) {
             if (this.isFirst || !this.node.parent) {
-                tooltip.hide()
-                return true
+                tooltip.hide();
+                return true;
             } else {
-                return false
+                return false;
             }
         } else {
             if (this.isLast || !this.node.parent) {
-                tooltip.hide()
-                return true
+                tooltip.hide();
+                return true;
             } else {
-                return false
+                return false;
             }
         }
+    }
+
+    goTo(url: string): void {
+        if (url) {
+            this._router.navigateByUrl(url);
+        } else {
+            this._router.navigate([this.nextRoute]);
+        }
+    }
+
+    canDeactivate(nextState?: any): boolean | Promise<boolean> {
+        return this._askForSaving();
+    }
+
+    private _init() {
+        this.nextRoute = this._router.url;
+        this._urlSegments = this._router.url.split('/');
+        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+        this._getNode();
+    }
+
+    private _getNode() {
+        // console.log('_getNode', this.dictionaryId, this.nodeId);
+        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
+            .then((node) => {
+                if (node) {
+                    this._update(node);
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            });
+            // .catch((err) => console.log('getNode error', err));
+    }
+
+    private _initNodeData(node: EosDictionaryNode) {
+        this.node = node;
+
+        this.nodeData = {
+            rec: {}
+        };
+        if (this.node) {
+            /* this.fields = this.node.getEditView();
+            this.fields.forEach(fld => {
+                this.nodeData[fld.key] = fld.value;
+            });*/
+            this.fieldsDescription = this.node.getEditFieldsDescription();
+            this.nodeData = this.node.getEditData();
+            // console.log('recived description', this.nodeData);
+
+            if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
+                this.dutysList = this._storageSrv.getItem('dutysList') || [];
+                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
+            }
+        }
+    }
+
+    private _update(node: EosDictionaryNode) {
+        let _canEdit: boolean;
+
+        this._initNodeData(node);
+
+        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
+            this._preventDeletedEdit() &&
+            this._preventMultiEdit();
+
+        if (_canEdit) {
+            this._setEditingCardLink();
+            this._setOriginalData();
+        }
+
+        this.editMode = _canEdit;
+        this._updateBorders();
+    }
+
+    private _setOriginalData() {
+        this._originalData = this.cloneData(this.nodeData);
+        this.recordChanged(this.nodeData);
+    }
+
+    private _preventMultiEdit(): boolean {
+        /* prevent editing multiple cards */
+        this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id !== this.nodeId /* && this.lastEditedCard.uuid !== this._uuid*/) {
+            this.modalOnlyRef.show();
+            return false;
+        }
+        return true;
+    }
+
+    private _preventDeletedEdit(): boolean {
+        if (!this.node.isDeleted) {
+            return true;
+        } else {
+            /* show warn */
+            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            return false;
+        }
+    }
+
+    private _updateBorders() {
+        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
+        this.isFirst = this.nodeIndex <= 0;
+        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
     }
 
     private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
@@ -349,18 +361,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             _url[_url.length - 1] = EDIT_CARD_MODES[forceMode];
         }
         return _url.join('/');
-    }
-
-    goTo(url: string): void {
-        if (url) {
-            this._router.navigateByUrl(url);
-        } else {
-            this._router.navigate([this.nextRoute]);
-        }
-    }
-
-    canDeactivate(nextState?: any): boolean | Promise<boolean> {
-        return this._askForSaving();
     }
 
     private _askForSaving(): Promise<boolean> {
@@ -414,7 +414,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._save(this.nodeData)
             .then((node) => {
                 if (node) {
-                    console.log('save', node);
+                    // console.log('save', node);
                     this._initNodeData(node);
                     this._setOriginalData();
                     this.cancel();
@@ -477,7 +477,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
-            console.log('this.nodeId', this.nodeId);
+            // console.log('this.nodeId', this.nodeId);
             this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }
@@ -512,7 +512,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         try {
             return JSON.parse(JSON.stringify(src));
         } catch (e) {
-            console.log(e);
+            return null;
+            // console.log(e);
         }
     }
 

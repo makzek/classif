@@ -2,13 +2,9 @@ import { Component, Input } from '@angular/core';
 
 import { EosDeskService } from '../services/eos-desk.service';
 import { EosDesk, IDesk } from '../core/eos-desk';
-import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
-import { IDeskItem } from '../core/desk-item.interface';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { WARN_LINK_PIN } from '../consts/messages.consts';
 import {
-    WARN_DESK_CREATING,
-    WARN_DESK_EDITING,
     DANGER_DESK_CREATING
 } from '../consts/messages.consts';
 
@@ -27,7 +23,6 @@ export class PushpinComponent {
 
     constructor(
         private _deskSrv: EosDeskService,
-        private _bcSrv: EosBreadcrumbsService,
         private _msgSrv: EosMessageService,
     ) {
         _deskSrv.desksList.subscribe((res: EosDesk[]) => this.deskList = res.filter((d: EosDesk) => d.id !== 'system'));
@@ -38,7 +33,9 @@ export class PushpinComponent {
      * @param desk desktop with which add dictionary
      */
     public pin(desk: EosDesk) {
-        if (!this._deskSrv.appendDeskItemToView(desk)) { this._msgSrv.addNewMessage(WARN_LINK_PIN) };
+        if (!this._deskSrv.appendDeskItemToView(desk)) {
+            this._msgSrv.addNewMessage(WARN_LINK_PIN);
+        }
     }
 
     public openCreateForm(evt: MouseEvent) {
@@ -52,7 +49,7 @@ export class PushpinComponent {
         }
     }
 
-    public create(evt: MouseEvent) {
+    public create() {
         /* todo: re-factor it to inline validation messages */
         if (this._deskSrv.desktopExisted(this.deskName)) {
             this.deskName = this._deskSrv.generateNewDeskName();
@@ -68,7 +65,7 @@ export class PushpinComponent {
                 .then((desk: IDesk) => {
                     this._deskSrv.appendDeskItemToView(desk);
                     this.creating = false;
-                }).catch(err => console.log(err));
+                });
         }
     }
 

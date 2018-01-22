@@ -31,7 +31,7 @@ export class AuthorizedGuard implements CanActivate {
                             if (success) {
                                 this.modalRef.hide();
                             }
-                        })
+                        });
                     }
                 }
                 return auth;

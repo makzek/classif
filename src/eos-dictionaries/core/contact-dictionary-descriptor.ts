@@ -9,12 +9,12 @@ export class ContactDictionaryDescriptor extends DictionaryDescriptor {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         contact['ISN_CONTACT'] = _isn;
         this.apiSrv.entityHelper.prepareAdded<CONTACT>(contact, this.apiInstance);
-        console.log('new contact', contact);
+        // console.log('new contact', contact);
         const changes = this.apiSrv.changeList([contact]);
-        console.log('changes', changes)
+        // console.log('changes', changes)
         return this.apiSrv.batch(changes, '')
             .then((resp: any[]) => {
-                console.log('response', resp);
+                // console.log('response', resp);
                 if (resp && resp[0]) {
                     return resp[0].FixedISN;
                 } else {
@@ -27,10 +27,10 @@ export class ContactDictionaryDescriptor extends DictionaryDescriptor {
         return this.getData({ criteries: { 'ISN_ORGANIZ': orgISN + '' } })
             .then((contacts) => {
                 // const results: IRecordOperationResult[] = [];
-                console.log('organization exist contacts', contacts);
-                console.log('new contacts', newContacts);
+                // console.log('organization exist contacts', contacts);
+                // console.log('new contacts', newContacts);
                 // filter only new contacts
-                const _contacts = [];
+                // const _contacts = [];
                 const pContacts = newContacts.map((contact) => {
                     if (contacts.findIndex((existContact) =>
                         existContact['SURNAME'] === contact['SURNAME'] && existContact['DUTY'] === contact['DUTY']) === -1) {
@@ -40,11 +40,11 @@ export class ContactDictionaryDescriptor extends DictionaryDescriptor {
                                 return <IRecordOperationResult>{
                                     success: true,
                                     record: contact
-                                }
+                                };
                             })
                             .then((result) => {
                                 // handle SEV
-                                this.getRelatedSev(result.record).then((sevs) => { console.log('contact sev', sevs) })
+                                this.getRelatedSev(result.record).then((/*sevs*/) => { /*console.log('contact sev', sevs)*/ });
                                 return result;
                             })
                             .catch((err) => {
@@ -52,7 +52,7 @@ export class ContactDictionaryDescriptor extends DictionaryDescriptor {
                                     success: false,
                                     record: contact,
                                     error: err
-                                }
+                                };
                             });
                     } else {
                         return Promise.resolve({
