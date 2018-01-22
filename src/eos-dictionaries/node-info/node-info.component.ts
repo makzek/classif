@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { BaseNodeInfoComponent } from './base-node-info';
+
+import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
     selector: 'eos-node-info',
@@ -7,7 +9,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
 })
 
 export class NodeInfoComponent extends BaseNodeInfoComponent {
-    constructor() {
-        super();
+    constructor(private injector: Injector) {
+        super(injector);
     }
  }

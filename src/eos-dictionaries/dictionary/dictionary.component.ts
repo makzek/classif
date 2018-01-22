@@ -143,7 +143,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 } else {
                     this.treeNodes = [];
                 }
-                console.log(this.treeNodes);
             });
 
         _dictSrv.listDictionary$.takeUntil(this.ngUnsubscribe)

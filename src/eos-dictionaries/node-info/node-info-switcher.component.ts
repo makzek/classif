@@ -51,9 +51,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                 }
             });
 
-            _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
-                .subscribe((viewParameters: IDictionaryViewParameters) => this.updating = viewParameters.updatingList);
-
         /*
         this._dictSubscription = this._dictSrv.dictionary$.subscribe((dict) => {
             if (dict && dict.id !== this.dictionaryId) {

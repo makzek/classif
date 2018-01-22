@@ -1,7 +1,4 @@
-<div *ngIf="updating" class="no-data full-info usual-border">
-    <eos-spinner size="lg"></eos-spinner>
-</div>
-<ng-container *ngIf="!updating" [ngSwitch]="dictionaryId">
+<ng-container [ngSwitch]="dictionaryId">
     <eos-department-node-info *ngSwitchCase="'departments'"
         [fieldsDescriptionShort]="fieldsDescriptionShort"
         [nodeDataShort]="nodeDataShort"
