@@ -1,7 +1,7 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import { E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
@@ -20,7 +20,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     bossName = '';
 
     private _openedNodeSubscription: Subscription;
-    private _dictSubscription: Subscription;
 
     constructor(private _dictSrv: EosDictService) {
         this._initInfo();
@@ -48,14 +47,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
         });
     }
 
-    private _initInfo() {
-        this.dictionaryId = null;
-        this.fieldsDescriptionFull = {};
-        this.fieldsDescriptionShort = {};
-        this.nodeDataFull = {};
-        this.nodeDataShort = {};
-    }
-
     ngOnDestroy() {
         this._openedNodeSubscription.unsubscribe();
     }
@@ -64,4 +55,11 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
         this.action.emit(action);
     }
 
+    private _initInfo() {
+        this.dictionaryId = null;
+        this.fieldsDescriptionFull = {};
+        this.fieldsDescriptionShort = {};
+        this.nodeDataFull = {};
+        this.nodeDataShort = {};
+    }
 }

@@ -80,7 +80,7 @@ export interface IDictionaryDescriptor {
 
     // listFields: string[];
     searchFields: string[];
-    searchConfig: SEARCH_TYPES[],
+    searchConfig: SEARCH_TYPES[];
     allVisibleFields: string[];
     treeFields: string[];
 
