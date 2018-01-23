@@ -161,6 +161,10 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
             });
     }
 
+    getContacts(orgISN: string): Promise<any> {
+        return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
+    }
+
     protected _initRecord(data: IDictionaryDescriptor) {
         this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
     }

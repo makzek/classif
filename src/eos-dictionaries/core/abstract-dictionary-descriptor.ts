@@ -51,7 +51,9 @@ export abstract class AbstractDictionaryDescriptor {
 
     abstract addRecord(...params): Promise<any>;
     abstract getChildren(...params): Promise<any[]>;
+    abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
+    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
 
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
@@ -126,11 +128,7 @@ export abstract class AbstractDictionaryDescriptor {
             if (rec[relation.sf]) {
                 reqs.push(this.apiSrv
                     .read({
-                        [relation.__type]: {
-                            criteries: PipRX.criteries({
-                                [relation.tf]: rec[relation.sf] + ''
-                            })
-                        }
+                        [relation.__type]: PipRX.criteries({ [relation.tf]: rec[relation.sf] + '' })
                     })
                     .then((records) => this.prepareForEdit(records))
                 );
@@ -147,9 +145,6 @@ export abstract class AbstractDictionaryDescriptor {
     getRecord(nodeId: string | number): Promise<any> {
         return this.getData([nodeId]);
     }
-
-    abstract getRoot(): Promise<any[]>;
-    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
 
     getIdByDictionaryMode(mode: number): string {
         return this.id;

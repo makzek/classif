@@ -7,7 +7,7 @@ import { EosDictionary } from '../core/eos-dictionary';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import {
     IDictionaryViewParameters, ISearchSettings, IOrderBy,
-    IDictionaryDescriptor, IFieldView, SEARCH_MODES
+    IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
 import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { IPaginationConfig, IPageLength } from '../node-list-pagination/node-list-pagination.interfaces';
@@ -166,6 +166,15 @@ export class EosDictService {
         this._dictMode = 0;
     }
 
+    createRepresentative(represData: any[]): Promise<IRecordOperationResult[]> {
+        if (this.dictionary) {
+            return this.dictionary.createRepresentative(represData, this.treeNode)
+                .catch((err) => this._errHandler(err));
+        } else {
+            return Promise.resolve([]);
+        }
+    }
+
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
@@ -249,24 +258,16 @@ export class EosDictService {
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
-        return this._profileSrv.checkAuth()
-            .then((authorized: boolean) => {
-                if (authorized) {
-                    if (this.dictionary && this.dictionary.id === dictionaryId) {
-                        return this.dictionary;
-                    } else {
-                        // this.viewParameters.showDeleted = false;
-                        // this._viewParameters$.next(this.viewParameters);
-                        if (this.dictionary) {
-                            this.closeDictionary();
-                        }
-                        return this._openDictionary(dictionaryId);
-                    }
-                } else {
-                    this.closeDictionary();
-                    return null;
-                }
-            });
+        if (this.dictionary && this.dictionary.id === dictionaryId) {
+            return Promise.resolve(this.dictionary);
+        } else {
+            // this.viewParameters.showDeleted = false;
+            // this._viewParameters$.next(this.viewParameters);
+            if (this.dictionary) {
+                this.closeDictionary();
+            }
+            return this._openDictionary(dictionaryId);
+        }
     }
 
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -285,10 +286,10 @@ export class EosDictService {
                             this.viewParameters.userOrdered,
                             this._storageSrv.getUserOrder(this.dictionary.id)
                         );
-                        this._mDictionaryPromise.delete(dictionaryId);
-                        this._dictionary$.next(this.dictionary);
                         this._dictMode = 0;
                         this._dictionaries[0] = this.dictionary;
+                        this._mDictionaryPromise.delete(dictionaryId);
+                        this._dictionary$.next(this.dictionary);
                         return this.dictionary;
                     })
                     .catch((err) => {
@@ -347,18 +348,18 @@ export class EosDictService {
         }
     }
 
-    // console.log('reloadNode', node);
-    // console.log('reloadNode', nodeData);
     public expandNode(nodeId: string): Promise<EosDictionaryNode> {
         if (this.treeNode.id === nodeId) {
             this.viewParameters.updating = true;
             this._viewParameters$.next(this.viewParameters);
         }
-        return this.dictionary.expandNode(nodeId).then((val) => {
-            this.viewParameters.updating = false;
-            this._viewParameters$.next(this.viewParameters);
-            return val
-        }).catch((err) => this._errHandler(err));
+        return this.dictionary.expandNode(nodeId)
+            .then((val) => {
+                this.viewParameters.updating = false;
+                this._viewParameters$.next(this.viewParameters);
+                return val
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     private _updateDictNodes(data: any[], updateTree = false): EosDictionaryNode[] {
@@ -488,11 +489,12 @@ export class EosDictService {
     }
 
     public openNode(nodeId: string): Promise<EosDictionaryNode> {
-        if (this.dictionary) {
+        const dictionary = this._dictionaries[this._dictMode];
+        if (dictionary) {
             if (!this._listNode || this._listNode.id !== nodeId) {
                 this.viewParameters.updatingFields = true;
                 this._viewParameters$.next(this.viewParameters);
-                return this.dictionary.getFullNodeInfo(nodeId)
+                return dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
                         this._openNode(node);
                         this.viewParameters.updatingFields = false;
@@ -527,11 +529,32 @@ export class EosDictService {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
 
-    public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
-        return this.dictionary.descriptor.updateRecord(node.data, data)
-            .then(() => this._reloadList())
-            .then(() => this.dictionary.getNode(node.id))
-            .catch((err) => this._errHandler(err));
+    public updateNode(node: EosDictionaryNode, data: any): Promise <any> {
+        if (this.dictionary.id === 'region') {
+            const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+            const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
+            return this.dictionary.descriptor.search(_srchCriteries)
+                .then(nodes => {
+                    const findNode = nodes.find((el: EosDictionaryNode) => {
+                        return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase()
+                    })
+                    if (findNode) {
+                        return Promise.reject('Запись с этим именем уже существует!');
+                    } else {
+                        return this.dictionary.descriptor.updateRecord(node.data, data);
+                    }
+                })
+                .then(() => this.dictionary.descriptor.updateRecord(node.data, data))
+                .then(() => this._reloadList().then(() => this.dictionary.getNode(node.id)))
+                .catch((err) => {
+                    this._errHandler(err);
+                });
+        } else {
+            return this.dictionary.descriptor.updateRecord(node.data, data)
+                .then(() => this._reloadList())
+                .then(() => this.dictionary.getNode(node.id))
+                .catch((err) => this._errHandler(err));
+        }
     }
 
     public addNode(data: any): Promise<any> {
@@ -545,7 +568,8 @@ export class EosDictService {
 
                 p = this.dictionary.descriptor.search(_srchCriteries)
                     .then((nodes: EosDictionaryNode[]) =>
-                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                        nodes.find((el: EosDictionaryNode) =>
+                            el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase())
                     )
                     .then((node: EosDictionaryNode) => {
                         if (node) {
@@ -612,7 +636,6 @@ export class EosDictService {
             const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
             return this.dictionary.deleteMarked()
                 .then((results) => {
-                    console.log('results', results);
                     let success = true;
                     results.forEach((result) => {
                         if (result.error) {
@@ -795,7 +818,7 @@ export class EosDictService {
     }
 
     private _errHandler(err: RestError | any) {
-        if (err instanceof RestError && (err.code === 434) || err.code === 0) {
+        if (err instanceof RestError && (err.code === 434 || err.code === 0)) {
             this._router.navigate(['login'], {
                 queryParams: {
                     returnUrl: this._router.url

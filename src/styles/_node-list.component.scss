@@ -46,7 +46,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
             vertical-align: bottom;
-            padding-top: 14px;
+            line-height: 48px;
+        }
+
+        .folder {
+            position: relative;
+            top: 8px;
         }
 
         .spinner {

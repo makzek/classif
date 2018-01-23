@@ -107,6 +107,15 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-bin-forever-dark-blue small',
     buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.createRepresentative,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Создать представителя организации',
+    iconClass: 'eos-icon eos-icon-avatar-blue small',
+    activeIconClass: null,
+    hoverIconClass: 'eos-icon eos-icon-avatar-dark-blue small',
+    buttonClass: null
 }];
 
 export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
