@@ -11,7 +11,6 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { EosDeskService } from '../../app/services/eos-desk.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
@@ -19,7 +18,6 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
-    INFO_NOTHING_CHANGES,
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE,
     WARN_SAVE_FAILED
@@ -91,7 +89,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     private _originalData: any = {};
     private nodeId: string;
-    private _uuid: string;
+    // private _uuid: string;
 
     private _urlSegments: string[];
     private nodeIndex: number = -1;
@@ -188,7 +186,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._openNode(this.node, EDIT_CARD_MODES.view);
     }
 
-    recordChanged(data: any) {
+    recordChanged(_data: any) {
         if (this.nodeData) {
             // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
@@ -248,7 +246,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
     }
 
-    canDeactivate(nextState?: any): boolean | Promise<boolean> {
+    canDeactivate(_nextState?: any): boolean | Promise<boolean> {
         return this._askForSaving();
     }
 
@@ -386,7 +384,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                         }
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     // console.log('cancel reason', err);
                     return false;
                 });

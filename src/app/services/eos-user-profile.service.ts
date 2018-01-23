@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -53,8 +52,6 @@ export class EosUserProfileService implements IUserProfile {
     }
 
     constructor(
-        private _router: Router,
-        private _route: ActivatedRoute,
         private _authSrv: AuthService,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
@@ -74,7 +71,7 @@ export class EosUserProfileService implements IUserProfile {
                     this._setUser(context.user, context.sysParams);
                     return this._setAuth(true);
                 })
-                .catch((err) => {
+                .catch(() => {
                     this._authPromise = null;
                     return this._setAuth(false);
                 });
@@ -125,7 +122,7 @@ export class EosUserProfileService implements IUserProfile {
     logout(): Promise<any> {
         if (this._isAuthorized) {
             return this._authSrv.logout()
-                .then((resp) => this._logout())
+                .then(() => this._logout())
                 .catch((err) => {
                     this._msgSrv.addNewMessage({
                         type: 'danger',

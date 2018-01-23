@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { EosSandwichService } from '../services/eos-sandwich.service';
@@ -14,13 +14,13 @@ export class SandwichComponent {
     show = false;
 
     constructor(
-        private _route: ActivatedRoute,
-        private _router: Router,
+        _route: ActivatedRoute,
+        _router: Router,
         private _sandwichSrv: EosSandwichService,
     ) {
         _router.events
             .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe((evt) => {
+            .subscribe(() => {
                 let _actRoute = _route.snapshot;
                 while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
                 this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;

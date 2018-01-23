@@ -1,5 +1,5 @@
 ﻿import { Injectable, Optional } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -15,7 +15,6 @@ import { IAsk, IKeyValuePair, IR, IRequest } from '../interfaces/interfaces';
 import { SequenceMap } from '../core/sequence-map';
 import { Metadata } from '../core/metadata';
 import { EntityHelper } from '../core/entity-helper';
-import { ErrorService } from './error.service';
 import { PipeUtils } from '../core/pipe-utils';
 import { Cache } from '../core/cache';
 import { RestError } from '../core/rest-error';

@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -120,7 +120,7 @@ export abstract class AbstractDictionaryDescriptor {
         return _criteries;
     }
 
-    getRelated(rec: any, ...args): Promise<any> {
+    getRelated(rec: any, ..._args): Promise<any> {
         const reqs = [];
         this.metadata.relations.forEach((relation) => {
             if (rec[relation.sf]) {
@@ -144,7 +144,7 @@ export abstract class AbstractDictionaryDescriptor {
         return this.getData([nodeId]);
     }
 
-    getIdByDictionaryMode(mode: number): string {
+    getIdByDictionaryMode(_mode: number): string {
         return this.id;
     }
 

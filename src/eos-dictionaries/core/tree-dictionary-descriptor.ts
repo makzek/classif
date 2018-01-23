@@ -1,4 +1,4 @@
-import { ITreeDictionaryDescriptor, E_FIELD_SET } from 'eos-dictionaries/interfaces';
+import { ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL, SEV_ASSOCIATION, CB_PRINT_INFO } from 'eos-rest';
@@ -109,9 +109,8 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         this.record = new TreeRecordDescriptor(this, data);
     }
 
-    protected preCreate<T>(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
-        const _parentDue = parent.DUE;
 
         const _res: IHierCL = {
             DUE: _isn + '.',

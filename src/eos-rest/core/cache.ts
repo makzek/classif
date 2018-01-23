@@ -1,5 +1,5 @@
 import { Metadata } from '../core/metadata';
-import { IEnt, IRequest, ICachePolicy, CacheLevel, IR } from '../interfaces/interfaces';
+import { IRequest, ICachePolicy, IR } from '../interfaces/interfaces';
 import { PipRX } from '../services/pipRX.service';
 import { PipeUtils} from '../core/pipe-utils';
 
@@ -19,7 +19,7 @@ export class Cache extends PipeUtils {
      * Прочитать и положить в кеш
      * @param req запрос
      */
-    public read<T>(req: IRequest, policy?: ICachePolicy): Promise<T[]> {
+    public read<T>(req: IRequest, _policy?: ICachePolicy): Promise<T[]> {
         const unread = [];
         const res = this.readOnlyCached<T>(req, unread);
         if ((res !== undefined) && ( unread.length === 0))
@@ -65,11 +65,11 @@ export class Cache extends PipeUtils {
         return JSON.stringify(req);
     }
 
-    public clear(req: IRequest) {
+    public clear(_req: IRequest) {
 
     }
 
-    public clearZone(policy?: ICachePolicy) {
+    public clearZone(_policy?: ICachePolicy) {
 
     }
 
@@ -90,7 +90,7 @@ export class Cache extends PipeUtils {
             const pk = item[pkn];
             ids.push(pk);
             place[pk] = item;
-            const test = place[pk];
+            // const test = place[pk];
         }
     }
 }

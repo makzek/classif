@@ -23,6 +23,8 @@ export class PhotoUploaderComponent implements OnInit {
     nativeInputEl: HTMLInputElement;
     // fileCount: number;
     file: File;
+    multiple = false;
+
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
 
@@ -46,28 +48,28 @@ export class PhotoUploaderComponent implements OnInit {
     upload() {
         this.confirmModalRef.hide();
         // const formData = new FormData();
-       /* if (this.fileCount > 0) {
-            for (let i = 0; i < this.fileCount; i++) {
-                formData.append('file[]', this.nativeInputEl.files.item(i));
-            }*/
+        /* if (this.fileCount > 0) {
+             for (let i = 0; i < this.fileCount; i++) {
+                 formData.append('file[]', this.nativeInputEl.files.item(i));
+             }*/
 
-            /* DON'T USE THIS COMPONENT FOR SANDING PHOTO!!! */
+        /* DON'T USE THIS COMPONENT FOR SANDING PHOTO!!! */
 
-            /*formData.append('file', this.file);
-            this._http
-                .post(this.contactUrl, formData).subscribe(
-                data => {
-                    // tslint:disable-next-line:no-debugger
-                    debugger;
-                    console.log('success');
-                    this.uploading = false;
-                    this.endUploading.emit(data);
-                },
-                error => {
-                    console.log(error);
-                    this.uploading = false;
-                    this.endUploading.emit(null);
-                })*/
+        /*formData.append('file', this.file);
+        this._http
+            .post(this.contactUrl, formData).subscribe(
+            data => {
+                // tslint:disable-next-line:no-debugger
+                debugger;
+                console.log('success');
+                this.uploading = false;
+                this.endUploading.emit(data);
+            },
+            error => {
+                console.log(error);
+                this.uploading = false;
+                this.endUploading.emit(null);
+            })*/
         // }
 
         this.endUploading.emit(this.file);

@@ -14,7 +14,7 @@ export class ConfirmWindowService {
 
         Object.assign(_wnd, content);
 
-        return new Promise((res, rej) => {
+        return new Promise((res, _rej) => {
             this._bsModalSrv.onHide.subscribe(reason => {
                 if (reason === 'backdrop-click' || reason === 'esc') {
                     res(false);

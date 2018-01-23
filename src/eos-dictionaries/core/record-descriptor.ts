@@ -1,6 +1,6 @@
 import {
-    IDictionaryDescriptor, IFieldView, IFieldDesriptor,
-    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, E_ACTION_GROUPS, IRecordModeDescription
+    IDictionaryDescriptor, IFieldView,
+    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, IRecordModeDescription
 } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
@@ -173,7 +173,7 @@ export class RecordDescriptor {
         return _description;
     }
 
-    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+    protected _getFieldSet(aSet: E_FIELD_SET, _values?: any): FieldDescriptor[] {
         switch (aSet) {
             case E_FIELD_SET.search:
                 return this._getSearchFields();
@@ -198,7 +198,7 @@ export class RecordDescriptor {
         }
     }
 
-    protected _getFieldView(aSet: E_FIELD_SET, mode?: string): any { }
+    protected _getFieldView(_aSet: E_FIELD_SET, _mode?: string): any { }
 
     protected _getFullSearchFields() {
         return this.fullSearchFields;
@@ -255,10 +255,6 @@ export class RecordDescriptor {
 
     private _getAllVisibleFields(): FieldDescriptor[] {
         return this.allVisibleFields;
-    }
-
-    private _getListFields(): FieldDescriptor[] {
-        return this.listFields;
     }
 
     private _getSearchFields(): FieldDescriptor[] {

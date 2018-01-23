@@ -1,13 +1,8 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { NgForm } from '@angular/forms';
-
-import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { E_DICT_TYPE, E_FIELD_SET, IFieldView, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
-import { EosDictionary } from '../core/eos-dictionary';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
@@ -153,7 +148,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.data['srchMode'] = this.currTab;
             }
             this._dictSrv.fullSearch(this.data, this.settings)
-                .then((nodes) => {
+                .then(() => {
                     this.searchDone = true;
                 });
         } else {

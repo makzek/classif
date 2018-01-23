@@ -1,9 +1,6 @@
 import {
     E_DICT_TYPE,
     E_FIELD_SET,
-    IDictionaryDescriptor,
-    IDepartmentDictionaryDescriptor,
-    ITreeDictionaryDescriptor,
     E_FIELD_TYPE,
     ISearchSettings,
     SEARCH_MODES,
@@ -12,15 +9,9 @@ import {
     E_RECORD_ACTIONS,
 } from 'eos-dictionaries/interfaces';
 import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
-import { DictionaryDescriptor } from './dictionary-descriptor';
-import { TreeDictionaryDescriptor } from './tree-dictionary-descriptor';
-import { DepartmentDictionaryDescriptor } from './department-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 
-import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
-import { Injector } from '@angular/core/src/di/injector';
-import { RestError } from 'eos-rest/core/rest-error';
 import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
 
 export class EosDictionary {
@@ -31,9 +22,9 @@ export class EosDictionary {
     private _orderBy: IOrderBy;
     private _userOrder: any;
     private _userOrdered: boolean;
-    private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
+    // private _orderedArray: { [parentId: string]: EosDictionaryNode[] };
     private _showDeleted: boolean;
-    private _mode: number;
+    // private _mode: number;
     private _dictionaries: { [key: string]: EosDictionary };
 
     get showDeleted(): boolean {

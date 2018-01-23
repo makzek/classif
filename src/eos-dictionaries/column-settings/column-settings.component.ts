@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -47,11 +47,12 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                 }
             }
         });
-        this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
-            this.selectedDictItem = null;
-            this.selectedCurrItem = null;
-            this.selectedFixedItem = null;
-        });
+        this._subscriptionDrag = dragulaService.drag
+            .subscribe(() => {
+                this.selectedDictItem = null;
+                this.selectedCurrItem = null;
+                this.selectedFixedItem = null;
+            });
         dragulaService.setOptions('bag-one', {
             moves: (el/*, source, handle, sibling*/) => !el.classList.contains('fixed-item')
         });

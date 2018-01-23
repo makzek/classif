@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "target": "es5",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedParameters": true,
     "typeRoots": [
       "node_modules/@types"
     ],

@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 
 import { RUBRIC_CL } from '../interfaces/structures';
-import { ALL_ROWS } from '../core/consts';
+// import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 
 @Component({
@@ -52,7 +52,7 @@ export class RubricComponent {
 
     onSave() {
         const chl = this.pip.changeList([this.currentItem]);
-        this.pip.batch(chl, '').then((r) => {
+        this.pip.batch(chl, '').then(() => {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
 

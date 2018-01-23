@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { EosDictionaryNode } from '../../eos-dictionaries/core/eos-dictionary-node';
-import { EosDictionary } from '../../eos-dictionaries/core/eos-dictionary';
-// import {Subject} from 'rxjs/Subject';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
-import { debug } from 'util';
 
 import { AppContext } from '../../eos-rest/services/appContext.service';
-import { SRCH_VIEW, USER_CL } from '../../eos-rest/interfaces/structures';
+import { SRCH_VIEW } from '../../eos-rest/interfaces/structures';
 
 import { ViewManager } from '../../eos-rest/services/viewManager';
-import { SRCH_VIEW_DESC } from '../../eos-rest/interfaces/structures';
 import { _ES } from 'eos-rest/core/consts';
 
 const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
@@ -53,7 +48,6 @@ export class EosDeskService {
     constructor(
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
-        private _route: ActivatedRoute,
         private _router: Router,
         private _appCtx: AppContext,
         private viewManager: ViewManager
@@ -81,9 +75,10 @@ export class EosDeskService {
             });
 
         this._recentItems = [];
-        this._appCtx.ready().then(x => {
-            this.readDeskList();
-        });
+        this._appCtx.ready()
+            .then(() => {
+                this.readDeskList();
+            });
     }
 
     /**
@@ -123,7 +118,7 @@ export class EosDeskService {
         const v = this.findView(this._selectedDesk.id);
         if (v !== undefined) {
             const blockId = link.url.split('/')[2];
-            const col = this.viewManager.updateViewColumn(v, blockId, link.title);
+            this.viewManager.updateViewColumn(v, blockId, link.title);
             return this.viewManager.saveView(v).then(() => {
                 this._appCtx.reInit();
                 this._selectedDesk$.next(this._selectedDesk);

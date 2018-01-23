@@ -1,8 +1,8 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { USER_CL } from '../interfaces/structures';
-import { ALL_ROWS } from '../core/consts';
+// import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 
 @Component({

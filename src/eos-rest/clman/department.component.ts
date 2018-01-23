@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL } from '../interfaces/structures';
 import { /*ALL_ROWS,*/ _ES } from '../core/consts';
@@ -18,8 +18,8 @@ class vmDEPARTMENT {
     public cabinet: CABINET;
     ORGANIZ: ORGANIZ_CL;
 
-    static Load(pip: PipRX, due: string, forEdit: boolean): Promise<vmDEPARTMENT> {
-        const startReadTime: any = new Date();
+    static Load(pip: PipRX, due: string, _forEdit: boolean): Promise<vmDEPARTMENT> {
+        // const startReadTime: any = new Date();
 
         // Читаем себя, НЕ из кеша
         const rDep = pip.read<DEPARTMENT>({ DEPARTMENT: due });
@@ -68,7 +68,7 @@ class vmDEPARTMENT {
         // загружаем индекс СЭВ
         const rSevIndex = pip.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')] });
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
-            .then(([a, b, [pi, org, cab], d]) => {
+            .then(([a, _b, [pi, org, cab], d]) => {
                 // console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
                 const result = new vmDEPARTMENT();
                 result.row = a[a.length - 1];
@@ -157,9 +157,10 @@ export class DepartmentComponent implements OnInit {
             changed.push(item.CB_PRINT_INFO);
         }
         const chl = this.pip.changeList(changed);
-        this.pip.batch(chl, '').then((r) => {
-            alert('oki');
-        });
+        this.pip.batch(chl, '')
+            .then(() => {
+                alert('oki');
+            });
     }
 
     onPreparePrintInfo() {
@@ -168,7 +169,7 @@ export class DepartmentComponent implements OnInit {
         // const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', DUTY: 'начальника'};
 
         this.pip.read<CB_PRINT_INFO>({ PreparePrintInfo: PipRX.args(q) })
-            .then(res => {
+            .then(() => {
                 // console.log(res);
             });
     }

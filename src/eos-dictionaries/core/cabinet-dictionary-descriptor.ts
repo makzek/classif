@@ -1,6 +1,4 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
-import { IRecordOperationResult } from 'eos-dictionaries/interfaces';
-import { RestError } from 'eos-rest/core/rest-error';
 import { CABINET } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';

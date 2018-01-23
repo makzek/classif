@@ -55,7 +55,7 @@ export class ErrorService /*implements IErrorService*/ {
         return Observable.throw(err);
     }
 
-    defaultLogicExceptionHandler(e, data) {
+    defaultLogicExceptionHandler(_e, data) {
         if (data.ErrorKind === 'InvalidEntityRef') {
             // TODO: специальное исключени - ссылка на уже не существующий объект, для интерфейса пытались отдать с подробностями
             // из ошибки берем имя сущности и по ее первичному ключу извлекаем его значение
@@ -98,7 +98,7 @@ export class ErrorService /*implements IErrorService*/ {
         }
     }
 
-    WriteErrorHtml(message, stacktrace?) {
+    WriteErrorHtml(_message, _stacktrace?) {
         // console.log('rest error', message + ' ' + stacktrace);
     }
 }

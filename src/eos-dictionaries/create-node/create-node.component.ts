@@ -103,7 +103,7 @@ export class CreateNodeComponent {
      * Check if data was changed
      * @param data user data
      */
-    recordChanged(data: any) {
+    recordChanged(_data: any) {
         if (this.nodeData) {
             /* tslint:disable:no-bitwise */
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {

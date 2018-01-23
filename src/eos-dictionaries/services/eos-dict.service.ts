@@ -462,7 +462,7 @@ export class EosDictService {
         return this._search(params.deleted);
     }
 
-    filter(params: any): Promise<any> {
+    filter(_params: any): Promise<any> {
         return Promise.reject('not implemeted');
     }
 

@@ -1,5 +1,4 @@
 import {
-    E_FIELD_SET,
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
@@ -8,11 +7,9 @@ import {
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
-import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
-import { _ES } from 'eos-rest/core/consts';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -58,6 +55,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         return __res;
     }
 
+    /*
     private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
         //  todo: fix hardcode to data, need better solution
         let _mode: string = E_DEPT_MODE[this.getMode(values)];
@@ -72,6 +70,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             return [];
         }
     }
+    */
 
     private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {

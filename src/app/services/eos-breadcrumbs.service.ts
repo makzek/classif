@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk } from '../core/eos-desk';
@@ -20,11 +19,10 @@ export class EosBreadcrumbsService {
     private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
 
     constructor(
-        private _router: Router,
+        _router: Router,
         private _route: ActivatedRoute,
-        private _dictSrv: EosDictService,
         private _descrSrv: DictionaryDescriptorService,
-        private _deskSrv: EosDeskService,
+        _deskSrv: EosDeskService,
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
@@ -46,7 +44,7 @@ export class EosBreadcrumbsService {
         return this._currentLink;
     }
 
-    public makeBreadCrumbs(desk: EosDesk) {
+    public makeBreadCrumbs(_desk: EosDesk) {
         this._breadcrumbs = [];
         Promise.all(this._parseState(this._route.snapshot))
             .then((breadcrumbs) => {

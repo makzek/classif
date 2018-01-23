@@ -10,12 +10,11 @@ import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.s
 import { CONFIRM_NODE_DELETE, CONFIRM_NODES_DELETE, CONFIRM_SUBNODES_RESTORE } from 'app/consts/confirms.const';
 import { IConfirmWindow } from 'eos-common/core/confirm-window.interface';
 
-import { EosUserProfileService } from 'app/services/eos-user-profile.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import {
-    IDictionaryViewParameters, E_FIELD_SET, IFieldView, INodeListParams,
-    E_DICT_TYPE, IOrderBy, E_ACTION_GROUPS, E_RECORD_ACTIONS, IActionEvent
+    IDictionaryViewParameters, E_FIELD_SET, IFieldView,
+    E_DICT_TYPE, IOrderBy, E_RECORD_ACTIONS, IActionEvent
 } from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
@@ -26,7 +25,6 @@ import {
     WARN_EDIT_ERROR,
     DANGER_EDIT_ROOT_ERROR,
     DANGER_EDIT_DELETED_ERROR,
-    DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
     DANGER_HAVE_NO_ELEMENTS,
     WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
@@ -112,11 +110,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
-        private _route: ActivatedRoute,
+        _route: ActivatedRoute,
         private _router: Router,
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService,
-        private _profileSrv: EosUserProfileService,
         private _storageSrv: EosStorageService,
         private _modalSrv: BsModalService,
         private _confirmSrv: ConfirmWindowService,
@@ -218,7 +215,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._treeScrollTop = this.treeEl.nativeElement.scrollTop;
     }
 
-    transitionEnd(e: Event) {
+    transitionEnd() {
         this._countColumnWidth();
     }
 
@@ -363,8 +360,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
      * @description Open modal with ColumnSettingsComponent, fullfill ColumnSettingsComponent data
      */
     public _configColumns() {
-        const _fldsCurr = [];
-        const _allFields = [];
+        // const _fldsCurr = [];
+        // const _allFields = [];
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         this.modalWindow.content.fixedFields = this.viewFields;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
@@ -465,7 +462,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _selectNode() {
         if (this.dictionaryId) {
             this._dictSrv.openDictionary(this.dictionaryId)
-                .then((dictionary) => {
+                .then(() => {
                     // todo: re-factor this ugly solution
                     this._dictSrv.selectNode(this._nodeId);
                 })

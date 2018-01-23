@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
