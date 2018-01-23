@@ -20,12 +20,6 @@ export class Deferred<T> {
 export class PipeUtils {
     protected _metadata: Metadata;
 
-    private static combinePath(path: string, s: string) {
-        if (path.length !== 0) { path += '/'; }
-        return path + s;
-    }
-
-
     protected static distinctIDS(l: any[]): string {
         let result = ',';
         for (let i = 0; i < l.length; i++) {
@@ -57,7 +51,74 @@ export class PipeUtils {
         return result;
     }
 
-    private parseMoreJson(item: any, tn: string) {
+    private static combinePath(path: string, s: string) {
+        if (path.length !== 0) { path += '/'; }
+        return path + s;
+    }
+
+    public changeList(entities: IEnt[]) {
+        // const startTime = new Date().getTime();
+
+        const chr: any[] = [];
+        for (let i = 0; i < entities.length; i++) {
+            const it = entities[i];
+            this.appendChange(it, chr, '');
+        }
+        // console.log('changeList ' + (new Date().getTime() - startTime));
+        return chr;
+    }
+
+    protected nativeParser(data: any) {
+        const md = data['odata.metadata'];
+        const tn = md.split('#')[1].split('/')[0];
+        const items = data.value || [data];
+        this.parseEntity(items, tn);
+        return items;
+    }
+
+    protected PKinfo(it: any) {
+        const etn = this._metadata.etn(it);
+        const et = this._metadata.typeDesc(etn);
+        if (et.pk.indexOf(' ') !== -1) {
+            const ss = et.pk.split(' ');
+            const pkv = [];
+            for (let i = 0; i < ss.length; i++) {
+                pkv[i] = it[ss[i]];
+            }
+            return '(\'' + pkv.join(' ') + '\')';
+        }
+        const v = it[et.pk];
+        return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
+    }
+
+    protected getAjax(url): Promise<any> {
+        // const starttime: any = new Date();
+        const xhr = new XMLHttpRequest();
+        const result = new Deferred<string>();
+        xhr.open('GET', url);
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState > 3 && xhr.status === 200) {
+                // console.log('чтение ' + (<any>new Date() - starttime).toString() + 'ms')
+                // const ans = xhr.responseText;
+                // const d = JSON.parse(ans);
+                result.resolve(xhr.responseText);
+                /**
+                 Observable.fromPromise(this.getAjax(urls[0]).then(r => {
+            return this.nativeParser(JSON.parse(r));
+        }));
+                 */
+            } // success(xhr.responseText);
+        };
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('MaxDataServiceVersion', '3.0');
+        xhr.setRequestHeader('Accept', 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;');
+        xhr.send();
+        return result.promise;
+    }
+
+    private parseMoreJson(item: any/*, tn: string*/) {
         item._more_json = JSON.parse(item._more_json);
         const exp = item._more_json.expand;
         if (exp) {
@@ -77,13 +138,13 @@ export class PipeUtils {
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (item._more_json) {
-                this.parseMoreJson(item, tn);
+                this.parseMoreJson(item/*, tn*/);
             }
             for (const pn in item) {
                 if (pn.indexOf('@') !== -1 || pn.indexOf('.') !== -1) {
                     delete item[pn];
                 } else if (t) {
-                    const pt = t.properties[pn];
+                    // const pt = t.properties[pn];
                     const pv = item[pn];
                     if (pv !== null) {
                         if (pn.lastIndexOf('_List') !== -1) {
@@ -98,30 +159,10 @@ export class PipeUtils {
         }
     }
 
-    protected nativeParser(data: any) {
-        const md = data['odata.metadata'];
-        const tn = md.split('#')[1].split('/')[0];
-        const items = data.value || [data];
-        this.parseEntity(items, tn);
-        return items;
-    }
-
-    public changeList(entities: IEnt[]) {
-        // const startTime = new Date().getTime();
-
-        const chr: any[] = [];
-        for (let i = 0; i < entities.length; i++) {
-            const it = entities[i];
-            this.appendChange(it, chr, '');
-        };
-        // console.log('changeList ' + (new Date().getTime() - startTime));
-        return chr;
-    }
-
     private appendChange(it: any, chr: any[], path: string) {
         const etn = this._metadata.etn(it);
         const et = this._metadata[etn];
-        const pkn = et.pk;
+        // const pkn = et.pk;
         let hasChanges = it._State === _ES.Added || it._State === _ES.Deleted;
         const ch: any = { method: it._State };
 
@@ -147,7 +188,7 @@ export class PipeUtils {
                 ch.requestUri += this.PKinfo(it._orig || it);
             }
             chr.push(ch);
-        };
+        }
         if (et.prepareChange) {
             et.prepareChange(it, ch, path, chr);
         }
@@ -176,48 +217,5 @@ export class PipeUtils {
             }
         }
     }
-
-    protected PKinfo(it: any) {
-        const etn = this._metadata.etn(it);
-        const et = this._metadata.typeDesc(etn);
-        if (et.pk.indexOf(' ') !== -1) {
-            const ss = et.pk.split(' ');
-            const pkv = [];
-            for (let i = 0; i < ss.length; i++) {
-                pkv[i] = it[ss[i]];
-            }
-            return '(\'' + pkv.join(' ') + '\')';
-        }
-        const v = it[et.pk];
-        return (et.properties[et.pk] === _T.s) ? ('(\'' + v + '\')') : ('(' + v + ')');
-    };
-
-    protected getAjax(url): Promise<any> {
-        const starttime: any = new Date();
-        const xhr = new XMLHttpRequest();
-        const result = new Deferred<string>();
-        xhr.open('GET', url);
-
-        xhr.onreadystatechange = function () {
-
-            if (xhr.readyState > 3 && xhr.status === 200) {
-                console.log('чтение ' + (<any>new Date() - starttime).toString() + 'ms')
-                const ans = xhr.responseText;
-                // const d = JSON.parse(ans);
-                result.resolve(xhr.responseText);
-                /**
-                 Observable.fromPromise(this.getAjax(urls[0]).then(r => {
-            return this.nativeParser(JSON.parse(r));
-        }));
-                 */
-            } // success(xhr.responseText);
-        };
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('MaxDataServiceVersion', '3.0');
-        xhr.setRequestHeader('Accept', 'application/json;odata=light;q=1,application/json;odata=minimalmetadata;');
-        xhr.send();
-        return result.promise;
-    }
-
 }
 

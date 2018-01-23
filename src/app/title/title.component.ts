@@ -19,7 +19,7 @@ export class TitleComponent {
                     this.currentDesk += link.id;
                 }
             } else {
-                this.currentDesk = '#'
+                this.currentDesk = '#';
             }
         });
     }

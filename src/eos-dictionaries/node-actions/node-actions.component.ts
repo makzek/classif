@@ -1,5 +1,4 @@
-import { Component, OnChanges, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable'
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/combineLatest';
@@ -18,7 +17,6 @@ import { IActionButton, IAction, IDictionaryViewParameters, E_DICT_TYPE,
     templateUrl: 'node-actions.component.html',
 })
 export class NodeActionsComponent implements OnDestroy {
-    private ngUnsubscribe: Subject<any> = new Subject();
 
     // @Input('params') params: INodeListParams;
     @Output('action') action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
@@ -39,6 +37,7 @@ export class NodeActionsComponent implements OnDestroy {
     private _nodeSelected = false;
     private _viewParams: IDictionaryViewParameters;
 
+    private ngUnsubscribe: Subject<any> = new Subject();
     constructor(_dictSrv: EosDictService) {
         this._initButtons();
 
@@ -56,6 +55,15 @@ export class NodeActionsComponent implements OnDestroy {
     ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    toggleButtonList() {
+        this.showMore = !this.showMore;
+    }
+
+    doAction(action: E_RECORD_ACTIONS, params?: any) {
+        // console.log('action', E_RECORD_ACTIONS[action], params);
+        this.action.emit({ action: action, params: params });
     }
 
     private _initButtons() {
@@ -134,10 +142,6 @@ export class NodeActionsComponent implements OnDestroy {
         button.isActive = _active;
     }
 
-    toggleButtonList() {
-        this.showMore = !this.showMore;
-    }
-
     private _actionToButton(action: IAction): IActionButton {
         const _btn = Object.assign({
             isActive: false,
@@ -146,10 +150,5 @@ export class NodeActionsComponent implements OnDestroy {
         }, action);
         this._updateButton(_btn);
         return _btn;
-    }
-
-    doAction(action: E_RECORD_ACTIONS, params?: any) {
-        console.log('action', E_RECORD_ACTIONS[action], params);
-        this.action.emit({ action: action, params: params });
     }
 }

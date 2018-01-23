@@ -1,4 +1,4 @@
-import { IEnt, ILinearCL, IHierCL, IStamp } from './interfaces'
+import { IEnt, ILinearCL, IHierCL, IStamp } from './interfaces';
 
 // tslint:disable class-name
 

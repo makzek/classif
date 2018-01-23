@@ -1,8 +1,7 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
-import { IFieldView, E_RECORD_ACTIONS, IDictionaryViewParameters } from 'eos-dictionaries/interfaces';
+import { E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
@@ -12,7 +11,6 @@ import { EosDictService } from '../services/eos-dict.service';
 export class NodeInfoSwitcherComponent implements OnDestroy {
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
-    private ngUnsubscribe: Subject<any> = new Subject();
     public updating: boolean;
     fieldsDescriptionShort: any = {};
     nodeDataShort: any = {};
@@ -22,10 +20,9 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     dictionaryId: string;
     bossName = '';
 
-    private _openedNodeSubscription: Subscription;
-    private _dictSubscription: Subscription;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
-    constructor(private _dictSrv: EosDictService) {
+    constructor(_dictSrv: EosDictService) {
         this._initInfo();
         _dictSrv.openedNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node) => {
@@ -52,14 +49,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
             .subscribe(viewParams => this.updating = viewParams.updatingInfo);
     }
 
-    private _initInfo() {
-        this.dictionaryId = null;
-        this.fieldsDescriptionFull = {};
-        this.fieldsDescriptionShort = {};
-        this.nodeDataFull = {};
-        this.nodeDataShort = {};
-    }
-
     ngOnDestroy() {
     }
 
@@ -67,4 +56,11 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
         this.action.emit(action);
     }
 
+    private _initInfo() {
+        this.dictionaryId = null;
+        this.fieldsDescriptionFull = {};
+        this.fieldsDescriptionShort = {};
+        this.nodeDataFull = {};
+        this.nodeDataShort = {};
+    }
 }
