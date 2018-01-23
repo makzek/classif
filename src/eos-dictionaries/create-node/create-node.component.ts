@@ -100,23 +100,10 @@ export class CreateNodeComponent {
     }
 
     /**
-     * Separate error massage from error and show it to user by using EosMessageService
-     */
-    private _errHandler(err) {
-        // console.error(err);
-        const errMessage = err.message ? err.message : err;
-        this._msgSrv.addNewMessage({
-            type: 'danger',
-            title: 'Ошибка добавления записи',
-            msg: errMessage,
-        });
-    }
-
-    /**
      * Check if data was changed
      * @param data user data
      */
-    recordChanged(data: any) {
+    recordChanged(_data: any) {
         if (this.nodeData) {
             /* tslint:disable:no-bitwise */
             const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
@@ -130,5 +117,17 @@ export class CreateNodeComponent {
             /* tslint:enable:no-bitwise */
             this.hasChanges = hasChanges;
         }
+    }
+    /**
+     * Separate error massage from error and show it to user by using EosMessageService
+     */
+    private _errHandler(err) {
+        // console.error(err);
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка добавления записи',
+            msg: errMessage,
+        });
     }
 }

@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -122,7 +122,7 @@ export abstract class AbstractDictionaryDescriptor {
         return _criteries;
     }
 
-    getRelated(rec: any, ...args): Promise<any> {
+    getRelated(rec: any, ..._args): Promise<any> {
         const reqs = [];
         this.metadata.relations.forEach((relation) => {
             if (rec[relation.sf]) {
@@ -146,7 +146,7 @@ export abstract class AbstractDictionaryDescriptor {
         return this.getData([nodeId]);
     }
 
-    getIdByDictionaryMode(mode: number): string {
+    getIdByDictionaryMode(_mode: number): string {
         return this.id;
     }
 
@@ -207,11 +207,15 @@ export abstract class AbstractDictionaryDescriptor {
         // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
 
+    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
+    }
+
     protected _postChanges(data: any, updates: any): Promise<any[]> {
-        console.log('_postChanges', data, updates);
+        // console.log('_postChanges', data, updates);
         Object.assign(data, updates);
         const changes = this.apiSrv.changeList([data]);
-        console.log('changes', changes);
+        // console.log('changes', changes);
         return this.apiSrv.batch(changes, '');
     }
 
@@ -219,9 +223,9 @@ export abstract class AbstractDictionaryDescriptor {
         const chain: string[] = due.split('.').filter((elem) => !!elem);
         let prefix = '';
         chain.forEach((elem, idx, arr) => {
-            arr[idx] = prefix + elem + '.'
+            arr[idx] = prefix + elem + '.';
             prefix = arr[idx];
-        })
+        });
         return chain;
     }
 
@@ -235,7 +239,7 @@ export abstract class AbstractDictionaryDescriptor {
         if (descriptorData.fields) {
             this.record = new RecordDescriptor(this, descriptorData);
         }
-    };
+    }
 
     protected prepareForEdit(records: any[]): any[] {
         return records.map((record) => this.apiSrv.entityHelper.prepareForEdit(record));

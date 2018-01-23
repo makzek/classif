@@ -7,7 +7,7 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: RecordDescriptor;
 
-    addRecord(data: any, useless: any, isProtected = false, isDeleted = false): Promise<any> {
+    addRecord(data: any, _useless: any, isProtected = false, isDeleted = false): Promise<any> {
         let _newRec = this.preCreate(isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<any>(_newRec, this.apiInstance);
         return this._postChanges(_newRec, data.rec)
@@ -22,7 +22,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getChildren(): Promise<any[]> {
         return this.getData();
-    };
+    }
 
     getSubtree(): Promise<any[]> {
         return Promise.resolve([]);
@@ -38,6 +38,10 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData();
     }
 
+    public onPreparePrintInfo(): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
+    }
+
     private preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _res: ILinearCL = {
@@ -48,12 +52,7 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
             NOTE: null,
             IS_FINAL: 0,
             STATUS: ''
-        }
-
+        };
         return _res;
-    };
-
-    public onPreparePrintInfo(): Promise<any> {
-        return Promise.reject('Type of dictionary not true!');
     }
 }

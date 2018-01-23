@@ -1,5 +1,4 @@
 import {
-    E_FIELD_SET,
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
@@ -9,11 +8,9 @@ import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
-import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
-import { _ES } from 'eos-rest/core/consts';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -55,10 +52,11 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         let __res = [];
         Object.keys(this.fullSearchFields).forEach((mode) => {
             __res = __res.concat(this.fullSearchFields[mode]);
-        })
+        });
         return __res;
     }
 
+    /*
     private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
         //  todo: fix hardcode to data, need better solution
         let _mode: string = E_DEPT_MODE[this.getMode(values)];
@@ -73,13 +71,14 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             return [];
         }
     }
+    */
 
     private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {
             if (!this[setName]) {
                 this[setName] = new ModeFieldSet(this, descriptor[setName]);
             }
-        })
+        });
     }
 }
 
@@ -105,7 +104,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 if (data.rec[fld.foreignKey]) {
                     _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
                 }
-            })
+            });
         }
         return _criteries;
     }
@@ -165,11 +164,11 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
     }
 
-    protected _initRecord(data: IDictionaryDescriptor) {
-        this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
-    }
-
     public onPreparePrintInfo(dec: FieldsDecline): Promise<any[]> {
         return this.apiSrv.read({ PreparePrintInfo: PipRX.args(dec) });
+    }
+
+    protected _initRecord(data: IDictionaryDescriptor) {
+        this.record = new DepartmentRecordDescriptor(this, <IDepartmentDictionaryDescriptor>data);
     }
 }

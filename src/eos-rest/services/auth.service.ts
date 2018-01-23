@@ -4,16 +4,16 @@ import { Http } from '@angular/http';
 import { PipRX } from './pipRX.service';
 import { ApiCfg } from '../core/api-cfg';
 import { HTTP_OPTIONS } from '../core/consts';
-import { USER_CL, SYS_PARMS } from '../interfaces/structures'
-import { ALL_ROWS } from '../core/consts';
-import { AppContext } from './appContext.service'
+import { USER_CL, SYS_PARMS } from '../interfaces/structures';
+// import { ALL_ROWS } from '../core/consts';
+import { AppContext } from './appContext.service';
 import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class AuthService {
     private _cfg: ApiCfg;
 
-    constructor(private _http: Http, private _pipe: PipRX, private appCtx: AppContext) {
+    constructor(private _http: Http, _pipe: PipRX, private appCtx: AppContext) {
         this._cfg = _pipe.getConfig();
     }
 
@@ -44,7 +44,7 @@ export class AuthService {
                 return {
                     user: arr[0],
                     sysParams: arr[1]
-                }
+                };
             });
         /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
@@ -77,6 +77,5 @@ export class AuthService {
                 debugger;
             })
             */
-        ;
     }
 }

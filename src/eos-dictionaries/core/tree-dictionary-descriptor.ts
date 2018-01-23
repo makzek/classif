@@ -1,4 +1,4 @@
-import { ITreeDictionaryDescriptor, E_FIELD_SET } from 'eos-dictionaries/interfaces';
+import { ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { IHierCL, SEV_ASSOCIATION, CB_PRINT_INFO } from 'eos-rest';
@@ -106,13 +106,16 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
+    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
+    }
+
     protected _initRecord(data: ITreeDictionaryDescriptor) {
         this.record = new TreeRecordDescriptor(this, data);
     }
 
-    protected preCreate<T>(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
+    protected preCreate(parent?: IHierCL, isLeaf = false, isProtected = false, isDeleted = false): IHierCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
-        const _parentDue = parent.DUE;
 
         const _res: IHierCL = {
             DUE: _isn + '.',
@@ -124,7 +127,7 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             DELETED: (isDeleted ? 1 : 0),
             CLASSIF_NAME: 'new_classif_name',
             NOTE: null,
-        }
+        };
 
         if (parent) {
             _res.DUE = parent.DUE + _res.DUE;
@@ -132,9 +135,5 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
             _res.ISN_HIGH_NODE = parent.ISN_NODE;
         }
         return _res;
-    };
-
-    public onPreparePrintInfo(dec: FieldsDecline): Promise<any> {
-        return Promise.reject('Type of dictionary not true!');
     }
 }

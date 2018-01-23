@@ -1957,7 +1957,7 @@ const commonMeta = {
 
         ]
     }
-}
+};
 
 export function commonMergeMeta(meta: any) {
     meta.merge(commonMeta);

@@ -4,4 +4,4 @@ export interface IRecordOperationResult {
     record: any;
     success: boolean;
     error?: RestError;
-};
+}

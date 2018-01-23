@@ -20,6 +20,7 @@ export class EosMessageService {
     }
 
     public addNewMessage(message: IMessage) {
+        /*tslint:disable:no-console*/
         if (message.dismissOnTimeout === undefined) {
             switch (message.type) {
                 case 'danger':
@@ -34,6 +35,7 @@ export class EosMessageService {
                     message.dismissOnTimeout = DEFAULT_DISMISS_TIMEOUT;
             }
         }
+        /*tslint:enable:no-console*/
         this.messages.push(message);
         this._messages$.next(this.messages);
     }

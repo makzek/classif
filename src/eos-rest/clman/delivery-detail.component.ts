@@ -19,7 +19,7 @@ export class DeliveryDetailComponent {
             return;
         }
         if (it.ISN_LCLASSIF > 0) {
-            this.read(it.ISN_LCLASSIF)
+            this.read(it.ISN_LCLASSIF);
         } else {
             // создание, может его логичнее здесь делать, чем снаружи?
             // create()
@@ -45,7 +45,7 @@ export class DeliveryDetailComponent {
 
     onSave() {
         const chl = this.pip.changeList([this.item]);
-        this.pip.batch(chl, '').then((r) => {
+        this.pip.batch(chl, '').then(() => {
             alert(this.pip.sequenceMap.GetFixed(this.item.ISN_LCLASSIF));
         });
 

@@ -50,6 +50,13 @@ import { ViewManager } from 'eos-rest/services/viewManager';
     ]
 })
 export class EosRestModule {
+    constructor( @Optional() @SkipSelf() parentModule: EosRestModule) {
+        if (parentModule) {
+            throw new Error(
+                'EosRestModule is already loaded. Import it in the AppModule only');
+        }
+    }
+
     static forRoot(config: IApiCfg): ModuleWithProviders {
         return {
             ngModule: EosRestModule,
@@ -57,11 +64,5 @@ export class EosRestModule {
                 { provide: ApiCfg, useValue: config }
             ]
         };
-    }
-    constructor( @Optional() @SkipSelf() parentModule: EosRestModule) {
-        if (parentModule) {
-            throw new Error(
-                'EosRestModule is already loaded. Import it in the AppModule only');
-        }
     }
 }
