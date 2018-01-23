@@ -22,7 +22,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     focusedField: string;
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
-    protected dictSrv;
+    protected dictSrv: EosDictService;
 
     private _subscrChanges: Subscription;
 
