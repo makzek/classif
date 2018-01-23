@@ -396,21 +396,13 @@ export class EosDictionary {
         this.root.data.rec['DELETED'] = false;
         this.root.isExpanded = true;
 
-        nodes.forEach((node) => {
-            if (!node.parent && node !== this.root) {
-                this.root.addChild(node);
-            }
-            node.updateExpandable(this._showDeleted);
-        });
-
-        this.root.updateExpandable(this._showDeleted);
-
         const treeOrderKey = this.root.getTreeView()[0];
         this.nodes.forEach((node) => {
             if (treeOrderKey && node.children && node.children.length > 0) {
                 node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
             }
         });
+        this._nodes.forEach((node) => node.updateExpandable(this._showDeleted));
     }
 
     /**
