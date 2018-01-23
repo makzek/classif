@@ -176,6 +176,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
+                    const url = this._router.url;
+                    this._storageSrv.setItem(RECENT_URL, url);
                 }
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
