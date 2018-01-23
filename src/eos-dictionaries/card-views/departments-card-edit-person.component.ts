@@ -47,14 +47,16 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
             GENDER: Number(this.data['printInfo']['GENDER']),
             NAME: this.data['printInfo']['NAME'] || '',
             PATRON: this.data['printInfo']['PATRON'] || '',
-            SURNAME: this.data['printInfo']['SURNAME'] || ''
+            SURNAME: this.data['printInfo']['SURNAME'] || '',
+            // PRINT_SURNAME_DP: 'test PRINT SURNAME_DP'
         }
-
         this.dictSrv.inclineFields(field)
             .then((res: any[]) => {
                 if (res && res[0]) {
                     Object.keys(res[0]).forEach((key) => {
-                        this.data.printInfo[key] = res[0][key];
+                        if (res[0][key]) {
+                            this.data.printInfo[key] = res[0][key];
+                        }
                     });
                 }
             });
