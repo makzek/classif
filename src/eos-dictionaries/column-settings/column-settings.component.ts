@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { ModalDirective, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -19,15 +19,15 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     selectedCurrItem: IFieldView;
     selectedFixedItem: IFieldView;
 
-    private _subscriptionDrop: Subscription;
-    private _subscriptionDrag: Subscription;
-
     editedItem: IFieldView;
     newTitle: string;
 
     modalRef: BsModalRef;
 
     readonly MAX_LEN = 80;
+
+    private _subscriptionDrop: Subscription;
+    private _subscriptionDrag: Subscription;
 
     /**
      * @description constructor, subscribe on drop in dragulaService for highlighting selected field
@@ -47,17 +47,18 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                 }
             }
         });
-        this._subscriptionDrag = dragulaService.drag.subscribe((value) => {
-            this.selectedDictItem = null;
-            this.selectedCurrItem = null;
-            this.selectedFixedItem = null;
-        })
+        this._subscriptionDrag = dragulaService.drag
+            .subscribe(() => {
+                this.selectedDictItem = null;
+                this.selectedCurrItem = null;
+                this.selectedFixedItem = null;
+            });
         dragulaService.setOptions('bag-one', {
-            moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
+            moves: (el/*, source, handle, sibling*/) => !el.classList.contains('fixed-item')
         });
 
         dragulaService.setOptions('fixed-bag', {
-            moves: (el, source, handle, sibling) => !el.classList.contains('fixed-item')
+            moves: (el/*, source, handle, sibling*/) => !el.classList.contains('fixed-item')
         });
     }
 
@@ -85,7 +86,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
             if (this.dictionaryFields) {
                 this.currentFields.forEach((_curr) => {
                     this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
-                })
+                });
             }
         }, 0);
     }

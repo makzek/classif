@@ -11,7 +11,6 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { EosDeskService } from '../../app/services/eos-desk.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
@@ -19,7 +18,6 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
-    INFO_NOTHING_CHANGES,
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE,
     WARN_SAVE_FAILED
@@ -32,7 +30,7 @@ import { LS_EDIT_CARD } from '../consts/common';
 export enum EDIT_CARD_MODES {
     edit,
     view,
-};
+}
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -47,32 +45,20 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
-    private ngUnsubscribe: Subject<any> = new Subject();
-
     node: EosDictionaryNode;
     nodes: EosDictionaryNode[];
 
     nodeData: any = {};
-    private _originalData: any = {};
     isChanged = false;
     fieldsDescription: any = {};
 
     dictionaryId: string;
-    private nodeId: string;
-    private _uuid: string;
-
-    private _urlSegments: string[];
-    private nodeIndex: number = -1;
-
     isFirst: boolean;
     isLast: boolean;
 
     lastEditedCard: EditedCard;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
 
-    private nextRoute: string;
-
-    private _mode: EDIT_CARD_MODES;
     editMode: boolean;
 
     selfLink = null;
@@ -83,26 +69,12 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     fullNamesList: string[] = [];
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
-
     /* todo: check tasks for reson
     @HostListener('document:blur')
     private _blur(): boolean {
         return this.canDeactivate();
     }
     */
-
-    @HostListener('window:beforeunload', ['$event'])
-    private _canWndUnload(evt: BeforeUnloadEvent): any {
-        if (this.editMode) {
-            /* clean link on close or reload */
-            /* cann't handle user answer */
-            this._clearEditingCardLink();
-        }
-        if (this.isChanged) {
-            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
-            return false;
-        }
-    }
 
     get nodeName() {
         let _nodeName = '';
@@ -114,6 +86,18 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
         return _nodeName;
     }
+
+    private _originalData: any = {};
+    private nodeId: string;
+    // private _uuid: string;
+
+    private _urlSegments: string[];
+    private nodeIndex: number = -1;
+
+    private nextRoute: string;
+
+    private _mode: EDIT_CARD_MODES;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private _storageSrv: EosStorageService,
@@ -136,6 +120,19 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
+    @HostListener('window:beforeunload', ['$event'])
+    canWndUnload(evt: BeforeUnloadEvent): any {
+        if (this.editMode) {
+            /* clean link on close or reload */
+            /* cann't handle user answer */
+            this._clearEditingCardLink();
+        }
+        if (this.isChanged) {
+            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
+            return false;
+        }
+    }
+
     ngOnInit() {
         // this._init();
     }
@@ -153,6 +150,106 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this.disableSave = val;
     }
 
+    forceView() {
+        if (this._mode === EDIT_CARD_MODES.edit) {
+            this._openNode(this.node, EDIT_CARD_MODES.view);
+        }
+    }
+
+    edit() {
+        const _canEdit = this._preventMultiEdit() && this._preventDeletedEdit();
+        if (_canEdit) {
+            this._openNode(this.node, EDIT_CARD_MODES.edit);
+        }
+    }
+
+    close() {
+        const url = this._storageSrv.getItem(RECENT_URL);
+        if (url) {
+            this.goTo(url);
+        } else {
+            const backUrl = (this.node.parent || this.node).getPath();
+            this._router.navigate(backUrl);
+            /*Generate back URL*/
+            /*
+            const urlSegments = this._router.url.split('/');
+            urlSegments[3] = this.node.parentId;
+            urlSegments.length--;
+            const backUrl = urlSegments.join('/');
+            this.goTo(backUrl);*/
+        }
+    }
+
+
+    cancel(): void {
+        /* _askForSaving fired on route change */
+        this._openNode(this.node, EDIT_CARD_MODES.view);
+    }
+
+    recordChanged(_data: any) {
+        if (this.nodeData) {
+            // console.log('recordChanged', this.nodeData, this._originalData);
+            /* tslint:disable:no-bitwise */
+            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+                if (this.nodeData[dict] && this._originalData[dict]) {
+                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
+                        ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
+                            (this.nodeData[dict][key] || this._originalData[dict][key])) &&
+                        (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
+                    );
+                } else {
+                    return false;
+                }
+            });
+            /* tslint:enable:no-bitwise */
+            this.isChanged = hasChanges;
+        }
+    }
+
+    next() {
+        if (this.nodeIndex < this.nodes.length - 1) {
+            this.nodeIndex++;
+            this._openNode(this.nodes[this.nodeIndex]);
+        }
+    }
+
+    prev() {
+        if (this.nodeIndex > 0) {
+            this.nodeIndex--;
+            this._openNode(this.nodes[this.nodeIndex]);
+        }
+    }
+
+    disManager(mod: boolean, tooltip: any): boolean {
+        if (mod) {
+            if (this.isFirst || !this.node.parent) {
+                tooltip.hide();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (this.isLast || !this.node.parent) {
+                tooltip.hide();
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    goTo(url: string): void {
+        if (url) {
+            this._router.navigateByUrl(url);
+        } else {
+            this._router.navigate([this.nextRoute]);
+        }
+    }
+
+    canDeactivate(_nextState?: any): boolean | Promise<boolean> {
+        return this._askForSaving();
+    }
+
     private _init() {
         this.nextRoute = this._router.url;
         this._urlSegments = this._router.url.split('/');
@@ -161,17 +258,18 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     }
 
     private _getNode() {
-        console.log('_getNode', this.dictionaryId, this.nodeId);
+        // console.log('_getNode', this.dictionaryId, this.nodeId);
         return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
             .then((node) => {
                 if (node) {
-                    this._update(node)
+                    this._update(node);
                 } else {
                     const segments: Array<string> = this._router.url.split('/');
                     this._router.navigate(['spravochniki/' + segments[2]]);
                     this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
                 }
-            }).catch((err) => console.log('getNode error', err));
+            });
+            // .catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
@@ -219,12 +317,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this.recordChanged(this.nodeData);
     }
 
-    forceView() {
-        if (this._mode === EDIT_CARD_MODES.edit) {
-            this._openNode(this.node, EDIT_CARD_MODES.view);
-        }
-    }
-
     private _preventMultiEdit(): boolean {
         /* prevent editing multiple cards */
         this.getLastEditedCard();
@@ -245,92 +337,10 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         }
     }
 
-    edit() {
-        const _canEdit = this._preventMultiEdit() && this._preventDeletedEdit();
-        if (_canEdit) {
-            this._openNode(this.node, EDIT_CARD_MODES.edit);
-        }
-    }
-
-    close() {
-        const url = this._storageSrv.getItem(RECENT_URL);
-        if (url) {
-            this.goTo(url);
-        } else {
-            const backUrl = (this.node.parent || this.node).getPath();
-            this._router.navigate(backUrl);
-            /*Generate back URL*/
-            /*
-            const urlSegments = this._router.url.split('/');
-            urlSegments[3] = this.node.parentId;
-            urlSegments.length--;
-            const backUrl = urlSegments.join('/');
-            this.goTo(backUrl);*/
-        }
-    }
-
-
-    cancel(): void {
-        /* _askForSaving fired on route change */
-        this._openNode(this.node, EDIT_CARD_MODES.view);
-    }
-
-    recordChanged(data: any) {
-        if (this.nodeData) {
-            // console.log('recordChanged', this.nodeData, this._originalData);
-            /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
-                if (this.nodeData[dict] && this._originalData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
-                        ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
-                            (this.nodeData[dict][key] || this._originalData[dict][key])) &&
-                        (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
-                    );
-                } else {
-                    return false;
-                }
-            });
-            /* tslint:enable:no-bitwise */
-            this.isChanged = hasChanges;
-        }
-    }
-
     private _updateBorders() {
         this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
         this.isFirst = this.nodeIndex <= 0;
         this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
-    }
-
-    next() {
-        if (this.nodeIndex < this.nodes.length - 1) {
-            this.nodeIndex++;
-            this._openNode(this.nodes[this.nodeIndex]);
-        }
-    }
-
-    prev() {
-        if (this.nodeIndex > 0) {
-            this.nodeIndex--;
-            this._openNode(this.nodes[this.nodeIndex]);
-        }
-    }
-
-    disManager(mod: boolean, tooltip: any): boolean {
-        if (mod) {
-            if (this.isFirst || !this.node.parent) {
-                tooltip.hide()
-                return true
-            } else {
-                return false
-            }
-        } else {
-            if (this.isLast || !this.node.parent) {
-                tooltip.hide()
-                return true
-            } else {
-                return false
-            }
-        }
     }
 
     private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
@@ -349,18 +359,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             _url[_url.length - 1] = EDIT_CARD_MODES[forceMode];
         }
         return _url.join('/');
-    }
-
-    goTo(url: string): void {
-        if (url) {
-            this._router.navigateByUrl(url);
-        } else {
-            this._router.navigate([this.nextRoute]);
-        }
-    }
-
-    canDeactivate(nextState?: any): boolean | Promise<boolean> {
-        return this._askForSaving();
     }
 
     private _askForSaving(): Promise<boolean> {
@@ -386,7 +384,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                         }
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     // console.log('cancel reason', err);
                     return false;
                 });
@@ -414,7 +412,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         this._save(this.nodeData)
             .then((node) => {
                 if (node) {
-                    console.log('save', node);
+                    // console.log('save', node);
                     this._initNodeData(node);
                     this._setOriginalData();
                     this.cancel();
@@ -477,7 +475,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
-            console.log('this.nodeId', this.nodeId);
+            // console.log('this.nodeId', this.nodeId);
             this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }
@@ -512,7 +510,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         try {
             return JSON.parse(JSON.stringify(src));
         } catch (e) {
-            console.log(e);
+            return null;
+            // console.log(e);
         }
     }
 

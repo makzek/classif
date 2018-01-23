@@ -231,11 +231,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         projManagment: false,
         onSight: false,
         onSignature: false
-    }
+    };
 
     @ViewChild('tableEl') tableEl;
-
-    private _interval: any;
 
     allMarkedAccess = false;
     allMarkedOwners = false;
@@ -267,6 +265,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         return !!~this.owners.findIndex((_person) => !_person.marked);
     }
     /* tslint:enable:no-bitwise */
+
+    private _interval: any;
 
     constructor(injector: Injector) {
         super(injector);

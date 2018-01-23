@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { NOT_EMPTY_STRING } from 'eos-dictionaries/consts/input-validation';
