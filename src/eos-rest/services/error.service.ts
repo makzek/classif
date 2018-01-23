@@ -6,7 +6,7 @@ export class ErrorService /*implements IErrorService*/ {
 
     httpCatch = (e) => {
         return this.errorHandler({ http: e });
-    };
+    }
 
     errorHandler(err) {
         if (err.http) {
@@ -29,7 +29,7 @@ export class ErrorService /*implements IErrorService*/ {
                     this.defaultErrorHandler(err.http);
             }
         } else if (err.isLogicException) {
-            console.log('rest error handler', err.message);
+            // console.log('rest error handler', err.message);
         } else if (err.odataErrors) {
             return this.odataErrorsHandler(err);
         }
@@ -50,12 +50,12 @@ export class ErrorService /*implements IErrorService*/ {
             }
         }
         if (logic !== '') {
-            console.log('odata error', logic);
+            // console.log('odata error', logic);
         }
         return Observable.throw(err);
     }
 
-    defaultLogicExceptionHandler(e, data) {
+    defaultLogicExceptionHandler(_e, data) {
         if (data.ErrorKind === 'InvalidEntityRef') {
             // TODO: специальное исключени - ссылка на уже не существующий объект, для интерфейса пытались отдать с подробностями
             // из ошибки берем имя сущности и по ее первичному ключу извлекаем его значение
@@ -71,7 +71,7 @@ export class ErrorService /*implements IErrorService*/ {
             // 	return;
         }
         // LogicException показываем как alert?
-        console.log('rest logic error', e.message);
+        // console.log('rest logic error', e.message);
     }
     // //для переопределения на конкретной pm, для вывода более конкретного сообщения
     // InvalidRefErrorHandler = (e, etn, isn) => false;
@@ -98,8 +98,8 @@ export class ErrorService /*implements IErrorService*/ {
         }
     }
 
-    WriteErrorHtml(message, stacktrace?) {
-        console.log('rest error', message + ' ' + stacktrace);
+    WriteErrorHtml(_message, _stacktrace?) {
+        // console.log('rest error', message + ' ' + stacktrace);
     }
 }
 

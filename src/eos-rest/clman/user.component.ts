@@ -1,8 +1,8 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { USER_CL } from '../interfaces/structures';
-import { ALL_ROWS } from '../core/consts';
+// import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 
 @Component({
@@ -26,10 +26,6 @@ export class UserRestComponent implements OnInit {
 
     }
 
-    private _sanitizeUrl(url: string): SafeUrl {
-        return this._sanitizer.bypassSecurityTrustUrl(url);
-    }
-
     getData() {
         this.pip.read<USER_CL>({
             // - Загрузка всех строк
@@ -44,8 +40,8 @@ export class UserRestComponent implements OnInit {
             USER_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
         }).then(r => {
-            console.log('----->>>>>>>');
-            console.log(r);
+            // console.log('----->>>>>>>');
+            // console.log(r);
             this.items = r;
             /* sanitize image url */
             // this.userPhotoUrl = this._sanitizeUrl(r.user_photo);
@@ -77,6 +73,10 @@ export class UserRestComponent implements OnInit {
             alert(this.pip.sequenceMap.GetFixed(this.currentItem.DUE) + ' ' + this.pip.sequenceMap.GetFixed(this.currentItem.ISN_NODE));
         });
         */
+    }
+
+    private _sanitizeUrl(url: string): SafeUrl {
+        return this._sanitizer.bypassSecurityTrustUrl(url);
     }
 }
 

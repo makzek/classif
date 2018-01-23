@@ -27,7 +27,7 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
     readonly confirmEvt: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(public modalRef: BsModalRef, private modalService: BsModalService) {
-        this.modalService.onHide.subscribe((evt) => {
+        this.modalService.onHide.subscribe((_evt) => {
             this.confirmEvt.emit(undefined);
         });
     }
