@@ -13,7 +13,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
 export class NodeInfoComponent extends BaseNodeInfoComponent {
     public update: boolean;
 
-    constructor(private _dictSrv: EosDictService) {
+    constructor(_dictSrv: EosDictService) {
         super();
         _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingFields);
     }

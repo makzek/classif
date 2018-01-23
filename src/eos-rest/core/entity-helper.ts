@@ -3,6 +3,7 @@ import { IEnt } from '../interfaces/interfaces';
 import { _ES } from '../core/consts';
 
 export class EntityHelper {
+    constructor(private _metadata: Metadata) {}
 
     static clone<T>(o: T): T {
         const r = <T>{};
@@ -12,10 +13,6 @@ export class EntityHelper {
             }
         }
         return r;
-    }
-
-    constructor(private _metadata: Metadata) {
-
     }
 
     public prepareAdded<T extends IEnt>(ent: any, typeName: string): T {
@@ -43,5 +40,4 @@ export class EntityHelper {
         }
         return it;
     }
-
 }

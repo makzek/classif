@@ -1,13 +1,8 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { NgForm } from '@angular/forms';
-
-import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 import { EosDictService } from '../services/eos-dict.service';
-import { E_DICT_TYPE, E_FIELD_SET, IFieldView, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
-import { EosDictionary } from '../core/eos-dictionary';
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 
@@ -55,10 +50,6 @@ export class DictionarySearchComponent implements OnDestroy {
 
     public mode = 0;
 
-    setTab(key: string) {
-        this.currTab = key;
-    }
-
     get noSearchData(): boolean {
         for (const _dict in this.data) {
             if (this.data[_dict]) {
@@ -105,6 +96,10 @@ export class DictionarySearchComponent implements OnDestroy {
         });
     }
 
+    setTab(key: string) {
+        this.currTab = key;
+    }
+
     public setFocus() {
         document.getElementById('inpQuick').focus();
     }
@@ -128,7 +123,7 @@ export class DictionarySearchComponent implements OnDestroy {
                     title: 'Идет поиск!',
                     type: 'warning',
                     msg: 'Пожалуйста подождите.'
-                })
+                });
             }
         }
     }
@@ -153,7 +148,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.data['srchMode'] = this.currTab;
             }
             this._dictSrv.fullSearch(this.data, this.settings)
-                .then((nodes) => {
+                .then(() => {
                     this.searchDone = true;
                 });
         } else {
@@ -161,7 +156,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 title: 'Идет поиск!',
                 type: 'danger',
                 msg: 'Пожалуйста подождите.'
-            })
+            });
         }
     }
 
@@ -175,6 +170,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dateFilter(date: Date) {
         if (date !== this.date) {
+            /*
             this.date = date;
             this._dictSrv.filter({ date: date })
                 .then(() => {
@@ -183,6 +179,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 .catch((err) => {
                     console.log(err)
                 });
+            */
         }
     }
 

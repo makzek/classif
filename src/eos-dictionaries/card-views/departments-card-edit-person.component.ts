@@ -29,7 +29,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
     }
 
     getGender(id: any): string {
-        let sGender = this.gender.find((elem) => elem.id === id)
+        let sGender = this.gender.find((elem) => elem.id === id);
         if (!sGender) {
             sGender = this.gender[0];
         }

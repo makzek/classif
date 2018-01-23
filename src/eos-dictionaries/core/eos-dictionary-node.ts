@@ -1,4 +1,4 @@
-import { E_FIELD_TYPE, IFieldView, IFieldDesriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
+import { E_FIELD_TYPE, IFieldView, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -7,10 +7,8 @@ export class EosDictionaryNode {
     readonly id: any;
     /* made public for a while */
     public _descriptor: RecordDescriptor;
-    private _dictionary: EosDictionary;
     parentId?: string;
     parent?: EosDictionaryNode;
-    private _children?: EosDictionaryNode[];
     isExpanded?: boolean;
 
     /**
@@ -44,6 +42,9 @@ export class EosDictionaryNode {
      * flag for updating indication
      * */
     updating: boolean;
+
+    private _dictionary: EosDictionary;
+    private _children?: EosDictionaryNode[];
 
     get children(): EosDictionaryNode[] {
         return this._children;
@@ -96,10 +97,6 @@ export class EosDictionaryNode {
         return !this.isNode || this._children !== undefined;
     }
 
-    isVisible(showDeleted: boolean): boolean {
-        return showDeleted || !this.isDeleted;
-    }
-
     get originalId(): string | number {
         return this._fieldValue(this._descriptor.keyField);
     }
@@ -135,26 +132,13 @@ export class EosDictionaryNode {
         }
     }
 
+    isVisible(showDeleted: boolean): boolean {
+        return showDeleted || !this.isDeleted;
+    }
+
     updateExpandable(showDeleted = false) {
         this.expandable = this.isNode && this._children &&
             this._children.findIndex((node) => !!node.isNode && node.isVisible(showDeleted)) > -1;
-    }
-
-    private _keyToString(value: any): string {
-        if (value !== undefined && value !== null) {
-            return value + '';
-        } else {
-            return null;
-        }
-    }
-
-    private _fieldValue(field: FieldDescriptor): any {
-        const _fld = field.foreignKey;
-        if (this.data.rec) {
-            return this.data.rec[_fld];
-        } else {
-            return null;
-        }
     }
 
     updateData(nodeData: any) {
@@ -232,7 +216,7 @@ export class EosDictionaryNode {
     getEditData(): any {
         const _data = {
             rec: {},
-        }
+        };
         this._descriptor.getEditView(this.data).forEach((_f) => {
             if (_f.type !== E_FIELD_TYPE.dictionary) {
                 _data.rec[_f.foreignKey] = _f.value;
@@ -360,6 +344,22 @@ export class EosDictionaryNode {
         return this.data.rec[field.foreignKey];
     }
 
+    private _keyToString(value: any): string {
+        if (value !== undefined && value !== null) {
+            return value + '';
+        } else {
+            return null;
+        }
+    }
+
+    private _fieldValue(field: FieldDescriptor): any {
+        const _fld = field.foreignKey;
+        if (this.data.rec) {
+            return this.data.rec[_fld];
+        } else {
+            return null;
+        }
+    }
 }
 
 

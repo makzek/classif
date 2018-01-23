@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HintConfiguration } from './hint-configuration.interface';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
@@ -39,7 +39,7 @@ export class LongTitleHintComponent {
             this.opacity = 1;
             this._node = hintConfig.node;
             this.lkm = false;
-        }, 100)
+        }, 100);
     }
 
     public hideHint(hintConfig?: HintConfiguration) {
@@ -56,7 +56,7 @@ export class LongTitleHintComponent {
         return false;
     }
 
-    public selectNode(evt: MouseEvent) {
+    public selectNode() {
         if (!this._node.isDeleted && this._node.id !== '') {
             this._dictSrv.openNode(this._node.id);
         }
@@ -66,7 +66,7 @@ export class LongTitleHintComponent {
         if (!this._dictSrv.isRoot(this._node.id)) {
             this._storageSrv.setItem(RECENT_URL, this._router.url);
             const _path = this._node.getPath();
-            _path.push('view')
+            _path.push('view');
             this._router.navigate(_path);
         }
     }
