@@ -396,6 +396,12 @@ export class EosDictionary {
         this.root.data.rec['DELETED'] = false;
         this.root.isExpanded = true;
 
+        nodes.forEach((node) => {
+            if (!node.parent && node !== this.root) {
+                this.root.addChild(node);
+            }
+        });
+
         const treeOrderKey = this.root.getTreeView()[0];
         this.nodes.forEach((node) => {
             if (treeOrderKey && node.children && node.children.length > 0) {
