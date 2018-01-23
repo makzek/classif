@@ -164,8 +164,15 @@ export class EosDictionary {
             }
             node.updateExpandable(this._showDeleted);
         });
-        // this.root.expandable = false;
+
         this.root.updateExpandable(this._showDeleted);
+
+        const treeOrderKey = this.root.getTreeView()[0];
+        this.nodes.forEach((node) => {
+            if (treeOrderKey && node.children && node.children.length > 0) {
+                node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
+            }
+        });
     }
 
     expandNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -488,8 +495,8 @@ export class EosDictionary {
         return nodes;
     }
 
-    private _orderByField(nodes: EosDictionaryNode[]): EosDictionaryNode[] {
-        const _orderBy = this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
+    private _orderByField(nodes: EosDictionaryNode[], orderBy?: IOrderBy): EosDictionaryNode[] {
+        const _orderBy = orderBy || this._orderBy; // DON'T USE THIS IN COMPARE FUNC!!! IT'S OTHER THIS!!!
         return nodes.sort((a: EosDictionaryNode, b: EosDictionaryNode) => {
             let _a = a.data.rec[_orderBy.fieldKey];
             let _b = b.data.rec[_orderBy.fieldKey];

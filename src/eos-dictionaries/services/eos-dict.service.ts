@@ -532,11 +532,32 @@ export class EosDictService {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
 
-    public updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
-        return this.dictionary.descriptor.updateRecord(node.data, data)
-            .then(() => this._reloadList())
-            .then(() => this.dictionary.getNode(node.id))
-            .catch((err) => this._errHandler(err));
+    public updateNode(node: EosDictionaryNode, data: any): Promise <any> {
+        if (this.dictionary.id === 'region') {
+            const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+            const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
+            return this.dictionary.descriptor.search(_srchCriteries)
+                .then(nodes => {
+                    const findNode = nodes.find((el: EosDictionaryNode) => {
+                        return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase()
+                    })
+                    if (findNode) {
+                        return Promise.reject('Запись с этим именем уже существует!');
+                    } else {
+                        return this.dictionary.descriptor.updateRecord(node.data, data);
+                    }
+                })
+                .then(() => this.dictionary.descriptor.updateRecord(node.data, data))
+                .then(() => this._reloadList().then(() => this.dictionary.getNode(node.id)))
+                .catch((err) => {
+                    this._errHandler(err);
+                });
+        } else {
+            return this.dictionary.descriptor.updateRecord(node.data, data)
+                .then(() => this._reloadList())
+                .then(() => this.dictionary.getNode(node.id))
+                .catch((err) => this._errHandler(err));
+        }
     }
 
     public addNode(data: any): Promise<any> {
@@ -550,7 +571,8 @@ export class EosDictService {
 
                 p = this.dictionary.descriptor.search(_srchCriteries)
                     .then((nodes: EosDictionaryNode[]) =>
-                        nodes.find((el: EosDictionaryNode) => el['CLASSIF_NAME'] === data.rec.CLASSIF_NAME)
+                        nodes.find((el: EosDictionaryNode) =>
+                            el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase())
                     )
                     .then((node: EosDictionaryNode) => {
                         if (node) {

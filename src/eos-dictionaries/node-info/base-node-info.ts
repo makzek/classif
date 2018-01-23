@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-
-import { IFieldView, E_FIELD_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import { E_FIELD_TYPE, E_RECORD_ACTIONS, IActionEvent } from 'eos-dictionaries/interfaces';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 
 export class BaseNodeInfoComponent implements OnChanges {
     @Input() node: EosDictionaryNode;
-    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+    @Output() action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
 
     fieldsDescriptionShort: any;
     nodeDataShort: any;
@@ -19,7 +18,10 @@ export class BaseNodeInfoComponent implements OnChanges {
     fieldTypes = E_FIELD_TYPE;
 
     actionHandler(type: E_RECORD_ACTIONS) {
-        this.action.emit(type);
+        this.action.emit({
+            action: type,
+            params: null
+        });
     }
 
     keys(data: Object): string[] {
