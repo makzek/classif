@@ -20,7 +20,7 @@ export class Cache extends PipeUtils {
      * @param req запрос
      */
     public read<T>(req: IRequest, policy?: ICachePolicy): Promise<T[]> {
-        const unread = []
+        const unread = [];
         const res = this.readOnlyCached<T>(req, unread);
         if ((res !== undefined) && ( unread.length === 0))
             return Promise.resolve(res);
@@ -34,27 +34,6 @@ export class Cache extends PipeUtils {
             // this._store.reqCache[rck] = ids;
         });
         return r;
-    }
-
-    private place(tn: string) {
-        if (!this._store.hasOwnProperty(tn))
-            this._store[tn] = {};
-        return this._store[tn];
-    }
-
-    private remember(d: any[], ids: any[]) {
-        if ( d.length === 0) return;
-        const tn = this._metadata.etn(d[0]);
-        const pkn = this._metadata.typeDesc(tn).pk;
-
-        const place = this.place(tn);
-        for (let i = 0; i < d.length; i++) {
-            const item = d[i];
-            const pk = item[pkn];
-            ids.push(pk);
-            place[pk] = item;
-            const test = place[pk];
-        }
     }
 
     /**
@@ -94,5 +73,24 @@ export class Cache extends PipeUtils {
 
     }
 
+    private place(tn: string) {
+        if (!this._store.hasOwnProperty(tn))
+            this._store[tn] = {};
+        return this._store[tn];
+    }
 
+    private remember(d: any[], ids: any[]) {
+        if ( d.length === 0) return;
+        const tn = this._metadata.etn(d[0]);
+        const pkn = this._metadata.typeDesc(tn).pk;
+
+        const place = this.place(tn);
+        for (let i = 0; i < d.length; i++) {
+            const item = d[i];
+            const pk = item[pkn];
+            ids.push(pk);
+            place[pk] = item;
+            const test = place[pk];
+        }
+    }
 }

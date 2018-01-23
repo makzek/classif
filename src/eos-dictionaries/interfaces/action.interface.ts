@@ -44,7 +44,7 @@ export interface IAction {
 export interface IActionButton extends IAction {
     isActive: boolean;
     enabled: boolean;
-    show: boolean
+    show: boolean;
 }
 
 export interface IActionEvent {

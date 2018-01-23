@@ -22,15 +22,24 @@ import { RestError } from '../core/rest-error';
 
 @Injectable()
 export class PipRX extends PipeUtils {
-    private _cfg: ApiCfg;
-    private _options = HTTP_OPTIONS;
-
     public sequenceMap: SequenceMap = new SequenceMap();
     // TODO: если сервис, то в конструктор? если хелпер то переимновать?
     // @igiware: using RestError instead
     // public errorService = new ErrorService();
     public entityHelper: EntityHelper;
     public cache: Cache;
+
+    private _cfg: ApiCfg;
+    private _options = HTTP_OPTIONS;
+
+    constructor(private http: Http, @Optional() cfg: ApiCfg) {
+        super();
+        this._cfg = cfg;
+        this._metadata = new Metadata(cfg);
+        this._metadata.init();
+        this.entityHelper = new EntityHelper(this._metadata);
+        this.cache = new Cache(this, this._metadata);
+    }
 
     static criteries(cr: any) {
         return { criteries: cr };
@@ -55,17 +64,16 @@ export class PipRX extends PipeUtils {
         });
     }
 
-    constructor(private http: Http, @Optional() cfg: ApiCfg) {
-        super();
-        this._cfg = cfg;
-        this._metadata = new Metadata(cfg);
-        this._metadata.init();
-        this.entityHelper = new EntityHelper(this._metadata);
-        this.cache = new Cache(this, this._metadata);
-    }
-
     getConfig(): ApiCfg {
         return this._cfg;
+    }
+
+    read<T>(req: IRequest): Promise<T[]> {
+        return this._read<T>(req).toPromise();
+    }
+
+    batch(changeSet: any[], vc: string): Promise<any[]> {
+        return this._batch(changeSet, vc).toPromise();
     }
 
     private makeArgs(args: IKeyValuePair): string {
@@ -80,7 +88,7 @@ export class PipRX extends PipeUtils {
                 v = t !== 'string' ? encodeURIComponent(JSON.stringify(v)) : v;
             }
             url += ['&', argname, '=', q, v, q].join('');
-        };
+        }
         return url;
     }
 
@@ -151,11 +159,6 @@ export class PipRX extends PipeUtils {
 
         return this._odataGet<T>(urls, req);
     }
-
-    read<T>(req: IRequest): Promise<T[]> {
-        return this._read<T>(req).toPromise();
-    }
-
     //
     private _odataGet<T>(urls: string[], req: IRequest): Observable<T[]> {
         const _options = Object.assign({}, this._options, {
@@ -210,11 +213,11 @@ export class PipRX extends PipeUtils {
         });
 
         const d = this.buildBatch(changeSet);
-        console.log(this._cfg.dataSrv + '$batch?' + vc, d, _options);
+        // console.log(this._cfg.dataSrv + '$batch?' + vc, d, _options);
         return this.http
             .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
             .map((r) => {
-                console.log('response', r);
+                // console.log('response', r);
                 const answer: any[] = [];
                 const e = this.parseBatchResponse(r, answer);
                 if (e) {
@@ -224,10 +227,6 @@ export class PipRX extends PipeUtils {
                 return answer;
             })
             .catch(this.httpErrorHandler);
-    }
-
-    batch(changeSet: any[], vc: string): Promise<any[]> {
-        return this._batch(changeSet, vc).toPromise();
     }
 
     private buildBatch(changeSets: any[]) {

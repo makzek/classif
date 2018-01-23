@@ -1,10 +1,10 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { DELIVERY_CL } from '../interfaces/structures';
 import { ALL_ROWS } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 
-import { AuthService } from '../services/auth.service';
+// import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'eos-rest-delivery',
@@ -15,7 +15,7 @@ export class DeliveryComponent implements OnInit {
     currentItem: DELIVERY_CL;
 
     errorMessage: string;
-    constructor(private pip: PipRX, private _auth: AuthService) { }
+    constructor(private pip: PipRX/*, private _auth: AuthService*/) { }
 
     ngOnInit() {
     }
@@ -32,11 +32,12 @@ export class DeliveryComponent implements OnInit {
 
             // - поиск по критериям
             // DELIVERY_CL: Utils.criteries({ CLASSIF_NAME: 'Поч%' })
-        }).then(r => {
-            console.log('----->>>>>>>');
-            console.log(r);
-            this.items = r;
-        });
+        })
+            .then(r => {
+                // console.log('----->>>>>>>');
+                // console.log(r);
+                this.items = r;
+            });
     }
 
     onSelect(cur: DELIVERY_CL): void {
@@ -58,11 +59,10 @@ export class DeliveryComponent implements OnInit {
             }
         );*/
         // потеря соединения при чтении
-        this.pip.read( {ErrorMirror_GetError: PipRX.args({code: 434, msg: 'What?'})})
-        .then(d => {
+        this.pip.read({ ErrorMirror_GetError: PipRX.args({ code: 434, msg: 'What?' }) })
+            .then(d => {
                 alert('пустой результат не ошибка');
-            }
-        )
+            });
         /*const ch = [];
         Utils.invokeSop( ch, 'ErrorMirror_BatchError', {code: -1, msg: 'incorrect data'});
         this.pip.batch(ch, '')

@@ -28,8 +28,8 @@ export class RubricComponent {
             RUBRIC_CL: PipRX.criteries({ LAYER: '0:2', IS_NODE: '0' })
             , orderby: 'DUE', top: 200
         }).then(r => {
-            console.log('----->>>>>>>');
-            console.log(r);
+            // console.log('----->>>>>>>');
+            // console.log(r);
             this.items = r;
         });
 
