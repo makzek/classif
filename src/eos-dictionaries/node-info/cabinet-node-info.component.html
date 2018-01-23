@@ -26,7 +26,7 @@
             <div *ngIf="nodeDataFull && nodeDataFull.department" class="full-info usual-border">
                 <div class="field">
                     <span class="field-title unimportant-text s-font">Подразделение</span><br>
-                    <a class="selected-text" [routerLink]="'/spravochniki/departments/'+nodeDataFull.department['DUE']">
+                    <a class="selected-text" [routerLink]="'/spravochniki/departments/'+nodeDataFull.department['DUE']+'/view'">
                         <!-->Needs routerLink<-->
                         {{nodeDataFull.department['FULLNAME'] || nodeDataFull.department['CLASSIF_NAME']}}
                     </a>

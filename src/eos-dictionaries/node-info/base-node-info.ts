@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-import { IFieldView, E_FIELD_TYPE, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import { E_FIELD_TYPE, E_RECORD_ACTIONS, IActionEvent } from 'eos-dictionaries/interfaces';
 import { RECORD_ACTIONS_EDIT, RECORD_ACTIONS_NAVIGATION_UP, RECORD_ACTIONS_NAVIGATION_DOWN } from '../consts/record-actions.consts';
 
 export class BaseNodeInfoComponent {
@@ -8,7 +7,7 @@ export class BaseNodeInfoComponent {
     @Input() nodeDataShort: any;
     @Input() fieldsDescriptionFull: any;
     @Input() nodeDataFull: any;
-    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
+    @Output() action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
 
     actionEdit = RECORD_ACTIONS_EDIT;
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
@@ -16,7 +15,10 @@ export class BaseNodeInfoComponent {
     fieldTypes = E_FIELD_TYPE;
 
     actionHandler(type: E_RECORD_ACTIONS) {
-        this.action.emit(type);
+        this.action.emit({
+            action: type,
+            params: null
+        });
     }
 
     keys(data: Object): string[] {
