@@ -39,7 +39,7 @@ export class LoginFormComponent {
                         this.errorMessage = AUTH_REQUIRED.title;
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     this.inProcess = false;
                     this.errorMessage = AUTH_REQUIRED.title;
                 });

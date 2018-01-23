@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { EosDictService } from '../services/eos-dict.service';
 import { IDictionaryViewParameters } from '../interfaces/eos-dictionary.interfaces';
 
@@ -15,7 +15,7 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
     bossName: string;
     department: string;
 
-    constructor(private _dictSrv: EosDictService) {
+    constructor(_dictSrv: EosDictService) {
         super();
         _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingFields);
     }

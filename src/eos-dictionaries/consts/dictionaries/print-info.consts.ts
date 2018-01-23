@@ -1,6 +1,5 @@
 import { E_DICT_TYPE, IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
-import { SEARCH_TYPES } from '../search-types';
 
 /* tslint:disable:max-line-length */
 export const PRINT_INFO_DICT: IDictionaryDescriptor = {

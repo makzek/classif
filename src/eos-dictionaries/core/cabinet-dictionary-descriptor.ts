@@ -1,6 +1,4 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
-import { IRecordOperationResult } from 'eos-dictionaries/interfaces';
-import { RestError } from 'eos-rest/core/rest-error';
 import { CABINET } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';
@@ -32,7 +30,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                     if (dues.findIndex((due) => due === rec.DUE) < 0) {
                         dues.push(rec.DUE);
                     }
-                })
+                });
                 if (dues.length) {
                     return this.apiSrv.read({ 'DEPARTMENT': dues })
                         .then((departments) => {
@@ -45,7 +43,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                                     rec['DEPARTMENT_NAME'] = '';
                                     rec['DEPARTMENT_Ref'] = {};
                                 }
-                            })
+                            });
                             return data;
                         });
                 } else {
@@ -62,7 +60,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }),
                 _moreJSON: {}
             })
-        ]
+        ];
         return Promise.all(reqs)
             .then(([departments, folders, users]) => {
                 const related = {
@@ -70,7 +68,6 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                     folders: folders,
                     users: users
                 };
-                console.log('related cabinet data', related)
                 return related;
             });
     }

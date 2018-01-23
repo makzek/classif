@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
+import { Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
@@ -17,14 +17,14 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() fullNamesList: string[];
 
     @ViewChild('cardForm') cardForm: NgForm;
-    private _subscrChanges: Subscription;
 
     tooltipText = '';
     focusedField: string;
+    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     protected dictSrv;
 
-    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
+    private _subscrChanges: Subscription;
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);

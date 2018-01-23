@@ -1,7 +1,7 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView, E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
+import { E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 

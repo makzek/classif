@@ -15,7 +15,7 @@ export class AuthorizedGuard implements CanActivate {
         private _modalSrv: BsModalService
     ) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
         return this._profileSrv.checkAuth()
             .then((auth) => {
                 if (!auth) {
@@ -31,7 +31,7 @@ export class AuthorizedGuard implements CanActivate {
                             if (success) {
                                 this.modalRef.hide();
                             }
-                        })
+                        });
                     }
                 }
                 return auth;
@@ -41,9 +41,9 @@ export class AuthorizedGuard implements CanActivate {
 
 @Injectable()
 export class UnauthorizedGuard implements CanActivate {
-    constructor(private _profileSrv: EosUserProfileService, private _router: Router) { }
+    constructor(private _profileSrv: EosUserProfileService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean | Promise<boolean> {
         return this._profileSrv.checkAuth()
             .then((auth) => {
                 if (auth) {
