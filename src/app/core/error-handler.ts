@@ -7,6 +7,7 @@ export class EosErrorHandler implements ErrorHandler {
     constructor(private _msgSrv: EosMessageService) { }
 
     handleError(error: Error) {
+        /* tslint:disable:no-console */
         console.error('Unhandled error', error);
         try {
             this._msgSrv.addNewMessage({
@@ -18,5 +19,6 @@ export class EosErrorHandler implements ErrorHandler {
         } catch (e) {
             console.error('addNewMessage failed', e);
         }
+        /*tslint:enable:no-console*/
     }
 }

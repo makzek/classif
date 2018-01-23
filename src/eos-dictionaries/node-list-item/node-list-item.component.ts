@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
 import { EosStorageService } from 'app/services/eos-storage.service';
 
@@ -9,7 +8,6 @@ import { RECENT_URL } from 'app/consts/common.consts';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters, IFieldView } from 'eos-dictionaries/interfaces';
-import { createElement } from '@angular/core/src/view/element';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
 
 @Component({
@@ -61,9 +59,9 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     viewNode() {
         if (!this._dictSrv.isRoot(this.node.id)) {
             this._storageSrv.setItem(RECENT_URL, this._router.url);
-            console.log('node', this.node)
+            // console.log('node', this.node);
             const _path = this.node.getPath();
-            _path.push('view')
+            _path.push('view');
             this._router.navigate(_path);
         }
     }
@@ -92,9 +90,9 @@ export class NodeListItemComponent implements OnInit, OnChanges {
             this.onHoverItem.emit({
                 show: false,
                 node: this.node
-            })
+            });
         }
-        body[0].removeChild(span)
+        body[0].removeChild(span);
     }
 
     /**

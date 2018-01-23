@@ -11,15 +11,16 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
+    @ViewChild('dpw') datePickerWrapper: ElementRef;
+    @ViewChild('dp') datePicker: BsDatepickerComponent;
+
     bsConfig: Partial<BsDatepickerConfig>;
 
     placement = 'bottom';
     aDate: Date;
 
-    private _handler;
 
-    @ViewChild('dpw') datePickerWrapper: ElementRef;
-    @ViewChild('dp') datePicker: BsDatepickerComponent;
+    private _handler;
 
     constructor() {
         this.bsConfig = {

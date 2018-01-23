@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
@@ -52,17 +51,7 @@ export class EosUserProfileService implements IUserProfile {
         return this._authorized$.asObservable();
     }
 
-    isAuthorized(silent = false): boolean {
-        if (!silent && !this._isAuthorized) {
-            this._msgSrv.addNewMessage(AUTH_REQUIRED);
-            // this._authorized$.next(this._isAuthorized);
-        }
-        return this._isAuthorized;
-    }
-
     constructor(
-        private _router: Router,
-        private _route: ActivatedRoute,
         private _authSrv: AuthService,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
@@ -82,7 +71,7 @@ export class EosUserProfileService implements IUserProfile {
                     this._setUser(context.user, context.sysParams);
                     return this._setAuth(true);
                 })
-                .catch((err) => {
+                .catch(() => {
                     this._authPromise = null;
                     return this._setAuth(false);
                 });
@@ -92,27 +81,18 @@ export class EosUserProfileService implements IUserProfile {
         }
     }
 
+    isAuthorized(silent = false): boolean {
+        if (!silent && !this._isAuthorized) {
+            this._msgSrv.addNewMessage(AUTH_REQUIRED);
+            // this._authorized$.next(this._isAuthorized);
+        }
+        return this._isAuthorized;
+    }
+
     notAuthorized(): boolean {
         // console.log('notAuthorized fired');
         this._msgSrv.addNewMessage(AUTH_REQUIRED);
         return this._setAuth(false);
-    }
-
-    private _setUser(user: USER_CL, params: SYS_PARMS) {
-        // console.log('_setUser', user, params);
-        this._user = user;
-        this._params = params;
-        this._storageSrv.init(this.userId);
-    }
-
-    private _setAuth(auth: boolean): boolean {
-        if (this._isAuthorized !== auth) {
-            this._isAuthorized = auth;
-            this._authorized$.next(auth);
-        } else {
-            this._authorized$.next(false);
-        }
-        return auth;
     }
 
     login(name: string, password: string): Promise<any> {
@@ -142,7 +122,7 @@ export class EosUserProfileService implements IUserProfile {
     logout(): Promise<any> {
         if (this._isAuthorized) {
             return this._authSrv.logout()
-                .then((resp) => this._logout())
+                .then(() => this._logout())
                 .catch((err) => {
                     this._msgSrv.addNewMessage({
                         type: 'danger',
@@ -168,6 +148,23 @@ export class EosUserProfileService implements IUserProfile {
         this._settings$.next(this.settings);
     }
 
+    private _setUser(user: USER_CL, params: SYS_PARMS) {
+        // console.log('_setUser', user, params);
+        this._user = user;
+        this._params = params;
+        this._storageSrv.init(this.userId);
+    }
+
+    private _setAuth(auth: boolean): boolean {
+        if (this._isAuthorized !== auth) {
+            this._isAuthorized = auth;
+            this._authorized$.next(auth);
+        } else {
+            this._authorized$.next(false);
+        }
+        return auth;
+    }
+
     private _logout(silent = false) {
         this._user = null;
         this._params = null;
@@ -185,7 +182,7 @@ export class EosUserProfileService implements IUserProfile {
                 id: key,
                 name: key,
                 value: value
-            }
+            };
             this.settings.push(_setting);
         } else {
             _setting.value = value;

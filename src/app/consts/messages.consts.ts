@@ -77,4 +77,4 @@ export const NAVIGATE_TO_ELEMENT_WARN: IMessage = {
     title: 'Предупреждение:',
     msg: 'Запись не найдена.',
     type: 'warning'
-}
+};
