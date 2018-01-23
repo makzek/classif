@@ -12,8 +12,6 @@ import { EosDictService } from '../services/eos-dict.service';
 export class NodeInfoSwitcherComponent implements OnDestroy {
     @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
-    // viewFields: IFieldView[];
-    // shortViewFields: IFieldView[];
     private ngUnsubscribe: Subject<any> = new Subject();
     public updating: boolean;
     fieldsDescriptionShort: any = {};
@@ -37,7 +35,7 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                     this.nodeDataShort = node.getShortViewData();
                     this.fieldsDescriptionFull = node.getFullViewFieldsDescription();
                     this.nodeDataFull = node.getFullViewData();
-                    // console.log('fieldsDescriptionFull', this.fieldsDescriptionFull);
+
                     if (this.dictionaryId === 'departments' && !node.data.rec['IS_NODE'] && node.children) {
                         const _boss = node.children.find((_chld) => _chld.data.rec['POST_H']);
                         if (_boss) {
@@ -50,12 +48,12 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
                     this._initInfo();
                 }
             });
-
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe(viewParams => this.updating = viewParams.updatingInfo);
     }
 
     private _initInfo() {
+        this.dictionaryId = null;
         this.fieldsDescriptionFull = {};
         this.fieldsDescriptionShort = {};
         this.nodeDataFull = {};

@@ -29,7 +29,9 @@ import {
     DANGER_DELETE_ELEMENT,
     WARN_LOGIC_DELETE,
     DANGER_HAVE_NO_ELEMENTS,
-    DANGER_LOGICALY_RESTORE_ELEMENT
+    WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
+    DANGER_LOGICALY_RESTORE_ELEMENT,
+    WARN_NO_ORGANIZATION
 } from '../consts/messages.consts';
 
 import { RECENT_URL } from 'app/consts/common.consts';
@@ -153,7 +155,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this.viewFields = dictionary.getListView();
                     const _customTitles = this._dictSrv.customTitles;
                     _customTitles.forEach((_title) => {
-                        this.viewFields.find((_field) => _field.key === _title.key).customTitle = _title.customTitle;
+                        const vField = this.viewFields.find((_field) => _field.key === _title.key);
+                        if (vField) {
+                            vField.customTitle = _title.customTitle;
+                        }
                     });
                     this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered })
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
@@ -175,6 +180,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         this.orderBy = this._dictSrv.order;
                     }
                     this.hasParent = !!node.parent;
+                    const url = this._router.url;
+                    this._storageSrv.setItem(RECENT_URL, url);
                 }
                 if (node !== this.selectedNode) {
                     this.selectedNode = node;
@@ -355,9 +362,62 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 break;
             case E_RECORD_ACTIONS.showAllSubnodes:
                 this._dictSrv.toggleAllSubnodes();
-                break
+                break;
+
+            case E_RECORD_ACTIONS.createRepresentative:
+                this._createRepresentative();
+                break;
             default:
                 console.log('unhandled action', E_RECORD_ACTIONS[evt.action]);
+        }
+    }
+
+    /**
+     * @description convert selected persons to list of organization representatives,
+     * add it to department organization if it exists upwards to tree
+     */
+    private _createRepresentative() {
+        if (this.dictionaryId === 'departments') {
+            this._dictSrv.getFullNode(this.dictionaryId, this.selectedNode.id).then((_fullData) => {
+                if (_fullData && _fullData.data && _fullData.data.organization['ISN_NODE']) {
+                    let _selectedCount = 0;
+                    const _represData: any[] = [];
+                    if (this.visibleNodes) {
+                        this.visibleNodes.forEach((_node) => {
+                            if (_node.marked && _node.data.rec['IS_NODE']) {
+                                _selectedCount++;
+                                _represData.push({
+                                    SURNAME: _node.data.rec['SURNAME'],
+                                    DUTY: _node.data.rec['DUTY'],
+                                    PHONE: _node.data.rec['PHONE'],
+                                    PHONE_LOCAL: _node.data.rec['PHONE_LOCAL'],
+                                    E_MAIL: _node.data.rec['E_MAIL'],
+                                    SEV: _node.data.sev['GLOBAL_ID'], // not sure
+                                    ISN_ORGANIZ: _fullData.data.organization['ISN_NODE'],
+                                    DEPARTMENT: _fullData.data.rec['CLASSIF_NAME']
+                                });
+                            }
+                        });
+                    }
+                    if (!_selectedCount) {
+                        this._msgSrv.addNewMessage(WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE);
+                    } else {
+                        /* call API and save */
+                        console.log('Representatives', _represData);
+                        return this._dictSrv.createRepresentative(_represData).then((results) => {
+                            results.forEach((result) =>
+                                this._msgSrv.addNewMessage({
+                                    type: result.success ? 'success' : 'warning',
+                                    title: result.record['SURNAME'],
+                                    msg: result.success ? 'Контакт создан' : result.error.message
+                                })
+                            );
+                        });
+                    }
+                } else {
+                    this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);
+                }
+            });
         }
     }
 

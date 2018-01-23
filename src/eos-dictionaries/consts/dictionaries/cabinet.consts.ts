@@ -8,11 +8,8 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     title: 'Кабинеты',
     keyField: 'ISN_CABINET',
     visible: !environment.production,
-    actions: [],
-    /*
-    ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
-        */
     fields: [{
         key: 'ISN_CABINET',
         type: 'number',
@@ -23,7 +20,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     }, {
         key: 'DUE',
         type: 'string',
-        title: 'Подразделение',
+        title: 'Код подразделения',
         length: 248,
     }, {
         key: 'CABINET_NAME',
@@ -35,8 +32,20 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         type: 'text',
         title: 'Полное наименование',
         length: 2000,
+    }, {
+        key: 'DEPARTMENT_NAME',
+        title: 'Подразделение',
+        type: 'text',
+        length: 255
+    }, {
+        key: 'department',
+        type: 'dictionary',
+        title: 'Подразделение'
     }],
     treeFields: ['CABINET_NAME'],
-    listFields: ['CABINET_NAME', 'DUE'],
-    allVisibleFields: ['FULLNAME', 'CABINET_NAME'],
+    listFields: ['CABINET_NAME', 'DEPARTMENT_NAME'],
+    allVisibleFields: ['FULLNAME'],
+    shortQuickViewFields: ['CABINET_NAME', 'FULLNAME'],
+    quickViewFields: ['CABINET_NAME', 'DEPARTMENT_NAME', 'department'],
+    editFields: ['CABINET_NAME', 'FULLNAME'],
 });

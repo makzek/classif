@@ -39,6 +39,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
+import { CabinetNodeInfoComponent } from './node-info/cabinet-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
@@ -74,6 +75,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
+        CabinetNodeInfoComponent,
         UnicValidatorDirective,
         LongTitleHintComponent,
         VisaTypeEditComponent,

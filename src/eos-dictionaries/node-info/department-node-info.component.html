@@ -15,14 +15,14 @@
         <div class="opened-node-wrapper">
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
                 <div *ngIf="nodeDataShort.rec">
-                    <span *ngIf="nodeDataShort['print-info'] && nodeDataShort['print-info']['NAME'] && nodeDataShort['print-info']['SURNAME'] && nodeDataShort['print-info']['PATRON'];then fullName else shortName"></span>
+                    <span *ngIf="nodeDataShort['printInfo'] && nodeDataShort['printInfo']['NAME'] && nodeDataShort['printInfo']['SURNAME'] && nodeDataShort['printInfo']['PATRON'];then fullName else shortName"></span>
                     <ng-template #fullName>
                         <div class="short-data-wrapper">
                             <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
                             <span class="short-info l-font">
-                                <span>{{nodeDataShort['print-info']['SURNAME']}}</span>
-                                <span>{{nodeDataShort['print-info']['NAME']}}</span>
-                                <span>{{nodeDataShort['print-info']['PATRON']}}</span>
+                                <span>{{nodeDataShort['printInfo']['SURNAME']}}</span>
+                                <span>{{nodeDataShort['printInfo']['NAME']}}</span>
+                                <span>{{nodeDataShort['printInfo']['PATRON']}}</span>
                             </span>
                         </div>
                     </ng-template>
@@ -96,10 +96,10 @@
                         <br>
                         <span class="field-value m-font">{{nodeDataFull.rec['CARD_NAME']}}</span>
                     </div>
-                    <div class="field" *ngIf="nodeDataFull['sev-association']">
+                    <div class="field" *ngIf="nodeDataFull['sev']">
                         <span class="field-title unimportant-text s-font">Индекс СЭВ</span>
                         <br>
-                        <span class="field-value m-font">{{nodeDataFull['sev-association']['GLOBAL_ID']}}</span>
+                        <span class="field-value m-font">{{nodeDataFull['sev']['GLOBAL_ID']}}</span>
                     </div>
                     <div class="field">
                         <span class="field-title unimportant-text s-font">Фамилия И.О. начальника подразделения</span>
