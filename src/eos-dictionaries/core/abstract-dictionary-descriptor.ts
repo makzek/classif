@@ -207,10 +207,6 @@ export abstract class AbstractDictionaryDescriptor {
         // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
     }
 
-    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
-        return Promise.reject('Type of dictionary not true!');
-    }
-
     protected _postChanges(data: any, updates: any): Promise<any[]> {
         // console.log('_postChanges', data, updates);
         Object.assign(data, updates);
