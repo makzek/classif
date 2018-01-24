@@ -343,7 +343,7 @@ export class EosDictService {
         }
     }
 
-    public addNode(data: any): Promise<any> {
+    public addNode(data: any): Promise<EosDictionaryNode> {
         // Проверка существования записи для регионов.
         if (this.treeNode) {
             let p: Promise<string>;
