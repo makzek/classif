@@ -25,6 +25,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
     }
 
     ngOnChanges() {
+        super.ngOnChanges();
         if (this.currentNodeId !== this.nodeId) {
             this.currTab = 0;
         }
