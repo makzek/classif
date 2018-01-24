@@ -3,91 +3,85 @@
     max-height: calc(100vh - 108px - 60px);
     border: 1px solid transparent;
     overflow-y: auto;
-
     .edit-block-header,
     .edit-header {
         min-height: $item-height;
-        padding:  0;
+        padding: 0;
         border-width: 1px;
         border-style: solid;
         width: 800px;
         margin: 0 auto;
     }
-
     .edit-header {
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 48px 1fr 153px;
         grid-template-columns: 100px 48px 1fr 153px;
-
         &.edited {
             -ms-grid-columns: 0 48px 1fr 195px;
             grid-template-columns: 0 48px 1fr 195px;
         }
-
         .btn {
             padding: 1px 6px;
         }
-
         a:hover {
             text-decoration: none;
         }
-
         div {
             display: inline-block;
         }
-
         .check-wrapper {
+            -ms-grid-column: 2;
             grid-column: 2;
+            -ms-grid-row: 1;
             grid-row: 1;
-
             .checkbox {
                 margin: 0;
-
                 label {
                     padding: 0;
                 }
             }
-
             .checkbox-inline {
                 padding: 0;
                 margin-left: 12px;
             }
         }
-
         .move-wrapper {
+            -ms-grid-column: 1;
             grid-column: 1;
+            -ms-grid-row: 1;
             grid-row: 1;
-
             .btn {
                 height: $item-height;
                 width: $item-width;
             }
         }
-
         .name-wrapper {
+            -ms-grid-row-align: center;
             align-self: center;
+            -ms-grid-column: 3;
             grid-column: 3;
+            -ms-grid-row: 1;
             grid-row: 1;
         }
-
         .buttons-wrapper {
+            -ms-grid-column: 4;
             grid-column: 4;
+            -ms-grid-row: 1;
             grid-row: 1;
             height: 48px;
         }
-
         .action-wrapper {
+            -ms-grid-column: 4;
             grid-column: 4;
+            -ms-grid-row: 1;
             grid-row: 1;
-
             .btn {
                 height: $item-height;
                 margin: -8px 0;
                 width: $item-width;
             }
         }
-
         .move-wrapper,
         .check-wrapper,
         .buttons-wrapper,
@@ -97,7 +91,6 @@
             justify-content: space-around;
         }
     }
-
     .spinner-wrapper {
         display: flex;
         justify-content: space-around;
@@ -108,13 +101,11 @@
         width: 800px;
         margin: 0 auto;
     }
-
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
         }
     }
-
     /* .active {
         background-color: #e6e5e5;
         border-color: #adadad;
@@ -123,17 +114,14 @@
 
 .edit-content {
     padding: 20px;
-
     label {
         font-weight: normal;
-
         &:not(.checkbox) {
             margin-bottom: 8px;
             text-transform: uppercase;
             white-space: nowrap;
         }
     }
-
     .mask {
         position: absolute;
         top: 0;
@@ -144,16 +132,13 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-
         .btn-wrapper {
             text-align: center;
-
             .btn {
                 text-transform: uppercase;
             }
         }
     }
-
     .visa-type-select {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -164,33 +149,27 @@
         background-position-y: center;
         background-size: 24px;
     }
-
     .visa-select-edit {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         background-image: none;
     }
-
     .form-group {
         &:not(.gender) {
             position: relative;
         }
-
         &:not(:first-child) {
             margin-top: 30px;
         }
     }
-
     .form-control {
         border-radius: 0;
         padding: 8px;
     }
-
     input.form-control {
         height: 32px;
     }
-
     .readonly {
         box-shadow: none;
         padding: 0;
