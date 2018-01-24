@@ -1,12 +1,12 @@
 
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
     templateUrl: 'departments-card-edit-person.component.html',
 })
-export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
+export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     currTab = 0;
     defaultImage = 'url(../assets/images/no-user.png)';
@@ -17,15 +17,22 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
         { id: 1, title: 'Женский' },
     ];
 
+    private currentNodeId: string;
 
     constructor(injector: Injector) {
         super(injector);
-        this.currTab = this.dictSrv.currentTab;
+        this.currentNodeId = this.nodeId;
+    }
+
+    ngOnChanges() {
+        super.ngOnChanges();
+        if (this.currentNodeId !== this.nodeId) {
+            this.currTab = 0;
+        }
     }
 
     setTab(i: number) {
         this.currTab = i;
-        this.dictSrv.currentTab = this.currTab;
     }
 
     getGender(id: any): string {
