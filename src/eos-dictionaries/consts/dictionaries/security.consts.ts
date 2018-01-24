@@ -56,7 +56,7 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
         pattern: NOT_EMPTY_STRING,
     }]),
     treeFields: ['GRIF_NAME'],
-    allVisibleFields: ['EDS_FLAG', 'ENCRYPT_FLAG', 'SEC_INDEX', 'CONFIDENTIONAL'],
+    allVisibleFields: ['EDS_FLAG', 'ENCRYPT_FLAG', 'SEC_INDEX', 'NOTE'],
     listFields: ['GRIF_NAME'],
     editFields: ['SEC_INDEX', 'GRIF_NAME', 'EDS_FLAG', 'ENCRYPT_FLAG', 'NOTE'],
     shortQuickViewFields: ['GRIF_NAME'],
