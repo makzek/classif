@@ -21,7 +21,6 @@ import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-de
 @Injectable()
 export class EosDictService {
     public viewParameters: IDictionaryViewParameters;
-    public currentTab = 0;
 
     private dictionary: EosDictionary;
     private treeNode: EosDictionaryNode; // record selected in tree

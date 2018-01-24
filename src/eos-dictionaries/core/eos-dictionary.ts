@@ -406,10 +406,7 @@ export class EosDictionary {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
-            node.updateExpandable(this._showDeleted);
         });
-
-        this.root.updateExpandable(this._showDeleted);
 
         const treeOrderKey = this.root.getTreeView()[0];
         this.nodes.forEach((node) => {
@@ -417,6 +414,7 @@ export class EosDictionary {
                 node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
             }
         });
+        this._nodes.forEach((node) => node.updateExpandable(this._showDeleted));
     }
 
     /**
