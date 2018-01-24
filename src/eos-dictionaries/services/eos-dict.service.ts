@@ -10,6 +10,7 @@ import {
     IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
+import { IImage } from '../interfaces/image.interface';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 import { WARN_SEARCH_NOTFOUND} from '../consts/messages.consts';
@@ -583,19 +584,8 @@ export class EosDictService {
         }
     }
 
-    public uploadImg(img: string) {
-        // убрать последнюю скобку и преамбулу
-        const pos = img.indexOf(',') + 1;
-        let data = img.substr(pos, img.length - pos - 1);
-        data = data.replace(/\s/g, '+');
-        // расширение файла
-        const pos2 = img.indexOf('/');
-        const pos3 = img.indexOf(';');
-
-        let ext = img.substring(pos2 + 1, pos3);
-        ext = ext.toUpperCase();
-
-        this.dictionary.descriptor.imgUpload(ext, data)
+    public uploadImg(img: IImage) {
+        this.dictionary.descriptor.imgUpload(img.extension, img.data)
             .then(val => {})
             .catch(err => this._errHandler(err));
     }

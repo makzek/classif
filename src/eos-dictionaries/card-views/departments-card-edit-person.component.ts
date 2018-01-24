@@ -1,6 +1,7 @@
 
 import { Component, Injector } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
+import { IImage } from '../interfaces/image.interface';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
@@ -36,8 +37,8 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
         return sGender.title;
     }
 
-    newImage(evt: string) {
-        this.defaultImage = 'url(' + evt + ')';
-        this.dictSrv.uploadImg(evt);
+    newImage(img: IImage) {
+        this.defaultImage = img.url;
+        this.dictSrv.uploadImg(img);
     }
 }
