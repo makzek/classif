@@ -38,6 +38,10 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData();
     }
 
+    public imgUpload(exp: string, imgData: string) {
+        return Promise.resolve(null);
+    }
+
     private preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _res: ILinearCL = {

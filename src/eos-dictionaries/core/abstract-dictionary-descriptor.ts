@@ -52,6 +52,7 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getChildren(...params): Promise<any[]>;
     abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
+    abstract imgUpload(exp: string, imgData: string): Promise<any>;
 
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });

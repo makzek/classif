@@ -583,6 +583,23 @@ export class EosDictService {
         }
     }
 
+    public uploadImg(img: string) {
+        // убрать последнюю скобку и преамбулу
+        const pos = img.indexOf(',') + 1;
+        let data = img.substr(pos, img.length - pos - 1);
+        data = data.replace(/\s/g, '+');
+        // расширение файла
+        const pos2 = img.indexOf('/');
+        const pos3 = img.indexOf(';');
+
+        let ext = img.substring(pos2 + 1, pos3);
+        ext = ext.toUpperCase();
+
+        this.dictionary.descriptor.imgUpload(ext, data)
+            .then(val => {})
+            .catch(err => this._errHandler(err));
+    }
+
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {

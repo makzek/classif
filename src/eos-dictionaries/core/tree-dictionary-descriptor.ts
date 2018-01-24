@@ -105,6 +105,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
     }
 
+    public imgUpload(exp: string, imgData: string) {
+        return Promise.resolve(null);
+    }
+
     protected _initRecord(data: ITreeDictionaryDescriptor) {
         this.record = new TreeRecordDescriptor(this, data);
     }

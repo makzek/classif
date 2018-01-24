@@ -35,8 +35,9 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent {
         }
         return sGender.title;
     }
-    newImage(evt) {
+
+    newImage(evt: string) {
         this.defaultImage = 'url(' + evt + ')';
-        // send it on server
+        this.dictSrv.uploadImg(evt);
     }
 }

@@ -10,6 +10,7 @@ import { ModeFieldSet } from './record-mode';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
+import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -161,6 +162,24 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getContacts(orgISN: string): Promise<any> {
         return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
+    }
+
+    public imgUpload(ext: string, imgData: string): Promise<any> {
+        const delo_blob = this.apiSrv.entityHelper.prepareAdded<DELO_BLOB>({
+            ISN_BLOB: this.apiSrv.sequenceMap.GetTempISN(),
+            EXTENSION: ext
+        }, 'DELO_BLOB');
+        const chl = this.apiSrv.changeList([delo_blob]);
+        const content = {
+            isn_target_blob: delo_blob.ISN_BLOB,
+            data: imgData
+        };
+
+        PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
+
+        return this.apiSrv.batch(chl, '').then(() => {
+            return this.apiSrv.sequenceMap.GetFixed(delo_blob.ISN_BLOB);
+        });
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {
