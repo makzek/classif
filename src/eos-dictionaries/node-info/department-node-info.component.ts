@@ -32,7 +32,8 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
                     this.bossName = '';
                 }
             } else {
-                this.department = this.node.parent.getParentData('CLASSIF_NAME', 'rec');
+                this.department = this.node.parent.getParentData('FULLNAME', 'rec') ||
+                    this.node.parent.getParentData('CLASSIF_NAME', 'rec');
             }
         }
     }
