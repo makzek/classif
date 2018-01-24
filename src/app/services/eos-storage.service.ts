@@ -24,7 +24,9 @@ export class EosStorageService {
             try {
                 this._data.__storage = JSON.parse(_val);
             } catch (e) {
+                /* tslint:disable:no-console */
                 console.log('error parsing', _val);
+                /* tslint:enable:no-console */
             }
             if (!this._data.__storage) {
                 this._data.__storage = {};
@@ -50,7 +52,7 @@ export class EosStorageService {
      * @param saveToLocalStorage boolean data, force store data in localStorage
      */
     public setItem(key: string, data: any, saveToLocalStorage = false) {
-        console.log('storage', key, data);
+        // console.log('storage', key, data);
         if (key && key !== '__storage' && key !== 'userOrder') {
             this._data[key] = data;
             // console.log('set to LS', key, typeof data, data);
@@ -74,16 +76,6 @@ export class EosStorageService {
                 delete this._data.__storage[key];
                 this._updateStorage();
             }
-        }
-    }
-
-    private _updateStorage() {
-        // todo: implement lazy update
-        try {
-            const _val = JSON.stringify(this._data.__storage);
-            localStorage.setItem(this._userId, _val);
-        } catch (e) {
-            console.log('error storing', e, this._data.__storage);
         }
     }
 
@@ -130,6 +122,16 @@ export class EosStorageService {
             return false;
         } else {
             return this._data.userOrder[dictionary].userOrderOn;
+        }
+    }
+
+    private _updateStorage() {
+        // todo: implement lazy update
+        try {
+            const _val = JSON.stringify(this._data.__storage);
+            localStorage.setItem(this._userId, _val);
+        } catch (e) {
+            console.warn('error storing', e, this._data.__storage);
         }
     }
 }

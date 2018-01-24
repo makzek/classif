@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router'
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { environment } from '../environments/environment';
 import { APP_MODULES, APP_MODULES_DROPDOWN } from './consts/app-modules.const';
 import { EosUserProfileService } from './services/eos-user-profile.service';
@@ -9,20 +9,19 @@ import { EosUserProfileService } from './services/eos-user-profile.service';
     templateUrl: './app.component.html'
 })
 export class AppComponent {
-    private _containerRef: ViewContainerRef;
-
     modules = APP_MODULES;
     modulesDropdown = APP_MODULES_DROPDOWN;
     version: string;
     isAuthorized: boolean;
     breadcrumbView = true;
     firstLoadAuth = false;
+    private _containerRef: ViewContainerRef;
 
     constructor(
         viewContainerRef: ViewContainerRef,
         private _profileSrv: EosUserProfileService,
-        private _router: Router,
-        private _route: ActivatedRoute,
+        _router: Router,
+        _route: ActivatedRoute,
     ) {
         this._containerRef = viewContainerRef;
         this._profileSrv.authorized$.subscribe((auth) => {
@@ -34,8 +33,8 @@ export class AppComponent {
         if (!environment.production) {
             this.version = environment.version;
         }
-        _router.events.filter((evt: NavigationEnd) => evt instanceof NavigationEnd)
-        .subscribe((evt: NavigationEnd) => {
+        _router.events.filter((evt) => evt instanceof NavigationEnd)
+        .subscribe(() => {
             let _actRoute = _route.snapshot;
             while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
             this.breadcrumbView = _actRoute.data && _actRoute.data.showBreadcrumb;

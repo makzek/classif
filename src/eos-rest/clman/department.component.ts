@@ -1,11 +1,10 @@
-﻿import { Component, OnInit, Input } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL, CONTACT } from '../interfaces/structures';
-import { ALL_ROWS, _ES } from '../core/consts';
+import { /*ALL_ROWS,*/ _ES } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
-import { IEnt } from 'eos-rest';
-import { SevIndexHelper } from '../services/sevIndex-helper'
+// import { IEnt } from 'eos-rest';
+import { SevIndexHelper } from '../services/sevIndex-helper';
 //
 
 // tslint:disable-next-line:class-name
@@ -19,8 +18,8 @@ class vmDEPARTMENT {
     public cabinet: CABINET;
     ORGANIZ: ORGANIZ_CL;
 
-    static Load(pip: PipRX, due: string, forEdit: boolean): Promise<vmDEPARTMENT> {
-        const startReadTime: any = new Date();
+    static Load(pip: PipRX, due: string, _forEdit: boolean): Promise<vmDEPARTMENT> {
+        // const startReadTime: any = new Date();
 
         // Читаем себя, НЕ из кеша
         const rDep = pip.read<DEPARTMENT>({ DEPARTMENT: due });
@@ -38,7 +37,7 @@ class vmDEPARTMENT {
                 parents.sort((a, b) => {
                     return a.DUE.length - b.DUE.length;
                 });
-                console.log('Чтение ДЛ шаг1:' + (<any>new Date() - startReadTime) + 'ms');
+                // console.log('Чтение ДЛ шаг1:' + (<any>new Date() - startReadTime) + 'ms');
                 return parents;
             });
         // TODO: разобраться почему без прохода через промис запрос выполняется дважды
@@ -67,10 +66,10 @@ class vmDEPARTMENT {
             return Promise.all([rPrintInfo, rOrg, rCab]);
         });
         // загружаем индекс СЭВ
-        const rSevIndex = pip.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')] })
+        const rSevIndex = pip.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(due, 'DEPARTMENT')] });
         return Promise.all([rDeps, rUser, rDopInfo, rSevIndex])
-            .then(([a, b, [pi, org, cab], d]) => {
-                console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
+            .then(([a, _b, [pi, org, cab], d]) => {
+                // console.log('Чтение ДЛ ' + (<any>new Date() - startReadTime));
                 const result = new vmDEPARTMENT();
                 result.row = a[a.length - 1];
                 // tslint:disable-next-line:no-debugger
@@ -131,7 +130,7 @@ export class DepartmentComponent implements OnInit {
     onSelectListItem(cur: DEPARTMENT): void {
         this.currentListItem = cur;
         vmDEPARTMENT.Load(this.pip, cur.DUE, false)
-            .then(vm => { this.detailedItem = vm });
+            .then(vm => { this.detailedItem = vm; });
     }
 
     onAdd() {
@@ -158,9 +157,10 @@ export class DepartmentComponent implements OnInit {
             changed.push(item.CB_PRINT_INFO);
         }
         const chl = this.pip.changeList(changed);
-        this.pip.batch(chl, '').then((r) => {
-            alert('oki');
-        });
+        this.pip.batch(chl, '')
+            .then(() => {
+                alert('oki');
+            });
     }
 
     onAddContact() {
@@ -179,6 +179,17 @@ export class DepartmentComponent implements OnInit {
             });
     }
 
+    onPreparePrintInfo() {
+        const q = { SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', GENDER: 2, DUTY: 'начальника' };
+        // вызов в случае GENDER=null - его надо опустить. Вообще, пустые поля походе надо опускать
+        // const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', DUTY: 'начальника'};
+
+        this.pip.read<CB_PRINT_INFO>({ PreparePrintInfo: PipRX.args(q) })
+            .then(() => {
+                // console.log(res);
+            });
+    }
+
     private prepareCB_PRINT_INFOforSave(rec: CB_PRINT_INFO, owner: DEPARTMENT): boolean {
         // удаление CB_PRINT_INFO, если все поля в нем пустые
         // как сраснить все поля не пишу - они разные для подразделения и ДЛ.
@@ -194,17 +205,6 @@ export class DepartmentComponent implements OnInit {
             rec.OWNER_KIND = 104;
         }
         return true;
-    }
-
-    onPreparePrintInfo() {
-        const q = { SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', GENDER: 2, DUTY: 'начальника' };
-        // вызов в случае GENDER=null - его надо опустить. Вообще, пустые поля походе надо опускать
-        // const q = {SURNAME: 'Иванов', NAME: 'Иван', PATRON: 'Иванович', DUTY: 'начальника'};
-
-        this.pip.read<CB_PRINT_INFO>({ PreparePrintInfo: PipRX.args(q) })
-            .then(res => {
-                console.log(res);
-            })
     }
 }
 

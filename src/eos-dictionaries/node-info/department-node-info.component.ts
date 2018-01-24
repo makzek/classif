@@ -14,7 +14,7 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent {
 
     @Input() bossName: string;
 
-    constructor(private _dictSrv: EosDictService) {
+    constructor(_dictSrv: EosDictService) {
         super();
         _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingFields);
     }

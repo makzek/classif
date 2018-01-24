@@ -31,15 +31,18 @@
     "member-access": false,
     "member-ordering": [
       true,
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": "fields-first"
+      }
     ],
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
       true,
       "debug",
+      "error",
       "info",
+      "log",
       "time",
       "timeEnd",
       "trace"
@@ -79,9 +82,7 @@
       "single"
     ],
     "radix": true,
-    "semicolon": [
-      "always"
-    ],
+    "semicolon": true,
     "triple-equals": [
       true,
       "allow-null-check"

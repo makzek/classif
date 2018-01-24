@@ -2,11 +2,11 @@ export class SequenceMap {
     private nextIsn: number = -20000;
     private fixed: any = {};
 
-    GetTempISN = function () {
-        return ++this.nextIsn;
+    GetTempISN() {
+        return (++this.nextIsn);
     }
 
-    GetTempDUE = function (parentDue) {
+    GetTempDUE(parentDue) {
         return parentDue + (++this.nextIsn).toString() + '.';
     }
 

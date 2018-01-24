@@ -1,5 +1,5 @@
 import { Metadata } from '../core/metadata';
-import { IEnt, IRequest, ICachePolicy, CacheLevel, IR } from '../interfaces/interfaces';
+import { IRequest, ICachePolicy, IR } from '../interfaces/interfaces';
 import { PipRX } from '../services/pipRX.service';
 import { PipeUtils} from '../core/pipe-utils';
 
@@ -19,8 +19,8 @@ export class Cache extends PipeUtils {
      * Прочитать и положить в кеш
      * @param req запрос
      */
-    public read<T>(req: IRequest, policy?: ICachePolicy): Promise<T[]> {
-        const unread = []
+    public read<T>(req: IRequest, _policy?: ICachePolicy): Promise<T[]> {
+        const unread = [];
         const res = this.readOnlyCached<T>(req, unread);
         if ((res !== undefined) && ( unread.length === 0))
             return Promise.resolve(res);
@@ -34,27 +34,6 @@ export class Cache extends PipeUtils {
             // this._store.reqCache[rck] = ids;
         });
         return r;
-    }
-
-    private place(tn: string) {
-        if (!this._store.hasOwnProperty(tn))
-            this._store[tn] = {};
-        return this._store[tn];
-    }
-
-    private remember(d: any[], ids: any[]) {
-        if ( d.length === 0) return;
-        const tn = this._metadata.etn(d[0]);
-        const pkn = this._metadata.typeDesc(tn).pk;
-
-        const place = this.place(tn);
-        for (let i = 0; i < d.length; i++) {
-            const item = d[i];
-            const pk = item[pkn];
-            ids.push(pk);
-            place[pk] = item;
-            const test = place[pk];
-        }
     }
 
     /**
@@ -86,13 +65,32 @@ export class Cache extends PipeUtils {
         return JSON.stringify(req);
     }
 
-    public clear(req: IRequest) {
+    public clear(_req: IRequest) {
 
     }
 
-    public clearZone(policy?: ICachePolicy) {
+    public clearZone(_policy?: ICachePolicy) {
 
     }
 
+    private place(tn: string) {
+        if (!this._store.hasOwnProperty(tn))
+            this._store[tn] = {};
+        return this._store[tn];
+    }
 
+    private remember(d: any[], ids: any[]) {
+        if ( d.length === 0) return;
+        const tn = this._metadata.etn(d[0]);
+        const pkn = this._metadata.typeDesc(tn).pk;
+
+        const place = this.place(tn);
+        for (let i = 0; i < d.length; i++) {
+            const item = d[i];
+            const pk = item[pkn];
+            ids.push(pk);
+            place[pk] = item;
+            // const test = place[pk];
+        }
+    }
 }
