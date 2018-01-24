@@ -16,7 +16,7 @@
                 <div class="col-1">
                     <div class="current-image"
                         [ngStyle]="{'background-image': defaultImage}">
-                        <eos-photo-uploader class="photo-uploader"
+                        <eos-photo-uploader class="photo-uploader" [disableEdit]="!editMode"
                             (endUploading)="newImage($event)"></eos-photo-uploader>
                     </div>
                     <div class="form-group gender">
