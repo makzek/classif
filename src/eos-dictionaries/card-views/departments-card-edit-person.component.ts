@@ -46,6 +46,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
 
     newImage(img: IImage) {
         this.defaultImage = img.url;
-        this.dictSrv.uploadImg(img);
+        this.dictSrv.uploadImg(img)
+            .then((photoId: number) => this.data.rec['ISN_PHOTO'] = photoId['ID']);
     }
 }

@@ -164,7 +164,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
     }
 
-    public imgUpload(ext: string, imgData: string): Promise<any> {
+    public imgUpload(ext: string, imgData: string): Promise<number> {
         const delo_blob = this.apiSrv.entityHelper.prepareAdded<DELO_BLOB>({
             ISN_BLOB: this.apiSrv.sequenceMap.GetTempISN(),
             EXTENSION: ext
@@ -177,9 +177,8 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
 
-        return this.apiSrv.batch(chl, '').then(() => {
-            return this.apiSrv.sequenceMap.GetFixed(delo_blob.ISN_BLOB);
-        });
+        return this.apiSrv.batch(chl, '')
+            .then((photoId) => photoId[0]);
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {
