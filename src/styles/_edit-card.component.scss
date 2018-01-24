@@ -57,10 +57,11 @@
             }
         }
         .name-wrapper {
+            -ms-grid-row-align: center;
             align-self: center;
             -ms-grid-column: 3;
             grid-column: 3;
-            -ms-grid-column: 1;
+            -ms-grid-row: 1;
             grid-row: 1;
         }
         .buttons-wrapper {
