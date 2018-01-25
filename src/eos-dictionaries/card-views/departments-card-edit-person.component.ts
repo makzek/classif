@@ -30,7 +30,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         if (this.currentNodeId !== this.nodeId) {
             this.currTab = 0;
         }
-        if (this.data.photo) {
+        if (this.data.photo && this.data.photo.url) {
             this.defaultImage = this.data.photo.url;
         } else {
             this.defaultImage = DEFAULT_PHOTO;
