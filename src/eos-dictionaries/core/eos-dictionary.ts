@@ -69,10 +69,16 @@ export class EosDictionary {
     }
 
     constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
-        this.descriptor = dictDescrSrv.getDescriptorClass(dictId);
-        this._nodes = new Map<string, EosDictionaryNode>();
-        this._dictionaries = {};
-        this.defaultOrder();
+        const descriptor = dictDescrSrv.getDescriptorClass(dictId);
+        if (descriptor) {
+            this.descriptor = descriptor;
+            this._nodes = new Map<string, EosDictionaryNode>();
+            this._dictionaries = {};
+            this.defaultOrder();
+            return this;
+        } else {
+            throw new Error('Словарь не поддерживается');
+        }
     }
 
     public defaultOrder() {
@@ -120,6 +126,18 @@ export class EosDictionary {
                 });
         } else {
             return Promise.resolve(null);
+        }
+    }
+
+    updateNodeData(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        if (data) {
+            return this.descriptor.updateRecord(node.data, data)
+                .then((_resp) => {
+                    node.updateData(data.rec);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(node);
         }
     }
 
@@ -400,10 +418,7 @@ export class EosDictionary {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
-            node.updateExpandable(this._showDeleted);
         });
-
-        this.root.updateExpandable(this._showDeleted);
 
         const treeOrderKey = this.root.getTreeView()[0];
         this.nodes.forEach((node) => {
@@ -411,6 +426,7 @@ export class EosDictionary {
                 node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
             }
         });
+        this._nodes.forEach((node) => node.updateExpandable(this._showDeleted));
     }
 
     /**

@@ -9,9 +9,10 @@
         [minDate]="bsConfig.minDate"
         [maxDate]="bsConfig.maxDate"
         [isDisabled]="isReadonly"
-        value="{{aDate | date:'dd.MM.yyyy'}}">
+        value="{{aDate | date:'dd.MM.yyyy' | slice:0:10}}"
+        maxlength="10">
     <input class="form-control readonly"
-        value="{{aDate | date:'dd.MM.yyyy'}}"
+        value="{{aDate | date:'dd.MM.yyyy' | slice:0:10}}"
         readonly
         [ngClass]="{'hidden': !isReadonly}"
         placeholder="{{placeholder}}">

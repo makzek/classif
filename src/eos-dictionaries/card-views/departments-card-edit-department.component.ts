@@ -40,4 +40,5 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
             });
         };
     }
+
 }
