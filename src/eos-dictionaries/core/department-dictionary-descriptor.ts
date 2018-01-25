@@ -38,10 +38,9 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         let visible = super.filterBy(filters, data);
         if (visible && filters) {
             if (filters.hasOwnProperty('date') && filters.date) {
-                const startDate = data.rec['START_DATE'] ? new Date(data.rec['START_DATE']) : null;
-                const endDate = data.rec['END_DATE'] ? new Date(data.rec['END_DATE']) : null;
-                const date = new Date(filters.date).getTime();
-                visible = (!startDate || date - startDate.getTime() >= 0) && (!endDate || endDate.getTime() - date >= 0);
+                const startDate = data.rec['START_DATE'] ? new Date(data.rec['START_DATE']).setHours(0, 0, 0, 0) : null;
+                const endDate = data.rec['END_DATE'] ? new Date(data.rec['END_DATE']).setHours(0, 0, 0, 0) : null;
+                visible = (!startDate || filters.date - startDate >= 0) && (!endDate || endDate - filters.date >= 0);
             }
         }
         return visible;

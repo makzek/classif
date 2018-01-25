@@ -46,7 +46,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
-    date: Date = new Date();
+    date: Date;
 
     public mode = 0;
 
@@ -169,18 +169,8 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        if (date !== this.date) {
-            this._dictSrv.setFilter({ date: date });
-            /*
-            this.date = date;
-            this._dictSrv.filter({ date: date })
-                .then(() => {
-                    console.log('filtered');
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-            */
+        if (!this.date || date.getTime() !== this.date.getTime()) {
+            this._dictSrv.setFilter({ date: date.setHours(0, 0, 0, 0) });
         }
     }
 
