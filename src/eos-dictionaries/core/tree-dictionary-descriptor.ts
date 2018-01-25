@@ -114,10 +114,6 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         return Promise.reject('Type of dictionary not true!');
     }
 
-    public imgUpload(exp: string, imgData: string) {
-        return Promise.resolve(null);
-    }
-
     protected _initRecord(data: ITreeDictionaryDescriptor) {
         this.record = new TreeRecordDescriptor(this, data);
     }
