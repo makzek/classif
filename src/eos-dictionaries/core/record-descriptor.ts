@@ -98,6 +98,14 @@ export class RecordDescriptor {
         /* tslint:enable:no-bitwise */
     }
 
+    filterBy(filters: any, data: any): boolean {
+        let visible = true;
+        if (filters && filters.hasOwnProperty('showDeleted')) {
+            visible = filters.showDeleted || data.rec['DELETED'] === 0;
+        }
+        return visible;
+    }
+
     getTreeView(data: any): IFieldView[] {
         return this._bindData(this.getFieldSet(E_FIELD_SET.tree), data);
     }

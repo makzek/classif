@@ -170,6 +170,10 @@ export class EosDictionaryNode {
         }
     }
 
+    filterBy(filters: any): boolean {
+        return this._descriptor.filterBy(filters, this.data);
+    }
+
     addChild(node: EosDictionaryNode) {
         /* remove old parent if exist */
         if (node.parent && node.parent !== this) {

@@ -12,7 +12,7 @@ import {
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
-import { WARN_SEARCH_NOTFOUND} from '../consts/messages.consts';
+import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
@@ -43,6 +43,7 @@ export class EosDictService {
     private _dictMode$: BehaviorSubject<number>;
     private _dictionaries: EosDictionary[];
     private _listDictionary$: BehaviorSubject<EosDictionary>;
+    private filters: any = {};
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -208,6 +209,7 @@ export class EosDictService {
         this._treeNode$.next(null);
         this._dictionary$.next(null);
         this._listDictionary$.next(null);
+        this.filters = {};
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -314,7 +316,7 @@ export class EosDictService {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
 
-    public updateNode(node: EosDictionaryNode, data: any): Promise <any> {
+    public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
         if (this.dictionary.id === 'region') {
             const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
             const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
@@ -456,13 +458,16 @@ export class EosDictService {
         return this._search();
     }
 
+    setFilter(filter: any) {
+        if (filter) {
+            Object.assign(this.filters, filter);
+            this._reloadList();
+        }
+    }
+
     public fullSearch(data: any, params: ISearchSettings) {
         this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
         return this._search(params.deleted);
-    }
-
-    filter(_params: any): Promise<any> {
-        return Promise.reject('not implemeted');
     }
 
     getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -725,6 +730,9 @@ export class EosDictService {
         if (!this.viewParameters.showDeleted) {
             this._visibleListNodes = this._visibleListNodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
+
+        this._visibleListNodes = this._visibleListNodes.filter((node) => node.filterBy(this.filters));
+
         this._fixCurrentPage();
 
         const page = this.paginationConfig;

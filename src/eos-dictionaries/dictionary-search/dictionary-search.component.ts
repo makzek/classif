@@ -170,6 +170,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dateFilter(date: Date) {
         if (date !== this.date) {
+            this._dictSrv.setFilter({ date: date });
             /*
             this.date = date;
             this._dictSrv.filter({ date: date })

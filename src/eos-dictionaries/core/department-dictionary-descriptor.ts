@@ -34,6 +34,19 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         ], descriptor);
     }
 
+    filterBy(filters: any, data: any): boolean {
+        let visible = super.filterBy(filters, data);
+        if (visible && filters) {
+            if (filters.hasOwnProperty('date') && filters.date) {
+                const startDate = data.rec['START_DATE'] ? new Date(data.rec['START_DATE']) : null;
+                const endDate = data.rec['END_DATE'] ? new Date(data.rec['END_DATE']) : null;
+                const date = new Date(filters.date).getTime();
+                visible = (!startDate || date - startDate.getTime() >= 0) && (!endDate || endDate.getTime() - date >= 0);
+            }
+        }
+        return visible;
+    }
+
     getMode(values: any): E_DEPT_MODE {
         /* if IS_NODE or another boolean field */
         if (values) {
