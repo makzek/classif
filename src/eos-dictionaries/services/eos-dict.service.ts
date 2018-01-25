@@ -9,6 +9,7 @@ import {
     IDictionaryViewParameters, ISearchSettings, IOrderBy,
     IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
@@ -574,6 +575,12 @@ export class EosDictService {
         } else {
             return null;
         }
+    }
+
+    public inclineFields(fields: FieldsDecline): Promise <any[]> {
+        // console.log(`Method inclineFields: ${fields}`);
+        return this.dictionary.descriptor.onPreparePrintInfo(fields)
+            .catch((err) => this._errHandler(err));
     }
 
     private _initViewParameters() {

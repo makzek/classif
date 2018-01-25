@@ -6,6 +6,7 @@ import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dic
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -107,6 +108,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         };
         return this.getData(PipRX.criteries(criteries));
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+    }
+
+    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
     }
 
     protected _initRecord(data: ITreeDictionaryDescriptor) {

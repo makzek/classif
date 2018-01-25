@@ -4,6 +4,7 @@ import {
     IRecordModeDescription,
     IDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
@@ -158,6 +159,10 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getContacts(orgISN: string): Promise<any> {
         return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
+    }
+
+    public onPreparePrintInfo(dec: FieldsDecline): Promise<any[]> {
+        return this.apiSrv.read({ PreparePrintInfo: PipRX.args(dec) });
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {
