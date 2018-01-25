@@ -9,10 +9,11 @@ import {
     IDictionaryViewParameters, ISearchSettings, IOrderBy,
     IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
-import { WARN_SEARCH_NOTFOUND} from '../consts/messages.consts';
+import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
@@ -337,20 +338,14 @@ export class EosDictService {
                         return this.dictionary.descriptor.updateRecord(node.data, data);
                     }
                 })
-                .then(() => this.dictionary.descriptor.updateRecord(node.data, data))
-                .then(() => this._reloadList().then(() => this.dictionary.getNode(node.id)))
-                .catch((err) => {
-                    this._errHandler(err);
-                });
-        } else {
-            return this.dictionary.descriptor.updateRecord(node.data, data)
-                .then(() => this._reloadList())
-                .then(() => this.dictionary.getNode(node.id))
+                .then(() => this._updateNode(node, data))
                 .catch((err) => this._errHandler(err));
+        } else {
+            return this._updateNode(node, data);
         }
     }
 
-    public addNode(data: any): Promise<any> {
+    public addNode(data: any): Promise<EosDictionaryNode> {
         // Проверка существования записи для регионов.
         if (this.treeNode) {
             let p: Promise<string>;
@@ -601,6 +596,12 @@ export class EosDictService {
         }
     }
 
+    public inclineFields(fields: FieldsDecline): Promise <any[]> {
+        // console.log(`Method inclineFields: ${fields}`);
+        return this.dictionary.descriptor.onPreparePrintInfo(fields)
+            .catch((err) => this._errHandler(err));
+    }
+
     private _initViewParameters() {
         // console.log('_initViewParameters');
         this.viewParameters = {
@@ -647,7 +648,11 @@ export class EosDictService {
     private _openDictionary(dictionaryId: string): Promise<EosDictionary> {
         let _p: Promise<EosDictionary> = this._mDictionaryPromise.get(dictionaryId);
         if (!_p) {
-            this.dictionary = new EosDictionary(dictionaryId, this._descrSrv);
+            try {
+                this.dictionary = new EosDictionary(dictionaryId, this._descrSrv);
+            } catch (e) {
+                return Promise.reject(e);
+            }
             if (this.dictionary) {
                 _p = this.dictionary.init()
                     .then(() => {
@@ -876,5 +881,13 @@ export class EosDictService {
 
     private _emitListDictionary() {
         this._listDictionary$.next(this._dictionaries[this.dictMode]);
+    }
+
+    private _updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        return this.dictionary.updateNodeData(node, data)
+            .then(() => this._reloadList())
+            .then(() => this.dictionary.getNode(node.id))
+            .catch((err) => this._errHandler(err));
+
     }
 }

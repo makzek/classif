@@ -1,27 +1,16 @@
-<div class="has-spinner" *ngIf="updating">
-    <eos-spinner size="lg"></eos-spinner>
-</div>
-<ng-container *ngIf="!updating" [ngSwitch]="dictionaryId">
-    <eos-department-node-info *ngSwitchCase="'departments'"
-        [fieldsDescriptionShort]="fieldsDescriptionShort"
-        [nodeDataShort]="nodeDataShort"
-        [fieldsDescriptionFull]="fieldsDescriptionFull"
-        [nodeDataFull]="nodeDataFull"
-        [bossName]="bossName"
-        (action)="onAction($event)">
-    </eos-department-node-info>
-    <eos-cabinet-node-info *ngSwitchCase="'cabinet'"
-        [fieldsDescriptionShort]="fieldsDescriptionShort"
-        [nodeDataShort]="nodeDataShort"
-        [fieldsDescriptionFull]="fieldsDescriptionFull"
-        [nodeDataFull]="nodeDataFull"
-        (action)="onAction($event)">
-    </eos-cabinet-node-info>
-    <eos-node-info *ngSwitchDefault
-        [fieldsDescriptionShort]="fieldsDescriptionShort"
-        [nodeDataShort]="nodeDataShort"
-        [fieldsDescriptionFull]="fieldsDescriptionFull"
-        [nodeDataFull]="nodeDataFull"
-        (action)="onAction($event)">
-    </eos-node-info>
+<ng-container *ngIf="node">
+    <ng-container [ngSwitch]="node.dictionaryId">
+        <eos-department-node-info *ngSwitchCase="'departments'"
+            [node]="node"
+            (action)="onAction($event)">
+        </eos-department-node-info>
+        <eos-cabinet-node-info *ngSwitchCase="'cabinet'"
+            [node]="node"
+            (action)="onAction($event)">
+        </eos-cabinet-node-info>
+        <eos-node-info *ngSwitchDefault
+            [node]="node"
+            (action)="onAction($event)">
+        </eos-node-info>
+    </ng-container>
 </ng-container>
