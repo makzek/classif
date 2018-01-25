@@ -10,6 +10,7 @@ import { ModeFieldSet } from './record-mode';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
+import { IImage } from '../interfaces/image.interface';
 import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
@@ -143,6 +144,17 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 const info = items.find((item) => item.ISN_OWNER === rec['ISN_NODE']);
                 return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
             });
+
+        /*const pPhotoImg = */this.apiSrv.read({ DELO_BLOB: 21 })
+            .then((recvImg: Array<DELO_BLOB>) => {
+                const img: IImage = {
+                    data: recvImg[0].CONTENTS,
+                    extension: recvImg[0].EXTENSION,
+                    url: `url(data:image/${recvImg[0].EXTENSION};base64,${recvImg[0].CONTENTS})`
+                };
+                return img;
+            });
+
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
