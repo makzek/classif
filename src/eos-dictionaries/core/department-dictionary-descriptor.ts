@@ -12,7 +12,6 @@ import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
 import { IImage } from '../interfaces/image.interface';
 import { DELO_BLOB } from '../../eos-rest/interfaces/structures';
-import { DEFAULT_PHOTO } from '../consts/default-img.const';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -146,40 +145,27 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
             });
 
-        let pPhotoImg;
-        if (rec['ISN_PHOTO']) {
-            pPhotoImg = this.apiSrv.read({ DELO_BLOB: rec['ISN_PHOTO'] })
-                .then((recvImg: Array<DELO_BLOB>) => {
-                    const img: IImage = {
-                        data: recvImg[0].CONTENTS,
-                        extension: recvImg[0].EXTENSION,
-                        url: `url(data:image/${recvImg[0].EXTENSION};base64,${recvImg[0].CONTENTS})`
-                    };
-                    return img;
-                });
-        } else {
-            const img: IImage = {
-                data: null,
-                extension: 'PNG',
-                url: DEFAULT_PHOTO
-            };
-            pPhotoImg = Promise.resolve(img);
-        }
-
+        const pPhotoImg = (rec['ISN_PHOTO']) ? this.apiSrv.read({ DELO_BLOB: rec['ISN_PHOTO'] }) : Promise.resolve([]);
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pPhotoImg])
-            .then(([user, org, cabinet, printInfo, photoImg]) => {
+            .then(([user, org, cabinet, printInfo, photoImgs]) => {
                 /*
                 if (!printInfo['_State']) {
                     printInfo._State = _ES.Stub;
                 }
                 */
+                const img = (photoImgs[0]) ? <IImage> {
+                    data: photoImgs[0].CONTENTS,
+                    extension: photoImgs[0].EXTENSION,
+                    url: `url(data:image/${photoImgs[0].EXTENSION};base64,${photoImgs[0].CONTENTS})`
+                } : null;
+
                 return {
                     user: user,
                     organization: org,
                     cabinet: cabinet,
                     printInfo: printInfo,
-                    photo: photoImg
+                    photo: img
                 };
             });
     }
@@ -202,7 +188,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
 
         return this.apiSrv.batch(chl, '')
-            .then((photoId) => photoId[0]);
+            .then((photoId) => photoId[0] ? photoId[0] : null);
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {
