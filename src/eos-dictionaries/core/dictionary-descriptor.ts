@@ -40,6 +40,8 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     public onPreparePrintInfo(): Promise<any> {
         return Promise.reject('Type of dictionary not true!');
+    }
+
     public imgUpload(exp: string, imgData: string) {
         return Promise.resolve(null);
     }
