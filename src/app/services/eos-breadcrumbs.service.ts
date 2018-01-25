@@ -82,7 +82,10 @@ export class EosBreadcrumbsService {
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
-                        bc.title = this._descrSrv.getDescriptorData(_dictId).title;
+                        const descr = this._descrSrv.getDescriptorData(_dictId);
+                        if (descr) {
+                            bc.title = descr.title;
+                        }
                         /*
                         _crumbPromise = this._dictSrv.getDictionariesList()
                             .then((list) => {

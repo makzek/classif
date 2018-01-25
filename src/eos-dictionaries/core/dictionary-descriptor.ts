@@ -38,6 +38,10 @@ export class DictionaryDescriptor extends AbstractDictionaryDescriptor {
         return this.getData();
     }
 
+    public onPreparePrintInfo(): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
+    }
+
     private preCreate(isProtected = false, isDeleted = false): ILinearCL {
         const _isn = this.apiSrv.sequenceMap.GetTempISN();
         const _res: ILinearCL = {
