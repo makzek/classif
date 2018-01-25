@@ -217,9 +217,9 @@ export class EosDictService {
             this.viewParameters.updatingList = false;
             this._viewParameters$.next(this.viewParameters);
             return Promise.resolve(this.dictionary);
-
         } else {
             this.viewParameters.showDeleted = false;
+            this.viewParameters.updatingList = false;
             this._viewParameters$.next(this.viewParameters);
             if (this.dictionary) {
                 this.closeDictionary();
@@ -284,8 +284,11 @@ export class EosDictService {
                         this._viewParameters$.next(this.viewParameters);
                         this._selectNode(node);
                         return node;
-                    });
+                    })
+                    .catch(err => this._errHandler(err));
             }
+            this.viewParameters.updatingList = false;
+            this._viewParameters$.next(this.viewParameters);
         } else {
             return Promise.resolve(this._selectRoot());
         }
@@ -399,7 +402,8 @@ export class EosDictService {
                 this.viewParameters.updatingList = false;
                 this._viewParameters$.next(this.viewParameters);
                 return val;
-            });
+            })
+            .catch(err => this._errHandler(err));
     }
     /**
      * @description Marks or unmarks record as deleted
