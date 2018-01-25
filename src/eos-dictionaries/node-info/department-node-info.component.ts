@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { EosDictService } from '../services/eos-dict.service';
 import { IDictionaryViewParameters } from '../interfaces/eos-dictionary.interfaces';
-
+import { DEFAULT_PHOTO } from '../consts/default-img.const';
 import { BaseNodeInfoComponent } from './base-node-info';
 
 @Component({
@@ -9,7 +9,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
     templateUrl: 'department-node-info.component.html',
 })
 export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent {
-    defaultImage = 'url(../assets/images/no-user.png)';
+    defaultImage = DEFAULT_PHOTO;
     public update: boolean;
 
     @Input() bossName: string;

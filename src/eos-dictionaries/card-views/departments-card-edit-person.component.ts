@@ -2,7 +2,7 @@
 import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
 import { IImage } from '../interfaces/image.interface';
-
+import { DEFAULT_PHOTO } from '../consts/default-img.const';
 @Component({
     selector: 'eos-departments-card-edit-person',
     templateUrl: 'departments-card-edit-person.component.html',
@@ -10,7 +10,7 @@ import { IImage } from '../interfaces/image.interface';
 export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     currTab = 0;
-    defaultImage = 'url(../assets/images/no-user.png)';
+    defaultImage = DEFAULT_PHOTO;
 
     gender = [
         { id: null, title: 'Не указан' },
@@ -29,6 +29,11 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         super.ngOnChanges();
         if (this.currentNodeId !== this.nodeId) {
             this.currTab = 0;
+        }
+        if (this.data.photo) {
+            this.defaultImage = this.data.photo.url;
+        } else {
+            this.defaultImage = DEFAULT_PHOTO;
         }
     }
 
