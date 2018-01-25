@@ -186,7 +186,7 @@ export abstract class AbstractDictionaryDescriptor {
     updateRecord(originalData: any, updates: any): Promise<any[]> {
         const changeData = [];
         Object.keys(originalData).forEach((key) => {
-            if (originalData[key]) {
+            if (key !== 'photo' && originalData[key]) {
                 if (key === 'sev') {
                     if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
                         changeData.push(Object.assign({}, originalData[key], updates[key]));

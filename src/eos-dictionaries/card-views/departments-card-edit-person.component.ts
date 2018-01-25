@@ -55,7 +55,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             .then((photoId: number) => {
                 if (photoId['ID']) {
                     this.data.rec['ISN_PHOTO'] = photoId['ID'];
-                    // this.onChange.emit(this.data);
+                    this.onChange.emit(this.data);
                 } else {
                     this.data['ISN_PHOTO'] = null;
                 }
