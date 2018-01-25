@@ -81,7 +81,7 @@ export class CreateNodeComponent {
             .then((node) => {
                 if (node) {
                     let title = '';
-                    node.getShortQuickView().forEach((_f) => {
+                    node.getTreeView().forEach((_f) => {
                         title += this.nodeData.rec[_f.key];
                     });
                     this._deskSrv.addRecentItem({
