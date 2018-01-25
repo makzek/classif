@@ -9,7 +9,7 @@ import { BaseNodeInfoComponent } from './base-node-info';
     templateUrl: 'department-node-info.component.html',
 })
 export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implements OnChanges {
-    defaultImage = DEFAULT_PHOTO;
+    photo = DEFAULT_PHOTO;
     public update: boolean;
 
     bossName: string;
@@ -34,6 +34,11 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
             } else {
                 this.department = this.node.parent.getParentData('FULLNAME', 'rec') ||
                     this.node.parent.getParentData('CLASSIF_NAME', 'rec');
+                    if (this.node.data.photo && this.node.data.photo.url) {
+                        this.photo = this.node.data.photo.url;
+                    } else {
+                        this.photo = DEFAULT_PHOTO;
+                    }
             }
         }
     }

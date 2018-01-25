@@ -15,7 +15,7 @@
             <div class="wrapper">
                 <div class="col-1">
                     <div class="current-image"
-                        [ngStyle]="{'background-image': defaultImage}">
+                        [ngStyle]="{'background-image': photo}">
                         <eos-photo-uploader class="photo-uploader" [disableEdit]="!editMode"
                             (endUploading)="newImage($event)"></eos-photo-uploader>
                     </div>

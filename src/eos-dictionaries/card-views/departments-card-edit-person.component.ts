@@ -11,7 +11,7 @@ import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     currTab = 0;
-    defaultImage = DEFAULT_PHOTO;
+    photo = DEFAULT_PHOTO;
 
     gender = [
         { id: null, title: 'Не указан' },
@@ -32,9 +32,9 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             this.currTab = 0;
         }
         if (this.data.photo && this.data.photo.url) {
-            this.defaultImage = this.data.photo.url;
+            this.photo = this.data.photo.url;
         } else {
-            this.defaultImage = DEFAULT_PHOTO;
+            this.photo = DEFAULT_PHOTO;
         }
     }
 
@@ -51,7 +51,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
     }
 
     newImage(img: IImage) {
-        this.defaultImage = img.url;
+        this.photo = img.url;
         this.dictSrv.uploadImg(img)
             .then((photoId: number) => {
                 if (photoId['ID']) {
