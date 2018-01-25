@@ -6,6 +6,7 @@ import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dic
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -83,10 +84,14 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
+        return this.getData(chain);
+        /*
+        do not read from cache!!!!
         const recordDue = chain.pop();
         // console.log('read', recordDue, 'read from cache', chain);
         return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
             .then(([record, parents]) => record.concat(parents));
+        */
     }
 
     getRoot(): Promise<any[]> {
@@ -103,6 +108,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         };
         return this.getData(PipRX.criteries(criteries));
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+    }
+
+    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
     }
 
     public imgUpload(exp: string, imgData: string) {

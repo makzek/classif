@@ -4,6 +4,7 @@ import {
     IRecordModeDescription,
     IDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
@@ -126,6 +127,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         const pOrganization = (orgDUE) ? this.getCachedRecord({ ORGANIZ_CL: [orgDUE] }) : Promise.resolve(null);
 
         const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
+        const pCabinets = this.getCachedRecord({ 'CABINET': { 'criteries': { DUE: rec.DUE } } });
 
         let owner = rec['ISN_NODE'].toString();
         if (!rec['IS_NODE']) {
@@ -146,13 +148,8 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         const pPhotoImg = (rec['ISN_PHOTO']) ? this.apiSrv.read({ DELO_BLOB: rec['ISN_PHOTO'] }) : Promise.resolve([]);
 
-        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pPhotoImg])
-            .then(([user, org, cabinet, printInfo, photoImgs]) => {
-                /*
-                if (!printInfo['_State']) {
-                    printInfo._State = _ES.Stub;
-                }
-                */
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets, pPhotoImg])
+            .then(([user, org, cabinet, printInfo, cabinets, photoImgs]) => {
                 const img = (photoImgs[0]) ? <IImage> {
                     data: photoImgs[0].CONTENTS,
                     extension: photoImgs[0].EXTENSION,
@@ -163,6 +160,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                     user: user,
                     organization: org,
                     cabinet: cabinet,
+                    cabinets: cabinets,
                     printInfo: printInfo,
                     photo: img
                 };
@@ -171,6 +169,10 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getContacts(orgISN: string): Promise<any> {
         return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
+    }
+
+    public onPreparePrintInfo(dec: FieldsDecline): Promise<any[]> {
+        return this.apiSrv.read({ PreparePrintInfo: PipRX.args(dec) });
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {

@@ -79,7 +79,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     get nodeName() {
         let _nodeName = '';
         if (this.node) {
-            this.node.getShortQuickView()
+            this.node.getTreeView()
                 .forEach((_f) => {
                     _nodeName += _f.value;
                 });

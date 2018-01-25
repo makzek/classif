@@ -1,6 +1,7 @@
 
 import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { IImage } from '../interfaces/image.interface';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 @Component({
@@ -58,6 +59,28 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
                     this.onChange.emit(this.data);
                 } else {
                     this.data['ISN_PHOTO'] = null;
+                }
+            });
+    }
+
+    public fillDeclineFields(): void {
+        const field: FieldsDecline = {
+            DUTY: this.data['rec']['DUTY'] || '',
+            GENDER: Number(this.data['printInfo']['GENDER']),
+            NAME: this.data['printInfo']['NAME'] || '',
+            PATRON: this.data['printInfo']['PATRON'] || '',
+            SURNAME: this.data['printInfo']['SURNAME'] || '',
+            // PRINT_SURNAME_DP: 'test PRINT SURNAME_DP'
+        };
+
+        this.dictSrv.inclineFields(field)
+            .then((res: any[]) => {
+                if (res && res[0]) {
+                    Object.keys(res[0]).forEach((key) => {
+                        if (res[0][key]) {
+                            this.data.printInfo[key] = res[0][key];
+                        }
+                    });
                 }
             });
     }

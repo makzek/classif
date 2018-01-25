@@ -2,6 +2,7 @@ import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
 import { ITypeDef, IEnt, DELO_BLOB } from 'eos-rest';
@@ -52,6 +53,7 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getChildren(...params): Promise<any[]>;
     abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
+    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
 
     addBlob(ext: string, blobData: string): Promise<string | number> {
         const delo_blob = this.apiSrv.entityHelper.prepareAdded<DELO_BLOB>({
