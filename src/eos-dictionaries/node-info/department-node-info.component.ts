@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { EosDictService } from '../services/eos-dict.service';
 import { IDictionaryViewParameters } from '../interfaces/eos-dictionary.interfaces';
-import { DEFAULT_PHOTO } from '../consts/default-img.const';
+import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { BaseNodeInfoComponent } from './base-node-info';
 
 @Component({

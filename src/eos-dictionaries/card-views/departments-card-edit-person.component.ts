@@ -2,7 +2,7 @@
 import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
 import { IImage } from '../interfaces/image.interface';
-import { DEFAULT_PHOTO } from '../consts/default-img.const';
+import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 @Component({
     selector: 'eos-departments-card-edit-person',
     templateUrl: 'departments-card-edit-person.component.html',

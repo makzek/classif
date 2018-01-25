@@ -584,7 +584,7 @@ export class EosDictService {
     }
 
     public uploadImg(img: IImage): Promise<number> {
-        return this.dictionary.descriptor.imgUpload(img.extension, img.data)
+        return this.dictionary.descriptor.addBlob(img.extension, img.data)
             .catch(err => this._errHandler(err));
     }
 
