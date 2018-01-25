@@ -171,21 +171,28 @@ export class EosDictionaryNode {
     }
 
     addChild(node: EosDictionaryNode) {
-        /* remove old parent if exist */
-        if (node.parent && node.parent !== this) {
-            node.parent.deleteChild(node);
-            node.parent = null;
-        }
-
         if (!this._children) {
             this._children = [];
         }
-        /* tslint:disable:no-bitwise */
-        if (!~this._children.findIndex((chld) => chld.id === node.id)) {
+        const child = this._children.find((chld) => chld.id === node.id);
+
+        if (!child) {
             this._children.push(node);
+
+            /* remove old parent if exist */
+            if (node.parent && node.parent !== this) {
+                node.parent.deleteChild(node);
+                node.parent = null;
+            }
+
             node.parent = this;
+        } else {
+            if (child !== node) {
+                // console.log('child differ from node');
+            } else if (child.parent !== node.parent) {
+                // console.log('different parents');
+            }
         }
-        /* tslint:enable:no-bitwise */
         this.updateExpandable();
     }
 

@@ -129,6 +129,18 @@ export class EosDictionary {
         }
     }
 
+    updateNodeData(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        if (data) {
+            return this.descriptor.updateRecord(node.data, data)
+                .then((_resp) => {
+                    node.updateData(data.rec);
+                    return node;
+                });
+        } else {
+            return Promise.resolve(node);
+        }
+    }
+
     updateNodes(data: any[], updateTree = false): EosDictionaryNode[] {
         const nodeIds: string[] = [];
         data.forEach((nodeData) => {
