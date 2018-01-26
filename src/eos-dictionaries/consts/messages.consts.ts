@@ -86,3 +86,21 @@ export const WARN_NO_ORGANIZATION: IMessage = {
     msg: 'вверх по иерархии нет организаций'
 };
 
+export const FILE_IS_NOT_IMAGE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'выбранный файл не является изображением!'
+};
+
+export const FILE_IS_BIG: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'размер файла слишком велик! Выбирите файл размером не более 1Mb.'
+};
+
+export const UPLOAD_IMG_FALLED: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'загрузить изображение не удалось!'
+};
+

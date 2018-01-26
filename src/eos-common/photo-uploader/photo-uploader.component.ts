@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-// import { Http, Headers, RequestOptions } from '@angular/http';
+import { EosMessageService } from '../services/eos-message.service';
+import { FILE_IS_NOT_IMAGE, FILE_IS_BIG } from '../../eos-dictionaries/consts/messages.consts';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { IImage } from '../../eos-dictionaries/interfaces/image.interface';
 
@@ -27,6 +28,7 @@ export class PhotoUploaderComponent implements OnInit {
 
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
+    constructor(private _msgSrv: EosMessageService) { }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;
@@ -35,7 +37,16 @@ export class PhotoUploaderComponent implements OnInit {
     chooseFile(e) {
         // this.fileCount = this.nativeInputEl.files.length;
         // const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-        const file = e.target.files[0];
+        const file: File = e.target.files[0];
+        if (file.type.indexOf('image') === -1) {
+            this._msgSrv.addNewMessage(FILE_IS_NOT_IMAGE);
+            return;
+        }
+
+        if (file.size > 1048576) {
+            this._msgSrv.addNewMessage(FILE_IS_BIG);
+            return;
+        }
 
         const reader = new FileReader();
 

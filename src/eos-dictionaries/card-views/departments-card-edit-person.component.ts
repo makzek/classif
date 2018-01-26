@@ -4,6 +4,9 @@ import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edi
 import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { IImage } from '../interfaces/image.interface';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { UPLOAD_IMG_FALLED } from '../consts/messages.consts';
+
 @Component({
     selector: 'eos-departments-card-edit-person',
     templateUrl: 'departments-card-edit-person.component.html',
@@ -21,7 +24,10 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
 
     private currentNodeId: string;
 
-    constructor(injector: Injector) {
+    constructor(
+        injector: Injector,
+        private _msgSrv: EosMessageService
+    ) {
         super(injector);
         this.currentNodeId = this.nodeId;
     }
@@ -54,11 +60,12 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         this.photo = img.url;
         this.dictSrv.uploadImg(img)
             .then((photoId: number) => {
-                if (photoId['ID']) {
+                if (photoId) {
                     this.data.rec['ISN_PHOTO'] = photoId['ID'];
                     this.onChange.emit(this.data);
                 } else {
-                    this.data['ISN_PHOTO'] = null;
+                    this.photo = DEFAULT_PHOTO;
+                    this._msgSrv.addNewMessage(UPLOAD_IMG_FALLED);
                 }
             });
     }
