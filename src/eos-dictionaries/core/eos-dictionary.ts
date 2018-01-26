@@ -12,7 +12,7 @@ import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
-import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
+import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -93,12 +93,16 @@ export class EosDictionary {
     }
 
     createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
-        const orgISN = node.data['organization']['ISN_NODE'];
-        if (orgISN) {
-            const dContact = <ContactDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('contact');
-            return dContact.createContacts(newContacts, orgISN);
+        const orgDUE = node.data['organization']['DUE'];
+        if (orgDUE) {
+            const dContact = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
+            return dContact.addContacts(newContacts, orgDUE);
         } else {
-            return Promise.resolve([]);
+            return Promise.resolve([<IRecordOperationResult>{
+                record: newContacts[0],
+                success: false,
+                error: { message: 'Нет связанной организации.' }
+            }]);
         }
     }
 
