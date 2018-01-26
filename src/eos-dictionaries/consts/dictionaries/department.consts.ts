@@ -92,7 +92,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'DUTY',
         title: 'Краткое наименование должности',
         type: 'string',
-        length: 238,
+        length: 236,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullTitle',
