@@ -1,6 +1,6 @@
 import {
     E_DICT_TYPE,
-    E_FIELD_SET,
+    // E_FIELD_SET,
     E_FIELD_TYPE,
     ISearchSettings,
     SEARCH_MODES,
@@ -337,14 +337,12 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
-        const _criteries = _searchFields.map((fld) => {
-            const _crit: any = {
-                [fld.foreignKey]: '"' + search + '"'
+        const _criteries = [];
+        const _crit: any = {
+                'CL_SEARCH.Contents': '"*' + search + '*"'
             };
-            this._extendCritery(_crit, params, selectedNode);
-            return _crit;
-        });
+        this._extendCritery(_crit, params, selectedNode);
+        _criteries.push(_crit);
         return _criteries;
     }
 
