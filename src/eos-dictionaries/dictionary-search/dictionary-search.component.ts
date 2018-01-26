@@ -67,7 +67,7 @@ export class DictionarySearchComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService
     ) {
-        this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
+        this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
@@ -94,6 +94,10 @@ export class DictionarySearchComponent implements OnDestroy {
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
         });
+
+        if (_dictSrv.getFilterValue('date')) {
+            this.date = new Date(_dictSrv.getFilterValue('date'));
+        }
     }
 
     setTab(key: string) {

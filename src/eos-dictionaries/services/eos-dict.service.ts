@@ -171,6 +171,10 @@ export class EosDictService {
             return Promise.resolve([]);
         }
     }
+
+    getFilterValue(filterName: string): any {
+        return this.filters.hasOwnProperty(filterName) ? this.filters[filterName] : null;
+    }
     // May be need used always instead this._viewParameters$.next();
     // Because this.viewParametrs is public and may be changed from other classes need way for share state
     public shareViewParameters() {
