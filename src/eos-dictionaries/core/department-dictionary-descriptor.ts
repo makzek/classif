@@ -129,7 +129,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         const pCabinets = this.getCachedRecord({ 'CABINET': { 'criteries': { DUE: rec.DUE } } });
 
         let owner = rec['ISN_NODE'].toString();
-        if (!rec['IS_NODE']) {
+        if (!rec['IS_NODE'] && rec['ISN_HIGH_NODE'] !== undefined && rec['ISN_HIGH_NODE'] !== null) {
             owner += '|' + rec['ISN_HIGH_NODE'].toString();
         }
 

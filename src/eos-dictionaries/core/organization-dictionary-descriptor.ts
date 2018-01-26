@@ -1,8 +1,8 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
-import { CONTACT, ORGANIZ_CL/*, SEV_ASSOCIATION */ } from 'eos-rest';
-// import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
+import { CONTACT, ORGANIZ_CL, SEV_ASSOCIATION } from 'eos-rest';
+import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 
 export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
 
@@ -11,7 +11,7 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
             .then(([org]) => {
                 const results: IRecordOperationResult[] = [];
                 if (org) {
-                    console.log(org.CONTACT_List);
+                    // console.log('adding contacts to organizaztion', org);
                     this.apiSrv.entityHelper.prepareForEdit(org);
                     const contacts = org.CONTACT_List || [];
                     newContacts.forEach((contact) => {
@@ -30,7 +30,6 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
                                 record: contact
                             });
                         } else {
-                            console.log('exist contact', existContact);
                             contact['ISN_CONTACT'] = existContact['ISN_CONTACT'];
                             results.push({
                                 record: contact,
@@ -46,17 +45,36 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
                     if (changes) {
                         return this.apiSrv.batch(changes, '')
                             .then((resp) => {
-                                console.log(resp);
-                                /*
-                                newContacts.filter((contact) => contact && contact.SEV)
+                                // console.log(resp);
+                                /**
+                                 * мы ориентировались на то что такого класса логику пишем на клиенте.
+                                 * больше чтобы понять как минимизировать АПИ. (c) В. Люкевич
+                                 */
+
+                                resp.forEach((newIsn) => {
+                                    const contact = newContacts
+                                        .find((_contact) => _contact.SEV && _contact['ISN_CONTACT'] === newIsn.FixedISN);
+                                    if (contact) {
+                                        contact.ISN_CONTACT = newIsn.FixedISN;
+                                    }
+                                });
+                                const pCreateSev = newContacts.filter((contact) => contact && contact.SEV && contact['ISN_CONTACT'] > 0)
                                     .map((contact) => {
                                         return this.apiSrv.read<SEV_ASSOCIATION>({
                                             SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(contact['ISN_CONTACT'], 'CONTACT')]
                                         })
-                                            .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
+                                            .then(([sev]) => {
+                                                if (sev) {
+                                                    /// add error message
+                                                } else {
+
+                                                }
+                                            });
+
                                     });
-                                    */
-                                return results;
+
+                                return Promise.all(pCreateSev)
+                                    .then(() => results);
                             });
                     } else {
                         return results;

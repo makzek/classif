@@ -108,7 +108,6 @@ export class NodeActionsComponent implements OnDestroy {
                     _enabled = _enabled && this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.restore:
-                case E_RECORD_ACTIONS.createRepresentative:
                 case E_RECORD_ACTIONS.remove:
                 case E_RECORD_ACTIONS.removeHard:
                     _enabled = _enabled && this._viewParams.haveMarked;
@@ -126,6 +125,9 @@ export class NodeActionsComponent implements OnDestroy {
                 case E_RECORD_ACTIONS.showAllSubnodes:
                     _enabled = _enabled && !this._viewParams.searchResults;
                     _active = this._viewParams.showAllSubnodes && !this._viewParams.searchResults;
+                    break;
+                case E_RECORD_ACTIONS.createRepresentative:
+                    _enabled = _enabled && !this._viewParams.searchResults;
                     break;
             }
         }
