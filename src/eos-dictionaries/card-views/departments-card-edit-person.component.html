@@ -247,7 +247,7 @@
                             required
                             maxlength="{{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}}"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                            tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены. Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
@@ -277,7 +277,7 @@
                                 required
                                 maxlength="{{252 - data.rec['SURNAME']?.length}}"
                                 [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символов. Пробелы в начале и в конце строки запрещены."
+                                tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символов. Пробелы в начале и в конце строки запрещены. Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
                                 containerClass="tooltip-error"
                                 container="body"
                                 [isDisabled]="!editMode"
