@@ -86,3 +86,8 @@ export const WARN_NO_ORGANIZATION: IMessage = {
     msg: 'вверх по иерархии нет организаций'
 };
 
+export const SEARCH_NOT_DONE: IMessage = {
+    title: 'Идет поиск!',
+    type: 'warning',
+    msg: 'Пожалуйста подождите.'
+};

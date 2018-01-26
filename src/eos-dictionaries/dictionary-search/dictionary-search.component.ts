@@ -5,6 +5,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { SEARCH_NOT_DONE } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -124,11 +125,7 @@ export class DictionarySearchComponent implements OnDestroy {
                         .then(() => this.searchDone = true);
                 }
             } else {
-                this._msgSrv.addNewMessage({
-                    title: 'Идет поиск!',
-                    type: 'warning',
-                    msg: 'Пожалуйста подождите.'
-                });
+                this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
             }
         }
     }
@@ -161,13 +158,10 @@ export class DictionarySearchComponent implements OnDestroy {
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then(() => {
                     this.searchDone = true;
+                    this.data.rec['CODE'] = '';
                 });
         } else {
-            this._msgSrv.addNewMessage({
-                title: 'Идет поиск!',
-                type: 'danger',
-                msg: 'Пожалуйста подождите.'
-            });
+            this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
         }
     }
 
