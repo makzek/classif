@@ -30,6 +30,8 @@ export class DictionarySearchComponent implements OnDestroy {
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
+    personeCode = '';
+    departmentCode = '';
     isOpenFull = false;
     searchDone = true; // Flag search is done, false while not received data
 
@@ -51,6 +53,9 @@ export class DictionarySearchComponent implements OnDestroy {
     public mode = 0;
 
     get noSearchData(): boolean {
+        if (this.personeCode || this.departmentCode) {
+            return false;
+        }
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
@@ -139,6 +144,12 @@ export class DictionarySearchComponent implements OnDestroy {
             this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
+        }
+        if (this.departmentCode && this.currTab === 'department') {
+            this.data.rec['CODE'] = this.departmentCode;
+        }
+        if (this.personeCode && this.currTab === 'person') {
+            this.data.rec['CODE'] = this.personeCode;
         }
 
         this.fSearchPop.hide();
