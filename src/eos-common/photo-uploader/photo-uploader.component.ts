@@ -4,6 +4,8 @@ import { FILE_IS_NOT_IMAGE, FILE_IS_BIG } from '../../eos-dictionaries/consts/me
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { IImage } from '../../eos-dictionaries/interfaces/image.interface';
 
+const maxFileSize = 102400; // 100kb
+
 @Component({
     selector: 'eos-photo-uploader',
     templateUrl: 'photo-uploader.component.html',
@@ -43,7 +45,7 @@ export class PhotoUploaderComponent implements OnInit {
             return;
         }
 
-        if (file.size > 1048576) {
+        if (file.size > maxFileSize) {
             this._msgSrv.addNewMessage(FILE_IS_BIG);
             return;
         }

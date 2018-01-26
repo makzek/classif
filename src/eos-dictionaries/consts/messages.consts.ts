@@ -95,7 +95,7 @@ export const FILE_IS_NOT_IMAGE: IMessage = {
 export const FILE_IS_BIG: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
-    msg: 'размер файла слишком велик! Выбирите файл размером не более 1Mb.'
+    msg: 'размер файла слишком велик! Выбирите файл размером не более 100Kb.'
 };
 
 export const UPLOAD_IMG_FALLED: IMessage = {
