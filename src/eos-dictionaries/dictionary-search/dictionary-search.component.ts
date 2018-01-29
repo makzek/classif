@@ -49,7 +49,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
-    date: Date = new Date();
+    date: Date;
 
     public mode = 0;
 
@@ -73,7 +73,7 @@ export class DictionarySearchComponent implements OnDestroy {
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService
     ) {
-        this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
+        this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
@@ -100,6 +100,10 @@ export class DictionarySearchComponent implements OnDestroy {
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
         });
+
+        if (_dictSrv.getFilterValue('date')) {
+            this.date = new Date(_dictSrv.getFilterValue('date'));
+        }
     }
 
     setTab(key: string) {
@@ -174,17 +178,8 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        if (date !== this.date) {
-            /*
-            this.date = date;
-            this._dictSrv.filter({ date: date })
-                .then(() => {
-                    console.log('filtered');
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-            */
+        if (!this.date || date.getTime() !== this.date.getTime()) {
+            this._dictSrv.setFilter({ date: date.setHours(0, 0, 0, 0) });
         }
     }
 
