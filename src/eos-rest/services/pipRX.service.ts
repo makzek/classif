@@ -137,10 +137,10 @@ export class PipRX extends PipeUtils {
         if (ids !== undefined) {
             const idss = PipeUtils.chunkIds(PipeUtils.distinctIDS(ids instanceof Array ? ids : [ids]));
             for (let i = 0; i < idss.length; i++) {
-                result.push([this._cfg.dataSrv, r._et, '/?ids=', idss[i], url].join(''));
+                result.push([this._cfg.dataUrl, r._et, '/?ids=', idss[i], url].join(''));
             }
         } else {
-            result.push(this._cfg.dataSrv + r._et + url.replace('&', '?'));
+            result.push(this._cfg.dataUrl + r._et + url.replace('&', '?'));
         }
 
         return result;
@@ -214,7 +214,7 @@ export class PipRX extends PipeUtils {
         const d = this.buildBatch(changeSet);
         // console.log(this._cfg.dataSrv + '$batch?' + vc, d, _options);
         return this.http
-            .post(this._cfg.dataSrv + '$batch?' + vc, d, _options)
+            .post(this._cfg.dataUrl + '$batch?' + vc, d, _options)
             .map((r) => {
                 // console.log('response', r);
                 const answer: any[] = [];

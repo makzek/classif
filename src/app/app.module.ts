@@ -69,7 +69,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
         TooltipModule.forRoot(),
-        EosRestModule.forRoot(APP_CONFIG.apiCfg),
+        EosRestModule.forRoot(APP_CONFIG),
         EosCommonModule,
         EosDictionariesModule,
     ],

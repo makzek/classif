@@ -12,7 +12,7 @@ import { DeliveryDetailComponent } from './clman/delivery-detail.component';
 import { DepartmentComponent } from './clman/department.component';
 import { UserRestComponent } from './clman/user.component';
 
-import { IApiCfg } from './interfaces/interfaces';
+import { IAppCfg } from 'eos-common/interfaces';
 import { ApiCfg } from './core/api-cfg';
 
 /* services */
@@ -57,11 +57,12 @@ export class EosRestModule {
         }
     }
 
-    static forRoot(config: IApiCfg): ModuleWithProviders {
+    static forRoot(config: IAppCfg): ModuleWithProviders {
+        const api = new ApiCfg(config);
         return {
             ngModule: EosRestModule,
             providers: [
-                { provide: ApiCfg, useValue: config }
+                { provide: ApiCfg, useValue: api }
             ]
         };
     }

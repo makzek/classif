@@ -1,7 +1,8 @@
-export const APP_CONFIG = {
-    apiCfg: {
-        authSrv: 'http://eos.ntrlab.ru/api/Services/ApiSession.asmx/',
-        dataSrv: 'http://eos.ntrlab.ru/api/OData.svc/',
-        metadataJs: ['http://eos.ntrlab.ru/api/libs/Delo/types.js']
-    }
+import { IAppCfg } from 'eos-common/interfaces';
+
+export const APP_CONFIG = <IAppCfg>{
+    webBaseUrl: 'http://www.eos.ru',
+    apiBaseUrl: 'http://localhost/api',
+    authApi: '/Services/ApiSession.asmx/',
+    dataApi: '/OData.svc/',
 };
