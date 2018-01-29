@@ -330,22 +330,25 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
-        if (this.dictionary.id === 'region') {
-            const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
-            const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
-            return this.dictionary.descriptor.search(_srchCriteries)
-                .then(nodes => {
-                    const findNode = nodes.find((el: EosDictionaryNode) => {
-                        return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase();
-                    });
-                    if (findNode) {
-                        return Promise.reject('Запись с этим именем уже существует!');
-                    } else {
-                        return this.dictionary.descriptor.updateRecord(node.data, data);
-                    }
-                })
-                .then(() => this._updateNode(node, data))
-                .catch((err) => this._errHandler(err));
+        if (node.dictionaryId === 'region') {
+            return this.openDictionary(node.dictionaryId)
+                .then(() => {
+                    const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                    const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, node);
+                    return this.dictionary.descriptor.search(_srchCriteries)
+                        .then(nodes => {
+                            const findNode = nodes.find((el: EosDictionaryNode) => {
+                                return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase();
+                            });
+                            if (findNode['DUE'] !== node.data.rec['DUE']) {
+                                return Promise.reject('Запись с этим именем уже существует!');
+                            } else {
+                                return this.dictionary.descriptor.updateRecord(node.data, data);
+                            }
+                        })
+                        .then(() => this._updateNode(node, data))
+                        .catch((err) => this._errHandler(err));
+                });
         } else {
             return this._updateNode(node, data);
         }
@@ -605,7 +608,7 @@ export class EosDictService {
         }
     }
 
-    public inclineFields(fields: FieldsDecline): Promise <any[]> {
+    public inclineFields(fields: FieldsDecline): Promise<any[]> {
         // console.log(`Method inclineFields: ${fields}`);
         return this.dictionary.descriptor.onPreparePrintInfo(fields)
             .catch((err) => this._errHandler(err));
