@@ -337,15 +337,25 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
-        const _criteries = _searchFields.map((fld) => {
+        if (selectedNode.dictionaryId === 'departments' || selectedNode.dictionaryId === 'rubricator') {
+            const _criteries = [];
             const _crit: any = {
-                [fld.foreignKey]: '"' + search + '"'
+                'CL_SEARCH.Contents': '"*' + search + '*"'
             };
             this._extendCritery(_crit, params, selectedNode);
-            return _crit;
-        });
-        return _criteries;
+            _criteries.push(_crit);
+            return _criteries;
+        } else {
+            const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
+            const _criteries = _searchFields.map((fld) => {
+                const _crit: any = {
+                    [fld.foreignKey]: '"' + search + '"'
+                };
+                this._extendCritery(_crit, params, selectedNode);
+                return _crit;
+            });
+            return _criteries;
+        }
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {

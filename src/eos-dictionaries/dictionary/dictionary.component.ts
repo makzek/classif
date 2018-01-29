@@ -160,6 +160,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered });
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
                     this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
+                    if (dictionary.root) {
+                        this.dictionaryName = dictionary.root.title;
+                        this.treeNodes = [dictionary.root];
+                    }
                 } else {
                     this.treeNodes = [];
                 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
+import 'rxjs/add/operator/takeUntil';
 import { E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
@@ -22,7 +22,6 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._openedNodeSubscription.unsubscribe();
     }
 
     onAction(action: E_RECORD_ACTIONS) {

@@ -1,6 +1,4 @@
 import { Component, OnChanges } from '@angular/core';
-import { EosDictService } from '../services/eos-dict.service';
-import { IDictionaryViewParameters } from '../interfaces/eos-dictionary.interfaces';
 
 import { BaseNodeInfoComponent } from './base-node-info';
 
@@ -15,9 +13,8 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
     bossName: string;
     department: string;
 
-    constructor(_dictSrv: EosDictService) {
+    constructor() {
         super();
-        _dictSrv.viewParameters$.subscribe((params: IDictionaryViewParameters) => this.update = params.updatingFields);
     }
 
     ngOnChanges() {
