@@ -44,6 +44,7 @@ export class EosDictService {
     private _dictMode$: BehaviorSubject<number>;
     private _dictionaries: EosDictionary[];
     private _listDictionary$: BehaviorSubject<EosDictionary>;
+    private filters: any = {};
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -171,6 +172,10 @@ export class EosDictService {
             return Promise.resolve([]);
         }
     }
+
+    getFilterValue(filterName: string): any {
+        return this.filters.hasOwnProperty(filterName) ? this.filters[filterName] : null;
+    }
     // May be need used always instead this._viewParameters$.next();
     // Because this.viewParametrs is public and may be changed from other classes need way for share state
     public shareViewParameters() {
@@ -209,6 +214,7 @@ export class EosDictService {
         this._treeNode$.next(null);
         this._dictionary$.next(null);
         this._listDictionary$.next(null);
+        this.filters = {};
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -470,13 +476,16 @@ export class EosDictService {
         return this._search();
     }
 
+    setFilter(filter: any) {
+        if (filter) {
+            Object.assign(this.filters, filter);
+            this._reloadList();
+        }
+    }
+
     public fullSearch(data: any, params: ISearchSettings) {
         this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
         return this._search(params.deleted);
-    }
-
-    filter(_params: any): Promise<any> {
-        return Promise.reject('not implemeted');
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
@@ -749,6 +758,9 @@ export class EosDictService {
         if (!this.viewParameters.showDeleted) {
             this._visibleListNodes = this._visibleListNodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
         }
+
+        this._visibleListNodes = this._visibleListNodes.filter((node) => node.filterBy(this.filters));
+
         this._fixCurrentPage();
 
         const page = this.paginationConfig;
