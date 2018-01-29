@@ -63,7 +63,6 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
         type: 'string',
-        pattern: /^\S{0,11}$/,
         length: 11,
         invalidMessage: 'Максимальная длина 11 символов. Пробелы в начале и в конце строки запрещены.'
     }, {
