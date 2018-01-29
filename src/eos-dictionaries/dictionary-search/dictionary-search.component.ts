@@ -159,6 +159,7 @@ export class DictionarySearchComponent implements OnDestroy {
                 .then(() => {
                     this.searchDone = true;
                     this.data.rec['CODE'] = '';
+                    this.data['srchMode'] = '';
                 });
         } else {
             this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
