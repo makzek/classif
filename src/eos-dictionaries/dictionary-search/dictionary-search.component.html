@@ -97,9 +97,9 @@
                 <div *ngIf="currTab === 'person'">
                     <div class="row">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
-                            <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
+                            <label for="CODE_PERSON" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['CODE']"
+                                [(ngModel)]="personeCode"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>
@@ -171,9 +171,9 @@
                 <div *ngIf="currTab === 'department'" class="row">
                     <div class="col-md-3 col-lg-3 col-xl-3">
                         <div class="form-group">
-                            <label for="code" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
-                            <input id="code" name="code" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['CODE']"
+                            <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
+                            <input id="CODE" name="CODE" type="text" class="form-control light"
+                                [(ngModel)]="departmentCode"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>

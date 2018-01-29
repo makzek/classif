@@ -97,10 +97,11 @@ export class NodeActionsComponent implements OnDestroy {
         let _show = false;
 
         if (this.dictionary && this._viewParams) {
-            _enabled = !this._viewParams.updating;
+            _enabled = !this._viewParams.updatingList;
             _show = this.dictionary.canDo(button.type);
             switch (button.type) {
                 case E_RECORD_ACTIONS.add:
+                    _enabled = !this._viewParams.updatingList;
                     break;
                 case E_RECORD_ACTIONS.moveUp:
                 case E_RECORD_ACTIONS.moveDown:
@@ -116,6 +117,7 @@ export class NodeActionsComponent implements OnDestroy {
                     _enabled = _enabled && this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
+                    _enabled = !this._viewParams.updatingList;
                     _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
