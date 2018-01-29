@@ -24,6 +24,25 @@ export class DictionarySearchComponent implements OnDestroy {
         cabinet: {},
         printInfo: {},
     };
+
+    departmentData = {
+        rec: {},
+        cabinet: {},
+        printInfo: {}
+    };
+
+    personeData = {
+        rec: {},
+        cabinet: {},
+        printInfo: {}
+    };
+
+    cabinetData = {
+        rec: {},
+        cabinet: {},
+        printInfo: {}
+    };
+
     public settings: ISearchSettings = {
         mode: SEARCH_MODES.totalDictionary,
         deleted: false
@@ -31,8 +50,6 @@ export class DictionarySearchComponent implements OnDestroy {
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
-    personeCode = '';
-    departmentCode = '';
     isOpenFull = false;
     searchDone = true; // Flag search is done, false while not received data
 
@@ -54,9 +71,6 @@ export class DictionarySearchComponent implements OnDestroy {
     public mode = 0;
 
     get noSearchData(): boolean {
-        if (this.personeCode || this.departmentCode) {
-            return false;
-        }
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
@@ -146,18 +160,20 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
-        if (this.departmentCode && this.currTab === 'department') {
-            this.data.rec['CODE'] = this.departmentCode;
-        }
-        if (this.personeCode && this.currTab === 'person') {
-            this.data.rec['CODE'] = this.personeCode;
-        }
 
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
             if (this.dictId === 'departments') {
                 this.data['srchMode'] = this.currTab;
+            }
+            switch (this.currTab) {
+                case 'department': this.data = this.departmentData;
+                    break;
+                case 'persone': this.data = this.personeData;
+                    break;
+                case 'cabinet': this.data = this.cabinetData;
+                    break;
             }
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then(() => {

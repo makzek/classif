@@ -99,7 +99,7 @@
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
                             <label for="CODE_PERSON" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE_PERSON" name="CODE_PERSON" type="text" class="form-control light"
-                                [(ngModel)]="personeCode"
+                                [(ngModel)]="personeData.rec['CODE']"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>
@@ -107,7 +107,7 @@
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="SURNAME" class="primary-text">Фамилия</label>
                             <input id="SURNAME" name="SURNAME" type="text" class="form-control light"
-                                [(ngModel)]="data['printInfo']['SURNAME']"
+                                [(ngModel)]="personeData['printInfo']['SURNAME']"
                                 placeholder="Фамилия"
                                 maxlength="64">
                         </div>
@@ -120,25 +120,42 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="NAME" class="primary-text">Имя</label>
                                     <input id="NAME" name="NAME" type="text" class="form-control light"
-                                        [(ngModel)]="data['printInfo']['NAME']"
+                                        [(ngModel)]="personeData['printInfo']['NAME']"
                                         placeholder="Имя"
                                         maxlength="64">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="PATRON" class="primary-text">Отчество</label>
                                     <input id="PATRON" name="PATRON" type="text" class="form-control light"
-                                        [(ngModel)]="data['printInfo']['PATRON']"
+                                        [(ngModel)]="personeData['printInfo']['PATRON']"
                                         placeholder="Отчество"
                                         maxlength="64">
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group col-md-9 col-lg-9 col-xl-9">
+                        <label for="DUTY" class="primary-text">{{fieldsDescription.rec['DUTY']?.title}}</label>
+                        <input id="DUTY" name="DUTY" type="text" class="form-control light"
+                            [(ngModel)]="personeData.rec['DUTY']"
+                            placeholder="{{fieldsDescription.rec['DUTY']?.title}}"
+                            maxlength="{{fieldsDescription.rec['DUTY']?.length}}">
+                    </div>
+
+                    <div class="form-group col-md-9 col-lg-9 col-xl-9">
+                        <label for="fullPosition" class="primary-text">{{fieldsDescription.rec['fullPosition']?.title}}</label>
+                        <input id="fullPosition" name="fullPosition" type="text" class="form-control light"
+                            [(ngModel)]="data.rec['fullPosition']"
+                            placeholder="{{personeData.rec['fullPosition']?.title}}"
+                            maxlength="{{personeData.rec['fullPosition']?.length}}">
+                    </div>
+
                     <div class="row no-top-margin">
                         <div class="form-group col-md-3 col-lg-3 col-xl-3">
                             <label for="PHONE" class="primary-text">{{fieldsDescription.rec['PHONE']?.title}}</label>
                             <input id="PHONE" name="PHONE" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['PHONE']"
+                                [(ngModel)]="personeData.rec['PHONE']"
                                 placeholder="{{fieldsDescription.rec['PHONE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['PHONE']?.length}}">
                         </div>
@@ -146,12 +163,21 @@
                         <div class="form-group col-md-9 col-lg-9 col-xl-9">
                             <label for="E_MAIL" class="primary-text">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
                             <input id="E_MAIL" name="E_MAIL" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['E_MAIL']"
+                                [(ngModel)]="personeData.rec['E_MAIL']"
                                 placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}"
                                 maxlength="{{fieldsDescription.rec['E_MAIL']?.length}}">
                         </div>
+
+                        <div class="form-group col-md-9 col-lg-9 col-xl-9">
+                            <label for="PERSON_NOTE" class="primary-text">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                            <input id="PERSON_NOTE" name="PERSON_NOTE" type="text" class="form-control light"
+                                [(ngModel)]="personeData.rec['NOTE']"
+                                placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['NOTE']?.length}}" readonly>
+                        </div>
                     </div>
                 </div>
+
                 <div *ngIf="currTab === 'cabinet'">
                     <div class="form-group">
                         <label for="titleRoom" class="primary-text">{{fieldsDescription.rec['titleRoom']?.title}}</label>
@@ -173,14 +199,14 @@
                         <div class="form-group">
                             <label for="CODE" class="primary-text">{{fieldsDescription.rec['CODE']?.title}}</label>
                             <input id="CODE" name="CODE" type="text" class="form-control light"
-                                [(ngModel)]="departmentCode"
+                                [(ngModel)]="cabinetData.rec['CODE']"
                                 placeholder="{{fieldsDescription.rec['CODE']?.title}}"
                                 maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                         </div>
                         <div class="form-group">
                             <label for="indexDep" class="primary-text">{{fieldsDescription.rec['indexDep']?.title}}</label>
                             <input id="indexDep" name="indexDepcode" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['DEPARTMENT_INDEX']"
+                                [(ngModel)]="cabinetData.rec['DEPARTMENT_INDEX']"
                                 placeholder="{{fieldsDescription.rec['indexDep']?.title}}"
                                 maxlength="{{fieldsDescription.rec['indexDep']?.length}}">
                         </div>
@@ -189,16 +215,23 @@
                         <div class="form-group">
                             <label for="title">{{fieldsDescription.rec['title']?.title}}</label>
                             <input id="title" name="title" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['CLASSIF_NAME']"
+                                [(ngModel)]="cabinetData.rec['CLASSIF_NAME']"
                                 placeholder="{{fieldsDescription.rec['title']?.title}}"
                                 maxlength="{{fieldsDescription.rec['title']?.length}}">
                         </div>
                         <div class="form-group">
                             <label for="fullTitle" class="primary-text">{{fieldsDescription.rec['fullTitle']?.title}}</label>
                             <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
-                                [(ngModel)]="data.rec['FULLNAME']"
+                                [(ngModel)]="cabinetData.rec['FULLNAME']"
                                 placeholder="{{fieldsDescription.rec['fullTitle']?.title}}"
                                 maxlength="{{fieldsDescription.rec['fullTitle']?.length}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="DEPARTMENT_NOTE" class="primary-text">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                            <input id="DEPARTMENT_NOTE" name="DEPARTMENT_NOTE" type="text" class="form-control light"
+                                [(ngModel)]="cabinetData.rec['NOTE']"
+                                placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['NOTE']?.length}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -221,7 +254,7 @@
                             placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
                             maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
                     </div>
-                    <!--
+
                     <div class="form-group">
                         <label for="fullTitle" class="primary-text">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
                         <input id="fullTitle" name="fullTitle" type="text" class="form-control light"
@@ -235,9 +268,9 @@
                         <input id="note" name="note" type="text" class="form-control light"
                             [(ngModel)]="data.rec['NOTE']"
                             placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
-                            maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
+                            maxlength="{{fieldsDescription.rec['NOTE']?.length}}" readonly>
                     </div>
-                -->
+
                 </div>
             </div>
             <div [hidden]="dictId !== 'region'"  *ngIf="data.rec" class="full-search-form">
