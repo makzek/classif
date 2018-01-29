@@ -5,6 +5,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { SEARCH_NOT_DONE } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -30,6 +31,8 @@ export class DictionarySearchComponent implements OnDestroy {
     currTab: string;
     modes: IRecordModeDescription[];
     loading = true;
+    personeCode = '';
+    departmentCode = '';
     isOpenFull = false;
     searchDone = true; // Flag search is done, false while not received data
 
@@ -51,6 +54,9 @@ export class DictionarySearchComponent implements OnDestroy {
     public mode = 0;
 
     get noSearchData(): boolean {
+        if (this.personeCode || this.departmentCode) {
+            return false;
+        }
         for (const _dict in this.data) {
             if (this.data[_dict]) {
                 for (const _field in this.data[_dict]) {
@@ -119,11 +125,7 @@ export class DictionarySearchComponent implements OnDestroy {
                         .then(() => this.searchDone = true);
                 }
             } else {
-                this._msgSrv.addNewMessage({
-                    title: 'Идет поиск!',
-                    type: 'warning',
-                    msg: 'Пожалуйста подождите.'
-                });
+                this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
             }
         }
     }
@@ -140,6 +142,12 @@ export class DictionarySearchComponent implements OnDestroy {
         } else if (this.mode === 2) {
             this.settings.mode = SEARCH_MODES.currentAndSubbranch;
         }
+        if (this.departmentCode && this.currTab === 'department') {
+            this.data.rec['CODE'] = this.departmentCode;
+        }
+        if (this.personeCode && this.currTab === 'person') {
+            this.data.rec['CODE'] = this.personeCode;
+        }
 
         this.fSearchPop.hide();
         if (this.searchDone) {
@@ -150,13 +158,10 @@ export class DictionarySearchComponent implements OnDestroy {
             this._dictSrv.fullSearch(this.data, this.settings)
                 .then(() => {
                     this.searchDone = true;
+                    this.data.rec['CODE'] = '';
                 });
         } else {
-            this._msgSrv.addNewMessage({
-                title: 'Идет поиск!',
-                type: 'danger',
-                msg: 'Пожалуйста подождите.'
-            });
+            this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
         }
     }
 
