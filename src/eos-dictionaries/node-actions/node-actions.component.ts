@@ -117,7 +117,6 @@ export class NodeActionsComponent implements OnDestroy {
                     _enabled = _enabled && this._nodeSelected;
                     break;
                 case E_RECORD_ACTIONS.showDeleted:
-                    _enabled = !this._viewParams.updatingList;
                     _active = this._viewParams.showDeleted;
                     break;
                 case E_RECORD_ACTIONS.userOrder:
