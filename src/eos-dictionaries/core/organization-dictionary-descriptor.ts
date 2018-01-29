@@ -25,6 +25,7 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
                             contact['ISN_CONTACT'] = _isn;
                             this.apiSrv.entityHelper.prepareAdded<CONTACT>(contact, 'CONTACT');
                             contacts.push(contact);
+                            // Object.assign(contact, _contact);
                             results.push({
                                 success: true,
                                 record: contact
@@ -59,65 +60,62 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
      * больше чтобы понять как минимизировать АПИ. (c) В. Люкевич
      */
     private createNewContactsSEV(newContacts: any[], createResp: any[]): Promise<IRecordOperationResult[]> {
-        console.log('creating sev for contacts', newContacts, createResp);
+        const contactsWithSev = [];
+        // console.log('createNewContactsSEV', newContacts, createResp);
         createResp.forEach((newIsn) => {
             const contact = newContacts
-                .find((_contact) => _contact.SEV && _contact['ISN_CONTACT'] === newIsn.FixedISN);
+                .find((_contact) => _contact.SEV && _contact['ISN_CONTACT'] === newIsn.TempID);
             if (contact) {
-                contact.ISN_CONTACT = newIsn.FixedISN;
+                contact.ISN_CONTACT = newIsn.ID;
+                contactsWithSev.push(contact);
             }
         });
 
-        const pReadSev = newContacts.filter((contact) => contact && contact.SEV && contact['ISN_CONTACT'] > 0)
-            .map((contact) => {
-                console.log('read SEV for contact', contact);
-                return this.apiSrv.read<SEV_ASSOCIATION>({
-                    SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(contact['ISN_CONTACT'], 'CONTACT')]
-                })
-                    .then(([sev]) => {
-                        const result = {
-                            record: contact,
-                            exist: false
-                        };
-                        if (sev) {
-                            result.exist = true;
+        // const contactsWithSev = newContacts.filter((contact) => contact && contact.SEV && contact['ISN_CONTACT'] > 0);
+
+        const req = contactsWithSev.map((contact) => SevIndexHelper.CompositePrimaryKey(contact['ISN_CONTACT'], 'CONTACT'));
+
+        // console.log('checking sevs', contactsWithSev, req);
+
+        if (req.length) {
+            return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: req })
+                .then((sevs) => {
+                    // console.log('found sevs', sevs);
+                    const changes = [];
+                    const results: IRecordOperationResult[] = [];
+
+                    contactsWithSev.forEach((contact) => {
+                        const existSev = sevs.find((sev) =>
+                            sev.OBJECT_ID === SevIndexHelper.CompositePrimaryKey(contact['ISN_CONTACT'], 'CONTACT'));
+                        if (existSev) {
+                            results.push(<IRecordOperationResult>{
+                                record: contact,
+                                success: false,
+                                error: new RestError({
+                                    isLogicException: true,
+                                    message: 'Индекс СЭВ создан ранее!'
+                                })
+                            });
+                        } else {
+                            const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
+                            // console.log('new sev', sevRec);
+                            sevRec.GLOBAL_ID = contact['SEV'];
+                            if (SevIndexHelper.PrepareForSave(sevRec, Object.assign(contact, { 'ISN_LCLASSIF': contact.ISN_CONTACT }))) {
+                                changes.push(sevRec);
+                            }
                         }
-                        return result;
                     });
 
-            });
-
-        return Promise.all(pReadSev)
-            .then((readResults) => {
-                const changes = [];
-                const results: IRecordOperationResult[] = [];
-
-                readResults.forEach((result) => {
-                    if (result.exist) {
-                        results.push(<IRecordOperationResult>{
-                            record: result.record,
-                            success: false,
-                            error: new RestError({
-                                isLogicException: true,
-                                message: 'Индекс СЭВ создан ранее!'
-                            })
-                        });
+                    if (changes.length) {
+                        // console.log('SEV changes', changes);
+                        return this.apiSrv.batch(this.apiSrv.changeList(changes), '')
+                            .then(() => results);
                     } else {
-                        const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
-                        sevRec.GLOBAL_ID = result.record['GLOBAL_ID'];
-                        if (SevIndexHelper.PrepareForSave(sevRec, result.record)) {
-                            changes.push(sevRec);
-                        }
+                        return results;
                     }
                 });
-
-                if (changes.length) {
-                    console.log('SEV changes', changes);
-                    return this.apiSrv.batch(changes, '')
-                        .then(() => results);
-                } else {
-                    return results;
-                }
-            });
+        } else {
+            return Promise.resolve([]);
+        }
     }
 }
