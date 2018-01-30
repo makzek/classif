@@ -1,13 +1,12 @@
-import { IApiCfg, ITypeDef } from '../interfaces/interfaces';
-// TODO: надо перенести в конфиг, а не задавать жестко
-import { commonMergeMeta } from '../common/initMetaData';
+import { ITypeDef } from 'eos-rest/interfaces/interfaces';
+import { ApiCfg } from 'eos-rest/core/api-cfg';
+// import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 
 export class Metadata {
 
-    constructor(private _cfg: IApiCfg) {
-        // TODO: надо из конфига получить функции выполняющие заполнение метаданных
-        _cfg.metaMergeFuncList = [commonMergeMeta];
-      }
+    constructor(private _cfg: ApiCfg) {
+        // _cfg.metaMergeFuncList = [commonMergeMeta];
+    }
 
     public init(): Promise<any> {
         /* console.log('init', this._cfg.metadataJs); */

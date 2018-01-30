@@ -13,9 +13,12 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DragulaModule } from 'ng2-dragula';
 
-import { APP_CONFIG } from '../app/app.config';
+// import { APP_CONFIG } from 'app/app.config';
+// import { APP_CONFIG as APP_CONFIG_LOCAL } from 'app/app.config.local';
+// Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+
 import { AppRoutingModule } from '../app/app-routing.module';
-import { EosRestModule } from '../eos-rest/eos-rest.module';
+// import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
 
 /* components */
@@ -92,9 +95,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         ReactiveFormsModule,
         HttpModule,
         AppRoutingModule,
-        /* AppModule, */
         SortableModule.forRoot(),
-        EosRestModule.forRoot(APP_CONFIG.apiCfg),
+//        EosRestModule.forRoot(APP_CONFIG),
         EosCommonModule,
         DatepickerModule.forRoot(),
         TooltipModule.forRoot(),
