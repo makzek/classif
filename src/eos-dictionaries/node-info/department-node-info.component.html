@@ -18,7 +18,7 @@
                     <span *ngIf="nodeDataFull['printInfo'] && nodeDataFull['printInfo']['NAME'] && nodeDataFull['printInfo']['SURNAME'] && nodeDataFull['printInfo']['PATRON'];then fullName else shortName"></span>
                     <ng-template #fullName>
                         <div class="short-data-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
+                            <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
                             <span class="short-info l-font">
                                 <span>{{nodeDataFull['printInfo']['SURNAME']}}</span>
                                 <span>{{nodeDataFull['printInfo']['NAME']}}</span>
@@ -28,7 +28,7 @@
                     </ng-template>
                     <ng-template #shortName>
                         <div class="flex-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
+                            <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
                             <span class="short-info l-font">{{nodeDataFull.rec['SURNAME']}}</span>
                         </div>
                     </ng-template>
