@@ -9,8 +9,9 @@ import {
     IDictionaryViewParameters, ISearchSettings, IOrderBy,
     IDictionaryDescriptor, IFieldView, SEARCH_MODES, IRecordOperationResult
 } from 'eos-dictionaries/interfaces';
-import { FieldsDecline } from '../interfaces/fields-decline.inerface';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.interfaces';
+import { IImage } from 'eos-dictionaries/interfaces/image.interface';
 import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-pagination.consts';
 
 import { WARN_SEARCH_NOTFOUND } from '../consts/messages.consts';
@@ -330,22 +331,25 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
-        if (this.dictionary.id === 'region') {
-            const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
-            const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
-            return this.dictionary.descriptor.search(_srchCriteries)
-                .then(nodes => {
-                    const findNode = nodes.find((el: EosDictionaryNode) => {
-                        return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase();
-                    });
-                    if (findNode) {
-                        return Promise.reject('Запись с этим именем уже существует!');
-                    } else {
-                        return this.dictionary.descriptor.updateRecord(node.data, data);
-                    }
-                })
-                .then(() => this._updateNode(node, data))
-                .catch((err) => this._errHandler(err));
+        if (node.dictionaryId === 'region') {
+            return this.openDictionary(node.dictionaryId)
+                .then(() => {
+                    const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
+                    const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, node);
+                    return this.dictionary.descriptor.search(_srchCriteries)
+                        .then(nodes => {
+                            const findNode = nodes.find((el: EosDictionaryNode) => {
+                                return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase();
+                            });
+                            if (findNode['DUE'] !== node.data.rec['DUE']) {
+                                return Promise.reject('Запись с этим именем уже существует!');
+                            } else {
+                                return this.dictionary.descriptor.updateRecord(node.data, data);
+                            }
+                        })
+                        .then(() => this._updateNode(node, data))
+                        .catch((err) => this._errHandler(err));
+                });
         } else {
             return this._updateNode(node, data);
         }
@@ -605,7 +609,12 @@ export class EosDictService {
         }
     }
 
-    public inclineFields(fields: FieldsDecline): Promise <any[]> {
+    public uploadImg(img: IImage): Promise<number> {
+        return this.dictionary.descriptor.addBlob(img.extension, img.data)
+            .catch(err => this._errHandler(err));
+    }
+
+    public inclineFields(fields: FieldsDecline): Promise<any[]> {
         // console.log(`Method inclineFields: ${fields}`);
         return this.dictionary.descriptor.onPreparePrintInfo(fields)
             .catch((err) => this._errHandler(err));

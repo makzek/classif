@@ -1,6 +1,6 @@
 <div class="eos-photo-uploader">
     <input class="input-file" type="file" #fileInput name="file" id="file" [multiple]="multiple" (change)="chooseFile($event)" placeholder="Upload file"
-    accept=".jpg, .png">
+    accept="image/jpeg,image/png">
     <label for="file" class="input-file-label">
         <span *ngIf="!disableEdit" class="eos-icon eos-icon-edit-blue small"></span>
     </label>

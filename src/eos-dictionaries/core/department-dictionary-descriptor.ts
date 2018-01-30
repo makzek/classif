@@ -4,13 +4,14 @@ import {
     IRecordModeDescription,
     IDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
-import { FieldsDecline } from '../interfaces/fields-decline.inerface';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
+import { IImage } from 'eos-dictionaries/interfaces/image.interface';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -157,14 +158,23 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
             });
 
-        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets])
-            .then(([user, org, cabinet, printInfo, cabinets]) => {
+        const pPhotoImg = (rec['ISN_PHOTO']) ? this.apiSrv.read({ DELO_BLOB: rec['ISN_PHOTO'] }) : Promise.resolve([]);
+
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets, pPhotoImg])
+            .then(([user, org, cabinet, printInfo, cabinets, photoImgs]) => {
+                const img = (photoImgs[0]) ? <IImage> {
+                    data: photoImgs[0].CONTENTS,
+                    extension: photoImgs[0].EXTENSION,
+                    url: `url(data:image/${photoImgs[0].EXTENSION};base64,${photoImgs[0].CONTENTS})`
+                } : null;
+
                 return {
                     user: user,
                     organization: org,
                     cabinet: cabinet,
                     cabinets: cabinets,
-                    printInfo: printInfo
+                    printInfo: printInfo,
+                    photo: img
                 };
             });
     }

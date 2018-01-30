@@ -2,10 +2,10 @@ import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
-import { FieldsDecline } from '../interfaces/fields-decline.inerface';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
-import { ITypeDef, IEnt } from 'eos-rest';
+import { ITypeDef, IEnt, DELO_BLOB } from 'eos-rest';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
@@ -54,6 +54,24 @@ export abstract class AbstractDictionaryDescriptor {
     abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
     abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
+
+    addBlob(ext: string, blobData: string): Promise<string | number> {
+        const delo_blob = this.apiSrv.entityHelper.prepareAdded<DELO_BLOB>({
+            ISN_BLOB: this.apiSrv.sequenceMap.GetTempISN(),
+            EXTENSION: ext
+        }, 'DELO_BLOB');
+        const chl = this.apiSrv.changeList([delo_blob]);
+        const content = {
+            isn_target_blob: delo_blob.ISN_BLOB,
+            data: blobData
+        };
+
+        PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
+
+        return this.apiSrv.batch(chl, '')
+            .then((ids) => (ids[0] ? ids[0] : null));
+
+    }
 
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
@@ -187,7 +205,7 @@ export abstract class AbstractDictionaryDescriptor {
     updateRecord(originalData: any, updates: any): Promise<any[]> {
         const changeData = [];
         Object.keys(originalData).forEach((key) => {
-            if (originalData[key]) {
+            if (key !== 'photo' && originalData[key]) {
                 if (key === 'sev') {
                     if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
                         changeData.push(Object.assign({}, originalData[key], updates[key]));

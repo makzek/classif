@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-// import { Http, Headers, RequestOptions } from '@angular/http';
+import { EosMessageService } from '../services/eos-message.service';
+import { FILE_IS_NOT_IMAGE, FILE_IS_BIG } from '../../eos-dictionaries/consts/messages.consts';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { IImage } from '../../eos-dictionaries/interfaces/image.interface';
 
+const maxFileSize = 102400; // 100kb
 
 @Component({
     selector: 'eos-photo-uploader',
@@ -9,7 +12,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class PhotoUploaderComponent implements OnInit {
     @Input() disableEdit = false;
-    @Output() endUploading: EventEmitter<any> = new EventEmitter<any>();
+    @Output() endUploading: EventEmitter<IImage> = new EventEmitter<IImage>();
 
     @ViewChild('fileInput') inputEl: ElementRef;
 
@@ -27,6 +30,7 @@ export class PhotoUploaderComponent implements OnInit {
 
     @ViewChild('confirmModal') private confirmModalRef: ModalDirective;
 
+    constructor(private _msgSrv: EosMessageService) { }
 
     ngOnInit() {
         this.nativeInputEl = this.inputEl.nativeElement;
@@ -35,44 +39,42 @@ export class PhotoUploaderComponent implements OnInit {
     chooseFile(e) {
         // this.fileCount = this.nativeInputEl.files.length;
         // const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-        const file = e.target.files[0];
+        const file: File = e.target.files[0];
+        if (file) {
+            if (file.type.indexOf('image') === -1) {
+                this._msgSrv.addNewMessage(FILE_IS_NOT_IMAGE);
+                return;
+            }
 
-        const reader = new FileReader();
+            if (file.size > maxFileSize) {
+                this._msgSrv.addNewMessage(FILE_IS_BIG);
+                return;
+            }
 
-        reader.onload = this._handleReaderLoaded.bind(this);
-        reader.readAsDataURL(file);
+            const reader = new FileReader();
 
-        this.confirmModalRef.show();
+            reader.onload = this._handleReaderLoaded.bind(this);
+            reader.readAsDataURL(file);
+
+            this.confirmModalRef.show();
+        }
     }
 
     upload() {
         this.confirmModalRef.hide();
-        // const formData = new FormData();
-        /* if (this.fileCount > 0) {
-             for (let i = 0; i < this.fileCount; i++) {
-                 formData.append('file[]', this.nativeInputEl.files.item(i));
-             }*/
+        const fileStr = String(this.file);
+        const pos = fileStr.indexOf(',') + 1;
+        let data = fileStr.substr(pos);
+        data = data.replace(/\s/g, '+');
+        // расширение файла
+        const pos2 = fileStr.indexOf('/');
+        const pos3 = fileStr.indexOf(';');
+        this.endUploading.emit({
+            data: data,
+            extension: fileStr.substring(pos2 + 1, pos3).toUpperCase(),
+            url: `url(${this.file})`
+        });
 
-        /* DON'T USE THIS COMPONENT FOR SANDING PHOTO!!! */
-
-        /*formData.append('file', this.file);
-        this._http
-            .post(this.contactUrl, formData).subscribe(
-            data => {
-                // tslint:disable-next-line:no-debugger
-                debugger;
-                console.log('success');
-                this.uploading = false;
-                this.endUploading.emit(data);
-            },
-            error => {
-                console.log(error);
-                this.uploading = false;
-                this.endUploading.emit(null);
-            })*/
-        // }
-
-        this.endUploading.emit(this.file);
         this.nativeInputEl.value = null;
     }
 
