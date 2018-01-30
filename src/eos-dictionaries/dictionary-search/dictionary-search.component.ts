@@ -25,19 +25,19 @@ export class DictionarySearchComponent implements OnDestroy {
         printInfo: {},
     };
 
-    departmentData = {
+    department = {
         rec: {},
         cabinet: {},
         printInfo: {}
     };
 
-    personeData = {
+    person = {
         rec: {},
         cabinet: {},
         printInfo: {}
     };
 
-    cabinetData = {
+    cabinet = {
         rec: {},
         cabinet: {},
         printInfo: {}
@@ -71,10 +71,10 @@ export class DictionarySearchComponent implements OnDestroy {
     public mode = 0;
 
     get noSearchData(): boolean {
-        for (const _dict in this.data) {
-            if (this.data[_dict]) {
-                for (const _field in this.data[_dict]) {
-                    if (this.data[_dict][_field] && this.data[_dict][_field].trim() !== '') {
+        for (const _dict in this[this.currTab || 'data']) {
+            if (this[this.currTab || 'data'][_dict]) {
+                for (const _field in this[this.currTab || 'data'][_dict]) {
+                    if (this[this.currTab || 'data'][_dict][_field] && this[this.currTab || 'data'][_dict][_field].trim() !== '') {
                         return false;
                     }
                 }
@@ -165,21 +165,15 @@ export class DictionarySearchComponent implements OnDestroy {
         if (this.searchDone) {
             this.searchDone = false;
             if (this.dictId === 'departments') {
-                this.data['srchMode'] = this.currTab;
+                this[this.currTab]['srchMode'] = this.currTab;
             }
-            switch (this.currTab) {
-                case 'department': this.data = this.departmentData;
-                    break;
-                case 'persone': this.data = this.personeData;
-                    break;
-                case 'cabinet': this.data = this.cabinetData;
-                    break;
+            if (this.currTab === 'person') {
+                this.person.rec['PHONE_LOCAL'] = this.person.rec['PHONE'];
             }
-            this._dictSrv.fullSearch(this.data, this.settings)
+            this._dictSrv.fullSearch(this[this.currTab || 'data'], this.settings)
                 .then(() => {
                     this.searchDone = true;
-                    this.data.rec['CODE'] = '';
-                    this.data['srchMode'] = '';
+                    this[this.currTab]['srchMode'] = '';
                 });
         } else {
             this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
@@ -187,9 +181,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     clearForm() {
-        for (const _field in this.data) {
-            if (this.data[_field]) {
-                this.data[_field] = {};
+        for (const _field in this[this.currTab || 'data']) {
+            if (this[this.currTab || 'data'][_field]) {
+                this[this.currTab || 'data'][_field] = {};
             }
         }
     }
