@@ -18,6 +18,8 @@ import { EntityHelper } from '../core/entity-helper';
 import { PipeUtils } from '../core/pipe-utils';
 import { Cache } from '../core/cache';
 import { RestError } from '../core/rest-error';
+// import { commonMergeMeta } from 'eos-rest/common/initMetaData';
+
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -34,7 +36,14 @@ export class PipRX extends PipeUtils {
     constructor(private http: Http, @Optional() config: ApiCfg) {
         super();
 
-        this._cfg = new ApiCfg(config);
+        console.log('source config', config);
+
+        this._cfg = config;
+        // this._cfg.dataApiUrl = config.apiBaseUrl + config.dataApi;
+        // this._cfg.authApiUrl = config.apiBaseUrl + config.authApi;
+        //  this._cfg.metaMergeFuncList = [commonMergeMeta];
+
+        console.log('generated config', this._cfg);
 
         this._metadata = new Metadata(this._cfg);
         this._metadata.init();
@@ -181,16 +190,16 @@ export class PipRX extends PipeUtils {
                     }
                 })
                 .catch(this.httpErrorHandler);
-                /*
-                (err, caught) => {
-                    if (err instanceof RestError) {
-                        return Observable.throw(err);
-                    } else {
-                        return Observable.throw(new RestError({ http: err, _request: req }));
-                    }
-                    // return [];
-                });
-                */
+            /*
+            (err, caught) => {
+                if (err instanceof RestError) {
+                    return Observable.throw(err);
+                } else {
+                    return Observable.throw(new RestError({ http: err, _request: req }));
+                }
+                // return [];
+            });
+            */
         });
 
         return rl.reduce((acc: T[], v: T[]) => {

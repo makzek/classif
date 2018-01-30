@@ -13,6 +13,7 @@ import { EosErrorHandler } from './core/error-handler';
 import { APP_CONFIG } from './app.config';
 import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
 Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+console.log('root config', APP_CONFIG);
 
 import { AppRoutingModule } from './app-routing.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
