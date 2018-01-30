@@ -58,11 +58,10 @@ export class EosRestModule {
     }
 
     static forRoot(config: IAppCfg): ModuleWithProviders {
-        const api = new ApiCfg(config);
         return {
             ngModule: EosRestModule,
             providers: [
-                { provide: ApiCfg, useValue: api }
+                { provide: ApiCfg, useValue: config }
             ]
         };
     }
