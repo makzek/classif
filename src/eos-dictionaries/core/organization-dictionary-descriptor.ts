@@ -3,6 +3,7 @@ import { IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 import { CONTACT, ORGANIZ_CL, SEV_ASSOCIATION } from 'eos-rest';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
+import { PipRX } from 'eos-rest/services/pipRX.service';
 
 export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
 
@@ -78,7 +79,7 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
         // console.log('checking sevs', contactsWithSev, req);
 
         if (req.length) {
-            return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: req })
+            return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: PipRX.criteries({ OBJECT_NAME: 'CONTACT' }) })
                 .then((sevs) => {
                     // console.log('found sevs', sevs);
                     const changes = [];
@@ -86,7 +87,7 @@ export class OrganizationDictionaryDescriptor extends DictionaryDescriptor {
 
                     contactsWithSev.forEach((contact) => {
                         const existSev = sevs.find((sev) =>
-                            sev.OBJECT_ID === SevIndexHelper.CompositePrimaryKey(contact['ISN_CONTACT'], 'CONTACT'));
+                            sev.GLOBAL_ID === contact['SEV']);
                         if (existSev) {
                             results.push(<IRecordOperationResult>{
                                 record: contact,
