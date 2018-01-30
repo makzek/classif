@@ -10,7 +10,7 @@ export class ApiCfg implements IAppCfg {
     authApi = '/Services/ApiSession.asmx/';
     dataApi = '/OData.svc/';
 
-    metaMergeFuncList?: any[] = []; // ((meta: any) => void)[]  = [];
+    metaMergeFuncList?: any[] = [];
     authApiUrl?: string = this.apiBaseUrl + this.authApi;
     dataApiUrl?: string = this.dataApiUrl + this.dataApi;
 }
