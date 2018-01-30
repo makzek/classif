@@ -18,6 +18,8 @@ import { EntityHelper } from '../core/entity-helper';
 import { PipeUtils } from '../core/pipe-utils';
 import { Cache } from '../core/cache';
 import { RestError } from '../core/rest-error';
+import { commonMergeMeta } from 'eos-rest/common/initMetaData';
+
 
 @Injectable()
 export class PipRX extends PipeUtils {
@@ -33,9 +35,7 @@ export class PipRX extends PipeUtils {
 
     constructor(private http: Http, @Optional() config: ApiCfg) {
         super();
-
-        this._cfg = new ApiCfg(config);
-
+        this.initConfig(config);
         this._metadata = new Metadata(this._cfg);
         this._metadata.init();
         this.entityHelper = new EntityHelper(this._metadata);
@@ -63,6 +63,20 @@ export class PipRX extends PipeUtils {
             requestUri: name + '?' + ar.join('&'),
             method: method
         });
+    }
+
+    // todo: move config in common service
+
+    initConfig(config: any) {
+        this._cfg = Object.assign({
+            webBaseUrl: 'http://www.eos.ru',
+            apiBaseUrl: 'http://localhost/api',
+            authApi: '/Services/ApiSession.asmx/',
+            dataApi: '/OData.svc/',
+        }, config);
+        this._cfg.dataApiUrl = this._cfg.apiBaseUrl + this._cfg.dataApi;
+        this._cfg.authApiUrl = this._cfg.apiBaseUrl + this._cfg.authApi;
+        this._cfg.metaMergeFuncList = [commonMergeMeta];
     }
 
     getConfig(): ApiCfg {
@@ -181,16 +195,16 @@ export class PipRX extends PipeUtils {
                     }
                 })
                 .catch(this.httpErrorHandler);
-                /*
-                (err, caught) => {
-                    if (err instanceof RestError) {
-                        return Observable.throw(err);
-                    } else {
-                        return Observable.throw(new RestError({ http: err, _request: req }));
-                    }
-                    // return [];
-                });
-                */
+            /*
+            (err, caught) => {
+                if (err instanceof RestError) {
+                    return Observable.throw(err);
+                } else {
+                    return Observable.throw(new RestError({ http: err, _request: req }));
+                }
+                // return [];
+            });
+            */
         });
 
         return rl.reduce((acc: T[], v: T[]) => {

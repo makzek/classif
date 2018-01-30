@@ -277,8 +277,7 @@ export class EosDeskService {
         const defaults = this._desksList[0].references;
         const s = '/spravochniki/' + blockId;
         const result = defaults.find(it => it.url === s);
-        // TODO: clone?
-        return result;
+        return Object.assign({}, result);
     }
 
     /**

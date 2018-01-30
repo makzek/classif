@@ -13,9 +13,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DragulaModule } from 'ng2-dragula';
 
-// import { APP_CONFIG } from 'app/app.config';
-// import { APP_CONFIG as APP_CONFIG_LOCAL } from 'app/app.config.local';
-// Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+// import { APP_CONFIG } from 'app/app.config.local';
+// console.log('dict config', APP_CONFIG);
 
 import { AppRoutingModule } from '../app/app-routing.module';
 // import { EosRestModule } from '../eos-rest/eos-rest.module';
