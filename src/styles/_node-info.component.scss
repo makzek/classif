@@ -11,10 +11,46 @@
     display: flex;
     flex-direction: column;
 
-    .opened-node-wrapper {
-        width: $dictionary-block-width;
-        height: calc(100vh - 108px);
-        overflow-y: auto;
+    .head-wrapper {
+        display: flex;
+        width: 300px;
+        max-width: 300px;
+
+        .current-image {
+            min-height: 100px;
+            min-width: 100px;
+            height: 100px;
+            width: 100px;
+            display: inline-block;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            margin: 20px;
+        }
+
+        .info {
+            width: 100%;
+            max-width: 160px;
+            padding: 20px 20px 20px 0;
+            display: flex;
+            align-items: center;
+
+
+            span {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            div {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     .short-info {
@@ -89,21 +125,6 @@
         &:focus {
             outline: 0;
         }
-    }
-
-    .current-image {
-        min-height: 100px;
-        min-width: 100px;
-        height: 100px;
-        width: 100px;
-        display: inline-block;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        margin: 20px;
     }
 
     .flex-wrapper {
