@@ -74,8 +74,8 @@ export class PipRX extends PipeUtils {
             authApi: '/Services/ApiSession.asmx/',
             dataApi: '/OData.svc/',
         }, config);
-        this._cfg.dataApiUrl = config.apiBaseUrl + config.dataApi;
-        this._cfg.authApiUrl = config.apiBaseUrl + config.authApi;
+        this._cfg.dataApiUrl = this._cfg.apiBaseUrl + this._cfg.dataApi;
+        this._cfg.authApiUrl = this._cfg.apiBaseUrl + this._cfg.authApi;
         this._cfg.metaMergeFuncList = [commonMergeMeta];
     }
 
