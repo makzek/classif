@@ -113,5 +113,5 @@ export const UPLOAD_IMG_FALLED: IMessage = {
 export const WARN_ELEMENT_PROTECTED: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',
-    msg: 'элемент "{{elem}}" является защищенным! Удаление не возможно.'
+    msg: 'элемент "{{elem}}" является защищенным! Удаление невозможно.'
 };
