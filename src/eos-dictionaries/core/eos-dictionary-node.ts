@@ -132,6 +132,29 @@ export class EosDictionaryNode {
         }
     }
 
+    bindOrganization(orgDue) {
+        /*
+                        // Получаем организацию
+
+                const orgReq = pip.cache.read<ORGANIZ_CL>({ ORGANIZ_CL: [due] });
+                orgReq.then(o => {
+                    const org = o[0];
+                    // TODO: проверить что можно назначить эту огранизацию.
+                    // const canUse = pip.read<DEPARTMENT>({DEPARTMENT: crit({DUE_LINK_ORGANIZ:due})});
+                    // canUse.then(other => {
+                    //     if (other.length !== 0) {
+                    //         showError('организация ' + org.CLASSIF_NAME
+                    //         + ' не может быть назначена этому подразелению, потомучто она связанна с ' + other[0].CLASSIF_NAME);
+                    //     } else {
+                    data.organization = org;
+                    data.rec.DUE_LINK_ORGANIZ = due;
+                    // TODO: вызвать event чтобы отобразился выбор и открылась кнопа сохранить.
+                    //     }
+                    // })
+                });
+        */
+    }
+
     isVisible(showDeleted: boolean): boolean {
         return showDeleted || !this.isDeleted;
     }
