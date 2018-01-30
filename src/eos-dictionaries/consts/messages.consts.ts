@@ -110,3 +110,8 @@ export const UPLOAD_IMG_FALLED: IMessage = {
     msg: 'загрузить изображение не удалось!'
 };
 
+export const WARN_ELEMENT_PROTECTED: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'элемент "{{elem}}" является защищенным! Удаление не возможно.'
+};
