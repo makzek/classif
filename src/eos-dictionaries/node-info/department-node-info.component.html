@@ -12,27 +12,29 @@
                 <span class="icon {{actionEdit.iconClass}} small"></span>
             </button>
         </span>
-        <div class="opened-node-wrapper">
+        <div class="">
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
-                <div>
-                    <span *ngIf="nodeDataFull['printInfo'] && nodeDataFull['printInfo']['NAME'] && nodeDataFull['printInfo']['SURNAME'] && nodeDataFull['printInfo']['PATRON'];then fullName else shortName"></span>
-                    <ng-template #fullName>
-                        <div class="short-data-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
-                            <span class="short-info l-font">
-                                <span>{{nodeDataFull['printInfo']['SURNAME']}}</span>
-                                <span>{{nodeDataFull['printInfo']['NAME']}}</span>
-                                <span>{{nodeDataFull['printInfo']['PATRON']}}</span>
-                            </span>
+                <span *ngIf="nodeDataFull['printInfo'] && nodeDataFull['printInfo']['NAME'] && nodeDataFull['printInfo']['SURNAME'] && nodeDataFull['printInfo']['PATRON'];then fullName else shortName"></span>
+                <ng-template #fullName>
+                    <div class="head-wrapper">
+                        <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
+                        <span class="info">
+                            <div>
+                                <div>{{nodeDataFull['printInfo']['SURNAME']}}</div>
+                                <div>{{nodeDataFull['printInfo']['NAME']}}</div>
+                                <div>{{nodeDataFull['printInfo']['PATRON']}}</div>
+                            </div>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template #shortName>
+                    <div class="head-wrapper">
+                        <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
+                        <div class="info">
+                            <span>{{nodeDataFull.rec['SURNAME']}}</span>
                         </div>
-                    </ng-template>
-                    <ng-template #shortName>
-                        <div class="flex-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
-                            <span class="short-info l-font">{{nodeDataFull.rec['SURNAME']}}</span>
-                        </div>
-                    </ng-template>
-                </div>
+                    </div>
+                </ng-template>
 
                 <div *ngIf="nodeDataFull.rec" class="full-info usual-border">
                     <span *ngIf="nodeDataFull.rec['FULLNAME'];then fullPosition else shortPosition"></span>
