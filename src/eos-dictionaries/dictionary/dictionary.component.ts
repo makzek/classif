@@ -29,7 +29,8 @@ import {
     DANGER_HAVE_NO_ELEMENTS,
     WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
     DANGER_LOGICALY_RESTORE_ELEMENT,
-    WARN_NO_ORGANIZATION
+    WARN_NO_ORGANIZATION,
+    WARN_ELEMENT_PROTECTED
 } from '../consts/messages.consts';
 
 import { RECENT_URL } from 'app/consts/common.consts';
@@ -617,6 +618,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.visibleNodes.forEach((node: EosDictionaryNode) => {
             if (node.marked) { allCount++; }
             if (node.marked && node.isDeleted) { delCount++; }
+            if (node.marked && node.isProtected) {
+                node.marked = false;
+                const warn = Object.assign({}, WARN_ELEMENT_PROTECTED);
+                warn.msg = warn.msg.replace('{{elem}}', node.title);
+                this._msgSrv.addNewMessage(warn);
+            }
         });
         if (delCount === allCount) {
             this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
