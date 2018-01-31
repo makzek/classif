@@ -10,49 +10,29 @@
     }
 }
 
-@media (max-width: 1280px) {
+@media (min-width: 0px) and (max-width: 1280px) {
     .eos-desktop .sortable-item,
     .eos-dictionaries .dictionary {
-        flex-basis: calc((100% - 2*10px) / 2);
+        flex-basis: calc((100% - 2*12px) / 2);
     }
 }
 
 @media (min-width: 1281px) and (max-width: 1640px) {
     .eos-desktop .sortable-item,
     .eos-dictionaries .dictionary {
-        flex-basis: calc((100% - 3*10px) / 3);
+        flex-basis: calc((100% - 3*12px) / 3);
+    }
+}
+
+@media (min-width: 1641px) {
+    .eos-desktop .sortable-item,
+    .eos-dictionaries .dictionary {
+        flex-basis: calc((100% - 4*12px) / 4);
     }
 }
 
 // For IE, Edge
 @media screen\0  {
-    .eos-dictionary .node-actions .selected-node .go-top-wrapper {
-        height: $item-height;
-    }
-
-    .eos-desktop .desktop-wrapper {
-        height: calc(100vh - 150px);
-    }
-
-    .eos-desktop .sortable-item,
-    .eos-dictionaries .dictionary {
-        flex-basis: calc((100% - 2*12px) / 2);
-    }
-
-    @media (max-width: 1640px) {
-        .eos-desktop .sortable-item,
-        .eos-dictionaries .dictionary {
-            flex-basis: calc((100% - 3*13px) / 3);
-        }
-    }
-
-    @media (max-width: 1280px) {
-        .eos-desktop .sortable-item,
-        .eos-dictionaries .dictionary {
-            flex-basis: calc((100% - 2*12px) / 2);
-        }
-    }
-
     input,
     textarea {
         &.ng-invalid.ng-dirty {
