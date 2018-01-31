@@ -153,7 +153,8 @@ export class PipRX extends PipeUtils {
         if (ids !== undefined) {
             const idss = PipeUtils.chunkIds(PipeUtils.distinctIDS(ids instanceof Array ? ids : [ids]));
             for (let i = 0; i < idss.length; i++) {
-                result.push([this._cfg.dataApiUrl, r._et, '/?ids=', idss[i], url].join(''));
+                // encode id because of hash issue
+                result.push([this._cfg.dataApiUrl, r._et, '/?ids=', encodeURIComponent(idss[i]), url].join(''));
             }
         } else {
             result.push(this._cfg.dataApiUrl + r._et + url.replace('&', '?'));

@@ -93,6 +93,10 @@ export class EosDictionaryNode {
         return (this.data.rec['IS_NODE'] !== undefined && this.data.rec['IS_NODE'] === 0);
     }
 
+    get isProtected(): boolean {
+        return Boolean(this.data.rec['PROTECTED']);
+    }
+
     get loaded(): boolean {
         return !this.isNode || this._children !== undefined;
     }
