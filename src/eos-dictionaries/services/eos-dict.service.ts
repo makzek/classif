@@ -168,8 +168,7 @@ export class EosDictService {
 
     bindOrganization(orgDue: string) {
         if (orgDue && this.dictionary && this._listNode) {
-            return this._listNode.bindOrganization(orgDue);
-            // call descriptor to bind organization
+            return this.dictionary.bindOrganization(orgDue, this._listNode);
         } else {
             return Promise.resolve(null);
         }
@@ -513,6 +512,10 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
+            .then((node) => {
+                this._listNode = node;
+                return node;
+            })
             .catch((err) => this._errHandler(err));
     }
 
