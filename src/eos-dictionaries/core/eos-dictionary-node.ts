@@ -133,6 +133,9 @@ export class EosDictionaryNode {
     }
 
     bindOrganization(orgDue) {
+        /*tslint:disable*/
+        console.log('binding', orgDue);
+        /*tslint:enable*/
         /*
                         // Получаем организацию
 

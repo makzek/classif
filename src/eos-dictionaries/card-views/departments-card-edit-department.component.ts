@@ -23,6 +23,9 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
             window.open(pageUrl + params, 'clhoose', 'width=1050,height=800,resizable=1,status=1,top=20,left=20');
 
             window['endPopup'] = function (due) {
+                /*tslint:disable*/
+                console.log('due', due);
+                /*tslint:enable*/
                 dictSrv.bindOrganization(due);
             };
         }
