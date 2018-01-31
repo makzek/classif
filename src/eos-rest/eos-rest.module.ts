@@ -12,7 +12,7 @@ import { DeliveryDetailComponent } from './clman/delivery-detail.component';
 import { DepartmentComponent } from './clman/department.component';
 import { UserRestComponent } from './clman/user.component';
 
-import { IApiCfg } from './interfaces/interfaces';
+// import { IAppCfg } from 'eos-common/interfaces';
 import { ApiCfg } from './core/api-cfg';
 
 /* services */
@@ -21,6 +21,7 @@ import { AuthService } from './services/auth.service';
 // import { ContextService } from './services/appContext.service';
 import { AppContext } from 'eos-rest/services/appContext.service';
 import { ViewManager } from 'eos-rest/services/viewManager';
+// import { commonMergeMeta } from 'eos-rest/common/initMetaData';
 
 @NgModule({
     imports: [
@@ -57,11 +58,14 @@ export class EosRestModule {
         }
     }
 
-    static forRoot(config: IApiCfg): ModuleWithProviders {
+    static forRoot(config: any): ModuleWithProviders {
         return {
             ngModule: EosRestModule,
             providers: [
-                { provide: ApiCfg, useValue: config }
+                {
+                    provide: ApiCfg,
+                    useValue: config
+                }
             ]
         };
     }

@@ -4,7 +4,7 @@ import { SEARCH_TYPES } from '../search-types';
 
 
 export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
-    id: 'organiz',
+    id: 'organization',
     apiInstance: 'ORGANIZ_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Организации',
