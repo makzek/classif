@@ -19,6 +19,7 @@ import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { IAppCfg } from 'eos-common/interfaces';
 
 @Injectable()
 export class EosDictService {
@@ -165,12 +166,28 @@ export class EosDictService {
         this._dictMode = 0;
     }
 
+    bindOrganization(orgDue: string) {
+        if (orgDue && this.dictionary && this._listNode) {
+            return this.dictionary.bindOrganization(orgDue, this._listNode);
+        } else {
+            return Promise.resolve(null);
+        }
+    }
+
     createRepresentative(represData: any[]): Promise<IRecordOperationResult[]> {
         if (this.dictionary) {
             return this.dictionary.createRepresentative(represData, this.treeNode)
                 .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve([]);
+        }
+    }
+
+    getApiConfig(): IAppCfg {
+        if (this.dictionary) {
+            return this.dictionary.descriptor.getApiConfig();
+        } else {
+            return null;
         }
     }
 
@@ -495,6 +512,10 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
+            .then((node) => {
+                this._listNode = node;
+                return node;
+            })
             .catch((err) => this._errHandler(err));
     }
 

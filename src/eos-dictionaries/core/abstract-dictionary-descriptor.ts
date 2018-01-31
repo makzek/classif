@@ -9,6 +9,7 @@ import { ITypeDef, IEnt, DELO_BLOB } from 'eos-rest';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
+import { IAppCfg } from 'eos-common/interfaces';
 
 
 export abstract class AbstractDictionaryDescriptor {
@@ -98,6 +99,10 @@ export abstract class AbstractDictionaryDescriptor {
         });
 
         return Promise.all(pDelete);
+    }
+
+    getApiConfig(): IAppCfg {
+        return this.apiSrv.getConfig();
     }
 
     merge(metadata: any) {

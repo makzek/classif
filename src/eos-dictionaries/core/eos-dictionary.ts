@@ -88,6 +88,16 @@ export class EosDictionary {
         };
     }
 
+    bindOrganization(orgDue: string, node: EosDictionaryNode): Promise<any> {
+        if (orgDue && node && this.descriptor.type === E_DICT_TYPE.department) {
+            const dOrganization = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
+            return dOrganization.getData([orgDue])
+                .then(([organization]) => organization);
+        } else {
+            return Promise.resolve(null);
+        }
+    }
+
     canDo(action: E_RECORD_ACTIONS): boolean {
         return this.descriptor.record.canDo(action);
     }
@@ -95,8 +105,8 @@ export class EosDictionary {
     createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
         const orgDUE = node.data['organization']['DUE'];
         if (orgDUE) {
-            const dContact = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
-            return dContact.addContacts(newContacts, orgDUE);
+            const dOrganization = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
+            return dOrganization.addContacts(newContacts, orgDUE);
         } else {
             return Promise.resolve([<IRecordOperationResult>{
                 record: newContacts[0],
