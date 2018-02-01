@@ -141,20 +141,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     fullSearch() {
-        switch (this.mode) {
-            case 0:
-                this.settings.mode = SEARCH_MODES.totalDictionary;
-                break;
-            case 1:
-                this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
-                break;
-            case 2:
-                this.settings.mode = SEARCH_MODES.currentAndSubbranch;
-                break;
-        }
-
         this.settings.mode = this.mode;
-
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
@@ -167,7 +154,9 @@ export class DictionarySearchComponent implements OnDestroy {
             this._dictSrv.fullSearch(this[this.currTab || 'data'], this.settings)
                 .then(() => {
                     this.searchDone = true;
-                    this[this.currTab]['srchMode'] = '';
+                    if (this.dictId  === 'departments') {
+                        this[this.currTab]['srchMode'] = '';
+                    }
                 });
         } else {
             this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
