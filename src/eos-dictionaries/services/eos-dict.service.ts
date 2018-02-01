@@ -529,12 +529,10 @@ export class EosDictService {
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        this.updateViewParameters({ updatingData: true });
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
             .then((node) => {
                 this._listNode = node;
-                this.updateViewParameters({ updatingData: false });
                 return node;
             })
             .catch((err) => this._errHandler(err));
@@ -928,7 +926,6 @@ export class EosDictService {
 
     private _errHandler(err: RestError | any) {
         this.updateViewParameters({
-            updatingData: false,
             updatingInfo: false,
             updatingList: false,
         });
