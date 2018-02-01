@@ -17,6 +17,7 @@ export class PushpinComponent {
     deskList: EosDesk[];
     openStyle = '252px';
     closeStyle = '0px';
+    public disable = false;
     public creating = false;
     public maxLength = 80;
     public deskName: string;
@@ -61,8 +62,10 @@ export class PushpinComponent {
                 references: [],
                 edited: false,
             };
+            this.disable = true;
             this._deskSrv.createDesk(_desk)
                 .then((desk: IDesk) => {
+                    this.disable = false;
                     this._deskSrv.appendDeskItemToView(desk);
                     this.creating = false;
                 });
