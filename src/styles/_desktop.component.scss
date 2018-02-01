@@ -143,6 +143,7 @@
         overflow-y: auto;
         max-height: calc(100vh - 150px);
         margin-right: -10px;
+        overflow-x: hidden;
         &.reverse {
             -ms-grid-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
             grid-template-columns: (2 * ($desktop-link-size + $desktop-link-margin)) 1fr;
