@@ -1,10 +1,3 @@
-export interface IApiCfg {
-    authSrv: string;
-    dataSrv: string;
-    metadataJs: string[];
-    metaMergeFuncList?: ((meta: any) => void)[];
-}
-
 export interface IEnt {
     _State?: string;
     __metadata?: any;

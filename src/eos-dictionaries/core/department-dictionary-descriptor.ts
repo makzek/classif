@@ -4,13 +4,14 @@ import {
     IRecordModeDescription,
     IDictionaryDescriptor,
 } from 'eos-dictionaries/interfaces';
-import { FieldsDecline } from '../interfaces/fields-decline.inerface';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
+import { IImage } from 'eos-dictionaries/interfaces/image.interface';
 
 export class DepartmentRecordDescriptor extends RecordDescriptor {
     dictionary: DepartmentDictionaryDescriptor;
@@ -33,6 +34,18 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         this._initModeSets([
             'fullSearchFields',
         ], descriptor);
+    }
+
+    filterBy(filters: any, data: any): boolean {
+        let visible = super.filterBy(filters, data);
+        if (visible && filters) {
+            if (filters.hasOwnProperty('date') && filters.date) {
+                const startDate = data.rec['START_DATE'] ? new Date(data.rec['START_DATE']).setHours(0, 0, 0, 0) : null;
+                const endDate = data.rec['END_DATE'] ? new Date(data.rec['END_DATE']).setHours(0, 0, 0, 0) : null;
+                visible = (!startDate || filters.date - startDate >= 0) && (!endDate || endDate - filters.date >= 0);
+            }
+        }
+        return visible;
     }
 
     getMode(values: any): E_DEPT_MODE {
@@ -129,7 +142,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
         const pCabinets = this.getCachedRecord({ 'CABINET': { 'criteries': { DUE: rec.DUE } } });
 
         let owner = rec['ISN_NODE'].toString();
-        if (!rec['IS_NODE']) {
+        if (!rec['IS_NODE'] && rec['ISN_HIGH_NODE'] !== undefined && rec['ISN_HIGH_NODE'] !== null) {
             owner += '|' + rec['ISN_HIGH_NODE'].toString();
         }
 
@@ -145,14 +158,23 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
             });
 
-        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets])
-            .then(([user, org, cabinet, printInfo, cabinets]) => {
+        const pPhotoImg = (rec['ISN_PHOTO']) ? this.apiSrv.read({ DELO_BLOB: rec['ISN_PHOTO'] }) : Promise.resolve([]);
+
+        return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo, pCabinets, pPhotoImg])
+            .then(([user, org, cabinet, printInfo, cabinets, photoImgs]) => {
+                const img = (photoImgs[0]) ? <IImage> {
+                    data: photoImgs[0].CONTENTS,
+                    extension: photoImgs[0].EXTENSION,
+                    url: `url(data:image/${photoImgs[0].EXTENSION};base64,${photoImgs[0].CONTENTS})`
+                } : null;
+
                 return {
                     user: user,
                     organization: org,
                     cabinet: cabinet,
                     cabinets: cabinets,
-                    printInfo: printInfo
+                    printInfo: printInfo,
+                    photo: img
                 };
             });
     }

@@ -93,6 +93,10 @@ export class EosDictionaryNode {
         return (this.data.rec['IS_NODE'] !== undefined && this.data.rec['IS_NODE'] === 0);
     }
 
+    get isProtected(): boolean {
+        return Boolean(this.data.rec['PROTECTED']);
+    }
+
     get loaded(): boolean {
         return !this.isNode || this._children !== undefined;
     }
@@ -168,6 +172,10 @@ export class EosDictionaryNode {
         if (/* (!this._children || this._children.length < 1) && */this.parent) {
             this.parent.deleteChild(this);
         }
+    }
+
+    filterBy(filters: any): boolean {
+        return this._descriptor.filterBy(filters, this.data);
     }
 
     addChild(node: EosDictionaryNode) {

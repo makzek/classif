@@ -2,6 +2,10 @@
 import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
 import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
+import { IImage } from '../interfaces/image.interface';
+import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
+import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { UPLOAD_IMG_FALLED } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
@@ -10,7 +14,7 @@ import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerfa
 export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     currTab = 0;
-    defaultImage = 'url(../assets/images/no-user.png)';
+    photo = DEFAULT_PHOTO;
 
     gender = [
         { id: null, title: 'Не указан' },
@@ -20,7 +24,10 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
 
     private currentNodeId: string;
 
-    constructor(injector: Injector) {
+    constructor(
+        injector: Injector,
+        private _msgSrv: EosMessageService
+    ) {
         super(injector);
         this.currentNodeId = this.nodeId;
     }
@@ -29,6 +36,11 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         super.ngOnChanges();
         if (this.currentNodeId !== this.nodeId) {
             this.currTab = 0;
+        }
+        if (this.data.photo && this.data.photo.url) {
+            this.photo = this.data.photo.url;
+        } else {
+            this.photo = DEFAULT_PHOTO;
         }
     }
 
@@ -43,9 +55,19 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         }
         return sGender.title;
     }
-    newImage(evt) {
-        this.defaultImage = 'url(' + evt + ')';
-        // send it on server
+
+    newImage(img: IImage) {
+        this.photo = img.url;
+        this.dictSrv.uploadImg(img)
+            .then((photoId: number) => {
+                if (photoId) {
+                    this.data.rec['ISN_PHOTO'] = photoId['ID'];
+                    this.onChange.emit(this.data);
+                } else {
+                    this.photo = DEFAULT_PHOTO;
+                    this._msgSrv.addNewMessage(UPLOAD_IMG_FALLED);
+                }
+            });
     }
 
     public fillDeclineFields(): void {

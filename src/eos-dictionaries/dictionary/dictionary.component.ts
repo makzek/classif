@@ -29,7 +29,8 @@ import {
     DANGER_HAVE_NO_ELEMENTS,
     WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
     DANGER_LOGICALY_RESTORE_ELEMENT,
-    WARN_NO_ORGANIZATION
+    WARN_NO_ORGANIZATION,
+    WARN_ELEMENT_PROTECTED
 } from '../consts/messages.consts';
 
 import { RECENT_URL } from 'app/consts/common.consts';
@@ -496,7 +497,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                                     PHONE: _node.data.rec['PHONE'],
                                     PHONE_LOCAL: _node.data.rec['PHONE_LOCAL'],
                                     E_MAIL: _node.data.rec['E_MAIL'],
-                                    SEV: _node.data.sev['GLOBAL_ID'], // not sure
+                                    SEV: _node.data.sev ? _node.data.sev['GLOBAL_ID'] : null, // not sure
                                     ISN_ORGANIZ: _fullData.data.organization['ISN_NODE'],
                                     DEPARTMENT: _fullData.data.rec['CLASSIF_NAME']
                                 });
@@ -509,13 +510,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                         /* call API and save */
                         // console.log('Representatives', _represData);
                         return this._dictSrv.createRepresentative(_represData).then((results) => {
-                            results.forEach((result) =>
+                            results.forEach((result) => {
                                 this._msgSrv.addNewMessage({
                                     type: result.success ? 'success' : 'warning',
                                     title: result.record['SURNAME'],
                                     msg: result.success ? 'Контакт создан' : result.error.message
-                                })
-                            );
+                                });
+                            });
                         });
                     }
                 } else {
@@ -617,6 +618,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.visibleNodes.forEach((node: EosDictionaryNode) => {
             if (node.marked) { allCount++; }
             if (node.marked && node.isDeleted) { delCount++; }
+            if (node.marked && node.isProtected) {
+                node.marked = false;
+                const warn = Object.assign({}, WARN_ELEMENT_PROTECTED);
+                warn.msg = warn.msg.replace('{{elem}}', node.title);
+                this._msgSrv.addNewMessage(warn);
+            }
         });
         if (delCount === allCount) {
             this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
