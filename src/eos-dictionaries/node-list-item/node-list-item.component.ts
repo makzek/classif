@@ -99,7 +99,8 @@ export class NodeListItemComponent implements OnInit, OnChanges {
      * @param node EosDictionaryNode
      * @description Navigate to param node. Open element as node
      */
-    public openAsFolder(node: EosDictionaryNode) {
+    public openAsFolder(evt: Event, node: EosDictionaryNode) {
+        evt.stopPropagation();
         const urlPeiase = this._router.url.split('/');
         urlPeiase[3] = node.id;
         const path = urlPeiase.join('/');

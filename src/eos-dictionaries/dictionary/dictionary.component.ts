@@ -27,9 +27,7 @@ import {
     DANGER_EDIT_DELETED_ERROR,
     WARN_LOGIC_DELETE,
     DANGER_HAVE_NO_ELEMENTS,
-    WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
     DANGER_LOGICALY_RESTORE_ELEMENT,
-    WARN_NO_ORGANIZATION,
     WARN_ELEMENT_PROTECTED
 } from '../consts/messages.consts';
 
@@ -483,47 +481,61 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
      */
     private _createRepresentative() {
         if (this.dictionaryId === 'departments') {
-            this._dictSrv.getFullNode(this.dictionaryId, this.selectedNode.id).then((_fullData) => {
-                if (_fullData && _fullData.data && _fullData.data.organization['ISN_NODE']) {
-                    let _selectedCount = 0;
-                    const _represData: any[] = [];
-                    if (this.visibleNodes) {
-                        this.visibleNodes.forEach((_node) => {
-                            if (_node.marked && _node.data.rec['IS_NODE']) {
-                                _selectedCount++;
-                                _represData.push({
-                                    SURNAME: _node.data.rec['SURNAME'],
-                                    DUTY: _node.data.rec['DUTY'],
-                                    PHONE: _node.data.rec['PHONE'],
-                                    PHONE_LOCAL: _node.data.rec['PHONE_LOCAL'],
-                                    E_MAIL: _node.data.rec['E_MAIL'],
-                                    SEV: _node.data.sev ? _node.data.sev['GLOBAL_ID'] : null, // not sure
-                                    ISN_ORGANIZ: _fullData.data.organization['ISN_NODE'],
-                                    DEPARTMENT: _fullData.data.rec['CLASSIF_NAME']
-                                });
-                            }
+            this._dictSrv.createRepresentative()
+                .then((results) => {
+                    results.forEach((result) => {
+                        this._msgSrv.addNewMessage({
+                            type: result.success ? 'success' : 'warning',
+                            title: result.record['SURNAME'],
+                            msg: result.success ? 'Контакт создан' : result.error.message
                         });
-                    }
-                    if (!_selectedCount) {
-                        this._msgSrv.addNewMessage(WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE);
-                    } else {
-                        /* call API and save */
-                        // console.log('Representatives', _represData);
-                        return this._dictSrv.createRepresentative(_represData).then((results) => {
-                            results.forEach((result) => {
-                                this._msgSrv.addNewMessage({
-                                    type: result.success ? 'success' : 'warning',
-                                    title: result.record['SURNAME'],
-                                    msg: result.success ? 'Контакт создан' : result.error.message
+                    });
+                });
+        }
+        /*
+            this._dictSrv.getFullNode(this.dictionaryId, this.selectedNode.id)
+                .then((_fullData) => {
+                    if (_fullData && _fullData.data && _fullData.data.organization['ISN_NODE']) {
+                        let _selectedCount = 0;
+                        const _represData: any[] = [];
+                        if (this.visibleNodes) {
+                            this.visibleNodes.forEach((_node) => {
+                                if (_node.marked && _node.data.rec['IS_NODE']) {
+                                    _selectedCount++;
+                                    _represData.push({
+                                        SURNAME: _node.data.rec['SURNAME'],
+                                        DUTY: _node.data.rec['DUTY'],
+                                        PHONE: _node.data.rec['PHONE'],
+                                        PHONE_LOCAL: _node.data.rec['PHONE_LOCAL'],
+                                        E_MAIL: _node.data.rec['E_MAIL'],
+                                        SEV: _node.data.sev ? _node.data.sev['GLOBAL_ID'] : null, // not sure
+                                        ISN_ORGANIZ: _fullData.data.organization['ISN_NODE'],
+                                        DEPARTMENT: _fullData.data.rec['CLASSIF_NAME']
+                                    });
+                                }
+                            });
+                        }
+                        if (!_selectedCount) {
+                            this._msgSrv.addNewMessage(WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE);
+                        } else {
+                            /* call API and save * /
+                            // console.log('Representatives', _represData);
+                            return this._dictSrv.createRepresentative(_represData).then((results) => {
+                                results.forEach((result) => {
+                                    this._msgSrv.addNewMessage({
+                                        type: result.success ? 'success' : 'warning',
+                                        title: result.record['SURNAME'],
+                                        msg: result.success ? 'Контакт создан' : result.error.message
+                                    });
                                 });
                             });
-                        });
+                        }
+                    } else {
+                        this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);
                     }
-                } else {
-                    this._msgSrv.addNewMessage(WARN_NO_ORGANIZATION);
-                }
-            });
+                });
         }
+        */
     }
 
     private _moveUp(): void {
