@@ -92,6 +92,7 @@
         }
     }
     .spinner-wrapper {
+        padding: 10px;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -195,4 +196,8 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
 }
