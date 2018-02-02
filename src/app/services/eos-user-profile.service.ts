@@ -104,9 +104,14 @@ export class EosUserProfileService implements IUserProfile {
                     return this._authSrv
                         .login(name, password)
                         .then((context) => {
-                            this._setUser(context.user, context.sysParams);
-                            return this._setAuth(true);
-                        });
+                            if (context.user && context.sysParams) {
+                                this._setUser(context.user, context.sysParams);
+                                return this._setAuth(true);
+                            } else {
+                                return this._setAuth(false);
+                            }
+                        })
+                        .catch((err) => this._setAuth(false));
                 }
             })
             .catch((err) => {
