@@ -213,7 +213,7 @@
                     name="DUE_LINK_ORGANIZ"
                     type="text"
                     class="form-control m-font readonly"
-                    [value]="orgName || data.organization['CLASSIF_NAME']"
+                    [value]="orgName || data.organization['CLASSIF_NAME'] || ''"
                     placeholder="Организация"
                     isDisabled="true"
                     placement="right"
@@ -221,7 +221,7 @@
                     container="body"
                     autocomplete="off"
                     triggers="">
-                <button *ngIf="editMode"
+                <button *ngIf="editMode && data.rec['CARD_FLAG']"
                     class="btn btn-primary"
                     [disabled]="lockOrgBtn"
                     (click)="chooseOrganiz()">выбрать</button>
