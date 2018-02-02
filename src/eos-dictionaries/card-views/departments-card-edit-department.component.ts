@@ -10,7 +10,7 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     // cannt handle because popup doesn't return on cancel or close events
 
     lockOrgBtn = false;
-    orgName: string;
+    orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);
     }
@@ -18,7 +18,7 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     chooseOrganiz() {
         const config = this.dictSrv.getApiConfig();
         if (config) {
-//            this.lockOrgBtn = true;
+            // this.lockOrgBtn = true;
             const pageUrl = config.webBaseUrl + '/Pages/Classif/ChooseClassif.aspx?';
             const params = 'Classif=ORGANIZ_CL&value_id=__ClassifIds&skip_deleted=True&select_nodes=False&select_leaf=True&return_due=True';
             this._zone.runOutsideAngular(() => {
@@ -31,7 +31,8 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     }
 
     bindOrganization(orgDue: string) {
-        this.dictSrv.bindOrganization(orgDue)
+        const dues = orgDue ? orgDue.split('|') : [''];
+        this.dictSrv.bindOrganization(dues[0])
             .then((org) => {
                 if (org) {
                     this.orgName = org['CLASSIF_NAME'];
