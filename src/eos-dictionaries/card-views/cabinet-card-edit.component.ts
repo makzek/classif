@@ -1,6 +1,7 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
+import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
 
 @Component({
     selector: 'eos-cabinet-card-edit',
@@ -10,19 +11,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showAccessToCabinet = true;
     showAccessToFolder = true;
-    owners: any[] = [{
-        SURNAME: 'Константинопольский К.К.',
-        DUTY: 'Директор департамента',
-        marked: false
-    }, {
-        SURNAME: 'Иванов К.К.',
-        DUTY: 'Директор департамента',
-        marked: false
-    }, {
-        SURNAME: 'Семёнов К.К.',
-        DUTY: 'Директор департамента',
-        marked: false
-    }];
+    owners: any[] = [];
+
+    folders = CABINET_FOLDERS;
 
     rows = [{
         title: '',
@@ -272,9 +263,17 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         super(injector);
     }
 
+    add() { }
+
     endScroll() {
         window.clearInterval(this._interval);
     }
+
+    moveUp() { }
+
+    moveDown() { }
+
+    remove() { }
 
     startScrollToLeft() {
         this._interval = setInterval(() => {
@@ -286,6 +285,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         this._interval = setInterval(() => {
             this.tableEl.nativeElement.scrollLeft--;
         }, 20);
+    }
+
+    toggleAccessFolder() {
+        this.showAccessToFolder = !this.showAccessToFolder;
     }
 
     toggleAllAccessMarks() {

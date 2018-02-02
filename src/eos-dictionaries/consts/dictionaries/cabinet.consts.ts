@@ -49,3 +49,32 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     quickViewFields: ['CABINET_NAME', 'DEPARTMENT_NAME', 'department'],
     editFields: ['CABINET_NAME', 'FULLNAME'],
 });
+
+export const CABINET_FOLDERS = [{
+    id: 1,
+    title: 'Поступившие'
+}, {
+    id: 2,
+    title: 'На исполнении'
+}, {
+    id: 3,
+    title: 'На контроле'
+}, {
+    id: 4,
+    title: 'У руководства'
+}, {
+    id: 5,
+    title: 'На рассмотрении'
+}, {
+    id: 6,
+    title: 'В дело'
+}, {
+    id: 7,
+    title: 'Управление проектам'
+}, {
+    id: 8,
+    title: 'На визировании'
+}, {
+    id: 9,
+    title: 'На подписи'
+}];

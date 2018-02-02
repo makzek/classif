@@ -1,110 +1,215 @@
-<div class="cabinet-card-edit" *ngIf="data.rec">
+<div class="cabinet-card-edit"
+    *ngIf="data?.rec">
     <form #cardForm="ngForm">
-        <div *ngIf="data && data.rec" class="edit-content secondary-block">
+        <div class="edit-content secondary-block">
             <div class="form-group">
-                <label for="CABINET_NAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Краткое наименование кабинета</label>
-                <input [readonly]="!editMode" id="CABINET_NAME" name="CABINET_NAME" type="text" class="form-control m-font" [ngModel]="data.rec['CABINET_NAME']"
-                    (ngModelChange)="change('CABINET_NAME', 'rec', $event)" placeholder="Краткое наименование кабинета" [readonly]="!editMode"
-                    [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING" maxlength="64" [eosUnic]="true"
-                    [key]="'CABINET_NAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true" tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены. Уникально в пределах справочника."
-                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('CABINET_NAME')" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'"
+                <label for="CABINET_NAME"
+                    class="primary-text"
+                    [ngClass]="{'unimportant-text': !editMode }">Краткое наименование кабинета</label>
+                <input [readonly]="!editMode"
+                    id="CABINET_NAME"
+                    name="CABINET_NAME"
+                    type="text"
+                    class="form-control m-font"
+                    [ngModel]="data.rec['CABINET_NAME']"
+                    (ngModelChange)="change('CABINET_NAME', 'rec', $event)"
+                    placeholder="Краткое наименование кабинета"
+                    [readonly]="!editMode"
+                    [ngClass]="{'readonly': !editMode }"
+                    required
+                    [pattern]="NOT_EMPTY_STRING"
+                    maxlength="64"
+                    [eosUnic]="true"
+                    [key]="'CABINET_NAME'"
+                    [checkingMethod]="checkUnic.bind(this)"
+                    [inDict]="true"
+                    tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены. Уникально в пределах справочника."
+                    placement="right"
+                    containerClass="tooltip-error"
+                    container="body"
+                    (focus)="focus('CABINET_NAME')"
+                    (blur)="blur()"
+                    [isDisabled]="!editMode"
+                    [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'"
                     triggers="">
             </div>
             <div class="form-group">
-                <label for="FULLNAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Полное наименование кабинета</label>
-                <input [readonly]="!editMode" id="FULLNAME" name="FULLNAME" type="text" class="form-control m-font" [ngModel]="data.rec['FULLNAME']"
-                    (ngModelChange)="change('FULLNAME', 'rec', $event)" placeholder="Краткое наименование кабинета" [readonly]="!editMode"
-                    [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING" maxlength="2000" [eosUnic]="false"
-                    [key]="'FULLNAME'" [checkingMethod]="checkUnic.bind(this)" [inDict]="false" tooltip="Обязательное поле. Максимальная длина 2000 символа. Пробелы в начале и в конце строки запрещены."
-                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('FULLNAME')" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['FULLNAME']?.dirty && cardForm.controls['FULLNAME']?.invalid && focusedField === 'FULLNAME'"
+                <label for="FULLNAME"
+                    class="primary-text"
+                    [ngClass]="{'unimportant-text': !editMode }">Полное наименование кабинета</label>
+                <input [readonly]="!editMode"
+                    id="FULLNAME"
+                    name="FULLNAME"
+                    type="text"
+                    class="form-control m-font"
+                    [ngModel]="data.rec['FULLNAME']"
+                    (ngModelChange)="change('FULLNAME', 'rec', $event)"
+                    placeholder="Краткое наименование кабинета"
+                    [readonly]="!editMode"
+                    [ngClass]="{'readonly': !editMode }"
+                    required
+                    [pattern]="NOT_EMPTY_STRING"
+                    maxlength="2000"
+                    [eosUnic]="false"
+                    [key]="'FULLNAME'"
+                    [checkingMethod]="checkUnic.bind(this)"
+                    [inDict]="false"
+                    tooltip="Обязательное поле. Максимальная длина 2000 символа. Пробелы в начале и в конце строки запрещены."
+                    placement="right"
+                    containerClass="tooltip-error"
+                    container="body"
+                    (focus)="focus('FULLNAME')"
+                    (blur)="blur()"
+                    [isDisabled]="!editMode"
+                    [isOpen]="cardForm.controls['FULLNAME']?.dirty && cardForm.controls['FULLNAME']?.invalid && focusedField === 'FULLNAME'"
                     triggers="">
             </div>
             <div class="form-group">
-                <label for="DUE" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-                <input [readonly]="!editMode" id="DUE" name="DUE" type="text" class="form-control m-font" [ngModel]="data.rec['DUE']" (ngModelChange)="change('DUE', 'rec', $event)"
-                    placeholder="Подразделение" [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" required [pattern]="NOT_EMPTY_STRING"
-                    maxlength="248" [eosUnic]="true" [key]="'DUE'" [checkingMethod]="checkUnic.bind(this)" [inDict]="true" tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
-                    placement="right" containerClass="tooltip-error" container="body" (focus)="focus('DUE')" (blur)="blur()"
-                    [isDisabled]="!editMode" [isOpen]="cardForm.controls['DUE']?.dirty && cardForm.controls['DUE']?.invalid && focusedField === 'DUE'"
+                <label for="DUE"
+                    class="primary-text"
+                    [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+                <input [readonly]="!editMode"
+                    id="DUE"
+                    name="DUE"
+                    type="text"
+                    class="form-control m-font"
+                    [ngModel]="data.rec['DUE']"
+                    (ngModelChange)="change('DUE', 'rec', $event)"
+                    placeholder="Подразделение"
+                    [readonly]="!editMode"
+                    [ngClass]="{'readonly': !editMode }"
+                    required
+                    [pattern]="NOT_EMPTY_STRING"
+                    maxlength="248"
+                    [eosUnic]="true"
+                    [key]="'DUE'"
+                    [checkingMethod]="checkUnic.bind(this)"
+                    [inDict]="true"
+                    tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                    placement="right"
+                    containerClass="tooltip-error"
+                    container="body"
+                    (focus)="focus('DUE')"
+                    (blur)="blur()"
+                    [isDisabled]="!editMode"
+                    [isOpen]="cardForm.controls['DUE']?.dirty && cardForm.controls['DUE']?.invalid && focusedField === 'DUE'"
                     triggers="">
             </div>
         </div>
         <div class="owner-wrapper">
             <div class="block-divider">
                 <span class="divider-text xl-font">Владельцы кабинета</span>
-                <button class="arrow-btn btn-primary-light" *ngIf="showOwners" (click)="showOwners = false">
+                <button class="arrow-btn btn-primary-light"
+                    *ngIf="showOwners"
+                    (click)="showOwners = false">
                     <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
                 </button>
-                <button class="arrow-btn btn-primary-light" *ngIf="!showOwners" (click)="showOwners = true">
+                <button class="arrow-btn btn-primary-light"
+                    *ngIf="!showOwners"
+                    (click)="showOwners = true">
                     <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="edit-block-header secondary-block" *ngIf="editMode">
-                <button class="action-btn btn-primary-light" (click)="add()">
+            <div class="edit-block-header secondary-block"
+                *ngIf="editMode">
+                <button class="action-btn btn-primary-light"
+                    (click)="add()">
                     <span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span>
                 </button>
-                <button class="action-btn btn-primary-light" (click)="remove()">
+                <button class="action-btn btn-primary-light"
+                    (click)="remove()">
                     <span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
                 </button>
-                <button class="action-btn btn-primary-light" (click)="moveTop()">
+                <!--
+                <button class="action-btn btn-primary-light"
+                    (click)="moveUp()">
                     <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
                 </button>
-                <button class="action-btn btn-primary-light" (click)="MoveBottom()">
+                <button class="action-btn btn-primary-light"
+                    (click)="moveDown()">
                     <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
                 </button>
+                -->
             </div>
-            <div class="edit-block-header secondary-block owners" [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
-                <span class="checkbox-inline" *ngIf="editMode">
+            <div class="edit-block-header secondary-block owners"
+                [ngClass]="{'edit-middle-block': editMode, 'edit-block-header': !editMode}">
+                <span class="checkbox-inline"
+                    *ngIf="editMode">
                     <label [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
                         <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
                         <span></span>
-                    </label>
+                </label>
                 </span>
-                <span class="fake-padding" *ngIf="!editMode"></span>
+                <span class="fake-padding"
+                    *ngIf="!editMode"></span>
                 <span class="text selected-text">Фамилия И.О.</span>
                 <span class="text selected-text">Должность</span>
             </div>
-            <div class="edit-content owners-content secondary-block" [hidden]="!showOwners">
-                <div class="owners owners-item highlight-on-hover" *ngFor="let person of owners">
-                    <span class="checkbox-inline" *ngIf="editMode">
+            <div class="edit-content owners-content secondary-block"
+                [hidden]="!showOwners">
+                <div class="owners owners-item highlight-on-hover"
+                    *ngFor="let person of owners">
+                    <span class="checkbox-inline"
+                        *ngIf="editMode">
                         <label>
                             <input type="checkbox" name="person" [(ngModel)]="person.marked">
                             <span></span>
-                        </label>
+                    </label>
                     </span>
-                    <span class="fake-padding" *ngIf="!editMode"></span>
+                    <span class="fake-padding"
+                        *ngIf="!editMode"></span>
                     <span class="text selected-text">{{person['SURNAME']}}</span>
                     <span class="text">{{person['DUTY']}}</span>
                 </div>
             </div>
         </div>
-        <div class="cabinet-access" [hidden]="!showAccessToCabinet">
+        <div class="cabinet-access"
+            [hidden]="!showAccessToCabinet">
             <div class="block-divider">
                 <span class="divider-text xl-font">Доступ пользователей к кабинету</span>
-                <button class="arrow-btn btn-primary-light" *ngIf="showAccessToCabinet" (click)="showAccessToCabinet = false">
+                <button class="arrow-btn btn-primary-light"
+                    *ngIf="showAccessToCabinet"
+                    (click)="showAccessToCabinet = false">
                     <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
                 </button>
-                <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToCabinet" (click)="showAccessToCabinet = true">
+                <button class="arrow-btn btn-primary-light"
+                    *ngIf="!showAccessToCabinet"
+                    (click)="showAccessToCabinet = true">
                     <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
                 </button>
             </div>
             <div class="shadow usual-border"></div>
-            <button (mousedown)="startScrollToLeft()" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn" *ngIf="showScroll">
+            <!--
+            <button (mousedown)="startScrollToLeft()"
+                (mouseup)="endScroll()"
+                class="btn btn-primary-light scroll-btn"
+                *ngIf="showScroll">
                 <span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span>
             </button>
-            <button (mousedown)="startScrollToRight()" (mouseup)="endScroll()" class="btn btn-primary-light scroll-btn right" *ngIf="showScroll">
+            <button (mousedown)="startScrollToRight()"
+                (mouseup)="endScroll()"
+                class="btn btn-primary-light scroll-btn right"
+                *ngIf="showScroll">
                 <span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
             </button>
-            <div class="table-wrapper block" #tableEl>
+        -->
+            <div class="table-wrapper block"
+                #tableEl>
                 <table class="cabinet-access-table">
-                    <tr *ngFor="let row of rows" [ngClass]="{'first-line usual-border': row.key === 'fio' }">
+                    <tr class="first-line usual-border">
+                        <th class="headcol block"></th>
+                        <td *ngFor="let person of persons"
+                            class="cell"
+                            align="center">{{person.fio}}</td>
+                    </tr>
+                    <tr *ngFor="let row of rows">
                         <th class="headcol block">{{row.title}}</th>
-                        <td *ngFor="let person of persons" class="cell" align="center">
-                            <span *ngIf="row.key === 'fio'">{{person[row.key]}}</span>
-                            <span *ngIf="person[row.key] && row.key !== 'fio'" class="eos-icon eos-icon-checkbox-grey small" aria-hidden="true"></span>
-                            <span *ngIf="!person[row.key] && row.key !== 'fio'" class="eos-icon eos-icon-minus-grey small" aria-hidden="true"></span>
+                        <td *ngFor="let person of persons"
+                            class="cell"
+                            align="center">
+                            <span class="eos-icon small"
+                                aria-hidden="true"
+                                [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
                         </td>
                     </tr>
                 </table>
@@ -113,11 +218,10 @@
         <div class="folder-access-wrapper">
             <div class="block-divider">
                 <span class="divider-text xl-font">Настройка доступа к папкам кабинета</span>
-                <button class="arrow-btn btn-primary-light" *ngIf="showAccessToFolder" (click)="showAccessToFolder = false">
-                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-                </button>
-                <button class="arrow-btn btn-primary-light" *ngIf="!showAccessToFolder" (click)="showAccessToFolder = true">
-                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
+                <button class="arrow-btn btn-primary-light"
+                    (click)="toggleAccessFolder()">
+                    <span class="eos-icon small" aria-hidden="true"
+                    [ngClass]="{'eos-icon-arrow-v-blue-top': showAccessToFolder, 'eos-icon-arrow-v-blue-bottom': !showAccessToFolder}"></span>
                 </button>
             </div>
             <div class="edit-block-header secondary-block">
@@ -125,14 +229,17 @@
                     <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
                         <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
                         <span></span>
-                    </label>
-                    <span *ngIf="!editMode && anyUnmarkedAccess" class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
-                    <span *ngIf="!editMode && !anyUnmarkedAccess" class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
+                </label>
+                <span *ngIf="!editMode && anyUnmarkedAccess"
+                    class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
+                <span *ngIf="!editMode && !anyUnmarkedAccess"
+                    class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
                 </span>
                 <span class="s-font primary-text">Полный доступ</span>
                 <span class="upper s-font unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
             </div>
-            <div class="edit-content secondary-block" [ngClass]="{'hidden': !showAccessToFolder}">
+            <div class="edit-content secondary-block"
+                [ngClass]="{'hidden': !showAccessToFolder}">
                 <div class="folder-access-item">
                     <div class="minus-checkbox">
                         <label class="checkbox primary-text s-font">
