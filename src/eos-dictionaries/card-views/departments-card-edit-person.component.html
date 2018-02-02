@@ -257,12 +257,13 @@
                             triggers="">
                     </div>
                     <div class="form-group">
-                        <label class="primary-text required"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="DUTY">
-                                Краткое наименование должности
-                            </label>
                         <div class="row-wrapper">
+                            <div class="form-group fathers-name">
+                                <label class="primary-text required"
+                                    [ngClass]="{'unimportant-text': !editMode }"
+                                    for="DUTY">
+                                        Краткое наименование должности
+                                </label>
                             <input [readonly]="!editMode"
                                 id="DUTY"
                                 name="DUTY"
@@ -287,13 +288,24 @@
                                 [typeahead]="dutysList"
                                 container="body"
                                 triggers="">
+                            </div>
 
-                            <label class="primary-text"
-                                [ngClass]="{'unimportant-text': !editMode }"
-                                class="checkbox boss">
-                                    <input type="checkbox" name="POST_H" (ngModelChange)="change('POST_H', 'rec', $event)" [disabled]="!editMode" [ngModel]="data.rec['POST_H']">
-                                    <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>Начальник
-                                </label>
+                            <div class="form-group role">
+                                <label class="primary-text"
+                                    [ngClass]="{'unimportant-text': !editMode }"
+                                    for="GENDER">Роль</label>
+                                <select class="form-control m-font gender-select" name="POST_H" id="POST_H" [ngModel]="data.rec['POST_H']"
+                                    (ngModelChange)="change('POST_H', 'rec', $event)" [ngClass]="{'readonly hidden': !editMode }">
+                                    <option *ngFor="let role of roles" [disabled]="!role.value" [value]="role.value">{{role.title}}</option>
+                                </select>
+                                <input *ngIf="!editMode"
+                                    name="GENDER"
+                                    type="text"
+                                    class="form-control m-font readonly"
+                                    [ngClass]="{'GENDER-placeholder': editMode }"
+                                    placeholder="Роль"
+                                    [value]="getRole(data.rec['POST_H'])" />
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

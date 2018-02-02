@@ -6,6 +6,7 @@ import { IImage } from '../interfaces/image.interface';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { UPLOAD_IMG_FALLED } from '../consts/messages.consts';
+import { ROLES_IN_WORKFLOW, GENDERS } from '../consts/roles.const';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
@@ -13,14 +14,11 @@ import { UPLOAD_IMG_FALLED } from '../consts/messages.consts';
 })
 export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
+    public roles = ROLES_IN_WORKFLOW;
     currTab = 0;
     photo = DEFAULT_PHOTO;
 
-    gender = [
-        { id: null, title: 'Не указан' },
-        { id: 0, title: 'Мужской' },
-        { id: 1, title: 'Женский' },
-    ];
+    gender = GENDERS;
 
     private currentNodeId: string;
 
@@ -54,6 +52,14 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             sGender = this.gender[0];
         }
         return sGender.title;
+    }
+
+    getRole(value: number): string {
+        let sRole = this.roles.find((elem) => elem.value === value);
+        if (!sRole) {
+            sRole = this.roles[0];
+        }
+        return sRole.title;
     }
 
     newImage(img: IImage) {
