@@ -143,6 +143,10 @@ export class EosDictService {
         return this._dictMode;
     }
 
+    get currentList(): Array<EosDictionaryNode> {
+        return this._currentList;
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         // private _profileSrv: EosUserProfileService,

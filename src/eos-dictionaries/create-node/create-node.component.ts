@@ -5,6 +5,10 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { CONFIRM_CHANGE_BOSS } from '../consts/confirm.consts';
+import { INFO_PERSONE_DONT_HAVE_CABINET } from '../consts/messages.consts';
+import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-create-node',
@@ -30,6 +34,7 @@ export class CreateNodeComponent {
         private _breadcrumbsSrv: EosBreadcrumbsService,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
+        private _confirmSrv: ConfirmWindowService
         ) {
         setTimeout(() => {
             if (this.dictionaryId === 'departments') {
@@ -73,6 +78,23 @@ export class CreateNodeComponent {
             if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
                 this.fullNamesList.push(this.nodeData.rec.FULLNAME)
             }
+            const srhNode = this._dictSrv.currentList.find((node: EosDictionaryNode) => !node.isNode && node.data.rec['POST_H'] === 1);
+            if (srhNode) {
+                const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
+                changeBoss.body = changeBoss.body.replace('{{persone}}', srhNode.data.rec['SURNAME']);
+                changeBoss.body = changeBoss.body.replace('{{newPersone}}',this.nodeData.rec['SURNAME']);
+                this._confirmSrv.confirm(changeBoss)
+                    .then((confirm: boolean) => {
+                        this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+                        if (confirm) {
+
+                        }
+                    })
+            } else {
+
+            }
+
+
             /* tslint:enable */
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);

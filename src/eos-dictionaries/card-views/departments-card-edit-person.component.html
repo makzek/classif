@@ -293,13 +293,13 @@
                             <div class="form-group role">
                                 <label class="primary-text"
                                     [ngClass]="{'unimportant-text': !editMode }"
-                                    for="GENDER">Роль</label>
+                                    for="POST_H">Роль</label>
                                 <select class="form-control m-font gender-select" name="POST_H" id="POST_H" [ngModel]="data.rec['POST_H']"
                                     (ngModelChange)="change('POST_H', 'rec', $event)" [ngClass]="{'readonly hidden': !editMode }">
                                     <option *ngFor="let role of roles" [disabled]="!role.value" [value]="role.value">{{role.title}}</option>
                                 </select>
                                 <input *ngIf="!editMode"
-                                    name="GENDER"
+                                    name="POST_H"
                                     type="text"
                                     class="form-control m-font readonly"
                                     [ngClass]="{'GENDER-placeholder': editMode }"
