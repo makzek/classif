@@ -622,11 +622,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
             this._confirmSrv
                 .confirm(_confrm)
-                .then((confirmed: boolean) => {
-                    if (confirmed) {
-                        this._dictSrv.markDeleted(confirmed, false);
-                    }
-                });
+                .then((confirmed: boolean) => this._dictSrv.markDeleted(confirmed, false));
         } else {
             this._dictSrv.markDeleted(false, false);
         }
