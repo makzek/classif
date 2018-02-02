@@ -167,8 +167,8 @@ export class EosDictService {
     }
 
     bindOrganization(orgDue: string) {
-        if (orgDue && this.dictionary && this._listNode) {
-            return this.dictionary.bindOrganization(orgDue, this._listNode);
+        if (orgDue && this.dictionary) {
+            return this.dictionary.bindOrganization(orgDue);
         } else {
             return Promise.resolve(null);
         }
