@@ -83,7 +83,7 @@ export class CreateNodeComponent {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
 
-            let boss = this._dictSrv.boss;
+            const boss = this._dictSrv.getBoss();
             if (this.nodeData.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
                 changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);

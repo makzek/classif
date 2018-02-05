@@ -13,6 +13,8 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
+import { INFO_PERSONE_DONT_HAVE_CABINET } from '../consts/messages.consts';
+import { CONFIRM_CHANGE_BOSS } from '../consts/confirm.consts';
 
 import { RECENT_URL } from '../../app/consts/common.consts';
 
@@ -408,17 +410,37 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             /* tslint:enable */
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
+
+            if (!this.nodeData.cabiet) {
+                this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+            }
+            const boss = this._dictSrv.getBoss(this.node.parent.children, this.node);
+            if (this.nodeData.rec['POST_H'] === '1' && boss) {
+                const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
+                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
+                changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
+                this._confirmSrv.confirm(changeBoss)
+                    .then((confirm: boolean) => {
+                        if (confirm) {
+                            boss.data.rec['POST_H'] = 0;
+                            this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
+                                this._save(this.nodeData)
+                                    .then((editNode: EosDictionaryNode) => this._afterSaving(editNode));
+                            });
+                        } else {
+                            this.nodeData.rec['POST_H'] = 0;
+                            this._save(this.nodeData)
+                                .then((node: EosDictionaryNode) => this._afterSaving(node));
+                        }
+                    });
+            } else {
+                this._save(this.nodeData)
+                    .then((node: EosDictionaryNode) => this._afterSaving(node));
+            }
+        } else {
+            this._save(this.nodeData)
+                .then((node) => this._afterSaving(node));
         }
-        this._save(this.nodeData)
-            .then((node) => {
-                if (node) {
-                    // console.log('save', node);
-                    this._initNodeData(node);
-                    this._setOriginalData();
-                    this.cancel();
-                }
-                this.disableSave = false;
-            });
     }
 
     private _save(data: any): Promise<any> {
@@ -438,6 +460,16 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 return resp;
             })
             .catch((err) => this._errHandler(err));
+    }
+
+    private _afterSaving(node: EosDictionaryNode) {
+        if (node) {
+            // console.log('save', node);
+            this._initNodeData(node);
+            this._setOriginalData();
+            this.cancel();
+        }
+        this.disableSave = false;
     }
 
     /*
