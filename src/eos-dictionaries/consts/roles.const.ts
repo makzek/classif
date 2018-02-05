@@ -1,7 +1,7 @@
 export interface RoleInWorkflow {
     value: number;
     title: string;
-    disable?: boolean;
+    selected?: boolean;
 }
 
 export interface Gender {
@@ -12,8 +12,8 @@ export interface Gender {
 export const ROLES_IN_WORKFLOW: Array<RoleInWorkflow> = [
     {
         value: 0,
-        title: 'Роль',
-        disable: true,
+        title: 'Не указана',
+        selected: true
     },
     {
         value: 1,
