@@ -11,6 +11,12 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     showOwners = true;
     showAccessToCabinet = true;
     showAccessToFolder = true;
+
+    status: any = {
+        showOwners: true,
+        showAccess: true,
+        showFolders: true
+    };
     owners: any[] = [];
 
     folders = CABINET_FOLDERS;
@@ -313,5 +319,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
                 _person.marked = false;
             });
         }
+    }
+
+    toggleOwners() {
+        this.showOwners = !this.showOwners;
     }
 }

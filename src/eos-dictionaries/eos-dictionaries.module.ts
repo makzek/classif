@@ -10,6 +10,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { DragulaModule } from 'ng2-dragula';
 
@@ -97,6 +98,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         SortableModule.forRoot(),
 //        EosRestModule.forRoot(APP_CONFIG),
         EosCommonModule,
+        AccordionModule.forRoot(),
         DatepickerModule.forRoot(),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
