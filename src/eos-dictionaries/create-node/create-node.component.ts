@@ -123,6 +123,7 @@ export class CreateNodeComponent {
      */
     private _errHandler(err) {
         // console.error(err);
+        this.upadating = false;
         const errMessage = err.message ? err.message : err;
         this._msgSrv.addNewMessage({
             type: 'danger',

@@ -74,6 +74,25 @@ export abstract class AbstractDictionaryDescriptor {
 
     }
 
+    checkSevIsNew(sevData: SEV_ASSOCIATION, record: any): Promise<SEV_ASSOCIATION> {
+        return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: PipRX.criteries({ OBJECT_NAME: this.apiInstance }) })
+            .then((sevs) => {
+                if (!sevData.__metadata) { // if new SEV
+                    const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
+                    sevData = Object.assign(sevRec, sevData);
+                }
+                if (SevIndexHelper.PrepareForSave(sevData, record)) {
+                    const exist = sevs.find((existSev) =>
+                        sevData.OBJECT_ID !== existSev.OBJECT_ID && existSev.GLOBAL_ID === sevData.GLOBAL_ID);
+
+                    if (exist) {
+                        throw new Error('Индекс СЭВ создан ранее!');
+                    }
+                }
+                return sevData;
+            });
+    }
+
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
     }
@@ -209,25 +228,36 @@ export abstract class AbstractDictionaryDescriptor {
      */
     updateRecord(originalData: any, updates: any): Promise<any[]> {
         const changeData = [];
+        let pSev: Promise<SEV_ASSOCIATION> = Promise.resolve(null);
         Object.keys(originalData).forEach((key) => {
-            if (key !== 'photo' && originalData[key]) {
-                if (key === 'sev') {
-                    if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
+
+            if (originalData[key]) {
+                switch (key) {
+                    case 'sev': // do nothing handle sev later
+                        pSev = this.checkSevIsNew(Object.assign({}, originalData.sev, updates.sev), originalData.rec);
+                        break;
+                    case 'photo':
+                        break;
+                    case 'printInfo':
+                        if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                            changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        }
+                        break;
+                    default:
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
-                    }
-                } else if (key === 'printInfo') {
-                    if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
-                        changeData.push(Object.assign({}, originalData[key], updates[key]));
-                    }
-                } else {
-                    changeData.push(Object.assign({}, originalData[key], updates[key]));
                 }
             }
         });
+
         // console.log('originalData', originalData);
         // console.log('changeData', changeData);
-        return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
-        // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
+        return pSev
+            .then((sevData) => {
+                if (sevData) {
+                    changeData.push(sevData);
+                }
+            })
+            .then(() => this.apiSrv.batch(this.apiSrv.changeList(changeData), ''));
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {
