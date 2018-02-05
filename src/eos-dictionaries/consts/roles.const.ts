@@ -13,11 +13,15 @@ export const ROLES_IN_WORKFLOW: Array<RoleInWorkflow> = [
     {
         value: 0,
         title: 'Роль',
-        disable: true
+        disable: true,
     },
     {
         value: 1,
         title: 'Начальник'
+    },
+    {
+        value: 0,
+        title: 'Секретарь',
     }
 ];
 

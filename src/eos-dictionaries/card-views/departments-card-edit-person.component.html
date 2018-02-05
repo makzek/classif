@@ -296,7 +296,7 @@
                                     for="POST_H">Роль</label>
                                 <select class="form-control m-font gender-select" name="POST_H" id="POST_H" [ngModel]="data.rec['POST_H']"
                                     (ngModelChange)="change('POST_H', 'rec', $event)" [ngClass]="{'readonly hidden': !editMode }">
-                                    <option *ngFor="let role of roles" [disabled]="!role.value" [value]="role.value">{{role.title}}</option>
+                                    <option *ngFor="let role of roles" selected="role.disable" [disabled]="role.disable" [value]="role.value">{{role.title}}</option>
                                 </select>
                                 <input *ngIf="!editMode"
                                     name="POST_H"

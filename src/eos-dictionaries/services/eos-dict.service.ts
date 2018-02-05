@@ -143,8 +143,16 @@ export class EosDictService {
         return this._dictMode;
     }
 
-    get currentList(): Array<EosDictionaryNode> {
-        return this._currentList;
+    get boss(): EosDictionaryNode {
+        if (this.dictionary.id === 'department') {
+            return this._currentList.find((node: EosDictionaryNode) => !node.isNode && node.data.rec['POST_H'] === 1);
+        } else {
+            return null;
+        }
+    }
+
+    get haveCabinet(): boolean {
+        return true;
     }
 
     constructor(

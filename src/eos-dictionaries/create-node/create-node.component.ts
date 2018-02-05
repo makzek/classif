@@ -35,7 +35,7 @@ export class CreateNodeComponent {
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
         private _confirmSrv: ConfirmWindowService
-        ) {
+    ) {
         setTimeout(() => {
             if (this.dictionaryId === 'departments') {
                 this.dutysList = this._storageSrv.getItem('dutysList') || [];
@@ -78,47 +78,42 @@ export class CreateNodeComponent {
             if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
                 this.fullNamesList.push(this.nodeData.rec.FULLNAME)
             }
-            const srhNode = this._dictSrv.currentList.find((node: EosDictionaryNode) => !node.isNode && node.data.rec['POST_H'] === 1);
-            if (srhNode) {
+
+            this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+            let boss = this._dictSrv.boss;
+            if (boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-                changeBoss.body = changeBoss.body.replace('{{persone}}', srhNode.data.rec['SURNAME']);
-                changeBoss.body = changeBoss.body.replace('{{newPersone}}',this.nodeData.rec['SURNAME']);
+                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
+                changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
+
                 this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
-                        this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
                         if (confirm) {
-
+                            boss.data.rec['POST_H'] = 0;
+                            this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
+                                this._dictSrv.addNode(this.nodeData)
+                                    .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                                    .catch((err) => this._errHandler(err));
+                            })
+                        } else {
+                            this.nodeData.rec['POST_H'] = 0;
+                            this._dictSrv.addNode(this.nodeData)
+                                .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                                .catch((err) => this._errHandler(err));
                         }
                     })
             } else {
-
+                this._dictSrv.addNode(this.nodeData)
+                    .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                    .catch((err) => this._errHandler(err));
             }
-
-
-            /* tslint:enable */
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
-        }
-        this._dictSrv.addNode(this.nodeData)
-            .then((node) => {
-                if (node) {
-                    let title = '';
-                    node.getTreeView().forEach((_f) => {
-                        title += this.nodeData.rec[_f.key] || _f.value;
-                    });
-                    this._deskSrv.addRecentItem({
-                        url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                        title: title,
-                        /* fullTitle: this._breadcrumbsSrv.currentLink.fullTitle + '/' + node.data.rec.CLASSIF_NAME */
-                    });
-                }
-                this.upadating = false;
-                this.onHide.emit(true);
-                if (!hide) {
-                    this.onOpen.emit(true);
-                }
-            })
+        } else {
+            this._dictSrv.addNode(this.nodeData)
+            .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
             .catch((err) => this._errHandler(err));
+        }
     }
 
     /**
@@ -138,6 +133,24 @@ export class CreateNodeComponent {
             });
             /* tslint:enable:no-bitwise */
             this.hasChanges = hasChanges;
+        }
+    }
+
+    private _afterAdd(node: EosDictionaryNode, hide: boolean): void {
+        if (node) {
+            let title = '';
+            node.getTreeView().forEach((_f) => {
+                title += this.nodeData.rec[_f.key] || _f.value;
+            });
+            this._deskSrv.addRecentItem({
+                url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
+                title: title,
+            });
+        }
+        this.upadating = false;
+        this.onHide.emit(true);
+        if (!hide) {
+            this.onOpen.emit(true);
         }
     }
     /**
