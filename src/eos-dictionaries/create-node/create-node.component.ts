@@ -79,39 +79,42 @@ export class CreateNodeComponent {
                 this.fullNamesList.push(this.nodeData.rec.FULLNAME)
             }
 
-            this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+            if (!this.nodeData.cabiet){
+                this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+            }
+
             let boss = this._dictSrv.boss;
-            if (boss) {
+            if (this.nodeData.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
                 changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
                 changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
-
+                // this.onHide.emit(true); сервис поддерживает не более одного окна одновременно???
                 this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
                         if (confirm) {
                             boss.data.rec['POST_H'] = 0;
                             this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
                                 this._dictSrv.addNode(this.nodeData)
-                                    .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                                    .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                     .catch((err) => this._errHandler(err));
                             })
                         } else {
                             this.nodeData.rec['POST_H'] = 0;
                             this._dictSrv.addNode(this.nodeData)
-                                .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                                .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                 .catch((err) => this._errHandler(err));
                         }
                     })
             } else {
                 this._dictSrv.addNode(this.nodeData)
-                    .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+                    .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                     .catch((err) => this._errHandler(err));
             }
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         } else {
             this._dictSrv.addNode(this.nodeData)
-            .then((node: EosDictionaryNode) => this._afterAdd(node, hide))
+            .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
             .catch((err) => this._errHandler(err));
         }
     }
@@ -136,7 +139,7 @@ export class CreateNodeComponent {
         }
     }
 
-    private _afterAdd(node: EosDictionaryNode, hide: boolean): void {
+    private _afterAdding(node: EosDictionaryNode, hide: boolean): void {
         if (node) {
             let title = '';
             node.getTreeView().forEach((_f) => {

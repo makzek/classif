@@ -144,7 +144,7 @@ export class EosDictService {
     }
 
     get boss(): EosDictionaryNode {
-        if (this.dictionary.id === 'department') {
+        if (this.dictionary.id === 'departments') {
             return this._currentList.find((node: EosDictionaryNode) => !node.isNode && node.data.rec['POST_H'] === 1);
         } else {
             return null;
