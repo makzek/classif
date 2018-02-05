@@ -10,6 +10,7 @@ import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 import { IAppCfg } from 'eos-common/interfaces';
+import { RestError } from 'eos-rest/core/rest-error';
 
 
 export abstract class AbstractDictionaryDescriptor {
@@ -50,7 +51,7 @@ export abstract class AbstractDictionaryDescriptor {
         }
     }
 
-    abstract addRecord(...params): Promise<any>;
+    abstract addRecord(...params): Promise<IRecordOperationResult[]>;
     abstract getChildren(...params): Promise<any[]>;
     abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
@@ -74,22 +75,33 @@ export abstract class AbstractDictionaryDescriptor {
 
     }
 
-    checkSevIsNew(sevData: SEV_ASSOCIATION, record: any): Promise<SEV_ASSOCIATION> {
+    checkSevIsNew(sevData: SEV_ASSOCIATION, record: any): Promise<IRecordOperationResult> {
         return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: PipRX.criteries({ OBJECT_NAME: this.apiInstance }) })
             .then((sevs) => {
+                let result: IRecordOperationResult;
                 if (!sevData.__metadata) { // if new SEV
                     const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
                     sevData = Object.assign(sevRec, sevData);
                 }
+                result = {
+                    record: sevData,
+                    success: true
+                };
                 if (SevIndexHelper.PrepareForSave(sevData, record)) {
                     const exist = sevs.find((existSev) =>
                         sevData.OBJECT_ID !== existSev.OBJECT_ID && existSev.GLOBAL_ID === sevData.GLOBAL_ID);
 
                     if (exist) {
-                        throw new Error('Индекс СЭВ создан ранее!');
+                        result.success = false;
+                        result.error = new RestError({
+                            isLogicException: true,
+                            message: 'Индекс СЭВ создан ранее!'
+                        });
                     }
+                } else {
+                    result = null;
                 }
-                return sevData;
+                return result;
             });
     }
 
@@ -226,9 +238,10 @@ export abstract class AbstractDictionaryDescriptor {
      * @param updates changes
      * @returns Promise<any[]>
      */
-    updateRecord(originalData: any, updates: any): Promise<any[]> {
+    updateRecord(originalData: any, updates: any): Promise<IRecordOperationResult[]> {
         const changeData = [];
-        let pSev: Promise<SEV_ASSOCIATION> = Promise.resolve(null);
+        let pSev: Promise<IRecordOperationResult> = Promise.resolve(null);
+        const results: IRecordOperationResult[] = [];
         Object.keys(originalData).forEach((key) => {
 
             if (originalData[key]) {
@@ -251,13 +264,23 @@ export abstract class AbstractDictionaryDescriptor {
 
         // console.log('originalData', originalData);
         // console.log('changeData', changeData);
+        const record = Object.assign({}, originalData.rec, updates.rec);
         return pSev
-            .then((sevData) => {
-                if (sevData) {
-                    changeData.push(sevData);
+            .then((result) => {
+                if (result) {
+                    if (result.success) {
+                        changeData.push(result.record);
+                    } else {
+                        result.record = record;
+                        results.push(result);
+                    }
                 }
             })
-            .then(() => this.apiSrv.batch(this.apiSrv.changeList(changeData), ''));
+            .then(() => this.apiSrv.batch(this.apiSrv.changeList(changeData), ''))
+            .then(() => {
+                results.push({ success: true, record: record });
+                return results;
+            });
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {

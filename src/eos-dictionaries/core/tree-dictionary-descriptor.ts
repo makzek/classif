@@ -30,14 +30,19 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         isLeaf = false,
         isProtected = false,
         isDeleted = false
-    ): Promise<IRecordOperationResult> {
+    ): Promise<IRecordOperationResult[]> {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<T>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
+                const results: IRecordOperationResult[] = [];
                 if (resp && resp[0]) {
                     data.rec = Object.assign(_newRec, data.rec);
+                    results.push({
+                        success: true,
+                        record: data.rec
+                    });
                     if (resp[0].ID !== undefined) {
                         data.rec['DUE'] = resp[0].ID;
                     }
@@ -71,19 +76,24 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                         }
                     });
                     return pSev
-                        .then((sevData) => {
-                            if (sevData) {
-                                changeData.push(sevData);
+                        .then((result) => {
+                            if (result) {
+                                if (result.success) {
+                                    changeData.push(result.record);
+                                } else {
+                                    result.record = data.rec;
+                                    results.push(result);
+                                }
                             }
                         })
                         .then(() => {
                             if (changeData.length) {
                                 return this.apiSrv.batch(this.apiSrv.changeList(changeData), '')
                                     .then(() => {
-                                        return resp[0].ID;
+                                        return results;
                                     });
                             } else {
-                                return resp[0].ID;
+                                return results;
                             }
                         });
                 } else {

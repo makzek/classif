@@ -396,7 +396,7 @@ export class EosDictService {
     public addNode(data: any): Promise<EosDictionaryNode> {
         // Проверка существования записи для регионов.
         if (this.treeNode) {
-            let p: Promise<string>;
+            let p: Promise<IRecordOperationResult[]>;
 
             if (this.dictionary.id === 'region') {
                 const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
@@ -419,12 +419,29 @@ export class EosDictService {
                 p = this.dictionary.descriptor.addRecord(data, this.treeNode.data);
             }
 
-            return p.then((newNodeId) => {
+            return p.then((results) => {
                 // console.log('created node', newNodeId);
                 return this._reloadList()
                     .then(() => {
                         this._treeNode$.next(this.treeNode);
-                        return this.dictionary.getNode(newNodeId + '');
+                        const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+
+                        results.forEach((res) => {
+                            // console.log(res, keyFld);
+                            res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                            if (!res.success) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: res.record ? res.record.title : '',
+                                    msg: res.error.message
+                                });
+                            }
+                        });
+                        if (results[0] && results[0].success) {
+                            return results[0].record;
+                        } else {
+                            return null;
+                        }
                     });
             })
                 .catch((err) => this._errHandler(err));
@@ -953,6 +970,21 @@ export class EosDictService {
 
     private _updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
         return this.dictionary.updateNodeData(node, data)
+            .then((results) => {
+                const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+
+                results.forEach((res) => {
+                    res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                    if (!res.success) {
+                        this._msgSrv.addNewMessage({
+                            type: 'warning',
+                            title: res.record.title,
+                            msg: res.error.message
+                        });
+                    }
+                });
+
+            })
             .then(() => this._reloadList())
             .then(() => this.dictionary.getNode(node.id))
             .catch((err) => this._errHandler(err));
