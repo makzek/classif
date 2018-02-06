@@ -398,7 +398,6 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     save(): void {
         this.disableSave = true;
-        let pSave: Promise<EosDictionaryNode>;
         if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
             /* tslint:disable */
             if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
@@ -415,50 +414,37 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             if (!this.nodeData.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
-            const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
-            const CLASSIF_NAME = this.nodeData.rec['SURNAME'] + ' - ' + this.nodeData.rec['DUTY'];
-            if (this.nodeData.rec['POST_H'] === '1' && boss) {
-                const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
-                changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
-                pSave = this._confirmSrv.confirm(changeBoss)
-                    .then((confirm: boolean) => {
-                        if (confirm) {
-                            boss.data.rec['POST_H'] = 0;
-                            return this._dictSrv.updateNode(boss, boss.data)
-                                .then((node) => this._save(this.nodeData));
-                        } else {
-                            this.nodeData.rec['POST_H'] = 0;
-                            return this._save(this.nodeData);
-                        }
-                    });
-            } else {
-                pSave = this._save(this.nodeData);
-            }
-        } else {
-            pSave = this._save(this.nodeData);
         }
-        pSave
-            .then((node) => this._afterSaving(node));
+        this._save(this.nodeData).then((node: EosDictionaryNode) => this._afterSaving(node));
     }
 
     private _save(data: any): Promise<any> {
-        // console.log('save', data);
-        return this._dictSrv.updateNode(this.node, data)
-            .then((resp: EosDictionaryNode) => {
-                if (resp) {
-                    this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                    this._deskSrv.addRecentItem({
-                        url: this._router.url,
-                        title: resp.data.rec.CLASSIF_NAME,
-                    });
-                    this._clearEditingCardLink();
-                } else {
-                    this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
+        const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
+        if (data.rec['POST_H'] === '1' && boss) {
+            const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
+            const CLASSIF_NAME = data.rec['SURNAME'] + ' - ' + data.rec['DUTY'];
+            changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
+            changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
+
+            return this._confirmSrv.confirm(changeBoss)
+                .then((confirm: boolean) => {
+
+                    if (confirm) {
+                        boss.data.rec['POST_H'] = 0;
+                        return this._dictSrv.updateNode(boss, boss.data)
+                            .then((node: EosDictionaryNode) => this._dictSrv.updateNode(this.node, data))
+                            .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
+                    } else {
+                        data.rec['POST_H'] = 0;
+                        return this._dictSrv.updateNode(this.node, data)
+                            .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
                 }
-                return resp;
-            })
-            .catch((err) => this._errHandler(err));
+            });
+        } else {
+            return this._dictSrv.updateNode(this.node, data)
+                .then((resp: EosDictionaryNode) => this._afterUpdating(resp))
+                .catch((err) => this._errHandler(err));
+        }
     }
 
     private _afterSaving(node: EosDictionaryNode) {
@@ -469,6 +455,20 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             this.cancel();
         }
         this.disableSave = false;
+    }
+
+    private _afterUpdating(resp: EosDictionaryNode): Promise<EosDictionaryNode> {
+        if (resp) {
+            this._msgSrv.addNewMessage(SUCCESS_SAVE);
+            this._deskSrv.addRecentItem({
+                url: this._router.url,
+                title: resp.data.rec.CLASSIF_NAME,
+            });
+            this._clearEditingCardLink();
+        } else {
+            this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
+        }
+        return Promise.resolve(resp);
     }
 
     /*

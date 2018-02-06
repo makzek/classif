@@ -89,7 +89,7 @@ export class CreateNodeComponent {
                 const CLASSIF_NAME = this.nodeData.rec['SURNAME'] + ' - ' + this.nodeData.rec['DUTY'];
                 changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
                 changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
-                // this.onHide.emit(true); сервис поддерживает не более одного окна одновременно???
+                this.onHide.emit(true);
                 this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
                         if (confirm) {
