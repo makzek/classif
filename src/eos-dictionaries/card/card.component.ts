@@ -190,19 +190,20 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
         if (this.nodeData) {
             // console.log('recordChanged', this.nodeData, this._originalData);
             /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
+            const changedDict = Object.keys(this.nodeData).findIndex((dict) => {
                 if (this.nodeData[dict] && this._originalData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
+                    const fldIdx = Object.keys(this.nodeData[dict]).findIndex((key) =>
                         ((this.nodeData[dict][key] !== this._originalData[dict][key]) &&
                             (this.nodeData[dict][key] || this._originalData[dict][key])) &&
                         (key !== '__metadata') && (key !== '_more_json') && (key !== '_orig')
                     );
+                    return fldIdx !== -1;
                 } else {
                     return false;
                 }
             });
             /* tslint:enable:no-bitwise */
-            this.isChanged = hasChanges;
+            this.isChanged = changedDict > -1;
         }
     }
 

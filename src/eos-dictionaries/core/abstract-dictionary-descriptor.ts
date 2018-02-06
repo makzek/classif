@@ -256,8 +256,11 @@ export abstract class AbstractDictionaryDescriptor {
                             changeData.push(Object.assign({}, originalData[key], updates[key]));
                         }
                         break;
-                    default:
+                    case 'rec':
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        break;
+                    default:// do nothing
+
                 }
             }
         });

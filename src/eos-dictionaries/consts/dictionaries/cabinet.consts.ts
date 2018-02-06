@@ -41,40 +41,56 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         key: 'department',
         type: 'dictionary',
         title: 'Подразделение'
+    }, {
+        key: 'users',
+        type: 'dictionary',
+        title: 'Пользователи кабинета'
+    }, {
+        key: 'folders',
+        type: 'dictionary',
+        title: 'Папки кабинета'
+    }, {
+        key: 'owners',
+        type: 'dictionary',
+        title: 'Владельцы кабинета'
+    }, {
+        key: 'cabinetAccess',
+        type: 'dictionary',
+        title: 'Доступ пользователей'
     }],
     treeFields: ['CABINET_NAME'],
     listFields: ['CABINET_NAME', 'DEPARTMENT_NAME'],
     allVisibleFields: ['FULLNAME'],
     shortQuickViewFields: ['CABINET_NAME', 'FULLNAME'],
     quickViewFields: ['CABINET_NAME', 'DEPARTMENT_NAME', 'department'],
-    editFields: ['CABINET_NAME', 'FULLNAME'],
+    editFields: ['CABINET_NAME', 'FULLNAME', 'department', 'users', 'owners', 'folders', 'cabinetAccess'],
 });
 
 export const CABINET_FOLDERS = [{
-    id: 1,
+    key: 1,
     title: 'Поступившие'
 }, {
-    id: 2,
+    key: 2,
     title: 'На исполнении'
 }, {
-    id: 3,
+    key: 3,
     title: 'На контроле'
 }, {
-    id: 4,
+    key: 4,
     title: 'У руководства'
 }, {
-    id: 5,
+    key: 5,
     title: 'На рассмотрении'
 }, {
-    id: 6,
+    key: 6,
     title: 'В дело'
 }, {
-    id: 7,
+    key: 7,
     title: 'Управление проектам'
 }, {
-    id: 8,
+    key: 8,
     title: 'На визировании'
 }, {
-    id: 9,
+    key: 9,
     title: 'На подписи'
 }];

@@ -1,5 +1,5 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
-import { CABINET } from 'eos-rest';
+import { CABINET, USER_CABINET, DEPARTMENT, USER_CL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';
 
@@ -54,20 +54,26 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
 
     getRelated(rec: CABINET): Promise<any> {
         const reqs = [
-            this.apiSrv.read({ 'DEPARTMENT': [rec.DUE] }),
+            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': [rec.DUE] }),
             this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
-            this.apiSrv.read({
-                'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }),
-                _moreJSON: {}
-            })
+            this.apiSrv.read<USER_CABINET>({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
+                .then((userCabinet) => {
+                    const userIds = userCabinet.map((u2c) => u2c.ISN_LCLASSIF);
+                    return this.apiSrv.read<USER_CL>({ 'USER_CL': userIds, expand: 'UFOLDER_List' })
+                        .then((users) => [userCabinet, users]);
+                }),
+            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
         ];
         return Promise.all(reqs)
-            .then(([departments, folders, users]) => {
+            .then(([[department], folders, [userCabinet, users], owners]) => {
                 const related = {
-                    department: departments[0],
+                    department: department,
                     folders: folders,
-                    users: users
+                    cabinetAccess: userCabinet,
+                    users: users,
+                    owners: owners
                 };
+                console.log('cabinet related', related);
                 return related;
             });
     }

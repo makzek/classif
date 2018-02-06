@@ -14,7 +14,6 @@
                     [ngModel]="data.rec['CABINET_NAME']"
                     (ngModelChange)="change('CABINET_NAME', 'rec', $event)"
                     placeholder="Краткое наименование кабинета"
-                    [readonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     required
                     [pattern]="NOT_EMPTY_STRING"
@@ -46,7 +45,6 @@
                     [ngModel]="data.rec['FULLNAME']"
                     (ngModelChange)="change('FULLNAME', 'rec', $event)"
                     placeholder="Полное наименование кабинета"
-                    [readonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     required
                     [pattern]="NOT_EMPTY_STRING"
@@ -69,30 +67,24 @@
                 <label for="DUE"
                     class="primary-text"
                     [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-                <input [readonly]="!editMode"
+                <input readonly="readonly"
                     id="DUE"
                     name="DUE"
                     type="text"
                     class="form-control m-font"
-                    [ngModel]="data.rec['DUE']"
-                    (ngModelChange)="change('DUE', 'rec', $event)"
+                    [ngModel]="data.department['CLASSIF_NAME']"
+                    (ngModelChange)="change('CLASSIF_NAME', 'department', $event)"
                     placeholder="Подразделение"
-                    [readonly]="!editMode"
-                    [ngClass]="{'readonly': !editMode }"
                     required
                     [pattern]="NOT_EMPTY_STRING"
                     maxlength="248"
-                    [eosUnic]="true"
-                    [key]="'DUE'"
-                    [checkingMethod]="checkUnic.bind(this)"
-                    [inDict]="true"
                     tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
                     (focus)="focus('DUE')"
                     (blur)="blur()"
-                    [isDisabled]="!editMode"
+                    [isDisabled]="true"
                     [isOpen]="cardForm.controls['DUE']?.dirty && cardForm.controls['DUE']?.invalid && focusedField === 'DUE'"
                     triggers="">
             </div>
@@ -135,17 +127,29 @@
                                         </label>
                                         </span>
                                     </th>
-                                    <th>
-                                        <span class="text selected-text">Фамилия И.О.</span>
+                                    <th class="text selected-text">
+                                        Фамилия И.О.
                                     </th>
-                                    <th>
-                                        <span class="text selected-text">Должность</span>
+                                    <th class="text selected-text">
+                                        Должность
                                     </th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr *ngFor="let owner of cabinetOwners" [ngClass]="{deleted: owner['DELETED']}">
+                                    <td class="td-checkbox">
+                                        <span class="checkbox-inline"
+                                            *ngIf="editMode">
+                                            <label class="checkbox"><input type="checkbox" name="owner" [(ngModel)]="owner.marked"><span></span></label>
+                                        </span>
+                                    </td>
+                                    <td>{{owner['SURNAME']}}</td>
+                                    <td>{{owner['DUTY']}}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <div class="ed1t-block-header secondary-block owners"
+                    <!--<div class="ed1t-block-header secondary-block owners"
                         [ngClass]="{'ed1t-middle-block': editMode, 'ed1t-block-header': !editMode}">
                         <span class="checkbox-inline"
                             *ngIf="editMode">
@@ -159,7 +163,7 @@
                         <span class="text selected-text">Фамилия И.О.</span>
                         <span class="text selected-text">Должность</span>
                     </div>
-                    <!--div class="edit-c0ntent owners-content sec0ndary-block"
+                    <div class="edit-c0ntent owners-content sec0ndary-block"
                         [hidden]="!status.showOwners">
                         <div class="owners owners-item highlight-on-hover"
                             *ngFor="let person of owners">
@@ -191,15 +195,15 @@
                                 <thead>
                                     <tr class="first-line">
                                         <th class="usual-border border-right headcol"></th>
-                                        <th *ngFor="let person of persons"
-                                            class="cell"
+                                        <th *ngFor="let person of cabinetUsers"
+                                            class="cell text-center"
                                             align="center">{{person.fio}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let row of accessHeaders">
                                         <th class="usual-border border-right headcol">{{row.title}}</th>
-                                        <td *ngFor="let person of persons"
+                                        <td *ngFor="let person of cabinetUsers"
                                             class="cell"
                                             align="center">
                                             <span class="eos-icon small"
