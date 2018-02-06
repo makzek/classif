@@ -86,8 +86,9 @@ export class CreateNodeComponent {
             const boss = this._dictSrv.getBoss();
             if (this.nodeData.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
-                changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
+                const CLASSIF_NAME = this.nodeData.rec['SURNAME'] + ' - ' + this.nodeData.rec['DUTY'];
+                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
+                changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
                 // this.onHide.emit(true); сервис поддерживает не более одного окна одновременно???
                 this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {

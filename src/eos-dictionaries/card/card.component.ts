@@ -416,10 +416,11 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
             const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
+            const CLASSIF_NAME = this.nodeData.rec['SURNAME'] + ' - ' + this.nodeData.rec['DUTY'];
             if (this.nodeData.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
-                changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
+                changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
+                changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
                 pSave = this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
                         if (confirm) {
