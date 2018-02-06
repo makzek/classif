@@ -12,7 +12,6 @@
         border-bottom-style: solid;
         display: inline-block;
         height: 38px;
-        width: 100%;
         font-weight: 700;
         padding-top: 8px;
 
@@ -32,6 +31,7 @@
 
         input[type="checkbox"] + span {
             margin-right: 12px;
+            width: 100%;
         }
 
         &.card-flag {
