@@ -376,17 +376,16 @@ export class EosDictService {
                     const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
                     const _srchCriteries = this.dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, node);
                     return this.dictionary.descriptor.search(_srchCriteries)
-                        .then(nodes => {
+                        .then((nodes) => {
                             const findNode = nodes.find((el: EosDictionaryNode) => {
                                 return el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase();
                             });
                             if (findNode['DUE'] !== node.data.rec['DUE']) {
                                 return Promise.reject('Запись с этим именем уже существует!');
                             } else {
-                                return this.dictionary.descriptor.updateRecord(node.data, data);
+                                return this._updateNode(node, data);
                             }
                         })
-                        .then(() => this._updateNode(node, data))
                         .catch((err) => this._errHandler(err));
                 });
         } else {
@@ -397,7 +396,7 @@ export class EosDictService {
     public addNode(data: any): Promise<EosDictionaryNode> {
         // Проверка существования записи для регионов.
         if (this.treeNode) {
-            let p: Promise<string>;
+            let p: Promise<IRecordOperationResult[]>;
 
             if (this.dictionary.id === 'region') {
                 const params = { deleted: true, mode: SEARCH_MODES.totalDictionary };
@@ -420,12 +419,29 @@ export class EosDictService {
                 p = this.dictionary.descriptor.addRecord(data, this.treeNode.data);
             }
 
-            return p.then((newNodeId) => {
+            return p.then((results) => {
                 // console.log('created node', newNodeId);
                 return this._reloadList()
                     .then(() => {
                         this._treeNode$.next(this.treeNode);
-                        return this.dictionary.getNode(newNodeId + '');
+                        const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+
+                        results.forEach((res) => {
+                            // console.log(res, keyFld);
+                            res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                            if (!res.success) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: res.record ? res.record.title : '',
+                                    msg: res.error.message
+                                });
+                            }
+                        });
+                        if (results[0] && results[0].success) {
+                            return results[0].record;
+                        } else {
+                            return null;
+                        }
                     });
             })
                 .catch((err) => this._errHandler(err));
@@ -953,9 +969,27 @@ export class EosDictService {
     }
 
     private _updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        let resNode: EosDictionaryNode = null;
         return this.dictionary.updateNodeData(node, data)
-            .then(() => this._reloadList())
-            .then(() => this.dictionary.getNode(node.id))
+            .then((results) => {
+                const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+
+                results.forEach((res) => {
+                    res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                    if (!res.success) {
+                        this._msgSrv.addNewMessage({
+                            type: 'warning',
+                            title: res.record.title,
+                            msg: res.error.message
+                        });
+                    } else {
+                        resNode = this.dictionary.getNode(node.id);
+                    }
+                });
+
+            })
+            .then((results) => this._reloadList())
+            .then(() => resNode)
             .catch((err) => this._errHandler(err));
 
     }

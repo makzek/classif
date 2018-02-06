@@ -66,6 +66,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             _value = null;
         } else if (value instanceof Date) {
             _value = EosUtils.dateToString(value);
+        } else if (value === '') { // fix empty strings in IE
+            _value = null;
         } else {
             _value = value;
         }

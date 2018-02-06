@@ -143,15 +143,15 @@ export class EosDictionary {
         }
     }
 
-    updateNodeData(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+    updateNodeData(node: EosDictionaryNode, data: any): Promise<IRecordOperationResult[]> {
         if (data) {
             return this.descriptor.updateRecord(node.data, data)
                 .then((_resp) => {
                     node.updateData(data.rec);
-                    return node;
+                    return _resp;
                 });
         } else {
-            return Promise.resolve(node);
+            return Promise.resolve([]);
         }
     }
 
