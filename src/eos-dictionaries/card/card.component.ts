@@ -271,7 +271,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
                 }
             });
-            // .catch((err) => console.log('getNode error', err));
+        // .catch((err) => console.log('getNode error', err));
     }
 
     private _initNodeData(node: EosDictionaryNode) {
@@ -398,6 +398,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
     save(): void {
         this.disableSave = true;
+        let pSave: Promise<EosDictionaryNode>;
         if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
             /* tslint:disable */
             if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
@@ -414,33 +415,30 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             if (!this.nodeData.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
-            const boss = this._dictSrv.getBoss(this.node.parent.children, this.node);
+            const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
             if (this.nodeData.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
                 changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['SURNAME']);
                 changeBoss.body = changeBoss.body.replace('{{newPersone}}', this.nodeData.rec['SURNAME']);
-                this._confirmSrv.confirm(changeBoss)
+                pSave = this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
                         if (confirm) {
                             boss.data.rec['POST_H'] = 0;
-                            this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
-                                this._save(this.nodeData)
-                                    .then((editNode: EosDictionaryNode) => this._afterSaving(editNode));
-                            });
+                            return this._dictSrv.updateNode(boss, boss.data)
+                                .then((node) => this._save(this.nodeData));
                         } else {
                             this.nodeData.rec['POST_H'] = 0;
-                            this._save(this.nodeData)
-                                .then((node: EosDictionaryNode) => this._afterSaving(node));
+                            return this._save(this.nodeData);
                         }
                     });
             } else {
-                this._save(this.nodeData)
-                    .then((node: EosDictionaryNode) => this._afterSaving(node));
+                pSave = this._save(this.nodeData);
             }
         } else {
-            this._save(this.nodeData)
-                .then((node) => this._afterSaving(node));
+            pSave = this._save(this.nodeData);
         }
+        pSave
+            .then((node) => this._afterSaving(node));
     }
 
     private _save(data: any): Promise<any> {
