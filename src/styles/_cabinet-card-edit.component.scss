@@ -1,4 +1,17 @@
 .cabinet-card-edit {
+    .shadow-box {
+        width: 224px;
+        position: absolute;
+        margin-top: 48px;
+        top:0;
+        bottom: 0;
+        box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
+        border-right-width: 1px;
+        border-right-style: solid;
+    }
+    .table-wrapper {
+        position: relative;
+    }
     .block-divider {
         .divider-text {
             vertical-align: super;
@@ -111,16 +124,6 @@
                 height: 49px;
             }
         }
-        .shadow {
-            width: 224px;
-            position: absolute;
-            top: 94px;
-            bottom: 0;
-            box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
-            z-index: 1;
-            border-right-width: 1px;
-            border-right-style: solid;
-        }
         .scroll-btn {
             position: absolute;
             z-index: 1;
@@ -218,8 +221,7 @@
             }
         }
         .shadow {
-            box-shadow: inset 0px 0 0px 100px #fff;
-            // box-shadow: inset 0 0 0 100px #5FCBE5;
+            box-shadow: inset 0px 0 0px 100px #fff; // box-shadow: inset 0 0 0 100px #5FCBE5;
             position: relative;
         }
         .shadow:before,
@@ -233,11 +235,11 @@
         }
         .shadow:before {
             left: 0;
-            box-shadow: -5px 0 10px rgba(0,0,0,0.85);
+            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.85);
         }
         .shadow:after {
             right: 0;
-            box-shadow: 5px 0 10px rgba(0,0,0,0.85);
+            box-shadow: 5px 0 10px rgba(0, 0, 0, 0.85);
         }
     }
 }

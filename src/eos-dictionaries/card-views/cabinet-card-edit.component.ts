@@ -8,57 +8,17 @@ import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.co
     templateUrl: 'cabinet-card-edit.component.html',
 })
 export class CabinetCardEditComponent extends BaseCardEditComponent {
-    showOwners = true;
-    showAccessToCabinet = true;
-    showAccessToFolder = true;
-
     status: any = {
-        showOwners: true,
+        showOwners: false,
         showAccess: true,
-        showFolders: true
+        showFolders: false
     };
+
     owners: any[] = [];
 
     folders = CABINET_FOLDERS;
 
-    rows = [{
-        title: '',
-        key: 'fio'
-    }, {
-        title: 'Ограничение доступа РК',
-        key: 'rk'
-    }, {
-        title: 'Ограничение доступа РКПД',
-        key: 'rkpd'
-    }, {
-        title: 'Поступившие',
-        key: 'received'
-    }, {
-        title: 'На исполнении',
-        key: 'inProgress'
-    }, {
-        title: 'На контроле',
-        key: 'inChecking'
-    }, {
-        title: 'У руководства',
-        key: 'boss'
-    }, {
-        title: 'На рассмотрении',
-        key: 'underConsideration'
-    }, {
-        title: 'В дело',
-        key: 'forWork'
-    }, {
-        title: 'Управление проектами',
-        key: 'projManagment'
-    }, {
-        title: 'На визировании',
-        key: 'onSight'
-    }, {
-        title: 'На подписи',
-        key: 'onSignature'
-    }
-    ];
+    accessHeaders = [];
 
     persons = [{
         fio: 'Константинопольский К.К.',
@@ -267,6 +227,19 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
 
     constructor(injector: Injector) {
         super(injector);
+        this.accessHeaders = [{
+            title: 'Ограничение доступа РК',
+            key: 'rk'
+        }, {
+            title: 'Ограничение доступа РКПД',
+            key: 'rkpd'
+            }];
+        this.folders.forEach((folder) => {
+            this.accessHeaders.push({
+                title: folder.title,
+                key: folder.id + ''
+            });
+        });
     }
 
     add() { }
@@ -293,10 +266,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         }, 20);
     }
 
-    toggleAccessFolder() {
-        this.showAccessToFolder = !this.showAccessToFolder;
-    }
-
     toggleAllAccessMarks() {
         if (this.allMarkedAccess) {
             Object.keys(this.folderConfig).forEach((_key) => {
@@ -319,9 +288,5 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
                 _person.marked = false;
             });
         }
-    }
-
-    toggleOwners() {
-        this.showOwners = !this.showOwners;
     }
 }
