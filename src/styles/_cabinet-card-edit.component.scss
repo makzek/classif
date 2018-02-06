@@ -1,17 +1,4 @@
 .cabinet-card-edit {
-    .shadow-box {
-        width: 224px;
-        position: absolute;
-        margin-top: 48px;
-        top:0;
-        bottom: 0;
-        box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
-        border-right-width: 1px;
-        border-right-style: solid;
-    }
-    .table-wrapper {
-        position: relative;
-    }
     .block-divider {
         .divider-text {
             vertical-align: super;
@@ -63,12 +50,12 @@
         }
     }
     .owner-wrapper,
-    .cabinet-access {
+        {
         margin: 0 auto;
         min-width: 800px;
         width: fit-content;
     }
-    .cabinet-access {
+    .cab1net-access {
         border-width: 1px;
         border-style: solid;
         position: relative;
@@ -102,16 +89,6 @@
                 border-bottom-style: solid;
                 height: 49px;
             }
-        }
-        .headcol {
-            position: absolute;
-            left: 0;
-            top: auto;
-            font-weight: normal;
-            padding: 13px 20px 0;
-            width: 224px;
-            border-left-width: 1px;
-            border-left-style: solid;
         }
         .first-line {
             border-bottom-width: 1px;
@@ -177,6 +154,39 @@
     .flex-box {
         display: flex;
         padding: $grid-gutter-width/2;
+    }
+}
+
+.cabinet-access {
+    .shadow-box {
+        width: 224px;
+        position: absolute;
+        margin-top: 48px;
+        top: 0;
+        bottom: 0;
+        box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
+        border-right-width: 1px;
+        border-right-style: solid;
+    }
+    .table-wrapper {
+        position: relative;
+    }
+    .headcol {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        background-color: #fff;
+        font-weight: normal;
+        padding: 13px 20px 0;
+        width: 224px;
+    }
+    th,
+    td,
+    .th,
+    .td {
+        vertical-align: middle;
+        font-weight: normal;
+        height: 48px;
     }
 }
 

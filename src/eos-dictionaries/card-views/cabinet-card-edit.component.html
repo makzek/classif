@@ -179,7 +179,7 @@
 
                 </accordion-group>
                 <accordion-group #access
-                    class="cab1net-access"
+                    class="cabinet-access"
                     [(isOpen)]="status.showAccess">
                     <div accordion-heading>Доступ пользователей к кабинету <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showAccess, 'fa-angle-down': !status.showAccess}"></i>
@@ -188,22 +188,26 @@
                         <div class="table-responsive"
                             #tableEl>
                             <table class="table cab1net-access-table table-hover">
-                                <tr class="first-line">
-                                    <th class="usual-border border-right"></th>
-                                    <td *ngFor="let person of persons"
-                                        class="cell"
-                                        align="center">{{person.fio}}</td>
-                                </tr>
-                                <tr *ngFor="let row of accessHeaders">
-                                    <th class="usual-border border-right">{{row.title}}</th>
-                                    <td *ngFor="let person of persons"
-                                        class="cell"
-                                        align="center">
-                                        <span class="eos-icon small"
-                                            aria-hidden="true"
-                                            [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
-                                    </td>
-                                </tr>
+                                <thead>
+                                    <tr class="first-line">
+                                        <th class="usual-border border-right headcol"></th>
+                                        <th *ngFor="let person of persons"
+                                            class="cell"
+                                            align="center">{{person.fio}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of accessHeaders">
+                                        <th class="usual-border border-right headcol">{{row.title}}</th>
+                                        <td *ngFor="let person of persons"
+                                            class="cell"
+                                            align="center">
+                                            <span class="eos-icon small"
+                                                aria-hidden="true"
+                                                [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         <div class="shadow-box usual-border"></div>
