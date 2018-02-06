@@ -969,6 +969,7 @@ export class EosDictService {
     }
 
     private _updateNode(node: EosDictionaryNode, data: any): Promise<EosDictionaryNode> {
+        let resNode: EosDictionaryNode = null;
         return this.dictionary.updateNodeData(node, data)
             .then((results) => {
                 const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
@@ -981,12 +982,14 @@ export class EosDictService {
                             title: res.record.title,
                             msg: res.error.message
                         });
+                    } else {
+                        resNode = this.dictionary.getNode(node.id);
                     }
                 });
 
             })
-            .then(() => this._reloadList())
-            .then(() => this.dictionary.getNode(node.id))
+            .then((results) => this._reloadList())
+            .then(() => resNode)
             .catch((err) => this._errHandler(err));
 
     }

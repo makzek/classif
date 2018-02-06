@@ -87,8 +87,9 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                             }
                         })
                         .then(() => {
-                            if (changeData.length) {
-                                return this.apiSrv.batch(this.apiSrv.changeList(changeData), '')
+                            const changes = this.apiSrv.changeList(changeData);
+                            if (changes) {
+                                return this.apiSrv.batch(changes, '')
                                     .then(() => {
                                         return results;
                                     });

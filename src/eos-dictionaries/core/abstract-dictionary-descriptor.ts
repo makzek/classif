@@ -276,10 +276,17 @@ export abstract class AbstractDictionaryDescriptor {
                     }
                 }
             })
-            .then(() => this.apiSrv.batch(this.apiSrv.changeList(changeData), ''))
             .then(() => {
-                results.push({ success: true, record: record });
-                return results;
+                const changes = this.apiSrv.changeList(changeData);
+                if (changes.length) {
+                    return this.apiSrv.batch(changes, '')
+                        .then(() => {
+                            results.push({ success: true, record: record });
+                            return results;
+                        });
+                } else {
+                    return results;
+                }
             });
     }
 
