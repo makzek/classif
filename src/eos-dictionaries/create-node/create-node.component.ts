@@ -82,7 +82,7 @@ export class CreateNodeComponent {
                 if (node) {
                     let title = '';
                     node.getTreeView().forEach((_f) => {
-                        title += this.nodeData.rec[_f.key];
+                        title += this.nodeData.rec[_f.key] || _f.value;
                     });
                     this._deskSrv.addRecentItem({
                         url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',

@@ -100,7 +100,7 @@ export class PipRX extends PipeUtils {
             const t = typeof (args[argname]);
             if (t !== 'number') {
                 q = '\'';
-                v = t !== 'string' ? encodeURIComponent(JSON.stringify(v)) : v;
+                v = t !== 'string' ? encodeURIComponent(JSON.stringify(v)) : encodeURIComponent(v);
             }
             url += ['&', argname, '=', q, v, q].join('');
         }

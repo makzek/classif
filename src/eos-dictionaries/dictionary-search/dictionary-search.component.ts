@@ -174,8 +174,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     public considerDel() {
-        this._dictSrv.viewParameters.showDeleted = this.settings.deleted;
-        this._dictSrv.shareViewParameters();
+        this._dictSrv.updateViewParameters({showDeleted : this.settings.deleted});
     }
 
     private clearModel(model: string) {
