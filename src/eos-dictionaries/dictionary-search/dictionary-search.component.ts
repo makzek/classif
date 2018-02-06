@@ -148,13 +148,10 @@ export class DictionarySearchComponent implements OnDestroy {
             if (this.dictId === 'departments') {
                 this[this.currTab]['srchMode'] = this.currTab;
             }
-            if (this.currTab === 'person') {
-                this.person.rec['PHONE_LOCAL'] = this.person.rec['PHONE'];
-            }
             this._dictSrv.fullSearch(this[this.currTab || 'data'], this.settings)
                 .then(() => {
                     this.searchDone = true;
-                    if (this.dictId  === 'departments') {
+                    if (this.dictId === 'departments') {
                         this[this.currTab]['srchMode'] = '';
                     }
                 });
@@ -174,7 +171,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     public considerDel() {
-        this._dictSrv.updateViewParameters({showDeleted : this.settings.deleted});
+        this._dictSrv.updateViewParameters({ showDeleted: this.settings.deleted });
     }
 
     private clearModel(model: string) {
