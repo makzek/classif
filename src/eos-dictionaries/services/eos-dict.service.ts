@@ -524,17 +524,12 @@ export class EosDictService {
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
-        if (data.srchMode && data.srchMode === 'persone') {
+        if (data.srchMode === 'person') {
             this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
-            const p1 = this._search(params.deleted);
             data.rec['PHONE_LOCAL'] = data.rec['PHONE'];
-            data.rec['PHONE'] = '';
-            this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
-            const p2 = this._search(params.deleted);
-            Promise.all([p1, p2]).then((values) => {
-                // console.log(values);
-                return values;
-            });
+            delete data.rec['PHONE'];
+            this._srchCriteries.push(this.dictionary.getFullsearchCriteries(data, params, this.treeNode));
+            return this._search(params.deleted);
         } else {
             this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
             return this._search(params.deleted);
