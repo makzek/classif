@@ -11,7 +11,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     status: any = {
         showOwners: false,
         showAccess: true,
-        showFolders: false
+        showFolders: false,
     };
 
     allMarkedAccess = false;
@@ -24,190 +24,26 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     folders = CABINET_FOLDERS;
 
-    persons = [{
-        fio: 'Константинопольский К.К.',
-        rk: false,
-        rkpd: true,
-        received: false,
-        inProgress: false,
-        inChecking: true,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: true,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Иванов И.И.',
-        rk: false,
-        rkpd: true,
-        received: false,
-        inProgress: false,
-        inChecking: true,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: true,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Семёнов А.П.',
-        rk: true,
-        rkpd: true,
-        received: true,
-        inProgress: false,
-        inChecking: true,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: false,
-        onSight: false,
-        onSignature: true
-    }, {
-        fio: 'Константинопольский К.К.',
-        rk: false,
-        rkpd: true,
-        received: false,
-        inProgress: true,
-        inChecking: false,
-        boss: false,
-        underConsideration: false,
-        forWork: false,
-        projManagment: true,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Иванов И.И.',
-        rk: false,
-        rkpd: true,
-        received: true,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: false,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Семёнов А.П.',
-        rk: false,
-        rkpd: false,
-        received: false,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: true,
-        projManagment: true,
-        onSight: true,
-        onSignature: true
-    }, {
-        fio: 'Константинопольский К.К.',
-        rk: false,
-        rkpd: true,
-        received: false,
-        inProgress: true,
-        inChecking: false,
-        boss: false,
-        underConsideration: false,
-        forWork: false,
-        projManagment: true,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Иванов И.И.',
-        rk: false,
-        rkpd: true,
-        received: true,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: false,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Семёнов А.П.',
-        rk: false,
-        rkpd: false,
-        received: false,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: true,
-        projManagment: true,
-        onSight: true,
-        onSignature: true
-    }, {
-        fio: 'Константинопольский К.К.',
-        rk: false,
-        rkpd: true,
-        received: false,
-        inProgress: true,
-        inChecking: false,
-        boss: false,
-        underConsideration: false,
-        forWork: false,
-        projManagment: true,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Иванов И.И.',
-        rk: false,
-        rkpd: true,
-        received: true,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: false,
-        projManagment: false,
-        onSight: false,
-        onSignature: false
-    }, {
-        fio: 'Семёнов А.П.',
-        rk: false,
-        rkpd: false,
-        received: false,
-        inProgress: false,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: true,
-        projManagment: true,
-        onSight: true,
-        onSignature: true
-    }];
-
-    folderConfig = {
-        received: false,
-        inProgress: true,
-        inChecking: false,
-        boss: true,
-        underConsideration: false,
-        forWork: true,
-        projManagment: false,
-        onSight: false,
-        onSignature: false
-    };
+    foldersMap: Map<number, any>;
+    showScroll = false;
 
     @ViewChild('tableEl') tableEl;
 
-
+    private scrollStep = 5;
+    private scrollInterval = 50;
+    /*
     get showScroll(): boolean {
         if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
-            return this.tableEl.nativeElement.scrollWidth > window.innerWidth - 224 - 40;
+            return this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;
         } else {
             return false;
         }
     }
+    */
 
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
-        this.allMarkedAccess = !!~Object.keys(this.folderConfig).findIndex((_key) => this.folderConfig[_key]);
+        this.allMarkedAccess = !!~this.data.folders.findIndex((folder) => folder['USER_COUNT']);
         return this.allMarkedAccess;
     }
 
@@ -217,7 +53,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     get anyUnmarkedAccess(): boolean {
-        return !!~Object.keys(this.folderConfig).findIndex((_key) => !this.folderConfig[_key]);
+        return !!~this.data.folders.findIndex((folder) => !folder['USER_COUNT']);
     }
 
     get anyUnmarkedOwners(): boolean {
@@ -229,12 +65,16 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     constructor(injector: Injector) {
         super(injector);
+        this.foldersMap = new Map<number, any>();
+        CABINET_FOLDERS.forEach((folder) => {
+            this.foldersMap.set(folder.key, folder);
+        });
     }
 
     ngOnChanges() {
         super.ngOnChanges();
         if (this.data && this.data.rec) {
-            console.log(this.data);
+            // console.log(this.data);
             this.init(this.data);
         }
     }
@@ -245,6 +85,17 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         window.clearInterval(this._interval);
     }
 
+    folderTitle(folderType: number): string {
+        let title = '';
+        if (folderType) {
+            const folder = this.foldersMap.get(folderType);
+            if (folder) {
+                title = folder.title;
+            }
+        }
+        return title;
+    }
+
     moveUp() { }
 
     moveDown() { }
@@ -252,39 +103,54 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     remove() { }
 
     startScrollToLeft() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
         this._interval = setInterval(() => {
-            this.tableEl.nativeElement.scrollLeft++;
-        }, 20);
+            if (this.tableEl.nativeElement.scrollLeft > this.scrollStep) {
+                this.tableEl.nativeElement.scrollLeft -= this.scrollStep;
+            } else {
+                this.tableEl.nativeElement.scrollLeft = 0;
+            }
+        }, this.scrollInterval);
     }
 
     startScrollToRight() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
         this._interval = setInterval(() => {
-            this.tableEl.nativeElement.scrollLeft--;
-        }, 20);
+            if (this.tableEl.nativeElement.scrollLeft + this.scrollStep < this.tableEl.nativeElement.scrollWidth) {
+                this.tableEl.nativeElement.scrollLeft += this.scrollStep;
+            } else {
+                this.tableEl.nativeElement.scrollLeft = this.tableEl.nativeElement.scrollWidth;
+            }
+        }, this.scrollInterval);
     }
 
     toggleAllAccessMarks() {
-        if (this.allMarkedAccess) {
-            Object.keys(this.folderConfig).forEach((_key) => {
-                this.folderConfig[_key] = true;
-            });
-        } else {
-            Object.keys(this.folderConfig).forEach((_key) => {
-                this.folderConfig[_key] = false;
-            });
-        }
+        this.data.folders.forEach((folder) => {
+            folder['USER_COUNT'] = +this.allMarkedAccess;
+        });
     }
 
     toggleAllOwnersMarks() {
-        if (this.allMarkedOwners) {
-            this.cabinetOwners.forEach((_person) => {
-                _person.marked = true;
-            });
+        this.cabinetOwners.forEach((_person) => {
+            _person.marked = this.allMarkedOwners;
+        });
+    }
+
+    private updateScroller() {
+        if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
+            this.showScroll = this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;
         } else {
-            this.cabinetOwners.forEach((_person) => {
-                _person.marked = false;
-            });
+            this.showScroll = false;
         }
+    }
+
+    private updateCabinetMarks() {
+        this.allMarkedAccess = this.data.folders.findIndex((folder) => folder['USER_COUNT']) > -1;
+        this.allMarkedOwners = this.cabinetOwners.findIndex((_person) => _person.marked) > -1;
     }
 
     private init(data: any) {
@@ -311,7 +177,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
         this.cabinetUsers = data.users.map((user) => {
             const userAccess = data.cabinetAccess.find((access) => access.ISN_LCLASSIF === user.ISN_LCLASSIF);
-            console.log(userAccess);
             const cUser = {
                 fio: user.SURNAME_PATRON,
                 rk: userAccess.HIDE_INACCESSIBLE,
@@ -322,6 +187,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             });
             return cUser;
         });
-        console.log('cabinet users', this.cabinetUsers);
+
+        this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers, this.cabinetUsers);
+
+        this.updateCabinetMarks();
+        this.updateScroller();
     }
 }

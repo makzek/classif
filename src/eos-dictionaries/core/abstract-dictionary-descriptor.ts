@@ -259,7 +259,7 @@ export abstract class AbstractDictionaryDescriptor {
                     case 'rec':
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
                         break;
-                    default:// do nothing
+                    default: // do nothing
 
                 }
             }

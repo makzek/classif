@@ -101,24 +101,15 @@
                 height: 49px;
             }
         }
-        .scroll-btn {
-            position: absolute;
-            z-index: 1;
-            left: 176px;
-            width: 48px;
-            height: 48px;
-            &.right {
-                left: auto;
-                right: 0;
-                background: linear-gradient(to right, transparent 0%, #fff 45%);
-                border-left: 0;
-            }
-        }
+    }
+    .s-font {
+        line-height: inherit;
     }
     .folder-access-wrapper {
         .folder-access-header {
-            padding: 11px 20px;
-            .unimportant-text {
+            padding: 8px 20px;
+            line-height: 32px;
+            unimportant-text {
                 position: relative;
                 top: 5px;
             }
@@ -132,19 +123,13 @@
             }
         }
         .folder-access-item {
-            display: flex;
-            flex-direction: column;
-            &:not(:last-child) {
-                margin-right: 40px;
-            }
+            padding-top: 8px;
+            padding-bottom: 8px;
             .minus-checkbox {
                 margin: 0;
                 padding: 0;
                 height: 32px;
-                padding-top: 4px;
-                &:not(:first-child) {
-                    margin-top: 30px;
-                }
+                line-height: 32px;
                 input[type="checkbox"]+span {
                     margin-right: 12px;
                 }
@@ -167,6 +152,33 @@
         box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
         border-right-width: 1px;
         border-right-style: solid;
+    }
+    .scroll-btn {
+        position: absolute;
+        margin: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        z-index: 1;
+        left: 176px;
+        width: 48px;
+        height: 48px;
+        &.right {
+            left: auto;
+            right: 0;
+            background: linear-gradient(to right, transparent 0%, #fff 45%);
+            border-left: 0;
+        }
+        &:focus,
+        &.focus {
+            outline: none;
+        }
+    }
+    table,
+    .table {
+        margin-bottom: 0;
+    }
+    .table-responsive {
+        overflow-x: hidden;
     }
     .table-wrapper {
         position: relative;
@@ -192,8 +204,12 @@
 
 .eos-cabinet-accordion {
     margin-top: $grid-gutter-width/2;
+    margin-bottom: 0;
     .panel-body {
         padding: 0;
+    }
+    &>.panel+.panel {
+        margin-top: 20px;
     }
     .table,
     table {

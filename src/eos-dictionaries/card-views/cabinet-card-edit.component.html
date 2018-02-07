@@ -127,16 +127,13 @@
                                         </label>
                                         </span>
                                     </th>
-                                    <th class="text selected-text">
-                                        Фамилия И.О.
-                                    </th>
-                                    <th class="text selected-text">
-                                        Должность
-                                    </th>
+                                    <th class="text selected-text">Фамилия И.О.</th>
+                                    <th class="text selected-text">Должность</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let owner of cabinetOwners" [ngClass]="{deleted: owner['DELETED']}">
+                                <tr *ngFor="let owner of cabinetOwners"
+                                    [ngClass]="{deleted: owner['DELETED']}">
                                     <td class="td-checkbox">
                                         <span class="checkbox-inline"
                                             *ngIf="editMode">
@@ -189,9 +186,20 @@
                             [ngClass]="{'fa-angle-up': status.showAccess, 'fa-angle-down': !status.showAccess}"></i>
                     </div>
                     <div class="table-wrapper">
+                        <button [hidden]="!showScroll"
+                            (mousedown)="startScrollToLeft()"
+                            (mouseup)="endScroll()"
+                            class="btn btn-primary-light scroll-btn"><span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span>
+                        </button>
+                        <button [hidden]="!showScroll"
+                            (mousedown)="startScrollToRight()"
+                            (mouseup)="endScroll()"
+                            class="btn btn-primary-light scroll-btn right"><span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
+                        </button>
+
                         <div class="table-responsive"
                             #tableEl>
-                            <table class="table cab1net-access-table table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr class="first-line">
                                         <th class="usual-border border-right headcol"></th>
@@ -225,9 +233,9 @@
                     </div>
                     <div class="folder-access-header secondary-block bottom-border">
                         <span class="checkbox-inline">
-                                <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
-                                    <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
-                                    <span></span>
+                            <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
+                                <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
+                                <span></span>
                         </label>
                         <span *ngIf="!editMode && anyUnmarkedAccess"
                             class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
@@ -237,6 +245,17 @@
                         <span class="s-font primary-text">Полный доступ</span>
                         <span class="upper s-font unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
                     </div>
+                    <div class="folder-access-body">
+                        <div class="col-sm-4 folder-access-item"
+                            *ngFor="let fIndex of [0, 3, 6, 1, 4, 7, 2, 5, 8]">
+                            <div class="minus-checkbox">
+                                <label class="checkbox primary-text s-font">
+                                    <input type="checkbox" [disabled]="!editMode || !data.folders[fIndex]" name="{{'folder_'+fIndex}}" [(ngModel)]="data.folders[fIndex]['USER_COUNT']">
+                                    <span></span>{{folderTitle(data.folders[fIndex]['FOLDER_KIND'])}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
                     <div class="flex-box secondary-block">
                         <div class="folder-access-item">
                             <div class="minus-checkbox">
@@ -289,7 +308,8 @@
                                     <span></span>На подписи</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                 </accordion-group>
             </accordion>
         </div>
