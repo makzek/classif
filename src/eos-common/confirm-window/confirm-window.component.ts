@@ -43,7 +43,7 @@ export class ConfirmWindowComponent implements IConfirmWindowContent {
     }
 
     close() {
-        this.confirmEvt.emit(undefined);
+        this.confirmEvt.emit(false);
         this._hide();
     }
 
