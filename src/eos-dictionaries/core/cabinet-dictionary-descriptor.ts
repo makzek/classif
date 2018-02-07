@@ -21,6 +21,8 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             req.orderby = order;
         }
 
+        req.expand = 'FOLDER_List';
+
         return this.apiSrv
             .read(req)
             .then((data: any[]) => {
@@ -54,8 +56,8 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
 
     getRelated(rec: CABINET): Promise<any> {
         const reqs = [
-            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': [rec.DUE] }),
-            this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
+            this.apiSrv.read({ 'DEPARTMENT': [rec.DUE] }),
+            // this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read<USER_CABINET>({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
                 .then((userCabinet) => {
                     const userIds = userCabinet.map((u2c) => u2c.ISN_LCLASSIF);
@@ -65,10 +67,10 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
         ];
         return Promise.all(reqs)
-            .then(([[department], folders, [userCabinet, users], owners]) => {
+            .then(([[department], [userCabinet, users], owners]) => {
                 const related = {
                     department: department,
-                    folders: folders,
+                    // folders: folders,
                     cabinetAccess: userCabinet,
                     users: users,
                     owners: owners

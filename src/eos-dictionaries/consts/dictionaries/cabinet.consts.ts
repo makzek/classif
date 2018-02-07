@@ -47,8 +47,9 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'Пользователи кабинета'
     }, {
         key: 'folders',
-        type: 'dictionary',
-        title: 'Папки кабинета'
+        type: 'array',
+        title: 'Папки кабинета',
+        foreignKey: 'FOLDER_List'
     }, {
         key: 'owners',
         type: 'dictionary',

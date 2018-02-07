@@ -91,7 +91,7 @@
             <accordion class="eos-cabinet-accordion">
                 <accordion-group #owners
                     [(isOpen)]="status.showOwners">
-                    <div accordion-heading>Владельцы кабинета <i class="fa fa-lg text-primary"
+                    <div accordion-heading class="xl-font">Владельцы кабинета <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showOwners, 'fa-angle-down': !status.showOwners}"></i>
                     </div>
 
@@ -182,7 +182,7 @@
                 <accordion-group #access
                     class="cabinet-access"
                     [(isOpen)]="status.showAccess">
-                    <div accordion-heading>Доступ пользователей к кабинету <i class="fa fa-lg text-primary"
+                    <div accordion-heading class="xl-font">Доступ пользователей к кабинету <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showAccess, 'fa-angle-down': !status.showAccess}"></i>
                     </div>
                     <div class="table-wrapper">
@@ -204,13 +204,13 @@
                                     <tr class="first-line">
                                         <th class="usual-border border-right headcol"></th>
                                         <th *ngFor="let person of cabinetUsers"
-                                            class="cell text-center"
+                                            class="cell text-center l-font text-primary"
                                             align="center">{{person.fio}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let row of accessHeaders">
-                                        <th class="usual-border border-right headcol">{{row.title}}</th>
+                                        <th class="usual-border border-right headcol l-font primary-text">{{row.title}}</th>
                                         <td *ngFor="let person of cabinetUsers"
                                             class="cell"
                                             align="center">
@@ -228,7 +228,7 @@
                 <accordion-group #folders
                     class="folder-access-wrapper"
                     [(isOpen)]="status.showFolders">
-                    <div accordion-heading>Настройка доступа к папкам кабинета <i class="fa fa-lg text-primary"
+                    <div accordion-heading class="xl-font">Настройка доступа к папкам кабинета <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showFolders, 'fa-angle-down': !status.showFolders}"></i>
                     </div>
                     <div class="folder-access-header secondary-block bottom-border">
@@ -250,8 +250,8 @@
                             *ngFor="let fIndex of [0, 3, 6, 1, 4, 7, 2, 5, 8]">
                             <div class="minus-checkbox">
                                 <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode || !data.folders[fIndex]" name="{{'folder_'+fIndex}}" [(ngModel)]="data.folders[fIndex]['USER_COUNT']">
-                                    <span></span>{{folderTitle(data.folders[fIndex]['FOLDER_KIND'])}}</label>
+                                    <input type="checkbox" [disabled]="!editMode || !data.rec['FOLDER_List'][fIndex]" name="{{'folder_'+fIndex}}" [(ngModel)]="data.rec['FOLDER_List'][fIndex]['USER_COUNT']">
+                                    <span></span>{{folderTitle(data.rec['FOLDER_List'][fIndex]['FOLDER_KIND'])}}</label>
                             </div>
                         </div>
                     </div>
