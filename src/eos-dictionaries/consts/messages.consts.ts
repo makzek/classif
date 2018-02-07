@@ -115,3 +115,9 @@ export const WARN_ELEMENT_PROTECTED: IMessage = {
     title: 'Предупреждение:',
     msg: 'элемент "{{elem}}" является защищенным! Удаление невозможно.'
 };
+
+export const INFO_PERSONE_DONT_HAVE_CABINET: IMessage = {
+    type: 'info',
+    title: 'Внимание:',
+    msg: 'У выбранного должностного лица отсутвует свой кабинет.'
+};
