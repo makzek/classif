@@ -143,6 +143,10 @@ export class EosDictService {
         return this._dictMode;
     }
 
+    get haveCabinet(): boolean {
+        return true;
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         // private _profileSrv: EosUserProfileService,
@@ -164,6 +168,22 @@ export class EosDictService {
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode$ = new BehaviorSubject(0);
         this._dictMode = 0;
+    }
+
+    /**
+     * @param list Parent nodes
+     * @returns node have a flag Boss
+     */
+    public getBoss(list?: EosDictionaryNode[], newBoss?: EosDictionaryNode): EosDictionaryNode {
+        if (this.dictionary.id === 'departments' && this._currentList) {
+            return this._currentList.find((node: EosDictionaryNode) => !node.isNode && node.data.rec['POST_H'] === 1);
+        } else if (list) {
+            return list.find((node: EosDictionaryNode) => {
+                return !node.isNode && node.data.rec['POST_H'] === 1 && newBoss.id !== node.id;
+            });
+        } else {
+            return null;
+        }
     }
 
     bindOrganization(orgDue: string) {
