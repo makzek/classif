@@ -12,6 +12,7 @@ import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
+// const SERVICE_PROPERTIES = ['_orig', '_more_json', '_State', '__metadata'];
 
 export abstract class AbstractDictionaryDescriptor {
     /**
@@ -211,6 +212,33 @@ export abstract class AbstractDictionaryDescriptor {
                 SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'] || rec['ISN_LCLASSIF'], this.apiInstance)]
             })
             .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
+    }
+
+    isDataChanged(data: any): boolean {
+        return Object.keys(data).findIndex((dictionary) => {
+            if (data[dictionary] instanceof Array) {
+                return data[dictionary].findIndex((rec) => this.isRecordChanged(rec)) > -1;
+            } else {
+                return this.isRecordChanged(data[dictionary]);
+            }
+        }) > -1;
+    }
+
+    isRecordChanged(rec: any): boolean {
+        if (rec instanceof Array) {
+            return rec.findIndex((recItem) => this.isRecordChanged(recItem)) > -1;
+        } else if (rec instanceof Object) {
+            const original = rec._orig || {};
+            const hasDiff = Object.keys(rec)
+                .filter((fld) => fld.indexOf('_') !== 0)
+                .findIndex((fld) => (original[fld] || rec[fld]) && original[fld] !== rec[fld]) > -1;
+            if (hasDiff) {
+                console.log('difference in ', rec);
+            }
+            return hasDiff;
+        }
+        console.warn('record is scalar', rec);
+        return false;
     }
 
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {

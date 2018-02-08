@@ -29,15 +29,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     private scrollStep = 5;
     private scrollInterval = 50;
-    /*
-    get showScroll(): boolean {
-        if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
-            return this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;
-        } else {
-            return false;
-        }
-    }
-    */
 
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {

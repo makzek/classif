@@ -250,6 +250,15 @@ export class EosDictService {
     getFilterValue(filterName: string): any {
         return this.filters.hasOwnProperty(filterName) ? this.filters[filterName] : null;
     }
+
+    isDataChanged(data: any): boolean {
+        const dictionary = this._dictionaries[this._dictMode];
+        if (dictionary) {
+            return dictionary.descriptor.isDataChanged(data);
+        }
+        return false;
+    }
+
     // May be need used always instead this._viewParameters$.next();
     // Because this.viewParametrs is public and may be changed from other classes need way for share state
     public updateViewParameters(updates?: any) {

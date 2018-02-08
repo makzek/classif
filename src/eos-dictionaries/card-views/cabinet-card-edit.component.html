@@ -91,7 +91,8 @@
             <accordion class="eos-cabinet-accordion">
                 <accordion-group #owners
                     [(isOpen)]="status.showOwners">
-                    <div accordion-heading class="xl-font">Владельцы кабинета <i class="fa fa-lg text-primary"
+                    <div accordion-heading
+                        class="xl-font">Владельцы кабинета <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showOwners, 'fa-angle-down': !status.showOwners}"></i>
                     </div>
 
@@ -182,7 +183,8 @@
                 <accordion-group #access
                     class="cabinet-access"
                     [(isOpen)]="status.showAccess">
-                    <div accordion-heading class="xl-font">Доступ пользователей к кабинету <i class="fa fa-lg text-primary"
+                    <div accordion-heading
+                        class="xl-font">Доступ пользователей к кабинету <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showAccess, 'fa-angle-down': !status.showAccess}"></i>
                     </div>
                     <div class="table-wrapper">
@@ -228,7 +230,8 @@
                 <accordion-group #folders
                     class="folder-access-wrapper"
                     [(isOpen)]="status.showFolders">
-                    <div accordion-heading class="xl-font">Настройка доступа к папкам кабинета <i class="fa fa-lg text-primary"
+                    <div accordion-heading
+                        class="xl-font">Настройка доступа к папкам кабинета <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showFolders, 'fa-angle-down': !status.showFolders}"></i>
                     </div>
                     <div class="folder-access-header secondary-block bottom-border">
@@ -250,7 +253,8 @@
                             *ngFor="let fIndex of [0, 3, 6, 1, 4, 7, 2, 5, 8]">
                             <div class="minus-checkbox">
                                 <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode || !data.rec['FOLDER_List'][fIndex]" name="{{'folder_'+fIndex}}" [(ngModel)]="data.rec['FOLDER_List'][fIndex]['USER_COUNT']">
+                                    <input type="checkbox" [disabled]="!editMode || !data.rec['FOLDER_List'][fIndex]" name="{{'folder_'+fIndex}}" [(ngModel)]="data.rec['FOLDER_List'][fIndex]['USER_COUNT']"
+                                    (ngModelChange)="change('USER_COUNT_' + fIndex,'rec', $event)">
                                     <span></span>{{folderTitle(data.rec['FOLDER_List'][fIndex]['FOLDER_KIND'])}}</label>
                             </div>
                         </div>

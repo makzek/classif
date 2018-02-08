@@ -60,14 +60,16 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             // this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read<USER_CABINET>({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
                 .then((userCabinet) => {
+                    this.prepareForEdit(userCabinet);
                     const userIds = userCabinet.map((u2c) => u2c.ISN_LCLASSIF);
                     return this.apiSrv.read<USER_CL>({ 'USER_CL': userIds, expand: 'UFOLDER_List' })
                         .then((users) => [userCabinet, users]);
                 }),
-            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
+            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
         ];
         return Promise.all(reqs)
             .then(([[department], [userCabinet, users], owners]) => {
+                this.prepareForEdit(owners);
                 const related = {
                     department: department,
                     // folders: folders,
@@ -75,7 +77,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                     users: users,
                     owners: owners
                 };
-                // console.log('cabinet related', related);
+                console.log('cabinet related', related);
                 return related;
             });
     }
