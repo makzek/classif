@@ -168,6 +168,10 @@
         .form-group {
             width: 100%;
 
+            span {
+                line-height: 32px;
+            }
+
             &:not(:first-child) {
                 width: 40%;
                 margin-top: 0;
@@ -268,5 +272,9 @@
 
     .col-2 {
         width: 535px;
+    }
+    
+    .placeholder {
+        color: $primary-font-color-main-theme;
     }
 }
