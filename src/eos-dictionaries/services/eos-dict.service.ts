@@ -560,8 +560,16 @@ export class EosDictService {
     }
 
     public fullSearch(data: any, params: ISearchSettings) {
-        this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
-        return this._search(params.deleted);
+        if (data.srchMode === 'person') {
+            this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
+            data.rec['PHONE_LOCAL'] = data.rec['PHONE'];
+            delete data.rec['PHONE'];
+            this._srchCriteries.push(this.dictionary.getFullsearchCriteries(data, params, this.treeNode));
+            return this._search(params.deleted);
+        } else {
+            this._srchCriteries = [this.dictionary.getFullsearchCriteries(data, params, this.treeNode)];
+            return this._search(params.deleted);
+        }
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
