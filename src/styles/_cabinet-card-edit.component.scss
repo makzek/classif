@@ -188,6 +188,32 @@
         padding: 13px 20px 0;
         width: 224px;
     }
+    .table,
+    table {
+        .th:first-child,
+        th:first-child {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            background-color: #fff;
+        }
+    }
+}
+
+// For IE, Edge
+@media screen\0 {
+    .cabinet-access {
+        .table,
+        table {
+            .th:first-child,
+            th:first-child {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #fff;
+            }
+        }
+    }
 }
 
 .eos-cabinet-accordion {
@@ -223,13 +249,6 @@
         th,
         .th {
             white-space: nowrap;
-        }
-        .th:first-child,
-        th:first-child {
-            position: -webkit-sticky;
-            position: sticky;
-            left: 0;
-            background-color: #fff;
         }
         .td-checkbox {
             width: 48px;

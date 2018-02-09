@@ -9,9 +9,9 @@ import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.co
 })
 export class CabinetCardEditComponent extends BaseCardEditComponent implements OnChanges {
     status: any = {
-        showOwners: false,
+        showOwners: true,
         showAccess: true,
-        showFolders: false,
+        showFolders: true,
     };
 
     allMarkedAccess = false;
@@ -32,7 +32,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
-        this.allMarkedAccess = !!~this.data.rec['FOLDER_List'].findIndex((folder) => folder['USER_COUNT']);
+        this.allMarkedAccess = !!~this.data.folders.findIndex((folder) => folder['USER_COUNT']);
         return this.allMarkedAccess;
     }
 
@@ -42,7 +42,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     get anyUnmarkedAccess(): boolean {
-        return !!~this.data.rec['FOLDER_List'].findIndex((folder) => !folder['USER_COUNT']);
+        return !!~this.data.folders.findIndex((folder) => !folder['USER_COUNT']);
     }
 
     get anyUnmarkedOwners(): boolean {
@@ -118,7 +118,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     toggleAllAccessMarks() {
-        this.data.rec['FOLDER_List'].forEach((folder) => {
+        this.data.folders.forEach((folder) => {
             folder['USER_COUNT'] = +this.allMarkedAccess;
         });
     }
@@ -138,7 +138,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     private updateCabinetMarks() {
-        this.allMarkedAccess = this.data.rec['FOLDER_List'].findIndex((folder) => folder['USER_COUNT']) > -1;
+        this.allMarkedAccess = this.data.folders.findIndex((folder) => folder['USER_COUNT']) > -1;
         this.allMarkedOwners = this.cabinetOwners.findIndex((_person) => _person.marked) > -1;
     }
 
@@ -151,7 +151,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
                 DELETED: owner.DELETED
             };
         });
-        this.cabinetFolders = data.rec['FOLDER_List'].map((folder) => {
+        this.cabinetFolders = data.folders.map((folder) => {
             return CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND);
         });
 

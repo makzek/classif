@@ -8,7 +8,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     title: 'Кабинеты',
     keyField: 'ISN_CABINET',
     visible: !environment.production,
-    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
+    actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'edit',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{
         key: 'ISN_CABINET',
@@ -36,7 +36,6 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         key: 'DEPARTMENT_NAME',
         title: 'Подразделение',
         type: 'text',
-        length: 255
     }, {
         key: 'department',
         type: 'dictionary',

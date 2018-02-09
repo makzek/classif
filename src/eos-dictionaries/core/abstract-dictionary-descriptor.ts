@@ -12,8 +12,6 @@ import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
-// const SERVICE_PROPERTIES = ['_orig', '_more_json', '_State', '__metadata'];
-
 export abstract class AbstractDictionaryDescriptor {
     /**
      * decription of dictionary fields
@@ -166,6 +164,10 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
+    getEmpty(): any {
+        return this.apiSrv.entityHelper.prepareAdded({}, this.apiInstance);
+    }
+
     getFullSearchCriteries(data: any): any {
         const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
         const _criteries = {};
@@ -214,31 +216,20 @@ export abstract class AbstractDictionaryDescriptor {
             .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
     }
 
-    isDataChanged(data: any): boolean {
-        return Object.keys(data).findIndex((dictionary) => {
-            if (data[dictionary] instanceof Array) {
-                return data[dictionary].findIndex((rec) => this.isRecordChanged(rec)) > -1;
-            } else {
-                return this.isRecordChanged(data[dictionary]);
-            }
-        }) > -1;
-    }
-
-    isRecordChanged(rec: any): boolean {
-        if (rec instanceof Array) {
-            return rec.findIndex((recItem) => this.isRecordChanged(recItem)) > -1;
-        } else if (rec instanceof Object) {
-            const original = rec._orig || {};
-            const hasDiff = Object.keys(rec)
+    isDiffer(data: any, original: any): boolean {
+        if (data instanceof Array) {
+            return data.findIndex((recItem, idx) => this.isDiffer(recItem, original[idx])) > -1;
+        } else if (data instanceof Object) {
+            return Object.keys(original)
                 .filter((fld) => fld.indexOf('_') !== 0)
-                .findIndex((fld) => (original[fld] || rec[fld]) && original[fld] !== rec[fld]) > -1;
+                .findIndex((fld) => this.isDiffer(data[fld], original[fld])) > -1;
+        } else {
+            const hasDiff = (original || data) && original !== data;
             if (hasDiff) {
-                console.log('difference in ', rec);
+                console.warn('difference in ', data, original);
             }
             return hasDiff;
         }
-        console.warn('record is scalar', rec);
-        return false;
     }
 
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {

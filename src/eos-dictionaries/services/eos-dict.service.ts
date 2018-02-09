@@ -251,10 +251,10 @@ export class EosDictService {
         return this.filters.hasOwnProperty(filterName) ? this.filters[filterName] : null;
     }
 
-    isDataChanged(data: any): boolean {
+    isDataChanged(data: any, original: any): boolean {
         const dictionary = this._dictionaries[this._dictMode];
         if (dictionary) {
-            return dictionary.descriptor.isDataChanged(data);
+            return dictionary.descriptor.isDiffer(data, original);
         }
         return false;
     }
