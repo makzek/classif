@@ -4,38 +4,41 @@ import { NOT_EMPTY_STRING } from '../input-validation';
 
 export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'brodcast-chanel',
-    apiInstance: '', //
+    apiInstance: 'SEV_CHANNEL',
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
     visible: true,
+    keyField: 'ISN_LCLASSIF',
     fields: [{
-        key: '',
-        type: '',
-        title: '',
+        key: 'ISN_LCLASSIF',
+        type: 'number',
     }, {
         key: 'CLASSIF_NAME',
-        type: 'text',
+        type: 'string',
         length: 0,
         title: 'Наименование',
         required: true,
         pattern: NOT_EMPTY_STRING,
         invalidMessage: '',
     }, {
-        key: '',
-        type: '',
+        key: 'NOTE',
+        type: 'string',
         length: 0,
         title: 'Примечание'
     }, {
-        key: '',
-        type: '',
+        key: 'CHANNEL_TYPE',
+        type: 'string',
         title: 'Тип канала',
         required: true,
     }, {
-        key: '',
-        type: '',
+        key: 'PARAMS',
+        type: 'string',
         title: 'Параметры доставки'
     }, {
-        key: '',
-        type: '',
+        key: 'WEIGHT',
+        type: 'number'
+    }, {
+        key: 'email',
+        type: 'string',
         title: 'E-mail',
         required: true,
         length: 0,
@@ -115,5 +118,8 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         required: true,
         title: 'Метод входящих сообщений',
     }],
-    editFields: []
+    editFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE'],
+    listFields: [],
+    allVisibleFields: [],
+    quickViewFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email']
 });

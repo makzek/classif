@@ -3,31 +3,36 @@ import { LINEAR_TEMPLATE } from './_linear-template';
 import { NOT_EMPTY_STRING } from '../input-validation';
 
 export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
-    id: 'brodcast-chanel',
-    apiInstance: '', //
+    id: 'sev-rules',
+    apiInstance: 'SEV_RULE',
     actions: null,
     visible: true,
+    keyField: 'SEV_RULE',
     fields: [{
-        key: '',
+        key: 'ISN_LCLASSIF',
+        type: 'number'
+    }, {
+        key: 'CLASSIF_NAME',
         type: 'string',
         required: true,
         title: 'Наименование',
+        pattern: NOT_EMPTY_STRING
     }, {
-        key: '',
+        key: 'NOTE',
         type: 'text',
         title: 'Примечание',
     }, {
-        key: '',
+        key: 'doctype',
         type: '',
         title: 'Тип документа',
         required: true,
     }, {
-        key: '',
-        type: '',
+        key: 'RULE_KIND',
+        type: 'number',
         title: 'Вид правила',
     }, {
-        key: '',
-        type: '',
+        key: 'DUE_DOCGROUP',
+        type: 'string',
         title: 'Группа документов',
     }, {
         key: '',
@@ -42,5 +47,7 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: '',
         title: 'Параметры обработки',
     }],
-    editFields: []
+    editFields: [],
+    listFields: [],
+    allVisibleFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP'],
 });
