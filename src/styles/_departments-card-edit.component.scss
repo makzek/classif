@@ -31,7 +31,6 @@
 
         input[type="checkbox"] + span {
             margin-right: 12px;
-            width: 100%;
         }
 
         &.card-flag {
@@ -169,7 +168,7 @@
             width: 100%;
 
             &:not(:first-child) {
-                width: 40%;
+                // width: 40%;
                 margin-top: 0;
             }
 
