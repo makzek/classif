@@ -2,9 +2,10 @@ import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { NOT_EMPTY_STRING } from '../input-validation';
 
-export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
+export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-participant',
     apiInstance: 'SEV_PARTICIPANT',
+    title: 'Участники СЭВ',
     actions: null,
     visible: true,
     keyField: 'SEV_PARTICIPANT',

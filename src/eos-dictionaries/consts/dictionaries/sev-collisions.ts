@@ -2,11 +2,13 @@ import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { NOT_EMPTY_STRING } from '../input-validation';
 
-export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
+export const COLLISIONS_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-collisions',
     apiInstance: '', //
     actions: null,
     visible: true,
+    title: 'Коллизии СЭВ',
+    keyField: 'SEV_COLLISION',
     fields: [{
         key: 'COLLISION_CODE',
         type: 'number'

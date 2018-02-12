@@ -7,6 +7,7 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     apiInstance: 'SEV_RULE',
     actions: null,
     visible: true,
+    title: 'Правила СЭВ',
     keyField: 'SEV_RULE',
     fields: [{
         key: 'ISN_LCLASSIF',
