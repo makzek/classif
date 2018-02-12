@@ -4,7 +4,7 @@ import { NOT_EMPTY_STRING } from '../input-validation';
 
 export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-participant',
-    apiInstance: 'SEV_PARTICIPANT',
+    apiInstance: 'SEV_PARTICIPANT (NEW)',
     title: 'Участники СЭВ',
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
     visible: true,

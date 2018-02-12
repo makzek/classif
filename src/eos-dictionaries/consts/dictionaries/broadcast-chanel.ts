@@ -8,7 +8,7 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
     visible: true,
     keyField: 'ISN_LCLASSIF',
-    title: 'Каналы передачи сообщений',
+    title: 'Каналы передачи сообщений (NEW)',
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number',
