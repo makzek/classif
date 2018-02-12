@@ -2,6 +2,14 @@ import { Component, Injector, ViewChild, OnChanges } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
+import { DEPARTMENT } from 'eos-rest';
+import { IOrderBy } from '../interfaces';
+
+interface ICabinetOwner {
+    index: number;
+    marked: boolean;
+    data: DEPARTMENT;
+}
 
 @Component({
     selector: 'eos-cabinet-card-edit',
@@ -19,11 +27,16 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     accessHeaders = [];
     cabinetFolders = [];
-    cabinetOwners: any[] = [];
+    cabinetOwners: ICabinetOwner[] = [];
     cabinetUsers = [];
 
     foldersMap: Map<number, any>;
     showScroll = false;
+
+    orderBy: IOrderBy = {
+        ascend: true,
+        fieldKey: 'SURNAME'
+    };
 
     @ViewChild('tableEl') tableEl;
 
@@ -32,23 +45,26 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
-        this.allMarkedAccess = !!~this.data.folders.findIndex((folder) => folder['USER_COUNT']);
-        return this.allMarkedAccess;
+        return this.updateAccessMarks();
     }
 
     get anyMarkedOwners(): boolean {
-        this.allMarkedOwners = !!~this.cabinetOwners.findIndex((_person) => _person.marked);
-        return this.allMarkedOwners;
+        return this.updateOwnersMarks();
     }
 
     get anyUnmarkedAccess(): boolean {
-        return !!~this.data.folders.findIndex((folder) => !folder['USER_COUNT']);
+        return !!~this.data.rec.FOLDER_List.findIndex((folder) => !folder['USER_COUNT']);
     }
 
     get anyUnmarkedOwners(): boolean {
-        return !!~this.cabinetOwners.findIndex((_person) => !_person.marked);
+        return !!~this.cabinetOwners.findIndex((_person) => !_person.marked && _person.data.ISN_CABINET === this.data.rec['ISN_CABINET']);
     }
     /* tslint:enable:no-bitwise */
+
+    get possibleOwners(): any[] {
+        return this.cabinetOwners
+            .filter((owner) => !owner.data['ISN_CABINET']);
+    }
 
     private _interval: any;
 
@@ -68,7 +84,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         }
     }
 
-    add() { }
+    add(owner: ICabinetOwner) {
+        owner.data.ISN_CABINET = this.data.rec.ISN_CABINET;
+        this.onChange.emit(this.data);
+    }
 
     endScroll() {
         window.clearInterval(this._interval);
@@ -89,7 +108,25 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     moveDown() { }
 
-    remove() { }
+    order(fieldKey: string) {
+        if (this.orderBy.fieldKey === fieldKey) {
+            this.orderBy.ascend = !this.orderBy.ascend;
+        } else {
+            this.orderBy.ascend = true;
+            this.orderBy.fieldKey = fieldKey;
+        }
+        this.reorderCabinetOwners();
+    }
+
+    remove() {
+        this.cabinetOwners.filter((owner) => owner.marked)
+            .forEach((markedOwner) => {
+                markedOwner.data['ISN_CABINET'] = null;
+                markedOwner.marked = false;
+            });
+        this.updateOwnersMarks();
+        this.onChange.emit(this.data);
+    }
 
     startScrollToLeft() {
         if (this._interval) {
@@ -118,40 +155,26 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     toggleAllAccessMarks() {
-        this.data.folders.forEach((folder) => {
+        this.data.rec.FOLDER_List.forEach((folder) => {
             folder['USER_COUNT'] = +this.allMarkedAccess;
         });
     }
 
     toggleAllOwnersMarks() {
         this.cabinetOwners.forEach((_person) => {
-            _person.marked = this.allMarkedOwners;
+            _person.marked = this.allMarkedOwners && _person.data['ISN_CABINET'] === this.data.rec['ISN_CABINET'];
         });
-    }
-
-    private updateScroller() {
-        if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
-            this.showScroll = this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;
-        } else {
-            this.showScroll = false;
-        }
-    }
-
-    private updateCabinetMarks() {
-        this.allMarkedAccess = this.data.folders.findIndex((folder) => folder['USER_COUNT']) > -1;
-        this.allMarkedOwners = this.cabinetOwners.findIndex((_person) => _person.marked) > -1;
     }
 
     private init(data: any) {
-        this.cabinetOwners = data.owners.map((owner) => {
-            return {
+        this.cabinetOwners = data.owners.map((owner, idx) => {
+            return <ICabinetOwner>{
+                index: idx,
                 marked: false,
-                SURNAME: owner.SURNAME,
-                DUTY: owner.DUTY,
-                DELETED: owner.DELETED
+                data: owner,
             };
         });
-        this.cabinetFolders = data.folders.map((folder) => {
+        this.cabinetFolders = data.rec.FOLDER_List.map((folder) => {
             return CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND);
         });
 
@@ -179,7 +202,47 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
         this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers, this.cabinetUsers);
 
-        this.updateCabinetMarks();
+        this.updateAccessMarks();
+        this.updateOwnersMarks();
         this.updateScroller();
+    }
+
+    private reorderCabinetOwners() {
+        const orderBy = this.orderBy;
+        this.cabinetOwners = this.cabinetOwners.sort((a, b) => {
+            let _a = a.data[orderBy.fieldKey];
+            let _b = b.data[orderBy.fieldKey];
+
+            if (typeof _a === 'string' || typeof _b === 'string') {
+                _a = (_a + '').toLocaleLowerCase();
+                _b = (_b + '').toLocaleLowerCase();
+            }
+            if (_a > _b) {
+                return orderBy.ascend ? 1 : -1;
+            }
+            if (_a < _b) {
+                return orderBy.ascend ? -1 : 1;
+            }
+            if (_a === _b) {
+                return 0;
+            }
+        });
+    }
+
+    private updateAccessMarks(): boolean {
+        return this.allMarkedAccess = this.data.rec.FOLDER_List.findIndex((folder) => folder['USER_COUNT']) > -1;
+    }
+
+    private updateOwnersMarks(): boolean {
+        return this.allMarkedOwners = this.cabinetOwners.findIndex((_person) =>
+            _person.marked && _person.data.ISN_CABINET === this.data.rec['ISN_CABINET']) > -1;
+    }
+
+    private updateScroller() {
+        if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
+            this.showScroll = this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;
+        } else {
+            this.showScroll = false;
+        }
     }
 }

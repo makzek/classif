@@ -65,26 +65,7 @@
                 <label for="DUE"
                     class="primary-text"
                     [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-                <input readonly="readonly"
-                    id="DUE"
-                    name="DUE"
-                    type="text"
-                    class="form-control m-font"
-                    [ngModel]="data.department['CLASSIF_NAME']"
-                    (ngModelChange)="change('CLASSIF_NAME', 'department', $event)"
-                    placeholder="Подразделение"
-                    required
-                    [pattern]="NOT_EMPTY_STRING"
-                    maxlength="248"
-                    tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    (focus)="focus('DUE')"
-                    (blur)="blur()"
-                    [isDisabled]="true"
-                    [isOpen]="cardForm.controls['DUE']?.dirty && cardForm.controls['DUE']?.invalid && focusedField === 'DUE'"
-                    triggers="">
+                <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
             </div>
             <accordion class="eos-cabinet-accordion">
                 <accordion-group #owners
@@ -96,22 +77,27 @@
 
                     <div class="secondary-block bottom-border"
                         *ngIf="editMode">
-                        <button class="action-btn btn-primary-light"
-                            (click)="add()"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span>
-                        </button>
-                        <button class="action-btn btn-primary-light"
+                        <span class="btn-group"
+                            dropdown>
+                            <button dropdownToggle class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
+
+                        <ul *dropdownMenu
+                            class="dropdown-menu"
+                            role="menu">
+                            <li *ngFor="let owner of possibleOwners"
+                                role="menuitem"
+                                class="dropdown-item btn selected-text"
+                                (click)="add(owner)">
+                                {{owner.data['CLASSIF_NAME']}}
+                            </li>
+                            <li *ngIf="!possibleOwners.length">
+                                <span class="dropdown-item btn disabled">Нет доступных ДЛ</span>
+                            </li>
+                        </ul>
+                        </span>
+                        <button class="btn action-btn btn-primary-light"
                             (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
                         </button>
-                        <!--
-                    <button class="action-btn btn-primary-light"
-                        (click)="moveUp()">
-                        <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-                    </button>
-                    <button class="action-btn btn-primary-light"
-                        (click)="moveDown()">
-                        <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-                    </button>
-                    -->
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover table-c0ndensed table-b0rdered table-striped">
@@ -126,22 +112,33 @@
                                         </label>
                                         </span>
                                     </th>
-                                    <th class="text selected-text">Фамилия И.О.</th>
-                                    <th class="text selected-text">Должность</th>
+                                    <th class="text selected-text l-font"
+                                        (click)="order('SURNAME')">
+                                        Фамилия И.О. <span [hidden]="orderBy.fieldKey !== 'SURNAME'"
+                                            class="icon eos-icon small"
+                                            [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                    </th>
+                                    <th class="text selected-text l-font"
+                                        (click)="order('DUTY')">Должность <span [hidden]="orderBy.fieldKey !== 'DUTY'"
+                                            class="icon eos-icon small"
+                                            [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let owner of cabinetOwners"
-                                    [ngClass]="{deleted: owner['DELETED']}">
-                                    <td class="td-checkbox">
-                                        <span class="checkbox-inline"
-                                            *ngIf="editMode">
+                                <ng-container *ngFor="let owner of cabinetOwners">
+                                    <tr *ngIf="owner.data['ISN_CABINET'] === data.rec['ISN_CABINET']"
+                                        [ngClass]="{deleted: owner['DELETED']}">
+                                        <td class="td-checkbox">
+                                            <span class="checkbox-inline"
+                                                *ngIf="editMode">
                                             <label class="checkbox"><input type="checkbox" name="owner" [(ngModel)]="owner.marked"><span></span></label>
-                                        </span>
-                                    </td>
-                                    <td>{{owner['SURNAME']}}</td>
-                                    <td>{{owner['DUTY']}}</td>
-                                </tr>
+                                            </span>
+                                        </td>
+                                        <td>{{owner.data['SURNAME']}}</td>
+                                        <td>{{owner.data['DUTY']}}</td>
+                                    </tr>
+                                </ng-container>
                             </tbody>
                         </table>
                     </div>
@@ -251,9 +248,9 @@
                             *ngFor="let fIndex of [0, 3, 6, 1, 4, 7, 2, 5, 8]">
                             <div class="minus-checkbox">
                                 <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode || !data.folders[fIndex]" name="{{'folder_'+fIndex}}" [ngModel]="data.folders[fIndex]['USER_COUNT']"
-                                    (ngModelChange)="changeByPath('folders['+ fIndex +'].USER_COUNT', $event)">
-                                    <span></span>{{folderTitle(data.folders[fIndex]['FOLDER_KIND'])}}</label>
+                                    <input type="checkbox" [disabled]="!editMode || !data.rec.FOLDER_List[fIndex]" name="{{'folder_'+fIndex}}" [ngModel]="data.rec.FOLDER_List[fIndex]['USER_COUNT']"
+                                    (ngModelChange)="changeByPath('rec.FOLDER_List['+ fIndex +'].USER_COUNT', $event)">
+                                    <span></span>{{folderTitle(data.rec.FOLDER_List[fIndex]['FOLDER_KIND'])}}</label>
                             </div>
                         </div>
                     </div>

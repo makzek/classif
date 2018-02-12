@@ -140,6 +140,15 @@
         display: flex;
         padding: $grid-gutter-width/2;
     }
+    .eos-icon {
+        vertical-align: sub;
+    }
+    .form-control-static {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-width: 1px;
+        min-height: 32px;
+    }
 }
 
 .cabinet-access {
@@ -159,14 +168,13 @@
         border-left-width: 0;
         border-right-width: 0;
         z-index: 1;
-        left: 176px;
+        left: 203px;
         width: 48px;
         height: 48px;
         &.right {
             left: auto;
             right: 0;
             background: linear-gradient(to right, transparent 0%, #fff 45%);
-            border-left: 0;
         }
         &:focus,
         &.focus {
