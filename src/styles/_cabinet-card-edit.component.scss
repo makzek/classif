@@ -224,9 +224,11 @@ $access-first-col-width: 251px;
                 position: absolute;
                 line-height: 48px;
             }
-            .td:nth-child(1),
-            td:nth-child(1) {
-                margin-left: $access-first-col-width+5px;
+            th:nth-child(2),
+            .th:nth-child(2)
+            .td:nth-child(2),
+            td:nth-child(2) {
+                padding-left: $access-first-col-width+20px;
             }
         }
     }
