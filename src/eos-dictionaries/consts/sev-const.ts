@@ -41,6 +41,17 @@ export const TYPE_OF_RULE: Array<OptionDiscription> = [{
 
 export const DOCUMENTS_GROUP: Array<OptionDiscription> = [];
 
+/**
+ * Document type of SEV rules
+ */
+export const DOCUMENT_TYPES: Array<OptionDiscription> = [{
+    value: 0,
+    title: 'Документ'
+}, {
+    value: 0,
+    title: 'Проект'
+}];
+
 export const SENDER: Array<OptionDiscription> = [{
     value: 0,
     title: 'Для всех организаций'
