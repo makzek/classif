@@ -9,7 +9,7 @@
         </ng-container>
     </ng-container>
 
-    <span class="visible-lg-inline-block actions">
+    <span *ngIf="haveMoreButtons" class="visible-lg-inline-block actions">
         <button class="btn btn-primary-light actions" [tooltip]="showMore ? 'Скрыть меню': 'Показать меню'" #itemTooltip="bs-tooltip"
             placement="right" containerClass="tooltip-info" (click)="itemTooltip.hide(); toggleButtonList()">
             <span class="eos-icon eos-icon-fab-blue small" [ngClass]="{'rotate': showMore}"></span>
