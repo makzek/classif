@@ -1,6 +1,6 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { NOT_EMPTY_STRING } from '../input-validation';
+import { NOT_EMPTY_STRING, EMAIL } from '../input-validation';
 
 export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'brodcast-chanel',
@@ -43,8 +43,8 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         title: 'E-mail',
         required: true,
         length: 0,
-        pattern: '',
-        invalidMessage: ''
+        pattern: EMAIL,
+        invalidMessage: 'Введите корркектынй email адрес!'
     }, {
         key: '',
         type: '',
@@ -119,7 +119,7 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         required: true,
         title: 'Метод входящих сообщений',
     }],
-    editFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE'],
+    editFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email'],
     listFields: [],
     allVisibleFields: [],
     quickViewFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email']
