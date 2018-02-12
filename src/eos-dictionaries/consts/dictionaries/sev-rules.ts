@@ -5,10 +5,10 @@ import { NOT_EMPTY_STRING } from '../input-validation';
 export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-rules',
     apiInstance: 'SEV_RULE',
-    actions: null,
+    actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
     visible: true,
     title: 'Правила СЭВ',
-    keyField: 'SEV_RULE',
+    keyField: 'ISN_LCLASSIF',
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number'

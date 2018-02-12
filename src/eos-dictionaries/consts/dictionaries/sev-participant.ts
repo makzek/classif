@@ -6,9 +6,9 @@ export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LIN
     id: 'sev-participant',
     apiInstance: 'SEV_PARTICIPANT',
     title: 'Участники СЭВ',
-    actions: null,
+    actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
     visible: true,
-    keyField: 'SEV_PARTICIPANT',
+    keyField: 'ISN_LCLASSIF',
     fields: [{
         key: 'ISN_LCLASSIF',
         type: 'number'
