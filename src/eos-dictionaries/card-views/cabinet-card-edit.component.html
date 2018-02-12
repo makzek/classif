@@ -142,38 +142,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <!--<div class="ed1t-block-header secondary-block owners"
-                        [ngClass]="{'ed1t-middle-block': editMode, 'ed1t-block-header': !editMode}">
-                        <span class="checkbox-inline"
-                            *ngIf="editMode">
-                        <label [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
-                            <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
-                            <span></span>
-                        </label>
-                        </span>
-                        <span class="fake-padding"
-                            *ngIf="!editMode"></span>
-                        <span class="text selected-text">Фамилия И.О.</span>
-                        <span class="text selected-text">Должность</span>
-                    </div>
-                    <div class="edit-c0ntent owners-content sec0ndary-block"
-                        [hidden]="!status.showOwners">
-                        <div class="owners owners-item highlight-on-hover"
-                            *ngFor="let person of owners">
-                            <span class="checkbox-inline"
-                                *ngIf="editMode">
-                        <label>
-                            <input type="checkbox" name="person" [(ngModel)]="person.marked">
-                            <span></span>
-                            </label>
-                            </span>
-                            <span class="fake-padding"
-                                *ngIf="!editMode"></span>
-                            <span class="text selected-text">{{person['SURNAME']}}</span>
-                            <span class="text">{{person['DUTY']}}</span>
-                        </div>
-                    </div-->
-
                 </accordion-group>
                 <accordion-group #access
                     class="cabinet-access"
@@ -254,61 +222,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--
-                    <div class="flex-box secondary-block">
-                        <div class="folder-access-item">
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="received" [(ngModel)]="folderConfig.received">
-                                    <span></span>Поступившие</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="inProgress" [(ngModel)]="folderConfig.inProgress">
-                                    <span></span>На исполнении</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="inChecking" [(ngModel)]="folderConfig.inChecking">
-                                    <span></span>На контроле</label>
-                            </div>
-                        </div>
-                        <div class="folder-access-item">
-                            <div class="minus-checkbox primary-text s-font">
-                                <label class="checkbox">
-                                    <input type="checkbox" [disabled]="!editMode" name="boss" [(ngModel)]="folderConfig.boss">
-                                    <span></span>У руководства</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="underConsideration" [(ngModel)]="folderConfig.underConsideration">
-                                    <span></span>На рассмотрении</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="forWork" [(ngModel)]="folderConfig.forWork">
-                                    <span></span>В дело</label>
-                            </div>
-                        </div>
-                        <div class="folder-access-item">
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="projManagment" [(ngModel)]="folderConfig.projManagment">
-                                    <span></span>Управление проектами</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="onSight" [(ngModel)]="folderConfig.onSight">
-                                    <span></span>На визировании</label>
-                            </div>
-                            <div class="minus-checkbox">
-                                <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode" name="onSignature" [(ngModel)]="folderConfig.onSignature">
-                                    <span></span>На подписи</label>
-                            </div>
-                        </div>
-                    </div> -->
-
                 </accordion-group>
             </accordion>
         </div>
