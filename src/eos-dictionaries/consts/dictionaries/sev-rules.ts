@@ -48,11 +48,11 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         key: 'DUE_DEP',
         type: 'string'
     }, {
-        key: '',
+        key: 'sender',
         type: '',
         title: 'Отправитель',
     }, {
-        key: '',
+        key: 'receiver',
         type: '',
         title: 'Получатель',
     }, {
@@ -60,7 +60,8 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: '',
         title: 'Параметры обработки',
     }],
-    editFields: [],
-    listFields: [],
+    editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver'],
+    listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP', 'NOTE'],
     allVisibleFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP'],
+    quickViewFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'sender']
 });

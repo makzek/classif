@@ -5,10 +5,11 @@ import { NOT_EMPTY_STRING } from '../input-validation';
 export const COLLISIONS_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-collisions',
     apiInstance: 'SEV_COLLISION',
-    actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
+    actions: ['edit'],
     visible: true,
     title: 'Коллизии СЭВ',
     keyField: 'COLLISION_CODE',
+    searchConfig: [],
     fields: [{
         key: 'COLLISION_CODE',
         type: 'number'
