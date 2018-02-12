@@ -41,7 +41,7 @@ export class NodeActionsComponent implements OnDestroy {
 
     get haveMoreButtons(): boolean {
         let have = false;
-        this.moreButtons.forEach((item: IActionButton) => have = item.show);
+        this.moreButtons.forEach((item: IActionButton) => have = have || item.show);
         return have;
     }
 
