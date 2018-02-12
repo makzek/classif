@@ -1,3 +1,4 @@
+$access-first-col-width: 251px;
 .cabinet-card-edit {
     .block-divider {
         .divider-text {
@@ -153,9 +154,9 @@
 
 .cabinet-access {
     .shadow-box {
-        width: 251px;
+        width: $access-first-col-width;
         position: absolute;
-        margin-top: 48px;
+        /* margin-top: 48px;*/
         top: 0;
         bottom: 0;
         box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
@@ -168,7 +169,7 @@
         border-left-width: 0;
         border-right-width: 0;
         z-index: 1;
-        left: 203px;
+        left: $access-first-col-width - 48px;
         width: 48px;
         height: 48px;
         &.right {
@@ -194,7 +195,7 @@
         background-color: #fff;
         font-weight: normal;
         padding: 13px 20px 0;
-        width: 224px;
+        width: $access-first-col-width;
     }
     .table,
     table {
@@ -211,14 +212,21 @@
 // For IE, Edge
 @media screen\0 {
     .cabinet-access {
+        .first-line {
+            .headcol {
+                border-bottom-width: 1px;
+            }
+        }
         .table,
         table {
             .th:first-child,
             th:first-child {
                 position: absolute;
-                top: 0;
-                left: 0;
-                background-color: #fff;
+                line-height: 48px;
+            }
+            .td:nth-child(1),
+            td:nth-child(1) {
+                margin-left: $access-first-col-width+5px;
             }
         }
     }
