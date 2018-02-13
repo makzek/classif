@@ -104,10 +104,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         return title;
     }
 
-    moveUp() { }
-
-    moveDown() { }
-
     order(fieldKey: string) {
         if (this.orderBy.fieldKey === fieldKey) {
             this.orderBy.ascend = !this.orderBy.ascend;
@@ -174,6 +170,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
                 data: owner,
             };
         });
+
+        this.reorderCabinetOwners();
+
         this.cabinetFolders = data.rec.FOLDER_List.map((folder) => {
             return CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND);
         });
