@@ -15,8 +15,6 @@ import { HintConfiguration } from '../long-title-hint/hint-configuration.interfa
     templateUrl: 'node-list.component.html',
 })
 export class NodeListComponent implements OnInit, OnDestroy {
-    private ngUnsubscribe: Subject<any> = new Subject();
-
     @Input() nodes: EosDictionaryNode[];
     @Input() length: any;
     @Input() customFields: IFieldView[];
@@ -26,6 +24,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
     params: IDictionaryViewParameters;
+
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(private _dictSrv: EosDictService) { }
 
@@ -59,7 +59,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
             this.hint.hideHint({
                 node: null,
                 show: false
-            })
+            });
             return;
         }
         if (hintConfig.show) {

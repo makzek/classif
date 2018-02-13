@@ -4,15 +4,16 @@ import { Http } from '@angular/http';
 import { PipRX } from './pipRX.service';
 import { ApiCfg } from '../core/api-cfg';
 import { HTTP_OPTIONS } from '../core/consts';
-import { USER_CL, SYS_PARMS } from '../interfaces/structures'
-import { ALL_ROWS } from '../core/consts';
-import { AppContext } from './appContext.service'
+import { USER_CL, SYS_PARMS } from '../interfaces/structures';
+// import { ALL_ROWS } from '../core/consts';
+import { AppContext } from './appContext.service';
+import { RestError } from 'eos-rest/core/rest-error';
 
 @Injectable()
 export class AuthService {
     private _cfg: ApiCfg;
 
-    constructor(private _http: Http, private _pipe: PipRX, private appCtx: AppContext) {
+    constructor(private _http: Http, _pipe: PipRX, private appCtx: AppContext) {
         this._cfg = _pipe.getConfig();
     }
 
@@ -21,22 +22,30 @@ export class AuthService {
         const r = this._http.get(_url, HTTP_OPTIONS).toPromise()
             .then((resp) => {
                 if (resp.text() && resp.text().indexOf('error:') > -1) {
-                    return null;
+                    return {};
                 } else {
                     return this.getContext();
                 }
-            });
+            })
+            .catch((err) => Promise.reject(new RestError({ http: err })));
 
         return r;
     }
 
     public logout() {
         const _url = this._cfg.authSrv + 'Logoff';
-        return this._http.get(_url, HTTP_OPTIONS).toPromise<any>();
+        return this._http.get(_url, HTTP_OPTIONS).toPromise<any>()
+            .catch((err) => Promise.reject(new RestError({ http: err })));
     }
 
     getContext(): Promise<{ user: USER_CL, sysParams: SYS_PARMS }> {
-        return this.appCtx.init();
+        return this.appCtx.init()
+            .then((arr) => {
+                return {
+                    user: arr[0],
+                    sysParams: arr[1]
+                };
+            });
         /*const p = this._pipe;
         // раз присоеденились сбрасываем подавление ругательства о потере соединения
         // p.errorService.LostConnectionAlerted = false;
@@ -68,6 +77,5 @@ export class AuthService {
                 debugger;
             })
             */
-        ;
     }
 }

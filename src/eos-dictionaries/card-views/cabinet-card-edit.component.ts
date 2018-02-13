@@ -25,42 +25,42 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     }];
 
     rows = [{
-            title: '',
-            key: 'fio'
-        }, {
-            title: 'Ограничение доступа РК',
-            key: 'rk'
-        }, {
-            title: 'Ограничение доступа РКПД',
-            key: 'rkpd'
-        }, {
-            title: 'Поступившие',
-            key: 'received'
-        }, {
-            title: 'На исполнении',
-            key: 'inProgress'
-        }, {
-            title: 'На контроле',
-            key: 'inChecking'
-        }, {
-            title: 'У руководства',
-            key: 'boss'
-        }, {
-            title: 'На рассмотрении',
-            key: 'underConsideration'
-        }, {
-            title: 'В дело',
-            key: 'forWork'
-        }, {
-            title: 'Управление проектами',
-            key: 'projManagment'
-        }, {
-            title: 'На визировании',
-            key: 'onSight'
-        }, {
-            title: 'На подписи',
-            key: 'onSignature'
-        }
+        title: '',
+        key: 'fio'
+    }, {
+        title: 'Ограничение доступа РК',
+        key: 'rk'
+    }, {
+        title: 'Ограничение доступа РКПД',
+        key: 'rkpd'
+    }, {
+        title: 'Поступившие',
+        key: 'received'
+    }, {
+        title: 'На исполнении',
+        key: 'inProgress'
+    }, {
+        title: 'На контроле',
+        key: 'inChecking'
+    }, {
+        title: 'У руководства',
+        key: 'boss'
+    }, {
+        title: 'На рассмотрении',
+        key: 'underConsideration'
+    }, {
+        title: 'В дело',
+        key: 'forWork'
+    }, {
+        title: 'Управление проектами',
+        key: 'projManagment'
+    }, {
+        title: 'На визировании',
+        key: 'onSight'
+    }, {
+        title: 'На подписи',
+        key: 'onSignature'
+    }
     ];
 
     persons = [{
@@ -231,18 +231,12 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         projManagment: false,
         onSight: false,
         onSignature: false
-    }
+    };
 
     @ViewChild('tableEl') tableEl;
 
-    private _interval: any;
-
     allMarkedAccess = false;
     allMarkedOwners = false;
-
-    constructor(injector: Injector) {
-        super(injector);
-    }
 
     get showScroll(): boolean {
         if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
@@ -253,49 +247,33 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
     }
 
     /* tslint:disable:no-bitwise */
-    get anyUnmarkedAccess(): boolean {
-        return !!~Object.keys(this.folderConfig).findIndex((_key) => !this.folderConfig[_key]);
-    }
-
     get anyMarkedAccess(): boolean {
         this.allMarkedAccess = !!~Object.keys(this.folderConfig).findIndex((_key) => this.folderConfig[_key]);
         return this.allMarkedAccess;
-    }
-    /* tslint:enable:no-bitwise */
-
-    toggleAllAccessMarks() {
-        if (this.allMarkedAccess) {
-            Object.keys(this.folderConfig).forEach((_key) => {
-                this.folderConfig[_key] = true;
-            });
-        } else {
-            Object.keys(this.folderConfig).forEach((_key) => {
-                this.folderConfig[_key] = false;
-            });
-        }
-    }
-
-    /* tslint:disable:no-bitwise */
-    get anyUnmarkedOwners(): boolean {
-        return !!~this.owners.findIndex((_person) => !_person.marked);
     }
 
     get anyMarkedOwners(): boolean {
         this.allMarkedOwners = !!~this.owners.findIndex((_person) => _person.marked);
         return this.allMarkedOwners;
     }
+
+    get anyUnmarkedAccess(): boolean {
+        return !!~Object.keys(this.folderConfig).findIndex((_key) => !this.folderConfig[_key]);
+    }
+
+    get anyUnmarkedOwners(): boolean {
+        return !!~this.owners.findIndex((_person) => !_person.marked);
+    }
     /* tslint:enable:no-bitwise */
 
-    toggleAllOwnersMarks() {
-        if (this.allMarkedOwners) {
-            this.owners.forEach((_person) => {
-                _person.marked = true;
-            });
-        } else {
-            this.owners.forEach((_person) => {
-                _person.marked = false;
-            });
-        }
+    private _interval: any;
+
+    constructor(injector: Injector) {
+        super(injector);
+    }
+
+    endScroll() {
+        window.clearInterval(this._interval);
     }
 
     startScrollToLeft() {
@@ -310,7 +288,27 @@ export class CabinetCardEditComponent extends BaseCardEditComponent {
         }, 20);
     }
 
-    endScroll() {
-        window.clearInterval(this._interval);
+    toggleAllAccessMarks() {
+        if (this.allMarkedAccess) {
+            Object.keys(this.folderConfig).forEach((_key) => {
+                this.folderConfig[_key] = true;
+            });
+        } else {
+            Object.keys(this.folderConfig).forEach((_key) => {
+                this.folderConfig[_key] = false;
+            });
+        }
+    }
+
+    toggleAllOwnersMarks() {
+        if (this.allMarkedOwners) {
+            this.owners.forEach((_person) => {
+                _person.marked = true;
+            });
+        } else {
+            this.owners.forEach((_person) => {
+                _person.marked = false;
+            });
+        }
     }
 }

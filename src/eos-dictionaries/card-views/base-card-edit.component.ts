@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, OnChanges, ViewChild, Injector, OnDestroy } from '@angular/core';
+import { Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -6,6 +6,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { EosDataConvertService } from '../services/eos-data-convert.service';
 import { InputControlService } from '../../eos-common/services/input-control.service';
+import { EosUtils } from 'eos-common/core/utils';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
@@ -17,6 +18,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     form: FormGroup;
+    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     protected dictSrv;
     private _dataSrv;
@@ -24,7 +26,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     private _currentFormStatus;
 
-    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
+    private _subscrChanges: Subscription;
 
     inputs: any;
     newData: any;
@@ -118,6 +120,24 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         return result;
     }
 
+    change(fldKey: string, dict: string, value: any) {
+        let _value = null;
+        if (typeof value === 'boolean') {
+            _value = +value;
+        } else if (value === 'null') {
+            _value = null;
+        } else if (value instanceof Date) {
+            _value = EosUtils.dateToString(value);
+        } else {
+            _value = value;
+        }
+
+        if (this.data[dict][fldKey] !== _value) {
+            this.data[dict][fldKey] = _value;
+            this.onChange.emit(this.data);
+        }
+    }
+
     /**
      * compare two objects
      * @param newObj one object
@@ -143,5 +163,13 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
      */
     getNewData(): any {
         return this.newData;
+    }
+
+    checkUnic(val: any, key: string, inDict?: boolean) {
+        if (this.focusedField === key) {
+            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
+        } else {
+            return null;
+        }
     }
 }

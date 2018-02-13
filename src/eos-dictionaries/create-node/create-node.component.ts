@@ -103,24 +103,22 @@ export class CreateNodeComponent {
     }
 
     /**
-     * Separate error massage from error and show it to user by using EosMessageService
-     */
-    private _errHandler(err) {
-        console.error(err);
-        const errMessage = err.message ? err.message : err;
-        this._msgSrv.addNewMessage({
-            type: 'danger',
-            title: 'Ошибка операции',
-            msg: errMessage,
-            dismissOnTimeout: 100000
-        });
-    }
-
-    /**
      * Set hasChanges
      * @param hasChanges recived value
      */
     recordChanged(hasChanges: boolean) {
         this.hasChanges = hasChanges;
     }
+    }
+    /**
+     * Separate error massage from error and show it to user by using EosMessageService
+     */
+    private _errHandler(err) {
+        // console.error(err);
+        const errMessage = err.message ? err.message : err;
+        this._msgSrv.addNewMessage({
+            type: 'danger',
+            title: 'Ошибка добавления записи',
+            msg: errMessage,
+        });
 }

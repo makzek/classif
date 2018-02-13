@@ -4,15 +4,16 @@ export enum E_DEPT_MODE {
     person,
     department,
     cabinet
-};
+}
 
 export enum E_DICT_TYPE {
     linear,
     tree,
     department
-};
+}
 
 export enum E_FIELD_SET {
+    tree,
     list,
     quickView,
     shortQuickView,
@@ -20,7 +21,7 @@ export enum E_FIELD_SET {
     fullSearch,
     edit,
     allVisible
-};
+}
 
 export enum E_FIELD_TYPE {
     string,
@@ -31,8 +32,8 @@ export enum E_FIELD_TYPE {
     icon,
     boolean,
     dictionary,
-    select
-};
+    select,
+}
 
 export interface IFieldDesriptor {
     key: string;
@@ -49,7 +50,7 @@ export interface IFieldDesriptor {
     options?: {key: string, value: string}[];
     height?: number;
     forNode?: boolean;
-};
+}
 
 export interface IFieldDesriptorBase {
     readonly key: string;
@@ -67,11 +68,11 @@ export interface IFieldDesriptorBase {
     readonly options?: {key: string, value: string}[];
     readonly height?: number;
     readonly forNode?: boolean;
-};
+}
 
 export interface IFieldView extends IFieldDesriptorBase {
     value: any;
-};
+}
 
 export interface IDictionaryDescriptor {
     id: string;
@@ -86,8 +87,9 @@ export interface IDictionaryDescriptor {
 
     // listFields: string[];
     searchFields: string[];
-    searchConfig: SEARCH_TYPES[],
+    searchConfig: SEARCH_TYPES[];
     allVisibleFields: string[];
+    treeFields: string[];
 
     /* abstract field sets, depend on dictionary type */
     fullSearchFields: any;
@@ -95,7 +97,7 @@ export interface IDictionaryDescriptor {
     shortQuickViewFields: any;
     editFields: any;
     listFields: any;
-};
+}
 
 export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
@@ -103,17 +105,17 @@ export interface ITreeDictionaryDescriptor extends IDictionaryDescriptor {
     shortQuickViewFields: string[];
     editFields: string[];
     listFields: string[];
-};
+}
 
 /* mode for department-like ditionary */
 export interface IRecordMode {
     [mode: string]: string[];
-};
+}
 
 export interface IRecordModeDescription {
     key: string;
     title: string;
-};
+}
 
 export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     parentField: string;
@@ -124,4 +126,4 @@ export interface IDepartmentDictionaryDescriptor extends IDictionaryDescriptor {
     editFields: string[];
     listFields: string[];
     fullSearchFields: IRecordMode;
-};
+}

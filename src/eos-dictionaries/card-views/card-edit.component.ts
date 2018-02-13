@@ -1,9 +1,5 @@
-import { Component, Output, Input, EventEmitter, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-
-import { EosDictionaryNode } from '../core/eos-dictionary-node';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
-
 @Component({
     selector: 'eos-card-edit',
     templateUrl: 'card-edit.component.html'

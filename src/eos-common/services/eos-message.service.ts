@@ -20,19 +20,22 @@ export class EosMessageService {
     }
 
     public addNewMessage(message: IMessage) {
-        console.warn('new message', message);
+        /*tslint:disable:no-console*/
         if (message.dismissOnTimeout === undefined) {
             switch (message.type) {
                 case 'danger':
                     message.dismissOnTimeout = DANGER_DISMISS_TIMEOUT;
+                    console.error(message);
                     break;
                 case 'warning':
                     message.dismissOnTimeout = WARN_DISMISS_TIMEOUT;
+                    console.warn(message);
                     break;
                 default:
                     message.dismissOnTimeout = DEFAULT_DISMISS_TIMEOUT;
             }
         }
+        /*tslint:enable:no-console*/
         this.messages.push(message);
         this._messages$.next(this.messages);
     }

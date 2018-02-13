@@ -1,23 +1,21 @@
 import {
-    IDictionaryDescriptor, IFieldView, IFieldDesriptor,
-    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, E_ACTION_GROUPS, IRecordModeDescription
+    IDictionaryDescriptor, IFieldView,
+    E_FIELD_SET, E_FIELD_TYPE, E_RECORD_ACTIONS, IRecordModeDescription
 } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
 import { SEARCH_TYPES } from 'eos-dictionaries/consts/search-types';
 
 export class RecordDescriptor {
-    protected dictionary: AbstractDictionaryDescriptor;
+    readonly searchConfig: SEARCH_TYPES[];
     keyField: FieldDescriptor;
     parentField?: FieldDescriptor;
     fields: FieldDescriptor[];
     fieldsMap: Map<string, FieldDescriptor>;
 
-    readonly searchConfig: SEARCH_TYPES[];
-    /**
-     * set of actions available for dictionary
-     */
-    private actions: E_RECORD_ACTIONS[];
+    protected dictionary: AbstractDictionaryDescriptor;
+
+    protected treeFields: FieldDescriptor[];
 
     /**
      *  set of visible fields in list mode
@@ -55,6 +53,10 @@ export class RecordDescriptor {
     protected allVisibleFields: FieldDescriptor[];
 
     protected modeList: IRecordModeDescription[];
+    /**
+     * set of actions available for dictionary
+     */
+    private actions: E_RECORD_ACTIONS[];
 
     constructor(dictionary: AbstractDictionaryDescriptor, data: IDictionaryDescriptor) {
         const fields = data.fields;
@@ -75,6 +77,7 @@ export class RecordDescriptor {
 
         this._initActions(data);
         this._initFieldSets([
+            'treeFields',
             'searchFields',
             'allVisibleFields',
             'quickViewFields',
@@ -93,6 +96,10 @@ export class RecordDescriptor {
         /* tslint:disable:no-bitwise */
         return !!~this.actions.findIndex((a) => a === action);
         /* tslint:enable:no-bitwise */
+    }
+
+    getTreeView(data: any): IFieldView[] {
+        return this._bindData(this.getFieldSet(E_FIELD_SET.tree), data);
     }
 
     getListView(data: any): IFieldView[] {
@@ -160,7 +167,7 @@ export class RecordDescriptor {
                         height: _f.height,
                         foreignKey: _f.foreignKey,
                         forNode: _f.forNode,
-                    }
+                    };
                 } else {
                     _description[_f.key] = {};
                     /* recive other dict description */
@@ -171,7 +178,7 @@ export class RecordDescriptor {
         return _description;
     }
 
-    protected _getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
+    protected _getFieldSet(aSet: E_FIELD_SET, _values?: any): FieldDescriptor[] {
         switch (aSet) {
             case E_FIELD_SET.search:
                 return this._getSearchFields();
@@ -187,6 +194,8 @@ export class RecordDescriptor {
                 return this.editFields;
             case E_FIELD_SET.list:
                 return this.listFields;
+            case E_FIELD_SET.tree:
+                return this.treeFields;
             default:
                 // throw new Error('Unknown field set');
                 console.warn('Unknown field set', aSet);
@@ -194,7 +203,7 @@ export class RecordDescriptor {
         }
     }
 
-    protected _getFieldView(aSet: E_FIELD_SET, mode?: string): any { }
+    protected _getFieldView(_aSet: E_FIELD_SET, _mode?: string): any { }
 
     protected _getFullSearchFields() {
         return this.fullSearchFields;
@@ -226,7 +235,7 @@ export class RecordDescriptor {
             group.push(_action);
         }
         /* tslint:enable:no-bitwise */
-    };
+    }
 
     private _addFieldToSet(name: string, fieldSet: FieldDescriptor[]) {
         const fld = this.fieldsMap.get(name);
@@ -253,10 +262,6 @@ export class RecordDescriptor {
         return this.allVisibleFields;
     }
 
-    private _getListFields(): FieldDescriptor[] {
-        return this.listFields;
-    }
-
     private _getSearchFields(): FieldDescriptor[] {
         return this.searchFields;
     }
@@ -269,6 +274,6 @@ export class RecordDescriptor {
             if (descriptor[foreignKey]) {
                 descriptor[foreignKey].forEach((actName) => this._addAction(actName, this[foreignKey]));
             }
-        })
+        });
     }
 }

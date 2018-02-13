@@ -16,32 +16,38 @@ export enum E_RECORD_ACTIONS {
     navigateDown,
     restore,
     importPhotos,
+    createRepresentative,
     tableCustomization,
     showAllSubnodes,
     // createRepresentative,
     // slantForForms,
     /* to be extended */
-};
+}
 
 export enum E_ACTION_GROUPS {
     common,
     item,
     group
-};
+}
 
 export interface IAction {
-    type: E_RECORD_ACTIONS
-    group: E_ACTION_GROUPS
-    title: string
-    hint: string
-    iconClass: string
-    hoverIconClass: string
-    activeIconClass: string
-    buttonClass: string
-};
+    type: E_RECORD_ACTIONS;
+    group: E_ACTION_GROUPS;
+    title: string;
+    hint: string;
+    iconClass: string;
+    hoverIconClass: string;
+    activeIconClass: string;
+    buttonClass: string;
+}
 
 export interface IActionButton extends IAction {
-    isActive: boolean
-    enabled: boolean
-    show: boolean
+    isActive: boolean;
+    enabled: boolean;
+    show: boolean;
+}
+
+export interface IActionEvent {
+    action: E_RECORD_ACTIONS;
+    params?: any;
 }

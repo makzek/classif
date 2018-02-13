@@ -11,7 +11,6 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 import { EosDeskService } from '../../app/services/eos-desk.service';
-import { EosUserProfileService } from '../../app/services/eos-user-profile.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
 
@@ -19,7 +18,6 @@ import { RECENT_URL } from '../../app/consts/common.consts';
 
 import {
     DANGER_NAVIGATE_TO_DELETED_ERROR,
-    INFO_NOTHING_CHANGES,
     DANGER_EDIT_DELETED_ERROR,
     SUCCESS_SAVE,
     WARN_SAVE_FAILED
@@ -34,7 +32,7 @@ import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.compone
 export enum EDIT_CARD_MODES {
     edit,
     view,
-};
+}
 
 /* Object that stores info about the last edited card in the LocalStorage */
 export class EditedCard {
@@ -49,32 +47,20 @@ export class EditedCard {
     templateUrl: 'card.component.html',
 })
 export class CardComponent implements CanDeactivateGuard, OnDestroy {
-    private ngUnsubscribe: Subject<any> = new Subject();
-
     node: EosDictionaryNode;
     nodes: EosDictionaryNode[];
 
     nodeData: any = {};
-    private _originalData: any = {};
     isChanged = false;
     fieldsDescription: any = {};
 
     dictionaryId: string;
-    private nodeId: string;
-    private _uuid: string;
-
-    private _urlSegments: string[];
-    private nodeIndex: number = -1;
-
     isFirst: boolean;
     isLast: boolean;
 
     lastEditedCard: EditedCard;
     closeRedirect: string; /* URL where to redirect after the cross is clicked */
 
-    private nextRoute: string;
-
-    private _mode: EDIT_CARD_MODES;
     editMode: boolean;
 
     selfLink = null;
@@ -86,26 +72,12 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
 
     @ViewChild('onlyEdit') modalOnlyRef: ModalDirective;
     @ViewChild('cardEditEl') cardEditRef: CardEditComponent;
-
     /* todo: check tasks for reson
     @HostListener('document:blur')
     private _blur(): boolean {
         return this.canDeactivate();
     }
     */
-
-    @HostListener('window:beforeunload', ['$event'])
-    private _canWndUnload(evt: BeforeUnloadEvent): any {
-        if (this.editMode) {
-            /* clean link on close or reload */
-            /* cann't handle user answer */
-            this._clearEditingCardLink();
-        }
-        if (this.isChanged) {
-            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
-            return false;
-        }
-    }
 
     get nodeName() {
         let _nodeName = '';
@@ -117,6 +89,18 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         }
         return _nodeName;
     }
+
+    private _originalData: any = {};
+    private nodeId: string;
+    // private _uuid: string;
+
+    private _urlSegments: string[];
+    private nodeIndex: number = -1;
+
+    private nextRoute: string;
+
+    private _mode: EDIT_CARD_MODES;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private _storageSrv: EosStorageService,
@@ -139,6 +123,19 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
     }
 
+    @HostListener('window:beforeunload', ['$event'])
+    canWndUnload(evt: BeforeUnloadEvent): any {
+        if (this.editMode) {
+            /* clean link on close or reload */
+            /* cann't handle user answer */
+            this._clearEditingCardLink();
+        }
+        if (this.isChanged) {
+            evt.returnValue = CONFIRM_SAVE_ON_LEAVE.body;
+            return false;
+        }
+    }
+
     ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
@@ -152,85 +149,9 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.disableSave = val;
     }
 
-    private _init() {
-        this.nextRoute = this._router.url;
-        this._urlSegments = this._router.url.split('/');
-        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
-        this._getNode();
-    }
-
-    private _getNode() {
-        // console.log('_getNode', this.dictionaryId, this.nodeId);
-        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
-            .then((node) => {
-                if (node) {
-                    this._update(node)
-                } else {
-                    const segments: Array<string> = this._router.url.split('/');
-                    this._router.navigate(['spravochniki/' + segments[2]]);
-                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
-                }
-            }).catch((err) => console.log('getNode error', err));
-    }
-
-    private _initNodeData(node: EosDictionaryNode) {
-        this.node = node;
-
-        this.nodeData = {
-            rec: {}
-        };
-        if (this.node) {
-            this.fieldsDescription = this.node.getEditFieldsDescription();
-            this.nodeData = this.node.getEditData();
-            // console.log('recived description', this.nodeData);
-
-            if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
-                this.dutysList = this._storageSrv.getItem('dutysList') || [];
-                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
-            }
-        }
-    }
-
-    private _update(node: EosDictionaryNode) {
-        let _canEdit: boolean;
-
-        this._initNodeData(node);
-
-        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
-            this._preventDeletedEdit() &&
-            this._preventMultiEdit();
-
-        if (_canEdit) {
-            this._setEditingCardLink();
-        }
-
-        this.editMode = _canEdit;
-        this._updateBorders();
-    }
-
     forceView() {
         if (this._mode === EDIT_CARD_MODES.edit) {
             this._openNode(this.node, EDIT_CARD_MODES.view);
-        }
-    }
-
-    private _preventMultiEdit(): boolean {
-        /* prevent editing multiple cards */
-        this.getLastEditedCard();
-        if (this.lastEditedCard && this.lastEditedCard.id !== this.nodeId /* && this.lastEditedCard.uuid !== this._uuid*/) {
-            this.modalOnlyRef.show();
-            return false;
-        }
-        return true;
-    }
-
-    private _preventDeletedEdit(): boolean {
-        if (!this.node.isDeleted) {
-            return true;
-        } else {
-            /* show warn */
-            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
-            return false;
         }
     }
 
@@ -269,12 +190,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.isChanged = isChanged;
     }
 
-    private _updateBorders() {
-        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
-        this.isFirst = this.nodeIndex <= 0;
-        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
-    }
-
     next() {
         if (this.nodeIndex < this.nodes.length - 1) {
             this.nodeIndex++;
@@ -292,19 +207,115 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     disManager(mod: boolean, tooltip: any): boolean {
         if (mod) {
             if (this.isFirst || !this.node.parent) {
-                tooltip.hide()
-                return true
+                tooltip.hide();
+                return true;
             } else {
-                return false
+                return false;
             }
         } else {
             if (this.isLast || !this.node.parent) {
-                tooltip.hide()
-                return true
+                tooltip.hide();
+                return true;
             } else {
-                return false
+                return false;
             }
         }
+    }
+
+    goTo(url: string): void {
+        if (url) {
+            this._router.navigateByUrl(url);
+        } else {
+            this._router.navigate([this.nextRoute]);
+        }
+    }
+
+    canDeactivate(_nextState?: any): boolean | Promise<boolean> {
+        return this._askForSaving();
+    }
+
+    private _init() {
+        this.nextRoute = this._router.url;
+        this._urlSegments = this._router.url.split('/');
+        this._mode = EDIT_CARD_MODES[this._urlSegments[this._urlSegments.length - 1]];
+        this._getNode();
+    }
+
+    private _getNode() {
+        // console.log('_getNode', this.dictionaryId, this.nodeId);
+        return this._dictSrv.getFullNode(this.dictionaryId, this.nodeId)
+            .then((node) => {
+                if (node) {
+                    this._update(node);
+                } else {
+                    const segments: Array<string> = this._router.url.split('/');
+                    this._router.navigate(['spravochniki/' + segments[2]]);
+                    this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
+                }
+            });
+            // .catch((err) => console.log('getNode error', err));
+    }
+
+    private _initNodeData(node: EosDictionaryNode) {
+        this.node = node;
+
+        this.nodeData = {
+            rec: {}
+        };
+        if (this.node) {
+            this.fieldsDescription = this.node.getEditFieldsDescription();
+            this.nodeData = this.node.getEditData();
+            // console.log('recived description', this.nodeData);
+
+            if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
+                this.dutysList = this._storageSrv.getItem('dutysList') || [];
+                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
+            }
+        }
+    }
+
+    private _update(node: EosDictionaryNode) {
+        let _canEdit: boolean;
+
+        this._initNodeData(node);
+
+        _canEdit = this._mode === EDIT_CARD_MODES.edit &&
+            this._preventDeletedEdit() &&
+            this._preventMultiEdit();
+
+        if (_canEdit) {
+            this._setEditingCardLink();
+        }
+
+        this.editMode = _canEdit;
+        this._updateBorders();
+    }
+
+    private _preventMultiEdit(): boolean {
+        /* prevent editing multiple cards */
+        this.getLastEditedCard();
+        if (this.lastEditedCard && this.lastEditedCard.id !== this.nodeId /* && this.lastEditedCard.uuid !== this._uuid*/) {
+            this.modalOnlyRef.show();
+            return false;
+        }
+        return true;
+    }
+
+    private _preventDeletedEdit(): boolean {
+        if (!this.node.isDeleted) {
+            return true;
+        } else {
+            /* show warn */
+            this._msgSrv.addNewMessage(DANGER_EDIT_DELETED_ERROR);
+            return false;
+        }
+    }
+
+
+    private _updateBorders() {
+        this.nodeIndex = this.nodes.findIndex((node) => node.id === this.node.id);
+        this.isFirst = this.nodeIndex <= 0;
+        this.isLast = this.nodeIndex >= this.nodes.length - 1 || this.nodeIndex < 0;
     }
 
     private _openNode(node: EosDictionaryNode, forceMode?: EDIT_CARD_MODES) {
@@ -323,18 +334,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             _url[_url.length - 1] = EDIT_CARD_MODES[forceMode];
         }
         return _url.join('/');
-    }
-
-    goTo(url: string): void {
-        if (url) {
-            this._router.navigateByUrl(url);
-        } else {
-            this._router.navigate([this.nextRoute]);
-        }
-    }
-
-    canDeactivate(nextState?: any): boolean | Promise<boolean> {
-        return this._askForSaving();
     }
 
     private _askForSaving(): Promise<boolean> {
@@ -359,7 +358,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                         }
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     // console.log('cancel reason', err);
                     return false;
                 });
@@ -386,7 +385,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this._save()
             .then((node) => {
                 if (node) {
-                    console.log('save', node);
+                    // console.log('save', node);
                     this._initNodeData(node);
                     this.cancel();
                 }
@@ -401,19 +400,13 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             .then((resp: EosDictionaryNode) => {
                 if (resp) {
                     this._msgSrv.addNewMessage(SUCCESS_SAVE);
-                    /*
-                    const fullTitle = this._fullTitle(resp);
-                    console.log('fullTitle', fullTitle);
-                    */
                     this._deskSrv.addRecentItem({
                         url: this._router.url,
                         title: resp.data.rec.CLASSIF_NAME,
-                        /* fullTitle: fullTitle */
                     });
                     this._clearEditingCardLink();
                 } else {
                     this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
-                    Promise.reject(resp);
                 }
                 return resp;
             })
@@ -445,7 +438,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                 'link': this._makeUrl(this.nodeId, EDIT_CARD_MODES.edit),
                 // uuid: this._uuid
             };
-            console.log('this.nodeId', this.nodeId);
+            // console.log('this.nodeId', this.nodeId);
             this._storageSrv.setItem(LS_EDIT_CARD, this.lastEditedCard, true);
         }
     }
@@ -474,5 +467,14 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             msg: errMessage
         });
         return null;
+    }
+
+      private cloneData(src: any): any {
+        try {
+            return JSON.parse(JSON.stringify(src));
+        } catch (e) {
+            return null;
+            // console.log(e);
+        }
     }
 }

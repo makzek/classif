@@ -1,6 +1,6 @@
-<div class="cabinet-card-edit">
+<div class="cabinet-card-edit" *ngIf="data.rec">
     <form #cardForm="ngForm">
-        <div class="edit-content secondary-block">
+        <div *ngIf="data && data.rec" class="edit-content secondary-block">
             <div class="form-group">
                 <label for="CABINET_NAME" class="primary-text" [ngClass]="{'unimportant-text': !editMode }">Краткое наименование кабинета</label>
                 <input [readonly]="!editMode" id="CABINET_NAME" name="CABINET_NAME" type="text" class="form-control m-font" [ngModel]="data.rec['CABINET_NAME']"

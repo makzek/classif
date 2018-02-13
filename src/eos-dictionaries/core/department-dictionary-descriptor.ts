@@ -1,5 +1,4 @@
 import {
-    E_FIELD_SET,
     E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
@@ -8,7 +7,6 @@ import {
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
 import { ModeFieldSet } from './record-mode';
-import { IHierCL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { CB_PRINT_INFO } from 'eos-rest/interfaces/structures';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
@@ -53,10 +51,11 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         let __res = [];
         Object.keys(this.fullSearchFields).forEach((mode) => {
             __res = __res.concat(this.fullSearchFields[mode]);
-        })
+        });
         return __res;
     }
 
+    /*
     private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
         //  todo: fix hardcode to data, need better solution
         let _mode: string = E_DEPT_MODE[this.getMode(values)];
@@ -71,13 +70,14 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             return [];
         }
     }
+    */
 
     private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {
             if (!this[setName]) {
                 this[setName] = new ModeFieldSet(this, descriptor[setName]);
             }
-        })
+        });
     }
 }
 
@@ -103,7 +103,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 if (data.rec[fld.foreignKey]) {
                     _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
                 }
-            })
+            });
         }
         return _criteries;
     }
@@ -126,17 +126,30 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
         const pCabinet = (rec['ISN_CABINET']) ? this.getCachedRecord({ 'CABINET': rec['ISN_CABINET'] }) : Promise.resolve(null);
 
+        let owner = rec['ISN_NODE'].toString();
+        if (!rec['IS_NODE']) {
+            owner += '|' + rec['ISN_HIGH_NODE'].toString();
+        }
+
         const pPrintInfo = this.apiSrv
             .read<CB_PRINT_INFO>({
                 CB_PRINT_INFO: PipRX.criteries({
-                    ISN_OWNER: rec['ISN_NODE'].toString() + '|' + rec['ISN_HIGH_NODE'].toString(),
+                    ISN_OWNER: owner,
                     OWNER_KIND: '104'
                 })
             })
-            .then((items) => this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(items[0], 'CB_PRINT_INFO'));
+            .then((items) => {
+                const info = items.find((item) => item.ISN_OWNER === rec['ISN_NODE']);
+                return this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(info || items[0], 'CB_PRINT_INFO');
+            });
 
         return Promise.all([pUser, pOrganization, pCabinet, pPrintInfo])
             .then(([user, org, cabinet, printInfo]) => {
+                /*
+                if (!printInfo['_State']) {
+                    printInfo._State = _ES.Stub;
+                }
+                */
                 return {
                     user: user,
                     organization: org,
@@ -144,6 +157,10 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                     printInfo: printInfo
                 };
             });
+    }
+
+    getContacts(orgISN: string): Promise<any> {
+        return this.apiSrv.read({ 'CONTACT': PipRX.criteries({ 'ISN_ORGANIZ': orgISN }) });
     }
 
     protected _initRecord(data: IDictionaryDescriptor) {

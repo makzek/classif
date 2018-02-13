@@ -49,6 +49,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
         title: 'Вес',
         type: 'number'
     }],
+    treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'NOTE'],
     searchFields: ['CLASSIF_NAME', 'NOTE'],
     fullSearchFields: ['CLASSIF_NAME', 'NOTE'],

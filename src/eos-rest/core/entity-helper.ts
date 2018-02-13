@@ -3,6 +3,7 @@ import { IEnt } from '../interfaces/interfaces';
 import { _ES } from '../core/consts';
 
 export class EntityHelper {
+    constructor(private _metadata: Metadata) {}
 
     static clone<T>(o: T): T {
         const r = <T>{};
@@ -14,10 +15,6 @@ export class EntityHelper {
         return r;
     }
 
-    constructor (private _metadata: Metadata) {
-
-    }
-
     public prepareAdded<T extends IEnt>(ent: any, typeName: string): T {
         ent.__metadata = { __type: typeName };
         ent._State = _ES.Added;
@@ -25,22 +22,22 @@ export class EntityHelper {
     }
 
     public prepareForEdit<T extends IEnt>(it: T, typeName?: string): T {
-        if (it === undefined) {
-            if (typeName !== undefined) {
+        if (it) {
+            if (it._State !== _ES.Added && !it.hasOwnProperty('_orig')) {
+                it._orig = EntityHelper.clone(it);
+            }
+        } else {
+            if (typeName) {
                 const e = <T>{};
                 const et = this._metadata.typeDesc(typeName);
                 e._State = _ES.Stub;
-                e.__metadata = {__type: typeName};
-                // tslint:disable-next-line:forin
-                for (const pn in et.properties) {
-                    e[pn] = null;
+                e.__metadata = { __type: typeName };
+                if (et && et.properties) {
+                    Object.keys(et.properties).forEach((key) => e[key] = null);
                 }
                 return e;
             }
-        } else if (it._State !== _ES.Added && !it.hasOwnProperty('_orig')) {
-            it._orig = EntityHelper.clone(it);
         }
         return it;
     }
-
 }

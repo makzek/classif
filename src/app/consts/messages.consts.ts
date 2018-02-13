@@ -63,7 +63,8 @@ export const DANGER_DELETE_ELEMENT: IMessage = {
 export const SESSION_CLOSED: IMessage = {
     type: 'success',
     title: 'Сессия завершена',
-    msg: ''
+    msg: '',
+    dismissOnTimeout: 1000
 };
 
 export const AUTH_REQUIRED: IMessage = {
@@ -76,4 +77,4 @@ export const NAVIGATE_TO_ELEMENT_WARN: IMessage = {
     title: 'Предупреждение:',
     msg: 'Запись не найдена.',
     type: 'warning'
-}
+};

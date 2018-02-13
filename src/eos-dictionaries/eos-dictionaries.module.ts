@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -21,11 +21,8 @@ import { EosCommonModule } from '../eos-common/eos-common.module';
 /* components */
 import { CardComponent } from './card/card.component';
 import { CardEditComponent } from './card-views/card-edit.component';
-import { DepartmentsCardEditComponent } from './card-views/departments-card-edit.component';
+import { DepartmentsCardEditDepartmentComponent } from './card-views/departments-card-edit-department.component';
 import { DepartmentsCardEditPersonComponent } from './card-views/departments-card-edit-person.component';
-import { DepartmentsCardEditPersonContactsComponent } from './card-views/departments-card-edit-person-contacts.component';
-import { DepartmentsCardEditPersonInfoComponent } from './card-views/departments-card-edit-person-info.component';
-import { DepartmentsCardEditPersonMainComponent } from './card-views/departments-card-edit-person-main.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
@@ -42,6 +39,7 @@ import { TreeNodeComponent } from './tree/tree-node.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
 import { DepartmentNodeInfoComponent } from './node-info/department-node-info.component';
+import { CabinetNodeInfoComponent } from './node-info/cabinet-node-info.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { CreateNodeComponent } from './create-node/create-node.component';
@@ -57,11 +55,8 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         CardComponent,
         CardEditComponent,
         ColumnSettingsComponent,
-        DepartmentsCardEditComponent,
+        DepartmentsCardEditDepartmentComponent,
         DepartmentsCardEditPersonComponent,
-        DepartmentsCardEditPersonMainComponent,
-        DepartmentsCardEditPersonInfoComponent,
-        DepartmentsCardEditPersonContactsComponent,
         DictionaryComponent,
         DictionariesComponent,
         DictionarySearchComponent,
@@ -77,6 +72,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
+        CabinetNodeInfoComponent,
         LongTitleHintComponent,
         SecurityCardEditComponent,
         CreateNodeComponent,

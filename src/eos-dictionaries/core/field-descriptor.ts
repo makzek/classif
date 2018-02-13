@@ -28,11 +28,11 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         }
 
         if (data.format) {
-            this.format = data.format
+            this.format = data.format;
         }
 
         if (data.pattern) {
-            this.pattern = data.pattern
+            this.pattern = data.pattern;
         }
 
         this.required = !!data.required;

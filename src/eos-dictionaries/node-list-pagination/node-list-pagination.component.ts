@@ -1,8 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { EosStorageService } from '../../app/services/eos-storage.service';
-import { IPaginationConfig, IPageLength } from './node-list-pagination.interfaces';
+import { IPaginationConfig } from './node-list-pagination.interfaces';
 import { LS_PAGE_LENGTH, PAGES } from './node-list-pagination.consts';
 import { EosDictService } from '../services/eos-dict.service';
 
@@ -11,15 +10,15 @@ import { EosDictService } from '../services/eos-dict.service';
     templateUrl: 'node-list-pagination.component.html'
 })
 export class NodeListPaginationComponent {
-    private ngUnsubscribe: Subject<any> = new Subject();
-    public config: IPaginationConfig;
     @Input() currentState: boolean[];
-
+    public config: IPaginationConfig;
     readonly pageLengths = PAGES;
-    private readonly _buttonsTotal = 5;
 
     pageCount = 1;
     pages: number[] = [];
+
+    private readonly _buttonsTotal = 5;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private _dictSrv: EosDictService,
@@ -35,7 +34,7 @@ export class NodeListPaginationComponent {
     }
 
     public setPageLength(length: number): void {
-        this._storageSrv.setItem(LS_PAGE_LENGTH, length, true)
+        this._storageSrv.setItem(LS_PAGE_LENGTH, length, true);
         this.config.length = length;
         this._dictSrv.changePagination(this.config);
     }
@@ -49,13 +48,13 @@ export class NodeListPaginationComponent {
         if (page !== this.config.current) {
             this.config.current = page;
             this.config.start = page;
-            this._dictSrv.changePagination(this.config)
+            this._dictSrv.changePagination(this.config);
         }
     }
 
     private _update() {
         let total = Math.ceil(this.config.itemsQty / this.config.length);
-        if (total === 0) { total = 1 }
+        if (total === 0) { total = 1; }
         const firstSet = this._buttonsTotal - this.config.current;
         const lastSet = total - this._buttonsTotal + 1;
         const middleSet = this._buttonsTotal - 3;

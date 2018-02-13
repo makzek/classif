@@ -24,10 +24,10 @@ export class TreeNodeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.viewFields = this.node.getListView();
+        this.viewFields = this.node.getTreeView();
     }
 
-    onExpand(evt: Event, isDeleted: boolean) {
+    onExpand(evt: Event/*, isDeleted: boolean*/) {
         evt.stopPropagation();
         if (this.node.isExpanded) {
             this.node.isExpanded = false;
@@ -35,13 +35,13 @@ export class TreeNodeComponent implements OnInit {
             this.node.updating = true;
             this._dictSrv.expandNode(this.node.id)
                 .then((node) => {
-                    node.isExpanded = true
-                    this.node.updating = false
+                    node.isExpanded = true;
+                    this.node.updating = false;
                 });
         }
     }
 
-    onSelect(evt: Event, isDeleted: boolean, el: HTMLElement) {
+    onSelect(evt: Event, isDeleted: boolean/*, el: HTMLElement*/) {
         evt.stopPropagation();
         if (!isDeleted) {
             const _path = this.node.getPath();

@@ -1,29 +1,26 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
-import { defineLocale } from 'ngx-bootstrap/bs-moment';
-import { ru } from 'ngx-bootstrap/locale';
-defineLocale('ru', ru);
 
 @Component({
     selector: 'eos-datepicker',
     templateUrl: 'datepicker.component.html',
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
-    @Input() value: Date;
-    @Input() readonly;
+    @Input() value: any;
+    @Input() isReadonly: boolean;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
+    @ViewChild('dpw') datePickerWrapper: ElementRef;
+    @ViewChild('dp') datePicker: BsDatepickerComponent;
+
     bsConfig: Partial<BsDatepickerConfig>;
 
     placement = 'bottom';
+    aDate: Date;
+
 
     private _handler;
-
-    isDisabled = false;
-
-    @ViewChild('dpw') datePickerWrapper: ElementRef;
-    @ViewChild('dp') datePicker: BsDatepickerComponent;
 
     constructor() {
         this.bsConfig = {
@@ -31,19 +28,25 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             showWeekNumbers: false,
             containerClass: 'theme-dark-blue',
             dateInputFormat: 'DD.MM.YYYY',
-            isDisabled: true,
-            minDate: new Date('01.01.1900'),
-            maxDate: new Date('12.31.2100'),
+            isDisabled: this.isReadonly,
+            minDate: new Date('01/01/1900'),
+            maxDate: new Date('12/31/2100'),
         };
     }
 
     ngOnInit() {
-        if (this.value && typeof this.value !== 'object') {
-            this.value = new Date(this.value);
+        this.bsConfig = Object.assign({}, this.bsConfig, {
+            isDisabled: this.isReadonly,
+        });
+
+        if (this.value instanceof Date) {
+            this.aDate = this.value;
+        } else if (this.value) {
+            this.aDate = new Date(this.value);
         }
         window.addEventListener('scroll', this._handler = () => {
-                this.datePicker.hide();
-            }, true);
+            this.datePicker.hide();
+        }, true);
     }
 
     ngOnDestroy() {
@@ -51,9 +54,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     emitChange(date: Date) {
-        if (this.value !== date) {
-            this.change.emit(date);
-        }
+        this.change.emit(date);
     }
 
     measureDistance() {

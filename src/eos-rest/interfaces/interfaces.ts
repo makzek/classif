@@ -3,14 +3,14 @@ export interface IApiCfg {
     dataSrv: string;
     metadataJs: string[];
     metaMergeFuncList?: ((meta: any) => void)[];
-};
+}
 
 export interface IEnt {
     _State?: string;
     __metadata?: any;
     _orig?: any;
     _more_json?: any;
-};
+}
 
 export interface ILinearCL extends IEnt {
     ISN_LCLASSIF: number;
@@ -62,14 +62,14 @@ export interface ITypeDef {
     pk: string;
     properties: any;
     relations: IRelationDef[];
-};
+}
 
 export interface IRelationDef {
     name: string;
     __type: string;
     sf: string;
     tf: string;
-};
+}
 
 export interface IViewModelResponse {
     value: any;
@@ -77,11 +77,11 @@ export interface IViewModelResponse {
     contentTypes: any[];
     declaredType: any;
     statusCode: number;
-};
+}
 
 export interface IKeyValuePair {
     [key: string]: any;
-};
+}
 
 export interface IRequest extends IKeyValuePair {
     url?: string;
@@ -97,26 +97,26 @@ export interface IRequest extends IKeyValuePair {
     urlParams?: string;
 
     //    errHandler?: (e) => any;
-};
+}
 
 export interface IAsk {
     ids?: any[];
     criteries?: any;
     args?: any;
     then?: any;
-};
+}
 
 export interface IR extends IRequest {
     _et: string;
-};
+}
 
 export enum CacheLevel {
     Entities = 1, List = 2, EntitiesAndList = 4
 }
 
 export interface ICachePolicy {
-    level?: CacheLevel
-    refresh?: CacheLevel
+    level?: CacheLevel;
+    refresh?: CacheLevel;
 
 //    expire?: Date;
 

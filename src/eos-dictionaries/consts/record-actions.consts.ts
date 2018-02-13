@@ -1,4 +1,4 @@
-import { IAction , E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/interfaces';
+import { IAction, E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/interfaces';
 
 export const RECORD_ACTIONS_EDIT = {
     type: E_RECORD_ACTIONS.edit,
@@ -107,6 +107,15 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-bin-forever-dark-blue small',
     buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.createRepresentative,
+    group: E_ACTION_GROUPS.group,
+    title: null,
+    hint: 'Создать представителя организации',
+    iconClass: 'eos-icon eos-icon-avatar-blue small',
+    activeIconClass: null,
+    hoverIconClass: 'eos-icon eos-icon-avatar-dark-blue small',
+    buttonClass: null
 }];
 
 export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
@@ -174,7 +183,7 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     buttonClass: 'hidden-lg'
 }];
 
-export const  SHOW_ALL_SUBNODES: IAction = {
+export const SHOW_ALL_SUBNODES: IAction = {
     type: E_RECORD_ACTIONS.showAllSubnodes,
     group: E_ACTION_GROUPS.common,
     title: null,
@@ -184,3 +193,23 @@ export const  SHOW_ALL_SUBNODES: IAction = {
     hoverIconClass: '',
     buttonClass: null
 };
+
+export const COMMON_ADD_MENU = [{
+    params: { 'IS_NODE': 0 },
+    title: 'Создать вершину'
+},
+{
+    params: { 'IS_NODE': 1 },
+    title: 'Создать лист'
+}];
+
+export const DEPARTMENT_ADD_MENU = [
+    {
+        params: { 'IS_NODE': 0 },
+        title: 'Создать подразделение'
+    },
+    {
+        params: { 'IS_NODE': 1 },
+        title: 'Создать должностное лицо'
+    }
+];
