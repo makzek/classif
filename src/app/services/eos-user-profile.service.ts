@@ -6,7 +6,7 @@ import { AuthService } from '../../eos-rest/services/auth.service';
 import { AUTH_REQUIRED, SESSION_CLOSED } from '../consts/messages.consts';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { IUserProfile } from '../core/user-profile.interface';
-import { DEFAURT_USER, USER_SETTINGS } from '../consts/user.consts';
+import { DEFAULT_USER, USER_SETTINGS } from '../consts/user.consts';
 import { ISettingsItem } from '../core/settings-item.interface';
 import { USER_CL, SYS_PARMS } from '../../eos-rest/interfaces/structures';
 import { EosStorageService } from 'app/services/eos-storage.service';
@@ -56,7 +56,7 @@ export class EosUserProfileService implements IUserProfile {
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
     ) {
-        Object.assign(this, DEFAURT_USER);
+        Object.assign(this, DEFAULT_USER);
         this.settings = USER_SETTINGS;
         this._isAuthorized = false;
         this._settings$ = new BehaviorSubject<ISettingsItem[]>(this.settings);
@@ -65,16 +65,18 @@ export class EosUserProfileService implements IUserProfile {
 
     checkAuth(): Promise<boolean> {
         if (!this._isAuthorized) {
-            this._authPromise = this._authSrv.getContext()
-                .then((context) => {
-                    this._authPromise = null;
-                    this._setUser(context.user, context.sysParams);
-                    return this._setAuth(true);
-                })
-                .catch(() => {
-                    this._authPromise = null;
-                    return this._setAuth(false);
-                });
+            if (!this._authPromise) {
+                this._authPromise = this._authSrv.getContext()
+                    .then((context) => {
+                        this._setUser(context.user, context.sysParams);
+                        this._authPromise = null;
+                        return this._setAuth(true);
+                    })
+                    .catch(() => {
+                        this._authPromise = null;
+                        return this._setAuth(false);
+                    });
+            }
             return this._authPromise;
         } else {
             return Promise.resolve(this._isAuthorized);
@@ -95,23 +97,30 @@ export class EosUserProfileService implements IUserProfile {
         return this._setAuth(false);
     }
 
-    login(name: string, password: string): Promise<any> {
+    login(name: string, password: string): Promise<boolean> {
+        // console.log('login checking auth');
         return this.checkAuth()
             .then((authorized) => {
                 if (authorized) {
                     return authorized;
                 } else {
+                    // console.log('not authorized: login');
                     return this._authSrv
                         .login(name, password)
                         .then((context) => {
                             if (context.user && context.sysParams) {
+                                // console.log('authorized: set context if any');
                                 this._setUser(context.user, context.sysParams);
                                 return this._setAuth(true);
                             } else {
-                                return this._setAuth(false);
+                                // console.log('authorized, but no context');
+                                return this._logout(true);
                             }
                         })
-                        .catch((err) => this._setAuth(false));
+                        .catch((err) => {
+                            // console.log('login error');
+                            return this._logout(true);
+                        });
                 }
             })
             .catch((err) => {
@@ -120,11 +129,12 @@ export class EosUserProfileService implements IUserProfile {
                     title: err.message ? err.message : err,
                     msg: ''
                 });
-                return Promise.resolve(this._logout(true));
+                return this._logout(true);
             });
     }
 
     logout(): Promise<any> {
+        // console.log('logout called');
         if (this._isAuthorized) {
             return this._authSrv.logout()
                 .then(() => this._logout())
@@ -134,9 +144,10 @@ export class EosUserProfileService implements IUserProfile {
                         title: err.message ? err.message : err,
                         msg: ''
                     });
-                    return Promise.resolve(this._logout(true));
+                    return this._logout(true);
                 });
         } else {
+            // console.log('no authorization');
             return Promise.resolve(true);
         }
     }

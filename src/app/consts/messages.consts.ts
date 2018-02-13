@@ -14,6 +14,12 @@ export const WARN_DESK_CREATING: IMessage = {
     dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
+export const WARN_DESK_MAX_COUNT: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение: максимальное колличество рабочих столов!',
+    msg: 'У вас может быть не более 5 рабочих столов',
+};
+
 export const DANGER_DESK_CREATING: IMessage = {
     type: 'danger',
     title: 'Ошибка создания рабочего стола:',
@@ -64,7 +70,7 @@ export const SESSION_CLOSED: IMessage = {
     type: 'success',
     title: 'Сессия завершена',
     msg: '',
-    dismissOnTimeout: 1000
+    dismissOnTimeout: 3000
 };
 
 export const AUTH_REQUIRED: IMessage = {
