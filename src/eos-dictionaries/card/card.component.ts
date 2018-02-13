@@ -265,7 +265,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
             .then((node) => {
                 if (node) {
                     this._update(node);
-                } else {
+                } else if (node === null) {
                     const segments: Array<string> = this._router.url.split('/');
                     this._router.navigate(['spravochniki/' + segments[2]]);
                     this._msgSrv.addNewMessage(NAVIGATE_TO_ELEMENT_WARN);
@@ -438,8 +438,8 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                         data.rec['POST_H'] = 0;
                         return this._dictSrv.updateNode(this.node, data)
                             .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
-                }
-            });
+                    }
+                });
         } else {
             return this._dictSrv.updateNode(this.node, data)
                 .then((resp: EosDictionaryNode) => this._afterUpdating(resp))

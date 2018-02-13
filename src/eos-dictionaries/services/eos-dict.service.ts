@@ -979,7 +979,7 @@ export class EosDictService {
                     returnUrl: this._router.url
                 }
             });
-            return null;
+            return undefined;
         } else {
             const errMessage = err.message ? err.message : err;
             console.warn(err);
