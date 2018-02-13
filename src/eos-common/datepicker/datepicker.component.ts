@@ -19,7 +19,6 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     placement = 'bottom';
     aDate: Date;
 
-
     private _handler;
 
     constructor() {

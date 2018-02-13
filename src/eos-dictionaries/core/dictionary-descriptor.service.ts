@@ -6,7 +6,7 @@ import { PipRX } from 'eos-rest/services/pipRX.service';
 import { DictionaryDescriptor } from 'eos-dictionaries/core/dictionary-descriptor';
 import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-descriptor';
 import { DepartmentDictionaryDescriptor } from 'eos-dictionaries/core/department-dictionary-descriptor';
-import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
+import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
 import { CabinetDictionaryDescriptor } from 'eos-dictionaries/core/cabinet-dictionary-descriptor';
 
 @Injectable()
@@ -47,8 +47,8 @@ export class DictionaryDescriptorService {
                     case 'departments':
                         res = new DepartmentDictionaryDescriptor(descr, this.apiSrv);
                         break;
-                    case 'contact':
-                        res = new ContactDictionaryDescriptor(descr, this.apiSrv);
+                    case 'organization':
+                        res = new OrganizationDictionaryDescriptor(descr, this.apiSrv);
                         break;
                     case 'cabinet':
                         res = new CabinetDictionaryDescriptor(descr, this.apiSrv);

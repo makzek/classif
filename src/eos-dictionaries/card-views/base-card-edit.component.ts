@@ -20,7 +20,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     form: FormGroup;
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
-    protected dictSrv;
+    protected dictSrv: EosDictService;
     private _dataSrv;
     private _inputCtrlSrv;
 
@@ -128,6 +128,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             _value = null;
         } else if (value instanceof Date) {
             _value = EosUtils.dateToString(value);
+        } else if (value === '') { // fix empty strings in IE
+            _value = null;
         } else {
             _value = value;
         }

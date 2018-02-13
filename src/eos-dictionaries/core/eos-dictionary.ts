@@ -12,7 +12,7 @@ import { AbstractDictionaryDescriptor } from './abstract-dictionary-descriptor';
 import { EosDictionaryNode } from './eos-dictionary-node';
 
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
-import { ContactDictionaryDescriptor } from 'eos-dictionaries/core/contact-dictionary-descriptor';
+import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -69,10 +69,16 @@ export class EosDictionary {
     }
 
     constructor(dictId: string, private dictDescrSrv: DictionaryDescriptorService) {
-        this.descriptor = dictDescrSrv.getDescriptorClass(dictId);
-        this._nodes = new Map<string, EosDictionaryNode>();
-        this._dictionaries = {};
-        this.defaultOrder();
+        const descriptor = dictDescrSrv.getDescriptorClass(dictId);
+        if (descriptor) {
+            this.descriptor = descriptor;
+            this._nodes = new Map<string, EosDictionaryNode>();
+            this._dictionaries = {};
+            this.defaultOrder();
+            return this;
+        } else {
+            throw new Error('Словарь не поддерживается');
+        }
     }
 
     public defaultOrder() {
@@ -82,17 +88,31 @@ export class EosDictionary {
         };
     }
 
+    bindOrganization(orgDue: string): Promise<any> {
+        if (orgDue && this.descriptor.type === E_DICT_TYPE.department) {
+            const dOrganization = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
+            return dOrganization.getData([orgDue])
+                .then(([organization]) => organization);
+        } else {
+            return Promise.resolve(null);
+        }
+    }
+
     canDo(action: E_RECORD_ACTIONS): boolean {
         return this.descriptor.record.canDo(action);
     }
 
     createRepresentative(newContacts: any[], node: EosDictionaryNode): Promise<IRecordOperationResult[]> {
-        const orgISN = node.data['organization']['ISN_NODE'];
-        if (orgISN) {
-            const dContact = <ContactDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('contact');
-            return dContact.createContacts(newContacts, orgISN);
+        const orgDUE = node.data['organization']['DUE'];
+        if (orgDUE) {
+            const dOrganization = <OrganizationDictionaryDescriptor>this.dictDescrSrv.getDescriptorClass('organization');
+            return dOrganization.addContacts(newContacts, orgDUE);
         } else {
-            return Promise.resolve([]);
+            return Promise.resolve([<IRecordOperationResult>{
+                record: newContacts[0],
+                success: false,
+                error: { message: 'Нет связанной организации.' }
+            }]);
         }
     }
 
@@ -120,6 +140,18 @@ export class EosDictionary {
                 });
         } else {
             return Promise.resolve(null);
+        }
+    }
+
+    updateNodeData(node: EosDictionaryNode, data: any): Promise<IRecordOperationResult[]> {
+        if (data) {
+            return this.descriptor.updateRecord(node.data, data)
+                .then((_resp) => {
+                    node.updateData(data.rec);
+                    return _resp;
+                });
+        } else {
+            return Promise.resolve([]);
         }
     }
 
@@ -319,15 +351,25 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
-        const _criteries = _searchFields.map((fld) => {
+        if (selectedNode.dictionaryId === 'departments' || selectedNode.dictionaryId === 'rubricator') {
+            const _criteries = [];
             const _crit: any = {
-                [fld.foreignKey]: '"' + search + '"'
+                'CL_SEARCH.Contents': '"*' + search + '*"'
             };
             this._extendCritery(_crit, params, selectedNode);
-            return _crit;
-        });
-        return _criteries;
+            _criteries.push(_crit);
+            return _criteries;
+        } else {
+            const _searchFields = this.descriptor.record.getFieldSet(E_FIELD_SET.search);
+            const _criteries = _searchFields.map((fld) => {
+                const _crit: any = {
+                    [fld.foreignKey]: '"' + search + '"'
+                };
+                this._extendCritery(_crit, params, selectedNode);
+                return _crit;
+            });
+            return _criteries;
+        }
     }
 
     getFullsearchCriteries(data: any, params: ISearchSettings, selectedNode?: EosDictionaryNode): any {
@@ -400,10 +442,7 @@ export class EosDictionary {
             if (!node.parent && node !== this.root) {
                 this.root.addChild(node);
             }
-            node.updateExpandable(this._showDeleted);
         });
-
-        this.root.updateExpandable(this._showDeleted);
 
         const treeOrderKey = this.root.getTreeView()[0];
         this.nodes.forEach((node) => {
@@ -411,6 +450,7 @@ export class EosDictionary {
                 node.children = this._orderByField(node.children, { fieldKey: treeOrderKey.foreignKey, ascend: true });
             }
         });
+        this._nodes.forEach((node) => node.updateExpandable(this._showDeleted));
     }
 
     /**

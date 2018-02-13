@@ -15,7 +15,7 @@ export enum E_DICT_TYPE {
 export enum E_FIELD_SET {
     tree,
     list,
-    quickView,
+    info,
     shortQuickView,
     search,
     fullSearch,

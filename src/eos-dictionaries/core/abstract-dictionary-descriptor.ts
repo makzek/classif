@@ -2,12 +2,15 @@ import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
+import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
-import { ITypeDef, IEnt } from 'eos-rest';
+import { ITypeDef, IEnt, DELO_BLOB } from 'eos-rest';
 import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
+import { IAppCfg } from 'eos-common/interfaces';
+import { RestError } from 'eos-rest/core/rest-error';
 
 
 export abstract class AbstractDictionaryDescriptor {
@@ -48,10 +51,59 @@ export abstract class AbstractDictionaryDescriptor {
         }
     }
 
-    abstract addRecord(...params): Promise<any>;
+    abstract addRecord(...params): Promise<IRecordOperationResult[]>;
     abstract getChildren(...params): Promise<any[]>;
     abstract getRoot(): Promise<any[]>;
     abstract getSubtree(...params): Promise<any[]>;
+    abstract onPreparePrintInfo(dec: FieldsDecline): Promise<any[]>;
+
+    addBlob(ext: string, blobData: string): Promise<string | number> {
+        const delo_blob = this.apiSrv.entityHelper.prepareAdded<DELO_BLOB>({
+            ISN_BLOB: this.apiSrv.sequenceMap.GetTempISN(),
+            EXTENSION: ext
+        }, 'DELO_BLOB');
+        const chl = this.apiSrv.changeList([delo_blob]);
+        const content = {
+            isn_target_blob: delo_blob.ISN_BLOB,
+            data: blobData
+        };
+
+        PipRX.invokeSop(chl, 'DELO_BLOB_SetDataContent', content);
+
+        return this.apiSrv.batch(chl, '')
+            .then((ids) => (ids[0] ? ids[0] : null));
+
+    }
+
+    checkSevIsNew(sevData: SEV_ASSOCIATION, record: any): Promise<IRecordOperationResult> {
+        return this.apiSrv.read<SEV_ASSOCIATION>({ SEV_ASSOCIATION: PipRX.criteries({ OBJECT_NAME: this.apiInstance }) })
+            .then((sevs) => {
+                let result: IRecordOperationResult;
+                if (!sevData.__metadata) { // if new SEV
+                    const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
+                    sevData = Object.assign(sevRec, sevData);
+                }
+                result = {
+                    record: sevData,
+                    success: true
+                };
+                if (SevIndexHelper.PrepareForSave(sevData, record)) {
+                    const exist = sevs.find((existSev) =>
+                        sevData.OBJECT_ID !== existSev.OBJECT_ID && existSev.GLOBAL_ID === sevData.GLOBAL_ID);
+
+                    if (exist) {
+                        result.success = false;
+                        result.error = new RestError({
+                            isLogicException: true,
+                            message: 'Индекс СЭВ создан ранее!'
+                        });
+                    }
+                } else {
+                    result = null;
+                }
+                return result;
+            });
+    }
 
     deleteRecord(data: IEnt): Promise<any> {
         return this._postChanges(data, { _State: _ES.Deleted });
@@ -78,6 +130,10 @@ export abstract class AbstractDictionaryDescriptor {
         });
 
         return Promise.all(pDelete);
+    }
+
+    getApiConfig(): IAppCfg {
+        return this.apiSrv.getConfig();
     }
 
     merge(metadata: any) {
@@ -182,27 +238,59 @@ export abstract class AbstractDictionaryDescriptor {
      * @param updates changes
      * @returns Promise<any[]>
      */
-    updateRecord(originalData: any, updates: any): Promise<any[]> {
+    updateRecord(originalData: any, updates: any): Promise<IRecordOperationResult[]> {
         const changeData = [];
+        let pSev: Promise<IRecordOperationResult> = Promise.resolve(null);
+        const results: IRecordOperationResult[] = [];
         Object.keys(originalData).forEach((key) => {
+
             if (originalData[key]) {
-                if (key === 'sev') {
-                    if (SevIndexHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                switch (key) {
+                    case 'sev': // do nothing handle sev later
+                        pSev = this.checkSevIsNew(Object.assign({}, originalData.sev, updates.sev), originalData.rec);
+                        break;
+                    case 'photo':
+                        break;
+                    case 'printInfo':
+                        if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
+                            changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        }
+                        break;
+                    case 'rec':
                         changeData.push(Object.assign({}, originalData[key], updates[key]));
-                    }
-                } else if (key === 'printInfo') {
-                    if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
-                        changeData.push(Object.assign({}, originalData[key], updates[key]));
-                    }
-                } else {
-                    changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        break;
+                    default: // do nothing
+
                 }
             }
         });
+
         // console.log('originalData', originalData);
         // console.log('changeData', changeData);
-        return this.apiSrv.batch(this.apiSrv.changeList(changeData), '');
-        // return Promise.all(_res); // this._postChanges(originalData.rec, updates.rec);
+        const record = Object.assign({}, originalData.rec, updates.rec);
+        return pSev
+            .then((result) => {
+                if (result) {
+                    if (result.success) {
+                        changeData.push(result.record);
+                    } else {
+                        result.record = record;
+                        results.push(result);
+                    }
+                }
+            })
+            .then(() => {
+                const changes = this.apiSrv.changeList(changeData);
+                if (changes.length) {
+                    return this.apiSrv.batch(changes, '')
+                        .then(() => {
+                            results.push({ success: true, record: record });
+                            return results;
+                        });
+                } else {
+                    return results;
+                }
+            });
     }
 
     protected _postChanges(data: any, updates: any): Promise<any[]> {

@@ -13,9 +13,11 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DragulaModule } from 'ng2-dragula';
 
-import { APP_CONFIG } from '../app/app.config';
+// import { APP_CONFIG } from 'app/app.config.local';
+// console.log('dict config', APP_CONFIG);
+
 import { AppRoutingModule } from '../app/app-routing.module';
-import { EosRestModule } from '../eos-rest/eos-rest.module';
+// import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
 
 /* components */
@@ -87,9 +89,8 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         ReactiveFormsModule,
         HttpModule,
         AppRoutingModule,
-        /* AppModule, */
         SortableModule.forRoot(),
-        EosRestModule.forRoot(APP_CONFIG.apiCfg),
+//        EosRestModule.forRoot(APP_CONFIG),
         EosCommonModule,
         DatepickerModule.forRoot(),
         TooltipModule.forRoot(),

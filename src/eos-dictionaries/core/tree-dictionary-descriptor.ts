@@ -1,11 +1,11 @@
-import { ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
+import { ITreeDictionaryDescriptor, IRecordOperationResult } from 'eos-dictionaries/interfaces';
 import { FieldDescriptor } from './field-descriptor';
 import { RecordDescriptor } from './record-descriptor';
-import { IHierCL, SEV_ASSOCIATION, CB_PRINT_INFO } from 'eos-rest';
+import { IHierCL, CB_PRINT_INFO } from 'eos-rest';
 import { AbstractDictionaryDescriptor } from 'eos-dictionaries/core/abstract-dictionary-descriptor';
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { SevIndexHelper } from 'eos-rest/services/sevIndex-helper';
 import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
+import { FieldsDecline } from '../interfaces/fields-decline.inerface';
 
 export class TreeRecordDescriptor extends RecordDescriptor {
     dictionary: TreeDictionaryDescriptor;
@@ -24,14 +24,25 @@ export class TreeRecordDescriptor extends RecordDescriptor {
 export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
     record: TreeRecordDescriptor;
 
-    addRecord<T extends IHierCL>(data: any, parent?: any, isLeaf = false, isProtected = false, isDeleted = false): Promise<any> {
+    addRecord<T extends IHierCL>(
+        data: any,
+        parent?: any,
+        isLeaf = false,
+        isProtected = false,
+        isDeleted = false
+    ): Promise<IRecordOperationResult[]> {
         let _newRec = this.preCreate(parent.rec, isLeaf, isProtected, isDeleted);
         _newRec = this.apiSrv.entityHelper.prepareAdded<T>(_newRec, this.apiInstance);
         // console.log('create tree node', _newRec);
         return this._postChanges(_newRec, data.rec)
             .then((resp) => {
+                const results: IRecordOperationResult[] = [];
                 if (resp && resp[0]) {
                     data.rec = Object.assign(_newRec, data.rec);
+                    results.push({
+                        success: true,
+                        record: data.rec
+                    });
                     if (resp[0].ID !== undefined) {
                         data.rec['DUE'] = resp[0].ID;
                     }
@@ -39,16 +50,20 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                         data.rec['ISN_NODE'] = resp[0].FixedISN;
                     }
                     const changeData = [];
+                    let pSev = Promise.resolve(null);
 
                     Object.keys(data).forEach((key) => {
                         if (key !== 'rec' && data[key]) {
                             switch (key) {
                                 case 'sev':
+                                    pSev = this.checkSevIsNew(data[key], data.rec);
+                                    /*
                                     const sevRec = this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(undefined, 'SEV_ASSOCIATION');
                                     data[key] = Object.assign(sevRec, data[key]);
                                     if (SevIndexHelper.PrepareForSave(data[key], data.rec)) {
                                         changeData.push(data[key]);
                                     }
+                                    */
                                     break;
                                 case 'printInfo':
                                     const printInfoRec = this.apiSrv.entityHelper.prepareForEdit<CB_PRINT_INFO>(undefined, 'CB_PRINT_INFO');
@@ -60,14 +75,28 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
                             }
                         }
                     });
-                    if (changeData.length) {
-                        return this.apiSrv.batch(this.apiSrv.changeList(changeData), '')
-                            .then(() => {
-                                return resp[0].ID;
-                            });
-                    } else {
-                        return resp[0].ID;
-                    }
+                    return pSev
+                        .then((result) => {
+                            if (result) {
+                                if (result.success) {
+                                    changeData.push(result.record);
+                                } else {
+                                    result.record = data.rec;
+                                    results.push(result);
+                                }
+                            }
+                        })
+                        .then(() => {
+                            const changes = this.apiSrv.changeList(changeData);
+                            if (changes) {
+                                return this.apiSrv.batch(changes, '')
+                                    .then(() => {
+                                        return results;
+                                    });
+                            } else {
+                                return results;
+                            }
+                        });
                 } else {
                     return null;
                 }
@@ -83,10 +112,14 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
 
     getRecord(due: string): Promise<any> {
         const chain = this.dueToChain(due);
+        return this.getData(chain);
+        /*
+        do not read from cache!!!!
         const recordDue = chain.pop();
         // console.log('read', recordDue, 'read from cache', chain);
         return Promise.all([this.getData([recordDue]), this.apiSrv.cache.read({ [this.apiInstance]: chain })])
             .then(([record, parents]) => record.concat(parents));
+        */
     }
 
     getRoot(): Promise<any[]> {
@@ -103,6 +136,10 @@ export class TreeDictionaryDescriptor extends AbstractDictionaryDescriptor {
         };
         return this.getData(PipRX.criteries(criteries));
         // return this.apiSrv.cache.read<IHierCL>({ [this.apiInstance]: {criteries: criteries}, orderby: 'DUE' });
+    }
+
+    public onPreparePrintInfo(_dec: FieldsDecline): Promise<any> {
+        return Promise.reject('Type of dictionary not true!');
     }
 
     protected _initRecord(data: ITreeDictionaryDescriptor) {

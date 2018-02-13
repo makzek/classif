@@ -95,7 +95,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'DUTY',
         title: 'Краткое наименование должности',
         type: 'string',
-        length: 255,
+        length: 236,
         pattern: NOT_EMPTY_STRING,
         required: true,
         forNode: true,
@@ -111,7 +111,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Полное наименование должности',
         type: 'string',
         foreignKey: 'FULLNAME',
-        length: 2000,
+        length: 1998,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'CODE',
@@ -239,7 +239,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'ISN_PHOTO',
         title: 'ISN фотографии',
-        type: 'photo',
+        type: 'number',
     }, {
         key: 'INS_DATE',
         title: 'Дата и время создания',
@@ -298,11 +298,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 248,
         pattern: NOT_EMPTY_STRING,
     }, {
-        key: 'extraData',
-        title: 'Дополнительные сведения',
-        type: 'text',
-        pattern: NOT_EMPTY_STRING,
-    }, {
         key: 'type',
         title: 'Тип',
         type: 'icon'
@@ -318,23 +313,28 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'fullTitleRoom',
+    }, {
+        key: 'photo',
+        type: 'dictionary',
+        title: 'Фото'
     }],
     treeFields: ['title'],
     searchFields: [/* 'RUBRIC_CODE', */'title'/*, 'NOTE'*/],
     listFields: ['CODE', 'title'],
     fullSearchFields: {
-        person: ['CODE', 'PHONE', 'E_MAIL'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
+        person: ['CODE', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'DUTY', 'fullPosition'],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', ],
         cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
-    quickViewFields: ['fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'sev'], // title is in shortQuickViewFields
-    shortQuickViewFields: ['SURNAME', 'firstName', 'fathersName', 'lastName', 'photo', 'title'],
+    quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
+        'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title'], // title is in shortQuickViewFields
+    shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
     editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
         'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'CLASSIF_NAME',
         'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-        'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user'],
+        'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'ISN_PHOTO', 'photo'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
-    allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'CODE', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
+    allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
         'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
 'organization', 'cabinet', 'user'*/],
 };

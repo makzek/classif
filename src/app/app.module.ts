@@ -10,9 +10,11 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
 
-import { APP_CONFIG } from './app.config';
-import { APP_CONFIG as APP_CONFIG_LOCAL } from './app.config.local';
-Object.assign(APP_CONFIG, APP_CONFIG_LOCAL);
+
+// import { APP_CONFIG } from './app.config';
+import { APP_CONFIG_LOCAL } from './app.config.local';
+// console.log('root config', config);
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
@@ -69,7 +71,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
         TooltipModule.forRoot(),
-        EosRestModule.forRoot(APP_CONFIG.apiCfg),
+        EosRestModule.forRoot(APP_CONFIG_LOCAL),
         EosCommonModule,
         EosDictionariesModule,
     ],

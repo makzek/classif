@@ -12,33 +12,32 @@
                 <span class="icon {{actionEdit.iconClass}} small"></span>
             </button>
         </span>
-        <div class="opened-node-wrapper">
-            <div *ngIf="update" class="no-data full-info usual-border">
-                <eos-spinner [size]="'lg'"></eos-spinner>
-            </div>
+        <div class="">
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']">
-                <div *ngIf="nodeDataShort.rec">
-                    <span *ngIf="nodeDataShort['printInfo'] && nodeDataShort['printInfo']['NAME'] && nodeDataShort['printInfo']['SURNAME'] && nodeDataShort['printInfo']['PATRON'];then fullName else shortName"></span>
-                    <ng-template #fullName>
-                        <div class="short-data-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
-                            <span class="short-info l-font">
-                                <span>{{nodeDataShort['printInfo']['SURNAME']}}</span>
-                                <span>{{nodeDataShort['printInfo']['NAME']}}</span>
-                                <span>{{nodeDataShort['printInfo']['PATRON']}}</span>
-                            </span>
+                <span *ngIf="nodeDataFull['printInfo'] && nodeDataFull['printInfo']['NAME'] && nodeDataFull['printInfo']['SURNAME'] && nodeDataFull['printInfo']['PATRON'];then fullName else shortName"></span>
+                <ng-template #fullName>
+                    <div class="head-wrapper">
+                        <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
+                        <span class="info">
+                            <div>
+                                <div>{{nodeDataFull['printInfo']['SURNAME']}}</div>
+                                <div>{{nodeDataFull['printInfo']['NAME']}}</div>
+                                <div>{{nodeDataFull['printInfo']['PATRON']}}</div>
+                            </div>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template #shortName>
+                    <div class="head-wrapper">
+                        <div class="current-image usual-border" [ngStyle]="{'background-image': photo}"></div>
+                        <div class="info">
+                            <span>{{nodeDataFull.rec['SURNAME']}}</span>
                         </div>
-                    </ng-template>
-                    <ng-template #shortName>
-                        <div class="flex-wrapper">
-                            <div class="current-image usual-border" [ngStyle]="{'background-image': defaultImage}"></div>
-                            <span class="short-info l-font">{{nodeDataShort.rec['SURNAME']}}</span>
-                        </div>
-                    </ng-template>
-                </div>
+                    </div>
+                </ng-template>
 
                 <div *ngIf="nodeDataFull.rec" class="full-info usual-border">
-                    <span *ngIf="nodeDataFull.rec['fullPosition'];then fullPosition else shortPosition"></span>
+                    <span *ngIf="nodeDataFull.rec['FULLNAME'];then fullPosition else shortPosition"></span>
                     <ng-template #fullPosition>
                         <div class="field">
                             <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['fullPosition']?.title}}</span>
@@ -59,6 +58,12 @@
                             </span>
                         </div>
                     </ng-template>
+
+                    <div class="field">
+                        <span class="field-title unimportant-text s-font">ПОДРАЗДЕЛЕНИЕ</span>
+                        <br>
+                        <span class="field-value m-font">{{department}}</span>
+                    </div>
 
                     <span *ngIf="nodeDataFull.rec['PHONE'];then phone else localPhone"></span>
                     <ng-template #phone>
@@ -81,16 +86,29 @@
                         <br>
                         <span class="field-value m-font">{{nodeDataFull.rec['E_MAIL']}}</span>
                     </div>
+                    <hr>
+                    <div class="field">
+                        <span class= "field-title unimportant-text s-font">КАБИНЕТЫ</span>
+                        <br>
+                        <span class="field-value m-font"><a [routerLink]="'/spravochniki/cabinet/'+nodeDataFull.cabinet?.ISN_CABINET + '/view'">
+                            {{nodeDataFull.cabinet?.CABINET_NAME}}</a></span>
+                    </div>
+                    <div class="field">
+                        <span class= "field-title unimportant-text s-font">ЯВЛЯЕТСЯ ПОЛЬЗОВАТЕЛЕМ</span>
+                        <br>
+                        <span class="field-value m-font"><!-- a [routerLink]="'/spravochniki/user/'+nodeDataFull.user?.ISN_LCLASSIF + '/view'" -->
+                            {{nodeDataFull.user?.CLASSIF_NAME}}<!-- /a --></span>
+                    </div>
                 </div>
             </div>
             <div *ngIf="nodeDataFull && nodeDataFull.rec && !nodeDataFull.rec['IS_NODE']">
-                <div *ngIf="nodeDataShort.rec">
-                    <span *ngIf="nodeDataShort['fullTitle'];then fullName else shortName"></span>
+                <div>
+                    <span *ngIf="nodeDataFull.rec['FULLNAME'];then fullName else shortName"></span>
                     <ng-template #fullName>
-                        <span class="short-info l-font">{{nodeDataShort.rec['fullTitle']}}</span>
+                        <span class="short-info l-font">{{nodeDataFull.rec['FULLNAME']}}</span>
                     </ng-template>
                     <ng-template #shortName>
-                        <span class="short-info l-font">{{nodeDataShort.rec['CLASSIF_NAME']}}</span>
+                        <span class="short-info l-font">{{nodeDataFull.rec['CLASSIF_NAME']}}</span>
                     </ng-template>
                 </div>
                 <div *ngIf="nodeDataFull.rec" class="full-info usual-border">

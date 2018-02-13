@@ -5,12 +5,18 @@ import { EosDictService } from '../services/eos-dict.service';
 import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEARCH_MODES } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { SEARCH_NOT_DONE } from '../consts/messages.consts';
+
+const SEARCH_MODEL = {
+    rec: {},
+    cabinet: {},
+    printInfo: {}
+};
 
 @Component({
     selector: 'eos-dictionary-search',
     templateUrl: 'dictionary-search.component.html'
 })
-
 export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
 
@@ -18,11 +24,11 @@ export class DictionarySearchComponent implements OnDestroy {
     fieldsDescription = {
         rec: {}
     };
-    data = {
-        rec: {},
-        cabinet: {},
-        printInfo: {},
-    };
+    data: any;
+    department: any;
+    person: any;
+    cabinet: any;
+
     public settings: ISearchSettings = {
         mode: SEARCH_MODES.totalDictionary,
         deleted: false
@@ -46,28 +52,30 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
-    date: Date = new Date();
+    date: Date;
 
     public mode = 0;
 
     get noSearchData(): boolean {
-        for (const _dict in this.data) {
-            if (this.data[_dict]) {
-                for (const _field in this.data[_dict]) {
-                    if (this.data[_dict][_field] && this.data[_dict][_field].trim() !== '') {
-                        return false;
-                    }
+        const model = this[this.currTab || 'data'];
+        let noData = true;
+        Object.keys(model).forEach((_dict) => {
+            Object.keys(model[_dict]).forEach((_field) => {
+                if (model[_dict][_field] && model[_dict][_field].trim() !== '') {
+                    noData = false;
                 }
-            }
-        }
-        return true;
+            });
+        });
+        return noData;
     }
 
     constructor(
         private _dictSrv: EosDictService,
         private _msgSrv: EosMessageService
     ) {
-        this.dictSubscription = this._dictSrv.dictionary$.subscribe((_d) => {
+        ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
+
+        this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
                 this.loading = false;
                 this.dictId = _d.id;
@@ -94,6 +102,10 @@ export class DictionarySearchComponent implements OnDestroy {
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
             }
         });
+
+        if (_dictSrv.getFilterValue('date')) {
+            this.date = new Date(_dictSrv.getFilterValue('date'));
+        }
     }
 
     setTab(key: string) {
@@ -119,11 +131,7 @@ export class DictionarySearchComponent implements OnDestroy {
                         .then(() => this.searchDone = true);
                 }
             } else {
-                this._msgSrv.addNewMessage({
-                    title: 'Идет поиск!',
-                    type: 'warning',
-                    msg: 'Пожалуйста подождите.'
-                });
+                this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
             }
         }
     }
@@ -133,58 +141,41 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     fullSearch() {
-        if (this.mode === 0) {
-            this.settings.mode = SEARCH_MODES.totalDictionary;
-        } else if (this.mode === 1) {
-            this.settings.mode = SEARCH_MODES.onlyCurrentBranch;
-        } else if (this.mode === 2) {
-            this.settings.mode = SEARCH_MODES.currentAndSubbranch;
-        }
-
+        this.settings.mode = this.mode;
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
             if (this.dictId === 'departments') {
-                this.data['srchMode'] = this.currTab;
+                this[this.currTab]['srchMode'] = this.currTab;
             }
-            this._dictSrv.fullSearch(this.data, this.settings)
+            this._dictSrv.fullSearch(this[this.currTab || 'data'], this.settings)
                 .then(() => {
                     this.searchDone = true;
+                    if (this.dictId === 'departments') {
+                        this[this.currTab]['srchMode'] = '';
+                    }
                 });
         } else {
-            this._msgSrv.addNewMessage({
-                title: 'Идет поиск!',
-                type: 'danger',
-                msg: 'Пожалуйста подождите.'
-            });
+            this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
         }
     }
 
     clearForm() {
-        for (const _field in this.data) {
-            if (this.data[_field]) {
-                this.data[_field] = {};
-            }
-        }
+        this.clearModel(this.currTab || 'data');
     }
 
     dateFilter(date: Date) {
-        if (date !== this.date) {
-            /*
-            this.date = date;
-            this._dictSrv.filter({ date: date })
-                .then(() => {
-                    console.log('filtered');
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-            */
+        if (!this.date || date.getTime() !== this.date.getTime()) {
+            this._dictSrv.setFilter({ date: date.setHours(0, 0, 0, 0) });
         }
     }
 
     public considerDel() {
-        this._dictSrv.viewParameters.showDeleted = this.settings.deleted;
-        this._dictSrv.shareViewParameters();
+        this._dictSrv.updateViewParameters({ showDeleted: this.settings.deleted });
+    }
+
+    private clearModel(model: string) {
+        this[model] = {};
+        Object.keys(SEARCH_MODEL).forEach((key) => this[model][key] = {});
     }
 }

@@ -5,7 +5,7 @@
                 <span *ngIf="node.expandable" class="eos-icon x-small icon"
                 [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"></span>
             </div>
-            <div class="title primary-text" [ngClass]="{'deleted': node.isDeleted}" [ngStyle]="{'width.px': 205 - layer*24}">
+            <div class="title" [ngClass]="{'deleted': node.isDeleted, 'select': node.isActive}" [ngStyle]="{'width.px': 205 - layer*24}">
                 <span *ngFor="let field of viewFields" class="title-item">{{field.value || ''}}&nbsp;</span>
                 <eos-spinner *ngIf="node.updating" size="sm"></eos-spinner>
             </div>

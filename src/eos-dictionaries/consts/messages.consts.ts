@@ -86,3 +86,38 @@ export const WARN_NO_ORGANIZATION: IMessage = {
     msg: 'вверх по иерархии нет организаций'
 };
 
+export const SEARCH_NOT_DONE: IMessage = {
+    title: 'Идет поиск!',
+    type: 'warning',
+    msg: 'Пожалуйста подождите.'
+};
+
+export const FILE_IS_NOT_IMAGE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'выбранный файл не является изображением!'
+};
+
+export const FILE_IS_BIG: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'размер файла слишком велик! Выбирите файл размером не более 100Kb.'
+};
+
+export const UPLOAD_IMG_FALLED: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'загрузить изображение не удалось!'
+};
+
+export const WARN_ELEMENT_PROTECTED: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'элемент "{{elem}}" является защищенным! Удаление невозможно.'
+};
+
+export const INFO_PERSONE_DONT_HAVE_CABINET: IMessage = {
+    type: 'info',
+    title: 'Внимание:',
+    msg: 'У выбранного должностного лица отсутвует свой кабинет.'
+};
