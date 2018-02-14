@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { InputBase } from '../core/inputs/input-base';
-import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'eos-dynamic-form-input',

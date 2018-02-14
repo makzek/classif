@@ -82,7 +82,7 @@ export class CreateNodeComponent {
                 this.fullNamesList.push(this.nodeData.rec.FULLNAME)
             }
 
-            if (!this.nodeData.cabiet){
+            if (!this.nodeData.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
 
@@ -118,8 +118,8 @@ export class CreateNodeComponent {
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         } else {
             this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
-            .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-            .catch((err) => this._errHandler(err));
+                .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
+                .catch((err) => this._errHandler(err));
         }
     }
 
@@ -129,7 +129,6 @@ export class CreateNodeComponent {
      */
     recordChanged(hasChanges: boolean) {
         this.hasChanges = hasChanges;
-    }
     }
 
     private _afterAdding(node: EosDictionaryNode, hide: boolean): void {
@@ -161,4 +160,5 @@ export class CreateNodeComponent {
             title: 'Ошибка добавления записи',
             msg: errMessage,
         });
+    }
 }

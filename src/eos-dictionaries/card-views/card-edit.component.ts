@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, ViewChild } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 @Component({
     selector: 'eos-card-edit',

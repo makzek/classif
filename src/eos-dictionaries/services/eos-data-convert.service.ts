@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { StringInput } from '../../eos-common/core/inputs/string-input';
-import { TextInput } from '../../eos-common/core/inputs/text-input';
-import { InputBase } from '../../eos-common/core/inputs/input-base';
-import { DropdownInput } from '../../eos-common/core/inputs/select-input';
-import { CheckboxInput } from '../../eos-common/core/inputs/checkbox-input';
-import { DateInput } from '../../eos-common/core/inputs/date-input';
+import { StringInput } from 'eos-common/core/inputs/string-input';
+import { TextInput } from 'eos-common/core/inputs/text-input';
+import { DropdownInput } from 'eos-common/core/inputs/select-input';
+import { CheckboxInput } from 'eos-common/core/inputs/checkbox-input';
+import { DateInput } from 'eos-common/core/inputs/date-input';
 import { E_FIELD_TYPE } from '../interfaces';
 
 const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;
@@ -22,7 +21,7 @@ export class EosDataConvertService {
      * @param data node data
      */
     getInputs(fieldsDescription: any[], data: any) {
-    const inputs: any = {};
+        const inputs: any = {};
         if (fieldsDescription) {
             Object.keys(fieldsDescription).forEach((_dict) => {
                 switch (_dict) {
@@ -123,15 +122,15 @@ export class EosDataConvertService {
                             dict: 'printInfo',
                             value: data['printInfo']['GENDER'],
                             options: [{
-                                    key: 'none',
-                                    value: null,
-                                }, {
-                                    key: 'm',
-                                    value: 'Мужской',
-                                }, {
-                                    key: 'f',
-                                    value: 'Женский',
-                                }],
+                                key: 'none',
+                                value: null,
+                            }, {
+                                key: 'm',
+                                value: 'Мужской',
+                            }, {
+                                key: 'f',
+                                value: 'Женский',
+                            }],
                             pattern: NOT_EMPTY_STRING,
                         });
                         inputs['printInfo.SURNAME'] = new StringInput({

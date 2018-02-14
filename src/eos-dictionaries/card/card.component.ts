@@ -92,7 +92,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         return _nodeName;
     }
 
-    private _originalData: any = {};
+    /* private _originalData: any = {}; */
     private nodeId: string;
     // private _uuid: string;
 
@@ -266,7 +266,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         };
         if (this.node) {
             this.fieldsDescription = this.node.getEditFieldsDescription();
-            this.nodeData = this.node.getEditData();
+            this.nodeData = this.node.data; // getEditData();
             // console.log('recived description', this.nodeData);
 
             if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
@@ -347,7 +347,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                         return false;
                     } else {
                         if (doSave) {
-                            return this._save()
+                            return this._save(this.nodeData)
                                 .then((node) => {
                                     if (node) {
                                         return true;
@@ -424,7 +424,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         if (node) {
             // console.log('save', node);
             this._initNodeData(node);
-            this._setOriginalData();
+            // this._setOriginalData();
             this.cancel();
         }
         this.disableSave = false;
@@ -502,7 +502,8 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         return null;
     }
 
-      private cloneData(src: any): any {
+    /*
+    private cloneData(src: any): any {
         try {
             return JSON.parse(JSON.stringify(src));
         } catch (e) {
@@ -510,4 +511,5 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             // console.log(e);
         }
     }
+    */
 }
