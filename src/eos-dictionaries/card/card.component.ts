@@ -190,6 +190,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
 
     recordChanged(isChanged: boolean) {
         this.isChanged = isChanged;
+        // this.isChanged = this._dictSrv.isDataChanged(this.nodeData, this._originalData);
     }
 
     next() {
@@ -261,9 +262,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     private _initNodeData(node: EosDictionaryNode) {
         this.node = node;
 
-        this.nodeData = {
-            rec: {}
-        };
         if (this.node) {
             this.fieldsDescription = this.node.getEditFieldsDescription();
             this.nodeData = this.node.data; // getEditData();
@@ -273,6 +271,10 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                 this.dutysList = this._storageSrv.getItem('dutysList') || [];
                 this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
             }
+        } else {
+            this.nodeData = {
+                rec: {}
+            };
         }
     }
 
@@ -388,7 +390,8 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
         }
-        this._save(this.nodeData).then((node: EosDictionaryNode) => this._afterSaving(node));
+        this._save(this.nodeData)
+            .then((node: EosDictionaryNode) => this._afterSaving(node));
     }
 
     private _save(data: any): Promise<any> {
@@ -430,37 +433,24 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this.disableSave = false;
     }
 
-    private _afterUpdating(resp: EosDictionaryNode): Promise<EosDictionaryNode> {
+    private _afterUpdating(node: EosDictionaryNode): EosDictionaryNode {
         // const _data = this.cardEditRef.baseCardEditRef.getNewData();
         // return this._dictSrv.updateNode(this.node, _data)
-        if (resp) {
+        if (node) {
+            this.recordChanged(node.data);
+            this.isChanged = false;
             this._msgSrv.addNewMessage(SUCCESS_SAVE);
             this._deskSrv.addRecentItem({
                 url: this._router.url,
-                title: resp.data.rec.CLASSIF_NAME,
+                title: node.title,
             });
             this._clearEditingCardLink();
         } else {
             this._msgSrv.addNewMessage(WARN_SAVE_FAILED);
         }
-        return Promise.resolve(resp);
+        return node;
     }
 
-    /*
-    private _fullTitle(node: EosDictionaryNode) {
-        let parent = node.parent;
-        let arr = [node.data.rec.CLASSIF_NAME];
-        while (parent.parent) {
-            arr.push(parent.data.rec.CLASSIF_NAME);
-            parent = parent.parent;
-        }
-        arr.push(parent.data.rec.RUBRIC_CODE);
-        arr.push('Справочники');
-        arr = arr.reverse();
-        const fullTItle = arr.join('/');
-        return fullTItle;
-    }
-    */
 
     private _setEditingCardLink() {
         this.getLastEditedCard();
