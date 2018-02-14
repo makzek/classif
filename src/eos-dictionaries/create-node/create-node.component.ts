@@ -98,26 +98,26 @@ export class CreateNodeComponent {
                         if (confirm) {
                             boss.data.rec['POST_H'] = 0;
                             this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
-                                this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
+                                this._dictSrv.addNode(this.cardEditRef.getNewData())
                                     .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                     .catch((err) => this._errHandler(err));
                             })
                         } else {
                             this.nodeData.rec['POST_H'] = 0;
-                            this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
+                            this._dictSrv.addNode(this.cardEditRef.getNewData())
                                 .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                 .catch((err) => this._errHandler(err));
                         }
                     })
             } else {
-                this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
+                this._dictSrv.addNode(this.cardEditRef.getNewData())
                     .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                     .catch((err) => this._errHandler(err));
             }
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         } else {
-            this._dictSrv.addNode(this.cardEditRef.baseCardEditRef.getNewData())
+            this._dictSrv.addNode(this.cardEditRef.getNewData())
                 .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                 .catch((err) => this._errHandler(err));
         }

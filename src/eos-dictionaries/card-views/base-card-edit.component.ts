@@ -1,6 +1,7 @@
 import { Output, Input, EventEmitter, OnChanges, OnDestroy, Injector } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs';
+import 'rxjs/add/operator/takeUntil';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
@@ -9,6 +10,8 @@ import { InputControlService } from '../../eos-common/services/input-control.ser
 import { EosUtils } from 'eos-common/core/utils';
 
 export class BaseCardEditComponent implements OnChanges, OnDestroy {
+    @Input() form: FormGroup;
+    @Input() inputs: any;
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
@@ -17,9 +20,9 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    inputs: any;
+    // inputs: any;
     newData: any;
-    form: FormGroup;
+    // form: FormGroup;
     nodeId: string;
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
@@ -27,10 +30,9 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     private _dataSrv;
     private _inputCtrlSrv;
 
-    private _currentFormStatus;
+    // private _currentFormStatus;
 
-    private _validationSubscr: Subscription;
-    private _changeSubscr: Subscription;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
@@ -69,10 +71,8 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             _value = value;
         }
 
-        if (EosUtils.getValueByPath(this.data, path) !== _value) {
-            EosUtils.setValueByPath(this.data, path, _value);
-            this.onChange.emit(this.data);
-        }
+        EosUtils.setValueByPath(this.newData, path, _value);
+        return EosUtils.getValueByPath(this.data, path) !== _value;
     }
 
     /*
@@ -88,13 +88,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     /* clean(field: string, value: string) {
         this.change(field, value);
     }*/
-
-    /**
-     * return new data, used by parent component
-     */
-    getNewData(): any {
-        return this.newData;
-    }
 
     /**
      * make string[] from object keys
@@ -113,6 +106,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
      * subscribe on statusChanges and valueChanges
      */
     ngOnChanges() {
+        /*
         if (this.fieldsDescription && this.data) {
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
 
@@ -121,47 +115,49 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             } else {
                 this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             }
+            console.log('form on change', this.form);
+            this.form.valueChanges
+                .takeUntil(this.ngUnsubscribe)
+                .subscribe((newVal) => {
+                    let changed = false;
+                    Object.keys(newVal).forEach((path) => {
+                        changed = this.changeByPath(path, newVal[path]);
+                    });
+                    console.log('new value', newVal);
+                    // this.newData = this._makeSavingData(this.form.value);
+                    this.onChange.emit(changed);
+                });
 
-            if (this._validationSubscr) {
-                this._validationSubscr.unsubscribe();
+            this.form.statusChanges
+                .takeUntil(this.ngUnsubscribe)
+                .subscribe((status) => {
+                    if (this._currentFormStatus !== status) {
+                        this.invalid.emit(status === 'INVALID');
+                    }
+                    this._currentFormStatus = status;
+                });
             }
-            this._validationSubscr = this.form.statusChanges.subscribe((status) => {
-                if (this._currentFormStatus !== status) {
-                    this.invalid.emit(status === 'INVALID');
-                }
-                this._currentFormStatus = status;
-            });
-
-            if (this._changeSubscr) {
-                this._changeSubscr.unsubscribe();
-            }
-            this._changeSubscr = this.form.valueChanges.subscribe((newVal) => {
-                this.newData = this._makeSavingData(this.form.value);
-                this.onChange.emit(this._notEqual(this.newData, this.data));
-            });
-        }
+            */
     }
 
     /**
-     * unsubscribe
+     * unsubscribe on destroy
      */
     ngOnDestroy() {
-        if (this._validationSubscr) {
-            this._validationSubscr.unsubscribe();
-        }
-        if (this._changeSubscr) {
-            this._changeSubscr.unsubscribe();
-        }
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 
     /**
      * convert form data in object suitable for saving
      * @param formData form data which is converted
      */
+    /*
     private _makeSavingData(formData: any): any {
         const result = {};
         if (formData) {
             Object.keys(formData).forEach((_ctrl) => {
+                console.log(_ctrl);
                 const _way = _ctrl.split('.');
                 if (!result[_way[0]]) {
                     result[_way[0]] = {};
@@ -175,20 +171,15 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
         return result;
     }
-
+    */
     /**
      * compare two objects
      * @param newObj one object
      * @param oldObj other object
      */
+    /*
     private _notEqual(newObj: any, oldObj: any): boolean {
-        if (newObj) {
-            return Object.keys(newObj).findIndex((_dict) =>
-                Object.keys(newObj[_dict]).findIndex((_key) =>
-                    ((newObj[_dict][_key] || oldObj[_dict][_key]) && newObj[_dict][_key] !== oldObj[_dict][_key])) > -1
-            ) > -1;
-        } else {
-            return false;
-        }
+        return this.dictSrv.isDataChanged(newObj, oldObj);
     }
+    */
 }

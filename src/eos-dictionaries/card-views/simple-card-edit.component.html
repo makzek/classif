@@ -1,13 +1,14 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
-        <form *ngIf="form" [formGroup]="form" class="form form-horizontal">
-            <div class="form-group" *ngFor="let key of keys(inputs)">
-                <eos-dynamic-form-input [input]="inputs[key]" [form]="form" [readonly]="!editMode">
-                </eos-dynamic-form-input>
-            </div>
-            <div class="form-group unimportant-text s-font">
-                <label>* - поля обязательные к заполнению</label>
-            </div>
-        </form>
+        <div class="form-group"
+            *ngFor="let key of keys(inputs)">
+            <eos-dynamic-form-input [input]="inputs[key]"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
+        <div class="form-group unimportant-text s-font">
+            <label>* - поля обязательные к заполнению</label>
+        </div>
     </article>
 </div>

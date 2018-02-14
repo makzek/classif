@@ -1,51 +1,47 @@
 <div class="simple-card-edit security-card-edit secondary-block">
     <article class="edit-content">
-        <form *ngIf="form && inputs"
-            [formGroup]="form"
-            class="form form-horizontal">
-            <div class="form-group">
-                <eos-dynamic-form-input *ngIf="inputs['rec.SEC_INDEX']"
-                    [input]="inputs['rec.SEC_INDEX']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-form-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-form-input *ngIf="inputs['rec.GRIF_NAME']"
-                    [input]="inputs['rec.GRIF_NAME']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-form-input>
-            </div>
+        <div class="form-group">
+            <eos-dynamic-form-input *ngIf="inputs['rec.SEC_INDEX']"
+                [input]="inputs['rec.SEC_INDEX']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-form-input *ngIf="inputs['rec.GRIF_NAME']"
+                [input]="inputs['rec.GRIF_NAME']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
 
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode}">
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode}">
                         Требуется
                     </label>
-                <div class="checkbox-wrapper">
-                    <eos-dynamic-form-input *ngIf="inputs['rec.EDS_FLAG']"
-                        [input]="inputs['rec.EDS_FLAG']"
-                        [form]="form"
-                        [readonly]="!editMode">
-                    </eos-dynamic-form-input>
-                    <eos-dynamic-form-input *ngIf="inputs['rec.ENCRYPT_FLAG']"
-                        [input]="inputs['rec.ENCRYPT_FLAG']"
-                        [form]="form"
-                        [readonly]="!editMode">
-                    </eos-dynamic-form-input>
-                </div>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']"
-                    [input]="inputs['rec.NOTE']"
+            <div class="checkbox-wrapper">
+                <eos-dynamic-form-input *ngIf="inputs['rec.EDS_FLAG']"
+                    [input]="inputs['rec.EDS_FLAG']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+                <eos-dynamic-form-input *ngIf="inputs['rec.ENCRYPT_FLAG']"
+                    [input]="inputs['rec.ENCRYPT_FLAG']"
                     [form]="form"
                     [readonly]="!editMode">
                 </eos-dynamic-form-input>
             </div>
-            <div class="form-group unimportant-text s-font">
-                <label>* - поля обязательные к заполнению</label>
-            </div>
-        </form>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']"
+                [input]="inputs['rec.NOTE']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-form-input>
+        </div>
+        <div class="form-group unimportant-text s-font">
+            <label>* - поля обязательные к заполнению</label>
+        </div>
     </article>
 </div>

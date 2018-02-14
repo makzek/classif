@@ -373,24 +373,25 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
 
     save(): void {
         this.disableSave = true;
+        const _data = this.cardEditRef.getNewData();
         if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
             /* tslint:disable */
-            if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
-                this.dutysList.push(this.nodeData.rec.DUTY);
+            if (_data.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === _data.rec.DUTY)) {
+                this.dutysList.push(_data.rec.DUTY);
             }
 
-            if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
-                this.fullNamesList.push(this.nodeData.rec.FULLNAME)
+            if (_data.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === _data.rec.FULLNAME)) {
+                this.fullNamesList.push(_data.rec.FULLNAME)
             }
             /* tslint:enable */
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
 
-            if (!this.nodeData.cabiet) {
+            if (!_data.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
         }
-        this._save(this.nodeData)
+        this._save(_data)
             .then((node: EosDictionaryNode) => this._afterSaving(node));
     }
 
