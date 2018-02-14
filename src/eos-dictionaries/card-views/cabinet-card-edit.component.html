@@ -99,8 +99,8 @@
                             (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-c0ndensed table-b0rdered table-striped">
+                    <div>
+                        <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th class="td-checkbox">
@@ -128,7 +128,7 @@
                             <tbody>
                                 <ng-container *ngFor="let owner of cabinetOwners">
                                     <tr *ngIf="owner.data['ISN_CABINET'] === data.rec['ISN_CABINET']"
-                                        [ngClass]="{deleted: owner['DELETED']}">
+                                        [ngClass]="{deleted: owner.data['DELETED']}">
                                         <td class="td-checkbox">
                                             <span class="checkbox-inline"
                                                 *ngIf="editMode">
@@ -225,58 +225,5 @@
                 </accordion-group>
             </accordion>
         </div>
-        <!--
-        <div class="cabinet-access"
-            [hidden]="!status.showAccess">
-            <div class="block-divider">
-                <span class="divider-text xl-font">Доступ пользователей к кабинету</span>
-                <button class="arrow-btn btn-primary-light"
-                    *ngIf="status.showAccess"
-                    (click)="status.showAccess = false">
-                    <span class="eos-icon eos-icon-arrow-v-blue-top small" aria-hidden="true"></span>
-                </button>
-                <button class="arrow-btn btn-primary-light"
-                    *ngIf="!status.showAccess"
-                    (click)="status.showAccess = true">
-                    <span class="eos-icon eos-icon-arrow-v-blue-bottom small" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="shadow usual-border"></div>
-            <!--
-            <button (mousedown)="startScrollToLeft()"
-                (mouseup)="endScroll()"
-                class="btn btn-primary-light scroll-btn"
-                *ngIf="showScroll">
-                <span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span>
-            </button>
-            <button (mousedown)="startScrollToRight()"
-                (mouseup)="endScroll()"
-                class="btn btn-primary-light scroll-btn right"
-                *ngIf="showScroll">
-                <span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
-            </button>
-            <div class="table-wrapper block"
-                #tableEl>
-                <table class="cabinet-access-table">
-                    <tr class="first-line usual-border">
-                        <th class="headcol block"></th>
-                        <td *ngFor="let person of persons"
-                            class="cell"
-                            align="center">{{person.fio}}</td>
-                    </tr>
-                    <tr *ngFor="let row of accessHeaders">
-                        <th class="headcol block">{{row.title}}</th>
-                        <td *ngFor="let person of persons"
-                            class="cell"
-                            align="center">
-                            <span class="eos-icon small"
-                                aria-hidden="true"
-                                [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    -->
     </form>
 </div>
