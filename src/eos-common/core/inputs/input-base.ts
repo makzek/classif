@@ -13,6 +13,7 @@ export class InputBase<T>{
     invalidMessage: string;
     hideLabel: boolean;
     forNode: boolean;
+    options?: any[];
 
     constructor(options: {
         value?: T,
@@ -29,6 +30,7 @@ export class InputBase<T>{
         invalidMessage?: string,
         hideLabel?: boolean,
         forNode?: boolean,
+        options?: any[],
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';

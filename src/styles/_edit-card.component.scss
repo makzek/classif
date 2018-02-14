@@ -18,8 +18,8 @@
         -ms-grid-columns: 100px 48px 1fr 153px;
         grid-template-columns: 100px 48px 1fr 153px;
         &.edited {
-            -ms-grid-columns: 0 48px 1fr 195px;
-            grid-template-columns: 0 48px 1fr 195px;
+            -ms-grid-columns: 0 48px 1fr 199px;
+            grid-template-columns: 0 48px 1fr 199px;
         }
         .btn {
             padding: 1px 6px;
@@ -164,7 +164,7 @@
             position: relative;
         }
         &:not(:first-child) {
-            margin-top: 30px;
+            margin-top: $grid-gutter-width *3/4;
         }
     }
     .form-control {
