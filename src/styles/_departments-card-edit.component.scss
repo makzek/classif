@@ -172,8 +172,11 @@
                 margin-top: 0;
             }
 
+            select {
+                width: 100%;
+            }
+
             &:not(:last-child) {
-                width: 60%;
                 margin-right: 40px;
             }
         }
