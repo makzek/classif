@@ -12,7 +12,6 @@ import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 
-
 export abstract class AbstractDictionaryDescriptor {
     /**
      * decription of dictionary fields
@@ -165,6 +164,10 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
+    getEmpty(): any {
+        return this.apiSrv.entityHelper.prepareAdded({}, this.apiInstance);
+    }
+
     getFullSearchCriteries(data: any): any {
         const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
         const _criteries = {};
@@ -211,6 +214,22 @@ export abstract class AbstractDictionaryDescriptor {
                 SEV_ASSOCIATION: [SevIndexHelper.CompositePrimaryKey(rec['DUE'] || rec['ISN_LCLASSIF'], this.apiInstance)]
             })
             .then((sev) => this.apiSrv.entityHelper.prepareForEdit<SEV_ASSOCIATION>(sev[0], 'SEV_ASSOCIATION'));
+    }
+
+    isDiffer(data: any, original: any): boolean {
+        if (data instanceof Array) {
+            return data.findIndex((recItem, idx) => this.isDiffer(recItem, original[idx])) > -1;
+        } else if (data instanceof Object) {
+            return Object.keys(original)
+                .filter((fld) => fld.indexOf('_') !== 0)
+                .findIndex((fld) => this.isDiffer(data[fld], original[fld])) > -1;
+        } else {
+            const hasDiff = (original || data) && original !== data;
+            if (hasDiff) {
+                console.warn('difference in ', data, original);
+            }
+            return hasDiff;
+        }
     }
 
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
