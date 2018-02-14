@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL } from '../interfaces/structures';
+import { DEPARTMENT, USER_CL, CB_PRINT_INFO, SEV_ASSOCIATION, CABINET, ORGANIZ_CL, CONTACT } from '../interfaces/structures';
 import { /*ALL_ROWS,*/ _ES } from '../core/consts';
 import { PipRX } from '../services/pipRX.service';
 // import { IEnt } from 'eos-rest';
@@ -160,6 +160,22 @@ export class DepartmentComponent implements OnInit {
         this.pip.batch(chl, '')
             .then(() => {
                 alert('oki');
+            });
+    }
+
+    onAddContact() {
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        const organiz = <ORGANIZ_CL>this.detailedItem.ORGANIZ;
+        if ( organiz.CONTACT_List === undefined) {
+            organiz.CONTACT_List = [];
+        }
+        const tisn = this.pip.sequenceMap.GetTempISN();
+        organiz.CONTACT_List.push(this.pip.entityHelper.prepareAdded<CONTACT>(
+            {ISN_CONTACT: tisn, ISN_ORGANIZ: organiz.ISN_NODE, SURNAME: 'Портнов И.А. dnjhj'}, 'CONTACT'));
+        const chl = this.pip.changeList([organiz]);
+            this.pip.batch(chl, '').then((r) => {
+                alert(this.pip.sequenceMap.GetFixed(tisn));
             });
     }
 
