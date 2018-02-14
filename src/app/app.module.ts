@@ -10,11 +10,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
 
-
-// import { APP_CONFIG } from './app.config';
 import { APP_CONFIG_LOCAL } from './app.config.local';
-// console.log('root config', config);
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
