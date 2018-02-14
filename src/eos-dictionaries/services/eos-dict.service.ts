@@ -250,6 +250,15 @@ export class EosDictService {
     getFilterValue(filterName: string): any {
         return this.filters.hasOwnProperty(filterName) ? this.filters[filterName] : null;
     }
+
+    isDataChanged(data: any, original: any): boolean {
+        const dictionary = this._dictionaries[this._dictMode];
+        if (dictionary) {
+            return dictionary.descriptor.isDiffer(data, original);
+        }
+        return false;
+    }
+
     // May be need used always instead this._viewParameters$.next();
     // Because this.viewParametrs is public and may be changed from other classes need way for share state
     public updateViewParameters(updates?: any) {
@@ -979,7 +988,7 @@ export class EosDictService {
                     returnUrl: this._router.url
                 }
             });
-            return null;
+            return undefined;
         } else {
             const errMessage = err.message ? err.message : err;
             console.warn(err);

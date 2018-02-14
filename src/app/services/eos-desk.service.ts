@@ -4,16 +4,17 @@ import { Observable } from 'rxjs/Observable';
 
 import { Router } from '@angular/router';
 
-import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
-import { EosMessageService } from '../../eos-common/services/eos-message.service';
+import { EosDictService } from 'eos-dictionaries/services/eos-dict.service';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { IDeskItem } from '../core/desk-item.interface';
 import { EosDesk, IDesk } from '../core/eos-desk';
 
-import { AppContext } from '../../eos-rest/services/appContext.service';
-import { SRCH_VIEW } from '../../eos-rest/interfaces/structures';
+import { AppContext } from 'eos-rest/services/appContext.service';
+import { SRCH_VIEW } from 'eos-rest/interfaces/structures';
 
-import { ViewManager } from '../../eos-rest/services/viewManager';
+import { ViewManager } from 'eos-rest/services/viewManager';
 import { _ES } from 'eos-rest/core/consts';
+import { WARN_DESK_MAX_COUNT } from '../consts/messages.consts';
 
 const DEFAULT_DESKTOP_NAME = 'Мой рабочий стол';
 const DEFAULT_DESKS: EosDesk[] = [{
@@ -207,11 +208,7 @@ export class EosDeskService {
 
     createDesk(desk: EosDesk): Promise<any> {
         if (this._desksList.length > 5) {// users desk + system desk
-            this._msgSrv.addNewMessage({
-                type: 'warning',
-                title: 'Предупреждение: максимальное колличество рабочих столов!',
-                msg: 'У вас может быть не более 5 рабочих столов',
-            });
+            this._msgSrv.addNewMessage(WARN_DESK_MAX_COUNT);
             return Promise.resolve(null);
         }
 

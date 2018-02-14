@@ -8,7 +8,7 @@ export const USER_SETTINGS: ISettingsItem[] = [
     },
 ];
 
-export const DEFAURT_USER = {
+export const DEFAULT_USER = {
     name: 'Зелибоба',
     secondName: 'Импоссиблович',
     family: 'Безбагов'
