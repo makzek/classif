@@ -676,7 +676,7 @@ export class EosDictService {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
                 /* check solution with this.selectedNode */
-                if (_node.data.rec[key] === val && this.selectedNode && _node.id !== this.selectedNode.id) {
+                if (_node.data.rec[key] === val && this.treeNode && _node.id !== this.treeNode.id) {
                     _hasMatch = true;
                 }
             });

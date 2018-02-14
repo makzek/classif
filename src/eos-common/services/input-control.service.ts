@@ -29,24 +29,6 @@ export class InputControlService {
     }
 
     /**
-     * add input to group
-     * @param group data for FormGroup
-     * @param input input which is added to group
-     */
-    private _addInput(group: any, input: InputBase<any>) {
-        group[input.key] = input.required ?
-        new FormControl(input.value || '', [
-            Validators.required,
-            Validators.pattern(input.pattern),
-            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
-        ])
-        : new FormControl(input.value || '', [
-            Validators.pattern(input.pattern),
-            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
-        ]);
-    }
-
-    /**
      * custom validation function
      * check if value is unic
      * @param isUnic show if value must be unic
@@ -60,6 +42,24 @@ export class InputControlService {
             } else {
                 return null;
             }
-        }
+        };
+    }
+
+    /**
+     * add input to group
+     * @param group data for FormGroup
+     * @param input input which is added to group
+     */
+    private _addInput(group: any, input: InputBase<any>) {
+        group[input.key] = input.required ?
+            new FormControl(input.value || '', [
+                Validators.required,
+                Validators.pattern(input.pattern),
+                this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+            ])
+            : new FormControl(input.value || '', [
+                Validators.pattern(input.pattern),
+                this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+            ]);
     }
 }

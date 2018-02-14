@@ -1,5 +1,4 @@
-
-import { Component, Injector, OnChanges } from '@angular/core';
+import { Component, Injector, OnChanges, Input } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
 import { FormGroup } from '@angular/forms';
 import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
@@ -35,7 +34,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
 
     ngOnChanges() {
         super.ngOnChanges();
-        if (this.currentNodeId !== this.nodeId) {
+        if (this.currentNodeId !== this.nodeId) { // todo: re-factor condition
             this.currTab = 0;
         }
         if (this.data.photo && this.data.photo.url) {

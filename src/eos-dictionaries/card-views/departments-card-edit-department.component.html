@@ -2,283 +2,100 @@
     <div class="wrapper">
         <div class="col-1">
             <div class="form-group">
-                <label class="primary-text"
-                    for="CODE"
-                    [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['CODE']?.required }">Код</label>
-                <input [readonly]="!editMode"
-                    id="CODE_DEP"
-                    name="CODE_DEP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data.rec['CODE']"
-                    (ngModelChange)="change('CODE', 'rec', $event)"
-                    placeholder="Код"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CODE_DEP')"
-                    (blur)="blur()"
-                    maxlength="64"
-                    [pattern]="NOT_EMPTY_STRING"
-                    [eosUnic]="true"
-                    [key]="'CODE'"
-                    [checkingMethod]="checkUnic.bind(this)"
-                    [inDict]="false"
-                    [key]="'CODE'"
-                    [checkingMethod]="checkUnic.bind(this)"
-                    tooltip="Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['CODE_DEP']?.invalid && cardForm.controls['CODE_DEP']?.dirty && focusedField === 'CODE_DEP'"
-                    autocomplete="off"
-                    triggers="">
-
+                <eos-dynamic-form-input *ngIf="inputs['rec.CODE']"
+                    [input]="inputs['rec.CODE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['DEPARTMENT_INDEX']?.required }"
-                    for="indexDep">Индекс</label>
-                <input [readonly]="!editMode"
-                    id="indexDep"
-                    name="indexDep"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data.rec['DEPARTMENT_INDEX']"
-                    (ngModelChange)="change('DEPARTMENT_INDEX', 'rec', $event)"
-                    placeholder="Индекс"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DEPARTMENT_INDEX')"
-                    (blur)="blur()"
-                    maxlength="24"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['indexDep']?.invalid && cardForm.controls['indexDep']?.dirty && focusedField === 'indexDep'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['rec.indexDep']"
+                    [input]="inputs['rec.indexDep']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SEV_DEP">Индекс СЭВ</label>
-                <input [readonly]="!editMode"
-                    id="SEV_DEP"
-                    name="SEV_DEP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['sev']['GLOBAL_ID']"
-                    (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
-                    placeholder="Индекс СЭВ"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('SEV_DEP')"
-                    (blur)="blur()"
-                    maxlength="255"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['SEV_DEP']?.invalid && cardForm.controls['SEV_DEP']?.dirty && focusedField === 'SEV_DEP'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['sev.GLOBAL_ID']"
+                    [input]="inputs['sev.GLOBAL_ID']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="START_DATE">Начало действия</label>
-                <eos-datepicker [placeholder]="'Начало действия'"
-                    [value]="data.rec['START_DATE']"
-                    (change)="change('START_DATE', 'rec', $event)"
-                    [isReadonly]="!editMode"
-                    [ngClass]="{'readonly': !editMode }"
-                    placement="top"></eos-datepicker>
+                <eos-dynamic-form-input *ngIf="inputs['rec.START_DATE']"
+                    [input]="inputs['rec.START_DATE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="END_DATE">Окончание действия</label>
-                <eos-datepicker [placeholder]="'Окончание действия'"
-                    [value]="data.rec['END_DATE']"
-                    (change)="change('END_DATE', 'rec', $event)"
-                    [isReadonly]="!editMode"
-                    [ngClass]="{'readonly': !editMode }"
-                    placement="top"></eos-datepicker>
+                <eos-dynamic-form-input *ngIf="inputs['rec.END_DATE']"
+                    [input]="inputs['rec.END_DATE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <span class="checkbox card-flag">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox">
-                        <input type="checkbox" name="CARD_FLAG" [ngModel]="data.rec['CARD_FLAG']" (ngModelChange)="change('CARD_FLAG', 'rec', $event)"
-                            [disabled]="!editMode">
-                        <span></span> Картотека
-            </label>
-            </span>
+                        <eos-dynamic-form-input *ngIf="inputs['rec.CARD_FLAG']" [input]="inputs['rec.CARD_FLAG']" [form]="form" [readonly]="!editMode">
+                        </eos-dynamic-form-input>
+                    </span>
         </div>
         <div class="col-2">
             <div class="form-group">
-                <label class="primary-text required"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="CLASSIF_NAME_DEP">
-                        Краткое наименование подразделения
-                    </label>
-                <input [readonly]="!editMode"
-                    id="CLASSIF_NAME_DEP"
-                    name="CLASSIF_NAME_DEP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data.rec['CLASSIF_NAME']"
-                    (ngModelChange)="change('CLASSIF_NAME', 'rec', $event)"
-                    placeholder="Краткое наименование подразделения"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CLASSIF_NAME_DEP')"
-                    (blur)="blur()"
-                    required
-                    maxlength="255"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['CLASSIF_NAME_DEP']?.invalid && cardForm.controls['CLASSIF_NAME_DEP']?.dirty && focusedField === 'CLASSIF_NAME_DEP'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['rec.title']"
+                    [input]="inputs['rec.title']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <span class="checkbox">
-                    <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox">
-                        <input type="checkbox" name="NOT_USE_IN_DUTY" (ngModelChange)="change('NOT_USE_IN_DUTY', 'printInfo', $event)" [disabled]="!editMode"
-                            [ngModel]="data['printInfo']['NOT_USE_IN_DUTY']">
-                        <span></span> Не использовать подразделение в названии должности</label>
-            </span>
+                        <eos-dynamic-form-input *ngIf="inputs['printInfo.NOT_USE_IN_DUTY']" [input]="inputs['printInfo.NOT_USE_IN_DUTY']" [form]="form" [readonly]="!editMode">
+                        </eos-dynamic-form-input>
+                    </span>
             <div class="form-group full-position">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="fullTitle">Полное наименование подразделения</label>
-                <input [readonly]="!editMode"
-                    id="fullTitle"
-                    name="fullTitle"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['rec']['FULLNAME']"
-                    (ngModelChange)="change('FULLNAME', 'rec', $event)"
-                    placeholder="Полное наименование подразделения"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('fullTitle')"
-                    (blur)="blur()"
-                    maxlength="2000"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['fullTitle']?.invalid && cardForm.controls['fullTitle']?.dirty && focusedField === 'fullTitle'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['printInfo.PRINT_DEPARTMENT']"
+                    [input]="inputs['printInfo.PRINT_DEPARTMENT']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="DEPARTMENT_RP">Наименование в родительном падеже (чего?)</label>
-                <input [readonly]="!editMode"
-                    id="DEPARTMENT_RP"
-                    name="DEPARTMENT_RP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['DEPARTMENT_RP']"
-                    (ngModelChange)="change('DEPARTMENT_RP', 'printInfo', $event)"
-                    placeholder="Наименование в родительном падеже (чего?)"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DEPARTMENT_RP')"
-                    (blur)="blur()"
-                    maxlength="248"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['DEPARTMENT_RP']?.invalid && cardForm.controls['DEPARTMENT_RP']?.dirty && focusedField === 'DEPARTMENT_RP'"
-                    autocomplete="off"
-                    triggers="">
+                <eos-dynamic-form-input *ngIf="inputs['printInfo.DEPARTMENT_RP']"
+                    [input]="inputs['printInfo.DEPARTMENT_RP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
                 <label class="primary-text"
                     [ngClass]="{'unimportant-text': !editMode }"
                     for="DUE_LINK_ORGANIZ">Организация</label>
-                <input readonly="readonly"
-                    id="DUE_LINK_ORGANIZ"
-                    name="DUE_LINK_ORGANIZ"
-                    type="text"
-                    class="form-control m-font readonly"
-                    [value]="orgName || data.organization['CLASSIF_NAME'] || ''"
-                    placeholder="Организация"
-                    isDisabled="true"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    autocomplete="off"
-                    triggers="">
-                <button *ngIf="editMode && data.rec['CARD_FLAG']"
-                    class="btn btn-primary"
-                    [disabled]="lockOrgBtn"
-                    (click)="chooseOrganiz()">выбрать</button>
+                <!-- <input [readonly]="!editMode" id="DUE_LINK_ORGANIZ" name="DUE_LINK_ORGANIZ" type="text" class="form-control m-font " [ngModel]="data.rec['DUE_LINK_ORGANIZ']"
+                            (ngModelChange)="change('DUE_LINK_ORGANIZ', 'rec', $event)" placeholder="Организация"
+                            [ngClass]="{'readonly': !editMode }" (focus)="focus('DUE_LINK_ORGANIZ')" (blur)="blur()" maxlength="248"
+                            [pattern]="NOT_EMPTY_STRING" tooltip="Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены."
+                            [isDisabled]="!editMode" placement="right" containerClass="tooltip-error" container="body" [isOpen]="cardForm.controls['DUE_LINK_ORGANIZ']?.invalid && cardForm.controls['DUE_LINK_ORGANIZ']?.dirty && focusedField === 'DUE_LINK_ORGANIZ'"
+                            autocomplete="off"
+                            triggers=""> -->
+                <div>{{data.organization.CLASSIF_NAME}} <button (click)="chooseOrganiz(data)">выбрать</button></div>
+
+
             </div>
             <div class="form-group"
                 *ngIf="data.rec['CARD_FLAG']">
-                <label class="primary-text required"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="CARD_NAME">Наименование картотеки</label>
-                <input [readonly]="!editMode"
-                    id="CARD_NAME"
-                    name="CARD_NAME"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data.rec['CARD_NAME']"
-                    (ngModelChange)="change('CARD_NAME', 'rec', $event)"
-                    placeholder="Наименование картотеки"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CARD_NAME')"
-                    (blur)="blur()"
-                    maxlength="64"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['CARD_NAME']?.invalid && cardForm.controls['CARD_NAME']?.dirty && focusedField === 'CARD_NAME'"
-                    autocomplete="off"
-                    triggers=""
-                    required>
+                <eos-dynamic-form-input *ngIf="inputs['rec.CARD_FLAG']"
+                    [input]="inputs['rec.CARD_FLAG']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
             <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="NOTE_DEP">Примечание</label>
-                <textarea [readonly]="!editMode"
-                    id="NOTE_DEP"
-                    name="NOTE_DEP"
-                    type="text"
-                    class="form-control m-font  note-dep"
-                    rows="5"
-                    [ngModel]="data.rec['NOTE']"
-                    (ngModelChange)="change('NOTE', 'rec', $event)"
-                    placeholder="Примечание"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('NOTE_DEP')"
-                    (blur)="blur()"
-                    maxlength="255"
-                    tooltip="Максимальная длина 255 символов."
-                    [isDisabled]="!editMode"
-                    placement="right"
-                    containerClass="tooltip-error"
-                    container="body"
-                    [isOpen]="cardForm.controls['NOTE_DEP']?.invalid && cardForm.controls['NOTE_DEP']?.dirty && focusedField === 'NOTE_DEP'"
-                    autocomplete="off"
-                    triggers=""></textarea>
+                <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']"
+                    [input]="inputs['rec.NOTE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
-import { Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Output, Input, EventEmitter, OnChanges, OnDestroy, Injector } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
 import { EosDictService } from '../services/eos-dict.service';
@@ -17,7 +17,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    inputs: any;
+    newData: any;
     form: FormGroup;
+    nodeId: string;
     readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
 
     protected dictSrv: EosDictService;
@@ -26,11 +29,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     private _currentFormStatus;
 
-    private _subscrChanges: Subscription;
-
-    inputs: any;
-    newData: any;
-
     private _validationSubscr: Subscription;
     private _changeSubscr: Subscription;
 
@@ -38,6 +36,47 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         this.dictSrv = injector.get(EosDictService);
         this._dataSrv = injector.get(EosDataConvertService);
         this._inputCtrlSrv = injector.get(InputControlService);
+    }
+
+    change(fldKey: string, dict: string, value: any) {
+        let _value = null;
+        if (typeof value === 'boolean') {
+            _value = +value;
+        } else if (value === 'null') {
+            _value = null;
+        } else if (value instanceof Date) {
+            _value = EosUtils.dateToString(value);
+        } else if (value === '') { // fix empty strings in IE
+            _value = null;
+        } else {
+            _value = value;
+        }
+
+        if (this.data[dict][fldKey] !== _value) {
+            this.data[dict][fldKey] = _value;
+            this.onChange.emit(this.data);
+        }
+    }
+
+    /*
+    checkUnic(val: any, key: string, inDict?: boolean) {
+        if (this.focusedField === key) {
+            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
+        } else {
+            return null;
+        }
+    }
+    */
+
+    /* clean(field: string, value: string) {
+        this.change(field, value);
+    }*/
+
+    /**
+     * return new data, used by parent component
+     */
+    getNewData(): any {
+        return this.newData;
     }
 
     /**
@@ -120,26 +159,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         return result;
     }
 
-    change(fldKey: string, dict: string, value: any) {
-        let _value = null;
-        if (typeof value === 'boolean') {
-            _value = +value;
-        } else if (value === 'null') {
-            _value = null;
-        } else if (value instanceof Date) {
-            _value = EosUtils.dateToString(value);
-        } else if (value === '') { // fix empty strings in IE
-            _value = null;
-        } else {
-            _value = value;
-        }
-
-        if (this.data[dict][fldKey] !== _value) {
-            this.data[dict][fldKey] = _value;
-            this.onChange.emit(this.data);
-        }
-    }
-
     /**
      * compare two objects
      * @param newObj one object
@@ -153,25 +172,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             ) > -1;
         } else {
             return false;
-        }
-    }
-
-    /* clean(field: string, value: string) {
-        this.change(field, value);
-    }*/
-
-    /**
-     * return new data, used by parent component
-     */
-    getNewData(): any {
-        return this.newData;
-    }
-
-    checkUnic(val: any, key: string, inDict?: boolean) {
-        if (this.focusedField === key) {
-            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
-        } else {
-            return null;
         }
     }
 }
