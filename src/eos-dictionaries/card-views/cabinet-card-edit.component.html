@@ -197,7 +197,7 @@
                         class="xl-font">Настройка доступа к папкам кабинета <i class="fa fa-lg text-primary"
                             [ngClass]="{'fa-angle-up': status.showFolders, 'fa-angle-down': !status.showFolders}"></i>
                     </div>
-                    <div class="folder-access-header secondary-block bottom-border">
+                    <div class="folder-access-header s-font secondary-block bottom-border">
                         <span class="checkbox-inline">
                             <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
                                 <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
@@ -208,8 +208,8 @@
                         <span *ngIf="!editMode && !anyUnmarkedAccess"
                             class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
                         </span>
-                        <span class="s-font primary-text">Полный доступ</span>
-                        <span class="upper s-font unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
+                        <span class="primary-text">Полный доступ</span>
+                        <span class="upper unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
                     </div>
                     <div class="folder-access-body">
                         <div class="col-sm-4 folder-access-item"

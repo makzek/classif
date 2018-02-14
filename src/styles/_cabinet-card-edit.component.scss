@@ -108,19 +108,19 @@ $access-first-col-width: 251px;
     }
     .folder-access-wrapper {
         .folder-access-header {
-            padding: 8px 20px;
-            line-height: 32px;
+            padding: 11px 20px;
+            line-height: 24px;
             unimportant-text {
                 position: relative;
                 top: 5px;
-            }
-            .checkbox-inline {
-                padding: 0;
             }
             .fake-checkbox {
                 position: relative;
                 top: 2px;
                 margin-right: 12px;
+            }
+            .checkbox-inline {
+                height: 24px;
             }
         }
         .folder-access-item {
@@ -225,8 +225,7 @@ $access-first-col-width: 251px;
                 line-height: 48px;
             }
             th:nth-child(2),
-            .th:nth-child(2)
-            .td:nth-child(2),
+            .th:nth-child(2) .td:nth-child(2),
             td:nth-child(2) {
                 padding-left: $access-first-col-width+20px;
             }
@@ -271,18 +270,18 @@ $access-first-col-width: 251px;
         .td-checkbox {
             width: 48px;
             text-align: center;
-            .checkbox-inline {
-                margin: 0;
-                padding: 0;
-                input[type="checkbox"]+span {
-                    margin: 0;
-                }
-                label {
-                    padding: 0;
-                    margin: 0;
-                    height: 24px;
-                }
-            }
+        }
+    }
+    .checkbox-inline {
+        margin: 0;
+        padding: 0;
+        input[type="checkbox"]+span {
+            margin: 0;
+        }
+        label {
+            padding: 0;
+            margin: 0;
+            height: 24px;
         }
     }
 }
