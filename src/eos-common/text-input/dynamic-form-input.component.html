@@ -1,61 +1,58 @@
 <div [formGroup]="form">
     <div [ngSwitch]="input.controlType">
-        <label [hidden]="input.hideLabel"
-            class="primary-text"
-            *ngSwitchCase="'string'"
-            [attr.for]="input.key"
-            [ngClass]="{'required': input.required}">{{input.label}}</label>
-        <input *ngSwitchCase="'string'"
-            [formControlName]="input.key"
-            [id]="input.key"
-            type="text"
-            [readonly]="readonly"
-            [ngClass]="{'readonly': readonly}"
-            placeholder="{{input.label}}"
-            class="form-control m-font"
-            [tooltip]="input.invalidMessage"
-            placement="right"
-            containerClass="tooltip-error"
-            container="body"
-            [isDisabled]="readonly"
-            [isOpen]="isDirty && !isValid"
-            triggers=""
-            autocomplete="off">
-
-        <label class="primary-text"
-            *ngSwitchCase="'text'"
-            [attr.for]="input.key"
-            [ngClass]="{'required': input.required}">{{input.label}}</label>
-        <textarea *ngSwitchCase="'text'"
-            [formControlName]="input.key"
-            [id]="input.key"
-            [readonly]="readonly"
-            [ngClass]="{'readonly': readonly}"
-            [ngStyle]="{'height.px': input.height}"
-            placeholder="{{input.label}}"
-            class="form-control m-font"
-            [tooltip]="input.invalidMessage"
-            placement="right"
-            containerClass="tooltip-error"
-            container="body"
-            [isDisabled]="readonly"
-            [isOpen]="isDirty && !isValid"
-            triggers=""></textarea>
-
-        <label class="primary-text"
-            *ngSwitchCase="'select'"
-            [attr.for]="input.key"
-            [ngClass]="{'required': input.required}">{{input.label}}</label>
-        <select [id]="input.key"
-            *ngSwitchCase="'select'"
-            [formControlName]="input.key"
-            class="form-control m-font">
-            <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
-            <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
-        </select>
-
-        <label class="primary-text checkbox"
-            *ngSwitchCase="'checkbox'">
+        <ng-container *ngSwitchCase="'string'">
+            <label [hidden]="input.hideLabel"
+                class="primary-text"
+                [attr.for]="input.key"
+                [ngClass]="{'required': input.required}">{{input.label}}</label>
+            <input class="form-control m-font"
+                [formControlName]="input.key"
+                [id]="input.key"
+                type="text"
+                [readonly]="readonly"
+                [ngClass]="{'readonly': readonly}"
+                placeholder="{{input.label}}"
+                [tooltip]="input.invalidMessage"
+                placement="right"
+                containerClass="tooltip-error"
+                container="body"
+                [isDisabled]="readonly"
+                [isOpen]="isDirty && !isValid"
+                triggers=""
+                autocomplete="off">
+        </ng-container>
+        <ng-container *ngSwitchCase="'text'">
+            <label class="primary-text"
+                [attr.for]="input.key"
+                [ngClass]="{'required': input.required}">{{input.label}}</label>
+            <textarea class="form-control m-font"
+                [formControlName]="input.key"
+                [id]="input.key"
+                [readonly]="readonly"
+                [ngClass]="{'readonly': readonly}"
+                [ngStyle]="{'height.px': input.height}"
+                placeholder="{{input.label}}"
+                [tooltip]="input.invalidMessage"
+                placement="right"
+                containerClass="tooltip-error"
+                container="body"
+                [isDisabled]="readonly"
+                [isOpen]="isDirty && !isValid"
+                triggers=""></textarea>
+        </ng-container>
+        <ng-container *ngSwitchCase="'select'">
+            <label class="primary-text"
+                [attr.for]="input.key"
+                [ngClass]="{'required': input.required}">{{input.label}}</label>
+            <select class="form-control m-font"
+                [id]="input.key"
+                [formControlName]="input.key">
+                <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
+                <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
+            </select>
+        </ng-container>
+        <ng-container *ngSwitchCase="'checkbox'">
+            <label class="primary-text checkbox">
             <input type="checkbox"
                 [formControlName]="input.key"
                 [id]="input.key"
@@ -63,14 +60,14 @@
                 [ngClass]="{'readonly': readonly}">
             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}
         </label>
-
-        <label class="primary-text"
-            *ngSwitchCase="'date'"
-            [attr.for]="input.key">{{input.label}}</label>
-        <eos-datepicker *ngSwitchCase="'date'"
-            [placeholder]="input.label"
-            [value]="input.value"
-            [isReadonly]="readonly"
-            [ngClass]="{'readonly': readonly }"></eos-datepicker>
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+            <label class="primary-text"
+                [attr.for]="input.key">{{input.label}}</label>
+            <eos-datepicker [ngClass]="{'readonly': readonly }"
+                [placeholder]="input.label"
+                [value]="input.value"
+                [isReadonly]="readonly"></eos-datepicker>
+        </ng-container>
     </div>
 </div>

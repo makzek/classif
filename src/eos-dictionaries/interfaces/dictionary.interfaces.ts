@@ -1,4 +1,5 @@
 import { SEARCH_TYPES } from '../consts/search-types';
+import { ISelectOption } from 'eos-common/interfaces';
 
 export enum E_DEPT_MODE {
     person,
@@ -47,7 +48,7 @@ export interface IFieldDesriptor {
     invalidMessage?: string;
     isUnic?: boolean;
     unicInDict?: boolean;
-    options?: {key: string, value: string}[];
+    options?: ISelectOption[];
     height?: number;
     forNode?: boolean;
 }
@@ -65,7 +66,7 @@ export interface IFieldDesriptorBase {
     readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
-    readonly options?: {key: string, value: string}[];
+    readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;
 }

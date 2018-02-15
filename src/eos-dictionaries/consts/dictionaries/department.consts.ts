@@ -1,7 +1,19 @@
 import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { ISelectOption } from 'eos-common/interfaces';
 
+export const ROLES_IN_WORKFLOW: ISelectOption[] = [
+    { value: 0, title: 'Не указана', },
+    { value: 1, title: 'Начальник' },
+    { value: 0, title: 'Делопроизводитель', }
+];
+
+export const GENDERS: ISelectOption[] = [
+    { value: null, title: 'Не указан' },
+    { value: 0, title: 'Мужской' },
+    { value: 1, title: 'Женский' }
+];
 /* tslint:disable:max-line-length */
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
@@ -168,7 +180,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'POST_H',
         title: 'Начальник',
-        type: 'boolean',
+        type: 'select',
+        options: ROLES_IN_WORKFLOW
     }, {
         key: 'CARD_FLAG',
         title: 'Картотека',
@@ -323,7 +336,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     listFields: ['CODE', 'title'],
     fullSearchFields: {
         person: ['CODE', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'DUTY', 'fullPosition'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', ],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
         cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',

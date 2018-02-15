@@ -6,8 +6,8 @@ import { DropdownInput } from 'eos-common/core/inputs/select-input';
 import { CheckboxInput } from 'eos-common/core/inputs/checkbox-input';
 import { DateInput } from 'eos-common/core/inputs/date-input';
 import { E_FIELD_TYPE } from '../interfaces';
-
-const NOT_EMPTY_STRING = /^\S(.*\S$|$)/;
+import { GENDERS } from '../consts/dictionaries/department.consts';
+import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 @Injectable()
 export class EosDataConvertService {
@@ -22,7 +22,7 @@ export class EosDataConvertService {
      */
     getInputs(fieldsDescription: any[], data: any) {
         const inputs: any = {};
-        if (fieldsDescription) {
+        if (fieldsDescription) { // todo: refactor & remove hardcode
             Object.keys(fieldsDescription).forEach((_dict) => {
                 switch (_dict) {
                     case 'rec':
@@ -121,16 +121,8 @@ export class EosDataConvertService {
                             label: 'Пол',
                             dict: 'printInfo',
                             value: data['printInfo']['GENDER'],
-                            options: [{
-                                key: 'none',
-                                value: null,
-                            }, {
-                                key: 'm',
-                                value: 'Мужской',
-                            }, {
-                                key: 'f',
-                                value: 'Женский',
-                            }],
+                            // options: fieldsDescription['printInfo']['GENDER'].options,
+                            options: GENDERS,
                             pattern: NOT_EMPTY_STRING,
                         });
                         inputs['printInfo.SURNAME'] = new StringInput({
