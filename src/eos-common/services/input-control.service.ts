@@ -51,13 +51,14 @@ export class InputControlService {
      * @param input input which is added to group
      */
     private _addInput(group: any, input: InputBase<any>) {
+        const value = input.value !== undefined ? input.value : null;
         group[input.key] = input.required ?
-            new FormControl(input.value || '', [
+            new FormControl(value, [
                 Validators.required,
                 Validators.pattern(input.pattern),
                 this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
             ])
-            : new FormControl(input.value || '', [
+            : new FormControl(value, [
                 Validators.pattern(input.pattern),
                 this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
             ]);

@@ -1,12 +1,10 @@
 import { InputBase } from './input-base';
 
-export class CheckboxInput extends InputBase<number> {
+export class CheckboxInput extends InputBase<boolean> {
     controlType = 'checkbox';
 
     constructor(options: {} = {}) {
         super(options);
-        if (!this.value) {
-            this.value = 0;
-        }
+        this.value = !!this.value;
     }
 }

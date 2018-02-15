@@ -6,6 +6,8 @@
                 *ngIf="data.rec">
                 <eos-departments-card-edit-person #cardEditEl
                     *ngIf="data.rec['IS_NODE'] === 1"
+                    [form]="form"
+                    [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"
                     [fieldsDescription]="fieldsDescription"
@@ -15,6 +17,8 @@
                     (invalid)="onInvalid($event)"></eos-departments-card-edit-person>
                 <eos-departments-card-edit-department #cardEditEl
                     *ngIf="data.rec['IS_NODE'] === 0"
+                    [form]="form"
+                    [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"
                     [fieldsDescription]="fieldsDescription"
@@ -26,6 +30,8 @@
         </ng-container>
 
         <eos-cabinet-card-edit *ngSwitchCase="'cabinet'"
+            [form]="form"
+            [inputs]="inputs"
             [data]="data"
             [fieldsDescription]="fieldsDescription"
             [editMode]="editMode"
@@ -40,6 +46,8 @@
         (invalid)="onInvalid($event)"></eos-visa-type-card-edit -->
         <eos-security-card-edit #cardEditEl
             *ngSwitchCase="'security'"
+            [form]="form"
+            [inputs]="inputs"
             [data]="data"
             [fieldsDescription]="fieldsDescription"
             [editMode]="editMode"

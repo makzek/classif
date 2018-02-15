@@ -77,7 +77,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     ngOnChanges() {
-        super.ngOnChanges();
         if (this.data && this.data.rec) {
             // console.log(this.data);
             this.init(this.data);

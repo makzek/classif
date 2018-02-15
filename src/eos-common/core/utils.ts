@@ -31,7 +31,7 @@ export class EosUtils {
         let elem = data;
         for (let i = 0; i < _path.length && (elem !== undefined && elem !== null); i++) { // dive deep while property exist
             const key = EosUtils.getKeyIndex(_path[i]);
-            if (initPath && !elem[key.value]) { // if undefined init empty
+            if (initPath && elem[key.value] === undefined) { // if undefined init empty
                 if (key.idx === undefined) {
                     elem[key.value] = {};
                 } else {

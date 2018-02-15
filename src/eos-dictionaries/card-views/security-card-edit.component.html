@@ -17,9 +17,7 @@
 
         <div class="form-group">
             <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode}">
-                        Требуется
-                    </label>
+                [ngClass]="{'unimportant-text': !editMode}">Требуется</label>
             <div class="checkbox-wrapper">
                 <eos-dynamic-form-input *ngIf="inputs['rec.EDS_FLAG']"
                     [input]="inputs['rec.EDS_FLAG']"

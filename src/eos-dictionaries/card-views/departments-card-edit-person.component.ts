@@ -1,6 +1,5 @@
-import { Component, Injector, OnChanges, Input } from '@angular/core';
+import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from 'eos-dictionaries/card-views/base-card-edit.component';
-import { FormGroup } from '@angular/forms';
 import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { IImage } from '../interfaces/image.interface';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
@@ -15,8 +14,6 @@ import { ROLES_IN_WORKFLOW, GENDERS } from '../consts/roles.const';
 export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent implements OnChanges {
     readonly fieldGroups: string[] = ['Основные данные', 'Контактная информация', 'Дополнительные сведения'];
     public roles = ROLES_IN_WORKFLOW;
-    @Input('form') form: FormGroup;
-    @Input('inputs') inputs: any;
     currTab = 0;
     photo = DEFAULT_PHOTO;
 
@@ -33,7 +30,6 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
     }
 
     ngOnChanges() {
-        super.ngOnChanges();
         if (this.currentNodeId !== this.nodeId) { // todo: re-factor condition
             this.currTab = 0;
         }

@@ -1,7 +1,7 @@
-import { Component, Output, Input, EventEmitter, ViewChild, OnChanges } from '@angular/core';
+import { Component, Output, Input, EventEmitter, ViewChild, OnChanges, OnDestroy } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 import { EosUtils } from 'eos-common/core/utils';
 // import { EosDictService } from '../services/eos-dict.service';
@@ -12,7 +12,7 @@ import { EosDataConvertService } from '../services/eos-data-convert.service';
     selector: 'eos-card-edit',
     templateUrl: 'card-edit.component.html'
 })
-export class CardEditComponent implements OnChanges {
+export class CardEditComponent implements OnChanges, OnDestroy {
     @Input() dictionaryId: string;
     @Input() data: any;
     @Input() editMode: boolean;
@@ -57,18 +57,15 @@ export class CardEditComponent implements OnChanges {
         } else {
             _value = value;
         }
-
         this.newData = EosUtils.setValueByPath(this.newData, path, _value);
-        return EosUtils.getValueByPath(this.data, path) !== _value;
+        return _value !== EosUtils.getValueByPath(this.data, path);
     }
 
     /**
      * return new data, used by parent component
      */
     getNewData(): any {
-        console.log('new form data', this.newData);
         return this.newData;
-
     }
 
     ngOnChanges() {
@@ -80,16 +77,14 @@ export class CardEditComponent implements OnChanges {
             } else {
                 this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
             }
-            console.log('form on change', this.form);
+            // console.log('form on change', this.form);
             this.form.valueChanges
                 .takeUntil(this.ngUnsubscribe)
                 .subscribe((newVal) => {
                     let changed = false;
                     Object.keys(newVal).forEach((path) => {
-                        changed = changed || this.changeByPath(path, newVal[path]);
+                        changed = this.changeByPath(path, newVal[path]) || changed;
                     });
-                    console.log('new value', newVal, changed);
-                    // this.newData = this._makeSavingData(this.form.value);
                     this.onChange.emit(changed);
                 });
 
@@ -119,8 +114,4 @@ export class CardEditComponent implements OnChanges {
     onInvalid(data: any) {
         this.invalid.emit(data);
     }
-
-    /* clean(field: string, value: string) {
-        this.change(field, value);
-    }*/
 }

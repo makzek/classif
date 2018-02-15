@@ -54,10 +54,10 @@ export class EosDataConvertService {
                                     break;
                                 case E_FIELD_TYPE.boolean:
                                     inputs[_dict + '.' + _key] = new CheckboxInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey + '.boolean',
+                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
                                         label: fieldsDescription[_dict][_key].title,
                                         forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        value: !!data[_dict][fieldsDescription[_dict][_key].foreignKey],
                                     });
                                     break;
                                 case E_FIELD_TYPE.select:

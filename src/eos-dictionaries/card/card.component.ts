@@ -171,13 +171,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         } else {
             const backUrl = (this.node.parent || this.node).getPath();
             this._router.navigate(backUrl);
-            /*Generate back URL*/
-            /*
-            const urlSegments = this._router.url.split('/');
-            urlSegments[3] = this.node.parentId;
-            urlSegments.length--;
-            const backUrl = urlSegments.join('/');
-            this.goTo(backUrl);*/
         }
     }
 

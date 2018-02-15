@@ -29,13 +29,11 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
         type: 'boolean',
         title: 'Требуется ЭП',
         length: 20,
-        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'ENCRYPT_FLAG',
         type: 'boolean',
         title: 'Требуется шифрование',
         length: 20,
-        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'SEC_INDEX',
         type: 'string',

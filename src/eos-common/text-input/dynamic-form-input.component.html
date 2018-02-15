@@ -58,7 +58,9 @@
             *ngSwitchCase="'checkbox'">
             <input type="checkbox"
                 [formControlName]="input.key"
-                [id]="input.key">
+                [id]="input.key"
+                [readonly]="readonly"
+                [ngClass]="{'readonly': readonly}">
             <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}
         </label>
 
