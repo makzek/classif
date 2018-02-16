@@ -58,7 +58,24 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         }
     }
 
+    /**
+     * Updates value in record data
+     * @param fldKey property name
+     * @param dict dictionary name
+     * @param value value
+     * @deprecated use changeByPath instead
+     */
     change(fldKey: string, dict: string, value: any) {
+        const path = dict + '.' + fldKey;
+        this.changeByPath(path, value);
+    }
+
+    /**
+     * Updates value in record data
+     * @param path - path in data to property
+     * @param value - new value
+     */
+    changeByPath(path: string, value: any) {
         let _value = null;
         if (typeof value === 'boolean') {
             _value = +value;
@@ -66,12 +83,14 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             _value = null;
         } else if (value instanceof Date) {
             _value = EosUtils.dateToString(value);
+        } else if (value === '') { // fix empty strings in IE
+            _value = null;
         } else {
             _value = value;
         }
 
-        if (this.data[dict][fldKey] !== _value) {
-            this.data[dict][fldKey] = _value;
+        if (EosUtils.getValueByPath(this.data, path) !== _value) {
+            EosUtils.setValueByPath(this.data, path, _value);
             this.onChange.emit(this.data);
         }
     }
