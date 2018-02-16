@@ -121,7 +121,7 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
     }],
     editFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email'],
     listFields: ['CLASSIF_NAME', 'CHANNEL_TYPE'],
-    allVisibleFields: [],
+    allVisibleFields: ['NOTE', 'PARAMS'],
     quickViewFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email'],
     searchFields: [],
 });

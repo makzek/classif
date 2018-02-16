@@ -56,13 +56,13 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: '',
         title: 'Получатель',
     }, {
-        key: '',
+        key: 'processing_params',
         type: '',
         title: 'Параметры обработки',
     }],
     editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver'],
-    listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP', 'NOTE'],
-    allVisibleFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP'],
+    listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP'],
+    allVisibleFields: ['doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'NOTE', 'sender', 'receiver', 'processing_params'],
     quickViewFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'sender'],
     searchFields: [],
 });
