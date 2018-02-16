@@ -248,6 +248,18 @@ export interface RESOLUTION_CATEGORY_CL extends ILinearCL {
      * Вес элемента
      */
     WEIGHT: number;
+    /**
+     * Использовать для расчета срока поручения
+     */
+    PLAN_COUNT_FLAG: number;
+    /**
+     * Количество дней
+     */
+    PLAN_DAY_COUNT: number;
+    /**
+     * Расчет в рабочих или календарных днях
+     */
+    PLAN_DAY_TYPE: number;
 }
 
 /**
