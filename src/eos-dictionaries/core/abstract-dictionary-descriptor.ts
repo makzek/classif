@@ -235,10 +235,9 @@ export abstract class AbstractDictionaryDescriptor {
     markDeleted(records: any[], deletedState = 1, cascade = false): Promise<any[]> {
         records.forEach((record) => record.DELETED = deletedState);
         const changes = this.apiSrv.changeList(records);
-        if (deletedState === 0 && cascade) { // blocked while cascade operations disabled
+        if (deletedState === 0 && cascade) {
             PipRX.invokeSop(changes, 'ClassifCascade_TRule', { DELETED: deletedState });
         }
-        // console.log('markDeleted ', changes);
         return this.apiSrv.batch(changes, '');
     }
 

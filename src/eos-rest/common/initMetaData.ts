@@ -1072,7 +1072,10 @@ const commonMeta = {
             DELETED: _t.i,
             PROTECTED: _t.i,
             WEIGHT: _t.i,
-            NOTE: _t.s
+            NOTE: _t.s,
+            PLAN_COUNT_FLAG: _t.i,
+            PLAN_DAY_COUNT: _t.i,
+            PLAN_DAY_TYPE: _t.i
         },
         readonly: [
 
