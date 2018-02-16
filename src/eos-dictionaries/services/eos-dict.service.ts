@@ -17,6 +17,8 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 import { WARN_SEARCH_NOTFOUND, WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE, WARN_NO_ORGANIZATION } from '../consts/messages.consts';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
+import { MockBackendService } from '../../environments/mock-backend.service';
+import { environment } from 'environments/environment';
 import { RestError } from 'eos-rest/core/rest-error';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { IAppCfg } from 'eos-common/interfaces';
@@ -154,6 +156,7 @@ export class EosDictService {
         // private _confirmSrv: ConfirmWindowService,
         private _descrSrv: DictionaryDescriptorService,
         private _router: Router,
+        private _mBackSrv: MockBackendService
     ) {
         this._initViewParameters();
         this._dictionaries = [];
@@ -381,6 +384,9 @@ export class EosDictService {
                 this.updateViewParameters({ updatingInfo: true });
                 return dictionary.getFullNodeInfo(nodeId)
                     .then((node) => {
+                        if (!node && !environment.production) {
+                            node = this._mBackSrv.fakeNode(this.dictionary);
+                        }
                         this._openNode(node);
                         this.updateViewParameters({ updatingInfo: false });
                         return node;
@@ -835,6 +841,9 @@ export class EosDictService {
         this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
         // hide root node
         this._currentList = this._currentList.filter((item) => item.id !== this.dictionary.root.id);
+        if (!this._currentList.length && !environment.production) {
+            this._currentList = [this._mBackSrv.fakeNode(this.dictionary)];
+        }
         this._initPaginationConfig(update);
         this._emitListDictionary();
         this._reorderList();
@@ -879,6 +888,7 @@ export class EosDictService {
     }
 
     private _openNode(node: EosDictionaryNode) {
+        console.warn(node);
         if (this._listNode !== node) {
             if (this._listNode) {
                 this._listNode.isSelected = false;
@@ -886,7 +896,6 @@ export class EosDictService {
             if (node) {
                 node.isSelected = true;
             }
-            this._listNode = node;
             this._listNode$.next(node);
         }
     }

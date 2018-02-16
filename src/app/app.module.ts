@@ -41,6 +41,7 @@ import { EosDeskService } from './services/eos-desk.service';
 import { EosNoticeService } from './services/eos-notice.service';
 import { EosStorageService } from './services/eos-storage.service';
 import { EosUserProfileService } from './services/eos-user-profile.service';
+import { MockBackendService } from '../environments/mock-backend.service';
 
 /* guards */
 import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
@@ -94,6 +95,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         EosNoticeService,
         EosStorageService,
         EosUserProfileService,
+        MockBackendService,
         { provide: LOCALE_ID, useValue: 'ru-RU' },
     ],
     bootstrap: [AppComponent],
