@@ -17,7 +17,6 @@ $ie:10 !default;
 
 @import "title.component";
 @import "dictionaries.component";
-@import "edit-card.component";
 @import "node-info.component";
 @import "breadcrumb.component";
 @import "desktop-switcher.component";
@@ -33,12 +32,17 @@ $ie:10 !default;
 @import "node-actions.component";
 @import "pushpin.component";
 @import "departments-card-edit.component";
-@import "cabinet-card-edit.component";
 @import "sandwich.component";
 @import "photo-uploader.component";
 @import "datepicker.component";
 @import "column-settings.component";
 @import "long-title-hint.component";
+
+// module styles
+@import "../app/styles";
+@import "../eos-common/styles";
+@import "../eos-dictionaries/styles";
+@import "../eos-rest/_styles";
 
 @import "theme";
 @import "adaptation";
