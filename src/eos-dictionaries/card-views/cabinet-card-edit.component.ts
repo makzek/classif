@@ -4,6 +4,7 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
 import { DEPARTMENT } from 'eos-rest';
 import { IOrderBy } from '../interfaces';
+import { environment } from 'environments/environment';
 
 interface ICabinetOwner {
     index: number;
@@ -199,7 +200,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             return cUser;
         });
 
-        this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers, this.cabinetUsers);
+        if (!environment.production) { // for testing table horizontal scroll
+            this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers);
+        }
 
         this.updateAccessMarks();
         this.updateOwnersMarks();

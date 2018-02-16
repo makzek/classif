@@ -1,8 +1,8 @@
-<form [formGroup]="form"
-    class="form form-horizontal"
+<div class="card-edit secondary-block"
     *ngIf="data && data.rec">
-    <div class="simple-card-edit secondary-block">
-        <article class="edit-content">
+    <article class="edit-content">
+        <form [formGroup]="form"
+            class="form form-horizontal">
             <ng-container [ngSwitch]="dictionaryId">
                 <ng-container *ngSwitchCase="'departments'">
                     <eos-departments-card-edit-person #cardEditEl
@@ -69,6 +69,6 @@
             <div class="form-group unimportant-text s-font">
                 <label>* - поля обязательные к заполнению</label>
             </div>
-        </article>
-    </div>
-</form>
+        </form>
+    </article>
+</div>

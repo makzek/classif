@@ -1,16 +1,19 @@
 .eos-card {
+    padding: 0;
+    border-width: 1px;
+    border-style: solid;
+    width: 800px;
+    margin: 0 auto;
     // min-height: 450px;
     max-height: calc(100vh - 108px - 60px);
     border: 1px solid transparent;
+    overflow-x: hidden;
     overflow-y: auto;
     .edit-block-header,
     .edit-header {
         min-height: $item-height;
-        padding: 0;
         border-width: 1px;
         border-style: solid;
-        width: 800px;
-        margin: 0 auto;
     }
     .edit-header {
         display: -ms-grid;
@@ -102,22 +105,23 @@
         width: 800px;
         margin: 0 auto;
     }
+    /*
     .edit-aside {
         .vertical-buttons {
             transform: rotate(-90deg) translateX(-145px) translateY(-144px);
         }
     }
-    /* .active {
+    */
+    /*
+    .active {
         background-color: #e6e5e5;
         border-color: #adadad;
-    }*/
-    textarea {
-        resize: none;
     }
+    */
 }
 
 .edit-content {
-    padding: 0 20px;
+    padding: 20px;
     label {
         font-weight: normal;
         &:not(.checkbox) {
@@ -143,22 +147,6 @@
             }
         }
     }
-    .visa-type-select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
-        background-repeat: no-repeat;
-        background-position-x: right;
-        background-position-y: center;
-        background-size: 24px;
-    }
-    .visa-select-edit {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: none;
-    }
     .form-group {
         &:not(.gender) {
             position: relative;
@@ -178,36 +166,15 @@
         box-shadow: none;
         padding: 0;
     }
-}
-
-.simple-card-edit,
-.visa-type-card-edit {
-    padding: 20px;
-    border-width: 1px;
-    border-style: solid;
-    border-top-width: 0;
-    width: 800px;
-    margin: 0 auto;
-}
-
-.security-card-edit {
-    .checkbox-inline {
-        padding-left: 0;
+    textarea {
+        resize: none;
     }
-}
-
-.visa-type-card-edit {
-    .checkbox {
-        padding-left: 0;
+    .appearance-none {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
     }
-}
-
-.appearance-none {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
+    select::-ms-expand {
+        display: none;
+    }
 }

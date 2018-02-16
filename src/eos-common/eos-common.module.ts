@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/bs-moment';
@@ -12,19 +11,22 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { MessagesComponent } from './messages/messages.component';
-import { EosMessageService } from './services/eos-message.service';
-import { InfoComponent } from './info/info.component';
+/* components */
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
-import { ConfirmWindowService } from './confirm-window/confirm-window.service';
-import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
-import { DynamicFormInputComponent } from './text-input/dynamic-form-input.component';
+import { DynamicFormInputComponent } from './dynamic-form-input/dynamic-form-input.component';
+import { InfoComponent } from './info/info.component';
+import { MessagesComponent } from './messages/messages.component';
+import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+
+/* services */
+import { ConfirmWindowService } from './confirm-window/confirm-window.service';
+import { EosMessageService } from './services/eos-message.service';
 import { InputControlService } from './services/input-control.service';
 
 /* directives */
+import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
 
 @NgModule({
