@@ -101,7 +101,7 @@ RECORD_ACTIONS_NAVIGATION_DOWN*/ ];
 export const MORE_RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.restore,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Восстановить',
     hint: 'Восстановить логически удаленные элементы',
     iconClass: 'eos-icon eos-icon-repair-blue small',
     activeIconClass: '',
@@ -110,7 +110,7 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.removeHard,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Удалить (физически)',
     hint: 'Удалить (физически)',
     iconClass: 'eos-icon eos-icon-bin-forever-blue small',
     activeIconClass: null,
@@ -119,7 +119,7 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.createRepresentative,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Создать представителя организации',
     hint: 'Создать представителя организации',
     iconClass: 'eos-icon eos-icon-avatar-blue small',
     activeIconClass: null,

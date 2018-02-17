@@ -13,6 +13,15 @@
     }
 }
 
+.dropdown-item {
+    height: $item-height;
+}
+
+.drop-title {
+    position: relative;
+    top: -5px;
+}
+
 .create-new-node {
     padding: 0;
 }

@@ -26,7 +26,6 @@ export class NodeActionsComponent implements OnDestroy {
     buttons: IActionButton[];
     ddButtons: IActionButton[];
     moreButtons: IActionButton[];
-    showMore = false;
 
     ADD_ACTION = E_RECORD_ACTIONS.add;
     isTree: boolean;
@@ -57,9 +56,6 @@ export class NodeActionsComponent implements OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
-    toggleButtonList() {
-        this.showMore = !this.showMore;
-    }
 
     doAction(action: E_RECORD_ACTIONS, params?: any) {
         // console.log('action', E_RECORD_ACTIONS[action], params);
