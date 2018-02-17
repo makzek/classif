@@ -85,7 +85,16 @@ export const RECORD_ACTIONS: IAction[] = [{
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-arrow-v-dark-blue-bottom small',
     buttonClass: null
-},
+}, {
+    type: E_RECORD_ACTIONS.showAllSubnodes,
+    group: E_ACTION_GROUPS.common,
+    title: null,
+    hint: 'Отобразить все дочерние записи единым списком',
+    iconClass: 'eos-icon eos-icon-tree-blue small',
+    activeIconClass: 'eos-icon eos-icon-tree-white small',
+    hoverIconClass: '',
+    buttonClass: null
+}
    /* RECORD_ACTIONS_NAVIGATION_UP,
 RECORD_ACTIONS_NAVIGATION_DOWN*/ ];
 
@@ -182,17 +191,6 @@ export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
     hoverIconClass: null,
     buttonClass: 'hidden-lg'
 }];
-
-export const SHOW_ALL_SUBNODES: IAction = {
-    type: E_RECORD_ACTIONS.showAllSubnodes,
-    group: E_ACTION_GROUPS.common,
-    title: null,
-    hint: 'Отобразить все дочерние записи единым списком',
-    iconClass: 'eos-icon eos-icon-tree-blue small',
-    activeIconClass: 'eos-icon eos-icon-tree-white small',
-    hoverIconClass: '',
-    buttonClass: null
-};
 
 export const COMMON_ADD_MENU = [{
     params: { 'IS_NODE': 0 },

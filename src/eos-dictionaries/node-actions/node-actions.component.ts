@@ -6,7 +6,7 @@ import 'rxjs/add/operator/combineLatest';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import {
-    RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS, SHOW_ALL_SUBNODES,
+    RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS,
     COMMON_ADD_MENU, DEPARTMENT_ADD_MENU
 } from '../consts/record-actions.consts';
 import {
@@ -26,8 +26,6 @@ export class NodeActionsComponent implements OnDestroy {
     buttons: IActionButton[];
     ddButtons: IActionButton[];
     moreButtons: IActionButton[];
-    showSubnodesBtn: IActionButton;
-    ctx = { item: this.showSubnodesBtn };
     showMore = false;
 
     ADD_ACTION = E_RECORD_ACTIONS.add;
@@ -72,7 +70,6 @@ export class NodeActionsComponent implements OnDestroy {
         this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.moreButtons = MORE_RECORD_ACTIONS.map(act => this._actionToButton(act));
-        this.showSubnodesBtn = this._actionToButton(SHOW_ALL_SUBNODES);
     }
 
     private _update() {
@@ -88,7 +85,6 @@ export class NodeActionsComponent implements OnDestroy {
         this.buttons.forEach(btn => this._updateButton(btn));
         this.ddButtons.forEach(btn => this._updateButton(btn));
         this.moreButtons.forEach(btn => this._updateButton(btn));
-        this._updateButton(this.showSubnodesBtn);
     }
 
     private _updateButton(button: IActionButton) {
