@@ -15,28 +15,6 @@ $ie:10 !default;
 
 @import "general-items";
 
-@import "../app/title/title.component";
-@import "../eos-dictionaries/dictionaries/dictionaries.component";
-@import "../eos-dictionaries/node-info/node-info.component";
-@import "../app/breadcrumb/breadcrumb.component";
-@import "../app/desktop-switcher/desktop-switcher.component";
-@import "../eos-dictionaries/dictionary-search/dictionary-search.component";
-@import "../app/user/user.component";
-@import "../eos-dictionaries/tree/tree.component";
-@import "../app/notice/notice.component";
-@import "../app/desktop/desktop.component";
-@import "../eos-dictionaries/dictionary/dictionary.component";
-@import "../eos-common/info/info.component";
-@import "../eos-dictionaries/node-list/node-list.component";
-@import "../eos-dictionaries/node-list-pagination/node-list-pagination.component";
-@import "../eos-dictionaries/node-actions/node-actions.component";
-@import "../app/pushpin/pushpin.component";
-@import "../eos-dictionaries/card-views/departments-card-edit.component";
-@import "../eos-dictionaries/sandwich/sandwich.component";
-@import "../eos-common/photo-uploader/photo-uploader.component";
-@import "../eos-common/datepicker/datepicker.component";
-@import "../eos-dictionaries/long-title-hint/long-title-hint.component";
-
 // module styles
 @import "../app/styles";
 @import "../eos-common/styles";
