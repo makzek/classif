@@ -127,8 +127,8 @@
             grid-template-columns: 48px 1fr auto minmax(80px,auto);
 
             &.has-custom {
-                -ms-grid-columns:  48px 1fr auto auto 48px;
-                grid-template-columns: 48px 1fr auto minmax(80px,auto) 48px;
+                -ms-grid-columns:  48px 1fr auto auto;
+                grid-template-columns: 48px 1fr auto minmax(80px, auto);
             }
 
             .item-count {
@@ -139,18 +139,6 @@
                 border-left-style: solid;
                 -ms-grid-column:4;
                 grid-column: 4;
-            }
-
-            .config-btn {
-                height: $item-height;
-                width: $item-width;
-                font-size: 24px;
-                border: 0;
-                border-radius: 0;
-                border-left-width: 1px;
-                border-left-style: solid;
-                -ms-grid-column: 5;
-                grid-column: 5;
             }
 
             .selected-node-title {

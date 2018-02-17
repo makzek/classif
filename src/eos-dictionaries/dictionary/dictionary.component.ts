@@ -277,7 +277,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.createRepresentative:
                 this._createRepresentative();
                 break;
-            case E_RECORD_ACTIONS.tuneFields:
+            case E_RECORD_ACTIONS.tableCustomization:
                 this._configColumns();
                 break;
             default:

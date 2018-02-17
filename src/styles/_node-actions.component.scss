@@ -11,9 +11,13 @@
         width: 100%;
         text-align: left;
     }
+
+    .fa {
+        font-size: 24px;
+    }
 }
 
-.dropdown-item {
+.dropdown-item-actions {
     height: $item-height;
 }
 
@@ -21,6 +25,8 @@
     position: relative;
     top: -5px;
 }
+
+
 
 .create-new-node {
     padding: 0;

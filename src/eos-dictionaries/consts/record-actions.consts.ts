@@ -95,7 +95,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     hoverIconClass: '',
     buttonClass: null
 }, {
-    type: E_RECORD_ACTIONS.tuneFields,
+    type: E_RECORD_ACTIONS.tableCustomization,
     group: E_ACTION_GROUPS.common,
     title: null,
     hint: 'Настройка отображения',

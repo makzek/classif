@@ -18,8 +18,7 @@ export enum E_RECORD_ACTIONS {
     importPhotos,
     createRepresentative,
     tableCustomization,
-    showAllSubnodes,
-    tuneFields
+    showAllSubnodes
     // createRepresentative,
     // slantForForms,
     /* to be extended */

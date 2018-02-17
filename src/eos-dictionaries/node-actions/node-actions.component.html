@@ -13,7 +13,7 @@
                 <li role="menuitem" tooltip="{{item.hint}}"
                     placement="right" containerClass="tooltip-info">
                     <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
-                        class="dropdown-item btn btn-primary-light" (click)="doAction(item.type)">
+                        class="dropdown-item-actions btn btn-primary-light" (click)="doAction(item.type)">
                         <span class="{{item.iconClass}}"></span>
                         <span class="drop-title">{{item.title}}</span>
                     </button>
@@ -32,7 +32,7 @@
                 <li role="menuitem" tooltip="{{item.hint}}"
                     placement="right" containerClass="tooltip-info">
                     <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
-                        class="btn dropdown-item btn-primary-light" (click)="doAction(item.type)">
+                        class="btn dropdown-item-actions btn-primary-light" (click)="doAction(item.type)">
                         <span class="{{item.iconClass}}"></span>
                         <span class="drop-title">{{item.title}}</span>
                     </button>
@@ -64,7 +64,7 @@
             class="dropdown-menu"
             role="menu">
                 <li *ngFor="let item of addMenu" role="menuitem">
-                    <button class="dropdown-item btn btn-primary-light"
+                    <button class="dropdown-item-actions btn btn-primary-light"
                         (click)="doAction(action,item.params)">{{item.title}}</button>
                 </li>
             </ul>
