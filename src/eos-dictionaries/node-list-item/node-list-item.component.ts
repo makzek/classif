@@ -56,6 +56,11 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         this.mark.emit(this.node.marked);
     }
 
+    dbClickHandler(evt: MouseEvent) {
+        evt.stopPropagation();
+        this.node.isNode ? this.openAsFolder() : this.viewNode();
+    }
+
     viewNode() {
         if (!this._dictSrv.isRoot(this.node.id)) {
             this._storageSrv.setItem(RECENT_URL, this._router.url);
@@ -99,10 +104,9 @@ export class NodeListItemComponent implements OnInit, OnChanges {
      * @param node EosDictionaryNode
      * @description Navigate to param node. Open element as node
      */
-    public openAsFolder(evt: Event, node: EosDictionaryNode) {
-        evt.stopPropagation();
+    public openAsFolder() {
         const urlPeiase = this._router.url.split('/');
-        urlPeiase[3] = node.id;
+        urlPeiase[3] = this.node.id;
         const path = urlPeiase.join('/');
         this._router.navigate([path]);
     }
