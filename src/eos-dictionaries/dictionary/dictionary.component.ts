@@ -277,6 +277,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.createRepresentative:
                 this._createRepresentative();
                 break;
+            case E_RECORD_ACTIONS.tuneFields:
+                this._configColumns();
+                break;
             default:
                 console.warn('unhandled action', E_RECORD_ACTIONS[evt.action]);
         }
