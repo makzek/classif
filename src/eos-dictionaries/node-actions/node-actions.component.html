@@ -9,15 +9,13 @@
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <ng-template ngFor let-item let-i="index" [ngForOf]="moreButtons">
-                <li role="menuitem">
-                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
-                        class="dropdown-item btn btn-primary-light" (click)="doAction(item.type)">
-                        <span class="{{item.iconClass}}"></span>
-                        <span class="drop-title">{{item.title}}</span>
-                    </button>
-                </li>
-            </ng-template>
+            <li *ngFor="let item of moreButtons" role="menuitem" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
+                <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
+                    class="action-dropdown-item btn btn-primary-light" (click)="doAction(item.type)">
+                    <span class="{{item.iconClass}}"></span>
+                    <span class="drop-title">{{item.title}}</span>
+                </button>
+            </li>
         </ul>
     </span>
 
@@ -54,16 +52,14 @@
         *ngIf="show">
         <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
         <ng-container *ngIf="action === ADD_ACTION && isTree">
-            <span class="btn-group"dropdown>
+            <span class="btn-group" dropdown>
             <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
                 <span [hidden]="isActive" [ngClass]="icon"></span>
                 <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
             </button>
-            <ul *dropdownMenu
-            class="dropdown-menu"
-            role="menu">
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
                 <li *ngFor="let item of addMenu" role="menuitem">
-                    <button class="dropdown-item btn btn-primary-light"
+                    <button class="action-dropdown-item btn btn-primary-light"
                         (click)="doAction(action,item.params)">{{item.title}}</button>
                 </li>
             </ul>
