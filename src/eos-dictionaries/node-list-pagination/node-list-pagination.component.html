@@ -11,9 +11,12 @@
     </div>
 
     <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показывать еще</button>
-    <div class="btn-group count-select usual-border" dropdown dropup="true" placement="top right">
-        <button type="button" dropdownToggle class="dropdown-toggle btn btn-transparent selected-text">
-            <span class="selected-text">Показывать по {{config?.length}}</span>
+
+    <div class="count-select-text usual-border" >
+        <span class="selected-text">Показывать по {{config?.length}}</span>
+    </div>
+    <div class="count-drop-icon" dropdown dropup="true" placement="top right">
+        <button type="button" dropdownToggle class="drop-btn btn btn-transparent selected-text">
             <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
