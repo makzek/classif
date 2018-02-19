@@ -2,7 +2,8 @@
     .node {
         cursor: pointer;
         width: $dictionary-block-width;
-        padding: $item-width / 4 0;
+        padding: $item-width / 6 0;
+        line-height: 22px;
         .fake-padding,
         .tree-btn,
         .title {
@@ -21,6 +22,11 @@
             .title-item {
                 padding-right: $item-width / 6;
             }
+        }
+
+        .tringle-size {
+            width: 22px;
+            height: 22px;
         }
 
         .deleted {
