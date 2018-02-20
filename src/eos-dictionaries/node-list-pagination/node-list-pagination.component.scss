@@ -69,6 +69,10 @@
             }
         }
     }
+
+    .to-rigth {
+        transform: rotate(180deg);
+    }
 }
 
 @media (min-width: 1500px) {
