@@ -3,7 +3,7 @@
         <span class="date">Состояние на: </span>
         <eos-datepicker [placeholder]="'дд.мм.гггг'" [value]="date" (change)="dateFilter($event)" [isReadonly]="false"></eos-datepicker>
     </div>
-    <span tooltip="Расширенный поиск" placement="left" container="body" containerClass="tooltip-info">
+    <span tooltip="Расширенный поиск" placement="bottom" container="body" containerClass="tooltip-info">
         <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
             containerClass="full-search-popover" placement="bottom" #full="bs-popover" [outsideClick]="true"
             (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
@@ -11,7 +11,7 @@
             <i [hidden]="!(isOpenFull || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true"></i>
         </button>
     </span>
-    <span tooltip="Быстрый поиск" placement="left" container="body" containerClass="tooltip-info"
+    <span tooltip="Быстрый поиск" placement="bottom" container="body" containerClass="tooltip-info"
     [isDisabled]="isOpenQuick">
     <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn"
         [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"  [outsideClick]="true"
