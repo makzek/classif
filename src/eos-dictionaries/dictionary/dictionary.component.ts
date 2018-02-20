@@ -390,78 +390,29 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _countColumnWidth() {
-        // console.log('start _countColWidth');
-        let _totalWidth = 0;
+        const span = document.createElement('span'),
+            body = document.getElementsByTagName('body');
+
+        span.style.position = 'absolute';
+        span.style.top = '-5000px';
+        span.style.left = '-5000px';
+        span.style.fontSize = '16px';
+        body[0].appendChild(span);
         const length = {};
+        // console.log(this.selectedEl.nativeElement.clientWidth);
         this.viewFields.forEach((_f) => {
-            if (_f.length) {
-                _totalWidth += _f.length;
-            } else {
-                _totalWidth += this.DEFAULT_FIELD_LEN;
-            }
+            span.innerText = _f.title;
+            length[_f.key] = 64 + span.clientWidth; // padding 20 * 2 + 24 sort ico
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
-                if (_f.length) {
-                    _totalWidth += _f.length;
-                } else {
-                    _totalWidth += this.DEFAULT_FIELD_LEN;
-                }
+                span.innerText = _f.title;
+                length[_f.key] = 64 + span.clientWidth;
             });
         }
-        /*Use Math.floor() to be be sure that there is enough space */
-        this.viewFields.forEach((_f) => {
-            if (_f.length) {
-                length[_f.key] = _f.length / _totalWidth;
-            } else {
-                length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
-            }
-        });
-
-        if (this.customFields) {
-            this.customFields.forEach((_f) => {
-                if (_f.length) {
-                    length[_f.key] = _f.length / _totalWidth;
-                } else {
-                    length[_f.key] = this.DEFAULT_FIELD_LEN / _totalWidth;
-                }
-            });
-        }
-        let fld;
-        const folderIcoSize = 42; // Size for block ico folder + rigth padding
-        if (this.selectedEl) {
-            const _selectedWidth = this.selectedEl.nativeElement.clientWidth;
-            fld = folderIcoSize * 100 / _selectedWidth;
-            this.tableWidth = _selectedWidth;
-            if (this.customFields && this.customFields.length) {
-                let w: number;
-                this.viewFields.forEach((_f) => {
-                    w = this.MIN_COL_WIDTH / (length[_f.key]);
-                    if (this.tableWidth < w) {
-                        this.tableWidth = w;
-                    }
-                });
-
-                this.customFields.forEach((_f) => {
-                    w = this.MIN_COL_WIDTH / (length[_f.key]);
-                    if (this.tableWidth < w) {
-                        this.tableWidth = w;
-                    }
-                });
-                if (this.tableWidth <= _selectedWidth) {
-                    this.tableWidth = _selectedWidth - 2;
-                }
-            } else {
-                this.tableWidth = _selectedWidth - 2;
-            }
-        }
-        Object.keys(length).forEach((key) => {
-            length[key] = Math.floor(length[key] * 100);
-        });
         this.length = length;
-        this.length['folder'] = fld;
-        // console.log('end _countColWidth');
+        body[0].removeChild(span);
     }
 
     private _selectNode() {
