@@ -88,9 +88,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     searchStartFlag = false; // flag begin search
 
-    readonly MIN_COL_WIDTH = 90; // 40px - paddings, 50px - content
-    readonly DEFAULT_FIELD_LEN = 200;
-
     tableWidth: number;
     hasCustomTable: boolean;
 
@@ -399,17 +396,30 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         span.style.fontSize = '16px';
         body[0].appendChild(span);
         const length = {};
-        // console.log(this.selectedEl.nativeElement.clientWidth);
+        let fullWidth = 0;
         this.viewFields.forEach((_f) => {
             span.innerText = _f.title;
             length[_f.key] = 64 + span.clientWidth; // padding 20 * 2 + 24 sort ico
+            fullWidth += 64 + span.clientWidth;
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
                 span.innerText = _f.title;
                 length[_f.key] = 64 + span.clientWidth;
+                fullWidth += 64 + span.clientWidth;
             });
+        }
+        // Распледеление остатка пространства
+        if (fullWidth < this.selectedEl.nativeElement.clientWidth) {
+            let fieldCount = this.viewFields.length;
+            if (this.customFields) {
+                fieldCount += this.customFields.length;
+            }
+            const remainingWidth = this.selectedEl.nativeElement.clientWidth - fullWidth - 68;
+            const width = remainingWidth / fieldCount;
+            Object.keys(length).forEach(key => length[key] += width);
+
         }
         this.length = length;
         body[0].removeChild(span);
