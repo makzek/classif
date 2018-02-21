@@ -4,7 +4,7 @@
     </ng-container>
 
     <span class="visible-lg-inline-block actions" dropdown container="body">
-        <button class="btn btn-primary-light actions" [tooltip]="'Показать меню'" #itemTooltip="bs-tooltip"
+        <button *ngIf="haveVisibleMore" class="btn btn-primary-light actions" [tooltip]="'Показать меню'" #itemTooltip="bs-tooltip"
             placement="right" containerClass="tooltip-info" dropdownToggle (click)="itemTooltip.hide()">
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
@@ -20,14 +20,14 @@
     </span>
 
     <span class="btn-group hidden-lg" dropdown>
-        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="right" containerClass="tooltip-info"
+        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="bottom" containerClass="tooltip-info"
             #itemTooltip="bs-tooltip" (click)="itemTooltip.hide();">
             <span class="eos-icon eos-icon-fab-blue small"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
             <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
                 <li role="menuitem" tooltip="{{item.hint}}"
-                    placement="right" containerClass="tooltip-info">
+                    placement="bottom" containerClass="tooltip-info">
                     <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
                         class="btn dropdown-item btn-primary-light" (click)="doAction(item.type)">
                         <span class="{{item.iconClass}}"></span>
@@ -50,7 +50,7 @@
     let-action="type">
     <span class="visible-lg-inline-block actions"
         *ngIf="show">
-        <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="right" containerClass="tooltip-info">
+        <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
         <ng-container *ngIf="action === ADD_ACTION && isTree">
             <span class="btn-group" dropdown>
             <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
