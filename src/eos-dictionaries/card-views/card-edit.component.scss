@@ -5,6 +5,9 @@
     overflow-y: auto;
     .edit-block-header,
     .edit-header {
+        background-color: $modal-block-background-main-theme;
+        color: $secondary-font-color-main-theme;
+        border-color: $border-color-main-theme;
         min-height: $item-height;
         padding: 0;
         border-width: 1px;

@@ -118,6 +118,7 @@
 
     .node-actions {
         .selected-node {
+            background: $modal-block-background-main-theme;
             border: 1px solid transparent;
             border-bottom: 0;
             min-height: $item-height;
@@ -147,6 +148,7 @@
             }
 
             .tabs-wrapper {
+                background-color: $modal-block-background-main-theme;
                 -ms-grid-column: 3;
                 grid-column: 3;
                 width: auto;
@@ -193,6 +195,7 @@
         }
 
         .first-line {
+            background: $modal-block-background-main-theme;
             height: $item-height + 6px;
             padding-top: 1px;
             border: 1px solid transparent;
@@ -249,6 +252,7 @@
     }
 
     .second-line {
+        background: $modal-block-background-main-theme;
         border-bottom-width: 1px;
         border-bottom-style: solid;
         width: 100%;
