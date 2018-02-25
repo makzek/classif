@@ -9,7 +9,7 @@
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li *ngFor="let item of moreButtons" role="menuitem" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
+            <li *ngFor="let item of moreButtons" role="menuitem" tooltip="{{item.hint}}" placement="bottom" containerClass="tooltip-info">
                 <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
                     class="action-dropdown-item btn btn-primary-light" (click)="doAction(item.type)">
                     <span class="{{item.iconClass}}"></span>

@@ -1,8 +1,10 @@
+<ng-template #markTemp>Снять<br>пометку</ng-template>
+<ng-template #notMarkTemp>Пометить<br>элемент</ng-template>
 <div #item class="eos-node-list-item secondary-text" [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
     <div [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
         <span *ngIf="params?.markItems" class="checkbox-inline">
-            <label tooltip="{{ node.marked ? 'Снять пометку' : 'Пометить элемент' }}"
-                containerClass="tooltip-info" container="body" placement="right">
+            <label [tooltip]="node.marked ? markTemp : notMarkTemp"
+                containerClass="tooltip-info" container="body" placement="bottom">
                 <input type="checkbox"[(ngModel)]="node.marked" (change)="markNode()"><span></span>
             </label>
         </span>
