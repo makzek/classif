@@ -3,7 +3,7 @@ import { IAction, E_RECORD_ACTIONS, E_ACTION_GROUPS } from 'eos-dictionaries/int
 export const RECORD_ACTIONS_EDIT = {
     type: E_RECORD_ACTIONS.edit,
     group: E_ACTION_GROUPS.item,
-    title: null,
+    title: 'Редактировать',
     hint: 'Редактировать',
     iconClass: 'eos-icon eos-icon-edit-blue small',
     hoverIconClass: 'eos-icon eos-icon-edit-dark-blue small',
@@ -32,7 +32,7 @@ export const RECORD_ACTIONS_NAVIGATION_DOWN = {
 export const RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
-    title: null,
+    title: 'Создать новый',
     hint: 'Создать новый',
     iconClass: 'eos-icon eos-icon-plus-blue small',
     activeIconClass: null,
@@ -43,7 +43,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 {
     type: E_RECORD_ACTIONS.remove,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Удалить логически',
     hint: 'Удалить логически',
     iconClass: 'eos-icon eos-icon-bin-blue small',
     activeIconClass: null,
@@ -52,7 +52,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.showDeleted,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Отображать логически удалённые',
     hint: 'Отображать логически удалённые',
     iconClass: 'eos-icon eos-icon-show-blue small',
     activeIconClass: 'eos-icon eos-icon-show-white small',
@@ -61,7 +61,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.userOrder,
     group: E_ACTION_GROUPS.group,
-    title: null,
+    title: 'Пользовательская сортировка',
     hint: 'Пользовательская сортировка',
     iconClass: 'eos-icon eos-icon-custom-list-blue small',
     activeIconClass: 'eos-icon eos-icon-custom-list-white small',
@@ -70,7 +70,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.moveUp,
     group: E_ACTION_GROUPS.item,
-    title: null,
+    title: 'Вверх',
     hint: 'Вверх',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
     activeIconClass: null,
@@ -79,7 +79,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.moveDown,
     group: E_ACTION_GROUPS.item,
-    title: null,
+    title: 'Вниз',
     hint: 'Вниз',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
     activeIconClass: null,
@@ -88,7 +88,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.showAllSubnodes,
     group: E_ACTION_GROUPS.common,
-    title: null,
+    title: 'Отобразить все дочерние записи единым списком',
     hint: 'Отобразить все дочерние записи единым списком',
     iconClass: 'eos-icon eos-icon-tree-blue small',
     activeIconClass: 'eos-icon eos-icon-tree-white small',
@@ -125,71 +125,6 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-avatar-dark-blue small',
     buttonClass: null
-}];
-
-export const DROPDOWN_RECORD_ACTIONS: IAction[] = [{
-    type: E_RECORD_ACTIONS.removeHard,
-    group: E_ACTION_GROUPS.group,
-    title: 'Удалить (физически)',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.restore,
-    group: E_ACTION_GROUPS.group,
-    title: 'Восстановить логически удаленные элементы',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: null
-}, {
-    type: E_RECORD_ACTIONS.add,
-    group: E_ACTION_GROUPS.common,
-    title: 'Создать новый',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: 'hidden-lg'
-}, {
-    type: E_RECORD_ACTIONS.remove,
-    group: E_ACTION_GROUPS.group,
-    title: 'Удалить элемент',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: 'hidden-lg'
-}, {
-    type: E_RECORD_ACTIONS.edit,
-    group: E_ACTION_GROUPS.item,
-    title: 'Редактировать элемент',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: 'hidden-lg'
-}, {
-    type: E_RECORD_ACTIONS.navigateUp,
-    group: E_ACTION_GROUPS.item,
-    title: 'Выбрать предыдущий',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: 'hidden-lg'
-}, {
-    type: E_RECORD_ACTIONS.navigateDown,
-    group: E_ACTION_GROUPS.item,
-    title: 'Выбрать следующий',
-    hint: null,
-    iconClass: null,
-    activeIconClass: null,
-    hoverIconClass: null,
-    buttonClass: 'hidden-lg'
 }];
 
 export const COMMON_ADD_MENU = [{

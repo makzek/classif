@@ -3,12 +3,19 @@
         <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
     </ng-container>
 
-    <span class="visible-lg-inline-block actions" dropdown container="body">
-        <button *ngIf="haveVisibleMore" class="btn btn-primary-light actions" [tooltip]="'Показать меню'" #itemTooltip="bs-tooltip"
+    <span class="actions" dropdown container="body">
+        <button class="btn btn-primary-light actions" [tooltip]="'Показать меню'" #itemTooltip="bs-tooltip"
             placement="right" containerClass="tooltip-info" dropdownToggle (click)="itemTooltip.hide()">
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li *ngFor="let item of buttons" role="menuitem" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
+                <button *ngIf="item.show" [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
+                    class="action-dropdown-item btn btn-primary-light hidden-lg" (click)="doAction(item.type)">
+                    <span class="{{item.iconClass}}"></span>
+                    <span class="drop-title">{{item.title}}</span>
+                </button>
+            </li>
             <li *ngFor="let item of moreButtons" role="menuitem" tooltip="{{item.hint}}" placement="right" containerClass="tooltip-info">
                 <button *ngIf="item.show" [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
                     class="action-dropdown-item btn btn-primary-light" (click)="doAction(item.type)">
@@ -16,25 +23,6 @@
                     <span class="drop-title">{{item.title}}</span>
                 </button>
             </li>
-        </ul>
-    </span>
-
-    <span class="btn-group hidden-lg" dropdown>
-        <button class="btn btn-primary-light actions" dropdownToggle tooltip="Ещё" placement="bottom" containerClass="tooltip-info"
-            #itemTooltip="bs-tooltip" (click)="itemTooltip.hide();">
-            <span class="eos-icon eos-icon-fab-blue small"></span>
-        </button>
-        <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <ng-template ngFor let-item let-i="index" [ngForOf]="ddButtons">
-                <li role="menuitem" tooltip="{{item.hint}}"
-                    placement="bottom" containerClass="tooltip-info">
-                    <button [disabled]="!item.enabled" [ngClass]="{active: item.isActive}"
-                        class="btn dropdown-item btn-primary-light" (click)="doAction(item.type)">
-                        <span class="{{item.iconClass}}"></span>
-                        <span class="drop-title">{{item.title}}</span>
-                    </button>
-                </li>
-            </ng-template>
         </ul>
     </span>
 </div>
