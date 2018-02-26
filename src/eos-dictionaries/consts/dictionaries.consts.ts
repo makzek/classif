@@ -17,6 +17,10 @@ import { SIGN_KIND_DICT } from './dictionaries/sign-kind.consts';
 import { STATUS_EXEC_DICT } from './dictionaries/status-exec.consts';
 import { STATUS_REPLY_DICT } from './dictionaries/status-reply.consts';
 import { VISA_TYPE_DICT } from './dictionaries/visa-type.consts';
+import { RULES_SEV_DICT } from './dictionaries/sev-rules';
+import { COLLISIONS_SEV_DICT } from './dictionaries/sev-collisions';
+import { PARTICIPANT_SEV_DICT } from './dictionaries/sev-participant';
+import { BROADCAST_CHANEL_DICT } from './dictionaries/broadcast-chanel';
 
 export const DICTIONARIES = [
     /* tree dictionaries */
@@ -39,4 +43,9 @@ export const DICTIONARIES = [
     STATUS_EXEC_DICT,
     STATUS_REPLY_DICT,
     VISA_TYPE_DICT,
+    // SEV
+    RULES_SEV_DICT,
+    COLLISIONS_SEV_DICT,
+    PARTICIPANT_SEV_DICT,
+    BROADCAST_CHANEL_DICT
 ];
