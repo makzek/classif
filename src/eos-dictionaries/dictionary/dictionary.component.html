@@ -45,7 +45,7 @@
                     </ng-template>
                 </div>
                 <button *ngIf="hasCustomTable" class="btn block pull-right config-btn selected-text" tooltip="Настройка отображения" containerClass="tooltip-info"
-                    placement="left" (click)="_configColumns()">
+                    placement="bottom" (click)="_configColumns()">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                 </button>
             </div>
@@ -70,7 +70,7 @@
                     </span>
                     <span class="node-title">
                         <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
-                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                            tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                     <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
@@ -79,7 +79,7 @@
                         </span>
 
                         <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
-                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                            tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                     <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
