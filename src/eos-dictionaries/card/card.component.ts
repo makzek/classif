@@ -27,6 +27,7 @@ import {
 import { NAVIGATE_TO_ELEMENT_WARN } from '../../app/consts/messages.consts';
 import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
+import { IFieldView, E_FIELD_TYPE } from '../interfaces/dictionary.interfaces';
 // import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
@@ -53,6 +54,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
     nodeData: any = {};
     isChanged = false;
     fieldsDescription: any = {};
+    editFields: any[] = [];
 
     dictionaryId: string;
     isFirst: boolean;
@@ -269,6 +271,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                 this.nodeData[fld.key] = fld.value;
             });*/
             this.fieldsDescription = this.node.getEditFieldsDescription();
+            const editFields: string[] = [];
+            this.node._descriptor.getEditView(node.data).forEach((field: IFieldView) => {
+                if (field.type !== E_FIELD_TYPE.dictionary) {
+                    editFields.push(field.key);
+                }
+            });
+            this.editFields = editFields;
             this.nodeData = this.node.data;
             // console.log('recived description', this.nodeData);
 

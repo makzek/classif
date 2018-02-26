@@ -1,7 +1,7 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
         <form #cardForm="ngForm" *ngIf="data && data.rec && fieldsDescription.rec" class="form form-horizontal">
-            <div class="form-group" *ngFor="let key of keys(fieldsDescription.rec)">
+            <div class="form-group" *ngFor="let key of editFields">
                 <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                     {{fieldsDescription.rec[key].title}}
                 </label>
@@ -11,13 +11,12 @@
                     [readonly] = "!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     [required]="fieldsDescription.rec[key]?.required"
-                    [pattern]="fieldsDescription.rec[key].pattern" maxlength="{{fieldsDescription.rec[key].length}}"
-                    [eosUnic]="fieldsDescription.rec[key].isUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict"
+                    [pattern]="fieldsDescription.rec[key]?.pattern" maxlength="{{fieldsDescription.rec[key]?.length}}"
+                    [eosUnic]="fieldsDescription.rec[key]?.isUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key]?.unicInDict"
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
                     placement="right" containerClass="tooltip-error" container="body"
                     (focus)="focus(key)" (blur)="blur()"
                     autocomplete="off"
-                    value="null"
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls[key]?.dirty && cardForm.controls[key]?.invalid && focusedField === key" triggers="">
                     <!--pre>{{fieldsDescription[key] | json}}</pre-->
             </div>

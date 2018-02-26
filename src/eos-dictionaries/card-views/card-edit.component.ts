@@ -8,6 +8,7 @@ export class CardEditComponent {
     @Input() nodeId: string;
     @Input() data: any;
     @Input() editMode: boolean;
+    @Input() editFields: string[];
     @Input() fieldsDescription: any;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();

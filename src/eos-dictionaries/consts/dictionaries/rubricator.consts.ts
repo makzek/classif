@@ -46,6 +46,13 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         isUnic: true,
         unicInDict: true,
     }, {
+        key: 'FULLNAME',
+        title: 'Полное наименование',
+        type: 'text',
+        length: 2000,
+        pattern: NOT_EMPTY_STRING,
+        invalidMessage: 'Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
+    }, {
         key: 'NOTE',
         title: 'Примечание',
         type: 'text',
@@ -87,19 +94,12 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'WEIGHT',
         type: 'number'
     }, {
-        key: 'FULLNAME',
-        title: 'Полное наименование',
-        type: 'text',
-        length: 2000,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
-    }, {
         key: 'sev',
         title: 'Индекс СЭВ',
         type: 'dictionary',
         }],
     treeFields: ['CLASSIF_NAME'],
-    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME', 'sev'],
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
     quickViewFields: ['FULLNAME', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields
