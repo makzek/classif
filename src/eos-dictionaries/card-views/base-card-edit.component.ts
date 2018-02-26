@@ -10,7 +10,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() editFields: string[];
     @Input() nodeId: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -29,6 +28,14 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
+    }
+
+    keys(data: Object): string[] {
+        if (data) {
+            return Object.keys(data);
+        } else {
+            return [];
+        }
     }
 
     ngOnChanges() {
