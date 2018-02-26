@@ -10,7 +10,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() isReadonly: boolean;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
-    @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
 
@@ -18,6 +18,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
 
     placement = 'bottom';
     aDate: Date;
+    bsDate: Date;
+    private _manualChange: boolean;
 
     private _handler;
 
@@ -43,6 +45,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
+        this.bsDate = this.aDate;
+
         window.addEventListener('scroll', this._handler = () => {
             this.datePicker.hide();
         }, true);
@@ -52,8 +56,27 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         window.removeEventListener('scroll', this._handler, true);
     }
 
-    emitChange(date: Date) {
-        this.change.emit(date);
+    dpChanged(date: Date) {
+        // console.log('dp changed', date);
+        if (!this._manualChange) {
+            this.aDate = date;
+            this.dateChange.emit(date);
+        }
+        this._manualChange = false;
+    }
+
+    inputChanged(sDate: string) {
+        // convert to UTC format
+        sDate = sDate.replace(/(\d{1,2}).(\d{1,2}).(\d{1,4})/g, '$3-$2-$1T00:00:00.000Z');
+        const date = new Date(sDate); // convert to Date
+        this._manualChange = true;
+        if (date && !isNaN(date.getTime())) {
+            this.bsDate = date;
+            this.dateChange.emit(date);
+        } else {
+            this.bsDate = null;
+            this.dateChange.emit(null);
+        }
     }
 
     measureDistance() {

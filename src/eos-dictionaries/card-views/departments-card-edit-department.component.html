@@ -92,7 +92,7 @@
                     for="START_DATE">Начало действия</label>
                 <eos-datepicker [placeholder]="'Начало действия'"
                     [value]="data.rec['START_DATE']"
-                    (change)="change('START_DATE', 'rec', $event)"
+                    (dateChange)="change('START_DATE', 'rec', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>
@@ -103,7 +103,7 @@
                     for="END_DATE">Окончание действия</label>
                 <eos-datepicker [placeholder]="'Окончание действия'"
                     [value]="data.rec['END_DATE']"
-                    (change)="change('END_DATE', 'rec', $event)"
+                    (dateChange)="change('END_DATE', 'rec', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     placement="top"></eos-datepicker>

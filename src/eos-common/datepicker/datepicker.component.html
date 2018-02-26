@@ -1,19 +1,21 @@
-<div class="eos-datepicker" #dpw>
-    <input placeholder="{{placeholder}}"
-        type="text" readonly class="form-control"
-        bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig"
-        [bsValue]="aDate" placement="{{placement}}"
-        (bsValueChange)="emitChange($event)"
-        [ngClass]="{'hidden': isReadonly}"
-        (click)="measureDistance()"
+<div class="eos-datepicker"
+    #dpw>
+    <input type="text"
+        class="form-control"
+        [ngClass]="{readonly: isReadonly}"
+        [readonly]="isReadonly"
+        placeholder="{{placeholder}}"
+        [ngModel]="aDate | date:'dd.MM.yyyy'"
+        (ngModelChange)="inputChanged($event)"
+        maxlength="10">
+    <a *ngIf="!isReadonly"
+        bsDatepicker
+        #dp="bsDatepicker"
+        [bsConfig]="bsConfig"
+        [bsValue]="bsDate"
+        (bsValueChange)="dpChanged($event)"
         [minDate]="bsConfig.minDate"
         [maxDate]="bsConfig.maxDate"
         [isDisabled]="isReadonly"
-        value="{{aDate | date:'dd.MM.yyyy' | slice:0:10}}"
-        maxlength="10">
-    <input class="form-control readonly"
-        value="{{aDate | date:'dd.MM.yyyy' | slice:0:10}}"
-        readonly
-        [ngClass]="{'hidden': !isReadonly}"
-        placeholder="{{placeholder}}">
+        placement="{{placement}}"><span class="eos-icon eos-icon-calendar-blue small"></span></a>
 </div>
