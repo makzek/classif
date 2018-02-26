@@ -1,8 +1,8 @@
 <div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
-        <div class="node s-font" #el (click)="onSelect($event, node.isDeleted, el)" [ngClass]="{'highlighted' : node.isActive}">
+        <div class="node" #el (click)="onSelect($event, node.isDeleted, el)" [ngClass]="{'highlighted' : node.isActive}">
             <span class="fake-padding" [ngStyle]="{'width.px': layer*12}"></span>
             <div class="tree-btn" (click)="onExpand($event, node.isDeleted)" >
-                <span *ngIf="node.expandable" class="eos-icon x-small icon"
+                <span *ngIf="node.expandable" class="eos-icon tringle-size icon"
                 [ngClass]="{'eos-icon-open-folder-blue': node.isExpanded, 'eos-icon-close-folder-blue': !node.isExpanded}"></span>
             </div>
             <div class="title" [ngClass]="{'deleted': node.isDeleted, 'select': node.isActive}" [ngStyle]="{'width.px': 205 - layer*24}">
