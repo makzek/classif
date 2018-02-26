@@ -1,5 +1,6 @@
 .eos-dictionary-search {
-    display: flex;
+    display: inline-block;
+    height: $item-height;
 
     .fa {
         font-size: 22px;
@@ -7,12 +8,14 @@
 
     .full-search {
         position: relative;
-        top: 3px;
     }
 
     .eos-icon-search-blue {
         position: relative;
-        top: 4px;
+    }
+
+    .search-btn-wraper {
+        display: inline-block;
     }
 
     .quick-search-form {
@@ -77,31 +80,19 @@
 
     .btn {
         &.search-btn {
-            position: relative;
             height: 48px;
             width: 48px;
-            right: -3px;
-            padding: 10px 6px;
         }
 
         &.quick-search-btn {
             height: 48px;
             width: 48px;
-            right: 0;
-            padding-bottom: 11px;
-            padding-top: 5px;
-
-            &.opened {
-                padding-top: 10px;
-            }
         }
     }
 
     .date-filter-wrapper {
         display: inline-block;
-        height: 43px;
-        position: relative;
-        top: -7px;
+        height: 48px;
 
         &.hidden {
             display: none;
