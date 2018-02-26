@@ -8,15 +8,7 @@
                     aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom" containerClass="tooltip-info"></button>
             </div>
         </div>
-        <div class="check-wrapper">
-            <span class="checkbox-inline">
-                <label *ngIf="node">
-                    <input type="checkbox" [(ngModel)]="node.marked">
-                    <span></span>
-                </label>
-            </span>
-        </div>
-        <div class="name-wrapper">
+        <div class="name-wrapper" [ngClass]="{'edited': editMode}">
             <span *ngIf="node" class="edit-title primary-text" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
         </div>
         <div class="buttons-wrapper" *ngIf="editMode">
