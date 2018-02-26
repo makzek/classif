@@ -8,13 +8,17 @@ import { TreeDictionaryDescriptor } from 'eos-dictionaries/core/tree-dictionary-
 import { DepartmentDictionaryDescriptor } from 'eos-dictionaries/core/department-dictionary-descriptor';
 import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
 import { CabinetDictionaryDescriptor } from 'eos-dictionaries/core/cabinet-dictionary-descriptor';
+import { MockBackendService } from '../../environments/mock-backend.service';
 
 @Injectable()
 export class DictionaryDescriptorService {
     private _mDicts: Map<string, IDictionaryDescriptor>;
     private _mDictClasses: Map<string, AbstractDictionaryDescriptor>;
 
-    constructor(private apiSrv: PipRX) {
+    constructor(
+        private apiSrv: PipRX,
+        private mBackSrv: MockBackendService
+    ) {
         this._mDicts = new Map<string, IDictionaryDescriptor>();
         this._mDictClasses = new Map<string, AbstractDictionaryDescriptor>();
         DICTIONARIES
@@ -45,23 +49,23 @@ export class DictionaryDescriptorService {
             if (descr) {
                 switch (descr.id) {
                     case 'departments':
-                        res = new DepartmentDictionaryDescriptor(descr, this.apiSrv);
+                        res = new DepartmentDictionaryDescriptor(descr, this.apiSrv, this.mBackSrv);
                         break;
                     case 'organization':
-                        res = new OrganizationDictionaryDescriptor(descr, this.apiSrv);
+                        res = new OrganizationDictionaryDescriptor(descr, this.apiSrv, this.mBackSrv);
                         break;
                     case 'cabinet':
-                        res = new CabinetDictionaryDescriptor(descr, this.apiSrv);
+                        res = new CabinetDictionaryDescriptor(descr, this.apiSrv, this.mBackSrv);
                         break;
                 }
 
                 if (!res) {
                     switch (descr.dictType) {
                         case E_DICT_TYPE.linear:
-                            res = new DictionaryDescriptor(descr, this.apiSrv);
+                            res = new DictionaryDescriptor(descr, this.apiSrv, this.mBackSrv);
                             break;
                         case E_DICT_TYPE.tree:
-                            res = new TreeDictionaryDescriptor(descr, this.apiSrv);
+                            res = new TreeDictionaryDescriptor(descr, this.apiSrv, this.mBackSrv);
                             break;
                         case E_DICT_TYPE.department:
                             break;

@@ -35,6 +35,12 @@ export class NodeActionsComponent implements OnDestroy {
     private _nodeSelected = false;
     private _viewParams: IDictionaryViewParameters;
 
+    get haveMoreButtons(): boolean {
+        let have = false;
+        this.moreButtons.forEach((item: IActionButton) => have = have || item.show);
+        return have;
+    }
+
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(_dictSrv: EosDictService) {

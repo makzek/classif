@@ -4,16 +4,25 @@
         'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1],
         'tree': currentState[0] && !currentState[1]}">
     <div class="pagination">
-        <button class="pag-btn btn-default prev" [disabled]="config?.current === 1" (click)="showPage(config.current - 1)">&lsaquo;</button>
-        <button *ngFor="let page of pages let i = index" class="pag-btn btn-default" [ngClass]="{'btn-primary-full': config.current === page}"
+        <button class="pag-btn btn-default prev" [disabled]="config?.current === 1" (click)="showPage(config.current - 1)">
+            <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-left"
+                [ngClass]="{'eos-icon-arrow-v-grey-left':config?.current === 1}"></span>
+        </button>
+        <button *ngFor="let page of pages let i = index" class="pag-btn btn-default selected-text" [ngClass]="{'btn-primary-full': config.current === page}"
             (click)="showPage(page)">{{page}}</button>
-        <button class="pag-btn btn-default next" [disabled]="config?.current === pageCount" (click)="showPage(config.current + 1)">&rsaquo;</button>
+        <button class="pag-btn btn-default next" [disabled]="config?.current === pageCount" (click)="showPage(config.current + 1)">
+            <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-rigth"
+                [ngClass]="{'eos-icon-arrow-v-grey-left': config?.current === pageCount}"></span>
+        </button>
     </div>
 
     <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показывать еще</button>
-    <div class="btn-group count-select usual-border" dropdown dropup="true" placement="top right">
-        <button type="button" dropdownToggle class="dropdown-toggle btn btn-transparent selected-text">
-            <span class="selected-text">Показывать по {{config?.length}}</span>
+
+    <div class="count-select-text usual-border" >
+        <span class="selected-text">Показывать по {{config?.length}}</span>
+    </div>
+    <div class="count-drop-icon" dropdown dropup="true" placement="top right">
+        <button type="button" dropdownToggle class="drop-btn btn btn-transparent selected-text">
             <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
         </button>
         <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">

@@ -47,6 +47,7 @@ import { LongTitleHintComponent } from './long-title-hint/long-title-hint.compon
 import { VisaTypeEditComponent } from './card-views/visa-type-card-edit.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { CreateNodeComponent } from './create-node/create-node.component';
+import { MockBackendService } from '../environments/mock-backend.service';
 
 /* services */
 import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
@@ -117,6 +118,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         DictionaryDescriptorService,
         EosDictService,
         EosSandwichService,
+        MockBackendService
     ],
 })
 export class EosDictionariesModule { }
