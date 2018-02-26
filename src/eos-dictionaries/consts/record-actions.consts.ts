@@ -94,6 +94,15 @@ export const RECORD_ACTIONS: IAction[] = [{
     activeIconClass: 'eos-icon eos-icon-tree-white small',
     hoverIconClass: '',
     buttonClass: null
+}, {
+    type: E_RECORD_ACTIONS.tableCustomization,
+    group: E_ACTION_GROUPS.common,
+    title: null,
+    hint: 'Настройка отображения',
+    iconClass: 'fa fa-cog',
+    activeIconClass: null,
+    hoverIconClass: '',
+    buttonClass: null
 }
    /* RECORD_ACTIONS_NAVIGATION_UP,
 RECORD_ACTIONS_NAVIGATION_DOWN*/ ];
