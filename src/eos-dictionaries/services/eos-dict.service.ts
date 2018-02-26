@@ -153,7 +153,7 @@ export class EosDictService {
         private _storageSrv: EosStorageService,
         // private _confirmSrv: ConfirmWindowService,
         private _descrSrv: DictionaryDescriptorService,
-        private _router: Router,
+        private _router: Router
     ) {
         this._initViewParameters();
         this._dictionaries = [];
@@ -886,7 +886,6 @@ export class EosDictService {
             if (node) {
                 node.isSelected = true;
             }
-            this._listNode = node;
             this._listNode$.next(node);
         }
     }
