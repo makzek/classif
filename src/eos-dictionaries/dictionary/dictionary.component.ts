@@ -305,7 +305,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._sandwichSrv.changeDictState(false, false);
             this._sandwichSrv.changeDictState(false, true);
         }
     }
