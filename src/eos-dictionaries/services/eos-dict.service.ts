@@ -585,7 +585,7 @@ export class EosDictService {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
             .then((node) => {
-                this._listNode = node;
+                this._openNode(node);
                 return node;
             })
             .catch((err) => this._errHandler(err));
@@ -886,6 +886,7 @@ export class EosDictService {
             if (node) {
                 node.isSelected = true;
             }
+            this._listNode = node;
             this._listNode$.next(node);
         }
     }

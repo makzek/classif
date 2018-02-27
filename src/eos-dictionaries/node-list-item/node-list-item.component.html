@@ -11,7 +11,7 @@
                 [ngStyle]="{'width.%': length[field.key]}"
                 [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
                 <div class="table-field-ico" *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
-                    <span *ngIf="!node.isDeleted " (click)="openAsFolder($event, node)" class="folder small eos-icon eos-icon-folder-blue"></span>
+                    <span *ngIf="!node.isDeleted" (click)="viewNode()" class="folder small eos-icon eos-icon-folder-blue"></span>
                     <span *ngIf="node.isDeleted" class="folder small eos-icon eos-icon-folder-grey"></span>
                 </div>
                 <span>{{field.value}}</span>
