@@ -97,7 +97,7 @@ export const RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.tableCustomization,
     group: E_ACTION_GROUPS.common,
-    title: null,
+    title: 'Настройка отображения',
     hint: 'Настройка отображения',
     iconClass: 'fa fa-cog',
     activeIconClass: null,

@@ -1,5 +1,10 @@
 .eos-node-actions {
     height: $item-height;
+
+    .actions {
+        display: inline-block;
+    }
+
     .rotate {
         transform: rotate(-90deg);
     }
@@ -18,15 +23,25 @@
 }
 
 .action-dropdown-item {
+    text-align: left;
+    width: 100%;
     height: $item-height;
+    .fa {
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        font-size: 22px;
+    }
+    .drop-title {
+        vertical-align: top;
+        margin-top: 4px;
+        display: inline-block;
+    }
 }
 
-.drop-title {
-    position: relative;
-    top: -5px;
+.action-dropdown-item:focus {
+    color: $button-color-hover-main-theme;
 }
-
-
 
 .create-new-node {
     padding: 0;
