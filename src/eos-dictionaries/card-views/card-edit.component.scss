@@ -1,113 +1,6 @@
-.eos-card {
-    padding: 0;
-    border-width: 1px;
+.card-edit {
     border-style: solid;
-    width: 800px;
-    margin: 0 auto;
-    // min-height: 450px;
-    max-height: calc(100vh - 108px - 60px);
-    border: 1px solid transparent;
-    overflow-x: hidden;
-    overflow-y: auto;
-    .edit-block-header,
-    .edit-header {
-        min-height: $item-height;
-        border-width: 1px;
-        border-style: solid;
-    }
-    .edit-header {
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 100px 1fr 153px;
-        grid-template-columns: 100px 1fr 153px;
-        &.edited {
-            -ms-grid-columns: 0 1fr 195px;
-            grid-template-columns: 0 1fr 195px;
-        }
-        .btn {
-            padding: 1px 6px;
-        }
-        a:hover {
-            text-decoration: none;
-        }
-        div {
-            display: inline-block;
-        }
-
-        .move-wrapper {
-            -ms-grid-column: 1;
-            grid-column: 1;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            .btn {
-                height: $item-height;
-                width: $item-width;
-            }
-        }
-        .name-wrapper {
-            -ms-grid-row-align: center;
-            align-self: center;
-            -ms-grid-column: 2;
-            grid-column: 2;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            &.edited {
-                padding-left: 20px;
-            }
-            .edit-title {
-                font-size: 18px;
-            }
-        }
-        .buttons-wrapper {
-            -ms-grid-column: 3;
-            grid-column: 3;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            height: 48px;
-        }
-        .action-wrapper {
-            -ms-grid-column: 4;
-            grid-column: 4;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            .btn {
-                height: $item-height;
-                margin: -8px 0;
-                width: $item-width;
-            }
-        }
-        .move-wrapper,
-        .buttons-wrapper,
-        .action-wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
-    }
-    .spinner-wrapper {
-        padding: 20px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-width: 1px;
-        border-style: solid;
-        border-top-width: 0;
-        width: 800px;
-        margin: 0 auto;
-    }
-    /*
-    .edit-aside {
-        .vertical-buttons {
-            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
-        }
-    }
-    */
-    /*
-    .active {
-        background-color: #e6e5e5;
-        border-color: #adadad;
-    }
-    */
+    border-width: 1px;
 }
 
 .edit-content {
@@ -160,9 +53,58 @@
         resize: none;
     }
     .appearance-none {
-        appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
+        appearance: none;
+    }
+    select::-ms-expand {
+        display: none;
+    }
+}
+
+.departments-card-edit {
+    .col-1 {
+        width: 178px;
+        margin-right: 40px;
+        .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+    .col-2 {
+        width: 522px;
+    }
+    .placeholder {
+        color: $primary-font-color-main-theme;
+    }
+    .field-value {
+        height: 32px;
+        line-height: 32px;
+    }
+    .block-title {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        display: block;
+        height: 38px;
+        font-weight: 700;
+        padding-top: 8px;
+        &:not(.first) {
+            margin-top: 50px;
+        }
+    }
+    .checkbox {
+        display: block;
+        margin-top: 8px;
+        margin-bottom: 0;
+        label {
+            padding-left: 0;
+        }
+        input[type="checkbox"]+span {
+            margin-right: 12px;
+        }
+        &.card-flag {
+            margin-top: 62px;
+        }
     }
     select::-ms-expand {
         display: none;

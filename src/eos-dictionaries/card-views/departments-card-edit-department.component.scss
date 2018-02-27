@@ -1,7 +1,7 @@
-.eos-departments-card-edit {
+.departments-department-card-edit {
     .col-1,
     .col-2 {
-        display: inline-block;
+        padding-top: 20px;
     }
     .col-1 {
         width: 178px;
@@ -12,39 +12,7 @@
         }
     }
     .col-2 {
-        width: 542px;
-    }
-    .placeholder {
-        color: $primary-font-color-main-theme;
-    }
-    .field-value {
-        height: 32px;
-        line-height: 32px;
-    }
-    .block-title {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        display: inline-block;
-        height: 38px;
-        font-weight: 700;
-        padding-top: 8px;
-        &:not(.first) {
-            margin-top: 50px;
-        }
-    }
-    .checkbox {
-        display: block;
-        margin-top: 8px;
-        margin-bottom: 0;
-        label {
-            padding-left: 0;
-        }
-        input[type="checkbox"]+span {
-            margin-right: 12px;
-        }
-        &.card-flag {
-            margin-top: 62px;
-        }
+        width: 522px;
     }
     .alternates {
         .form-group {
@@ -68,192 +36,8 @@
     }
     .form-group {
         margin-bottom: 0;
-        &:not(:first-child) {
-            &.fathers-name {
-                margin-top: 0;
-            }
-            &.full-position {
-                margin-top: 91px;
-            }
-            &.gender {
-                margin-top: 44px;
-                position: relative;
-            }
-            &.role {
-                margin-top: 0;
-            }
-        }
-        &.duty-row {
-            display: flex;
-            align-items: flex-end;
-            .text-input {
-                width: 72%;
-            }
-            .checkbox-input {
-                padding: 0 0 6px 40px;
-            }
-        }
-        .boss {
-            width: 154px;
-        }
     }
     textarea {
-        resize: none;
-        &.note-person {
-            height: 212px;
-        }
-        &.note-dep {
-            height: 90px;
-        }
-    }
-    select::-ms-expand {
-        display: none;
-    }
-    .alternate-button-wrapper {
-        margin-top: 20px;
-        .alternate-button {
-            width: 100%;
-            height: 32px;
-        }
-    }
-    .current-image {
-        height: 130px;
-        width: 130px;
-        display: inline-block;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        position: relative;
-        margin: 0 24px;
-        .photo-uploader {
-            position: absolute;
-            bottom: -8px;
-            right: -24px;
-        }
-    }
-    .gender-placeholder {
-        position: absolute;
-        top: 30px;
-        left: 9px;
-        width: 30px;
-    }
-    .gender-select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
-        background-repeat: no-repeat;
-        background-position-x: right;
-        background-position-y: center;
-        background-size: 24px;
-    }
-    .names {
-        margin-top: 30px;
-    }
-    .wrapper,
-    .row-wrapper {
-        display: flex;
-    }
-    .row-wrapper {
-        width: 100%;
-        margin-top: 30px;
-        .form-group {
-            width: 50%;
-            &:not(:first-child) {
-                margin-top: 0;
-            }
-            select {
-                width: 100%;
-            }
-            input {
-                width: 100%;
-            }
-            &:not(:last-child) {
-                margin-right: 40px;
-            }
-        }
-    }
-    .contact-wrapper {
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        -ms-grid-rows: 60px 90px;
-        grid-template-rows: 60px 90px;
-        .cab,
-        .phone,
-        .phone-local,
-        .email {
-            margin-right: 40px;
-        }
-        .phone,
-        .phone-local,
-        .fax {
-            margin-top: 0;
-        }
-        .cab {
-            -ms-grid-column: 1;
-            grid-column: 1;
-        }
-        .phone {
-            -ms-grid-column: 2;
-            grid-column: 2;
-        }
-        .phone-local {
-            -ms-grid-column: 3;
-            grid-column: 3;
-        }
-        .fax {
-            -ms-grid-column: 4;
-            grid-column: 4;
-        }
-        .email {
-            -ms-grid-column-start: 2;
-            grid-column-start: 2;
-            -ms-grid-column-end: 4;
-            grid-column-end: 4;
-            -ms-grid-row: 2;
-            grid-row: 2;
-            -ms-grid-column-span: 2;
-        }
-        .skype {
-            -ms-grid-column-start: 4;
-            grid-column-start: 4;
-            -ms-grid-column-end: 5;
-            grid-column-end: 5;
-            -ms-grid-row: 2;
-            grid-row: 2;
-        }
-    }
-    .declination-wrapper {
-        .form-control {
-            width: 24%;
-            &:not(.last) {
-                margin-right: 40px;
-            }
-            &:first-child {
-                width: 55%;
-            }
-        }
-    }
-    .col-1,
-    .col-2 {
-        display: inline-block;
-    }
-    .col-1 {
-        width: 178px;
-        margin-right: 40px;
-    }
-    .col-2 {
-        width: 535px;
-    }
-    .placeholder {
-        color: $primary-font-color-main-theme;
-    }
-    .field-value {
-        height: 32px;
-        line-height: 32px;
+        height: 212px;
     }
 }

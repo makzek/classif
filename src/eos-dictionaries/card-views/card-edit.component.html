@@ -2,12 +2,12 @@
     *ngIf="data && data.rec">
     <article class="edit-content">
         <form [formGroup]="form"
-            class="form form-horizontal">
+            class="form">
             <ng-container [ngSwitch]="dictionaryId">
                 <ng-container *ngSwitchCase="'departments'">
                     <eos-departments-card-edit-person #cardEditEl
                         *ngIf="data.rec['IS_NODE'] === 1"
-                        class="eos-departments-card-edit"
+                        class="departments-person-card-edit departments-card-edit"
                         [form]="form"
                         [inputs]="inputs"
                         [data]="data"
@@ -19,7 +19,7 @@
                         (invalid)="onInvalid($event)"></eos-departments-card-edit-person>
                     <eos-departments-card-edit-department #cardEditEl
                         *ngIf="data.rec['IS_NODE'] === 0"
-                        class="eos-departments-card-edit"
+                        class="departments-department-card-edit departments-card-edit"
                         [form]="form"
                         [inputs]="inputs"
                         [data]="data"

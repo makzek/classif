@@ -10,9 +10,9 @@
     </ul>
 </div>
 <div [hidden]="currTab !== 0">
-    <div class="wrapper"
+    <div class="wrapper clearfix"
         *ngIf="inputs">
-        <div class="col-1">
+        <div class="col-1 pull-left">
             <div class="current-image"
                 [ngStyle]="{'background-image': photo}">
                 <eos-photo-uploader class="photo-uploader"
@@ -63,7 +63,7 @@
                 </eos-dynamic-form-input>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-2 pull-right">
             <div class="form-group">
                 <eos-dynamic-form-input *ngIf="inputs['printInfo.SURNAME']"
                     [input]="inputs['printInfo.SURNAME']"
@@ -87,39 +87,41 @@
                     </eos-dynamic-form-input>
                 </div>
             </div>
-            <eos-dynamic-form-input *ngIf="inputs['rec.SURNAME']"
-                [input]="inputs['rec.SURNAME']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-form-input>
-        </div>
-        <div class="form-group duty-row">
-            <eos-dynamic-form-input class="text-input"
-                *ngIf="inputs['rec.DUTY']"
-                [input]="inputs['rec.DUTY']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-form-input>
-            <eos-dynamic-form-input class="checkbox-input"
-                *ngIf="inputs['rec.POST_H']"
-                [input]="inputs['rec.POST_H']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-form-input>
-        </div>
-        <div class="form-group">
-            <eos-dynamic-form-input *ngIf="inputs['rec.fullPosition']"
-                [input]="inputs['rec.fullPosition']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-form-input>
-        </div>
-        <div class="form-group">
-            <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']"
-                [input]="inputs['rec.NOTE']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-form-input>
+            <div class="form-group">
+                <eos-dynamic-form-input *ngIf="inputs['rec.SURNAME']"
+                    [input]="inputs['rec.SURNAME']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+            </div>
+            <div class="form-group duty-row">
+                <eos-dynamic-form-input class="text-input"
+                    *ngIf="inputs['rec.DUTY']"
+                    [input]="inputs['rec.DUTY']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+                <eos-dynamic-form-input class="checkbox-input"
+                    *ngIf="inputs['rec.POST_H']"
+                    [input]="inputs['rec.POST_H']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-form-input *ngIf="inputs['rec.fullPosition']"
+                    [input]="inputs['rec.fullPosition']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-form-input *ngIf="inputs['rec.NOTE']"
+                    [input]="inputs['rec.NOTE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-form-input>
+            </div>
         </div>
     </div>
     <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
