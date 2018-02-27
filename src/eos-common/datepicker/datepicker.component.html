@@ -4,10 +4,11 @@
         class="form-control"
         [ngClass]="{readonly: isReadonly}"
         [readonly]="isReadonly"
+        [pattern]="datePattern"
         placeholder="{{placeholder}}"
         [ngModel]="aDate | date:'dd.MM.yyyy'"
         (ngModelChange)="inputChanged($event)"
-        maxlength="10">
+        maxlength="16">
     <a *ngIf="!isReadonly"
         bsDatepicker
         #dp="bsDatepicker"

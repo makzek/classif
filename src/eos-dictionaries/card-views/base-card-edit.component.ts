@@ -88,8 +88,9 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             _value = value;
         }
-
-        if (EosUtils.getValueByPath(this.data, path) !== _value) {
+        const oldValue = EosUtils.getValueByPath(this.data, path);
+        // console.log('changeByPath', oldValue, _value);
+        if (oldValue !== _value) {
             EosUtils.setValueByPath(this.data, path, _value);
             this.onChange.emit(this.data);
         }

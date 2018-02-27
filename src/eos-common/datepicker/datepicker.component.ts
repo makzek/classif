@@ -19,6 +19,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     placement = 'bottom';
     aDate: Date;
     bsDate: Date;
+    readonly datePattern = /.*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19\d{2}|20\d{2}|2100).*?/;
     private _manualChange: boolean;
 
     private _handler;
@@ -66,10 +67,13 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     inputChanged(sDate: string) {
-        // convert to UTC format
-        sDate = sDate.replace(/(\d{1,2}).(\d{1,2}).(\d{1,4})/g, '$3-$2-$1T00:00:00.000Z');
-        const date = new Date(sDate); // convert to Date
+        let date: Date;
         this._manualChange = true;
+        if (this.datePattern.test(sDate)) { // if correct format
+            // convert to UTC format then to Date
+            date = new Date(sDate.replace(this.datePattern, '$3-$2-$1T00:00:00.000Z'));
+        }
+
         if (date && !isNaN(date.getTime())) {
             this.bsDate = date;
             this.dateChange.emit(date);
