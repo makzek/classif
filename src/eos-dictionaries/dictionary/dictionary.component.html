@@ -99,7 +99,10 @@
         </div>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
-        <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
+        <div class="info-spinner">
+            <eos-spinner *ngIf="params.updatingInfo" size="lg"></eos-spinner>
+        </div>
+        <eos-node-info-switcher *ngIf="!params.updatingInfo" (action)="doAction($event)"></eos-node-info-switcher>
     </div>
 </div>
 

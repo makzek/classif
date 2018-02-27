@@ -35,6 +35,12 @@
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
+        .info-spinner {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            top: 44%;
+        }
     }
 
     .selected-wrapper {

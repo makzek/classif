@@ -48,7 +48,7 @@ export class NodeListItemComponent implements OnInit, OnChanges {
 
     selectNode(): void {
         if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNode(this.node.id);
+            this._dictSrv.openNodeFromList(this.node);
         }
     }
 

@@ -394,6 +394,17 @@ export class EosDictService {
         }
     }
 
+    public openNodeFromList(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        this._openNode(node);
+        this.updateViewParameters({ updatingInfo: true });
+        return this.dictionary.getFullNodeInfo(node.id)
+            .then((receivedNode: EosDictionaryNode) => {
+                node = receivedNode;
+                this.updateViewParameters({ updatingInfo: false });
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
     public isRoot(nodeId: string): boolean {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
