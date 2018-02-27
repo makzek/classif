@@ -16,7 +16,8 @@
                 <div class="col-1">
                     <div class="current-image"
                         [ngStyle]="{'background-image': photo}">
-                        <eos-photo-uploader class="photo-uploader" [disableEdit]="!editMode"
+                        <eos-photo-uploader class="photo-uploader"
+                            [disableEdit]="!editMode"
                             (endUploading)="newImage($event)"></eos-photo-uploader>
                     </div>
                     <div class="form-group gender">
@@ -60,12 +61,12 @@
                             [key]="'CODE'"
                             [checkingMethod]="checkUnic.bind(this)"
                             [inDict]="false"
-                            tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
+                            tooltip="Максимальная длина 64 символа. Должно быть уникально в пределах вершины"
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['CODE_PERSON']?.invalid && cardForm.controls['CODE_PERSON']?.dirty && focusedField === 'CODE_PERSON'"
+                            [isOpen]="isInvalid('CODE_PERSON')"
                             autocomplete="off"
                             triggers="">
 
@@ -83,16 +84,16 @@
                             (ngModelChange)="change('DEPARTMENT_INDEX', 'rec', $event)"
                             placeholder="Индекс ДЛ"
                             [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('DEPARTMENT_INDEX')"
+                            (focus)="focus('indexPerson')"
                             (blur)="blur()"
                             maxlength="24"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
+                            tooltip="Максимальная длина 24 символа."
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['indexPerson']?.invalid && cardForm.controls['indexPerson']?.dirty && focusedField === 'DEPARTMENT_INDEX'"
+                            [isOpen]="isInvalid('indexPerson')"
                             autocomplete="off"
                             triggers="">
                     </div>
@@ -113,12 +114,12 @@
                             (blur)="blur()"
                             maxlength="255"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                            tooltip="Максимальная длина 255 символов."
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['SEV']?.invalid && cardForm.controls['SEV']?.dirty && focusedField === 'SEV'"
+                            [isOpen]="isInvalid('SEV')"
                             autocomplete="off"
                             triggers="">
                     </div>
@@ -163,12 +164,12 @@
                             (blur)="blur()"
                             maxlength="64"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
+                            tooltip="Максимальная длина 64 символа."
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['SURNAME_PRINT']?.invalid && cardForm.controls['SURNAME_PRINT']?.dirty && focusedField === 'SURNAME'"
+                            [isOpen]="isInvalid('SURNAME')"
                             autocomplete="off"
                             triggers="">
                     </div>
@@ -190,12 +191,12 @@
                                 (blur)="blur()"
                                 maxlength="64"
                                 [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
+                                tooltip="Максимальная длина 64 символа."
                                 [isDisabled]="!editMode"
                                 placement="right"
                                 containerClass="tooltip-error"
                                 container="body"
-                                [isOpen]="cardForm.controls['NAME']?.invalid && cardForm.controls['NAME']?.dirty && focusedField === 'NAME'"
+                                [isOpen]="isInvalid('NAME')"
                                 autocomplete="off"
                                 triggers="">
                         </div>
@@ -216,12 +217,12 @@
                                 (blur)="blur()"
                                 maxlength="64"
                                 [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
+                                tooltip="Максимальная длина 64 символа."
                                 [isDisabled]="!editMode"
                                 placement="right"
                                 containerClass="tooltip-error"
                                 container="body"
-                                [isOpen]="cardForm.controls['PATRON']?.invalid && cardForm.controls['PATRON']?.dirty && focusedField === 'PATRON'"
+                                [isOpen]="isInvalid('PATRON')"
                                 autocomplete="off"
                                 triggers="">
                         </div>
@@ -247,20 +248,21 @@
                             required
                             maxlength="{{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}}"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символов. Пробелы в начале и в конце строки запрещены. Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
+                            tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
+
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['SURNAME']?.invalid && cardForm.controls['SURNAME']?.dirty && focusedField === 'SURNAME'"
+                            [isOpen]="isInvalid('SURNAME')"
                             autocomplete="off"
                             triggers="">
                     </div>
                     <div class="row-wrapper">
                         <div class="form-group fathers-name">
                             <label class="primary-text required"
-                                    [ngClass]="{'unimportant-text': !editMode }"
-                                    for="DUTY">
+                                [ngClass]="{'unimportant-text': !editMode }"
+                                for="DUTY">
                                         Краткое наименование должности
                             </label>
                             <input [readonly]="!editMode"
@@ -278,38 +280,42 @@
                                 required
                                 maxlength="{{252 - data.rec['SURNAME']?.length}}"
                                 [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символов. Пробелы в начале и в конце строки запрещены. Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
+                                tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
+
                                 containerClass="tooltip-error"
                                 container="body"
                                 [isDisabled]="!editMode"
                                 placement="right"
-                                [isOpen]="cardForm.controls['DUTY']?.invalid && cardForm.controls['DUTY']?.dirty && focusedField === 'DUTY'"
+                                [isOpen]="isInvalid('DUTY')"
                                 autocomplete="off"
                                 [typeahead]="dutysList"
                                 container="body"
                                 triggers="">
-                                <div *ngIf="!editMode && data.rec['DUTY']" class="field-value">{{data.rec['DUTY']}}</div>
-                                <div *ngIf="!editMode && !data.rec['DUTY']" class="placeholder field-value">Краткое наименование должности</div>
-                            </div>
+                            <div *ngIf="!editMode && data.rec['DUTY']"
+                                class="field-value">{{data.rec['DUTY']}}</div>
+                            <div *ngIf="!editMode && !data.rec['DUTY']"
+                                class="placeholder field-value">Краткое наименование должности</div>
+                        </div>
 
                         <div class="form-group role">
                             <label class="primary-text"
-                                    [ngClass]="{'unimportant-text': !editMode }"
-                                    for="POST_H">Роль</label>
+                                [ngClass]="{'unimportant-text': !editMode }"
+                                for="POST_H">Роль</label>
                             <select class="form-control m-font gender-select"
-                                    name="POST_H" id="POST_H"
-                                    [ngModel]="data.rec['POST_H']"
-                                    (ngModelChange)="change('POST_H', 'rec', $event)"
-                                    [ngClass]="{'readonly hidden': !editMode }">
+                                name="POST_H"
+                                id="POST_H"
+                                [ngModel]="data.rec['POST_H']"
+                                (ngModelChange)="change('POST_H', 'rec', $event)"
+                                [ngClass]="{'readonly hidden': !editMode }">
                                     <option *ngFor="let role of roles" [value]="role.value">{{role.title}}</option>
                             </select>
                             <input *ngIf="!editMode"
-                                    name="POST_H"
-                                    type="text"
-                                    class="form-control m-font readonly"
-                                    [ngClass]="{'GENDER-placeholder': editMode }"
-                                    placeholder="Роль"
-                                    [value]="getRole(data.rec['POST_H'])" />
+                                name="POST_H"
+                                type="text"
+                                class="form-control m-font readonly"
+                                [ngClass]="{'GENDER-placeholder': editMode }"
+                                placeholder="Роль"
+                                [value]="getRole(data.rec['POST_H'])" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -330,17 +336,19 @@
                             (blur)="blur()"
                             maxlength="1998"
                             [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 1998 символов. Пробелы в начале и в конце строки запрещены."
+                            tooltip="Максимальная длина 1998 символов."
                             [isDisabled]="!editMode"
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['fullPosition']?.invalid && cardForm.controls['fullPosition']?.dirty && focusedField === 'fullPosition'"
+                            [isOpen]="isInvalid('fullPosition')"
                             autocomplete="off"
                             [typeahead]="fullNamesList"
                             triggers="">
-                            <div *ngIf="!editMode && data.rec['FULLNAME']" class="field-value">{{data.rec['FULLNAME']}}</div>
-                            <div *ngIf="!editMode && !data.rec['FULLNAME']" class="placeholder field-value">Полное наименование должности</div>
+                        <div *ngIf="!editMode && data.rec['FULLNAME']"
+                            class="field-value">{{data.rec['FULLNAME']}}</div>
+                        <div *ngIf="!editMode && !data.rec['FULLNAME']"
+                            class="placeholder field-value">Полное наименование должности</div>
                     </div>
                     <div class="form-group">
                         <label class="primary-text"
@@ -364,7 +372,7 @@
                             placement="right"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="cardForm.controls['NOTE']?.invalid && cardForm.controls['NOTE']?.dirty && focusedField === 'NOTE'"
+                            [isOpen]="isInvalid('NOTE')"
                             autocomplete="off"
                             triggers=""></textarea>
                     </div>
@@ -449,12 +457,12 @@
                         (blur)="blur()"
                         maxlength="24"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 24 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NUM_CAB']?.invalid && cardForm.controls['NUM_CAB']?.dirty && focusedField === 'NUM_CAB'"
+                        [isOpen]="isInvalid('NUM_CAB')"
                         triggers=""
                         autocomplete="off">
                 </div>
@@ -476,12 +484,12 @@
                         (blur)="blur()"
                         maxlength="24"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 24 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PHONE']?.invalid && cardForm.controls['PHONE']?.dirty && focusedField === 'PHONE'"
+                        [isOpen]="isInvalid('PHONE')"
                         triggers=""
                         autocomplete="off">
                 </div>
@@ -503,12 +511,12 @@
                         (blur)="blur()"
                         maxlength="24"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 24 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PHONE_LOCAL']?.invalid && cardForm.controls['PHONE_LOCAL']?.dirty && focusedField === 'PHONE_LOCAL'"
+                        [isOpen]="isInvalid('PHONE_LOCAL')"
                         triggers=""
                         autocomplete="off">
                 </div>
@@ -530,12 +538,12 @@
                         (blur)="blur()"
                         maxlength="24"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 24 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['FAX']?.invalid && cardForm.controls['FAX']?.dirty && focusedField === 'FAX'"
+                        [isOpen]="isInvalid('FAX')"
                         triggers=""
                         autocomplete="off">
                 </div>
@@ -557,12 +565,12 @@
                         (blur)="blur()"
                         maxlength="64"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['E_MAIL']?.invalid && cardForm.controls['E_MAIL']?.dirty && focusedField === 'E_MAIL'"
+                        [isOpen]="isInvalid('E_MAIL')"
                         triggers=""
                         autocomplete="off">
                 </div>
@@ -583,20 +591,23 @@
                         (blur)="blur()"
                         maxlength="64"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SKYPE']?.invalid && cardForm.controls['SKYPE']?.dirty && focusedField === 'SKYPE'"
+                        [isOpen]="isInvalid('SKYPE')"
                         triggers=""
                         autocomplete="off">
                 </div>
             </div>
         </div>
         <div [hidden]="currTab !== 2">
-            <button *ngIf="editMode" class="btn btn-primary-full alternate-button" (click)="fillDeclineFields()"
-                containerClass="tooltip-info" tooltip="Проверка API склонения">Заполнить поля</button>
+            <button *ngIf="editMode"
+                class="btn btn-primary-full alternate-button"
+                (click)="fillDeclineFields()"
+                containerClass="tooltip-info"
+                tooltip="Проверка API склонения">Заполнить поля</button>
             <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
             <div class="form-group">
                 <label class="primary-text"
@@ -614,12 +625,12 @@
                     (focus)="focus('DUTY_RP')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 255 символов."
                     [isDisabled]="!editMode"
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="cardForm.controls['DUTY_RP']?.invalid && cardForm.controls['DUTY_RP']?.dirty && focusedField === 'DUTY_RP'"
+                    [isOpen]="isInvalid('DUTY_RP')"
                     autocomplete="off"
                     triggers=""
                     maxlength="255">
@@ -641,12 +652,12 @@
                     (focus)="focus('DUTY_DP')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 255 символов."
                     [isDisabled]="!editMode"
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="cardForm.controls['DUTY_DP']?.invalid && cardForm.controls['DUTY_DP']?.dirty && focusedField === 'DUTY_DP'"
+                    [isOpen]="isInvalid('DUTY_DP')"
                     autocomplete="off"
                     triggers=""
                     maxlength="255">
@@ -668,12 +679,12 @@
                     (focus)="focus('DUTY_VP')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 255 символов."
                     [isDisabled]="!editMode"
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="cardForm.controls['DUTY_VP']?.invalid && cardForm.controls['DUTY_VP']?.dirty && focusedField === 'DUTY_VP'"
+                    [isOpen]="isInvalid('DUTY_VP')"
                     autocomplete="off"
                     triggers=""
                     maxlength="255">
@@ -696,12 +707,12 @@
                     (focus)="focus('PRINT_SURNAME_DP')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 64 символа."
                     [isDisabled]="!editMode"
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="cardForm.controls['PRINT_SURNAME_DP']?.invalid && cardForm.controls['PRINT_SURNAME_DP']?.dirty && focusedField === 'PRINT_SURNAME_DP'"
+                    [isOpen]="isInvalid('PRINT_SURNAME_DP')"
                     autocomplete="off"
                     triggers=""
                     maxlength="64">
@@ -722,12 +733,12 @@
                     (focus)="focus('PRINT_SURNAME')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 64 символа."
                     [isDisabled]="!editMode"
                     placement="right"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="cardForm.controls['PRINT_SURNAME']?.invalid && cardForm.controls['PRINT_SURNAME']?.dirty && focusedField === 'PRINT_SURNAME'"
+                    [isOpen]="isInvalid('PRINT_SURNAME')"
                     autocomplete="off"
                     triggers=""
                     maxlength="64">
@@ -750,12 +761,12 @@
                         (focus)="focus('SURNAME_RP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SURNAME_RP']?.invalid && cardForm.controls['SURNAME_RP']?.dirty && focusedField === 'SURNAME_RP'"
+                        [isOpen]="isInvalid('SURNAME_RP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -771,12 +782,12 @@
                         (focus)="focus('NAME_RP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NAME_RP']?.invalid && cardForm.controls['NAME_RP']?.dirty && focusedField === 'NAME_RP'"
+                        [isOpen]="isInvalid('NAME_RP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -792,12 +803,12 @@
                         (focus)="focus('PATRON_RP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PATRON_RP']?.invalid && cardForm.controls['PATRON_RP']?.dirty && focusedField === 'PATRON_RP'"
+                        [isOpen]="isInvalid('PATRON_RP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -820,12 +831,12 @@
                         (focus)="focus('SURNAME_DP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SURNAME_DP']?.invalid && cardForm.controls['SURNAME_DP']?.dirty && focusedField === 'SURNAME_DP'"
+                        [isOpen]="isInvalid('SURNAME_DP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -841,12 +852,12 @@
                         (focus)="focus('NAME_DP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NAME_DP']?.invalid && cardForm.controls['NAME_DP']?.dirty && focusedField === 'NAME_DP'"
+                        [isOpen]="isInvalid('NAME_DP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -862,12 +873,12 @@
                         (focus)="focus('PATRON_DP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PATRON_DP']?.invalid && cardForm.controls['PATRON_DP']?.dirty && focusedField === 'PATRON_DP'"
+                        [isOpen]="isInvalid('PATRON_DP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -890,12 +901,12 @@
                         (focus)="focus('SURNAME_VP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SURNAME_VP']?.invalid && cardForm.controls['SURNAME_VP']?.dirty && focusedField === 'SURNAME_VP'"
+                        [isOpen]="isInvalid('SURNAME_VP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -911,12 +922,12 @@
                         (focus)="focus('NAME_VP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NAME_VP']?.invalid && cardForm.controls['NAME_VP']?.dirty && focusedField === 'NAME_VP'"
+                        [isOpen]="isInvalid('NAME_VP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -932,12 +943,12 @@
                         (focus)="focus('PATRON_VP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PATRON_VP']?.invalid && cardForm.controls['PATRON_VP']?.dirty && focusedField === 'PATRON_VP'"
+                        [isOpen]="isInvalid('PATRON_VP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -960,12 +971,12 @@
                         (focus)="focus('SURNAME_TP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SURNAME_TP']?.invalid && cardForm.controls['SURNAME_TP']?.dirty && focusedField === 'SURNAME_TP'"
+                        [isOpen]="isInvalid('SURNAME_TP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -981,12 +992,12 @@
                         (focus)="focus('NAME_TP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NAME_TP']?.invalid && cardForm.controls['NAME_TP']?.dirty && focusedField === 'NAME_TP'"
+                        [isOpen]="isInvalid('NAME_TP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -1002,12 +1013,12 @@
                         (focus)="focus('PATRON_TP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PATRON_TP']?.invalid && cardForm.controls['PATRON_TP']?.dirty && focusedField === 'PATRON_TP'"
+                        [isOpen]="isInvalid('PATRON_TP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -1030,12 +1041,12 @@
                         (focus)="focus('SURNAME_PP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['SURNAME_PP']?.invalid && cardForm.controls['SURNAME_PP']?.dirty && focusedField === 'SURNAME_PP'"
+                        [isOpen]="isInvalid('SURNAME_PP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -1056,7 +1067,7 @@
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['NAME_PP']?.invalid && cardForm.controls['NAME_PP']?.dirty && focusedField === 'NAME_PP'"
+                        [isOpen]="isInvalid('NAME_PP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -1072,12 +1083,12 @@
                         (focus)="focus('PATRON_PP')"
                         (blur)="blur()"
                         [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены."
+                        tooltip="Максимальная длина 64 символа."
                         [isDisabled]="!editMode"
                         placement="right"
                         containerClass="tooltip-error"
                         container="body"
-                        [isOpen]="cardForm.controls['PATRON_PP']?.invalid && cardForm.controls['PATRON_PP']?.dirty && focusedField === 'PATRON_PP'"
+                        [isOpen]="isInvalid('PATRON_PP')"
                         autocomplete="off"
                         triggers=""
                         maxlength="64">
@@ -1102,12 +1113,12 @@
                     required
                     maxlength="255"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Обязательное поле. Максимальная длина 255 символов."
                     containerClass="tooltip-error"
                     container="body"
                     [isDisabled]="!editMode"
                     placement="right"
-                    [isOpen]="cardForm.controls['PRINT_DUTY']?.invalid && cardForm.controls['PRINT_DUTY']?.dirty && focusedField === 'PRINT_DUTY'"
+                    [isOpen]="isInvalid('PRINT_DUTY')"
                     autocomplete="off"
                     triggers="">
 
@@ -1128,12 +1139,12 @@
                     (focus)="focus('PRINT_DEPARTMENT')"
                     (blur)="blur()"
                     [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 255 символов."
                     containerClass="tooltip-error"
                     container="body"
                     [isDisabled]="!editMode"
                     placement="right"
-                    [isOpen]="cardForm.controls['PRINT_DEPARTMENT']?.invalid && cardForm.controls['PRINT_DEPARTMENT']?.dirty && focusedField === 'PRINT_DEPARTMENT'"
+                    [isOpen]="isInvalid('PRINT_DEPARTMENT')"
                     autocomplete="off"
                     triggers=""
                     maxlength="255">

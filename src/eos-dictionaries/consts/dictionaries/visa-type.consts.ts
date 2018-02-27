@@ -19,14 +19,14 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Обязательное поле. Максимальная длинна 64 символа.'
     }, {
         key: 'NOTE',
         title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длинна 255 символов.'
     }, {
         key: 'DELETED',
         title: 'Логически удален',
