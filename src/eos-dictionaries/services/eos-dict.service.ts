@@ -681,6 +681,9 @@ export class EosDictService {
     }
 
     isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
+        if ('string' === typeof val) {
+            val = val.trim();
+        }
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
