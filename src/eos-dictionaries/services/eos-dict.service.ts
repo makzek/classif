@@ -598,10 +598,7 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
-            .then((node) => {
-                this._openNode(node);
-                return node;
-            })
+            .then((node) => node)
             .catch((err) => this._errHandler(err));
     }
 
