@@ -1,4 +1,7 @@
 .pagination-option {
+    background-color: $modal-block-background-main-theme;
+    color: $primary-font-color-main-theme;
+    border-color: $border-color-main-theme !important;
     margin-top: 20px;
     border: 1px solid transparent;
     display: -ms-grid;
@@ -19,8 +22,9 @@
         font: inherit;
     }
     .pag-btn {
-        width: 48px;
-        height: 48px;
+        background-color: $modal-block-background-main-theme;
+        width: $item-width;
+        height: $item-height;
         border-width: 0;
         border-right-width: 1px;
         border-right-style: solid;

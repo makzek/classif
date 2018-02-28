@@ -1,7 +1,7 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
         <form #cardForm="ngForm" *ngIf="data.rec && fieldsDescription.rec" class="form form-horizontal">
-            <div *ngFor="let key of keys(fieldsDescription.rec)">
+            <div *ngFor="let key of fieldsDescription._list">
                 <div *ngIf="!(key === 'STATUS' || key === 'IS_FINAL')" class="form-group">
                     <label for="{{key}}" class="primary-text" [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec[key]?.required}">
                         {{fieldsDescription.rec[key].title}}
