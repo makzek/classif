@@ -44,12 +44,13 @@
         <label class="primary-text"
             [attr.for]="input.key"
             [ngClass]="{'required': input.required}">{{input.label}}</label>
-        <select class="form-control m-font"
+        <select class="form-control m-font eos-select"
+            [ngClass]="{readonly: readonly}"
             [id]="input.key"
             [formControlName]="input.key">
-                <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
-                <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
-            </select>
+            <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
+            <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
+        </select>
     </ng-container>
     <ng-container *ngSwitchCase="'checkbox'">
         <label class="primary-text checkbox">

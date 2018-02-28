@@ -19,4 +19,12 @@ export class DynamicFormInputComponent {
     get isDirty() {
         return this.form.controls[this.input.key].dirty;
     }
+
+    selectClick(evt: Event) {
+        if (this.readonly) {
+            evt.stopImmediatePropagation();
+            evt.stopPropagation();
+            evt.preventDefault();
+        }
+    }
 }
