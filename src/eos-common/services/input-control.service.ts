@@ -52,15 +52,17 @@ export class InputControlService {
      */
     private _addInput(group: any, input: InputBase<any>) {
         const value = input.value !== undefined ? input.value : null;
-        group[input.key] = input.required ?
-            new FormControl(value, [
-                Validators.required,
-                Validators.pattern(input.pattern),
-                this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
-            ])
-            : new FormControl(value, [
-                Validators.pattern(input.pattern),
-                this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
-            ]);
+        const validators = [
+            Validators.pattern(input.pattern),
+            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
+        ];
+        if (input.required) {
+            validators.push(Validators.required);
+        }
+        if (input.disabled) {
+            group[input.key] = new FormControl({ value: value, disabled: true }, validators);
+        } else {
+            group[input.key] = new FormControl(value, validators);
+        }
     }
 }

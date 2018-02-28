@@ -20,7 +20,7 @@ export class EosDataConvertService {
      * @param fieldsDescription node fields description
      * @param data node data
      */
-    getInputs(fieldsDescription: any[], data: any) {
+    getInputs(fieldsDescription: any[], data: any, editMode = true) {
         const inputs: any = {};
         if (fieldsDescription) { // todo: refactor & remove hardcode
             Object.keys(fieldsDescription).forEach((_dict) => {
@@ -58,6 +58,7 @@ export class EosDataConvertService {
                                         label: fieldsDescription[_dict][_key].title,
                                         forNode: fieldsDescription[_dict][_key].forNode,
                                         value: !!data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        disabled: !editMode,
                                     });
                                     break;
                                 case E_FIELD_TYPE.select:
@@ -96,6 +97,7 @@ export class EosDataConvertService {
                             label: 'Не использовать подразделение в названии должности',
                             dict: 'printInfo',
                             value: data['printInfo']['NOT_USE_IN_DUTY'],
+                            disabled: !editMode,
                             pattern: NOT_EMPTY_STRING,
                         });
                         inputs['printInfo.PRINT_DEPARTMENT'] = new StringInput({

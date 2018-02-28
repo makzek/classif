@@ -14,6 +14,7 @@ export class InputBase<T>{
     hideLabel: boolean;
     forNode: boolean;
     options?: any[];
+    disabled?: boolean;
 
     constructor(options: {
         value?: T,
@@ -31,6 +32,7 @@ export class InputBase<T>{
         hideLabel?: boolean,
         forNode?: boolean,
         options?: any[],
+        disabled?: boolean
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';
@@ -46,5 +48,6 @@ export class InputBase<T>{
         this.invalidMessage = options.invalidMessage || '';
         this.hideLabel = !!options.hideLabel;
         this.forNode = !!options.forNode;
+        this.disabled = !!options.disabled;
     }
 }

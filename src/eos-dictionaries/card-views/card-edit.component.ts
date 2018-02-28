@@ -70,13 +70,9 @@ export class CardEditComponent implements OnChanges, OnDestroy {
 
     ngOnChanges() {
         if (this.fieldsDescription && this.data) {
-            this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data);
-
-            if (this.data.rec && this.data.rec.IS_NODE) {
-                this.form = this._inputCtrlSrv.toFormGroup(this.inputs, true);
-            } else {
-                this.form = this._inputCtrlSrv.toFormGroup(this.inputs);
-            }
+            this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
+            const isNode = this.data.rec && this.data.rec.IS_NODE;
+            this.form = this._inputCtrlSrv.toFormGroup(this.inputs, isNode);
             // console.log('form on change', this.form);
             this.form.valueChanges
                 .takeUntil(this.ngUnsubscribe)
