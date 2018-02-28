@@ -19,14 +19,14 @@
                 placement="right" container="body"
                 dropdown
                 triggers="mouseclick">
+                <div tooltip="{{item.hint}}"
+                placement="bottom"
+                containerClass="tooltip-info">
                 <button *ngIf="item.show && item.type !== ADD_ACTION && isTree"
                     [disabled]="!item.enabled"
                     [ngClass]="{active: item.isActive}"
                     class="action-dropdown-item btn btn-primary-light hidden-lg"
-                    (click)="doAction(item.type); dropdown.hide()"
-                    tooltip="{{item.hint}}"
-                    placement="bottom"
-                    containerClass="tooltip-info">
+                    (click)="doAction(item.type); dropdown.hide()">
                         <span *ngIf="!item.isActive" class="{{item.iconClass}}"></span>
                         <span *ngIf="item.isActive" class="{{item.activeIconClass}}"></span>
                         <span class="drop-title">{{item.title}}</span>
@@ -43,6 +43,7 @@
                         <span *ngIf="item.isActive" class="{{item.activeIconClass}}"></span>
                         <span class="drop-title">{{item.title}}</span>
                 </button>
+                </div>
 
                 <ul *dropdownMenu class="dropdown-menu" role="menu">
                     <li *ngFor="let type of addMenu" role="menuitem">
@@ -53,17 +54,18 @@
             </li>
             <li *ngFor="let item of moreButtons"
                 role="menuitem">
+                <div tooltip="{{item.hint}}"
+                placement="bottom"
+                containerClass="tooltip-info">
                 <button *ngIf="item.show"
                     [disabled]="!item.enabled"
                     [ngClass]="{active: item.isActive}"
                     class="action-dropdown-item btn btn-primary-light"
-                    (click)="doAction(item.type)"
-                    tooltip="{{item.hint}}"
-                    placement="bottom"
-                    containerClass="tooltip-info">
+                    (click)="doAction(item.type)">
                         <span [ngClass]="item.activeIconClass" class="{{item.iconClass}}"></span>
                         <span class="drop-title">{{item.title}}</span>
                 </button>
+                </div>
             </li>
         </ul>
     </div>
