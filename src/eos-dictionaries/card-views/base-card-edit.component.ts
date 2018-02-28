@@ -30,14 +30,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         this.dictSrv = injector.get(EosDictService);
     }
 
-    keys(data: Object): string[] {
-        if (data) {
-            return Object.keys(data);
-        } else {
-            return [];
-        }
-    }
-
     ngOnChanges() {
         setTimeout(() => {
             if (this.cardForm) {
