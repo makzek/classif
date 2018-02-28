@@ -6,7 +6,7 @@ import 'rxjs/add/operator/combineLatest';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import {
-    RECORD_ACTIONS, DROPDOWN_RECORD_ACTIONS, MORE_RECORD_ACTIONS,
+    RECORD_ACTIONS, MORE_RECORD_ACTIONS,
     COMMON_ADD_MENU, DEPARTMENT_ADD_MENU
 } from '../consts/record-actions.consts';
 import {
@@ -24,7 +24,6 @@ export class NodeActionsComponent implements OnDestroy {
     @Output('action') action: EventEmitter<IActionEvent> = new EventEmitter<IActionEvent>();
 
     buttons: IActionButton[];
-    ddButtons: IActionButton[];
     moreButtons: IActionButton[];
 
     ADD_ACTION = E_RECORD_ACTIONS.add;
@@ -43,6 +42,7 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     private ngUnsubscribe: Subject<any> = new Subject();
+
     constructor(_dictSrv: EosDictService) {
         this._initButtons();
 
@@ -70,7 +70,6 @@ export class NodeActionsComponent implements OnDestroy {
 
     private _initButtons() {
         this.buttons = RECORD_ACTIONS.map((act) => this._actionToButton(act));
-        this.ddButtons = DROPDOWN_RECORD_ACTIONS.map((act) => this._actionToButton(act));
         this.moreButtons = MORE_RECORD_ACTIONS.map(act => this._actionToButton(act));
     }
 
@@ -85,7 +84,6 @@ export class NodeActionsComponent implements OnDestroy {
             }
         }
         this.buttons.forEach(btn => this._updateButton(btn));
-        this.ddButtons.forEach(btn => this._updateButton(btn));
         this.moreButtons.forEach(btn => this._updateButton(btn));
     }
 

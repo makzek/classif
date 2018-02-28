@@ -20,6 +20,7 @@ import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { IAppCfg } from 'eos-common/interfaces';
+import { E_DICT_TYPE } from '../interfaces/dictionary.interfaces';
 
 @Injectable()
 export class EosDictService {
@@ -452,24 +453,26 @@ export class EosDictService {
                 // console.log('created node', newNodeId);
                 return this._reloadList()
                     .then(() => {
-                        this._treeNode$.next(this.treeNode);
-                        const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+                        if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
+                            this._treeNode$.next(this.treeNode);
+                            const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
 
-                        results.forEach((res) => {
-                            // console.log(res, keyFld);
-                            res.record = this.dictionary.getNode(res.record[keyFld] + '');
-                            if (!res.success) {
-                                this._msgSrv.addNewMessage({
-                                    type: 'warning',
-                                    title: res.record ? res.record.title : '',
-                                    msg: res.error.message
-                                });
+                            results.forEach((res) => {
+                                // console.log(res, keyFld);
+                                res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                                if (!res.success) {
+                                    this._msgSrv.addNewMessage({
+                                        type: 'warning',
+                                        title: res.record ? res.record.title : '',
+                                        msg: res.error.message
+                                    });
+                                }
+                            });
+                            if (results[0] && results[0].success) {
+                                return results[0].record;
+                            } else {
+                                return null;
                             }
-                        });
-                        if (results[0] && results[0].success) {
-                            return results[0].record;
-                        } else {
-                            return null;
                         }
                     });
             })
