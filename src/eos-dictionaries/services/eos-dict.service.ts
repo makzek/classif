@@ -20,6 +20,7 @@ import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { IAppCfg } from 'eos-common/interfaces';
+import { EosUtils } from 'eos-common/core/utils';
 
 @Injectable()
 export class EosDictService {
@@ -680,24 +681,19 @@ export class EosDictService {
         this.updateViewParameters({ haveMarked: val });
     }
 
-    isUnic(val: string, key: string, inDict?: boolean): { [key: string]: any } {
+    isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
+        let records: EosDictionaryNode[] = [];
+
         if (inDict) {
-            let _hasMatch = false;
-            this.dictionary.nodes.forEach((_node) => {
-                /* check solution with this.selectedNode */
-                if (_node.data.rec[key] === val && this.treeNode && _node.id !== this.treeNode.id) {
-                    _hasMatch = true;
-                }
-            });
-            return _hasMatch ? { 'isUnic': _hasMatch } : null;
-        } else if (this.treeNode) {
-            /* tslint:disable:no-bitwise */
-            const _hasMatch = !!~this.treeNode.children.findIndex((_node) => _node.data.rec[key] === val);
-            /* tslint:enable:no-bitwise */
-            return _hasMatch ? { 'isUnic': _hasMatch } : null;
+            records = Array.from(this.dictionary.nodes.values())
+                .filter((node) => this.treeNode && node.id !== this.treeNode.id);
         } else {
-            return null;
+            records = this.treeNode ? this.treeNode.children : [];
         }
+
+        const _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
+
+        return _hasMatch ? { 'isUnic': !_hasMatch } : null;
     }
 
     public uploadImg(img: IImage): Promise<number> {

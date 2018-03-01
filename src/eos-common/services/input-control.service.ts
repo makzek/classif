@@ -31,18 +31,11 @@ export class InputControlService {
     /**
      * custom validation function
      * check if value is unic
-     * @param isUnic show if value must be unic
-     * @param key key of checked value
+     * @param path path in data object
      * @param inDict must it be unic in dictionary
      */
-    unicValueValidator(isUnic: boolean, key: string, inDict: boolean): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } => {
-            if (isUnic) {
-                return this._dictSrv.isUnic(control.value, key, inDict) ? { 'isUnic': false } : null;
-            } else {
-                return null;
-            }
-        };
+    unicValueValidator(path: string, inDict: boolean): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } => this._dictSrv.isUnic(control.value, path, inDict);
     }
 
     /**
@@ -52,10 +45,13 @@ export class InputControlService {
      */
     private _addInput(group: any, input: InputBase<any>) {
         const value = input.value !== undefined ? input.value : null;
-        const validators = [
-            Validators.pattern(input.pattern),
-            this.unicValueValidator(input.isUnic, input.key, input.unicInDict)
-        ];
+        const validators = [];
+        if (input.pattern) {
+            validators.push(Validators.pattern(input.pattern));
+        }
+        if (input.isUnic) {
+            validators.push(this.unicValueValidator(input.key, input.unicInDict));
+        }
         if (input.required) {
             validators.push(Validators.required);
         }
