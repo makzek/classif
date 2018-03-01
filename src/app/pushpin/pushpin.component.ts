@@ -7,6 +7,7 @@ import { WARN_LINK_PIN } from '../consts/messages.consts';
 import {
     DANGER_DESK_CREATING
 } from '../consts/messages.consts';
+import { NOT_EMPTY_STRING } from 'eos-common/consts/common.consts';
 
 @Component({
     selector: 'eos-pushpin',
@@ -22,6 +23,7 @@ export class PushpinComponent {
     public maxLength = 80;
     public deskName: string;
 
+    notEmptyString = NOT_EMPTY_STRING;
     constructor(
         private _deskSrv: EosDeskService,
         private _msgSrv: EosMessageService,

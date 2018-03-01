@@ -1,14 +1,11 @@
 .pin {
     display: inline-block;
-
     .pushdrop {
         min-width: 280px !important;
     }
-
     .pushpin:focus {
         border: none;
     }
-
     .eos-icon-pin-blue {
         cursor: pointer;
     }
@@ -16,18 +13,13 @@
 
 .pushdrop {
     min-width: 280px;
-
     .desk {
         cursor: pointer;
     }
-
     .create {
         cursor: pointer;
-
-        span {
-            div {
-                margin: 3px 20px;
-            }
+        .input-group {
+            margin: 3px 20px;
         }
     }
 }

@@ -22,14 +22,14 @@
                     [key]="'CABINET_NAME'"
                     [checkingMethod]="checkUnic.bind(this)"
                     [inDict]="true"
-                    tooltip="Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены. Уникально в пределах справочника."
+                    tooltip="Обязательное поле. Максимальная длина 64 символа. Уникально в пределах справочника."
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     (focus)="focus('CABINET_NAME')"
                     (blur)="blur()"
                     [isDisabled]="!editMode"
-                    [isOpen]="cardForm.controls['CABINET_NAME']?.dirty && cardForm.controls['CABINET_NAME']?.invalid && focusedField === 'CABINET_NAME'"
+                    [isOpen]="isInvalid('CABINET_NAME')"
                     triggers="">
             </div>
             <div class="form-group">
@@ -51,14 +51,14 @@
                     [key]="'FULLNAME'"
                     [checkingMethod]="checkUnic.bind(this)"
                     [inDict]="false"
-                    tooltip="Максимальная длина 2000 символа. Пробелы в начале и в конце строки запрещены."
+                    tooltip="Максимальная длина 2000 символа."
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     (focus)="focus('FULLNAME')"
                     (blur)="blur()"
                     [isDisabled]="!editMode"
-                    [isOpen]="cardForm.controls['FULLNAME']?.dirty && cardForm.controls['FULLNAME']?.invalid && focusedField === 'FULLNAME'"
+                    [isOpen]="isInvalid('FULLNAME')"
                     triggers=""></textarea>
             </div>
             <div class="form-group">

@@ -429,7 +429,7 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
                     }
                 });
         } else {
-            return this._dictSrv.updateNode(this.node, data)
+                return this._dictSrv.updateNode(this.node, data)
                 .then((resp: EosDictionaryNode) => this._afterUpdating(resp))
                 .catch((err) => this._errHandler(err));
         }
