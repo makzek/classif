@@ -685,11 +685,12 @@ export class EosDictService {
         let records: EosDictionaryNode[] = [];
 
         if (inDict) {
-            records = Array.from(this.dictionary.nodes.values())
-                .filter((node) => this.treeNode && node.id !== this.treeNode.id);
+            records = Array.from(this.dictionary.nodes.values());
         } else {
             records = this.treeNode ? this.treeNode.children : [];
         }
+
+        records = records.filter((node) => this._listNode && node.id !== this._listNode.id);
 
         const _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
 
