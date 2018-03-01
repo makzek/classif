@@ -104,7 +104,11 @@
                 background-color: transparent;
                 color: black;
                 font-weight: normal;
+                &.ng-dirty.ng-invalid{
+                    border-color: $brand-danger;
+                }
             }
+
         }
     }
 }

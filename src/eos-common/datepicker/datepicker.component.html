@@ -8,7 +8,16 @@
         placeholder="{{placeholder}}"
         [ngModel]="aDate | date:'dd.MM.yyyy'"
         (ngModelChange)="inputChanged($event)"
-        maxlength="16">
+        tooltip="Формат даты ДД.ММ.ГГГГ"
+        placement="bottom"
+        containerClass="tooltip-error"
+        container="body"
+        triggers=""
+        [isDisabled]="isReadonly"
+        [isOpen]="!valid && !focused"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        maxlength="10">
     <a *ngIf="!isReadonly"
         bsDatepicker
         #dp="bsDatepicker"

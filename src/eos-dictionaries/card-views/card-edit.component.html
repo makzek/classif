@@ -10,7 +10,7 @@
                 [dutysList]="dutysList"
                 [fullNamesList]="fullNamesList"
                 (onChange)="recordChanged($event)"
-                (invalid)="onInvalid($event)"></eos-departments-card-edit-person>
+                (formInvalid)="onInvalid($event)"></eos-departments-card-edit-person>
             <eos-departments-card-edit-department *ngIf="data.rec['IS_NODE'] === 0"
                 [data]="data"
                 [editMode]="editMode"
@@ -19,7 +19,7 @@
                 [dutysList]="dutysList"
                 [fullNamesList]="fullNamesList"
                 (onChange)="recordChanged($event)"
-                (invalid)="onInvalid($event)"></eos-departments-card-edit-department>
+                (formInvalid)="onInvalid($event)"></eos-departments-card-edit-department>
         </div>
     </ng-container>
 
@@ -29,26 +29,26 @@
         [editMode]="editMode"
         [nodeId]="nodeId"
         (onChange)="recordChanged($event)"
-        (invalid)="onInvalid($event)"></eos-cabinet-card-edit>
+        (formInvalid)="onInvalid($event)"></eos-cabinet-card-edit>
     <eos-visa-type-card-edit *ngSwitchCase="'visa-type'"
         [data]="data"
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"
         [nodeId]="nodeId"
         (onChange)="recordChanged($event)"
-        (invalid)="onInvalid($event)"></eos-visa-type-card-edit>
+        (formInvalid)="onInvalid($event)"></eos-visa-type-card-edit>
     <eos-security-card-edit *ngSwitchCase="'security'"
         [data]="data"
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"
         [nodeId]="nodeId"
         (onChange)="recordChanged($event)"
-        (invalid)="onInvalid($event)"></eos-security-card-edit>
+        (formInvalid)="onInvalid($event)"></eos-security-card-edit>
     <eos-simple-card-edit *ngSwitchDefault
         [data]="data"
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"
         [nodeId]="nodeId"
         (onChange)="recordChanged($event)"
-        (invalid)="onInvalid($event)"></eos-simple-card-edit>
+        (formInvalid)="onInvalid($event)"></eos-simple-card-edit>
 </ng-container>

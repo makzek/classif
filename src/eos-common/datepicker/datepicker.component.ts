@@ -11,6 +11,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
     @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() dateValid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
 
@@ -19,9 +20,11 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     placement = 'bottom';
     aDate: Date;
     bsDate: Date;
+    focused = false;
+    valid = true;
+
     readonly datePattern = /.*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19\d{2}|20\d{2}|2100).*?/;
     private _manualChange: boolean;
-
     private _handler;
 
     constructor() {
@@ -62,22 +65,33 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         if (!this._manualChange) {
             this.aDate = date;
             this.dateChange.emit(date);
+            this.valid = true;
         }
+        this.dateValid.emit(this.valid);
         this._manualChange = false;
     }
 
     inputChanged(sDate: string) {
         let date: Date;
         this._manualChange = true;
-        if (this.datePattern.test(sDate)) { // if correct format
-            // convert to UTC format then to Date
-            date = new Date(sDate.replace(this.datePattern, '$3-$2-$1T00:00:00.000Z'));
-        }
+        sDate = sDate.trim();
+        if (sDate) {
+            if (this.datePattern.test(sDate)) { // if correct format
+                // convert to UTC format then to Date
+                date = new Date(sDate.replace(this.datePattern, '$3-$2-$1T00:00:00.000Z'));
+            }
 
-        if (date && !isNaN(date.getTime())) {
-            this.bsDate = date;
-            this.dateChange.emit(date);
+            if (date && !isNaN(date.getTime())) {
+                this.valid = true;
+                this.bsDate = date;
+                this.dateChange.emit(date);
+            } else {
+                this.valid = false;
+                this.bsDate = null;
+                this.dateChange.emit(null);
+            }
         } else {
+            this.valid = true;
             this.bsDate = null;
             this.dateChange.emit(null);
         }
@@ -99,5 +113,13 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         }
         this.datePicker.toggle();
         this.datePicker.toggle();
+    }
+
+    onBlur(evt) {
+        this.focused = false;
+    }
+
+    onFocus(evt) {
+        this.focused = true;
     }
 }

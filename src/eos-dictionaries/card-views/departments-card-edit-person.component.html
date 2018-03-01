@@ -105,7 +105,7 @@
                             id="SEV"
                             name="SEV"
                             type="text"
-                            class="form-control m-font "
+                            class="form-control m-font"
                             [ngModel]="data['sev']['GLOBAL_ID']"
                             (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
                             placeholder="Индекс СЭВ"
@@ -130,9 +130,9 @@
                         <eos-datepicker [placeholder]="'Начало действия'"
                             [value]="data.rec['START_DATE']"
                             (dateChange)="change('START_DATE', 'rec', $event)"
+                            (dateValid)="dateValid('START_DATE', $event)"
                             [isReadonly]="!editMode"
-                            [ngClass]="{'readonly': !editMode }"
-                            placement="bottom"></eos-datepicker>
+                            [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                     </div>
                     <div class="form-group">
                         <label class="primary-text"
@@ -141,6 +141,7 @@
                         <eos-datepicker [placeholder]="'Окончание действия'"
                             [value]="data.rec['END_DATE']"
                             (dateChange)="change('END_DATE', 'rec', $event)"
+                            (dateValid)="dateValid('END_DATE', $event)"
                             [isReadonly]="!editMode"
                             [ngClass]="{'readonly': !editMode }"
                             placement="bottom"></eos-datepicker>
@@ -160,7 +161,7 @@
                             (ngModelChange)="change('SURNAME', 'printInfo', $event)"
                             placeholder="Фамилия"
                             [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('SURNAME')"
+                            (focus)="focus('SURNAME_PRINT')"
                             (blur)="blur()"
                             maxlength="64"
                             [pattern]="NOT_EMPTY_STRING"
@@ -169,7 +170,7 @@
                             placement="bottom"
                             containerClass="tooltip-error"
                             container="body"
-                            [isOpen]="isInvalid('SURNAME')"
+                            [isOpen]="isInvalid('SURNAME_PRINT')"
                             autocomplete="off"
                             triggers="">
                     </div>
