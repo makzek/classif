@@ -62,6 +62,9 @@ export class NodeActionsComponent implements OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
+    stopCloseMenu(evt: MouseEvent) {
+        evt.stopPropagation();
+    }
 
     doAction(action: E_RECORD_ACTIONS, params?: any) {
         // console.log('action', E_RECORD_ACTIONS[action], params);

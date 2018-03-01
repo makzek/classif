@@ -58,7 +58,7 @@
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
                     <span *ngIf="params.markItems" class="checkbox-inline">
-                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="bottom" container="body" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                             <span></span>
@@ -66,7 +66,7 @@
                     </span>
                     <span class="node-title">
                         <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
-                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                            tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                     <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
@@ -75,7 +75,7 @@
                         </span>
 
                         <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.%': length[field.key]}"
-                            tooltip="{{field.title}}" placement="top" container="body" containerClass="tooltip-info">
+                            tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                     <span class="text" (click)="orderByField(field.foreignKey)">
                                         {{field.customTitle || field.title}}
                                         <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"

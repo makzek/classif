@@ -26,7 +26,7 @@
                     [checkingMethod]="checkUnic.bind(this)"
                     tooltip="Пробелы в начале и в конце строки запрещены. Должно быть уникально в пределах вершины"
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['CODE_DEP']?.invalid && cardForm.controls['CODE_DEP']?.dirty && focusedField === 'CODE_DEP'"
@@ -53,7 +53,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 24 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['indexDep']?.invalid && cardForm.controls['indexDep']?.dirty && focusedField === 'indexDep'"
@@ -79,7 +79,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['SEV_DEP']?.invalid && cardForm.controls['SEV_DEP']?.dirty && focusedField === 'SEV_DEP'"
@@ -95,7 +95,7 @@
                     (change)="change('START_DATE', 'rec', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
-                    placement="top"></eos-datepicker>
+                    placement="bottom"></eos-datepicker>
             </div>
             <div class="form-group">
                 <label class="primary-text"
@@ -106,7 +106,7 @@
                     (change)="change('END_DATE', 'rec', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
-                    placement="top"></eos-datepicker>
+                    placement="bottom"></eos-datepicker>
             </div>
             <span class="checkbox card-flag">
                     <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" class="checkbox">
@@ -139,7 +139,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['CLASSIF_NAME_DEP']?.invalid && cardForm.controls['CLASSIF_NAME_DEP']?.dirty && focusedField === 'CLASSIF_NAME_DEP'"
@@ -171,7 +171,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['fullTitle']?.invalid && cardForm.controls['fullTitle']?.dirty && focusedField === 'fullTitle'"
@@ -197,7 +197,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['DEPARTMENT_RP']?.invalid && cardForm.controls['DEPARTMENT_RP']?.dirty && focusedField === 'DEPARTMENT_RP'"
@@ -216,7 +216,7 @@
                     [value]="orgName || data.organization['CLASSIF_NAME'] || ''"
                     placeholder="Организация"
                     isDisabled="true"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     autocomplete="off"
@@ -246,7 +246,7 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['CARD_NAME']?.invalid && cardForm.controls['CARD_NAME']?.dirty && focusedField === 'CARD_NAME'"
@@ -273,7 +273,7 @@
                     maxlength="255"
                     tooltip="Максимальная длина 255 символов."
                     [isDisabled]="!editMode"
-                    placement="right"
+                    placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
                     [isOpen]="cardForm.controls['NOTE_DEP']?.invalid && cardForm.controls['NOTE_DEP']?.dirty && focusedField === 'NOTE_DEP'"

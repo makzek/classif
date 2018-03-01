@@ -21,12 +21,12 @@
             <span [hidden]="desk.edited">
                 <span [hidden]="desk.edited" class="desktop-wrapper">
                     <a class="dropdown-item">
-                        <span triggers="hover" tooltip="{{desk.name}}" placement="left" containerClass="tooltip-info">{{desk.name}}</span>
+                        <span triggers="hover" tooltip="{{desk.name}}" placement="bottom" containerClass="tooltip-info">{{desk.name}}</span>
                     </a>
                 </span>
                 <span *ngIf="desk.id !== 'system'" class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="tooltip-info" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" placement="bottom" containerClass="tooltip-info" (click)="openEditForm($event, desk)"></span>
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" placement="bottom" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
                 </span>
             </span>
             <span [hidden]="!desk.edited">
@@ -35,10 +35,10 @@
                         required pattern="^\S(.*\S$|$)" />
                     <div class="input-group-btn">
                         <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default" [disabled]="!deskName?.length || !nameForm.checkValidity()"
-                            tooltip="Сохранить" containerClass="tooltip-info">
+                            tooltip="Сохранить" placement="bottom" containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить" containerClass="tooltip-info">
+                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить" placement="bottom" containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </div>
@@ -54,11 +54,11 @@
                         <input type="text" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
                             [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
                         <div class="input-group-btn">
-                            <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
+                            <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" placement="bottom" containerClass="tooltip-info"
                                 [disabled]="!deskName?.length || !createForm.checkValidity()">
                                 <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                             </button>
-                            <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="tooltip-info">
+                            <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" placement="bottom" containerClass="tooltip-info">
                                 <span class="eos-icon eos-icon-close-black x-small"></span>
                             </button>
                         </div>

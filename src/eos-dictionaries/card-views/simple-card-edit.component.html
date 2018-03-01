@@ -14,7 +14,7 @@
                     [pattern]="fieldsDescription.rec[key].pattern" maxlength="{{fieldsDescription.rec[key].length}}"
                     [eosUnic]="fieldsDescription.rec[key].isUnic" [key]="key" [checkingMethod]="checkUnic.bind(this)" [inDict]="fieldsDescription.rec[key].unicInDict"
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"
-                    placement="right" containerClass="tooltip-error" container="body"
+                    placement="bottom" containerClass="tooltip-error" container="body"
                     (focus)="focus(key)" (blur)="blur()"
                     autocomplete="off"
                     value="null"
@@ -31,7 +31,7 @@
                     [ngClass]="{'readonly': !editMode }"
                     [pattern]="notEmptyString" maxlength="255"
                     [tooltip]="fieldsDescription['sev']['GLOBAL_ID']?.invalidMessage"
-                    placement="right" containerClass="tooltip-error" container="body"
+                    placement="bottom" containerClass="tooltip-error" container="body"
                     (focus)="focus('GLOBAL_ID')" (blur)="blur()"
                     autocomplete="off"
                     [isDisabled]="!editMode" [isOpen]="cardForm.controls['GLOBAL_ID']?.dirty && cardForm.controls['GLOBAL_ID']?.invalid && focusedField === 'GLOBAL_ID'" triggers="">
