@@ -115,11 +115,11 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         this.datePicker.toggle();
     }
 
-    onBlur(evt) {
+    onBlur() {
         this.focused = false;
     }
 
-    onFocus(evt) {
+    onFocus() {
         this.focused = true;
     }
 }
