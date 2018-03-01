@@ -9,29 +9,43 @@
             [isReadonly]="false"></eos-datepicker>
         </span>
     </div>
-    <span tooltip="Расширенный поиск"
-        placement="left"
-        container="body"
-        containerClass="tooltip-info">
-        <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }" class="btn btn-primary-light search-btn" [popover]="searchModal"
-            containerClass="full-search-popover" placement="bottom" #full="bs-popover" [outsideClick]="true"
-            (onShown)="isOpenFull = true" (onHidden)="isOpenFull = false">
+    <div [popover]="searchModal"
+        containerClass="full-search-popover"
+        class="search-btn-wraper"
+        placement="bottom"
+        #full="bs-popover"
+        [outsideClick]="true"
+        (onShown)="isOpenFull = true"
+        (onHidden)="isOpenFull = false">
+        <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }"
+            class="btn btn-primary-light search-btn"
+            tooltip="Расширенный поиск"
+            placement="bottom"
+            container="body"
+            containerClass="tooltip-info">
             <i [hidden]="isOpenFull || !noSearchData" class="eos-icon eos-icon-filter-blue small" aria-hidden="true"></i>
             <i [hidden]="!(isOpenFull || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true"></i>
         </button>
-    </span>
-    <span tooltip="Быстрый поиск"
-        placement="left"
+    </div>
+    <div class="search-btn-wraper"
+        tooltip="Быстрый поиск"
+        placement="bottom"
         container="body"
         containerClass="tooltip-info"
         [isDisabled]="isOpenQuick">
-    <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}" class="btn btn-primary-light search-btn quick-search-btn"
-        [popover]="quickSearchModal" containerClass="quick-search-popover" placement="left" #quick="bs-popover"  [outsideClick]="true"
-        (onShown)="setFocus(); isOpenQuick = true" (onHidden)="isOpenQuick = false">
+        <button [ngClass]="{'hidden': !hasQuick, 'opened': isOpenQuick}"
+            class="btn btn-primary-light search-btn quick-search-btn"
+            [popover]="quickSearchModal"
+            containerClass="quick-search-popover"
+            placement="left"
+            #quick="bs-popover"
+            [outsideClick]="true"
+            (onShown)="setFocus(); isOpenQuick = true"
+            (onHidden)="isOpenQuick = false">
             <i [hidden]="isOpenQuick" class="eos-icon eos-icon-search-blue small" aria-hidden="true"></i>
             <i [hidden]="!isOpenQuick" class="eos-icon eos-icon-search-white small" aria-hidden="true"></i>
     </button>
-</span>
+    </div>
 </div>
 
 <ng-template #quickSearchModal>
@@ -75,8 +89,8 @@
         <span class="pull-left title">Область поиска</span>
     </div>
     <div>
-        <div class="full-search-settings-container usual-border">
-            <form>
+        <form #searchForm="ngForm">
+            <div class="full-search-settings-container usual-border">
                 <div class="radio-inline">
                     <label>
                         <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
@@ -97,14 +111,12 @@
                         <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
-            </form>
-        </div>
+            </div>
 
-        <div *ngIf="loading"
-            class="spinner-wrapper">
-            <eos-spinner size="md"></eos-spinner>
-        </div>
-        <form #searchForm="ngForm">
+            <div *ngIf="loading"
+                class="spinner-wrapper">
+                <eos-spinner size="md"></eos-spinner>
+            </div>
             <div [hidden]="dictId !== 'departments'"
                 class="full-search-form"
                 *ngIf="data.rec && data['printInfo']">

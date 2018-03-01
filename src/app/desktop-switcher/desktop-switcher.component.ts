@@ -14,6 +14,7 @@ import {
 } from '../consts/messages.consts';
 
 import { CONFIRM_DESK_DELETE } from '../consts/confirms.const';
+import { NOT_EMPTY_STRING } from 'eos-common/consts/common.consts';
 
 @Component({
     selector: 'eos-desktop-switcher',
@@ -28,6 +29,8 @@ export class DesktopSwitcherComponent {
     updating = false;
     maxLength = 80;
     innerClick: boolean;
+
+    notEmptyString = NOT_EMPTY_STRING;
 
     @ViewChild('dropDown') private _dropDown: BsDropdownDirective;
 
@@ -98,7 +101,7 @@ export class DesktopSwitcherComponent {
             /* todo: re-factor it to inline validation messages */
             // const _tempDeskName = this.deskName.trim().substring(0, this.maxLength);
             // const _tempDeskName = this.deskName;
-            desk.name = this.deskName;
+            desk.name = this.deskName.trim();
             if (desk.id) {
                 pUpdate = this._deskSrv.editDesk(desk);
             } else {

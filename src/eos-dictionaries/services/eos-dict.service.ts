@@ -20,6 +20,7 @@ import { EosStorageService } from 'app/services/eos-storage.service';
 import { RestError } from 'eos-rest/core/rest-error';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { IAppCfg } from 'eos-common/interfaces';
+import { E_DICT_TYPE } from '../interfaces/dictionary.interfaces';
 
 @Injectable()
 export class EosDictService {
@@ -394,6 +395,17 @@ export class EosDictService {
         }
     }
 
+    public openNodeFromList(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        this._openNode(node);
+        this.updateViewParameters({ updatingInfo: true });
+        return this.dictionary.getFullNodeInfo(node.id)
+            .then((receivedNode: EosDictionaryNode) => {
+                node = receivedNode;
+                this.updateViewParameters({ updatingInfo: false });
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
     public isRoot(nodeId: string): boolean {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
@@ -452,24 +464,26 @@ export class EosDictService {
                 // console.log('created node', newNodeId);
                 return this._reloadList()
                     .then(() => {
-                        this._treeNode$.next(this.treeNode);
-                        const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
+                        if (this.dictionary.descriptor.type !== E_DICT_TYPE.linear) {
+                            this._treeNode$.next(this.treeNode);
+                            const keyFld = this.dictionary.descriptor.record.keyField.foreignKey;
 
-                        results.forEach((res) => {
-                            // console.log(res, keyFld);
-                            res.record = this.dictionary.getNode(res.record[keyFld] + '');
-                            if (!res.success) {
-                                this._msgSrv.addNewMessage({
-                                    type: 'warning',
-                                    title: res.record ? res.record.title : '',
-                                    msg: res.error.message
-                                });
+                            results.forEach((res) => {
+                                // console.log(res, keyFld);
+                                res.record = this.dictionary.getNode(res.record[keyFld] + '');
+                                if (!res.success) {
+                                    this._msgSrv.addNewMessage({
+                                        type: 'warning',
+                                        title: res.record ? res.record.title : '',
+                                        msg: res.error.message
+                                    });
+                                }
+                            });
+                            if (results[0] && results[0].success) {
+                                return results[0].record;
+                            } else {
+                                return null;
                             }
-                        });
-                        if (results[0] && results[0].success) {
-                            return results[0].record;
-                        } else {
-                            return null;
                         }
                     });
             })
@@ -584,10 +598,7 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
-            .then((node) => {
-                this._listNode = node;
-                return node;
-            })
+            .then((node) => node)
             .catch((err) => this._errHandler(err));
     }
 
@@ -681,6 +692,9 @@ export class EosDictService {
     }
 
     isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
+        if ('string' === typeof val) {
+            val = val.trim();
+        }
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
@@ -886,6 +900,7 @@ export class EosDictService {
             if (node) {
                 node.isSelected = true;
             }
+            this._listNode = node;
             this._listNode$.next(node);
         }
     }

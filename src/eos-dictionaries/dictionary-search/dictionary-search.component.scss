@@ -1,15 +1,17 @@
 .eos-dictionary-search {
     display: inline-block;
+    height: $item-height;
     .fa {
         font-size: 22px;
     }
     .full-search {
         position: relative;
-        top: 3px;
     }
     .eos-icon-search-blue {
         position: relative;
-        top: 4px;
+    }
+    .search-btn-wraper {
+        display: inline-block;
     }
     .quick-search-form {
         display: inline-block;
@@ -63,21 +65,12 @@
     }
     .btn {
         &.search-btn {
-            position: relative;
             height: 48px;
             width: 48px;
-            right: -3px;
-            padding: 10px 6px;
         }
         &.quick-search-btn {
             height: 48px;
             width: 48px;
-            right: 0;
-            padding-bottom: 11px;
-            padding-top: 5px;
-            &.opened {
-                padding-top: 10px;
-            }
         }
     }
     .date-filter-wrapper {
@@ -155,14 +148,14 @@
 }
 
 .full-search-top {
+    background-color: $modal-block-background-main-theme;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     padding-top: 20px;
     padding-bottom: 8px;
-    margin: 0 20px;
     height: 42px;
     .title {
-        margin: 0;
+        margin: 0 20px;
         line-height: 14px;
     }
 }
@@ -170,9 +163,8 @@
 .full-search-settings-container {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    padding-left: 20px;
-    margin: 0;
-    padding-top: 30px;
+    margin: 5px 0;
+    font-size: 0;
     form {
         display: flex;
     }
@@ -182,15 +174,8 @@
     .radio-inline,
     .checkbox-inline {
         height: 32px;
-        margin: 5px 5px 25px 0;
-    }
-    .radio-inline+.radio-inline,
-    .checkbox-inline+.checkbox-inline {
-        margin-left: 0;
-    }
-    .checkbox-inline,
-    .radio-inline {
         padding-left: 0;
+        margin: 15px $grid-gutter-width/2;
     }
     .col-1 {
         width: 190px;
@@ -204,6 +189,7 @@
 .full-search-form {
     padding: 0 20px;
     .tabs-wrapper {
+        width: auto;
         margin: 0 -20px -10px;
     }
     .form-control {

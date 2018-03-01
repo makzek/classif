@@ -30,14 +30,6 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         this.dictSrv = injector.get(EosDictService);
     }
 
-    keys(data: Object): string[] {
-        if (data) {
-            return Object.keys(data);
-        } else {
-            return [];
-        }
-    }
-
     ngOnChanges() {
         setTimeout(() => {
             if (this.cardForm) {
@@ -77,6 +69,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
      */
     changeByPath(path: string, value: any) {
         let _value = null;
+
+        if (typeof value === 'string') {
+            value = value.trim();
+        }
+
         if (typeof value === 'boolean') {
             _value = +value;
         } else if (value === 'null') {
@@ -113,6 +110,13 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
         } else {
             return null;
+        }
+    }
+
+    isInvalid(fieldName: string): boolean {
+        if (this.cardForm) {
+            const control = this.cardForm.controls[fieldName];
+            return control && control.dirty && control.invalid && this.focusedField !== fieldName;
         }
     }
 }

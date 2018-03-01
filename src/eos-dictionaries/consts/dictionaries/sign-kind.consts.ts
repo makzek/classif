@@ -28,7 +28,7 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
         required: true,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
@@ -38,7 +38,7 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длинна 255 символов.'
     }, {
         key: 'DELETED',
         title: 'Логически удален',
