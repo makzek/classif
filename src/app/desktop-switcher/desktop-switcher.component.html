@@ -35,7 +35,7 @@
                 </span>
                 <span *ngIf="desk.id !== 'system'"
                     class="actions">
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" placement="bottom" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
+                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="tooltip-info" (click)="openEditForm($event, desk)"></span>
                 <span class="eos-icon eos-icon-close-black x-small"
                     tooltip="Удалить"
                     placement="bottom"
