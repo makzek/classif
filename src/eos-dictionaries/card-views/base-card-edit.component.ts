@@ -22,7 +22,7 @@ export class BaseCardEditComponent {
 
     protected dictSrv: EosDictService;
 
-    private _dates: any = {};
+    /* private _dates: any = {}; */
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
     }
@@ -52,7 +52,7 @@ export class BaseCardEditComponent {
         } else {
             _value = value;
         }
-        const oldValue = EosUtils.getValueByPath(this.data, path);
+        // const oldValue = EosUtils.getValueByPath(this.data, path);
         // EosUtils.setValueByPath(this.newData, path, _value);
         return EosUtils.getValueByPath(this.data, path) !== _value;
     }
