@@ -20,7 +20,8 @@
     <accordion-group #owners
         [(isOpen)]="status.showOwners">
         <div accordion-heading
-            class="xl-font">Владельцы кабинета <i class="fa fa-lg text-primary"
+            class="xl-font">Владельцы кабинета
+            <i class="fa fa-lg text-primary"
                 [ngClass]="{'fa-angle-up': status.showOwners, 'fa-angle-down': !status.showOwners}"></i>
         </div>
 
@@ -28,8 +29,7 @@
             *ngIf="editMode">
             <span class="btn-group"
                 dropdown>
-                            <button dropdownToggle class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
-
+                <button dropdownToggle class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
             <ul *dropdownMenu
                 class="dropdown-menu"
                 role="menu">
@@ -45,8 +45,7 @@
             </ul>
             </span>
             <button class="btn action-btn btn-primary-light"
-                (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span>
-                        </button>
+                (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span></button>
         </div>
         <div>
             <table class="table table-hover table-striped">
@@ -55,9 +54,9 @@
                         <th class="td-checkbox">
                             <span class="checkbox-inline"
                                 *ngIf="editMode">
-                                            <label class="checkbox" [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
-                                                <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
-                                                <span></span>
+                                <label class="checkbox" [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
+                                    <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
+                                    <span></span>
                             </label>
                             </span>
                         </th>
@@ -108,9 +107,7 @@
             <button [hidden]="!showScroll"
                 (mousedown)="startScrollToRight()"
                 (mouseup)="endScroll()"
-                class="btn btn-primary-light scroll-btn right"><span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span>
-                        </button>
-
+                class="btn btn-primary-light scroll-btn right"><span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span></button>
             <div class="table-responsive"
                 #tableEl>
                 <table class="table table-hover">
@@ -165,9 +162,9 @@
                 *ngFor="let fIndex of [0, 3, 6, 1, 4, 7, 2, 5, 8]">
                 <div class="minus-checkbox">
                     <label class="checkbox primary-text s-font">
-                                    <input type="checkbox" [disabled]="!editMode || !data.rec.FOLDER_List[fIndex]" name="{{'folder_'+fIndex}}" [ngModel]="data.rec.FOLDER_List[fIndex]['USER_COUNT']"
-                                    (ngModelChange)="changeByPath('rec.FOLDER_List['+ fIndex +'].USER_COUNT', $event)">
-                                    <span></span>{{folderTitle(data.rec.FOLDER_List[fIndex]['FOLDER_KIND'])}}</label>
+                        <input type="checkbox" [disabled]="!editMode || !data.rec.FOLDER_List[fIndex]" name="{{'folder_'+fIndex}}" [ngModel]="data.rec.FOLDER_List[fIndex]['USER_COUNT']"
+                            (ngModelChange)="changeByPath('rec.FOLDER_List['+ fIndex +'].USER_COUNT', $event)">
+                        <span></span>{{folderTitle(data.rec.FOLDER_List[fIndex]['FOLDER_KIND'])}}</label>
                 </div>
             </div>
         </div>

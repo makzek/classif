@@ -156,12 +156,14 @@ export class RecordDescriptor {
 
     getFieldDescription(aSet: E_FIELD_SET, data?: any): any {
         const _description = {
-            rec: {}
+            rec: {},
+            _list: []
         };
         const _descs = this.getFieldSet(aSet, data);
         if (_descs) {
             _descs.forEach((_f) => {
                 if (_f.type !== E_FIELD_TYPE.dictionary) {
+                    _description._list.push(_f.key);
                     _description.rec[_f.key] = {
                         title: _f.title,
                         length: _f.length,

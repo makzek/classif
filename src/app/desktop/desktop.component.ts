@@ -11,6 +11,7 @@ import { CONFIRM_LINK_DELETE } from '../consts/confirms.const';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 import { NAVIGATE_TO_ELEMENT_WARN } from '../consts/messages.consts';
+import { NOT_EMPTY_STRING } from 'eos-common/consts/common.consts';
 
 @Component({
     templateUrl: 'desktop.component.html',
@@ -21,6 +22,8 @@ export class DesktopComponent implements OnDestroy {
     deskId: string;
 
     historyToLeft = false;
+
+    notEmptyString = NOT_EMPTY_STRING;
 
     private _editingItem: IDeskItem;
     private _newTitle: string;

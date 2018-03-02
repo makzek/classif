@@ -29,7 +29,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 248,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
@@ -41,7 +41,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         required: true,
         pattern: NOT_EMPTY_STRING,
         /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены. Должно быть уникальным в пределах справочника',
+        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Должно быть уникальным в пределах справочника',
         /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
@@ -51,13 +51,13 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 255 символов.'
     }, {
         key: 'CODE',
         title: 'Code',
         type: 'string',
         length: 64,
-        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 64 символа.'
     }, {
         key: 'DELETED',
         title: 'DELETED',
@@ -92,14 +92,14 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 2000 символов.'
     }, {
         key: 'sev',
         title: 'Индекс СЭВ',
         type: 'dictionary',
         }],
     treeFields: ['CLASSIF_NAME'],
-    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME', 'sev'],
+    editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'NOTE', 'FULLNAME'],
     quickViewFields: ['FULLNAME', 'NOTE', 'sev'],  // CLASSIF_NAME is in shortQuickViewFields

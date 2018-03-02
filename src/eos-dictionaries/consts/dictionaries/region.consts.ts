@@ -44,14 +44,14 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа.'
     }, {
         key: 'NOTE',
         title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 255 символов.'
     }, {
         key: 'CODE',
         title: 'Код региона',
@@ -64,7 +64,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         title: 'Код ОКАТО',
         type: 'string',
         length: 11,
-        invalidMessage: 'Максимальная длина 11 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 11 символов.'
     }, {
         key: 'DELETED',
         title: 'DELETED',
@@ -87,7 +87,7 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 248 символов.'
     }],
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],

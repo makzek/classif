@@ -44,20 +44,20 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа.'
     }, {
         key: 'NOTE',
         title: 'Примечание',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 255 символов.'
     }, {
         key: 'CODE',
         title: 'Код',
         type: 'string',
         length: 64,
-        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 64 символа.'
     }, {
         key: 'DELETED',
         title: 'DELETED',
@@ -80,7 +80,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 64 символа. Пробелы в начале и в конце строки запрещены.'
+        invalidMessage: 'Максимальная длина 64 символа.'
     }],
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],

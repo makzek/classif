@@ -277,6 +277,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             case E_RECORD_ACTIONS.createRepresentative:
                 this._createRepresentative();
                 break;
+            case E_RECORD_ACTIONS.tableCustomization:
+                this._configColumns();
+                break;
             default:
                 console.warn('unhandled action', E_RECORD_ACTIONS[evt.action]);
         }
@@ -305,7 +308,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     onClick() {
         if (window.innerWidth <= 1500) {
-            this._sandwichSrv.changeDictState(false, false);
             this._sandwichSrv.changeDictState(false, true);
         }
     }
@@ -548,7 +550,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
 
-        this._dictSrv.openNode(this.visibleNodes[_idx].id);
+        this._dictSrv.openNodeFromList(this.visibleNodes[_idx]);
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {

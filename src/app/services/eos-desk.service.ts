@@ -195,7 +195,7 @@ export class EosDeskService {
 
         let res = Promise.resolve(null);
         if (deskView) {
-            deskView.VIEW_NAME = desk.name;
+            deskView.VIEW_NAME = desk.name.trim();
             res = this.viewManager.saveView(deskView);
         }
         res.then(() => {
@@ -214,7 +214,7 @@ export class EosDeskService {
 
         const viewMan = this.viewManager;
         const newDesc = viewMan.createView('clmanDesc');
-        newDesc.VIEW_NAME = desk.name;
+        newDesc.VIEW_NAME = desk.name.trim();
 
         return viewMan.saveView(newDesc)
             .then((isn_view) => {
@@ -232,6 +232,7 @@ export class EosDeskService {
      * @param name Name of desktop
      */
     public desktopExisted(name: string) {
+        name = name.trim();
         /* tslint:disable:no-bitwise */
         return !!~this._desksList.findIndex((_d) => _d.name === name);
         /* tslint:enable:no-bitwise */

@@ -1,15 +1,22 @@
-<div *ngIf="deskList" #dropDown="bs-dropdown" (onShown)="hint.hide()" bsDropdown class="btn-group eos-desktop-switcher" dropdown
-    [autoClose]="!innerClick" (click)="setInnerClick()">
-    <span dropdownToggle type="button" class="dropdown-button btn dropdown-toggle usual-border m-font">
+<div *ngIf="deskList"
+    #dropDown="bs-dropdown"
+    (onShown)="hint.hide()"
+    bsDropdown
+    class="btn-group eos-desktop-switcher"
+    dropdown
+    [autoClose]="!innerClick"
+    (click)="setInnerClick()">
+    <span dropdownToggle
+        type="button"
+        class="dropdown-button btn dropdown-toggle usual-border m-font">
         <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
             containerClass="tooltip-info" container="body">
             {{selectedDesk.name}}
         </span>
-        <span class="btn-icon">
-            <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
-        </span>
+    <span class="btn-icon"><span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span></span>
     </span>
-    <ul class="dropdown-menu" role="menu">
+    <ul class="dropdown-menu"
+        role="menu">
         <li *ngIf="updating">
             <div class="spinner-wrapper">
                 <div class="spinner-holder">
@@ -17,53 +24,97 @@
                 </div>
             </div>
         </li>
-        <li *ngFor="let desk of deskList" role="menuitem" class="menuitem" (click)="route(desk)">
-            <span [hidden]="desk.edited">
-                <span [hidden]="desk.edited" class="desktop-wrapper">
-                    <a class="dropdown-item">
-                        <span triggers="hover" tooltip="{{desk.name}}" placement="left" containerClass="tooltip-info">{{desk.name}}</span>
-                    </a>
+        <li *ngFor="let desk of deskList"
+            role="menuitem"
+            class="menuitem"
+            (click)="route(desk)">
+            <ng-container *ngIf="!desk.edited">
+                <span [hidden]="desk.edited"
+                    class="desktop-wrapper">
+                    <a class="dropdown-item"><span triggers="hover" tooltip="{{desk.name}}" placement="bottom" containerClass="tooltip-info">{{desk.name}}</span></a>
                 </span>
-                <span *ngIf="desk.id !== 'system'" class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small" tooltip="Редактировать" containerClass="tooltip-info" (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
+                <span *ngIf="desk.id !== 'system'"
+                    class="actions">
+                    <span class="eos-icon eos-icon-close-black x-small" tooltip="Удалить" placement="bottom" containerClass="tooltip-info" (click)="removeDesk(desk,$event)"></span>
+                <span class="eos-icon eos-icon-close-black x-small"
+                    tooltip="Удалить"
+                    placement="bottom"
+                    containerClass="tooltip-info"
+                    (click)="removeDesk(desk,$event)"></span>
                 </span>
-            </span>
-            <span [hidden]="!desk.edited">
+            </ng-container>
+            <ng-container *ngIf="desk.edited">
                 <div class="input-group">
-                    <input type="text" class="form-control light" id="nameForm" name="nameForm" #nameForm [(ngModel)]="deskName" maxlength="{{maxLength}}"
-                        required pattern="^\S(.*\S$|$)" />
+                    <input type="text"
+                        class="form-control light"
+                        id="nameForm"
+                        name="nameForm"
+                        #nameForm
+                        [(ngModel)]="deskName"
+                        maxlength="{{maxLength}}"
+                        required
+                        [pattern]="notEmptyString.source" />
                     <div class="input-group-btn">
-                        <button type="button" (click)="saveDesk(desk,$event)" class="btn btn-default" [disabled]="!deskName?.length || !nameForm.checkValidity()"
-                            tooltip="Сохранить" containerClass="tooltip-info">
+                        <button type="button"
+                            (click)="saveDesk(desk,$event)"
+                            class="btn btn-default"
+                            [disabled]="!nameForm.checkValidity()"
+                            tooltip="Сохранить"
+                            placement="bottom"
+                            containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-checkbox-black x-small"></span>
                         </button>
-                        <button type="button" (click)="cancelEdit(desk,$event)" class="btn btn-default" tooltip="Отменить" containerClass="tooltip-info">
+                        <button type="button"
+                            (click)="cancelEdit(desk,$event)"
+                            class="btn btn-default"
+                            tooltip="Отменить"
+                            placement="bottom"
+                            containerClass="tooltip-info">
                             <span class="eos-icon eos-icon-close-black x-small"></span>
                         </button>
                     </div>
                 </div>
-            </span>
+            </ng-container>
         </li>
         <ng-container *ngIf="deskList.length < 6">
             <li class="divider dropdown-divider"></li>
             <li class="menuitem">
-                <span *ngIf="!creating" class="create primary-text" (click)="openCreateForm()">Создать рабочий стол</span>
-                <span *ngIf="creating">
+                <span *ngIf="!creating"
+                    class="create primary-text"
+                    (click)="openCreateForm()">Создать рабочий стол</span>
+                <ng-container *ngIf="creating">
                     <div class="input-group">
-                        <input type="text" class="form-control light" id="createForm" name="createForm" #createForm placeholder="Название нового рабочего стола"
-                            [(ngModel)]="deskName" maxlength="{{maxLength}}" required pattern="^\S(.*\S$|$)" />
+                        <input type="text"
+                            class="form-control light"
+                            id="createForm"
+                            name="createForm"
+                            #createForm
+                            placeholder="Название нового рабочего стола"
+                            [(ngModel)]="deskName"
+                            maxlength="{{maxLength}}"
+                            required
+                            [pattern]="notEmptyString.source" />
                         <div class="input-group-btn">
-                            <button class="btn btn-default" (click)="create($event)" type="button" tooltip="Сохранить" containerClass="tooltip-info"
-                                [disabled]="!deskName?.length || !createForm.checkValidity()">
+                            <button class="btn btn-default"
+                                (click)="create($event)"
+                                type="button"
+                                tooltip="Сохранить"
+                                placement="bottom"
+                                containerClass="tooltip-info"
+                                [disabled]="!createForm.checkValidity()">
                                 <span class="eos-icon eos-icon-checkbox-black x-small"></span>
-                            </button>
-                            <button class="btn btn-default" (click)="cancelCreating($event)" type="button" tooltip="Отменить" containerClass="tooltip-info">
+        </button>
+                            <button class="btn btn-default"
+                                (click)="cancelCreating($event)"
+                                type="button"
+                                tooltip="Отменить"
+                                placement="bottom"
+                                containerClass="tooltip-info">
                                 <span class="eos-icon eos-icon-close-black x-small"></span>
                             </button>
                         </div>
                     </div>
-                </span>
+                </ng-container>
             </li>
         </ng-container>
     </ul>
