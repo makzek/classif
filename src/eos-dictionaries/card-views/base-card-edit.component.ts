@@ -127,9 +127,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     private isFormValid() {
         if (this.cardForm) {
             setTimeout(() => {
-                const invalid = this.cardForm.invalid ||
-                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1;
-                    this.formInvalid.emit(invalid);
+                const datesInvalid = Object.keys(this._dates).length ?
+                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1 : false;
+                const invalid = this.cardForm.invalid || datesInvalid;
+                this.formInvalid.emit(invalid);
             }, 0);
         }
     }

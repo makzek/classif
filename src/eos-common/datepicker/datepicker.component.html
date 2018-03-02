@@ -6,7 +6,7 @@
         [readonly]="isReadonly"
         [pattern]="datePattern"
         placeholder="{{placeholder}}"
-        [ngModel]="aDate | date:'dd.MM.yyyy'"
+        [ngModel]="aDate | date:'dd.MM.yyyy' | slice:0:10"
         (ngModelChange)="inputChanged($event)"
         tooltip="Формат даты ДД.ММ.ГГГГ"
         placement="bottom"
