@@ -13,7 +13,7 @@ import { NOT_EMPTY_STRING } from '../consts/input-validation';
 export class EosDataConvertService {
     // Todo: get from a remote source of question metadata
     // Todo: make asynchronous
-
+    // todo: refactor, remove hardcode, move into record description class
     /**
      * convert fields description and data in same object
      * but with Input for use it in dynamic form
@@ -22,7 +22,7 @@ export class EosDataConvertService {
      */
     getInputs(fieldsDescription: any[], data: any, editMode = true) {
         const inputs: any = {};
-        if (fieldsDescription) { // todo: refactor & remove hardcode
+        if (fieldsDescription) {
             Object.keys(fieldsDescription).forEach((_dict) => {
                 switch (_dict) {
                     case 'rec':
@@ -69,6 +69,7 @@ export class EosDataConvertService {
                                         required: fieldsDescription[_dict][_key].required,
                                         forNode: fieldsDescription[_dict][_key].forNode,
                                         value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        disabled: !editMode,
                                     });
                                     break;
                                 case E_FIELD_TYPE.date:
@@ -126,6 +127,7 @@ export class EosDataConvertService {
                             // options: fieldsDescription['printInfo']['GENDER'].options,
                             options: GENDERS,
                             pattern: NOT_EMPTY_STRING,
+                            disabled: !editMode,
                         });
                         inputs['printInfo.SURNAME'] = new StringInput({
                             key: 'printInfo.SURNAME',

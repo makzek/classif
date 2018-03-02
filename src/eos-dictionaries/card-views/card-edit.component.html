@@ -48,6 +48,7 @@
         (onChange)="recordChanged($event)"
         (invalid)="onInvalid($event)"></eos-visa-type-card-edit -->
                 <eos-security-card-edit #cardEditEl
+                    class="security-card-edit"
                     *ngSwitchCase="'security'"
                     [form]="form"
                     [inputs]="inputs"
@@ -57,6 +58,7 @@
                     (onChange)="recordChanged($event)"
                     (invalid)="onInvalid($event)"></eos-security-card-edit>
                 <eos-simple-card-edit #cardEditEl
+                    class="simple-card-edit"
                     *ngSwitchDefault
                     [form]="form"
                     [inputs]="inputs"

@@ -67,10 +67,12 @@ export class BaseCardEditComponent {
         }
     }
 
+    /* move into dynamic input
     isInvalid(fieldName: string): boolean {
         if (this.cardForm) {
             const control = this.cardForm.controls[fieldName];
             return control && control.dirty && control.invalid && this.focusedField !== fieldName;
         }
     }
+    */
 }
