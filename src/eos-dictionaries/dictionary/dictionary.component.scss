@@ -207,10 +207,6 @@
             border: 1px solid transparent;
         }
 
-        .date {
-            position: relative;
-        }
-
         .search {
             width: 320px;
 
@@ -240,17 +236,6 @@
         .icon {
             margin: 5px 10px;
             cursor: pointer;
-        }
-
-        .eos-datepicker {
-            display: inline-block;
-            width: 125px;
-            font-weight: bold;
-
-            input {
-                border-color: transparent;
-                box-shadow: none;
-            }
         }
     }
 

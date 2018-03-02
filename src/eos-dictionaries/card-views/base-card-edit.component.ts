@@ -22,9 +22,11 @@ export class BaseCardEditComponent {
 
     protected dictSrv: EosDictService;
 
+    private _dates: any = {};
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
     }
+
 
     /**
      * @deprecated implementation moved to CardEditComponent
@@ -50,7 +52,7 @@ export class BaseCardEditComponent {
         } else {
             _value = value;
         }
-
+        const oldValue = EosUtils.getValueByPath(this.data, path);
         // EosUtils.setValueByPath(this.newData, path, _value);
         return EosUtils.getValueByPath(this.data, path) !== _value;
     }
@@ -71,7 +73,23 @@ export class BaseCardEditComponent {
     isInvalid(fieldName: string): boolean {
         if (this.cardForm) {
             const control = this.cardForm.controls[fieldName];
+            // console.log(control, fieldName);
             return control && control.dirty && control.invalid && this.focusedField !== fieldName;
+        }
+    }
+
+    dateValid(fldName: string, valid: boolean) {
+        this._dates[fldName] = valid;
+        this.isFormValid();
+    }
+
+    private isFormValid() {
+        if (this.cardForm) {
+            setTimeout(() => {
+                const invalid = this.cardForm.invalid ||
+                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1;
+                    this.formInvalid.emit(invalid);
+            }, 0);
         }
     }
     */

@@ -90,7 +90,6 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         EosNoticeService,
         EosStorageService,
         EosUserProfileService,
-        { provide: LOCALE_ID, useValue: 'ru-RU' },
     ],
     bootstrap: [AppComponent],
 })

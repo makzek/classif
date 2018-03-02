@@ -8,15 +8,28 @@
     <li><a routerLink="/user">User REST test page</a></li>
 </ul>
 
-<div class="current-image" [ngStyle]="{'background-image': defaultImage}">
-        <eos-photo-uploader class="photo-uploader" (endUploading)="newImage($event)"></eos-photo-uploader>
+<div class="current-image"
+    [ngStyle]="{'background-image': defaultImage}">
+    <eos-photo-uploader class="photo-uploader"
+        (endUploading)="newImage($event)"></eos-photo-uploader>
 </div>
 
-<eos-datepicker [placeholder]="'Дата окончания действия'" [value]="date" [isReadonly]="false" (change)="change($event)"></eos-datepicker>
+<div class="row">
+    <div class="col-sm-2">
+        <eos-datepicker [placeholder]="'Дата окончания действия'"
+            [value]="date"
+            [isReadonly]="false"
+            (dateChange)="change($event)"></eos-datepicker>
+    </div>
+    <div class="col-sm-6">
+        <pre>{{this.date | json}}</pre>
+    </div>
+</div>
 
 <div>
     выбор из справочника<button (click)="chooseCL($event)">выбор из справочника</button>
-    <input type='text' name='__ClassifIds' id='__ClassifIds'/>
+    <input type='text'
+        name='__ClassifIds'
+        id='__ClassifIds' />
 
 </div>
-

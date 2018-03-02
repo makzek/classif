@@ -75,16 +75,40 @@
     }
     .date-filter-wrapper {
         display: inline-block;
-        height: 48px;
+        vertical-align: -webkit-baseline-middle;
+        vertical-align: middle;
+        line-height: 0;
+        /* height: 43px; */
+        /* position: relative; */
+        /* top: -7px; */
+        .date,
+        span {
+            vertical-align: -webkit-baseline-middle;
+            vertical-align: middle;
+            display: inline-block;
+            /* position: relative; */
+            /* top: 6px; */
+        }
         &.hidden {
             display: none;
         }
         .eos-datepicker {
+            display: inline-block;
+            width: 125px;
+            font-weight: bold;
+            /* position: relative; */
+            /* top: 6px; */
             input {
+                border-color: transparent;
+                box-shadow: none;
                 background-color: transparent;
                 color: black;
                 font-weight: normal;
+                &.ng-dirty.ng-invalid{
+                    border-color: $brand-danger;
+                }
             }
+
         }
     }
 }

@@ -10,7 +10,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     @Input() isReadonly: boolean;
     @Input() placeholder = '';
     // @Input() placement = 'bottom';
-    @Output() change: EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
+    @Output() dateValid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
 
@@ -18,7 +19,12 @@ export class DatepickerComponent implements OnInit, OnDestroy {
 
     placement = 'bottom';
     aDate: Date;
+    bsDate: Date;
+    focused = false;
+    valid = true;
 
+    readonly datePattern = /.*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19\d{2}|20\d{2}|2100).*?/;
+    private _manualChange: boolean;
     private _handler;
 
     constructor() {
@@ -43,6 +49,8 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
+        this.bsDate = this.aDate;
+
         window.addEventListener('scroll', this._handler = () => {
             this.datePicker.hide();
         }, true);
@@ -52,8 +60,41 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         window.removeEventListener('scroll', this._handler, true);
     }
 
-    emitChange(date: Date) {
-        this.change.emit(date);
+    dpChanged(date: Date) {
+        // console.log('dp changed', date);
+        if (!this._manualChange) {
+            this.aDate = date;
+            this.dateChange.emit(date);
+            this.valid = true;
+        }
+        this.dateValid.emit(this.valid);
+        this._manualChange = false;
+    }
+
+    inputChanged(sDate: string) {
+        let date: Date;
+        this._manualChange = true;
+        sDate = sDate.trim();
+        if (sDate) {
+            if (this.datePattern.test(sDate)) { // if correct format
+                // convert to UTC format then to Date
+                date = new Date(sDate.replace(this.datePattern, '$3-$2-$1T00:00:00.000Z'));
+            }
+
+            if (date && !isNaN(date.getTime())) {
+                this.valid = true;
+                this.bsDate = date;
+                this.dateChange.emit(date);
+            } else {
+                this.valid = false;
+                this.bsDate = null;
+                this.dateChange.emit(null);
+            }
+        } else {
+            this.valid = true;
+            this.bsDate = null;
+            this.dateChange.emit(null);
+        }
     }
 
     measureDistance() {
@@ -72,5 +113,13 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         }
         this.datePicker.toggle();
         this.datePicker.toggle();
+    }
+
+    onBlur() {
+        this.focused = false;
+    }
+
+    onFocus() {
+        this.focused = true;
     }
 }
