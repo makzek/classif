@@ -44,7 +44,7 @@
                 </button>
                 </div>
 
-                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <ul *dropdownMenu class="dropdown-menu menu-two-lvl" role="menu">
                     <li *ngFor="let type of addMenu" role="menuitem">
                         <button class="action-dropdown-item btn btn-primary-light"
                             (click)="doAction(item.type, type.params)">{{type.title}}</button>
