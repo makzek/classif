@@ -413,6 +413,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
         }
         // Распледеление остатка пространства
+        /*
         if (fullWidth < this.selectedEl.nativeElement.clientWidth) {
             let fieldCount = this.viewFields.length;
             if (this.customFields) {
@@ -422,7 +423,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             const width = remainingWidth / fieldCount;
             Object.keys(length).forEach(key => length[key] += width);
 
-        }
+        }*/
         this.length = length;
         body[0].removeChild(span);
     }
