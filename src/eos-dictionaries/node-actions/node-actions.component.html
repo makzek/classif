@@ -102,6 +102,7 @@
             </span>
         </ng-container>
         <ng-container *ngIf="action !== ADD_ACTION || !isTree">
+            <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
             <button [disabled]="!enabled"
                 class="btn btn-primary-light {{buttonClass}}"
                 [ngClass]="{active: isActive}"
@@ -109,6 +110,7 @@
                     <span [hidden]="isActive" [ngClass]="icon"></span>
                     <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
             </button>
+            </div>
         </ng-container>
     </span>
 </ng-template>
