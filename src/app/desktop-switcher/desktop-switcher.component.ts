@@ -91,7 +91,7 @@ export class DesktopSwitcherComponent {
         if ($evt) {
             $evt.stopPropagation();
         }
-        if (this._deskSrv.desktopExisted(this.deskName)) {
+        if (this._deskSrv.desktopExisted(this.deskName) && !desk.edited) {
             this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             this.updating = true;
