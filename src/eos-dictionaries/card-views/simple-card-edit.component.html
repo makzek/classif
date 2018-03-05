@@ -1,7 +1,6 @@
 <div class="simple-card-edit secondary-block">
     <article class="edit-content">
         <form #cardForm="ngForm"
-            *ngIf="data && data.rec && fieldsDescription.rec"
             class="form form-horizontal">
             <div class="form-group"
                 *ngFor="let key of fieldsDescription._list">
@@ -17,7 +16,7 @@
                     class="form-control m-font"
                     [ngModel]="data.rec[key]"
                     (ngModelChange)="change(key, 'rec', $event)"
-                    placeholder="{{fieldsDescription.rec[key].title}}"
+                    [placeholder]="fieldsDescription.rec[key].title"
                     [readonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     [required]="fieldsDescription.rec[key]?.required"
@@ -31,7 +30,7 @@
                     (focus)="focus(key)"
                     (blur)="blur()"
                     autocomplete="off"
-                    value=""
+                    value="default"
                     containerClass="tooltip-error"
                     container="body"
                     [tooltip]="fieldsDescription.rec[key]?.invalidMessage"

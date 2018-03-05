@@ -11,10 +11,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeId: string;
-    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
+    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('cardForm') cardForm: NgForm;
 
@@ -87,7 +87,7 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         // console.log('changeByPath', oldValue, _value);
         if (oldValue !== _value) {
             EosUtils.setValueByPath(this.data, path, _value);
-            this.onChange.emit(this.data);
+            this.formChanged.emit(this.data);
         }
     }
 
