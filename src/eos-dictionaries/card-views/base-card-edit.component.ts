@@ -12,8 +12,8 @@ export class BaseCardEditComponent {
     @Input() fieldsDescription: any;
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
-    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     // inputs: any;
     // newData: any;
@@ -86,9 +86,10 @@ export class BaseCardEditComponent {
     private isFormValid() {
         if (this.cardForm) {
             setTimeout(() => {
-                const invalid = this.cardForm.invalid ||
-                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1;
-                    this.formInvalid.emit(invalid);
+                const datesInvalid = Object.keys(this._dates).length ?
+                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1 : false;
+                const invalid = this.cardForm.invalid || datesInvalid;
+                this.formInvalid.emit(invalid);
             }, 0);
         }
     }

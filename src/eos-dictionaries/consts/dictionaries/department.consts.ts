@@ -88,6 +88,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 255,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',

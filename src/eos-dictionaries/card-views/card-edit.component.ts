@@ -19,9 +19,8 @@ export class CardEditComponent implements OnChanges, OnDestroy {
     @Input() fieldsDescription: any;
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
-
-    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('cardEditEl') baseCardEditRef: BaseCardEditComponent;
 
@@ -81,14 +80,14 @@ export class CardEditComponent implements OnChanges, OnDestroy {
                     Object.keys(newVal).forEach((path) => {
                         changed = this.changeByPath(path, newVal[path]) || changed;
                     });
-                    this.onChange.emit(changed);
+                    this.formChanged.emit(changed);
                 });
 
             this.form.statusChanges
                 .takeUntil(this.ngUnsubscribe)
                 .subscribe((status) => {
                     if (this._currentFormStatus !== status) {
-                        this.invalid.emit(status === 'INVALID');
+                        this.formInvalid.emit(status === 'INVALID');
                     }
                     this._currentFormStatus = status;
                 });
@@ -104,10 +103,10 @@ export class CardEditComponent implements OnChanges, OnDestroy {
     }
 
     recordChanged(data: any) {
-        this.onChange.emit(data);
+        this.formChanged.emit(data);
     }
 
-    onInvalid(data: any) {
-        this.invalid.emit(data);
+    recordInvalid(data: any) {
+        this.formInvalid.emit(data);
     }
 }

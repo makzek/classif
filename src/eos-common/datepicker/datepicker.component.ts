@@ -49,6 +49,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
+        this._manualChange = true;
         this.bsDate = this.aDate;
 
         window.addEventListener('scroll', this._handler = () => {

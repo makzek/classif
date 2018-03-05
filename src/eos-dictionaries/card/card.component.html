@@ -42,8 +42,8 @@
         [data]="nodeData"
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"
-        (onChange)="recordChanged($event)"
-        (invalid)="turnOffSave($event)"
+        (formChanged)="recordChanged($event)"
+        (formInvalid)="turnOffSave($event)"
         [dutysList]="dutysList"
         [fullNamesList]="fullNamesList"></eos-card-edit>
     <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true"

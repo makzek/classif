@@ -44,7 +44,6 @@ export class CreateNodeComponent {
                 this.dutysList = this._storageSrv.getItem('dutysList') || [];
                 this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
             }
-            // console.log('this.dutysList', this.dutysList);
         }, 0);
     }
 

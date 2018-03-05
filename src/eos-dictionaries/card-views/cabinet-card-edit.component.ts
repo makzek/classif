@@ -86,7 +86,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     add(owner: ICabinetOwner) {
         owner.data.ISN_CABINET = this.data.rec.ISN_CABINET;
-        this.onChange.emit(this.data);
+        this.formChanged.emit(this.data);
     }
 
     endScroll() {
@@ -121,7 +121,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
                 markedOwner.marked = false;
             });
         this.updateOwnersMarks();
-        this.onChange.emit(this.data);
+        this.formChanged.emit(this.data);
     }
 
     startScrollToLeft() {
@@ -154,7 +154,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         this.data.rec.FOLDER_List.forEach((folder) => {
             folder['USER_COUNT'] = +this.allMarkedAccess;
         });
-        this.onChange.emit(this.data);
+        this.formChanged.emit(this.data);
     }
 
     toggleAllOwnersMarks() {
