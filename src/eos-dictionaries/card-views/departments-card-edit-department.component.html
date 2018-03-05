@@ -6,21 +6,20 @@
                     for="CODE"
                     [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['CODE']?.required }">Код</label>
                 <input [readonly]="!editMode"
-                    
-                    id="CODE_DEP"
-                    name="CODE_DEP"
+                    id="CODE"
+                    name="CODE"
                     type="text"
                     class="form-control m-font "
                     [ngModel]="data.rec['CODE']"
                     (ngModelChange)="change('CODE', 'rec', $event)"
                     placeholder="Код"
                     [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CODE_DEP')"
+                    (focus)="focus('CODE')"
                     (blur)="blur()"
                     maxlength="64"
                     [pattern]="NOT_EMPTY_STRING"
                     [eosUnic]="true"
-                    [key]="'CODE'"
+                    key="CODE"
                     [checkingMethod]="checkUnic.bind(this)"
                     [inDict]="false"
                     [key]="'CODE'"
@@ -30,7 +29,7 @@
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="isInvalid('CODE_DEP')"
+                    [isOpen]="isInvalid('CODE')"
                     autocomplete="off"
                     triggers="">
 
@@ -222,7 +221,6 @@
                     triggers="">
                 <button *ngIf="editMode && data.rec['CARD_FLAG']"
                     class="btn btn-primary"
-                    [disabled]="lockOrgBtn"
                     (click)="chooseOrganiz()">выбрать</button>
             </div>
             <div class="form-group"

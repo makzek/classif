@@ -75,6 +75,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',

@@ -44,15 +44,15 @@
                             [ngClass]="{'unimportant-text': !editMode }"
                             for="CODE">Код</label>
                         <input [readonly]="!editMode"
-                            id="CODE_PERSON"
-                            name="CODE_PERSON"
+                            id="CODE"
+                            name="CODE"
                             type="text"
                             class="form-control m-font"
                             [ngModel]="data.rec['CODE']"
                             (ngModelChange)="change('CODE', 'rec', $event)"
                             placeholder="Код"
                             [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('CODE_PERSON')"
+                            (focus)="focus('CODE')"
                             (blur)="blur()"
                             maxlength="64"
                             [pattern]="NOT_EMPTY_STRING"
@@ -64,7 +64,7 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            [isOpen]="isInvalid('CODE_PERSON')"
+                            [isOpen]="isInvalid('CODE')"
                             autocomplete="off"
                             triggers="">
 

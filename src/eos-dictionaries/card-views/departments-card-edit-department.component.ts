@@ -9,7 +9,6 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent {
     // cannt handle because popup doesn't return on cancel or close events
 
-    lockOrgBtn = false;
     orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);
@@ -18,7 +17,6 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     chooseOrganiz() {
         const config = this.dictSrv.getApiConfig();
         if (config) {
-            // this.lockOrgBtn = true;
             const pageUrl = config.webBaseUrl + '/Pages/Classif/ChooseClassif.aspx?';
             const params = 'Classif=ORGANIZ_CL&value_id=__ClassifIds&skip_deleted=True&select_nodes=False&select_leaf=True&return_due=True';
             this._zone.runOutsideAngular(() => {
@@ -38,7 +36,6 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
                     this.orgName = org['CLASSIF_NAME'];
                     this.changeByPath('rec.DUE_LINK_ORGANIZ', org.DUE);
                 }
-                // this.lockOrgBtn = false;
             });
     }
 }
