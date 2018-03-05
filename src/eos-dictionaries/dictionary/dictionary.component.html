@@ -40,7 +40,12 @@
                     <ng-template #foundRecords>
                         <span class="item-count-found">
                             Найдено <span class="secondary-text">{{paginationConfig?.itemsQty}}</span> записей
-                            <button class="btn btn-primary-light" (click)=resetSearch()><span class="eos-icon eos-icon-close-blue small"></span></button>
+                            <button class="btn btn-primary-light"
+                                tooltip="Очистить результаты"
+                                placement="bottom"
+                                container="body"
+                                containerClass="tooltip-info"
+                                (click)=resetSearch()><span class="eos-icon eos-icon-close-blue small"></span></button>
                         </span>
                     </ng-template>
                 </div>
