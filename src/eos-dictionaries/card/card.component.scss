@@ -8,6 +8,9 @@
     overflow-y: auto;
     .edit-block-header,
     .edit-header {
+        background-color: #fafafa;
+        color: black;
+        border-color: #e6e6e6;
         min-height: $item-height;
         border-width: 1px;
         border-style: solid;

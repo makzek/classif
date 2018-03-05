@@ -66,6 +66,8 @@
         <label class="primary-text"
             [attr.for]="input.key">{{input.label}}</label>
         <eos-datepicker [ngClass]="{'readonly': readonly }"
+            [form]="form"
+            [formControlName]="input.key"
             [placeholder]="input.label"
             [value]="input.value"
             [isReadonly]="readonly"></eos-datepicker>

@@ -72,10 +72,10 @@ export class CardEditComponent implements OnChanges, OnDestroy {
             this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
             const isNode = this.data.rec && this.data.rec.IS_NODE;
             this.form = this._inputCtrlSrv.toFormGroup(this.inputs, isNode);
-            // console.log('form on change', this.form);
             this.form.valueChanges
                 .takeUntil(this.ngUnsubscribe)
                 .subscribe((newVal) => {
+                    console.log('new values', newVal);
                     let changed = false;
                     Object.keys(newVal).forEach((path) => {
                         changed = this.changeByPath(path, newVal[path]) || changed;

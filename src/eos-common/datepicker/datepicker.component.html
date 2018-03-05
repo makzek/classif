@@ -1,6 +1,7 @@
-<div class="eos-datepicker"
+<div class="eos-datepicker" [formGroup]="form"
     #dpw>
     <input type="text"
+        [formControlName]="formControlName"
         class="form-control"
         [ngClass]="{readonly: isReadonly}"
         [readonly]="isReadonly"
