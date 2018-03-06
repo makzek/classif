@@ -17,9 +17,8 @@
         (focus)="onFocus()"
         (blur)="onBlur()"
         maxlength="10">
-    <span #dpw
-        *ngIf="!isReadonly">
-    <a bsDatepicker
+    <span #dpw *ngIf="!isReadonly"><a
+        bsDatepicker
         #dp="bsDatepicker"
         [bsConfig]="bsConfig"
         [bsValue]="bsDate"
