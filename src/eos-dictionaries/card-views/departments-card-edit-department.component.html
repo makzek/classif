@@ -126,15 +126,16 @@
                         Краткое наименование подразделения
                     </label>
                 <input [readonly]="!editMode"
-                    id="CLASSIF_NAME_DEP"
-                    name="CLASSIF_NAME_DEP"
+                    id="title"
+                    name="title"
                     type="text"
                     class="form-control m-font "
                     [ngModel]="data.rec['CLASSIF_NAME']"
                     (ngModelChange)="change('CLASSIF_NAME', 'rec', $event)"
-                    placeholder="Краткое наименование подразделения"
+                    [placeholder]="fieldsDescription.rec.title.title"
+                    value="default"
                     [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CLASSIF_NAME_DEP')"
+                    (focus)="focus('title')"
                     (blur)="blur()"
                     required
                     maxlength="255"
@@ -144,7 +145,7 @@
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="isInvalid('CLASSIF_NAME_DEP')"
+                    [isOpen]="isInvalid('title')"
                     autocomplete="off"
                     triggers="">
             </div>
