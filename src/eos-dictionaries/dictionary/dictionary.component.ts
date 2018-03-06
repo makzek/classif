@@ -85,7 +85,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictTypes = E_DICT_TYPE;
 
     dictMode = 1;
-
+    // FEATURE TABLE SCROLL
+    public tableModeDuble = false;
+    left_sc = 0;
+    // END
     searchStartFlag = false; // flag begin search
 
     tableWidth: number;
@@ -220,6 +223,17 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     transitionEnd() {
         this._countColumnWidth();
     }
+
+    /*FEATURE TABLE SCROLL */
+    move(val: boolean) {
+        val ? this.left_sc -= 60 : this.left_sc += 60;
+        console.warn(this.left_sc);
+    }
+
+    downMoveTable() {
+
+    }
+    /*END */
 
     doAction(evt: IActionEvent) {
         switch (evt.action) {
@@ -412,6 +426,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
                 fullWidth += PADDING_SPACE + span.clientWidth;
             });
+        }
+        if (fullWidth < this.selectedEl.nativeElement.clientWidth) {
+            this.tableModeDuble = false;
+            let fieldCount = this.viewFields.length;
+            if (this.customFields) {
+                fieldCount += this.customFields.length;
+            }
+            const remainingWidth = this.selectedEl.nativeElement.clientWidth - fullWidth - 68;
+            const width = remainingWidth / fieldCount;
+            Object.keys(length).forEach(key => length[key] += width);
+        } else {
+            this.tableModeDuble = true;
         }
         this.length = length;
         body[0].removeChild(span);

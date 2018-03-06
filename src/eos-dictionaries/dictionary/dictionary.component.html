@@ -70,6 +70,7 @@
                         </label>
                     </span>
                     <span class="node-title">
+                        <div *ngIf="!tableModeDuble">
                         <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
@@ -87,6 +88,39 @@
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                     </span>
                         </span>
+                    </div>
+                    <!--SCROLING MODE-->
+                    <div *ngIf="tableModeDuble">
+                        <div class="fixed-block">
+                            <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                                <span class="text" (click)="orderByField(field.foreignKey)"
+                                    tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
+                                    {{field.customTitle || field.title}}
+                                    <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
+                                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="srolling-block">
+                            <button class="table-move to-left" (click)="move(true)">
+                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                            </button>
+                            <div class="move" [style.left.px]="left_sc">
+                                <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                                    <span class="text" (click)="orderByField(field.foreignKey)"
+                                        tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
+                                        {{field.customTitle || field.title}}
+                                        <span *ngIf="orderBy?.fieldKey === field.foreignKey" class="icon eos-icon small"
+                                            [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                    </span>
+                                </span>
+                            </div>
+                            <button class="table-move to-rigth" (click)="move(false)">
+                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <!--END-->
                     </span>
                 </div>
             </div>
