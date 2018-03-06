@@ -91,7 +91,8 @@ export class DesktopSwitcherComponent {
         if ($evt) {
             $evt.stopPropagation();
         }
-        if (this._deskSrv.desktopExisted(this.deskName) && !desk.edited) {
+        const findDesk = this._deskSrv.desktopExisted(this.deskName);
+        if (findDesk && findDesk.id !== desk.id) {
             this._msgSrv.addNewMessage(DANGER_DESK_CREATING);
         } else {
             this.updating = true;

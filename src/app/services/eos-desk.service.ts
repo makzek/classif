@@ -234,7 +234,7 @@ export class EosDeskService {
     public desktopExisted(name: string) {
         name = name.trim();
         /* tslint:disable:no-bitwise */
-        return !!~this._desksList.findIndex((_d) => _d.name === name);
+        return this._desksList.find((_d) => _d.name === name);
         /* tslint:enable:no-bitwise */
     }
     /**
