@@ -14,7 +14,7 @@ export class AppComponent {
     version: string;
     isAuthorized: boolean;
     breadcrumbView = true;
-    firstLoadAuth = false;
+    firstLoadAuth = true;
     private _containerRef: ViewContainerRef;
 
     constructor(

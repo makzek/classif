@@ -11,18 +11,21 @@
             type="text"
             [readonly]="readonly"
             [ngClass]="{'readonly': readonly}"
-            placeholder="{{input.label}}"
+            [placeholder]="input.label"
             [tooltip]="input.invalidMessage"
-            placement="right"
-            containerClass="tooltip-error"
-            container="body"
+            [placement]="tooltip.placement"
+            [containerClass]="tooltip.class"
+            [container]="tooltip.container"
             [isDisabled]="readonly"
-            [isOpen]="isDirty && !isValid"
+            [isOpen]="!focused && isDirty && !isValid"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
             triggers=""
             autocomplete="off">
     </ng-container>
     <ng-container *ngSwitchCase="'text'">
         <label class="primary-text"
+            [hidden]="input.hideLabel"
             [attr.for]="input.key"
             [ngClass]="{'required': input.required}">{{input.label}}</label>
         <textarea class="form-control m-font"
@@ -31,17 +34,20 @@
             [readonly]="readonly"
             [ngClass]="{'readonly': readonly}"
             [ngStyle]="{'height.px': input.height}"
-            placeholder="{{input.label}}"
+            [placeholder]="input.label"
             [tooltip]="input.invalidMessage"
-            placement="right"
-            containerClass="tooltip-error"
-            container="body"
+            [placement]="tooltip.placement"
+            [containerClass]="tooltip.class"
+            [container]="tooltip.container"
             [isDisabled]="readonly"
-            [isOpen]="isDirty && !isValid"
+            [isOpen]="!focused && isDirty && !isValid"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
             triggers=""></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'select'">
         <label class="primary-text"
+            [hidden]="input.hideLabel"
             [attr.for]="input.key"
             [ngClass]="{'required': input.required}">{{input.label}}</label>
         <select class="form-control m-font eos-select"
@@ -64,12 +70,37 @@
     </ng-container>
     <ng-container *ngSwitchCase="'date'">
         <label class="primary-text"
+            [hidden]="input.hideLabel"
             [attr.for]="input.key">{{input.label}}</label>
-        <eos-datepicker [ngClass]="{'readonly': readonly }"
-            [form]="form"
-            [formControlName]="input.key"
-            [placeholder]="input.label"
-            [value]="input.value"
-            [isReadonly]="readonly"></eos-datepicker>
+        <div class="eos-datepicker">
+            <input type="text"
+                [id]="input.key"
+                [formControlName]="input.key"
+                class="form-control"
+                [ngClass]="{readonly: readonly}"
+                [readonly]="readonly"
+                [placeholder]="input.label"
+                [tooltip]="input.invalidMessage"
+                [placement]="tooltip.placement"
+                [containerClass]="tooltip.class"
+                [container]="tooltip.container"
+                triggers=""
+                [isDisabled]="readonly"
+                [isOpen]="!focused && isDirty && !isValid"
+                (focus)="onFocus()"
+                (blur)="onBlur()"
+                maxlength="10">
+            <span #dpw><a *ngIf="!readonly"
+                bsDatepicker
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                [bsValue]="bsDate"
+                (bsValueChange)="dpChanged($event)"
+                [minDate]="bsConfig.minDate"
+                [maxDate]="bsConfig.maxDate"
+                [isDisabled]="readonly"
+                ><span class="eos-icon eos-icon-calendar-blue small"></span></a>
+            </span>
+        </div>
     </ng-container>
 </div>

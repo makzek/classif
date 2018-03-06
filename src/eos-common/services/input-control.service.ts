@@ -3,10 +3,40 @@ import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from
 
 import { InputBase } from '../core/inputs/input-base';
 import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
+import { IBaseInput, ISelectInput } from '../interfaces';
+import { StringInput } from '../core/inputs/string-input';
+import { TextInput } from '../core/inputs/text-input';
+import { CheckboxInput } from '../core/inputs/checkbox-input';
+import { DateInput } from '../core/inputs/date-input';
+import { DropdownInput } from '../core/inputs/select-input';
 
 @Injectable()
 export class InputControlService {
     constructor(private _dictSrv: EosDictService) { }
+
+    generateInputs(inputs: IBaseInput[]): InputBase<any>[] {
+        const set: InputBase<any>[] = [];
+        inputs.forEach((input) => {
+            switch (input.controlType) {
+                case 'text':
+                    set.push(new TextInput(input));
+                    break;
+                case 'checkbox':
+                    set.push(new CheckboxInput(input));
+                    break;
+                case 'date':
+                    set.push(new DateInput(input));
+                    break;
+                case 'select':
+                    set.push(new DropdownInput(<ISelectInput>input));
+                    break;
+                default:
+                    set.push(new StringInput(input));
+                    break;
+            }
+        });
+        return set;
+    }
 
     /**
      * make FormGroup from array of InputBase<any>

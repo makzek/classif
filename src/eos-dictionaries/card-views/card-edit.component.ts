@@ -75,7 +75,6 @@ export class CardEditComponent implements OnChanges, OnDestroy {
             this.form.valueChanges
                 .takeUntil(this.ngUnsubscribe)
                 .subscribe((newVal) => {
-                    console.log('new values', newVal);
                     let changed = false;
                     Object.keys(newVal).forEach((path) => {
                         changed = this.changeByPath(path, newVal[path]) || changed;

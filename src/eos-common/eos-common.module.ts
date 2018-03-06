@@ -44,11 +44,11 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         BsDatepickerModule.forRoot(),
         TooltipModule.forRoot(),
         AlertModule.forRoot(),
         ModalModule.forRoot(),
-        ReactiveFormsModule,
     ],
     exports: [
         ConfirmWindowComponent,

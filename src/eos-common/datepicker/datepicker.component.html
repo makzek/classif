@@ -1,5 +1,4 @@
-<div class="eos-datepicker" [formGroup]="form"
-    #dpw>
+<div class="eos-datepicker">
     <input type="text"
         [formControlName]="formControlName"
         class="form-control"
@@ -18,8 +17,9 @@
         (focus)="onFocus()"
         (blur)="onBlur()"
         maxlength="10">
-    <a *ngIf="!isReadonly"
-        bsDatepicker
+    <span #dpw
+        *ngIf="!isReadonly">
+    <a bsDatepicker
         #dp="bsDatepicker"
         [bsConfig]="bsConfig"
         [bsValue]="bsDate"
@@ -28,4 +28,5 @@
         [maxDate]="bsConfig.maxDate"
         [isDisabled]="isReadonly"
         placement="{{placement}}"><span class="eos-icon eos-icon-calendar-blue small"></span></a>
+    </span>
 </div>
