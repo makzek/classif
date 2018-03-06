@@ -70,8 +70,8 @@
                         </label>
                     </span>
                     <span class="node-title">
-                        <div *ngIf="!tableModeDuble">
-                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                        <div *ngIf="!length.tableModeDuble">
+                        <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                         {{field.customTitle || field.title}}
@@ -80,7 +80,7 @@
                             </span>
                         </span>
 
-                        <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                        <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                         {{field.customTitle || field.title}}
@@ -90,9 +90,9 @@
                         </span>
                     </div>
                     <!--SCROLING MODE-->
-                    <div *ngIf="tableModeDuble">
+                    <div *ngIf="length.tableModeDuble">
                         <div class="fixed-block">
-                            <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                            <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                 <span class="text" (click)="orderByField(field.foreignKey)"
                                     tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                     {{field.customTitle || field.title}}
@@ -105,8 +105,8 @@
                             <button class="table-move to-left" (click)="move(true)">
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
-                            <div class="move" [style.left.px]="left_sc">
-                                <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length[field.key]}">
+                            <div class="move" [style.left.px]="length.left_sc">
+                                <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
                                         {{field.customTitle || field.title}}

@@ -9,19 +9,44 @@
             </label>
         </span>
         <span class="node-info" (click)="selectNode()" (dblclick)="dbClickHandler($event)">
-            <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
-                [ngStyle]="{'width.px': length[field.key]}"
-                [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
-                <div class="table-field-ico" *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
-                    <span *ngIf="!node.isDeleted" (click)="viewNode()" class="folder small eos-icon eos-icon-folder-blue"></span>
-                    <span *ngIf="node.isDeleted" class="folder small eos-icon eos-icon-folder-grey"></span>
+            <div *ngIf="!length.tableModeDuble">
+                <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
+                    [ngStyle]="{'width.px': length.length[field.key]}"
+                    [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
+                    <div class="table-field-ico" *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
+                        <span *ngIf="!node.isDeleted" (click)="viewNode()" class="folder small eos-icon eos-icon-folder-blue"></span>
+                        <span *ngIf="node.isDeleted" class="folder small eos-icon eos-icon-folder-grey"></span>
+                    </div>
+                    <span>{{field.value}}</span>
+                </span>
+                <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
+                    id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.px': length.length[field.key]}">
+                    <span *ngIf="customValues">{{customValues[field.key]}}</span>
+                </span>
+            </div>
+            <!--SCROLING MODE-->
+            <div *ngIf="length.tableModeDuble">
+                <div class="fixed-block">
+                    <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
+                        [ngStyle]="{'width.px': length.length[field.key]}"
+                        [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
+                        <div class="table-field-ico" *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
+                            <span *ngIf="!node.isDeleted" (click)="viewNode()" class="folder small eos-icon eos-icon-folder-blue"></span>
+                            <span *ngIf="node.isDeleted" class="folder small eos-icon eos-icon-folder-grey"></span>
+                        </div>
+                        <span>{{field.value}}</span>
+                    </span>
                 </div>
-                <span>{{field.value}}</span>
-            </span>
-            <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
-                id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.px': length[field.key]}">
-                <span *ngIf="customValues">{{customValues[field.key]}}</span>
-            </span>
+                <div class="srolling-block">
+                    <div class="move" [style.left.px]="length.left_sc">
+                        <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
+                            id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.px': length.length[field.key]}">
+                            <span *ngIf="customValues">{{customValues[field.key]}}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--END-->
         </span>
         <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>

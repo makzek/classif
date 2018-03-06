@@ -75,7 +75,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     formValidated = false;
     hasChanges = false;
 
-    public length = {}; // Length column
+    public length = {
+        tableModeDuble: false,
+        left_sc: 0,
+        length: {}
+    }; // Length column
 
     orderBy: IOrderBy;
 
@@ -85,10 +89,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictTypes = E_DICT_TYPE;
 
     dictMode = 1;
-    // FEATURE TABLE SCROLL
-    public tableModeDuble = false;
-    left_sc = 0;
-    // END
     searchStartFlag = false; // flag begin search
 
     tableWidth: number;
@@ -226,8 +226,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     /*FEATURE TABLE SCROLL */
     move(val: boolean) {
-        val ? this.left_sc -= 60 : this.left_sc += 60;
-        console.warn(this.left_sc);
+        val ? this.length.left_sc -= 60 : this.length.left_sc += 60;
+        console.warn(this.length.left_sc);
     }
 
     downMoveTable() {
@@ -428,7 +428,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
         }
         if (fullWidth < this.selectedEl.nativeElement.clientWidth) {
-            this.tableModeDuble = false;
+            this.length.tableModeDuble = false;
             let fieldCount = this.viewFields.length;
             if (this.customFields) {
                 fieldCount += this.customFields.length;
@@ -437,9 +437,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             const width = remainingWidth / fieldCount;
             Object.keys(length).forEach(key => length[key] += width);
         } else {
-            this.tableModeDuble = true;
+            this.length.tableModeDuble = true;
         }
-        this.length = length;
+        this.length.length = length;
         body[0].removeChild(span);
     }
 
