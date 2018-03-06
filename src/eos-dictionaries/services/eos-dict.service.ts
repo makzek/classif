@@ -395,6 +395,17 @@ export class EosDictService {
         }
     }
 
+    public openNodeFromList(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        this._openNode(node);
+        this.updateViewParameters({ updatingInfo: true });
+        return this.dictionary.getFullNodeInfo(node.id)
+            .then((receivedNode: EosDictionaryNode) => {
+                node = receivedNode;
+                this.updateViewParameters({ updatingInfo: false });
+            })
+            .catch((err) => this._errHandler(err));
+    }
+
     public isRoot(nodeId: string): boolean {
         return this.dictionary.root && this.dictionary.root.id === nodeId;
     }
@@ -587,10 +598,7 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.openDictionary(dictionaryId)
             .then(() => this.dictionary.getFullNodeInfo(nodeId))
-            .then((node) => {
-                this._listNode = node;
-                return node;
-            })
+            .then((node) => node)
             .catch((err) => this._errHandler(err));
     }
 
@@ -684,6 +692,9 @@ export class EosDictService {
     }
 
     isUnic(val: string, key: string, inDict?: boolean, nodeId?: string): { [key: string]: any } {
+        if ('string' === typeof val) {
+            val = val.trim();
+        }
         if (inDict) {
             let _hasMatch = false;
             this.dictionary.nodes.forEach((_node) => {
@@ -889,6 +900,7 @@ export class EosDictService {
             if (node) {
                 node.isSelected = true;
             }
+            this._listNode = node;
             this._listNode$.next(node);
         }
     }

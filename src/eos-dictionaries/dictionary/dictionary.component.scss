@@ -35,6 +35,12 @@
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
+        .info-spinner {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            top: 44%;
+        }
     }
 
     .selected-wrapper {
@@ -203,7 +209,6 @@
 
         .date {
             position: relative;
-            top: 6px;
         }
 
         .search {
@@ -241,8 +246,6 @@
             display: inline-block;
             width: 125px;
             font-weight: bold;
-            position: relative;
-            top: 6px;
 
             input {
                 border-color: transparent;

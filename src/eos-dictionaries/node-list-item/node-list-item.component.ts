@@ -48,12 +48,17 @@ export class NodeListItemComponent implements OnInit, OnChanges {
 
     selectNode(): void {
         if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNode(this.node.id);
+            this._dictSrv.openNodeFromList(this.node);
         }
     }
 
     markNode() {
         this.mark.emit(this.node.marked);
+    }
+
+    dbClickHandler(evt: MouseEvent) {
+        evt.stopPropagation();
+        this.node.isNode ? this.openAsFolder() : this.viewNode();
     }
 
     viewNode() {
@@ -99,10 +104,9 @@ export class NodeListItemComponent implements OnInit, OnChanges {
      * @param node EosDictionaryNode
      * @description Navigate to param node. Open element as node
      */
-    public openAsFolder(evt: Event, node: EosDictionaryNode) {
-        evt.stopPropagation();
+    public openAsFolder() {
         const urlPeiase = this._router.url.split('/');
-        urlPeiase[3] = node.id;
+        urlPeiase[3] = this.node.id;
         const path = urlPeiase.join('/');
         this._router.navigate([path]);
     }

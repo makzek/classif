@@ -40,7 +40,12 @@
                     <ng-template #foundRecords>
                         <span class="item-count-found">
                             Найдено <span class="secondary-text">{{paginationConfig?.itemsQty}}</span> записей
-                            <button class="btn btn-primary-light" (click)=resetSearch()><span class="eos-icon eos-icon-close-blue small"></span></button>
+                            <button class="btn btn-primary-light"
+                                tooltip="Очистить результаты"
+                                placement="bottom"
+                                container="body"
+                                containerClass="tooltip-info"
+                                (click)=resetSearch()><span class="eos-icon eos-icon-close-blue small"></span></button>
                         </span>
                     </ng-template>
                 </div>
@@ -58,7 +63,7 @@
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
                     <span *ngIf="params.markItems" class="checkbox-inline">
-                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="right" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="bottom" container="body" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                             <span></span>
@@ -95,7 +100,10 @@
         </div>
     </div>
     <div class="opened-wrapper secondary-block" [ngClass]="{'open-info': currentState[1]}">
-        <eos-node-info-switcher (action)="doAction($event)"></eos-node-info-switcher>
+        <div class="info-spinner">
+            <eos-spinner *ngIf="params.updatingInfo" size="lg"></eos-spinner>
+        </div>
+        <eos-node-info-switcher *ngIf="!params.updatingInfo" (action)="doAction($event)"></eos-node-info-switcher>
     </div>
 </div>
 
