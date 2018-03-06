@@ -34,27 +34,29 @@
         id='__ClassifIds' />
 
 </div>
-<div class="card-edit secondary-block">
-    <article class="edit-content">
-        <!--form [formGroup]="form"
+<div class="test-form">
+    <div class="card-edit secondary-block">
+        <article class="edit-content">
+            <!--form [formGroup]="form"
             class="form"-->
-        <div class="row">
-            <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-8">
 
-                <div class="row">
-                    <div class="col-sm-6"
-                        *ngFor="let ctrl of inputs">
-                        <eos-dynamic-form-input [input]="ctrl"
-                            [form]="form"
-                            [readonly]="false">
-                        </eos-dynamic-form-input>
+                    <div class="row">
+                        <div class="col-sm-4"
+                            *ngFor="let ctrl of inputs">
+                            <eos-dynamic-input [input]="ctrl"
+                                [form]="form"
+                                [readonly]="false">
+                            </eos-dynamic-input>
+                        </div>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <pre>{{data | json}}</pre>
+                </div>
             </div>
-            <div class="col-sm-8">
-                <pre>{{data | json}}</pre>
-            </div>
-        </div>
-        <!-- /form -->
-    </article>
+            <!-- /form -->
+        </article>
+    </div>
 </div>

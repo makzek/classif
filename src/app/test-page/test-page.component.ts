@@ -35,6 +35,7 @@ const TEST_INPUTS = <IBaseInput[]>[{
     controlType: 'select',
     key: 'data.select',
     label: 'select',
+    required: true,
     options: [{
         value: 1,
         title: 'one'
@@ -45,12 +46,13 @@ const TEST_INPUTS = <IBaseInput[]>[{
         value: 3,
         title: 'three'
     }]
-    }, {
-        controlType: 'date',
-        key: 'data.date',
-        value: '01.01.2003',
-        label: 'date'
-    }];
+}, {
+    controlType: 'date',
+    key: 'data.date',
+    value: '01.01.2003',
+    invalidMessage: 'Некорректная дата',
+    label: 'date'
+}];
 
 @Component({
     selector: 'eos-test-page',

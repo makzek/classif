@@ -14,7 +14,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 /* components */
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
-import { DynamicFormInputComponent } from './dynamic-form-input/dynamic-form-input.component';
+import { DynamicInputComponent } from './dynamic-form-input/dynamic-input.component';
+import { DynamicInputCheckboxComponent } from './dynamic-form-input/dynamic-input-checkbox.component';
+import { DynamicInputDateComponent } from './dynamic-form-input/dynamic-input-date.component';
+import { DynamicInputSelectComponent } from './dynamic-form-input/dynamic-input-select.component';
+import { DynamicInputStringComponent } from './dynamic-form-input/dynamic-input-string.component';
+import { DynamicInputTextComponent } from './dynamic-form-input/dynamic-input-text.component';
 import { InfoComponent } from './info/info.component';
 import { MessagesComponent } from './messages/messages.component';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
@@ -39,7 +44,12 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         PhotoUploaderComponent,
         DatepickerComponent,
         UnicValidatorDirective,
-        DynamicFormInputComponent,
+        DynamicInputComponent,
+        DynamicInputCheckboxComponent,
+        DynamicInputDateComponent,
+        DynamicInputSelectComponent,
+        DynamicInputStringComponent,
+        DynamicInputTextComponent,
     ],
     imports: [
         BrowserModule,
@@ -62,7 +72,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         DatepickerComponent,
         // TextInputComponent,
         UnicValidatorDirective,
-        DynamicFormInputComponent,
+        DynamicInputComponent,
         // DataConvertService,
     ],
     entryComponents: [

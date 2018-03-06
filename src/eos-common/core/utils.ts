@@ -4,9 +4,14 @@ export class EosUtils {
         return d.getFullYear() +
             '-' + pad(d.getMonth() + 1) +
             '-' + pad(d.getDate());
-            /*'T' + pad(d.getHours()) +
-            ':' + pad(d.getMinutes()) +
-            ':' + pad(d.getSeconds()); */
+        /*'T' + pad(d.getHours()) +
+        ':' + pad(d.getMinutes()) +
+        ':' + pad(d.getSeconds()); */
+    }
+
+    static dateForInput(d: Date): string {
+        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('.');
     }
 
     static setValueByPath(data: any, path: string, value: any): any {

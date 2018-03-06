@@ -1,0 +1,36 @@
+<div [formGroup]="form"
+    [tooltip]="input.invalidMessage"
+    [placement]="tooltipCfg.placement"
+    [containerClass]="tooltipCfg.class"
+    [container]="tooltipCfg.container"
+    [isDisabled]="readonly"
+    [isOpen]="!focused && isDirty && !isValid"
+    triggers="">
+    <label class="primary-text"
+        [hidden]="input.hideLabel"
+        [attr.for]="input.key">{{input.label}}</label>
+    <div class="eos-datepicker">
+        <input type="text"
+            ng-model
+            [id]="input.key"
+            [formControlName]="input.key"
+            class="form-control"
+            [ngClass]="{readonly: readonly}"
+            [readonly]="readonly"
+            [placeholder]="input.label"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            maxlength="10">
+        <span #dpw><a *ngIf="!readonly"
+    bsDatepicker
+    #dp="bsDatepicker"
+    [bsConfig]="bsConfig"
+    [bsValue]="bsDate"
+    (bsValueChange)="dpChanged($event)"
+    [minDate]="bsConfig.minDate"
+    [maxDate]="bsConfig.maxDate"
+    [isDisabled]="readonly"
+    ><span class="eos-icon eos-icon-calendar-blue small"></span></a>
+        </span>
+    </div>
+</div>

@@ -150,12 +150,12 @@
     }
     .declination-wrapper {
         margin-top: 0;
-        eos-dynamic-form-input {
+        eos-dynamic-input {
             display: block;
             width: 30%;
             margin-right: 40px;
         }
-        eos-dynamic-form-input:last-child {
+        eos-dynamic-input:last-child {
             margin-right: 0;
         }
     }
