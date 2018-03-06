@@ -49,11 +49,12 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
-        this._manualChange = true;
         this.bsDate = this.aDate;
 
         window.addEventListener('scroll', this._handler = () => {
-            this.datePicker.hide();
+            if (this.datePicker) {
+                this.datePicker.hide();
+            }
         }, true);
     }
 
@@ -73,10 +74,10 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     inputChanged(sDate: string) {
-        let date: Date;
         this._manualChange = true;
-        sDate = sDate.trim();
         if (sDate) {
+            let date: Date;
+            sDate = ('string' === typeof sDate) ? sDate.trim() : sDate;
             if (this.datePattern.test(sDate)) { // if correct format
                 // convert to UTC format then to Date
                 date = new Date(sDate.replace(this.datePattern, '$3-$2-$1T00:00:00.000Z'));
@@ -96,24 +97,27 @@ export class DatepickerComponent implements OnInit, OnDestroy {
             this.bsDate = null;
             this.dateChange.emit(null);
         }
+        this.dateValid.emit(this.valid);
     }
 
     measureDistance() {
-        if (window.innerHeight - this.datePickerWrapper.nativeElement.getBoundingClientRect().bottom >= 308) {
-            this.placement = 'bottom';
-        } else {
-            if (this.datePickerWrapper.nativeElement.getBoundingClientRect().top >= 308) {
-                this.placement = 'top';
+        if (this.datePicker) {
+            if (window.innerHeight - this.datePickerWrapper.nativeElement.getBoundingClientRect().bottom >= 308) {
+                this.placement = 'bottom';
             } else {
-                if (this.datePickerWrapper.nativeElement.getBoundingClientRect().left >= 318) {
-                    this.placement = 'left';
+                if (this.datePickerWrapper.nativeElement.getBoundingClientRect().top >= 308) {
+                    this.placement = 'top';
                 } else {
-                    this.placement = 'right';
+                    if (this.datePickerWrapper.nativeElement.getBoundingClientRect().left >= 318) {
+                        this.placement = 'left';
+                    } else {
+                        this.placement = 'right';
+                    }
                 }
             }
+            this.datePicker.toggle();
+            this.datePicker.toggle();
         }
-        this.datePicker.toggle();
-        this.datePicker.toggle();
     }
 
     onBlur() {
