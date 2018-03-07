@@ -31,6 +31,7 @@ import { EosMessageService } from './services/eos-message.service';
 import { InputControlService } from './services/input-control.service';
 
 /* directives */
+import { EosDateMaskDirective } from './directives/date-mask.directive';
 import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
 
@@ -44,6 +45,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         PhotoUploaderComponent,
         DatepickerComponent,
         UnicValidatorDirective,
+        EosDateMaskDirective,
         DynamicInputComponent,
         DynamicInputCheckboxComponent,
         DynamicInputDateComponent,
