@@ -90,7 +90,7 @@
                         </span>
                     </div>
                     <!--SCROLING MODE-->
-                    <div *ngIf="length.tableModeDuble">
+                    <div *ngIf="length.tableModeDuble" class="scroll-mode-wrapper">
                         <div class="fixed-block">
                             <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                 <span class="text" (click)="orderByField(field.foreignKey)"
@@ -102,10 +102,13 @@
                             </span>
                         </div>
                         <div class="srolling-block">
-                            <button class="table-move to-left" (click)="move(true)">
+                            <button class="table-move to-left"
+                                (click)="move(true)"
+                                (mousedown)="startScrollToLeft()"
+                                (mouseup)="endScroll()">
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
-                            <div class="move" [style.left.px]="length.left_sc">
+                            <div #moveBlock class="move" [style.left.px]="length.left_sc">
                                 <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
                                         tooltip="{{field.title}}" placement="bottom" container="body" containerClass="tooltip-info">
@@ -115,7 +118,10 @@
                                     </span>
                                 </span>
                             </div>
-                            <button class="table-move to-rigth" (click)="move(false)">
+                            <button class="table-move to-rigth"
+                                (click)="move(false)"
+                                (mousedown)="startScrollToRight()"
+                                (mouseup)="endScroll()">
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
                         </div>

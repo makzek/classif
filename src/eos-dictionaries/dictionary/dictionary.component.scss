@@ -337,11 +337,15 @@
 }
 
 /*Feature table-scroll*/
+.scroll-mode-wrapper {
+    height: $item-height;
+}
+
 .move {
     position: absolute;
     display: inline-block;
-    width: 3000px;
-    transition: left 1s;
+    white-space: nowrap;
+    transition: left .2s;
 }
 
 .table-move {
@@ -356,6 +360,10 @@
 .to-left {
     left: 0;
     background: linear-gradient(90deg, #fafafa 60%, #fafafa00 100%);
+}
+
+.to-left:focus, .to-rigth:focus {
+    outline: 0 none !important;
 }
 
 .to-rigth {

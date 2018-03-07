@@ -25,7 +25,7 @@
                 </span>
             </div>
             <!--SCROLING MODE-->
-            <div *ngIf="length.tableModeDuble">
+            <div *ngIf="length.tableModeDuble" class="scroll-mode-wrapper">
                 <div class="fixed-block">
                     <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
                         [ngStyle]="{'width.px': length.length[field.key]}"
@@ -39,7 +39,7 @@
                 </div>
                 <div class="srolling-block">
                     <div class="move" [style.left.px]="length.left_sc">
-                        <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
+                        <span *ngFor="let field of customFields; let i = index" #el
                             id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.px': length.length[field.key]}">
                             <span *ngIf="customValues">{{customValues[field.key]}}</span>
                         </span>
