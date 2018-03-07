@@ -24,7 +24,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     valid = true;
 
     readonly datePattern = /.*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19\d{2}|20\d{2}|2100).*?/;
-    private _manualChange: boolean;
+    // private _manualChange: boolean;
     private _handler;
 
     constructor() {
@@ -63,18 +63,19 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     dpChanged(date: Date) {
-        if (!this._manualChange) {
-            this.aDate = date;
-            this.valid = true;
-            this.dateChange.emit(date);
-            this.dateValid.emit(this.valid);
-        }
-        this._manualChange = false;
+        date.setHours(0, 0, 0, 0);
+        // if (!this._manualChange) {
+        this.aDate = date;
+        this.valid = true;
+        this.dateChange.emit(date);
+        this.dateValid.emit(this.valid);
+        // }
+        // this._manualChange = false;
     }
 
     inputChanged(sDate: string) {
         let date: Date = null;
-        this._manualChange = true;
+        // this._manualChange = true;
         if (sDate) {
             sDate = ('string' === typeof sDate) ? sDate.trim() : sDate;
             if (this.datePattern.test(sDate)) { // if correct format
