@@ -45,10 +45,11 @@
                     class="form-control m-font"
                     [ngModel]="data.rec['GRIF_NAME']"
                     (ngModelChange)="change('GRIF_NAME', 'rec', $event)"
-                    placeholder="Наименование грифа"
+                    [placeholder]="fieldsDescription.rec['GRIF_NAME'].title"
                     [readonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     [pattern]="NOT_EMPTY_STRING"
+                    value="-"
                     required
                     maxlength="64"
                     [eosUnic]="true"
