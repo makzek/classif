@@ -196,7 +196,7 @@
 .full-search-settings-container {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    margin: 5px 0;
+    margin-left: 5px 0;
     font-size: 0;
 
     form {
@@ -207,11 +207,17 @@
         text-transform: none;
     }
 
+    .radio-inline:first-child {
+        height: 32px;
+        padding-left: 0;
+        margin: 15px ($grid-gutter-width / 2);
+    }
+
     .radio-inline,
     .checkbox-inline {
         height: 32px;
         padding-left: 0;
-        margin: 15px ($grid-gutter-width / 2);
+        margin: 15px 20px 15px 0;
     }
 
     .col-1 {
