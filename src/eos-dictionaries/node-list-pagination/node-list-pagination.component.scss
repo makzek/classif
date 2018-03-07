@@ -6,35 +6,35 @@
     border: 1px solid transparent;
     display: -ms-grid;
     display: grid; // sass-lint:disable-line no-duplicate-properties
-    -ms-grid-columns: 330px 1fr 282px 48px;
-    grid-template-columns: 330px 1fr 282px 48px;
+    -ms-grid-columns: auto 1fr 288px 48px;
+    grid-template-columns: auto 1fr 288px 48px;
     position: fixed;
     bottom: 60px;
     left: $grid-gutter-width / 2;
     right: $grid-gutter-width / 2;
     transition: 300ms ease-in-out;
     .pagination {
+        border-right: 1px solid;
+        border-color: $border-color-main-theme;
+        border-radius: 0;
         display: flex;
         margin: 0;
+        .pag-btn {
+            background-color: $modal-block-background-main-theme;
+            width: $item-width;
+            height: $item-height;
+            border-width: 0;
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+        .pag-btn:active {
+            color: $button-color-main-theme;
+        }
     }
     .btn {
         line-height: inherit;
         font: inherit;
-    }
-    .pag-btn {
-        background-color: $modal-block-background-main-theme;
-        width: $item-width;
-        height: $item-height;
-        border-width: 0;
-        border-right-width: 1px;
-        border-right-style: solid;
-        &:disabled {
-            cursor: not-allowed;
-        }
-        &:hover:not(:disabled) {
-            border-width: 1px;
-            border-style: solid;
-        }
     }
     .count-select-text {
         line-height: $item-height;
@@ -43,6 +43,9 @@
         grid-column: 3;
         border-left-width: 1px;
         border-left-style: solid;
+        span {
+            margin-left: 24px;
+        }
     }
 
     .count-drop-icon {
@@ -57,7 +60,6 @@
     }
     .show-more {
         position: relative;
-        left: -5px;
         height: $item-height;
         padding: 0 10px;
         background: transparent;
