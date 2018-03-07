@@ -49,7 +49,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
-        this.bsDate = this.aDate;
+        // this.bsDate = this.aDate;
 
         window.addEventListener('scroll', this._handler = () => {
             if (this.datePicker) {
@@ -63,20 +63,19 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     dpChanged(date: Date) {
-        // console.log('dp changed', date);
         if (!this._manualChange) {
             this.aDate = date;
-            this.dateChange.emit(date);
             this.valid = true;
+            this.dateChange.emit(date);
+            this.dateValid.emit(this.valid);
         }
-        this.dateValid.emit(this.valid);
         this._manualChange = false;
     }
 
     inputChanged(sDate: string) {
+        let date: Date = null;
         this._manualChange = true;
         if (sDate) {
-            let date: Date;
             sDate = ('string' === typeof sDate) ? sDate.trim() : sDate;
             if (this.datePattern.test(sDate)) { // if correct format
                 // convert to UTC format then to Date
@@ -85,18 +84,14 @@ export class DatepickerComponent implements OnInit, OnDestroy {
 
             if (date && !isNaN(date.getTime())) {
                 this.valid = true;
-                this.bsDate = date;
-                this.dateChange.emit(date);
             } else {
                 this.valid = false;
-                this.bsDate = null;
-                this.dateChange.emit(null);
+                date = null;
             }
         } else {
             this.valid = true;
-            this.bsDate = null;
-            this.dateChange.emit(null);
         }
+        this.dateChange.emit(date);
         this.dateValid.emit(this.valid);
     }
 
