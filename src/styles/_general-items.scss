@@ -157,6 +157,10 @@ input[type=text]::-ms-clear {
         height: $item-height;
         margin-right: 40px;
     }
+
+    .tab-item:last-child {
+        margin: 0;
+    }
 }
 
 .btn {
