@@ -46,8 +46,14 @@
                             <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['fullPosition']?.title}}</span>
                             <br>
                             <span class="flex-wrapper">
-                                <span *ngIf="nodeDataFull.rec['POST_H']" class="eos-icon eos-icon-star-black small field-value boss-icon"></span>
                                 <span class="field-value m-font">{{nodeDataFull.rec['FULLNAME']}}</span>
+                            </span>
+                        </div>
+                        <div class="field">
+                            <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['POST_H']?.title}}</span>
+                            <br>
+                            <span class="flex-wrapper">
+                                <span class="field-value m-font">{{getRole(nodeDataFull.rec['POST_H'])}}</span>
                             </span>
                         </div>
                     </ng-template>
