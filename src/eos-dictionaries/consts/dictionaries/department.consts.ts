@@ -162,8 +162,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'DEPARTMENT_INDEX',
     }, {
         key: 'POST_H',
-        title: 'Начальник',
-        type: 'boolean',
+        title: 'Роль',
+        type: 'number',
     }, {
         key: 'CARD_FLAG',
         title: 'Картотека',
