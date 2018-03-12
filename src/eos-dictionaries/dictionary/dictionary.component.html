@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="table-wrapper block">
+        <div class="table-wrapper block" #table>
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
                     <span *ngIf="params.markItems" class="checkbox-inline">
@@ -100,14 +100,15 @@
                                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                 </span>
                             </span>
-                        </div>
-                        <div class="srolling-block" #wrMoveBlock>
-                            <button class="table-move to-left"
+                            <button class="table-move to-rigth"
                                 (click)="move(true)"
                                 (mousedown)="startScrollToLeft()"
                                 (mouseup)="endScroll()">
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
+                        </div>
+                        <div class="table-shadow" [style.height.px]="table.clientHeight"></div>
+                        <div class="srolling-block" #wrMoveBlock>
                             <div #moveBlock class="move" [style.left.px]="length.left_sc">
                                 <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
                                     <span class="text" (click)="orderByField(field.foreignKey)"
@@ -122,7 +123,7 @@
                                 (click)="move(false)"
                                 (mousedown)="startScrollToRight()"
                                 (mouseup)="endScroll()">
-                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small rigth"></span>
                             </button>
                         </div>
                     </div>
