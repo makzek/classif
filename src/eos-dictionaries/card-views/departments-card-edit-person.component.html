@@ -37,7 +37,6 @@
                             type="text"
                             class="form-control m-font readonly"
                             [ngClass]="{'GENDER-placeholder': editMode }"
-                            placeholder="Пол"
                             [value]="getGender(data['printInfo']['GENDER'])" />
                     </div>
                     <div class="form-group">
@@ -45,15 +44,15 @@
                             [ngClass]="{'unimportant-text': !editMode }"
                             for="CODE">Код</label>
                         <input [readonly]="!editMode"
-                            id="CODE_PERSON"
-                            name="CODE_PERSON"
+                            id="CODE"
+                            name="CODE"
                             type="text"
                             class="form-control m-font"
                             [ngModel]="data.rec['CODE']"
                             (ngModelChange)="change('CODE', 'rec', $event)"
                             placeholder="Код"
                             [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('CODE_PERSON')"
+                            (focus)="focus('CODE')"
                             (blur)="blur()"
                             maxlength="64"
                             [pattern]="NOT_EMPTY_STRING"
@@ -65,8 +64,7 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
-                            [isOpen]="isInvalid('CODE_PERSON')"
+                            [isOpen]="isInvalid('CODE')"
                             autocomplete="off"
                             triggers="">
 
@@ -92,7 +90,6 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
                             [isOpen]="isInvalid('indexPerson')"
                             autocomplete="off"
                             triggers="">
@@ -105,7 +102,7 @@
                             id="SEV"
                             name="SEV"
                             type="text"
-                            class="form-control m-font "
+                            class="form-control m-font"
                             [ngModel]="data['sev']['GLOBAL_ID']"
                             (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
                             placeholder="Индекс СЭВ"
@@ -118,7 +115,6 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
                             [isOpen]="isInvalid('SEV')"
                             autocomplete="off"
                             triggers="">
@@ -129,10 +125,10 @@
                             for="START_DATE">Начало действия</label>
                         <eos-datepicker [placeholder]="'Начало действия'"
                             [value]="data.rec['START_DATE']"
-                            (change)="change('START_DATE', 'rec', $event)"
+                            (dateChange)="change('START_DATE', 'rec', $event)"
+                            (dateValid)="dateValid('START_DATE', $event)"
                             [isReadonly]="!editMode"
-                            [ngClass]="{'readonly': !editMode }"
-                            placement="bottom"></eos-datepicker>
+                            [ngClass]="{'readonly': !editMode }"></eos-datepicker>
                     </div>
                     <div class="form-group">
                         <label class="primary-text"
@@ -140,7 +136,8 @@
                             for="END_DATE">Окончание действия</label>
                         <eos-datepicker [placeholder]="'Окончание действия'"
                             [value]="data.rec['END_DATE']"
-                            (change)="change('END_DATE', 'rec', $event)"
+                            (dateChange)="change('END_DATE', 'rec', $event)"
+                            (dateValid)="dateValid('END_DATE', $event)"
                             [isReadonly]="!editMode"
                             [ngClass]="{'readonly': !editMode }"
                             placement="bottom"></eos-datepicker>
@@ -160,7 +157,7 @@
                             (ngModelChange)="change('SURNAME', 'printInfo', $event)"
                             placeholder="Фамилия"
                             [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('SURNAME')"
+                            (focus)="focus('SURNAME_PRINT')"
                             (blur)="blur()"
                             maxlength="64"
                             [pattern]="NOT_EMPTY_STRING"
@@ -168,8 +165,7 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
-                            [isOpen]="isInvalid('SURNAME')"
+                            [isOpen]="isInvalid('SURNAME_PRINT')"
                             autocomplete="off"
                             triggers="">
                     </div>
@@ -195,7 +191,6 @@
                                 [isDisabled]="!editMode"
                                 placement="bottom"
                                 containerClass="tooltip-error"
-                                container="body"
                                 [isOpen]="isInvalid('NAME')"
                                 autocomplete="off"
                                 triggers="">
@@ -221,7 +216,6 @@
                                 [isDisabled]="!editMode"
                                 placement="bottom"
                                 containerClass="tooltip-error"
-                                container="body"
                                 [isOpen]="isInvalid('PATRON')"
                                 autocomplete="off"
                                 triggers="">
@@ -238,14 +232,15 @@
                             id="SURNAME"
                             name="SURNAME"
                             type="text"
-                            class="form-control m-font "
+                            class="form-control m-font"
                             [ngModel]="data.rec['SURNAME']"
                             (ngModelChange)="change('SURNAME', 'rec', $event)"
-                            placeholder="Фамилия И.О."
+                            [placeholder]="fieldsDescription.rec.SURNAME.title"
+                            value="default"
                             [ngClass]="{'readonly': !editMode }"
                             (focus)="focus('SURNAME')"
                             (blur)="blur()"
-                            required
+                            [required]="fieldsDescription.rec.SURNAME.required"
                             maxlength="{{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}}"
                             [pattern]="NOT_EMPTY_STRING"
                             tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
@@ -253,7 +248,6 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
                             [isOpen]="isInvalid('SURNAME')"
                             autocomplete="off"
                             triggers="">
@@ -266,35 +260,28 @@
                                         Краткое наименование должности
                             </label>
                             <input [readonly]="!editMode"
-                                *ngIf="editMode"
                                 id="DUTY"
                                 name="DUTY"
                                 type="text"
                                 class="form-control m-font  duty"
                                 [ngModel]="data.rec['DUTY']"
                                 (ngModelChange)="change('DUTY', 'rec', $event)"
-                                placeholder="Краткое наименование должности"
+                                [placeholder]="fieldsDescription.rec.DUTY.title"
+                                [required]="fieldsDescription.rec.DUTY.required"
+                                value="default"
                                 [ngClass]="{'readonly': !editMode }"
                                 (focus)="focus('DUTY')"
                                 (blur)="blur()"
-                                required
                                 maxlength="{{252 - data.rec['SURNAME']?.length}}"
                                 [pattern]="NOT_EMPTY_STRING"
                                 tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
-
                                 containerClass="tooltip-error"
-                                container="body"
                                 [isDisabled]="!editMode"
                                 placement="bottom"
                                 [isOpen]="isInvalid('DUTY')"
                                 autocomplete="off"
                                 [typeahead]="dutysList"
-                                container="body"
                                 triggers="">
-                            <div *ngIf="!editMode && data.rec['DUTY']"
-                                class="field-value">{{data.rec['DUTY']}}</div>
-                            <div *ngIf="!editMode && !data.rec['DUTY']"
-                                class="placeholder field-value">Краткое наименование должности</div>
                         </div>
 
                         <div class="form-group role">
@@ -323,14 +310,14 @@
                             [ngClass]="{'unimportant-text': !editMode }"
                             for="fullPosition">Полное наименование должности</label>
                         <input [readonly]="!editMode"
-                            *ngIf="editMode"
                             id="fullPosition"
                             name="fullPosition"
                             type="text"
                             class="form-control m-font "
                             [ngModel]="data.rec['FULLNAME']"
                             (ngModelChange)="change('FULLNAME', 'rec', $event)"
-                            placeholder="Полное наименование должности"
+                            [placeholder]="fieldsDescription.rec.fullPosition.title"
+                            [required]="fieldsDescription.rec.fullPosition.required"
                             [ngClass]="{'readonly': !editMode }"
                             (focus)="focus('fullPosition')"
                             (blur)="blur()"
@@ -340,15 +327,10 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
                             [isOpen]="isInvalid('fullPosition')"
                             autocomplete="off"
                             [typeahead]="fullNamesList"
                             triggers="">
-                        <div *ngIf="!editMode && data.rec['FULLNAME']"
-                            class="field-value">{{data.rec['FULLNAME']}}</div>
-                        <div *ngIf="!editMode && !data.rec['FULLNAME']"
-                            class="placeholder field-value">Полное наименование должности</div>
                     </div>
                     <div class="form-group">
                         <label class="primary-text"
@@ -371,7 +353,6 @@
                             [isDisabled]="!editMode"
                             placement="bottom"
                             containerClass="tooltip-error"
-                            container="body"
                             [isOpen]="isInvalid('NOTE')"
                             autocomplete="off"
                             triggers=""></textarea>
@@ -461,7 +442,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NUM_CAB')"
                         triggers=""
                         autocomplete="off">
@@ -488,7 +468,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PHONE')"
                         triggers=""
                         autocomplete="off">
@@ -515,7 +494,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PHONE_LOCAL')"
                         triggers=""
                         autocomplete="off">
@@ -542,7 +520,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('FAX')"
                         triggers=""
                         autocomplete="off">
@@ -569,7 +546,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('E_MAIL')"
                         triggers=""
                         autocomplete="off">
@@ -595,7 +571,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SKYPE')"
                         triggers=""
                         autocomplete="off">
@@ -629,7 +604,6 @@
                     [isDisabled]="!editMode"
                     placement="bottom"
                     containerClass="tooltip-error"
-                    container="body"
                     [isOpen]="isInvalid('DUTY_RP')"
                     autocomplete="off"
                     triggers=""
@@ -656,7 +630,6 @@
                     [isDisabled]="!editMode"
                     placement="bottom"
                     containerClass="tooltip-error"
-                    container="body"
                     [isOpen]="isInvalid('DUTY_DP')"
                     autocomplete="off"
                     triggers=""
@@ -683,7 +656,6 @@
                     [isDisabled]="!editMode"
                     placement="bottom"
                     containerClass="tooltip-error"
-                    container="body"
                     [isOpen]="isInvalid('DUTY_VP')"
                     autocomplete="off"
                     triggers=""
@@ -711,7 +683,6 @@
                     [isDisabled]="!editMode"
                     placement="bottom"
                     containerClass="tooltip-error"
-                    container="body"
                     [isOpen]="isInvalid('PRINT_SURNAME_DP')"
                     autocomplete="off"
                     triggers=""
@@ -737,7 +708,6 @@
                     [isDisabled]="!editMode"
                     placement="bottom"
                     containerClass="tooltip-error"
-                    container="body"
                     [isOpen]="isInvalid('PRINT_SURNAME')"
                     autocomplete="off"
                     triggers=""
@@ -765,7 +735,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SURNAME_RP')"
                         autocomplete="off"
                         triggers=""
@@ -786,7 +755,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NAME_RP')"
                         autocomplete="off"
                         triggers=""
@@ -807,7 +775,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PATRON_RP')"
                         autocomplete="off"
                         triggers=""
@@ -835,7 +802,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SURNAME_DP')"
                         autocomplete="off"
                         triggers=""
@@ -856,7 +822,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NAME_DP')"
                         autocomplete="off"
                         triggers=""
@@ -877,7 +842,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PATRON_DP')"
                         autocomplete="off"
                         triggers=""
@@ -905,7 +869,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SURNAME_VP')"
                         autocomplete="off"
                         triggers=""
@@ -926,7 +889,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NAME_VP')"
                         autocomplete="off"
                         triggers=""
@@ -947,7 +909,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PATRON_VP')"
                         autocomplete="off"
                         triggers=""
@@ -975,7 +936,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SURNAME_TP')"
                         autocomplete="off"
                         triggers=""
@@ -996,7 +956,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NAME_TP')"
                         autocomplete="off"
                         triggers=""
@@ -1017,7 +976,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PATRON_TP')"
                         autocomplete="off"
                         triggers=""
@@ -1045,7 +1003,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('SURNAME_PP')"
                         autocomplete="off"
                         triggers=""
@@ -1066,7 +1023,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('NAME_PP')"
                         autocomplete="off"
                         triggers=""
@@ -1087,7 +1043,6 @@
                         [isDisabled]="!editMode"
                         placement="bottom"
                         containerClass="tooltip-error"
-                        container="body"
                         [isOpen]="isInvalid('PATRON_PP')"
                         autocomplete="off"
                         triggers=""
@@ -1096,7 +1051,7 @@
             </div>
             <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
             <div class="form-group">
-                <label class="primary-text required"
+                <label class="primary-text"
                     [ngClass]="{'unimportant-text': !editMode }"
                     for="PRINT_DUTY">Должность</label>
                 <input [readonly]="!editMode"
@@ -1110,18 +1065,15 @@
                     [ngClass]="{'readonly': !editMode }"
                     (focus)="focus('PRINT_DUTY')"
                     (blur)="blur()"
-                    required
                     maxlength="255"
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Обязательное поле. Максимальная длина 255 символов."
                     containerClass="tooltip-error"
-                    container="body"
                     [isDisabled]="!editMode"
                     placement="bottom"
                     [isOpen]="isInvalid('PRINT_DUTY')"
                     autocomplete="off"
                     triggers="">
-
             </div>
             <div class="form-group">
                 <label class="primary-text"
@@ -1141,7 +1093,6 @@
                     [pattern]="NOT_EMPTY_STRING"
                     tooltip="Максимальная длина 255 символов."
                     containerClass="tooltip-error"
-                    container="body"
                     [isDisabled]="!editMode"
                     placement="bottom"
                     [isOpen]="isInvalid('PRINT_DEPARTMENT')"

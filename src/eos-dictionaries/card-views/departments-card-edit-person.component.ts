@@ -68,7 +68,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             .then((photoId: number) => {
                 if (photoId) {
                     this.data.rec['ISN_PHOTO'] = photoId['ID'];
-                    this.onChange.emit(this.data);
+                    this.formChanged.emit(this.data);
                 } else {
                     this.photo = DEFAULT_PHOTO;
                     this._msgSrv.addNewMessage(UPLOAD_IMG_FALLED);
@@ -96,5 +96,10 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
                     });
                 }
             });
+    }
+
+    isInvalid(fieldName: string): boolean {
+        const value = super.isInvalid(fieldName);
+        return value;
     }
 }

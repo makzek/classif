@@ -2,10 +2,12 @@
     <div [ngClass]="{'hidden': !hasDate}"
         class="date-filter-wrapper">
         <span class="date">Состояние на: </span>
+        <span>
         <eos-datepicker [placeholder]="'дд.мм.гггг'"
             [value]="date"
-            (change)="dateFilter($event)"
+            (dateChange)="dateFilter($event)"
             [isReadonly]="false"></eos-datepicker>
+        </span>
     </div>
     <div [popover]="searchModal"
         containerClass="full-search-popover"

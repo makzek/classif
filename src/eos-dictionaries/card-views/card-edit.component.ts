@@ -9,17 +9,17 @@ export class CardEditComponent {
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
+    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     recordChanged(data: any) {
-        this.onChange.emit(data);
+        this.formChanged.emit(data);
     }
 
-    onInvalid(data: any) {
-        this.invalid.emit(data);
+    recordInvalid(data: any) {
+        this.formInvalid.emit(data);
     }
 
     /* clean(field: string, value: string) {

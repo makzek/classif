@@ -41,7 +41,6 @@ export class CreateNodeComponent {
                 this.dutysList = this._storageSrv.getItem('dutysList') || [];
                 this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
             }
-            // console.log('this.dutysList', this.dutysList);
         }, 0);
     }
 
@@ -79,7 +78,7 @@ export class CreateNodeComponent {
                 this.fullNamesList.push(this.nodeData.rec.FULLNAME)
             }
 
-            if (!this.nodeData.cabiet){
+            if (!this.nodeData.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
 
@@ -115,8 +114,8 @@ export class CreateNodeComponent {
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         } else {
             this._dictSrv.addNode(this.nodeData)
-            .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-            .catch((err) => this._errHandler(err));
+                .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
+                .catch((err) => this._errHandler(err));
         }
     }
 

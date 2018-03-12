@@ -75,6 +75,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        isUnic: true,
+        unicInDict: true,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',
@@ -88,12 +90,14 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
+        required: true,
     }, {
         key: 'DUTY',
         title: 'Краткое наименование должности',
         type: 'string',
         length: 236,
         pattern: NOT_EMPTY_STRING,
+        required: true,
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
@@ -317,7 +321,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     listFields: ['CODE', 'title'],
     fullSearchFields: {
         person: ['CODE', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'DUTY', 'fullPosition'],
-        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle', ],
+        department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
         cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
