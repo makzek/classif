@@ -61,7 +61,7 @@ export class TestPageComponent implements OnInit {
     }
 
     change(evt) {
-        // console.log('evt', evt)
+        // console.warn('evt', evt);
         this.date = evt;
     }
 

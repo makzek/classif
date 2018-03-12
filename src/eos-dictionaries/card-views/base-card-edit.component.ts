@@ -11,10 +11,10 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
     @Input() nodeId: string;
-    @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
+    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('cardForm') cardForm: NgForm;
 
@@ -25,23 +25,21 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     protected dictSrv: EosDictService;
 
     private _subscrChanges: Subscription;
+    private _dates: any = {};
 
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
     }
 
     ngOnChanges() {
-        setTimeout(() => {
-            if (this.cardForm) {
-                if (this._subscrChanges) {
-                    this._subscrChanges.unsubscribe();
-                    this._subscrChanges = null;
-                }
-                this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => {
-                    this.invalid.emit(this.cardForm.invalid);
-                });
+        if (this.cardForm) {
+            this.isFormValid();
+            if (this._subscrChanges) {
+                this._subscrChanges.unsubscribe();
+                this._subscrChanges = null;
             }
-        }, 0);
+            this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => this.isFormValid());
+        }
     }
 
     ngOnDestroy() {
@@ -85,10 +83,11 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             _value = value;
         }
-
-        if (EosUtils.getValueByPath(this.data, path) !== _value) {
+        const oldValue = EosUtils.getValueByPath(this.data, path);
+        // console.log('changeByPath', oldValue, _value);
+        if (oldValue !== _value) {
             EosUtils.setValueByPath(this.data, path, _value);
-            this.onChange.emit(this.data);
+            this.formChanged.emit(this.data);
         }
     }
 
@@ -115,7 +114,24 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
     isInvalid(fieldName: string): boolean {
         if (this.cardForm) {
             const control = this.cardForm.controls[fieldName];
+            // console.log(control, fieldName);
             return control && control.dirty && control.invalid && this.focusedField !== fieldName;
+        }
+    }
+
+    dateValid(fldName: string, valid: boolean) {
+        this._dates[fldName] = valid;
+        this.isFormValid();
+    }
+
+    private isFormValid() {
+        if (this.cardForm) {
+            setTimeout(() => {
+                const datesInvalid = Object.keys(this._dates).length ?
+                    Object.keys(this._dates).findIndex((fld) => !this._dates[fld]) > -1 : false;
+                const invalid = this.cardForm.invalid || datesInvalid;
+                this.formInvalid.emit(invalid);
+            }, 0);
         }
     }
 }

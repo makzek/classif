@@ -193,25 +193,25 @@
     border-color: $border-color-main-theme;
 
     &.light {
-        background-color: $primary-color-main-theme;
-    }
-
-    &:focus {
-        border-color: $active-field-color-main-theme;
+        background-color: $modal-block-background-main-theme
     }
 
     &:-ms-input-placeholder {
         color: $primary-font-color-main-theme;
     }
 
-    &.ng-invalid.ng-dirty {
-        border-color: $invalid-color-main-theme !important;
-        outline: $invalid-color-main-theme solid 1px !important;
-        outline-offset: 0 !important;
+    &.ng-invalid.ng-dirty:not(:focus) {
+        border-color: $invalid-color-main-theme;
+        /* outline: $invalid-color-main-theme solid 1px !important; */
+        /* outline-offset: 0 !important; */
     }
 
     &.ng-valid {
-        border-color: $border-color-main-theme !important;
+        border-color: $border-color-main-theme;
+    }
+
+    &:focus {
+        border-color: $active-field-color-main-theme;
     }
 
     &.readonly {
