@@ -114,7 +114,6 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     }
 
     writeValue(value) {
-        console.log('set value', value);
         if (value) {
             if (value instanceof Date) {
                 value.setHours(0, 0, 0, 0);
