@@ -88,6 +88,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 255,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        invalidMessage: 'Обязательное поле. Максимальная длина 255 символов.',
         isUnic: true,
         unicInDict: true,
     }, {
@@ -112,6 +113,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 236,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        invalidMessage: 'Обязательное поле',
         forNode: true,
     }, {
         key: 'fullTitle',

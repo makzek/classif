@@ -49,7 +49,7 @@ const TEST_INPUTS = <IBaseInput[]>[{
 }, {
     controlType: 'date',
     key: 'data.date',
-    value: '01.01.2003',
+    value: new Date(),
     invalidMessage: 'Некорректная дата',
     label: 'date'
 }];

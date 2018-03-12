@@ -68,6 +68,17 @@ export class InputControlService {
         return (control: AbstractControl): { [key: string]: any } => this._dictSrv.isUnic(control.value, path, inDict);
     }
 
+    dateValueValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } => {
+            const value = control.value;
+            let valid = true;
+            if (value && value instanceof Date) {
+                valid = !isNaN(value.getTime());
+            }
+            return (valid ? null : { 'wrongDate': true });
+        };
+    }
+
     /**
      * add input to group
      * @param group data for FormGroup
@@ -76,6 +87,11 @@ export class InputControlService {
     private _addInput(group: any, input: InputBase<any>) {
         const value = input.value !== undefined ? input.value : null;
         const validators = [];
+
+        if (input.controlType === 'date') {
+            validators.push(this.dateValueValidator());
+        }
+
         if (input.pattern) {
             validators.push(Validators.pattern(input.pattern));
         }

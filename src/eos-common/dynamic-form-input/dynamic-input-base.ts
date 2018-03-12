@@ -12,7 +12,7 @@ export class DynamicInputBase {
     tooltipCfg: any = {
         placement: 'bottom',
         class: 'tooltip-error',
-        container: null
+        container: ''
     };
 
     get isValid() {

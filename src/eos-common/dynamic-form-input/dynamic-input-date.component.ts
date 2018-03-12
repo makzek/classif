@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DynamicInputBase } from './dynamic-input-base';
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
-import { EosUtils } from '../core/utils';
+// import { EosUtils } from '../core/utils';
 
 @Component({
     selector: 'eos-dynamic-input-date',
@@ -28,8 +28,8 @@ export class DynamicInputDateComponent extends DynamicInputBase {
     }
 
     dpChanged(value: Date) {
-        const sDate = EosUtils.dateForInput(value);
-        this.form.controls[this.input.key].setValue(sDate);
+        // const sDate = EosUtils.dateForInput(value);
+        this.form.controls[this.input.key].setValue(value);
     }
 
 }

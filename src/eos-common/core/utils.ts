@@ -1,17 +1,19 @@
 export class EosUtils {
-    static dateToString(d: Date): string {
-        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
-        return d.getFullYear() +
-            '-' + pad(d.getMonth() + 1) +
-            '-' + pad(d.getDate());
-        /*'T' + pad(d.getHours()) +
-        ':' + pad(d.getMinutes()) +
-        ':' + pad(d.getSeconds()); */
+    static pad(n: number): string {
+        return n < 10 ? '0' + n : '' + n;
     }
 
-    static dateForInput(d: Date): string {
-        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
-        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('.');
+    static dateToString(d: Date): string {
+        if (d instanceof Date) {
+            return d.getFullYear() +
+                '-' + EosUtils.pad(d.getMonth() + 1) +
+                '-' + EosUtils.pad(d.getDate());
+            /*'T' + pad(d.getHours()) +
+            ':' + pad(d.getMinutes()) +
+            ':' + pad(d.getSeconds()); */
+        } else {
+            return null;
+        }
     }
 
     static setValueByPath(data: any, path: string, value: any): any {
