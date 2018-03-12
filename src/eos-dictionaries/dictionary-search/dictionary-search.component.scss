@@ -1,18 +1,23 @@
 .eos-dictionary-search {
     display: inline-block;
     height: $item-height;
+
     .fa {
         font-size: 22px;
     }
+
     .full-search {
         position: relative;
     }
+
     .eos-icon-search-blue {
         position: relative;
     }
+
     .search-btn-wraper {
         display: inline-block;
     }
+
     .quick-search-form {
         display: inline-block;
         height: 46px;
@@ -22,18 +27,23 @@
         border-width: 1px;
         border-style: solid;
         border-radius: 0;
+
         &.hidden {
             display: none;
         }
     }
+
     input:read-only {
         background: $disabled-color-main-theme;
     }
+
     .quickInput {
         position: relative;
+
         .usual-border:focus {
-            border: 1px solid $active-field-color-main-theme
+            border: 1px solid $active-field-color-main-theme;
         }
+
         .clear-btn {
             position: absolute;
             top: 0;
@@ -46,33 +56,40 @@
             margin-right: -8px;
         }
     }
+
     .quick-search-top {
         border-bottom-width: 1px;
         border-bottom-style: solid;
         padding-top: 20px;
         padding-bottom: 8px;
         height: 42px;
+
         .title {
             margin: 0;
             line-height: 14px;
         }
     }
+
     .quickRadio {
         margin: 8px 0 8px 0;
+
         .quick {
             padding-left: 0;
         }
     }
+
     .btn {
         &.search-btn {
             height: 48px;
             width: 48px;
         }
+
         &.quick-search-btn {
             height: 48px;
             width: 48px;
         }
     }
+
     .date-filter-wrapper {
         display: inline-block;
         vertical-align: -webkit-baseline-middle;
@@ -92,6 +109,7 @@
         &.hidden {
             display: none;
         }
+
         .eos-datepicker {
             display: inline-block;
             width: 125px;
@@ -124,18 +142,22 @@
     width: 800px;
     max-width: 800px;
     border-radius: 0;
+
     .popover-arrow.arrow {
         right: 61px !important;
         left: auto !important;
     }
+
     .popover-content {
         padding: 0 !important;
     }
+
     .spinner-wrapper {
         text-align: center;
         padding: 10px;
     }
-    .checkbox-inline input[type="checkbox"]+span {
+
+    .checkbox-inline input[type="checkbox"] + span {
         margin-right: 12px;
     }
 }
@@ -145,6 +167,7 @@
     border-top-width: 1px;
     border-top-style: solid;
     padding: 8px 20px;
+
     .btn {
         width: 82px;
         height: 32px;
@@ -155,36 +178,75 @@
     background-color: $modal-block-background-main-theme;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    padding-top: 20px;
-    padding-bottom: 8px;
-    height: 42px;
+    height: 48px;
+
     .title {
-        margin: 0 20px;
-        line-height: 14px;
+        height: 48px;
+        line-height: 48px;
+        margin-left: 20px;
+    }
+
+    .srch-btns {
+        margin: 8px 20px 8px 0px;
+
+        .btn {
+            width: 82px;
+            margin: 0px 5px;
+        }
+    }
+}
+
+.wrap {
+    position: relative;
+
+    button {
+        border: none;
+        padding: 0px;
+        width: 30px;
+        height: 30px;
+        top: 1px;
+        float: right;
+        right: 2px;
+        background-color: $modal-block-background-main-theme;
+        position: absolute;
+
+        .eos-icon {
+            height: 26px;
+        }
     }
 }
 
 .full-search-settings-container {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    margin: 5px 0;
     font-size: 0;
+
     form {
         display: flex;
     }
+
     label {
         text-transform: none;
     }
+
+    .radio-inline:first-child {
+        height: 32px;
+        padding-left: 0;
+        margin: 15px ($grid-gutter-width / 2);
+    }
+
     .radio-inline,
     .checkbox-inline {
         height: 32px;
         padding-left: 0;
-        margin: 15px $grid-gutter-width/2;
+        margin: 15px 20px 15px 0;
     }
+
     .col-1 {
         width: 190px;
         margin-right: 40px;
     }
+
     .col-2 {
         width: 300px;
     }
@@ -192,18 +254,23 @@
 
 .full-search-form {
     padding: 0 20px;
+
     .tabs-wrapper {
+        background-color: $modal-block-background-main-theme;
         width: auto;
         margin: 0 -20px -10px;
     }
+
     .form-control {
         border-radius: 0;
         height: 32px;
     }
+
     .form-group {
         margin-bottom: 20px;
         margin-top: 30px;
     }
+
     .no-top-margin {
         .form-group {
             margin-top: 10px;

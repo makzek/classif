@@ -181,7 +181,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'DEPARTMENT_INDEX',
     }, {
         key: 'POST_H',
-        title: 'Начальник',
+        title: 'Роль',
         type: 'select',
         options: ROLES_IN_WORKFLOW
     }, {

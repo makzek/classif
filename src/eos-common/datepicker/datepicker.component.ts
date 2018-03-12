@@ -27,7 +27,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     valid = true;
 
     readonly datePattern = /.*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19\d{2}|20\d{2}|2100).*?/;
-    private _manualChange: boolean;
+    // private _manualChange: boolean;
     private _handler;
 
     constructor() {
@@ -52,7 +52,7 @@ export class DatepickerComponent implements OnInit, OnDestroy {
         } else if (this.value) {
             this.aDate = new Date(this.value);
         }
-        this.bsDate = this.aDate;
+        // this.bsDate = this.aDate;
 
         window.addEventListener('scroll', this._handler = () => {
             if (this.datePicker) {
@@ -66,20 +66,20 @@ export class DatepickerComponent implements OnInit, OnDestroy {
     }
 
     dpChanged(date: Date) {
-        // console.log('dp changed', date);
-        if (!this._manualChange) {
-            this.aDate = date;
-            this.dateChange.emit(date);
-            this.valid = true;
-        }
+        date.setHours(0, 0, 0, 0);
+        // if (!this._manualChange) {
+        this.aDate = date;
+        this.valid = true;
+        this.dateChange.emit(date);
         this.dateValid.emit(this.valid);
-        this._manualChange = false;
+        // }
+        // this._manualChange = false;
     }
 
     inputChanged(sDate: string) {
-        this._manualChange = true;
+        let date: Date = null;
+        // this._manualChange = true;
         if (sDate) {
-            let date: Date;
             sDate = ('string' === typeof sDate) ? sDate.trim() : sDate;
             if (this.datePattern.test(sDate)) { // if correct format
                 // convert to UTC format then to Date
@@ -88,18 +88,14 @@ export class DatepickerComponent implements OnInit, OnDestroy {
 
             if (date && !isNaN(date.getTime())) {
                 this.valid = true;
-                this.bsDate = date;
-                this.dateChange.emit(date);
             } else {
                 this.valid = false;
-                this.bsDate = null;
-                this.dateChange.emit(null);
+                date = null;
             }
         } else {
             this.valid = true;
-            this.bsDate = null;
-            this.dateChange.emit(null);
         }
+        this.dateChange.emit(date);
         this.dateValid.emit(this.valid);
     }
 
