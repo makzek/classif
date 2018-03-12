@@ -44,6 +44,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
     @ViewChild('tree') treeEl;
     @ViewChild('moveBlock') moveBlock;
+    @ViewChild('wrMoveBlock') wrMoveBlock;
     @ViewChild('selectedWrapper') selectedEl;
 
     dictionary: EosDictionary;
@@ -225,45 +226,42 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     /*FEATURE TABLE SCROLL */
-
     move(val: boolean) {
         // val ? this.length.left_sc -= 60 : this.length.left_sc += 60;
     }
-    startScrollToLeft() {
-        console.warn(this.length.left_sc >= this.moveBlock.nativeElement.clientWidth);
+
+    public startScrollToLeft() {
+        const diff = this.moveBlock.nativeElement.clientWidth - this.wrMoveBlock.nativeElement.clientWidth;
         const SCROLL_INTERVAL = 50;
         const SCROLL_STEP = 5;
         if (this._interval) {
             window.clearInterval(this._interval);
         }
         this._interval = setInterval(() => {
-            this.length.left_sc -= SCROLL_STEP; /*
-            if (this.length.left_sc >= this.moveBlock.nativeElement.clientWidth) {
+            if (this.length.left_sc <= -1 * diff) {
+                this.length.left_sc = -1 * diff;
+            } else {
                 this.length.left_sc -= SCROLL_STEP;
-            } else {
-                // this.length.left_sc = 0;
-            }*/
+            }
         }, SCROLL_INTERVAL);
     }
 
-    startScrollToRight() {
+    public startScrollToRight() {
         const SCROLL_INTERVAL = 50;
         const SCROLL_STEP = 5;
         if (this._interval) {
             window.clearInterval(this._interval);
         }
         this._interval = setInterval(() => {
-            this.length.left_sc += SCROLL_STEP;
-            /*
-            if (this.length.left_sc <= 0) {
-                this.length.left_sc += SCROLL_STEP;
+            if (this.length.left_sc >= 0) {
+                this.length.left_sc = 0;
             } else {
-                // this.length.left_sc = this.moveBlock.nativeElement.clientWidth;
-            }*/
+                this.length.left_sc += SCROLL_STEP;
+            }
         }, SCROLL_INTERVAL);
     }
 
-    endScroll() {
+    public endScroll() {
         window.clearInterval(this._interval);
     }
     /*END */
