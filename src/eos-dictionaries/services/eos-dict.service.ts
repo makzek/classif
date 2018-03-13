@@ -704,7 +704,7 @@ export class EosDictService {
             records = this.treeNode ? this.treeNode.children : [];
         }
 
-        records = records.filter((node) => this._listNode && node.id !== this._listNode.id);
+        records = records.filter((node) => !this._listNode || node.id !== this._listNode.id);
 
         const _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
 
