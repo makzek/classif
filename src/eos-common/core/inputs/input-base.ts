@@ -15,6 +15,7 @@ export class InputBase<T>{
     forNode: boolean;
     options?: any[];
     disabled?: boolean;
+    height?: number;
 
     constructor(options: {
         value?: T,
