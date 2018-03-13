@@ -13,4 +13,9 @@ export class DynamicInputSelectComponent extends DynamicInputBase {
             evt.preventDefault();
         }
     }
+
+    hasValue(): boolean {
+        const ctrl = this.form.controls[this.input.key];
+        return (ctrl.value !== null && ctrl.value !== undefined);
+    }
 }

@@ -1,7 +1,7 @@
 import { InputBase } from './input-base';
 import { ISelectOption, ISelectInput } from '../../interfaces';
 
-export class DropdownInput extends InputBase<string> implements ISelectInput {
+export class DropdownInput extends InputBase<string | number> implements ISelectInput {
     controlType = 'select';
     options: ISelectOption[] = [];
 

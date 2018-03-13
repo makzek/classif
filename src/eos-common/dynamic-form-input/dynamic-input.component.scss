@@ -15,4 +15,10 @@
         appearance: textfield;
         background-image: none;
     }
+    &.select-placeholder {
+        color: rgba(0, 0, 0, 0.5);
+        option {
+            color: black;
+        }
+    }
 }

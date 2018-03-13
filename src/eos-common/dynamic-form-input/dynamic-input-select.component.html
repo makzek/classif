@@ -11,12 +11,12 @@
         [attr.for]="input.key"
         [ngClass]="{'required': input.required}">{{input.label}}</label>
     <select class="form-control m-font eos-select"
-        [ngClass]="{readonly: readonly}"
+        [ngClass]="{readonly: readonly, 'select-placeholder': !hasValue()}"
         [id]="input.key"
         [formControlName]="input.key"
         (focus)="onFocus()"
         (blur)="onBlur()">
-        <option disabled="disabled" selected="selected" class="hidden">{{input.label}}</option>
+        <option disabled="disabled" [selected]="!hasValue()" class="hidden">{{input.label}}</option>
         <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
     </select>
 </div>
