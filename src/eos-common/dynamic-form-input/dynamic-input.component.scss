@@ -22,3 +22,10 @@
         }
     }
 }
+.form-group {
+    font-size: 0;
+    label {
+        font-size: 12px;
+        color: $label-color;
+    }
+}

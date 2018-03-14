@@ -1,7 +1,7 @@
 .card-edit {
-        background-color: $modal-block-background-main-theme;
-        color: $secondary-font-color-main-theme;
-        border-color: $border-color-main-theme;
+        /* background-color: $modal-block-background-main-theme; */
+         /* color: $secondary-font-color-main-theme; */
+    border-color: $border-color-main-theme;
     border-style: solid;
     border-width: 1px;
 }
@@ -34,11 +34,9 @@
         }
     }
     .form-group {
+        margin-bottom: $grid-gutter-width /2;
         &:not(.gender) {
             position: relative;
-        }
-        &:not(:first-child) {
-            margin-top: $grid-gutter-width *3/4;
         }
     }
     .form-control {

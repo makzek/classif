@@ -1,5 +1,6 @@
 $access-first-col-width: 251px;
-.cabinet-card-edit {
+.cabinet-card-edit,
+eos-cabinet-card-edit {
     .block-divider {
         .divider-text {
             vertical-align: super;
@@ -56,13 +57,12 @@ $access-first-col-width: 251px;
         min-width: 800px;
         width: fit-content;
     }
-    .cab1net-access {}
     .s-font {
         line-height: inherit;
     }
     .folder-access-wrapper {
         .folder-access-header {
-            padding: 11px 20px;
+            padding: 11px 20px 11px 0;
             line-height: 24px;
             unimportant-text {
                 position: relative;
@@ -74,12 +74,17 @@ $access-first-col-width: 251px;
                 margin-right: 12px;
             }
             .checkbox-inline {
+                text-align: center;
+                width: 48px;
                 height: 24px;
+                padding-left: 0;
             }
         }
+        .folder-access-body {
+            padding: $grid-gutter-width /4 0;
+        }
         .folder-access-item {
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding: $grid-gutter-width /4 $grid-gutter-width /2;
             .minus-checkbox {
                 margin: 0;
                 padding: 0;
@@ -193,7 +198,6 @@ $access-first-col-width: 251px;
         position: -webkit-sticky;
         position: sticky;
         left: 0;
-        background-color: #fff;
         font-weight: normal;
         padding: 13px 20px 0;
         width: $access-first-col-width;
@@ -205,7 +209,6 @@ $access-first-col-width: 251px;
             position: -webkit-sticky;
             position: sticky;
             left: 0;
-            background-color: #fff;
         }
     }
 }
@@ -235,7 +238,7 @@ $access-first-col-width: 251px;
 }
 
 .eos-cabinet-tab {
-    margin-top: $grid-gutter-width;
+    // margin-top: $grid-gutter-width;
     margin-bottom: 0;
     .panel-group .panel-heading {
         padding: 11px 20px;
@@ -248,19 +251,25 @@ $access-first-col-width: 251px;
     }
     .table,
     table {
-        margin-bottom: 0;
+        margin-bottom: 20px;
         th,
         td,
         .th,
         .td {
             vertical-align: middle;
             font-weight: normal;
-            height: 48px;
             padding: 0px 20px;
+        }
+        td,
+        .td {
+            font-size: 14px;
+            line-height: 20px;
+            border-style: none;
         }
         thead>tr {
             th,
             .th {
+                height: 48px;
                 vertical-align: middle;
             }
         }
@@ -269,6 +278,7 @@ $access-first-col-width: 251px;
             white-space: nowrap;
         }
         .td-checkbox {
+            padding: 0;
             width: 48px;
             text-align: center;
         }

@@ -98,6 +98,7 @@
 
 .usual-border {
     border-color: $border-color-main-theme;
+    border-width: 1px;
 }
 
 .active-border {
@@ -230,9 +231,10 @@
 
 .main-theme {
     .secondary-block {
-        background-color: $block-color-main-theme;
+        background-color: $secondary-panel-bg-color;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
+        border-width: 1px;
     }
 
     .link-text {
