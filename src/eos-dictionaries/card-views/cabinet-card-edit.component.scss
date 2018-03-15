@@ -1,61 +1,10 @@
 $access-first-col-width: 251px;
 .cabinet-card-edit,
 eos-cabinet-card-edit {
-    .block-divider {
-        .divider-text {
-            vertical-align: super;
-        }
-    }
-    .edit-content,
-    .edit-middle-block {
-        border-width: 1px;
-        border-style: solid;
-        border-top-width: 0;
-        width: 800px;
-        margin: 0 auto 20px;
-        .form-group {
-            margin-bottom: 0;
-        }
-        &.owners-content {
-            padding: 0;
-        }
-        &.hidden {
-            display: none !important;
-        }
-    }
-    .edit-middle-block {
-        margin-bottom: 0;
-    }
     .action-btn,
-    .arrow-btn {
+    .scroll-btn {
         height: $item-height;
         width: $item-width;
-    }
-    .owners {
-        display: flex;
-        &.owners-item {
-            width: 100%;
-        }
-        .text {
-            width: 45%;
-            padding: 13px 0;
-        }
-        .checkbox-inline {
-            width: 64px;
-            padding: 10px 20px 0;
-        }
-        .selected-text {
-            cursor: pointer;
-        }
-        .fake-padding {
-            width: 64px;
-        }
-    }
-    .owner-wrapper,
-    {
-        margin: 0 auto;
-        min-width: 800px;
-        width: fit-content;
     }
     .s-font {
         line-height: inherit;
@@ -78,6 +27,9 @@ eos-cabinet-card-edit {
                 width: 48px;
                 height: 24px;
                 padding-left: 0;
+                span {
+                    margin: 0;
+                }
             }
         }
         .folder-access-body {
@@ -96,149 +48,12 @@ eos-cabinet-card-edit {
             }
         }
     }
-    .flex-box {
-        display: flex;
-        padding: $grid-gutter-width/2;
-    }
     .eos-icon {
         vertical-align: sub;
-    }
-    .form-control-static {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        border-width: 1px;
-        min-height: 32px;
-    }
-}
-
-.cabinet-access {
-    border-width: 1px;
-    border-style: solid;
-    position: relative;
-    padding: 0;
-    border: 0;
-    /*
-    .table-wrapper {
-        overflow-x: hidden;
-        margin-left: 224px;
-        margin-bottom: 20px;
-        padding: 0;
-        /*width: fit-content;
-        border-width: 1px;
-        border-style: solid;
-        border-left: 0;
-
-        max-width: calc(100vw - 282px);
-    }
-    */
-    .cell,
-    .headcol {
-        margin: 0;
-        white-space: nowrap;
-        height: $item-height;
-        padding: 0 20px;
-    }
-    .cell {
-        vertical-align: middle;
-    }
-    tr:last-child {
-        .headcol {
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            height: 49px;
-        }
-    }
-    .first-line {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        .headcol {
-            border-right-width: 1px;
-            border-right-style: solid;
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-            height: 49px;
-        }
-    }
-    .shadow-box {
-        width: $access-first-col-width;
-        position: absolute;
-        /* margin-top: 48px;*/
-        top: 0;
-        bottom: 0;
-        box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
-        border-right-width: 1px;
-        border-right-style: solid;
-    }
-    .scroll-btn {
-        position: absolute;
-        margin: 0;
-        border-left-width: 0;
-        border-right-width: 0;
-        z-index: 1;
-        left: $access-first-col-width - 48px;
-        width: 48px;
-        height: 48px;
-        &.right {
-            left: auto;
-            right: 0;
-            background: linear-gradient(to right, transparent 0%, #fff 45%);
-        }
-        &:focus,
-        &.focus {
-            outline: none;
-        }
-    }
-    .table-responsive {
-        overflow-x: hidden;
-    }
-    .table-wrapper {
-        position: relative;
-    }
-    .headcol {
-        position: -webkit-sticky;
-        position: sticky;
-        left: 0;
-        font-weight: normal;
-        padding: 13px 20px 0;
-        width: $access-first-col-width;
-    }
-    .table,
-    table {
-        .th:first-child,
-        th:first-child {
-            position: -webkit-sticky;
-            position: sticky;
-            left: 0;
-        }
-    }
-}
-
-// For IE, Edge
-@media screen\0 {
-    .cabinet-access {
-        .first-line {
-            .headcol {
-                border-bottom-width: 1px;
-            }
-        }
-        .table,
-        table {
-            .th:first-child,
-            th:first-child {
-                position: absolute;
-                line-height: 48px;
-            }
-            th:nth-child(2),
-            .th:nth-child(2) .td:nth-child(2),
-            td:nth-child(2) {
-                padding-left: $access-first-col-width+20px;
-            }
-        }
     }
 }
 
 .eos-cabinet-tab {
-    // margin-top: $grid-gutter-width;
     margin-bottom: 0;
     .panel-group .panel-heading {
         padding: 11px 20px;
@@ -252,19 +67,30 @@ eos-cabinet-card-edit {
     .table,
     table {
         margin-bottom: 20px;
+        background-color: #fff;
+        tr {
+            background-color: inherit;
+            border-width: 1px 0;
+        }
         th,
         td,
         .th,
         .td {
+            border-width: 1px;
+            background-color: inherit;
             vertical-align: middle;
             font-weight: normal;
             padding: 0px 20px;
         }
-        td,
-        .td {
-            font-size: 14px;
-            line-height: 20px;
-            border-style: none;
+        tbody {
+            td,
+            .td {
+                border-top-style: none;
+                border-bottom-style: none;
+                font-size: 14px;
+                line-height: 20px;
+            }
+            background-color: #fff;
         }
         thead>tr {
             th,
@@ -293,6 +119,104 @@ eos-cabinet-card-edit {
             padding: 0;
             margin: 0;
             height: 24px;
+        }
+    }
+}
+
+.cabinet-access {
+    border-width: 1px;
+    border-style: solid;
+    position: relative;
+    padding: 0;
+    border: 0;
+    .cell,
+    .headcol {
+        margin: 0;
+        white-space: nowrap;
+        height: $item-height;
+        padding: 0 20px;
+    }
+    .headcol {
+        left: 0;
+        font-weight: normal;
+        padding-top: 13px;
+        width: $access-first-col-width;
+    }
+    .cell {
+        vertical-align: middle;
+    }
+    .first-line {
+        .headcol {
+            border-right-width: 1px;
+            border-right-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            height: 49px;
+        }
+    }
+    .shadow-box {
+        width: $access-first-col-width;
+        position: absolute;
+        /* margin-top: 48px;*/
+        top: 0;
+        bottom: 0;
+        box-shadow: 10px 0 10px -5px rgba(0, 0, 0, .15);
+        border-right-width: 1px;
+        border-right-style: solid;
+    }
+    .scroll-btn {
+        position: absolute;
+        margin: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        z-index: 1;
+        left: $access-first-col-width - $item-height;
+        &.right {
+            left: auto;
+            right: 0;
+            background: linear-gradient(to right, transparent 0%, #fff 45%);
+        }
+        &:focus,
+        &.focus {
+            outline: none;
+        }
+    }
+    .table-wrapper {
+        position: relative;
+    }
+    .table-responsive {
+        overflow-x: hidden;
+        table {
+            margin: 0;
+            &>tr>td {
+                font-size: 16px;
+                line-height: 24px;
+            }
+            .th:first-child,
+            th:first-child {
+                position: absolute;
+                line-height: 48px;
+            }
+            th:nth-child(2),
+            .th:nth-child(2) .td:nth-child(2),
+            td:nth-child(2) {
+                padding-left: $access-first-col-width+20px;
+            }
+        }
+    }
+    .tr-divider {
+        th,td {
+            border-top: none;
+        }
+    }
+    .table,
+    table {
+        tbody {
+            th,
+            td {
+                border-bottom-width: 0;
+                border-top-width: 0
+            }
         }
     }
 }

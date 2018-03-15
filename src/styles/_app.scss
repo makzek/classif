@@ -168,6 +168,7 @@
 }
 
 .paragraph-title {
+    display: block;
     margin: $grid-gutter-width/2 0;
     border: 1px none $border-color-main-theme;
     border-bottom-style: solid;

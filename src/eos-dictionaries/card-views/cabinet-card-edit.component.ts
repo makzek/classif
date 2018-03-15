@@ -189,8 +189,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         }, {
             title: 'Ограничение доступа РКПД',
             key: 'rkpd'
-        }]
-            .concat(this.cabinetFolders);
+        }];
+
 
         this.cabinetUsers = data.users.map((user) => {
             const userAccess = data.cabinetAccess.find((access) => access.ISN_LCLASSIF === user.ISN_LCLASSIF);

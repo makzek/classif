@@ -55,8 +55,8 @@
     </div>
     <div class="row">
         <table class="table usual-border border-bottom">
-            <thead class="border-top border-bottom secondary-block">
-                <tr>
+            <thead class="secondary-block">
+                <tr class="border-top border-bottom">
                     <th class="td-checkbox secondary-block">
                         <span class="checkbox-inline"
                             *ngIf="editMode">
@@ -142,13 +142,34 @@
             class="btn btn-primary-light scroll-btn right"><span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span></button>
         <div class="table-responsive"
             #tableEl>
-            <table class="table table-hover">
-                <thead>
-                    <tr class="first-line">
+            <table class="table table-hover usual-border">
+                <thead class="secondary-block">
+                    <tr class="first-line border-bottom">
                         <th class="usual-border border-right headcol"></th>
                         <th *ngFor="let person of cabinetUsers"
                             class="cell text-center l-font text-primary"
                             align="center">{{person.fio}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of cabinetFolders">
+                        <th class="usual-border border-right headcol l-font primary-text">{{row.title}}</th>
+                        <td *ngFor="let person of cabinetUsers"
+                            class="cell"
+                            align="center">
+                            <span class="eos-icon small"
+                                aria-hidden="true"
+                                [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead class="secondary-block">
+                    <tr class="usual-border border-top border-bottom tr-divider">
+                        <th class="l-font primary-text usual-border">Учитывать пользовательские ограничения доступа</th>
+                        <td *ngFor="let person of cabinetUsers"
+                            class="cell usual-border"
+                            align="center">
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,9 +183,10 @@
                                 [ngClass]="{'eos-icon-checkbox-grey': person[row.key], 'eos-icon-minus-grey': !person[row.key]}"></span>
                         </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
-        <div class="shadow-box usual-border"></div>
+        <!-- div class="shadow-box usual-border"></div -->
     </div>
 </div>
