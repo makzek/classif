@@ -1075,7 +1075,8 @@ const commonMeta = {
             NOTE: _t.s,
             PLAN_COUNT_FLAG: _t.i,
             PLAN_DAY_COUNT: _t.i,
-            PLAN_DAY_TYPE: _t.i
+            PLAN_DAY_TYPE: _t.i,
+            PLAN_PROTECTED: _t.i
         },
         readonly: [
 
