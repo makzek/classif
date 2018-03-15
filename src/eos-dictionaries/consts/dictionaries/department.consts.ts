@@ -62,7 +62,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Номер вышестоящей вершины',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -135,6 +135,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
+        isUnic: true,
+        unicInDict: false,
+        invalidMessage: 'Поле должно быть уникально. Максимальная длина 64 символа.',
     }, {
         key: 'SKYPE',
         title: 'Skype',

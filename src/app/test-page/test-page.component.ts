@@ -35,6 +35,7 @@ const TEST_INPUTS = <IBaseInput[]>[{
     controlType: 'select',
     key: 'data.select',
     label: 'select value',
+    disabled: true,
     required: false,
     options: [{
         value: 1,
