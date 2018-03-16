@@ -72,11 +72,10 @@
         <div class="form-group">
             <label class="primary-text"
                 [ngClass]="{'unimportant-text': !editMode }"
-                for="DUE_LINK_ORGANIZ">Организация</label>
+                for="DUE_LINK_ORGANIZ">Организация <a
+                *ngIf="editMode && hasCard"
+                (click)="chooseOrganiz()">[выбрать]</a></label>
             <p class="form-control-static m-font">{{orgName || data.organization['CLASSIF_NAME'] || ''}}</p>
-            <a class="btn btn-primary"
-                *ngIf="editMode && inputs['rec.CARD_FLAG'] && inputs['rec.CARD_FLAG'].value"
-                (click)="chooseOrganiz()">выбрать</a>
         </div>
     </div>
 </div>
@@ -91,7 +90,7 @@
     </div>
     <div class="col-2 pull-right">
         <div class="form-group"
-            *ngIf="inputs['rec.CARD_FLAG'] && inputs['rec.CARD_FLAG'].value">
+            *ngIf="hasCard">
             <eos-dynamic-input *ngIf="inputs['rec.CARD_NAME']"
                 [input]="inputs['rec.CARD_NAME']"
                 [form]="form"

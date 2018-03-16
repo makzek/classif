@@ -12,6 +12,10 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
         super(injector);
     }
 
+    get hasCard(): boolean {
+        return this.form.controls['rec.CARD_FLAG'] && this.form.controls['rec.CARD_FLAG'].value;
+    }
+
     chooseOrganiz() {
         const config = this.dictSrv.getApiConfig();
         if (config) {
@@ -32,7 +36,9 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
             .then((org) => {
                 if (org) {
                     this.orgName = org['CLASSIF_NAME'];
-                    this.changeByPath('rec.DUE_LINK_ORGANIZ', org.DUE);
+                    if (this.form.controls['rec.DUE_LINK_ORGANIZ']) {
+                        this.form.controls['rec.DUE_LINK_ORGANIZ'].setValue(org.DUE);
+                    }
                 }
             });
     }
