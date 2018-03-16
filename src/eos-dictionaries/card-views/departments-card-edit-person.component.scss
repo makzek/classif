@@ -16,7 +16,7 @@
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
-        margin: 0 24px;
+        margin: 20px 24px 0;
         .photo-uploader {
             position: absolute;
             bottom: -8px;
@@ -69,19 +69,17 @@
             width: 154px;
         }
     }
-    .names {
-        margin-top: 30px;
-    }
     .wrapper,
     .row-wrapper {
         display: flex;
     }
     .row-wrapper {
         width: 100%;
-        margin-top: 30px;
+        margin-top: 20px;
         .form-group {
             width: 50%;
             margin-bottom: 0;
+            margin-top: 0;
             &:not(:first-child) {
                 margin-top: 0;
             }
@@ -108,11 +106,6 @@
         .phone-local,
         .email {
             margin-right: 40px;
-        }
-        .phone,
-        .phone-local,
-        .fax {
-            margin-top: 0;
         }
         .cab {
             -ms-grid-column: 1;

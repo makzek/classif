@@ -40,9 +40,6 @@
         &:not(.gender) {
             position: relative;
         }
-        &:not(:first-child) {
-            margin-top: $grid-gutter-width *3/4;
-        }
     }
     .form-control {
         border-radius: 0;
@@ -72,10 +69,6 @@
     .col-1 {
         width: 178px;
         margin-right: 40px;
-        .form-group {
-            margin-left: 0;
-            margin-right: 0;
-        }
     }
     .col-2 {
         width: 522px;

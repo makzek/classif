@@ -1,24 +1,72 @@
-    .eos-select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
-        background-repeat: no-repeat;
-        background-position-x: right;
-        background-position-y: center;
-        background-size: 24px;
-        &[disabled],
-        &.readonly {
-            cursor: default;
-            background-image: none;
-            background-color: inherit;
-            box-shadow: none;
-            border: 0 none transparent;
-        }
-        &.select-placeholder {
-            color: rgba(0, 0, 0, 0.5);
-            option {
-                color: black;
-            }
+.eos-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: center;
+    background-size: 24px;
+    &[disabled],
+    &.readonly {
+        cursor: default;
+        background-image: none;
+        background-color: inherit;
+        box-shadow: none;
+        border: 0 none transparent;
+    }
+    &.select-placeholder {
+        color: rgba(0, 0, 0, 0.5);
+        option {
+            color: black;
         }
     }
+}
+
+.form-group {
+    font-size: 0;
+    label {
+        font-size: 12px;
+        color: $label-color;
+    }
+    margin: $grid-gutter-width /2 0;
+    /* margin-bottom: $grid-gutter-width /2; */
+    &:not(.gender) {
+        position: relative;
+    }
+
+    .form-control-static {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-width: 1px;
+        min-height: 32px;
+    }
+}
+
+.form-control {
+    border-radius: 0;
+    padding: 6px 8px;
+}
+
+input.form-control {
+    height: 32px;
+}
+
+.readonly {
+    box-shadow: none;
+    padding: 0;
+}
+
+textarea {
+    resize: none;
+}
+
+.appearance-none {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}

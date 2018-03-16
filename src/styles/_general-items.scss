@@ -130,12 +130,10 @@ input[type=text]::-ms-clear {
 }
 
 .tabs-wrapper {
-    width: 800px;
+    /* width: 800px; */
     display: flex;
     justify-content: space-around;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    margin: 0 -20px 20px;
+    margin: 0 $grid-gutter-width / -2;
 }
 
 .tabs {
@@ -144,7 +142,7 @@ input[type=text]::-ms-clear {
     margin: 0;
     .tab-item {
         display: inline-block;
-        border-bottom-width: 5px;
+        border-bottom-width: 6px;
         border-bottom-style: solid;
         border-bottom-color: transparent;
         padding: 12px 0 5px;

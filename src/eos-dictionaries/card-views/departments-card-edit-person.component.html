@@ -264,11 +264,14 @@
     </div>
 </div>
 <div [hidden]="currTab !== 2">
-    <div *ngIf="inputs">
-        <button (click)="fillDeclineFields()"
-            containerClass="tooltip-info"
-            tooltip="Проверка API склонения">Заполнить поля</button>
-        <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
+    <div>
+        <div class="form-group">
+            <button class="btn"
+                (click)="fillDeclineFields()"
+                containerClass="tooltip-info"
+                tooltip="Проверка API склонения">Заполнить поля</button>
+        </div>
+        <div class="xl-font paragraph-title">Склонение должности</div>
         <div class="form-group">
             <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_RP']"
                 [input]="inputs['printInfo.DUTY_RP']"
