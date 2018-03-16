@@ -416,11 +416,13 @@ export class CardComponent implements CanDeactivateGuard, OnInit, OnDestroy {
 
             return this._confirmSrv.confirm(changeBoss)
                 .then((confirm: boolean) => {
-
                     if (confirm) {
                         boss.data.rec['POST_H'] = 0;
                         return this._dictSrv.updateNode(boss, boss.data)
-                            .then((node: EosDictionaryNode) => this._dictSrv.updateNode(this.node, data))
+                            .then((node: EosDictionaryNode) => {
+                                data.rec['POST_H'] = 1;
+                                return this._dictSrv.updateNode(this.node, data);
+                            })
                             .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
                     } else {
                         data.rec['POST_H'] = 0;
