@@ -83,19 +83,10 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         span.style.padding = '20px';
         span.innerText = el.innerText;
         body[0].appendChild(span);
-        if (span.clientWidth > el.clientWidth) {
-            this.onHoverItem.emit({
-                top: el.offsetTop - el.offsetParent.scrollTop,
-                left: el.offsetLeft,
-                text: el.innerText,
-                show: true,
-                node: this.node
-            });
+        if (!this.length.tableModeDuble || this.length.tableModeDuble && el.parentElement.className === 'fixed-block') {
+            this._sendEvent(false, span.clientWidth, el);
         } else {
-            this.onHoverItem.emit({
-                show: false,
-                node: this.node
-            });
+            this._sendEvent(true, span.clientWidth, el);
         }
         body[0].removeChild(span);
     }
@@ -111,4 +102,21 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         this._router.navigate([path]);
     }
 
+    private _sendEvent(useScroll: Boolean, calcWidth: number, el: HTMLElement) {
+        if (calcWidth > el.clientWidth) {
+            this.onHoverItem.emit({
+                top: el.offsetTop,
+                left: useScroll ? el.offsetLeft - this.length.left_sc : el.offsetLeft,
+                text: el.innerText,
+                show: true,
+                width: !useScroll ? el.clientWidth : null,
+                node: this.node
+            });
+        } else {
+            this.onHoverItem.emit({
+                show: false,
+                node: this.node
+            });
+        }
+    }
 }

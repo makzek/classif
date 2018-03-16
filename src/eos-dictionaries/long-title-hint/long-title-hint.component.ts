@@ -16,6 +16,7 @@ export class LongTitleHintComponent {
     public top: string;
     public left: string;
     public opacity = 0;
+    public width: string;
 
     public lkm = false;
     public show = false;
@@ -38,6 +39,7 @@ export class LongTitleHintComponent {
             this.left = hintConfig.left + 'px';
             this.opacity = 1;
             this._node = hintConfig.node;
+            this.width = hintConfig.width + 'px';
             this.lkm = false;
         }, 100);
     }

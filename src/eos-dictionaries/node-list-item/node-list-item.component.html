@@ -37,9 +37,9 @@
                         <span>{{field.value}}</span>
                     </span>
                 </div>
-                <div class="srolling-block">
-                    <div class="move" [style.left.px]="length.left_sc">
-                        <span *ngFor="let field of customFields; let i = index" #el
+                <div class="srolling-block" [scrollLeft]="length.left_sc">
+                    <div class="move">
+                        <span *ngFor="let field of customFields; let i = index" #el (mouseover)="showHint(el)"
                             id="{{field.foreignKey}}" class="code" [ngStyle]="{'width.px': length.length[field.key]}">
                             <span *ngIf="customValues">{{customValues[field.key]}}</span>
                         </span>

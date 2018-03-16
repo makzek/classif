@@ -4,6 +4,7 @@ export interface HintConfiguration {
     top?: number;
     left?: number;
     text?: string;
+    width?: number;
     show: boolean;
     node: EosDictionaryNode;
 }

@@ -327,64 +327,64 @@
 /*Feature table-scroll*/
 .scroll-mode-wrapper {
     height: $item-height;
-}
+    .table-move {
+        width: 48px;
+        height: 46px;
+        top: 0;
+        z-index: 3;
+        border: none;
+        position: absolute;
 
-.move {
-    position: absolute;
-    display: inline-block;
-    white-space: nowrap;
-    transition: left .2s;
-}
+    }
 
-.table-move {
-    width: 48px;
-    height: 46px;
-    position: absolute;
-    z-index: 3;
-    border: none;
-}
+    .srolling-block {
+        width: 50%;
+        display: inline-block;
+        overflow-x: scroll;
+        height: 48px;
+        .move {
+            display: inline-block;
+            white-space: nowrap;
+        }
+    }
 
-.to-left {
-    left: 0;
-    background: linear-gradient(90deg, #fafafa 60%, #fafafa00 100%);
-}
+    .srolling-block::-webkit-scrollbar {
+        width: 0;
+    }
 
-.to-left:focus, .to-rigth:focus {
-    outline: 0 none !important;
-}
+    .fixed-block {
+        width: 49.5%;
+        display: inline-block;
+        overflow: hidden;
+        height: 48px;
+    }
 
-.to-rigth {
-    right: 0;
-    background: linear-gradient(-90deg, #fafafa 60%, #fafafa00 100%);
-}
+    .table-shadow {
+        width: 1px;
+        height: 500px;
+        box-shadow: 5px 0 8px #000;
+        display: inline-block;
+        position: absolute;
+        z-index: 4;
+        cursor: pointer;
+        top: -5px;
+    }
 
-.rigth {
-    transform: rotate(-180deg);
-}
+    .to-left {
+        background: linear-gradient(90deg, #fafafa 60%, #fafafa00 100%);
+        left: calc(49.5% - 22px);
+    }
 
-.srolling-block {
-    width: 50%;
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
-    height: 48px;
-}
+    .to-left:focus, .to-right:focus {
+        outline: 0 none !important;
+    }
 
-.fixed-block {
-    width: 49.5%;
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
-    height: 48px;
-}
+    .to-right {
+        background: linear-gradient(-90deg, #fafafa 60%, #fafafa00 100%);
+        right: 0;
+    }
 
-.table-shadow {
-    width: 1px;
-    height: 500px;
-    box-shadow: 5px 0 8px #000;
-    display: inline-block;
-    position: absolute;
-    z-index: 4;
-    cursor: pointer;
-    top: -5px;
+    .rigth {
+        transform: rotate(-180deg);
+    }
 }

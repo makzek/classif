@@ -1,5 +1,5 @@
 <div *ngIf="show" (mouseleave)="hideHint()" (click)="selectNode($event)" (dblclick)="viewNode()" (contextmenu)="lkmClick()"
-    class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left">
+    class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left" [style.width]="width">
     <span class="title">{{title}}</span>
     <span class="interface-text">ПКМ - скрыть.</span>
 </div>

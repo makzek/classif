@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -42,10 +42,10 @@ import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.
 })
 export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
-    @ViewChild('tree') treeEl;
-    @ViewChild('moveBlock') moveBlock;
-    @ViewChild('wrMoveBlock') wrMoveBlock;
-    @ViewChild('selectedWrapper') selectedEl;
+    @ViewChild('tree') treeEl: ElementRef;
+    @ViewChild('moveBlock') moveBlock: ElementRef;
+    @ViewChild('wrMoveBlock') wrMoveBlock: ElementRef;
+    @ViewChild('selectedWrapper') selectedEl: ElementRef;
 
     dictionary: EosDictionary;
     listDictionary: EosDictionary;
@@ -80,7 +80,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         tableModeDuble: false,
         left_sc: 0,
         length: {}
-    }; // Length column
+    };
 
     orderBy: IOrderBy;
 
@@ -95,15 +95,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     tableWidth: number;
     hasCustomTable: boolean;
 
-    public fonConf = {
-        width: 0 + 'px',
-        height: 0 + 'px',
-        top: 0 + 'px'
-    };
-
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
     }
+
+    private SCROLL_INTERVAL = 50;
+    private SCROLL_STEP = 5;
+
     private _interval = null;
     private _nodeId: string;
 
@@ -225,46 +223,36 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._countColumnWidth();
     }
 
-    /*FEATURE TABLE SCROLL */
-    move(val: boolean) {
-        // val ? this.length.left_sc -= 60 : this.length.left_sc += 60;
-    }
-
     public startScrollToLeft() {
-        const diff = this.moveBlock.nativeElement.clientWidth - this.wrMoveBlock.nativeElement.clientWidth;
-        const SCROLL_INTERVAL = 50;
-        const SCROLL_STEP = 5;
         if (this._interval) {
             window.clearInterval(this._interval);
         }
         this._interval = setInterval(() => {
-            if (this.length.left_sc <= -1 * diff) {
-                this.length.left_sc = -1 * diff;
+            if (this.wrMoveBlock.nativeElement.scrollLeft > this.SCROLL_STEP) {
+                this.length.left_sc -= this.SCROLL_STEP;
             } else {
-                this.length.left_sc -= SCROLL_STEP;
+                this.wrMoveBlock.nativeElement.scrollLeft = 0;
             }
-        }, SCROLL_INTERVAL);
+        }, this.SCROLL_INTERVAL);
     }
 
     public startScrollToRight() {
-        const SCROLL_INTERVAL = 50;
-        const SCROLL_STEP = 5;
         if (this._interval) {
             window.clearInterval(this._interval);
         }
         this._interval = setInterval(() => {
-            if (this.length.left_sc >= 0) {
-                this.length.left_sc = 0;
+            if (this.wrMoveBlock.nativeElement.scrollLeft + this.length.left_sc
+                < this.wrMoveBlock.nativeElement.scrollWidth) {
+                this.length.left_sc += this.SCROLL_STEP;
             } else {
-                this.length.left_sc += SCROLL_STEP;
+               this.length.left_sc = this.wrMoveBlock.nativeElement.scrollWidth;
             }
-        }, SCROLL_INTERVAL);
+        }, this.SCROLL_INTERVAL);
     }
 
     public endScroll() {
         window.clearInterval(this._interval);
     }
-    /*END */
 
     doAction(evt: IActionEvent) {
         switch (evt.action) {
