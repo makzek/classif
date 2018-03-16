@@ -241,11 +241,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             window.clearInterval(this._interval);
         }
         this._interval = setInterval(() => {
-            if (this.wrMoveBlock.nativeElement.scrollLeft + this.length.left_sc
+            if (this.wrMoveBlock.nativeElement.scrollLeft + this.wrMoveBlock.nativeElement.clientWidth
                 < this.wrMoveBlock.nativeElement.scrollWidth) {
                 this.length.left_sc += this.SCROLL_STEP;
-            } else {
-               this.length.left_sc = this.wrMoveBlock.nativeElement.scrollWidth;
             }
         }, this.SCROLL_INTERVAL);
     }
