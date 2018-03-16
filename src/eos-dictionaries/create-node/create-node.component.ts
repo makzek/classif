@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { EosStorageService } from '../../app/services/eos-storage.service';
+import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.component';
 import { CONFIRM_CHANGE_BOSS } from '../consts/confirm.consts';
 import { INFO_PERSONE_DONT_HAVE_CABINET } from '../consts/messages.consts';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
@@ -21,6 +22,8 @@ export class CreateNodeComponent {
     @Input() nodeData: any;
     @Output() onHide: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() onOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    @ViewChild('cardEditEl') cardEditRef: CardEditComponent;
 
     formIsValid = false;
     hasChanges = false;
@@ -94,49 +97,37 @@ export class CreateNodeComponent {
                         if (confirm) {
                             boss.data.rec['POST_H'] = 0;
                             this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
-                                this._dictSrv.addNode(this.nodeData)
+                                this._dictSrv.addNode(this.cardEditRef.getNewData())
                                     .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                     .catch((err) => this._errHandler(err));
                             })
                         } else {
                             this.nodeData.rec['POST_H'] = 0;
-                            this._dictSrv.addNode(this.nodeData)
+                            this._dictSrv.addNode(this.cardEditRef.getNewData())
                                 .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                                 .catch((err) => this._errHandler(err));
                         }
                     })
             } else {
-                this._dictSrv.addNode(this.nodeData)
+                this._dictSrv.addNode(this.cardEditRef.getNewData())
                     .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                     .catch((err) => this._errHandler(err));
             }
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
         } else {
-            this._dictSrv.addNode(this.nodeData)
+            this._dictSrv.addNode(this.cardEditRef.getNewData())
                 .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
                 .catch((err) => this._errHandler(err));
         }
     }
 
     /**
-     * Check if data was changed
-     * @param data user data
+     * Set hasChanges
+     * @param hasChanges recived value
      */
-    recordChanged(_data: any) {
-        if (this.nodeData) {
-            /* tslint:disable:no-bitwise */
-            const hasChanges = !!~Object.keys(this.nodeData).findIndex((dict) => {
-                if (this.nodeData[dict]) {
-                    return !!~Object.keys(this.nodeData[dict]).findIndex((key) =>
-                        this.nodeData[dict][key] && key !== 'IS_NODE');
-                } else {
-                    return false;
-                }
-            });
-            /* tslint:enable:no-bitwise */
-            this.hasChanges = hasChanges;
-        }
+    recordChanged(hasChanges: boolean) {
+        this.hasChanges = hasChanges;
     }
 
     private _afterAdding(node: EosDictionaryNode, hide: boolean): void {

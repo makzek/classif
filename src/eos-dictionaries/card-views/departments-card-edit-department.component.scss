@@ -1,0 +1,30 @@
+.departments-department-card-edit {
+    display: block;
+    padding-top: 20px;
+    .card-flag {
+        margin-top: 30px;
+    }
+    .duty-flag{
+        margin-top: -6px;
+    }
+    .alternates {
+        .form-group {
+            &:first-child {
+                margin-top: 30px;
+            }
+            &:last-child {
+                .form-control {
+                    padding-right: 32px;
+                    position: relative;
+                }
+            }
+            .person-list-btn {
+                position: absolute;
+                right: 20px;
+                top: 29px;
+                height: 32px;
+                width: 32px;
+            }
+        }
+    }
+}

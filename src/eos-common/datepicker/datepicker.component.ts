@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'eos-datepicker',
     templateUrl: 'datepicker.component.html',
 })
 export class DatepickerComponent implements OnInit, OnDestroy {
+    @Input() form: FormGroup;
+    @Input() formControlName: string;
     @Input() value: any;
     @Input() isReadonly: boolean;
     @Input() placeholder = '';

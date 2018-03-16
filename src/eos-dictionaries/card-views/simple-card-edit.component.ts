@@ -9,6 +9,7 @@ import { NOT_EMPTY_STRING } from 'eos-dictionaries/consts/input-validation';
 })
 export class SimpleCardEditComponent extends BaseCardEditComponent {
     readonly notEmptyString = NOT_EMPTY_STRING;
+
     constructor(injector: Injector) {
         super(injector);
     }

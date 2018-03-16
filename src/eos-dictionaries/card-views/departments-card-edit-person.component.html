@@ -1,389 +1,172 @@
-<form #cardForm="ngForm">
-    <div>
-        <div class="tabs-wrapper usual-border">
-            <ul class="tabs">
-                <li class="tab-item primary-text"
-                    *ngFor="let tab of fieldGroups; let i = index"
-                    role="presentation"
-                    [ngClass]="{'active-border secondary-text': i === currTab}"
-                    (click)="setTab(i)">
-                    <span class="tab-title">{{tab}}</span>
-                </li>
-            </ul>
+<div class="tabs-wrapper usual-border">
+    <ul class="tabs">
+        <li class="tab-item primary-text"
+            *ngFor="let tab of fieldGroups; let i = index"
+            role="presentation"
+            [ngClass]="{'active-border secondary-text': i === currTab}"
+            (click)="setTab(i)">
+            <span class="tab-title">{{tab}}</span>
+        </li>
+    </ul>
+</div>
+<div [hidden]="currTab !== 0">
+    <div class="wrapper clearfix"
+        *ngIf="inputs">
+        <div class="col-1 pull-left">
+            <div class="current-image"
+                [ngStyle]="{'background-image': photo}">
+                <eos-photo-uploader class="photo-uploader"
+                    [disableEdit]="!editMode"
+                    (endUploading)="newImage($event)"></eos-photo-uploader>
+            </div>
+
+            <div class="form-group gender">
+                <eos-dynamic-input *ngIf="inputs['printInfo.GENDER']"
+                    [input]="inputs['printInfo.GENDER']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.CODE']"
+                    [input]="inputs['rec.CODE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.indexPerson']"
+                    [input]="inputs['rec.indexPerson']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group sev">
+                <eos-dynamic-input *ngIf="inputs['sev.GLOBAL_ID']"
+                    [input]="inputs['sev.GLOBAL_ID']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.START_DATE']"
+                    [input]="inputs['rec.START_DATE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.END_DATE']"
+                    [input]="inputs['rec.END_DATE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
         </div>
-        <div [hidden]="currTab !== 0">
-            <div class="wrapper">
-                <div class="col-1">
-                    <div class="current-image"
-                        [ngStyle]="{'background-image': photo}">
-                        <eos-photo-uploader class="photo-uploader"
-                            [disableEdit]="!editMode"
-                            (endUploading)="newImage($event)"></eos-photo-uploader>
-                    </div>
-                    <div class="form-group gender">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="GENDER">Пол</label>
-                        <select name="GENDER"
-                            id="GENDER"
-                            class="form-control m-font gender-select"
-                            [ngModel]="data['printInfo']['GENDER']"
-                            (ngModelChange)="change('GENDER', 'printInfo', $event)"
-                            [ngClass]="{'readonly hidden': !editMode }">
-                                <option *ngFor="let g of gender" [value]="g.id">{{g.title}}</option>
-                            </select>
-                        <input *ngIf="data['printInfo'] && !editMode"
-                            name="GENDER"
-                            type="text"
-                            class="form-control m-font readonly"
-                            [ngClass]="{'GENDER-placeholder': editMode }"
-                            [value]="getGender(data['printInfo']['GENDER'])" />
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="CODE">Код</label>
-                        <input [readonly]="!editMode"
-                            id="CODE"
-                            name="CODE"
-                            type="text"
-                            class="form-control m-font"
-                            [ngModel]="data.rec['CODE']"
-                            (ngModelChange)="change('CODE', 'rec', $event)"
-                            placeholder="Код"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('CODE')"
-                            (blur)="blur()"
-                            maxlength="64"
-                            [pattern]="NOT_EMPTY_STRING"
-                            [eosUnic]="true"
-                            [key]="'CODE'"
-                            [checkingMethod]="checkUnic.bind(this)"
-                            [inDict]="false"
-                            tooltip="Максимальная длина 64 символа. Должно быть уникально в пределах вершины"
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('CODE')"
-                            autocomplete="off"
-                            triggers="">
-
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="indexPerson">Индекс ДЛ</label>
-                        <input [readonly]="!editMode"
-                            id="indexPerson"
-                            name="indexPerson"
-                            type="text"
-                            class="form-control m-font"
-                            [ngModel]="data.rec['DEPARTMENT_INDEX']"
-                            (ngModelChange)="change('DEPARTMENT_INDEX', 'rec', $event)"
-                            placeholder="Индекс ДЛ"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('indexPerson')"
-                            (blur)="blur()"
-                            maxlength="24"
-                            [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 24 символа."
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('indexPerson')"
-                            autocomplete="off"
-                            triggers="">
-                    </div>
-                    <div class="form-group sev">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="SEV">Индекс СЭВ</label>
-                        <input [readonly]="!editMode"
-                            id="SEV"
-                            name="SEV"
-                            type="text"
-                            class="form-control m-font"
-                            [ngModel]="data['sev']['GLOBAL_ID']"
-                            (ngModelChange)="change('GLOBAL_ID', 'sev', $event)"
-                            placeholder="Индекс СЭВ"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('SEV')"
-                            (blur)="blur()"
-                            maxlength="255"
-                            [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 255 символов."
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('SEV')"
-                            autocomplete="off"
-                            triggers="">
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="START_DATE">Начало действия</label>
-                        <eos-datepicker [placeholder]="'Начало действия'"
-                            [value]="data.rec['START_DATE']"
-                            (dateChange)="change('START_DATE', 'rec', $event)"
-                            (dateValid)="dateValid('START_DATE', $event)"
-                            [isReadonly]="!editMode"
-                            [ngClass]="{'readonly': !editMode }"></eos-datepicker>
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="END_DATE">Окончание действия</label>
-                        <eos-datepicker [placeholder]="'Окончание действия'"
-                            [value]="data.rec['END_DATE']"
-                            (dateChange)="change('END_DATE', 'rec', $event)"
-                            (dateValid)="dateValid('END_DATE', $event)"
-                            [isReadonly]="!editMode"
-                            [ngClass]="{'readonly': !editMode }"
-                            placement="bottom"></eos-datepicker>
-                    </div>
+        <div class="col-2 pull-right">
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME']"
+                    [input]="inputs['printInfo.SURNAME']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="names row-wrapper">
+                <div class="form-group first-name">
+                    <eos-dynamic-input *ngIf="inputs['printInfo.NAME']"
+                        [input]="inputs['printInfo.NAME']"
+                        [form]="form"
+                        [readonly]="!editMode">
+                    </eos-dynamic-input>
                 </div>
-                <div class="col-2">
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="SURNAME_PRINT">Фамилия</label>
-                        <input [readonly]="!editMode"
-                            id="SURNAME_PRINT"
-                            name="SURNAME_PRINT"
-                            type="text"
-                            class="form-control m-font "
-                            [ngModel]="data['printInfo']['SURNAME']"
-                            (ngModelChange)="change('SURNAME', 'printInfo', $event)"
-                            placeholder="Фамилия"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('SURNAME_PRINT')"
-                            (blur)="blur()"
-                            maxlength="64"
-                            [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 64 символа."
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('SURNAME_PRINT')"
-                            autocomplete="off"
-                            triggers="">
-                    </div>
-                    <div class="names row-wrapper">
-                        <div class="form-group first-name">
-                            <label class="primary-text"
-                                [ngClass]="{'unimportant-text': !editMode }"
-                                for="NAME">Имя</label>
-                            <input [readonly]="!editMode"
-                                id="NAME"
-                                name="NAME"
-                                type="text"
-                                class="form-control m-font "
-                                [ngModel]="data['printInfo']['NAME']"
-                                (ngModelChange)="change('NAME', 'printInfo', $event)"
-                                placeholder="Имя"
-                                [ngClass]="{'readonly': !editMode }"
-                                (focus)="focus('NAME')"
-                                (blur)="blur()"
-                                maxlength="64"
-                                [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Максимальная длина 64 символа."
-                                [isDisabled]="!editMode"
-                                placement="bottom"
-                                containerClass="tooltip-error"
-                                [isOpen]="isInvalid('NAME')"
-                                autocomplete="off"
-                                triggers="">
-                        </div>
-                        <div class="form-group fathers-name">
-                            <label class="primary-text"
-                                [ngClass]="{'unimportant-text': !editMode }"
-                                for="PATRON">Отчество</label>
-                            <input [readonly]="!editMode"
-                                id="PATRON"
-                                name="PATRON"
-                                type="text"
-                                class="form-control m-font "
-                                [ngModel]="data['printInfo']['PATRON']"
-                                (ngModelChange)="change('PATRON', 'printInfo', $event)"
-                                placeholder="Отчество"
-                                [ngClass]="{'readonly': !editMode }"
-                                (focus)="focus('PATRON')"
-                                (blur)="blur()"
-                                maxlength="64"
-                                [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Максимальная длина 64 символа."
-                                [isDisabled]="!editMode"
-                                placement="bottom"
-                                containerClass="tooltip-error"
-                                [isOpen]="isInvalid('PATRON')"
-                                autocomplete="off"
-                                triggers="">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="primary-text required"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="SURNAME">
-                                Фамилия И.О.
-                            </label>
-                        <input [readonly]="!editMode"
-                            id="SURNAME"
-                            name="SURNAME"
-                            type="text"
-                            class="form-control m-font"
-                            [ngModel]="data.rec['SURNAME']"
-                            (ngModelChange)="change('SURNAME', 'rec', $event)"
-                            [placeholder]="fieldsDescription.rec.SURNAME.title"
-                            value="default"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('SURNAME')"
-                            (blur)="blur()"
-                            [required]="fieldsDescription.rec.SURNAME.required"
-                            maxlength="{{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}}"
-                            [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Обязательное поле. Максимальная длина {{(252 - data.rec['DUTY']?.length) > 64 ? 64 : 252 - data.rec['DUTY']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
-
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('SURNAME')"
-                            autocomplete="off"
-                            triggers="">
-                    </div>
-                    <div class="row-wrapper">
-                        <div class="form-group fathers-name">
-                            <label class="primary-text required"
-                                [ngClass]="{'unimportant-text': !editMode }"
-                                for="DUTY">
-                                        Краткое наименование должности
-                            </label>
-                            <input [readonly]="!editMode"
-                                id="DUTY"
-                                name="DUTY"
-                                type="text"
-                                class="form-control m-font  duty"
-                                [ngModel]="data.rec['DUTY']"
-                                (ngModelChange)="change('DUTY', 'rec', $event)"
-                                [placeholder]="fieldsDescription.rec.DUTY.title"
-                                [required]="fieldsDescription.rec.DUTY.required"
-                                value="default"
-                                [ngClass]="{'readonly': !editMode }"
-                                (focus)="focus('DUTY')"
-                                (blur)="blur()"
-                                maxlength="{{252 - data.rec['SURNAME']?.length}}"
-                                [pattern]="NOT_EMPTY_STRING"
-                                tooltip="Обязательное поле. Максимальная длина {{252 - data.rec['SURNAME']?.length}} символ(а|ов). Суммарная длинна полей Фамилия И.О. и Краткое наименование должности не может превышать 252 символа."
-                                containerClass="tooltip-error"
-                                [isDisabled]="!editMode"
-                                placement="bottom"
-                                [isOpen]="isInvalid('DUTY')"
-                                autocomplete="off"
-                                [typeahead]="dutysList"
-                                triggers="">
-                        </div>
-
-                        <div class="form-group role">
-                            <label class="primary-text"
-                                [ngClass]="{'unimportant-text': !editMode }"
-                                for="POST_H">Роль</label>
-                            <select class="form-control m-font gender-select"
-                                name="POST_H"
-                                id="POST_H"
-                                [ngModel]="data.rec['POST_H']"
-                                (ngModelChange)="change('POST_H', 'rec', $event)"
-                                [ngClass]="{'readonly hidden': !editMode }">
-                                    <option *ngFor="let role of roles" [value]="role.value">{{role.title}}</option>
-                            </select>
-                            <input *ngIf="!editMode"
-                                name="POST_H"
-                                type="text"
-                                class="form-control m-font readonly"
-                                [ngClass]="{'GENDER-placeholder': editMode }"
-                                placeholder="Роль"
-                                [value]="getRole(data.rec['POST_H'])" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="fullPosition">Полное наименование должности</label>
-                        <input [readonly]="!editMode"
-                            id="fullPosition"
-                            name="fullPosition"
-                            type="text"
-                            class="form-control m-font "
-                            [ngModel]="data.rec['FULLNAME']"
-                            (ngModelChange)="change('FULLNAME', 'rec', $event)"
-                            [placeholder]="fieldsDescription.rec.fullPosition.title"
-                            [required]="fieldsDescription.rec.fullPosition.required"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('fullPosition')"
-                            (blur)="blur()"
-                            maxlength="1998"
-                            [pattern]="NOT_EMPTY_STRING"
-                            tooltip="Максимальная длина 1998 символов."
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('fullPosition')"
-                            autocomplete="off"
-                            [typeahead]="fullNamesList"
-                            triggers="">
-                    </div>
-                    <div class="form-group">
-                        <label class="primary-text"
-                            [ngClass]="{'unimportant-text': !editMode }"
-                            for="NOTE">Примечание</label>
-                        <textarea [readonly]="!editMode"
-                            id="NOTE"
-                            name="NOTE"
-                            type="text"
-                            class="form-control m-font  note-person"
-                            rows="5"
-                            [ngModel]="data.rec['NOTE']"
-                            (ngModelChange)="change('NOTE', 'rec', $event)"
-                            placeholder="Примечание"
-                            [ngClass]="{'readonly': !editMode }"
-                            (focus)="focus('NOTE')"
-                            (blur)="blur()"
-                            maxlength="255"
-                            tooltip="Максимальная длина 255 символов."
-                            [isDisabled]="!editMode"
-                            placement="bottom"
-                            containerClass="tooltip-error"
-                            [isOpen]="isInvalid('NOTE')"
-                            autocomplete="off"
-                            triggers=""></textarea>
-                    </div>
+                <div class="form-group fathers-name">
+                    <eos-dynamic-input *ngIf="inputs['printInfo.PATRON']"
+                        [input]="inputs['printInfo.PATRON']"
+                        [form]="form"
+                        [readonly]="!editMode">
+                    </eos-dynamic-input>
                 </div>
             </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.SURNAME']"
+                    [input]="inputs['rec.SURNAME']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group duty-row">
+                <eos-dynamic-input class="text-input"
+                    *ngIf="inputs['rec.DUTY']"
+                    [input]="inputs['rec.DUTY']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input class="checkbox-input"
+                    *ngIf="inputs['rec.POST_H']"
+                    [input]="inputs['rec.POST_H']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.fullPosition']"
+                    [input]="inputs['rec.fullPosition']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.NOTE']"
+                    [input]="inputs['rec.NOTE']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+        </div>
+    </div>
+    <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+    <!-- delegation
             <div>
                 <span class="block-title l-font usual-border primary-text">Исполнитель моих обязанностей</span>
-                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
-                <!--<div class="row alternates" *ngFor="let alternate of data['alternates']; let i = index">
-                                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_START_DATE">Начало действия</label>
-                                        <eos-datepicker [placeholder]="'Начало действия'" [value]="alternate.START_DATE"
-                                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="bottom"></eos-datepicker>
-                                    </div>
-                                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="alternate_END_DATE">Окончание действия</label>
-                                        <eos-datepicker [placeholder]="'Окончание действия'" [value]="alternate.END_DATE"
-                                            [readonly]="!editMode" [ngClass]="{'readonly': !editMode }" placement="bottom"></eos-datepicker>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
-                                        <label class="primary-text" [ngClass]="{'unimportant-text': !editMode }" for="fullPosition">Исполнитель моих обязанностей</label>
-                                        <input [readonly]="!editMode" id="fullPosition" name="alternate.name" type="text" class="form-control m-font "
-                                            [ngModel]="alternate.name"
-                                            placeholder="Исполнитель моих обязанностей"
-                                            [ngClass]="{'readonly': !editMode }">
-                                        <button class="btn btn-primary-light person-list-btn">
-                                            <i [hidden]="!editMode" class="fa fa-user-plus selected-text user-icon" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                </div>-->
+                <div class="row alternates"
+                    *ngFor="let alternate of data['alternates']; let i = index">
+                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+                        <label class="primary-text"
+                            [ngClass]="{'unimportant-text': !editMode }"
+                            for="alternate_START_DATE">Начало действия</label>
+                        <eos-datepicker [placeholder]="'Начало действия'"
+                            [value]="alternate.START_DATE"
+                            [readonly]="!editMode"
+                            [ngClass]="{'readonly': !editMode }"
+                            placement="top"></eos-datepicker>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+                        <label class="primary-text"
+                            [ngClass]="{'unimportant-text': !editMode }"
+                            for="alternate_END_DATE">Окончание действия</label>
+                        <eos-datepicker [placeholder]="'Окончание действия'"
+                            [value]="alternate.END_DATE"
+                            [readonly]="!editMode"
+                            [ngClass]="{'readonly': !editMode }"
+                            placement="top"></eos-datepicker>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
+                        <label class="primary-text"
+                            [ngClass]="{'unimportant-text': !editMode }"
+                            for="fullPosition">Исполнитель моих обязанностей</label>
+                        <input [readonly]="!editMode"
+                            id="fullPosition"
+                            name="alternate.name"
+                            type="text"
+                            class="form-control m-font "
+                            [(ngModel)]="alternate.name"
+                            placeholder="Исполнитель моих обязанностей"
+                            [ngClass]="{'readonly': !editMode }">
+                        <button class="btn btn-primary-light person-list-btn">
+                                        <i [hidden]="!editMode" class="fa fa-user-plus selected-text user-icon" aria-hidden="true"></i>
+                                    </button>
+                    </div>
+                </div>
 
                 <div class="row alternate-button-wrapper">
                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -397,713 +180,262 @@
             </div>
             <div>
                 <span class="block-title l-font usual-border primary-text">Исполняю обязанности</span>
-                <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
-                <!--<div class="row alternates">
-                                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                                        <label for="alternate_START_DATE">начало действия</label>
-                                        <eos-datepicker [placeholder]="'начало действия'" [value]="data['alternates'][0].START_DATE"
-                                            [readonly]="true" class="readonly" placement="bottom"></eos-datepicker>
-                                    </div>
-                                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
-                                        <label for="alternate_END_DATE">окончание действия</label>
-                                        <eos-datepicker [placeholder]="'окончание действия'" [value]="data['alternates'][0].END_DATE"
-                                            [readonly]="true" class="readonly" placement="bottom"></eos-datepicker>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
-                                        <label for="fullPosition">Исполняю обязанности</label>
-                                        <input id="fullPosition" name="alternate.name" type="text" class="form-control m-font  readonly"
-                                            [ngModel]="data['alternates'][0].name"
-                                            placeholder="Исполняет мои обязанности"
-                                            readonly>
-                                    </div>
-                                </div>-->
-            </div>
-        </div>
-        <div [hidden]="currTab !== 1">
-            <div class="contact-wrapper">
-                <div class="form-group cab">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="NUM_CAB">№ кабинета</label>
-                    <input [readonly]="!editMode"
-                        id="NUM_CAB"
-                        name="NUM_CAB"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['NUM_CAB']"
-                        (ngModelChange)="change('NUM_CAB', 'rec', $event)"
-                        placeholder="№ кабинета"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NUM_CAB')"
-                        (blur)="blur()"
-                        maxlength="24"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NUM_CAB')"
-                        triggers=""
-                        autocomplete="off">
-                </div>
-
-                <div class="form-group phone">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="PHONE">№ телефона</label>
-                    <input [readonly]="!editMode"
-                        id="PHONE"
-                        name="PHONE"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['PHONE']"
-                        (ngModelChange)="change('PHONE', 'rec', $event)"
-                        placeholder="№ телефона"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PHONE')"
-                        (blur)="blur()"
-                        maxlength="24"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PHONE')"
-                        triggers=""
-                        autocomplete="off">
-                </div>
-
-                <div class="form-group phone-local">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="PHONE_LOCAL">№ местного телефона</label>
-                    <input [readonly]="!editMode"
-                        id="PHONE_LOCAL"
-                        name="PHONE_LOCAL"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['PHONE_LOCAL']"
-                        (ngModelChange)="change('PHONE_LOCAL', 'rec', $event)"
-                        placeholder="№ местного телефона"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PHONE_LOCAL')"
-                        (blur)="blur()"
-                        maxlength="24"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PHONE_LOCAL')"
-                        triggers=""
-                        autocomplete="off">
-                </div>
-
-                <div class="form-group fax">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="FAX">Факс</label>
-                    <input [readonly]="!editMode"
-                        id="FAX"
-                        name="FAX"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['FAX']"
-                        (ngModelChange)="change('FAX', 'rec', $event)"
-                        placeholder="Факс"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('FAX')"
-                        (blur)="blur()"
-                        maxlength="24"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 24 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('FAX')"
-                        triggers=""
-                        autocomplete="off">
-                </div>
-
-                <div class="form-group email">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="E_MAIL">E-mail</label>
-                    <input [readonly]="!editMode"
-                        id="E_MAIL"
-                        name="E_MAIL"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['E_MAIL']"
-                        (ngModelChange)="change('E_MAIL', 'rec', $event)"
-                        placeholder="E-mail"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('E_MAIL')"
-                        (blur)="blur()"
-                        maxlength="64"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('E_MAIL')"
-                        triggers=""
-                        autocomplete="off">
-                </div>
-                <div class="form-group skype">
-                    <label class="primary-text"
-                        [ngClass]="{'unimportant-text': !editMode }"
-                        for="SKYPE">Skype</label>
-                    <input [readonly]="!editMode"
-                        id="SKYPE"
-                        name="SKYPE"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data.rec['SKYPE']"
-                        (ngModelChange)="change('SKYPE', 'rec', $event)"
-                        placeholder="Skype"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SKYPE')"
-                        (blur)="blur()"
-                        maxlength="64"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SKYPE')"
-                        triggers=""
-                        autocomplete="off">
+                <div class="row alternates">
+                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+                        <label for="alternate_START_DATE">начало действия</label>
+                        <eos-datepicker [placeholder]="'начало действия'"
+                            [value]="data['alternates'][0].START_DATE"
+                            [readonly]="true"
+                            class="readonly"
+                            placement="top"></eos-datepicker>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3 form-group">
+                        <label for="alternate_END_DATE">окончание действия</label>
+                        <eos-datepicker [placeholder]="'окончание действия'"
+                            [value]="data['alternates'][0].END_DATE"
+                            [readonly]="true"
+                            class="readonly"
+                            placement="top"></eos-datepicker>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6 form-group">
+                        <label for="fullPosition">Исполняю обязанности</label>
+                        <input id="fullPosition"
+                            name="alternate.name"
+                            type="text"
+                            class="form-control m-font  readonly"
+                            [(ngModel)]="data['alternates'][0].name"
+                            placeholder="Исполняет мои обязанности"
+                            readonly>
+                    </div>
                 </div>
             </div>
+            <!-- end of delegation -->
+    <!-- endOf tab1 -->
+</div>
+<div [hidden]="currTab !== 1">
+    <div class="contact-wrapper"
+        *ngIf="inputs">
+        <div class="form-group cab">
+            <eos-dynamic-input *ngIf="inputs['rec.NUM_CAB']"
+                [input]="inputs['rec.NUM_CAB']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
         </div>
-        <div [hidden]="currTab !== 2">
-            <button *ngIf="editMode"
-                class="btn btn-primary-full alternate-button"
+
+        <div class="form-group phone">
+            <eos-dynamic-input *ngIf="inputs['rec.PHONE']"
+                [input]="inputs['rec.PHONE']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+
+        <div class="form-group phone-local">
+            <eos-dynamic-input *ngIf="inputs['rec.PHONE_LOCAL']"
+                [input]="inputs['rec.PHONE_LOCAL']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+
+        <div class="form-group fax">
+            <eos-dynamic-input *ngIf="inputs['rec.FAX']"
+                [input]="inputs['rec.FAX']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+
+        <div class="form-group email">
+            <eos-dynamic-input *ngIf="inputs['rec.E_MAIL']"
+                [input]="inputs['rec.E_MAIL']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+        <div class="form-group skype">
+            <eos-dynamic-input *ngIf="inputs['rec.SKYPE']"
+                [input]="inputs['rec.SKYPE']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+    </div>
+</div>
+<div [hidden]="currTab !== 2">
+    <div>
+        <div class="form-group">
+            <button class="btn"
                 (click)="fillDeclineFields()"
                 containerClass="tooltip-info"
                 tooltip="Проверка API склонения">Заполнить поля</button>
-            <span class="block-title l-font first usual-border primary-text">Склонение должности</span>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="DUTY_RP">Родительный падеж (кого, чего)</label>
-                <input [readonly]="!editMode"
-                    id="DUTY_RP"
-                    name="DUTY_RP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['DUTY_RP']"
-                    (ngModelChange)="change('DUTY_RP', 'printInfo', $event)"
-                    placeholder="Родительный падеж (кого, чего)"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DUTY_RP')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов."
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    containerClass="tooltip-error"
-                    [isOpen]="isInvalid('DUTY_RP')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="255">
-            </div>
+        </div>
+        <div class="xl-font paragraph-title">Склонение должности</div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_RP']"
+                [input]="inputs['printInfo.DUTY_RP']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
 
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="DUTY_DP">Дательный падеж (кому, чему?)</label>
-                <input [readonly]="!editMode"
-                    id="DUTY_DP"
-                    name="DUTY_DP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['DUTY_DP']"
-                    (ngModelChange)="change('DUTY_DP', 'printInfo', $event)"
-                    placeholder="Дательный падеж (кому, чему?)"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DUTY_DP')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов."
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    containerClass="tooltip-error"
-                    [isOpen]="isInvalid('DUTY_DP')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="255">
-            </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_DP']"
+                [input]="inputs['printInfo.DUTY_DP']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
 
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="DUTY_VP">Винительный падеж (кого, что?)</label>
-                <input [readonly]="!editMode"
-                    id="DUTY_VP"
-                    name="DUTY_VP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['DUTY_VP']"
-                    (ngModelChange)="change('DUTY_VP', 'printInfo', $event)"
-                    placeholder="Винительный падеж (кого, что?)"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('DUTY_VP')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов."
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    containerClass="tooltip-error"
-                    [isOpen]="isInvalid('DUTY_VP')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="255">
-            </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_VP']"
+                [input]="inputs['printInfo.DUTY_VP']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
 
-            <span class="block-title l-font usual-border primary-text">Склонение фамилии, имени, отчества</span>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="PRINT_SURNAME_DP">Фамилия И.О. в дательном падеже</label>
-                <input [readonly]="!editMode"
-                    id="PRINT_SURNAME_DP"
-                    name="PRINT_SURNAME_DP"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['PRINT_SURNAME_DP']"
-                    (ngModelChange)="change('PRINT_SURNAME_DP', 'printInfo', $event)"
-                    placeholder="Фамилия И.О. в дательном падеже"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('PRINT_SURNAME_DP')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 64 символа."
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    containerClass="tooltip-error"
-                    [isOpen]="isInvalid('PRINT_SURNAME_DP')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="64">
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="PRINT_SURNAME">И.О. Фамилия в дательном падеже</label>
-                <input [readonly]="!editMode"
-                    id="PRINT_SURNAME"
-                    name="PRINT_SURNAME"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['PRINT_SURNAME']"
-                    (ngModelChange)="change('PRINT_SURNAME', 'printInfo', $event)"
-                    placeholder="И.О. Фамилия в дательном падеже"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('PRINT_SURNAME')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 64 символа."
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    containerClass="tooltip-error"
-                    [isOpen]="isInvalid('PRINT_SURNAME')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="64">
-            </div>
+        <span class="block-title l-font usual-border primary-text">Склонение фамилии, имени, отчества</span>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME_DP']"
+                [input]="inputs['printInfo.PRINT_SURNAME_DP']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME']"
+                [input]="inputs['printInfo.PRINT_SURNAME']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
 
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SURNAME_RP">Родительный падеж (кого?)</label>
-                <div class="row-wrapper declination-wrapper">
-                    <input [readonly]="!editMode"
-                        id="SURNAME_RP"
-                        name="SURNAME_RP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['SURNAME_RP']"
-                        (ngModelChange)="change('SURNAME_RP', 'printInfo', $event)"
-                        placeholder="Фамилия"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SURNAME_RP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SURNAME_RP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="NAME_RP"
-                        name="NAME_RP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['NAME_RP']"
-                        (ngModelChange)="change('NAME_RP', 'printInfo', $event)"
-                        placeholder="Имя"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NAME_RP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NAME_RP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="PATRON_RP"
-                        name="PATRON_RP"
-                        type="text"
-                        class="form-control m-font  last"
-                        [ngModel]="data['printInfo']['PATRON_RP']"
-                        (ngModelChange)="change('PATRON_RP', 'printInfo', $event)"
-                        placeholder="Отчество"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PATRON_RP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PATRON_RP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SURNAME_DP">Дательный падеж (кому?)</label>
-                <div class="row-wrapper declination-wrapper">
-                    <input [readonly]="!editMode"
-                        id="SURNAME_DP"
-                        name="SURNAME_DP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['SURNAME_DP']"
-                        (ngModelChange)="change('SURNAME_DP', 'printInfo', $event)"
-                        placeholder="Фамилия"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SURNAME_DP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SURNAME_DP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="NAME_DP"
-                        name="NAME_DP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['NAME_DP']"
-                        (ngModelChange)="change('NAME_DP', 'printInfo', $event)"
-                        placeholder="Имя"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NAME_DP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NAME_DP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="PATRON_DP"
-                        name="PATRON_DP"
-                        type="text"
-                        class="form-control m-font  last"
-                        [ngModel]="data['printInfo']['PATRON_DP']"
-                        (ngModelChange)="change('PATRON_DP', 'printInfo', $event)"
-                        placeholder="Отчество"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PATRON_DP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PATRON_DP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SURNAME_VP">Винительный падеж (кого?)</label>
-                <div class="row-wrapper declination-wrapper">
-                    <input [readonly]="!editMode"
-                        id="SURNAME_VP"
-                        name="SURNAME_VP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['SURNAME_VP']"
-                        (ngModelChange)="change('SURNAME_VP', 'printInfo', $event)"
-                        placeholder="Фамилия"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SURNAME_VP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SURNAME_VP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="NAME_VP"
-                        name="NAME_VP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['NAME_VP']"
-                        (ngModelChange)="change('NAME_VP', 'printInfo', $event)"
-                        placeholder="Имя"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NAME_VP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NAME_VP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="PATRON_VP"
-                        name="PATRON_VP"
-                        type="text"
-                        class="form-control m-font  last"
-                        [ngModel]="data['printInfo']['PATRON_VP']"
-                        (ngModelChange)="change('PATRON_VP', 'printInfo', $event)"
-                        placeholder="Отчество"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PATRON_VP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PATRON_VP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SURNAME_TP">Творительный падеж (кем?)</label>
-                <div class="row-wrapper declination-wrapper">
-                    <input [readonly]="!editMode"
-                        id="SURNAME_TP"
-                        name="SURNAME_TP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['SURNAME_TP']"
-                        (ngModelChange)="change('SURNAME_TP', 'printInfo', $event)"
-                        placeholder="Фамилия"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SURNAME_TP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SURNAME_TP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="NAME_TP"
-                        name="NAME_TP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['NAME_TP']"
-                        (ngModelChange)="change('NAME_TP', 'printInfo', $event)"
-                        placeholder="Имя"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NAME_TP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NAME_TP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="PATRON_TP"
-                        name="PATRON_TP"
-                        type="text"
-                        class="form-control m-font  last"
-                        [ngModel]="data['printInfo']['PATRON_TP']"
-                        (ngModelChange)="change('PATRON_TP', 'printInfo', $event)"
-                        placeholder="Отчество"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PATRON_TP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PATRON_TP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="SURNAME_PP">Предложный падеж (о ком?)</label>
-                <div class="row-wrapper declination-wrapper">
-                    <input [readonly]="!editMode"
-                        id="SURNAME_PP"
-                        name="SURNAME_PP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['SURNAME_PP']"
-                        (ngModelChange)="change('SURNAME_PP', 'printInfo', $event)"
-                        placeholder="Фамилия"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('SURNAME_PP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('SURNAME_PP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="NAME_PP"
-                        name="NAME_PP"
-                        type="text"
-                        class="form-control m-font "
-                        [ngModel]="data['printInfo']['NAME_PP']"
-                        (ngModelChange)="change('NAME_PP', 'printInfo', $event)"
-                        placeholder="Имя"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('NAME_PP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Пробелы в начале и в конце строки запрещены."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('NAME_PP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                    <input [readonly]="!editMode"
-                        id="PATRON_PP"
-                        name="PATRON_PP"
-                        type="text"
-                        class="form-control m-font  last"
-                        [ngModel]="data['printInfo']['PATRON_PP']"
-                        (ngModelChange)="change('PATRON_PP', 'printInfo', $event)"
-                        placeholder="Отчество"
-                        [ngClass]="{'readonly': !editMode }"
-                        (focus)="focus('PATRON_PP')"
-                        (blur)="blur()"
-                        [pattern]="NOT_EMPTY_STRING"
-                        tooltip="Максимальная длина 64 символа."
-                        [isDisabled]="!editMode"
-                        placement="bottom"
-                        containerClass="tooltip-error"
-                        [isOpen]="isInvalid('PATRON_PP')"
-                        autocomplete="off"
-                        triggers=""
-                        maxlength="64">
-                </div>
-            </div>
-            <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="PRINT_DUTY">Должность</label>
-                <input [readonly]="!editMode"
-                    id="PRINT_DUTY"
-                    name="PRINT_DUTY"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['PRINT_DUTY']"
-                    (ngModelChange)="change('PRINT_DUTY', 'printInfo', $event)"
-                    placeholder="Должность"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('PRINT_DUTY')"
-                    (blur)="blur()"
-                    maxlength="255"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Обязательное поле. Максимальная длина 255 символов."
-                    containerClass="tooltip-error"
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    [isOpen]="isInvalid('PRINT_DUTY')"
-                    autocomplete="off"
-                    triggers="">
-            </div>
-            <div class="form-group">
-                <label class="primary-text"
-                    [ngClass]="{'unimportant-text': !editMode }"
-                    for="PRINT_DEPARTMENT">Подразделение</label>
-                <input [readonly]="!editMode"
-                    id="PRINT_DEPARTMENT"
-                    name="PRINT_DEPARTMENT"
-                    type="text"
-                    class="form-control m-font "
-                    [ngModel]="data['printInfo']['PRINT_DEPARTMENT']"
-                    (ngModelChange)="change('PRINT_DEPARTMENT', 'printInfo', $event)"
-                    placeholder="Подразделение"
-                    [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('PRINT_DEPARTMENT')"
-                    (blur)="blur()"
-                    [pattern]="NOT_EMPTY_STRING"
-                    tooltip="Максимальная длина 255 символов."
-                    containerClass="tooltip-error"
-                    [isDisabled]="!editMode"
-                    placement="bottom"
-                    [isOpen]="isInvalid('PRINT_DEPARTMENT')"
-                    autocomplete="off"
-                    triggers=""
-                    maxlength="255">
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode }"
+                for="SURNAME_RP">Родительный падеж (кого?)</label>
+            <div class="row-wrapper declination-wrapper">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_RP']"
+                    [input]="inputs['printInfo.SURNAME_RP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_RP']"
+                    [input]="inputs['printInfo.NAME_RP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_RP']"
+                    [input]="inputs['printInfo.PATRON_RP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
             </div>
         </div>
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode }"
+                for="SURNAME_DP">Дательный падеж (кому?)</label>
+            <div class="row-wrapper declination-wrapper">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_DP']"
+                    [input]="inputs['printInfo.SURNAME_DP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_DP']"
+                    [input]="inputs['printInfo.NAME_DP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_DP']"
+                    [input]="inputs['printInfo.PATRON_DP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode }"
+                for="SURNAME_VP">Винительный падеж (кого?)</label>
+            <div class="row-wrapper declination-wrapper">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_VP']"
+                    [input]="inputs['printInfo.SURNAME_VP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_VP']"
+                    [input]="inputs['printInfo.NAME_VP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_VP']"
+                    [input]="inputs['printInfo.PATRON_VP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode }"
+                for="SURNAME_TP">Творительный падеж (кем?)</label>
+            <div class="row-wrapper declination-wrapper">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_TP']"
+                    [input]="inputs['printInfo.SURNAME_TP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_TP']"
+                    [input]="inputs['printInfo.NAME_TP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_TP']"
+                    [input]="inputs['printInfo.PATRON_TP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="primary-text"
+                [ngClass]="{'unimportant-text': !editMode }"
+                for="SURNAME_PP">Предложный падеж (о ком?)</label>
+            <div class="row-wrapper declination-wrapper">
+                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_PP']"
+                    [input]="inputs['printInfo.SURNAME_PP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_PP']"
+                    [input]="inputs['printInfo.NAME_PP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_PP']"
+                    [input]="inputs['printInfo.PATRON_PP']"
+                    [form]="form"
+                    [readonly]="!editMode">
+                </eos-dynamic-input>
+            </div>
+        </div>
+        <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DUTY']"
+                [input]="inputs['printInfo.PRINT_DUTY']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DEPARTMENT']"
+                [input]="inputs['printInfo.PRINT_DEPARTMENT']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
     </div>
-
-    <div class="form-group unimportant-text s-font">
-        <label>* - поля обязательные к заполнению</label>
-    </div>
-</form>
+</div>

@@ -7,8 +7,6 @@ import { BaseCardEditComponent } from './base-card-edit.component';
     templateUrl: 'departments-card-edit-department.component.html',
 })
 export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent {
-    // cannt handle because popup doesn't return on cancel or close events
-
     orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);

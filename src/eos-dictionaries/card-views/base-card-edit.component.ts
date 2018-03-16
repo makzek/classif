@@ -1,66 +1,35 @@
-import { Output, Input, EventEmitter, OnChanges, OnDestroy, ViewChild, Injector } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { EosDictService } from '../services/eos-dict.service';
-import { NOT_EMPTY_STRING } from '../consts/input-validation';
+import { Output, Input, EventEmitter, Injector } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
+import { EosDictService } from '../services/eos-dict.service';
 import { EosUtils } from 'eos-common/core/utils';
 
-export class BaseCardEditComponent implements OnChanges, OnDestroy {
+export class BaseCardEditComponent {
+    @Input() form: FormGroup;
+    @Input() inputs: any;
     @Input() data: any;
     @Input() editMode: boolean;
     @Input() fieldsDescription: any;
-    @Input() nodeId: string;
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
     @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('cardForm') cardForm: NgForm;
-
-    tooltipText = '';
-    focusedField: string;
-    readonly NOT_EMPTY_STRING = NOT_EMPTY_STRING;
+    // inputs: any;
+    // newData: any;
+    // form: FormGroup;
+    nodeId: string;
 
     protected dictSrv: EosDictService;
 
-    private _subscrChanges: Subscription;
-    private _dates: any = {};
-
+    /* private _dates: any = {}; */
     constructor(injector: Injector) {
         this.dictSrv = injector.get(EosDictService);
     }
 
-    ngOnChanges() {
-        if (this.cardForm) {
-            this.isFormValid();
-            if (this._subscrChanges) {
-                this._subscrChanges.unsubscribe();
-                this._subscrChanges = null;
-            }
-            this._subscrChanges = this.cardForm.control.valueChanges.subscribe(() => this.isFormValid());
-        }
-    }
-
-    ngOnDestroy() {
-        if (this._subscrChanges) {
-            this._subscrChanges.unsubscribe();
-        }
-    }
 
     /**
-     * Updates value in record data
-     * @param fldKey property name
-     * @param dict dictionary name
-     * @param value value
-     * @deprecated use changeByPath instead
-     */
-    change(fldKey: string, dict: string, value: any) {
-        const path = dict + '.' + fldKey;
-        this.changeByPath(path, value);
-    }
-
-    /**
+     * @deprecated implementation moved to CardEditComponent
      * Updates value in record data
      * @param path - path in data to property
      * @param value - new value
@@ -83,34 +52,24 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
         } else {
             _value = value;
         }
-        const oldValue = EosUtils.getValueByPath(this.data, path);
-        // console.log('changeByPath', oldValue, _value);
-        if (oldValue !== _value) {
-            EosUtils.setValueByPath(this.data, path, _value);
-            this.formChanged.emit(this.data);
-        }
+        // const oldValue = EosUtils.getValueByPath(this.data, path);
+        // EosUtils.setValueByPath(this.newData, path, _value);
+        return EosUtils.getValueByPath(this.data, path) !== _value;
     }
 
-    focus(name: string) {
-        this.focusedField = name;
-    }
-
-    blur() {
-        this.focusedField = null;
-    }
-
-    /* clean(field: string, value: string) {
-        this.change(field, value);
-    }*/
-
-    checkUnic(val: any, key: string, inDict?: boolean) {
-        if (this.focusedField === key) {
-            return this.dictSrv.isUnic(val, key, inDict, this.nodeId);
+    /**
+     * make string[] from object keys
+     * @param data object which keys is used
+     */
+    keys(data: Object): string[] {
+        if (data) {
+            return Object.keys(data);
         } else {
-            return null;
+            return [];
         }
     }
 
+    /* move into dynamic input
     isInvalid(fieldName: string): boolean {
         if (this.cardForm) {
             const control = this.cardForm.controls[fieldName];
@@ -134,4 +93,5 @@ export class BaseCardEditComponent implements OnChanges, OnDestroy {
             }, 0);
         }
     }
+    */
 }

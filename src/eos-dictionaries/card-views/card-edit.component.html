@@ -1,55 +1,76 @@
-<ng-container *ngIf="data && data.rec && fieldsDescription">
-    <ng-container [ngSwitch]="dictionaryId">
-        <ng-container *ngSwitchCase="'departments'">
-            <div class="eos-departments-card-edit edit-content secondary-block">
-                <eos-departments-card-edit-person *ngIf="data.rec['IS_NODE'] === 1"
-                    [data]="data"
-                    [editMode]="editMode"
-                    [fieldsDescription]="fieldsDescription"
-                    [nodeId]="nodeId"
-                    [dutysList]="dutysList"
-                    [fullNamesList]="fullNamesList"
-                    (formChanged)="recordChanged($event)"
-                    (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-person>
-                <eos-departments-card-edit-department *ngIf="data.rec['IS_NODE'] === 0"
-                    [data]="data"
-                    [editMode]="editMode"
-                    [fieldsDescription]="fieldsDescription"
-                    [nodeId]="nodeId"
-                    [dutysList]="dutysList"
-                    [fullNamesList]="fullNamesList"
-                    (formChanged)="recordChanged($event)"
-                    (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-department>
-            </div>
-        </ng-container>
+<div class="card-edit block"
+    *ngIf="data && data.rec">
+    <article class="edit-content">
+        <form [formGroup]="form"
+            class="form">
+            <ng-container [ngSwitch]="dictionaryId">
+                <ng-container *ngSwitchCase="'departments'">
+                    <eos-departments-card-edit-person #cardEditEl
+                        *ngIf="data.rec['IS_NODE'] === 1"
+                        class="departments-person-card-edit departments-card-edit"
+                        [form]="form"
+                        [inputs]="inputs"
+                        [data]="data"
+                        [editMode]="editMode"
+                        [fieldsDescription]="fieldsDescription"
+                        [dutysList]="dutysList"
+                        [fullNamesList]="fullNamesList"
+                        (formChanged)="recordChanged($event)"
+                        (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-person>
+                    <eos-departments-card-edit-department #cardEditEl
+                        *ngIf="data.rec['IS_NODE'] === 0"
+                        class="departments-department-card-edit departments-card-edit"
+                        [form]="form"
+                        [inputs]="inputs"
+                        [data]="data"
+                        [editMode]="editMode"
+                        [fieldsDescription]="fieldsDescription"
+                        [dutysList]="dutysList"
+                        [fullNamesList]="fullNamesList"
+                        (formChanged)="recordChanged($event)"
+                        (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-department>
+                </ng-container>
 
-        <eos-cabinet-card-edit *ngSwitchCase="'cabinet'"
+                <eos-cabinet-card-edit *ngSwitchCase="'cabinet'"
+                    class="cabinet-card-edit"
+                    [form]="form"
+                    [inputs]="inputs"
+                    [data]="data"
+                    [fieldsDescription]="fieldsDescription"
+                    [editMode]="editMode"
+                    (formChanged)="recordChanged($event)"
+                    (formInvalid)="recordInvalid($event)"></eos-cabinet-card-edit>
+                <!-- eos-visa-type-card-edit #cardEditEl *ngSwitchCase="'visa-type'"
             [data]="data"
             [fieldsDescription]="fieldsDescription"
             [editMode]="editMode"
             [nodeId]="nodeId"
             (formChanged)="recordChanged($event)"
-            (formInvalid)="recordInvalid($event)"></eos-cabinet-card-edit>
-        <eos-visa-type-card-edit *ngSwitchCase="'visa-type'"
-            [data]="data"
-            [fieldsDescription]="fieldsDescription"
-            [editMode]="editMode"
-            [nodeId]="nodeId"
-            (formChanged)="recordChanged($event)"
-            (formInvalid)="recordInvalid($event)"></eos-visa-type-card-edit>
-        <eos-security-card-edit *ngSwitchCase="'security'"
-            [data]="data"
-            [fieldsDescription]="fieldsDescription"
-            [editMode]="editMode"
-            [nodeId]="nodeId"
-            (formChanged)="recordChanged($event)"
-            (formInvalid)="recordInvalid($event)"></eos-security-card-edit>
-        <eos-simple-card-edit *ngSwitchDefault
-            [data]="data"
-            [fieldsDescription]="fieldsDescription"
-            [editMode]="editMode"
-            [nodeId]="nodeId"
-            (formChanged)="recordChanged($event)"
-            (formInvalid)="recordInvalid($event)"></eos-simple-card-edit>
-    </ng-container>
-</ng-container>
+            (formInvalid)="recordInvalid($event)"></eos-visa-type-card-edit -->
+                <eos-security-card-edit #cardEditEl
+                    class="security-card-edit"
+                    *ngSwitchCase="'security'"
+                    [form]="form"
+                    [inputs]="inputs"
+                    [data]="data"
+                    [fieldsDescription]="fieldsDescription"
+                    [editMode]="editMode"
+                    (formChanged)="recordChanged($event)"
+                    (formInvalid)="recordInvalid($event)"></eos-security-card-edit>
+                <eos-simple-card-edit #cardEditEl
+                    class="simple-card-edit"
+                    *ngSwitchDefault
+                    [form]="form"
+                    [inputs]="inputs"
+                    [data]="data"
+                    [fieldsDescription]="fieldsDescription"
+                    [editMode]="editMode"
+                    (formChanged)="recordChanged($event)"
+                    (formInvalid)="recordInvalid($event)"></eos-simple-card-edit>
+            </ng-container>
+            <!-- div class="form-group unimportant-text s-font">
+                <label>* - поля обязательные к заполнению</label>
+            </div-->
+        </form>
+    </article>
+</div>

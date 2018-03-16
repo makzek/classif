@@ -20,7 +20,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     }, {
         key: 'CLASSIF_NAME',
         title: 'Наименование',
-        type: 'text',
+        type: 'string',
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,

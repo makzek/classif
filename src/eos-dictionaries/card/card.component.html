@@ -37,9 +37,8 @@
     <div *ngIf="!node || node.updating" class="spinner-wrapper secondary-block">
         <eos-spinner [size]="'lg'"></eos-spinner>
     </div>
-    <eos-card-edit
+    <eos-card-edit #cardEditEl
         [dictionaryId]="dictionaryId"
-        [nodeId]="node?.id"
         [data]="nodeData"
         [fieldsDescription]="fieldsDescription"
         [editMode]="editMode"

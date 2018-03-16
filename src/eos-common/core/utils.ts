@@ -1,12 +1,19 @@
 export class EosUtils {
+    static pad(n: number): string {
+        return n < 10 ? '0' + n : '' + n;
+    }
+
     static dateToString(d: Date): string {
-        const pad = (n: number) => n < 10 ? '0' + n : '' + n;
-        return d.getFullYear() +
-            '-' + pad(d.getMonth() + 1) +
-            '-' + pad(d.getDate());
+        if (d instanceof Date) {
+            return d.getFullYear() +
+                '-' + EosUtils.pad(d.getMonth() + 1) +
+                '-' + EosUtils.pad(d.getDate());
             /*'T' + pad(d.getHours()) +
             ':' + pad(d.getMinutes()) +
             ':' + pad(d.getSeconds()); */
+        } else {
+            return null;
+        }
     }
 
     static setValueByPath(data: any, path: string, value: any): any {
@@ -31,7 +38,7 @@ export class EosUtils {
         let elem = data;
         for (let i = 0; i < _path.length && (elem !== undefined && elem !== null); i++) { // dive deep while property exist
             const key = EosUtils.getKeyIndex(_path[i]);
-            if (initPath && !elem[key.value]) { // if undefined init empty
+            if (initPath && elem[key.value] === undefined) { // if undefined init empty
                 if (key.idx === undefined) {
                     elem[key.value] = {};
                 } else {

@@ -1,0 +1,34 @@
+.simple-card-edit {
+    display: block;
+    padding-top: 20px;
+    /*
+    padding: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    width: 800px;
+    margin: 0 auto;
+    */
+}
+
+.visa-type-card-edit {
+    .checkbox {
+        padding-left: 0;
+    }
+    .visa-type-select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
+        background-repeat: no-repeat;
+        background-position-x: right;
+        background-position-y: center;
+        background-size: 24px;
+    }
+    .visa-select-edit {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none;
+    }
+}

@@ -1,7 +1,19 @@
 import { E_DICT_TYPE, IDepartmentDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { ISelectOption } from 'eos-common/interfaces';
 
+export const ROLES_IN_WORKFLOW: ISelectOption[] = [
+    { value: 0, title: 'Не указана', },
+    { value: 1, title: 'Начальник' },
+    { value: 0, title: 'Делопроизводитель', }
+];
+
+export const GENDERS: ISelectOption[] = [
+    { value: null, title: 'Не указан' },
+    { value: 0, title: 'Мужской' },
+    { value: 1, title: 'Женский' }
+];
 /* tslint:disable:max-line-length */
 export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
@@ -50,7 +62,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Номер вышестоящей вершины',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
+        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -75,6 +87,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        required: true,
+        invalidMessage: 'Обязательное поле. Максимальная длина 255 символов.',
         isUnic: true,
         unicInDict: true,
     }, {
@@ -91,6 +105,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 64,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        forNode: true,
     }, {
         key: 'DUTY',
         title: 'Краткое наименование должности',
@@ -98,17 +113,21 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 236,
         pattern: NOT_EMPTY_STRING,
         required: true,
+        invalidMessage: 'Обязательное поле',
+        forNode: true,
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
-        type: 'string',
+        type: 'text',
+        height: 50,
         foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
-        type: 'string',
+        type: 'text',
+        height: 50,
         foreignKey: 'FULLNAME',
         length: 1998,
         pattern: NOT_EMPTY_STRING,
@@ -118,6 +137,9 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
+        isUnic: true,
+        unicInDict: false,
+        invalidMessage: 'Поле должно быть уникально. Максимальная длина 64 символа.',
     }, {
         key: 'SKYPE',
         title: 'Skype',
@@ -153,7 +175,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'indexPerson',
         title: 'Индекс ДЛ',
-        type: 'text',
+        type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'DEPARTMENT_INDEX',
@@ -167,7 +189,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'POST_H',
         title: 'Роль',
-        type: 'number',
+        type: 'select',
+        options: ROLES_IN_WORKFLOW
     }, {
         key: 'CARD_FLAG',
         title: 'Картотека',
@@ -184,6 +207,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        height: 90,
     }, {
         key: 'START_DATE',
         title: 'Начало действия',
@@ -328,7 +352,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title'], // title is in shortQuickViewFields
     shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
     editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
+        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'CLASSIF_NAME',
         'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
         'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'ISN_PHOTO', 'photo'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']

@@ -9,3 +9,8 @@ export interface IAppCfg {
     dataApiUrl?: string;
     */
 }
+
+export interface ISelectOption {
+    value: string | number;
+    title: string;
+}
