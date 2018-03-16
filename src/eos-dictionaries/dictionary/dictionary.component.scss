@@ -341,16 +341,12 @@
     .srolling-block {
         width: 50%;
         display: inline-block;
-        overflow-x: scroll;
+        overflow-x: hidden;
         height: 48px;
         .move {
             display: inline-block;
             white-space: nowrap;
         }
-    }
-
-    .srolling-block::-webkit-scrollbar {
-        width: 0;
     }
 
     .fixed-block {
