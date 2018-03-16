@@ -77,7 +77,9 @@ export class CardEditComponent implements OnChanges, OnDestroy {
                 .subscribe((newVal) => {
                     let changed = false;
                     Object.keys(newVal).forEach((path) => {
-                        changed = this.changeByPath(path, newVal[path]) || changed;
+                        if (this.changeByPath(path, newVal[path])) {
+                            changed = true;
+                        }
                     });
                     this.formChanged.emit(changed);
                 });

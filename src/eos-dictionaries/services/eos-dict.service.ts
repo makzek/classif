@@ -694,20 +694,22 @@ export class EosDictService {
 
     isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
         let records: EosDictionaryNode[] = [];
+        let _hasMatch = false;
 
         if ('string' === typeof val) {
             val = val.trim();
         }
-        if (inDict) {
-            records = Array.from(this.dictionary.nodes.values());
-        } else {
-            records = this.treeNode ? this.treeNode.children : [];
+        if (val) {
+            if (inDict) {
+                records = Array.from(this.dictionary.nodes.values());
+            } else {
+                records = this.treeNode ? this.treeNode.children : [];
+            }
+
+            records = records.filter((node) => !this._listNode || node.id !== this._listNode.id);
+
+            _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
         }
-
-        records = records.filter((node) => !this._listNode || node.id !== this._listNode.id);
-
-        const _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
-
         return _hasMatch ? { 'isUnic': !_hasMatch } : null;
     }
 
