@@ -52,6 +52,6 @@ export class FieldDescriptor implements IFieldDesriptorBase {
             this.height = data.height;
         }
 
-        this.forNode = !!data.forNode;
+        this.forNode = data.forNode;
     }
 }

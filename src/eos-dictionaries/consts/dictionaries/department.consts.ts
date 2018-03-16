@@ -6,7 +6,7 @@ import { ISelectOption } from 'eos-common/interfaces';
 export const ROLES_IN_WORKFLOW: ISelectOption[] = [
     { value: 0, title: 'Не указана', },
     { value: 1, title: 'Начальник' },
-    { value: 0, title: 'Делопроизводитель', }
+    { value: 2, title: 'Делопроизводитель', }
 ];
 
 export const GENDERS: ISelectOption[] = [
@@ -91,6 +91,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         invalidMessage: 'Обязательное поле. Максимальная длина 255 символов.',
         isUnic: true,
         unicInDict: true,
+        forNode: false,
     }, {
         key: 'fio',
         title: 'Фамилия И.О. - должность',
@@ -98,6 +99,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         pattern: NOT_EMPTY_STRING,
+        forNode: false,
     }, {
         key: 'SURNAME',
         title: 'Фамилия И.О.',
@@ -189,6 +191,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'POST_H',
         title: 'Роль',
         type: 'select',
+        required: true,
         options: ROLES_IN_WORKFLOW
     }, {
         key: 'CARD_FLAG',
@@ -350,8 +353,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
         'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title'], // title is in shortQuickViewFields
     shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
-    editFields: ['IS_NODE', 'CODE', 'fio', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'CLASSIF_NAME',
+    editFields: ['IS_NODE', 'CODE', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
+        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
         'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
         'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'ISN_PHOTO', 'photo'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']

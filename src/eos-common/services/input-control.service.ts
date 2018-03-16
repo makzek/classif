@@ -47,11 +47,11 @@ export class InputControlService {
         const group: any = {};
 
         Object.keys(inputs).forEach(input => {
-            if (inputs[input].forNode) {
-                if (isNode) {
-                    this._addInput(group, inputs[input]);
-                }
-            } else {
+            if (inputs[input].forNode === undefined) {
+                this._addInput(group, inputs[input]);
+            } else if (inputs[input].forNode && isNode) {
+                this._addInput(group, inputs[input]);
+            } else if (inputs[input].forNode === false && !isNode) {
                 this._addInput(group, inputs[input]);
             }
         });

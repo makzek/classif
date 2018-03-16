@@ -48,7 +48,7 @@ export class InputBase<T>{
         this.unicInDict = !!options.unicInDict;
         this.invalidMessage = options.invalidMessage || '';
         this.hideLabel = !!options.hideLabel;
-        this.forNode = !!options.forNode;
+        this.forNode = options.forNode;
         this.disabled = !!options.disabled;
     }
 }
