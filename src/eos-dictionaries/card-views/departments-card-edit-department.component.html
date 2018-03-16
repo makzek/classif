@@ -6,20 +6,20 @@
                     for="CODE"
                     [ngClass]="{'unimportant-text': !editMode, 'required': fieldsDescription.rec['CODE']?.required }">Код</label>
                 <input [readonly]="!editMode"
-                    id="CODE_DEP"
-                    name="CODE_DEP"
+                    id="CODE"
+                    name="CODE"
                     type="text"
                     class="form-control m-font "
                     [ngModel]="data.rec['CODE']"
                     (ngModelChange)="change('CODE', 'rec', $event)"
                     placeholder="Код"
                     [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CODE_DEP')"
+                    (focus)="focus('CODE')"
                     (blur)="blur()"
                     maxlength="64"
                     [pattern]="NOT_EMPTY_STRING"
                     [eosUnic]="true"
-                    [key]="'CODE'"
+                    key="CODE"
                     [checkingMethod]="checkUnic.bind(this)"
                     [inDict]="false"
                     [key]="'CODE'"
@@ -29,7 +29,7 @@
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="isInvalid('CODE_DEP')"
+                    [isOpen]="isInvalid('CODE')"
                     autocomplete="off"
                     triggers="">
 
@@ -92,7 +92,8 @@
                     for="START_DATE">Начало действия</label>
                 <eos-datepicker [placeholder]="'Начало действия'"
                     [value]="data.rec['START_DATE']"
-                    (change)="change('START_DATE', 'rec', $event)"
+                    (dateChange)="change('START_DATE', 'rec', $event)"
+                    (dateValid)="dateValid('START_DATE', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     placement="bottom"></eos-datepicker>
@@ -103,7 +104,8 @@
                     for="END_DATE">Окончание действия</label>
                 <eos-datepicker [placeholder]="'Окончание действия'"
                     [value]="data.rec['END_DATE']"
-                    (change)="change('END_DATE', 'rec', $event)"
+                    (dateChange)="change('END_DATE', 'rec', $event)"
+                    (dateValid)="dateValid('END_DATE', $event)"
                     [isReadonly]="!editMode"
                     [ngClass]="{'readonly': !editMode }"
                     placement="bottom"></eos-datepicker>
@@ -124,15 +126,16 @@
                         Краткое наименование подразделения
                     </label>
                 <input [readonly]="!editMode"
-                    id="CLASSIF_NAME_DEP"
-                    name="CLASSIF_NAME_DEP"
+                    id="title"
+                    name="title"
                     type="text"
                     class="form-control m-font "
                     [ngModel]="data.rec['CLASSIF_NAME']"
                     (ngModelChange)="change('CLASSIF_NAME', 'rec', $event)"
-                    placeholder="Краткое наименование подразделения"
+                    [placeholder]="fieldsDescription.rec.title.title"
+                    value="default"
                     [ngClass]="{'readonly': !editMode }"
-                    (focus)="focus('CLASSIF_NAME_DEP')"
+                    (focus)="focus('title')"
                     (blur)="blur()"
                     required
                     maxlength="255"
@@ -142,7 +145,7 @@
                     placement="bottom"
                     containerClass="tooltip-error"
                     container="body"
-                    [isOpen]="isInvalid('CLASSIF_NAME_DEP')"
+                    [isOpen]="isInvalid('title')"
                     autocomplete="off"
                     triggers="">
             </div>
@@ -219,7 +222,6 @@
                     triggers="">
                 <button *ngIf="editMode && data.rec['CARD_FLAG']"
                     class="btn btn-primary"
-                    [disabled]="lockOrgBtn"
                     (click)="chooseOrganiz()">выбрать</button>
             </div>
             <div class="form-group"
