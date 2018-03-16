@@ -69,6 +69,21 @@ export class BaseCardEditComponent {
         }
     }
 
+    protected getValue(path: string): any {
+        const control = this.form.controls[path];
+        if (control) {
+            return control.value;
+        } else {
+            return null;
+        }
+    }
+
+    protected setValue(path: string, value: any) {
+        const control = this.form.controls[path];
+        if (control) {
+            control.setValue(value);
+        }
+    }
     /* move into dynamic input
     isInvalid(fieldName: string): boolean {
         if (this.cardForm) {

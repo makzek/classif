@@ -9,119 +9,100 @@
         </li>
     </ul>
 </div>
-<div [hidden]="currTab !== 0">
-    <div class="wrapper clearfix"
-        *ngIf="inputs">
-        <div class="col-1 pull-left">
-            <div class="current-image"
-                [ngStyle]="{'background-image': photo}">
-                <eos-photo-uploader class="photo-uploader"
-                    [disableEdit]="!editMode"
-                    (endUploading)="newImage($event)"></eos-photo-uploader>
-            </div>
-
-            <div class="form-group gender">
-                <eos-dynamic-input *ngIf="inputs['printInfo.GENDER']"
-                    [input]="inputs['printInfo.GENDER']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.CODE']"
-                    [input]="inputs['rec.CODE']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.indexPerson']"
-                    [input]="inputs['rec.indexPerson']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group sev">
-                <eos-dynamic-input *ngIf="inputs['sev.GLOBAL_ID']"
-                    [input]="inputs['sev.GLOBAL_ID']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.START_DATE']"
-                    [input]="inputs['rec.START_DATE']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.END_DATE']"
-                    [input]="inputs['rec.END_DATE']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
+<div [hidden]="currTab !== 0"
+    class="clearfix">
+    <div class="col-1 pull-left">
+        <div class="current-image"
+            [ngStyle]="{'background-image': photo}">
+            <eos-photo-uploader class="photo-uploader"
+                [disableEdit]="!editMode"
+                (endUploading)="newImage($event)"></eos-photo-uploader>
         </div>
-        <div class="col-2 pull-right">
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME']"
-                    [input]="inputs['printInfo.SURNAME']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="names row-wrapper">
-                <div class="form-group first-name">
-                    <eos-dynamic-input *ngIf="inputs['printInfo.NAME']"
-                        [input]="inputs['printInfo.NAME']"
-                        [form]="form"
-                        [readonly]="!editMode">
-                    </eos-dynamic-input>
-                </div>
-                <div class="form-group fathers-name">
-                    <eos-dynamic-input *ngIf="inputs['printInfo.PATRON']"
-                        [input]="inputs['printInfo.PATRON']"
-                        [form]="form"
-                        [readonly]="!editMode">
-                    </eos-dynamic-input>
-                </div>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.SURNAME']"
-                    [input]="inputs['rec.SURNAME']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group duty-row">
-                <eos-dynamic-input class="text-input"
-                    *ngIf="inputs['rec.DUTY']"
-                    [input]="inputs['rec.DUTY']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input class="checkbox-input"
-                    *ngIf="inputs['rec.POST_H']"
-                    [input]="inputs['rec.POST_H']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.fullPosition']"
-                    [input]="inputs['rec.fullPosition']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-            <div class="form-group">
-                <eos-dynamic-input *ngIf="inputs['rec.NOTE']"
-                    [input]="inputs['rec.NOTE']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.GENDER']"
+                [input]="inputs['printInfo.GENDER']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.CODE']"
+                [input]="inputs['rec.CODE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.POST_H']"
+                [input]="inputs['rec.POST_H']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.indexPerson']"
+                [input]="inputs['rec.indexPerson']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group sev">
+            <eos-dynamic-input *ngIf="inputs['sev.GLOBAL_ID']"
+                [input]="inputs['sev.GLOBAL_ID']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.START_DATE']"
+                [input]="inputs['rec.START_DATE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.END_DATE']"
+                [input]="inputs['rec.END_DATE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div class="col-2 pull-right">
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME']"
+                [input]="inputs['printInfo.SURNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="row-wrapper form-group">
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME']"
+                class="person-name"
+                [input]="inputs['printInfo.NAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON']"
+                class="person-second-name"
+                [input]="inputs['printInfo.PATRON']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.SURNAME']"
+                [input]="inputs['rec.SURNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.DUTY']"
+                [input]="inputs['rec.DUTY']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group department-fullname">
+            <eos-dynamic-input *ngIf="inputs['rec.fullPosition']"
+                [input]="inputs['rec.fullPosition']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group department-note">
+            <eos-dynamic-input *ngIf="inputs['rec.NOTE']"
+                [input]="inputs['rec.NOTE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
     </div>
     <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
@@ -213,229 +194,197 @@
     <!-- endOf tab1 -->
 </div>
 <div [hidden]="currTab !== 1">
-    <div class="contact-wrapper"
-        *ngIf="inputs">
+    <div class="contact-wrapper">
         <div class="form-group cab">
             <eos-dynamic-input *ngIf="inputs['rec.NUM_CAB']"
                 [input]="inputs['rec.NUM_CAB']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
 
         <div class="form-group phone">
             <eos-dynamic-input *ngIf="inputs['rec.PHONE']"
                 [input]="inputs['rec.PHONE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
 
         <div class="form-group phone-local">
             <eos-dynamic-input *ngIf="inputs['rec.PHONE_LOCAL']"
                 [input]="inputs['rec.PHONE_LOCAL']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
 
         <div class="form-group fax">
             <eos-dynamic-input *ngIf="inputs['rec.FAX']"
                 [input]="inputs['rec.FAX']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
 
         <div class="form-group email">
             <eos-dynamic-input *ngIf="inputs['rec.E_MAIL']"
                 [input]="inputs['rec.E_MAIL']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group skype">
             <eos-dynamic-input *ngIf="inputs['rec.SKYPE']"
                 [input]="inputs['rec.SKYPE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
     </div>
 </div>
-<div [hidden]="currTab !== 2">
-    <div>
-        <div class="form-group">
-            <button class="btn"
-                (click)="fillDeclineFields()"
-                containerClass="tooltip-info"
-                tooltip="Проверка API склонения">Заполнить поля</button>
-        </div>
-        <div class="xl-font paragraph-title">Склонение должности</div>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_RP']"
-                [input]="inputs['printInfo.DUTY_RP']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
+<div [hidden]="currTab !== 2"
+    class="clearfix">
+    <div class="xl-font paragraph-title">Склонение должности <a (click)="fillDeclineFields()"
+        class="s-font pull-right"
+        containerClass="tooltip-info"
+        placement="bottom"
+        tooltip="Проверка API склонения">[Заполнить поля]</a></div>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_RP']"
+            [input]="inputs['printInfo.DUTY_RP']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
 
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_DP']"
-                [input]="inputs['printInfo.DUTY_DP']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_DP']"
+            [input]="inputs['printInfo.DUTY_DP']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
 
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_VP']"
-                [input]="inputs['printInfo.DUTY_VP']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.DUTY_VP']"
+            [input]="inputs['printInfo.DUTY_VP']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
 
-        <span class="block-title l-font usual-border primary-text">Склонение фамилии, имени, отчества</span>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME_DP']"
-                [input]="inputs['printInfo.PRINT_SURNAME_DP']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME']"
-                [input]="inputs['printInfo.PRINT_SURNAME']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
+    <span class="paragraph-title xl-font">Склонение фамилии, имени, отчества</span>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME_DP']"
+            [input]="inputs['printInfo.PRINT_SURNAME_DP']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_SURNAME']"
+            [input]="inputs['printInfo.PRINT_SURNAME']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
 
-        <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
-                for="SURNAME_RP">Родительный падеж (кого?)</label>
-            <div class="row-wrapper declination-wrapper">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_RP']"
-                    [input]="inputs['printInfo.SURNAME_RP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_RP']"
-                    [input]="inputs['printInfo.NAME_RP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_RP']"
-                    [input]="inputs['printInfo.PATRON_RP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
-                for="SURNAME_DP">Дательный падеж (кому?)</label>
-            <div class="row-wrapper declination-wrapper">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_DP']"
-                    [input]="inputs['printInfo.SURNAME_DP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_DP']"
-                    [input]="inputs['printInfo.NAME_DP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_DP']"
-                    [input]="inputs['printInfo.PATRON_DP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
-                for="SURNAME_VP">Винительный падеж (кого?)</label>
-            <div class="row-wrapper declination-wrapper">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_VP']"
-                    [input]="inputs['printInfo.SURNAME_VP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_VP']"
-                    [input]="inputs['printInfo.NAME_VP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_VP']"
-                    [input]="inputs['printInfo.PATRON_VP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
-                for="SURNAME_TP">Творительный падеж (кем?)</label>
-            <div class="row-wrapper declination-wrapper">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_TP']"
-                    [input]="inputs['printInfo.SURNAME_TP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_TP']"
-                    [input]="inputs['printInfo.NAME_TP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_TP']"
-                    [input]="inputs['printInfo.PATRON_TP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
-                for="SURNAME_PP">Предложный падеж (о ком?)</label>
-            <div class="row-wrapper declination-wrapper">
-                <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_PP']"
-                    [input]="inputs['printInfo.SURNAME_PP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.NAME_PP']"
-                    [input]="inputs['printInfo.NAME_PP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-                <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_PP']"
-                    [input]="inputs['printInfo.PATRON_PP']"
-                    [form]="form"
-                    [readonly]="!editMode">
-                </eos-dynamic-input>
-            </div>
-        </div>
-        <span class="block-title l-font usual-border primary-text">Данные для формирования поручений</span>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DUTY']"
-                [input]="inputs['printInfo.PRINT_DUTY']"
+    <div class="form-group">
+        <label class="primary-text"
+            [ngClass]="{'unimportant-text': !editMode }"
+            for="SURNAME_RP">Родительный падеж (кого?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_RP']"
+                [input]="inputs['printInfo.SURNAME_RP']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DEPARTMENT']"
-                [input]="inputs['printInfo.PRINT_DEPARTMENT']"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME_RP']"
+                [input]="inputs['printInfo.NAME_RP']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_RP']"
+                [input]="inputs['printInfo.PATRON_RP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="primary-text"
+            [ngClass]="{'unimportant-text': !editMode }"
+            for="SURNAME_DP">Дательный падеж (кому?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_DP']"
+                [input]="inputs['printInfo.SURNAME_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME_DP']"
+                [input]="inputs['printInfo.NAME_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_DP']"
+                [input]="inputs['printInfo.PATRON_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="primary-text"
+            [ngClass]="{'unimportant-text': !editMode }"
+            for="SURNAME_VP">Винительный падеж (кого?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_VP']"
+                [input]="inputs['printInfo.SURNAME_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME_VP']"
+                [input]="inputs['printInfo.NAME_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_VP']"
+                [input]="inputs['printInfo.PATRON_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="primary-text"
+            [ngClass]="{'unimportant-text': !editMode }"
+            for="SURNAME_TP">Творительный падеж (кем?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_TP']"
+                [input]="inputs['printInfo.SURNAME_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME_TP']"
+                [input]="inputs['printInfo.NAME_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_TP']"
+                [input]="inputs['printInfo.PATRON_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="primary-text"
+            [ngClass]="{'unimportant-text': !editMode }"
+            for="SURNAME_PP">Предложный падеж (о ком?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input *ngIf="inputs['printInfo.SURNAME_PP']"
+                [input]="inputs['printInfo.SURNAME_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.NAME_PP']"
+                [input]="inputs['printInfo.NAME_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input *ngIf="inputs['printInfo.PATRON_PP']"
+                [input]="inputs['printInfo.PATRON_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <span class="paragraph-title xl-font">Данные для формирования поручений</span>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DUTY']"
+            [input]="inputs['printInfo.PRINT_DUTY']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group">
+        <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DEPARTMENT']"
+            [input]="inputs['printInfo.PRINT_DEPARTMENT']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
     </div>
 </div>

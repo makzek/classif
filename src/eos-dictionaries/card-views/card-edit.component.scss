@@ -6,7 +6,7 @@
     border-width: 1px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: calc(100vh - 50px);
+    max-height: calc(100vh - 200px);
 }
 
 .edit-content {
@@ -37,8 +37,21 @@
         }
     }
     .form-group {
+        label {
+            font-size: 12px;
+            line-height: 10px;
+            color: $label-color;
+        }
+        margin: 0 0 $grid-gutter-width /2;
+        /* margin-bottom: $grid-gutter-width /2; */
         &:not(.gender) {
             position: relative;
+        }
+        .form-control-static {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-width: 1px;
+            min-height: 32px;
         }
     }
     .form-control {
@@ -51,20 +64,6 @@
     .readonly {
         box-shadow: none;
         padding: 0;
-    }
-    textarea {
-        resize: none;
-    }
-    .appearance-none {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    }
-    select::-ms-expand {
-        display: none;
-    }
-    .placeholder {
-        color: $primary-font-color-main-theme;
     }
     .field-value {
         height: 32px;
@@ -81,18 +80,10 @@
             margin-top: 50px;
         }
     }
-    select::-ms-expand {
-        display: none;
-    }
 }
 
+/*
 .departments-card-edit {
-    .col-1 {
-        width: 178px;
-    }
-    .col-2 {
-        width: 522px;
-    }
     .checkbox {
         display: block;
         margin-top: 8px;
@@ -105,3 +96,4 @@
         }
     }
 }
+*/

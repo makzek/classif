@@ -127,7 +127,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'fullPosition',
         title: 'Полное наименование должности',
         type: 'text',
-        height: 50,
         foreignKey: 'FULLNAME',
         length: 1998,
         pattern: NOT_EMPTY_STRING,
