@@ -253,6 +253,7 @@
         .second-line-content {
             display: flex;
             width: 100%;
+            height: $item-height;
         }
 
         .node-title {
@@ -361,13 +362,13 @@
 
     .table-shadow {
         width: 1px;
-        height: 500px;
-        box-shadow: 5px 0 8px #000;
+        height: 1000px;
+        box-shadow: 0px 1000px 6px #000;
         display: inline-block;
         position: absolute;
         z-index: 4;
         cursor: pointer;
-        top: -5px;
+        top: -1000px;
     }
 
     .to-left {

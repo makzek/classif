@@ -58,9 +58,10 @@
                 </div>
             </div>
         </div>
-        <div class="table-wrapper block" #table>
+        <div class="table-wrapper block">
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
+                    <!--COMMON TABLE HEAD-->
                     <span *ngIf="params.markItems" class="checkbox-inline">
                         <label tooltip="{{ anyMarked ? 'Снять пометки':'Пометить все'}}" placement="bottom" container="body" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
@@ -88,7 +89,7 @@
                                     </span>
                         </span>
                     </div>
-                    <!--SCROLING MODE-->
+                    <!--SCROLING MODE TABLE/ DUBLE TABLE-->
                     <div *ngIf="length.tableModeDuble" class="scroll-mode-wrapper">
                         <div class="fixed-block">
                             <span *ngFor="let field of viewFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
@@ -105,7 +106,7 @@
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
                         </div>
-                        <div class="table-shadow" [style.height.px]="table.clientHeight"></div>
+                        <div class="table-shadow"></div>
                         <div class="srolling-block" #wrMoveBlock [scrollLeft]="length.left_sc">
                             <div #moveBlock class="move">
                                 <span *ngFor="let field of customFields" class="item l-font" [ngStyle]="{'width.px': length.length[field.key]}">
@@ -124,7 +125,6 @@
                             </button>
                         </div>
                     </div>
-                    <!--END-->
                     </span>
                 </div>
             </div>

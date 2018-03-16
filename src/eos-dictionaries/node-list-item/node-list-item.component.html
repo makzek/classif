@@ -9,6 +9,7 @@
             </label>
         </span>
         <span class="node-info" (click)="selectNode()" (dblclick)="dbClickHandler($event)">
+            <!--COMMON MODE LINE-->
             <div *ngIf="!length.tableModeDuble">
                 <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
                     [ngStyle]="{'width.px': length.length[field.key]}"
@@ -24,7 +25,7 @@
                     <span *ngIf="customValues">{{customValues[field.key]}}</span>
                 </span>
             </div>
-            <!--SCROLING MODE-->
+            <!--SCROLING MODE LINE-->
             <div *ngIf="length.tableModeDuble" class="scroll-mode-wrapper">
                 <div class="fixed-block">
                     <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
