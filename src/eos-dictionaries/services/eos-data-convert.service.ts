@@ -28,6 +28,7 @@ export class EosDataConvertService {
                     case 'rec':
                         Object.keys(fieldsDescription[_dict]).forEach((_key) => {
                             switch (fieldsDescription[_dict][_key].type) {
+                                case E_FIELD_TYPE.number:
                                 case E_FIELD_TYPE.string:
                                     inputs[_dict + '.' + _key] = new StringInput({
                                         key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
@@ -355,6 +356,7 @@ export class EosDataConvertService {
 
         }
         // console.log('inputs', inputs);
+        console.warn('generated inputs', inputs);
         return inputs;
     }
 }
