@@ -15,6 +15,7 @@
         [id]="input.key"
         [readonly]="readonly"
         [ngClass]="{'readonly': readonly}"
+        [ngStyle]="{'height.px': input.height}"
         [placeholder]="input.label"
         (focus)="onFocus()"
         (blur)="onBlur()"

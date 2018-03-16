@@ -101,7 +101,7 @@ export class EosDataConvertService {
                             disabled: !editMode,
                             pattern: NOT_EMPTY_STRING,
                         });
-                        inputs['printInfo.PRINT_DEPARTMENT'] = new StringInput({
+                        inputs['printInfo.PRINT_DEPARTMENT'] = new TextInput({
                             key: 'printInfo.PRINT_DEPARTMENT',
                             label: 'Полное наименование подразделения',
                             dict: 'printInfo',
@@ -112,7 +112,7 @@ export class EosDataConvertService {
                         });
                         inputs['printInfo.DEPARTMENT_RP'] = new StringInput({
                             key: 'printInfo.DEPARTMENT_RP',
-                            label: 'Полное наименование подразделения',
+                            label: 'Наименование подразделения в родительном падеже (чего?)',
                             dict: 'printInfo',
                             value: data['printInfo']['DEPARTMENT_RP'],
                             pattern: NOT_EMPTY_STRING,

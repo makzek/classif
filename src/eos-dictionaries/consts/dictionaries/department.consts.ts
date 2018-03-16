@@ -118,14 +118,16 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'fullTitle',
         title: 'Полное наименование подразделения',
-        type: 'string',
+        type: 'text',
+        height: 50,
         foreignKey: 'FULLNAME',
         length: 2000,
         pattern: NOT_EMPTY_STRING,
     }, {
         key: 'fullPosition',
         title: 'Полное наименование должности',
-        type: 'string',
+        type: 'text',
+        height: 50,
         foreignKey: 'FULLNAME',
         length: 1998,
         pattern: NOT_EMPTY_STRING,
@@ -205,7 +207,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        height: 212,
+        height: 90,
     }, {
         key: 'START_DATE',
         title: 'Начало действия',

@@ -6,7 +6,7 @@
     border-width: 1px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: calc(100vh - 195px);
+    max-height: calc(100vh - 50px);
 }
 
 .edit-content {
@@ -63,16 +63,6 @@
     select::-ms-expand {
         display: none;
     }
-}
-
-.departments-card-edit {
-    .col-1 {
-        width: 178px;
-        margin-right: 40px;
-    }
-    .col-2 {
-        width: 522px;
-    }
     .placeholder {
         color: $primary-font-color-main-theme;
     }
@@ -91,6 +81,18 @@
             margin-top: 50px;
         }
     }
+    select::-ms-expand {
+        display: none;
+    }
+}
+
+.departments-card-edit {
+    .col-1 {
+        width: 178px;
+    }
+    .col-2 {
+        width: 522px;
+    }
     .checkbox {
         display: block;
         margin-top: 8px;
@@ -101,11 +103,5 @@
         input[type="checkbox"]+span {
             margin-right: 12px;
         }
-        &.card-flag {
-            margin-top: 62px;
-        }
-    }
-    select::-ms-expand {
-        display: none;
     }
 }

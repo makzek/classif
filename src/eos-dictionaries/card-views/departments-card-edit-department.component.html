@@ -3,66 +3,71 @@
         <div class="form-group">
             <eos-dynamic-input [input]="inputs['rec.CODE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
             <eos-dynamic-input [input]="inputs['rec.indexDep']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
+    </div>
+    <div class="col-2 pull-right">
+        <div class="col-2 pull-right">
+            <div class="form-group">
+                <eos-dynamic-input *ngIf="inputs['rec.title']"
+                    [input]="inputs['rec.title']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+            </div>
+            <div class="duty-flag">
+                <eos-dynamic-input *ngIf="inputs['printInfo.NOT_USE_IN_DUTY']"
+                    [input]="inputs['printInfo.NOT_USE_IN_DUTY']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="col-1 pull-left">
         <div class="form-group">
             <eos-dynamic-input [input]="inputs['sev.GLOBAL_ID']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
+
+    </div>
+    <div class="col-2 pull-right">
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.fullTitle']"
+                [input]="inputs['rec.fullTitle']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="col-1 pull-left">
         <div class="form-group">
             <eos-dynamic-input *ngIf="inputs['rec.START_DATE']"
                 [input]="inputs['rec.START_DATE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
             <eos-dynamic-input *ngIf="inputs['rec.END_DATE']"
                 [input]="inputs['rec.END_DATE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
-        <span class="checkbox card-flag">
-            <eos-dynamic-input *ngIf="inputs['rec.CARD_FLAG']"
-                [input]="inputs['rec.CARD_FLAG']"
-                [form]="form" [readonly]="!editMode"></eos-dynamic-input>
-        </span>
     </div>
     <div class="col-2 pull-right">
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['rec.title']"
-                [input]="inputs['rec.title']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
-        <span class="checkbox">
-            <eos-dynamic-input *ngIf="inputs['printInfo.NOT_USE_IN_DUTY']" [input]="inputs['printInfo.NOT_USE_IN_DUTY']" [form]="form" [readonly]="!editMode">
-            </eos-dynamic-input>
-        </span>
-        <div class="form-group full-position">
-            <eos-dynamic-input *ngIf="inputs['printInfo.PRINT_DEPARTMENT']"
-                [input]="inputs['printInfo.PRINT_DEPARTMENT']"
-                [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
-        </div>
         <div class="form-group">
             <eos-dynamic-input *ngIf="inputs['printInfo.DEPARTMENT_RP']"
                 [input]="inputs['printInfo.DEPARTMENT_RP']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
             <label class="primary-text"
@@ -73,20 +78,30 @@
                 *ngIf="editMode && inputs['rec.CARD_FLAG'] && inputs['rec.CARD_FLAG'].value"
                 (click)="chooseOrganiz()">выбрать</a>
         </div>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="col-1 pull-left">
+        <div class="card-flag">
+            <eos-dynamic-input *ngIf="inputs['rec.CARD_FLAG']"
+                [input]="inputs['rec.CARD_FLAG']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div class="col-2 pull-right">
         <div class="form-group"
             *ngIf="inputs['rec.CARD_FLAG'] && inputs['rec.CARD_FLAG'].value">
             <eos-dynamic-input *ngIf="inputs['rec.CARD_NAME']"
                 [input]="inputs['rec.CARD_NAME']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
             <eos-dynamic-input *ngIf="inputs['rec.NOTE']"
                 [input]="inputs['rec.NOTE']"
                 [form]="form"
-                [readonly]="!editMode">
-            </eos-dynamic-input>
+                [readonly]="!editMode"></eos-dynamic-input>
         </div>
     </div>
 </div>
