@@ -260,6 +260,10 @@ export interface RESOLUTION_CATEGORY_CL extends ILinearCL {
      * Расчет в рабочих или календарных днях
      */
     PLAN_DAY_TYPE: number;
+    /**
+     * Запретить редактирование плановой даты
+     */
+    PLAN_PROTECTED: number;
 }
 
 /**
