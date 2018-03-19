@@ -445,6 +445,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             });
         }
         if (fullWidth < this.selectedEl.nativeElement.clientWidth) {
+            /*
             this.length.tableModeDuble = false;
             let fieldCount = this.viewFields.length;
             if (this.customFields) {
@@ -452,7 +453,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             }
             const remainingWidth = this.selectedEl.nativeElement.clientWidth - fullWidth - 68;
             const width = remainingWidth / fieldCount;
-            Object.keys(length).forEach(key => length[key] += width);
+            Object.keys(length).forEach(key => length[key] += width);*/
         } else {
             this.length.tableModeDuble = true;
         }
