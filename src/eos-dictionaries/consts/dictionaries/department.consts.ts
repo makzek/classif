@@ -73,14 +73,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Parent ID',
         length: 248,
     }, {
-        key: 'WEIGHT',
-        title: 'WEIGHT',
-        type: 'number'
-    }, {
-        key: 'MAXDUE',
-        title: 'MAXDUE',
-        type: 'string'
-    }, {
         key: 'title',
         title: 'Краткое наименование подразделения',
         type: 'string',
