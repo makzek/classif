@@ -25,7 +25,7 @@
             <div *ngFor="let key of keys(fieldsDescriptionFull.rec)" class="field">
                 <span *ngIf="fieldsDescriptionFull.rec[key].type === fieldTypes.boolean;then checkboxField else textField"></span>
                 <ng-template #checkboxField>
-                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" value="{{nodeDataFull.rec[key]}}" disabled>
+                    <label class="checkbox field-title unimportant-text s-font"><input type="checkbox" [(ngModel)]="nodeDataFull.rec[key]" disabled>
                         <span></span>
                         {{fieldsDescriptionFull.rec[key].title}}</label>
                 </ng-template>
