@@ -342,6 +342,7 @@
         width: 50%;
         display: inline-block;
         overflow-x: hidden;
+        overflow-y: hidden;
         height: 48px;
         .move {
             display: inline-block;
@@ -359,7 +360,7 @@
     .table-shadow {
         width: 1px;
         height: 1000px;
-        box-shadow: 0px 1000px 6px #000;
+        box-shadow: -8px 1000px 6px #000;
         display: inline-block;
         position: absolute;
         z-index: 4;
@@ -369,7 +370,7 @@
 
     .to-left {
         background: linear-gradient(90deg, #fafafa 60%, #fafafa00 100%);
-        left: calc(49.5% - 22px);
+        left: 48%;
     }
 
     .to-left:focus, .to-right:focus {
