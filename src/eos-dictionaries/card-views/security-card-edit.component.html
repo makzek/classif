@@ -16,16 +16,20 @@
     <label class="primary-text"
         [ngClass]="{'unimportant-text': !editMode}">Требуется</label>
     <div class="checkbox-wrapper">
-        <eos-dynamic-input *ngIf="inputs['rec.EDS_FLAG']"
-            [input]="inputs['rec.EDS_FLAG']"
-            [form]="form"
-            [readonly]="!editMode">
-        </eos-dynamic-input>
-        <eos-dynamic-input *ngIf="inputs['rec.ENCRYPT_FLAG']"
-            [input]="inputs['rec.ENCRYPT_FLAG']"
-            [form]="form"
-            [readonly]="!editMode">
-        </eos-dynamic-input>
+        <div class="checkbox-inline">
+            <eos-dynamic-input *ngIf="inputs['rec.EDS_FLAG']"
+                [input]="inputs['rec.EDS_FLAG']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
+        <div class="checkbox-inline">
+            <eos-dynamic-input *ngIf="inputs['rec.ENCRYPT_FLAG']"
+                [input]="inputs['rec.ENCRYPT_FLAG']"
+                [form]="form"
+                [readonly]="!editMode">
+            </eos-dynamic-input>
+        </div>
     </div>
 </div>
 <div class="form-group">
