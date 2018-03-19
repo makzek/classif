@@ -47,7 +47,7 @@ export class EosDictionaryNode {
     private _children?: EosDictionaryNode[];
 
     get children(): EosDictionaryNode[] {
-        return this._children;
+        return this._children || [];
     }
 
     set children(nodes: EosDictionaryNode[]) {

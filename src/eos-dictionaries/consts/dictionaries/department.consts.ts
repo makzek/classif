@@ -183,7 +183,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'POST_H',
         title: 'Роль',
         type: 'select',
-        required: false,
         default: 0,
         options: ROLES_IN_WORKFLOW
     }, {
@@ -325,12 +324,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'CLASSIF_NAME',
     }, {
-        key: 'fullTitleRoom',
-        title: 'Полное наименование кабинета',
-        type: 'string',
-        pattern: NOT_EMPTY_STRING,
-        foreignKey: 'fullTitleRoom',
-    }, {
         key: 'photo',
         type: 'dictionary',
         title: 'Фото'
@@ -346,10 +339,10 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
         'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title'], // title is in shortQuickViewFields
     shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
-    editFields: ['IS_NODE', 'CODE', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'START_DATE', 'END_DATE',
-        'DUTY', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user',
-        'IS_NODE', 'CODE', 'title', 'NOTE', 'START_DATE', 'END_DATE', 'CARD_NAME', 'CARD_FLAG', 'DUE_LINK_ORGANIZ', 'indexDep',
-        'INDEX', 'fullTitle', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'ISN_PHOTO', 'photo'],
+    editFields: ['CARD_FLAG', 'CARD_NAME', 'CODE', 'DUTY', 'IS_NODE', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB',
+        'START_DATE', 'END_DATE', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'photo',
+        'title',  'DUE_LINK_ORGANIZ', 'indexDep',
+        'INDEX', 'fullTitle', 'ISN_PHOTO'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
         'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',

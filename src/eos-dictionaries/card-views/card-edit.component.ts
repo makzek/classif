@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, ViewChild, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Output, Input, EventEmitter, ViewChild, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
@@ -67,11 +67,12 @@ export class CardEditComponent implements OnChanges, OnDestroy {
         return this.newData;
     }
 
-    ngOnChanges() {
-        if (this.fieldsDescription && this.data) {
-            this.inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
+    ngOnChanges(changes: SimpleChanges) {
+        if ((changes.fieldsDescription || changes.data) && this.fieldsDescription && this.data) {
+            const inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
             const isNode = this.data.rec && this.data.rec.IS_NODE;
-            this.form = this._inputCtrlSrv.toFormGroup(this.inputs, isNode);
+            this.form = this._inputCtrlSrv.toFormGroup(inputs, isNode);
+            this.inputs = inputs;
             this.form.valueChanges
                 .takeUntil(this.ngUnsubscribe)
                 .subscribe((newVal) => {
