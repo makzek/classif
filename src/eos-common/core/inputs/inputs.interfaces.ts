@@ -17,7 +17,6 @@ export interface IBaseInput {
     forNode?: boolean;
     options?: any[];
     disabled?: boolean;
-
 }
 
 export interface ISelectInput extends IBaseInput {

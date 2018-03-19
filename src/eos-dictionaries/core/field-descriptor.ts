@@ -15,6 +15,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;
+    readonly default?: any;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -53,5 +54,6 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         }
 
         this.forNode = data.forNode;
+        this.default = data.default;
     }
 }

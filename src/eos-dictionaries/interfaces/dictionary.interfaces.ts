@@ -51,6 +51,7 @@ export interface IFieldDesriptor {
     options?: ISelectOption[];
     height?: number;
     forNode?: boolean;
+    default?: any;
 }
 
 export interface IFieldDesriptorBase {
@@ -69,6 +70,7 @@ export interface IFieldDesriptorBase {
     readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;
+    readonly default?: any;
 }
 
 export interface IFieldView extends IFieldDesriptorBase {

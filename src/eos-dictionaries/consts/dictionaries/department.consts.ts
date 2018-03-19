@@ -191,7 +191,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'POST_H',
         title: 'Роль',
         type: 'select',
-        required: true,
+        required: false,
+        default: 0,
         options: ROLES_IN_WORKFLOW
     }, {
         key: 'CARD_FLAG',

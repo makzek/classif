@@ -39,7 +39,8 @@ export class EosDataConvertService {
                                         isUnic: fieldsDescription[_dict][_key].isUnic,
                                         unicInDict: fieldsDescription[_dict][_key].inDict,
                                         forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey]
+                                            || fieldsDescription[_dict][_key].default,
                                     });
                                     break;
                                 case E_FIELD_TYPE.text:
@@ -69,7 +70,8 @@ export class EosDataConvertService {
                                         options: fieldsDescription[_dict][_key].options,
                                         required: fieldsDescription[_dict][_key].required,
                                         forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey]
+                                            || fieldsDescription[_dict][_key].default,
                                         disabled: !editMode,
                                     });
                                     break;
