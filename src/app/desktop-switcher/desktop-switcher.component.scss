@@ -26,6 +26,25 @@
             padding-right: 12px;
         }
     }
+    .dropdown-menu {
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+        width: 336px;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border: 1px solid #e6e6e6;
+        .menuitem {
+            padding: 0;
+            cursor: pointer;
+            height: $item-height;
+            line-height: $item-height;
+        }
+        .divider {
+            margin: 0;
+        }
+    }
+
     .form-control {
         height: 32px;
     }
@@ -42,9 +61,6 @@
         }
         li {
             cursor: pointer;
-            &:last-child {
-                margin-bottom: 5px;
-            }
             .spinner-wrapper {
                 position: absolute;
                 bottom: 0;
