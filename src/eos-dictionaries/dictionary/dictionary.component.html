@@ -19,11 +19,11 @@
                 <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
                 <div class="tabs-wrapper usual-border m-font">
                     <ul class="tabs" *ngIf="dictionary.id === 'departments'">
-                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active secondary-text': dictMode === 1}"
+                        <li class="tab-item" role="presentation" [ngClass]="{'active': dictMode === 1}"
                             (click)="setDictMode(1)">
                             <span class="tab-title">Кабинеты</span>
                         </li>
-                        <li class="tab-item primary-text" role="presentation" [ngClass]="{'active secondary-text': dictMode === 0}"
+                        <li class="tab-item" role="presentation" [ngClass]="{'active': dictMode === 0}"
                             (click)="setDictMode(0)">
                             <span class="tab-title">Подразделения</span>
                         </li>

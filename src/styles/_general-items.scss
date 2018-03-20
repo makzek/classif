@@ -134,6 +134,7 @@ input[type=text]::-ms-clear {
     display: flex;
     justify-content: space-around;
     margin: 0 $grid-gutter-width / -2;
+    background-color: $light-grey-1;
 }
 
 .tabs {
