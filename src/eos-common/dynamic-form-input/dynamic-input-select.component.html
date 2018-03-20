@@ -10,7 +10,11 @@
         [hidden]="input.hideLabel"
         [attr.for]="input.key"
         [ngClass]="{'required': input.required}">{{input.label}}</label>
-    <select class="form-control m-font eos-select"
+    <p *ngIf="readonly"
+        class="form-control-static m-font"
+        [ngClass]="{readonly: readonly, 'select-placeholder': !hasValue()}">{{currentValue()}}</p>
+    <select *ngIf="!readonly"
+        class="form-control m-font eos-select"
         [ngClass]="{readonly: readonly, 'select-placeholder': !hasValue()}"
         [id]="input.key"
         [formControlName]="input.key"
