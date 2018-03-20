@@ -47,7 +47,7 @@ export class EosDictionaryNode {
     private _children?: EosDictionaryNode[];
 
     get children(): EosDictionaryNode[] {
-        return this._children;
+        return this._children || [];
     }
 
     set children(nodes: EosDictionaryNode[]) {
@@ -212,7 +212,8 @@ export class EosDictionaryNode {
         return this._descriptor.getListView(this.data);
     }
 
-    /*getInfoView(): IFieldView[] {
+    /*
+    getInfoView(): IFieldView[] {
         return this._descriptor.getInfoView(this.data);
     }
 
@@ -222,12 +223,14 @@ export class EosDictionaryNode {
 
     getEditView(): any {
         return this._descriptor.getEditView(this.data);
-    }*/
+    }
+    */
 
     getEditFieldsDescription(): any {
         return this._descriptor.getEditFieldDescription(this.data);
     }
 
+    /*
     getEditData(): any {
         const _data = {
             rec: {},
@@ -238,11 +241,12 @@ export class EosDictionaryNode {
             } else {
                 // console.log('subdictionary', this.data[_f.key]);
                 _data[_f.key] = this.data[_f.key];
-                /* recive other dict data */
+                // recive other dict data
             }
         });
         return _data;
     }
+    */
 
     getCreatingData(recParams: any): any {
         const _data = {

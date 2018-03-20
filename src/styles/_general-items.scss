@@ -1,4 +1,16 @@
 .checkbox-inline,
+.checkbox,
+.minus-checkbox,
+.radio-inline,
+.radio {
+    margin: 0;
+    cursor: pointer;
+    &.disabled {
+        cursor: default;
+    }
+}
+
+.checkbox-inline,
 .radio-inline {
     padding-left: 12px;
     line-height: 24px;
@@ -11,12 +23,10 @@
         opacity: 0;
         cursor: pointer;
         margin-left: 0;
-
-        &:checked + span {
+        &:checked+span {
             background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
         }
-
-        & + span {
+        &+span {
             margin-right: 6px;
             margin-bottom: -7px;
             display: inline-block;
@@ -26,33 +36,26 @@
             background-size: cover;
             background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
         }
-
         &[disabled] {
-            & + span {
+            cursor: default;
+            &+span {
                 background-image: url("../assets/icons/Checkbox-Square-Grey.svg");
             }
-
-            &:checked + span {
+            &:checked+span {
                 background-image: url("../assets/icons/Checkbox-Grey.svg");
             }
         }
-    }
-
-    label {
-        // padding-left: 0;
-        // position: relative;
-        margin: 0;
     }
 }
 
 .minus-checkbox {
     input[type="checkbox"] {
         &[disabled] {
-            & + span {
+            cursor: default;
+            &+span {
                 background-image: url("../assets/icons/Minus-Grey.svg");
             }
-
-            &:checked + span {
+            &:checked+span {
                 background-image: url("../assets/icons/Checkbox-Grey.svg");
             }
         }
@@ -65,12 +68,10 @@
         opacity: 0;
         cursor: pointer;
         margin-left: 0;
-
-        &:checked + span {
+        &:checked+span {
             background-image: url("../assets/icons/Radio-V-Blue.svg");
         }
-
-        & + span {
+        &+span {
             margin-right: 12px;
             margin-bottom: -7px;
             display: inline-block;
@@ -81,19 +82,13 @@
             background-image: url("../assets/icons/Radio-Blue.svg");
         }
     }
-
-    label {
-        margin: 0;
-    }
 }
-
 
 .group-checkbox {
     input[type="checkbox"] {
-        &:checked + span {
+        &:checked+span {
             background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
         }
-
         /*& + span {
             margin-right: 6px;
             margin-bottom: -3px;
@@ -115,6 +110,7 @@
     cursor: pointer;
 }
 
+
 /*.input-cleaner {
     float: right;
     margin-top: -34px;
@@ -122,6 +118,7 @@
     position: relative;
 }
 */
+
 input[type=text]::-ms-clear {
     display: none;
 }
@@ -133,22 +130,19 @@ input[type=text]::-ms-clear {
 }
 
 .tabs-wrapper {
-    width: 800px;
+    /* width: 800px; */
     display: flex;
     justify-content: space-around;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    margin: 0 -20px 20px;
+    margin: 0 $grid-gutter-width / -2;
 }
 
 .tabs {
     display: inline-block;
     padding: 0;
     margin: 0;
-
     .tab-item {
         display: inline-block;
-        border-bottom-width: 5px;
+        border-bottom-width: 6px;
         border-bottom-style: solid;
         border-bottom-color: transparent;
         padding: 12px 0 5px;
@@ -156,6 +150,9 @@ input[type=text]::-ms-clear {
         cursor: pointer;
         height: $item-height;
         margin-right: 40px;
+    }
+    .tab-item:last-child {
+        margin: 0;
     }
 }
 
@@ -167,7 +164,7 @@ input[type=text]::-ms-clear {
 .btn-primary,
 .btn-primary-full {
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
 }
 
 .s-font {
@@ -196,6 +193,10 @@ input[type=text]::-ms-clear {
 
 .no-drag {
     background-color: red !important;
+}
+
+textarea {
+    resize: none;
 }
 
 typeahead-container {

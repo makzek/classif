@@ -1,14 +1,16 @@
 import { Component, OnChanges } from '@angular/core';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { BaseNodeInfoComponent } from './base-node-info';
+import { ROLES_IN_WORKFLOW } from '../consts/dictionaries/department.consts';
 
 @Component({
     selector: 'eos-department-node-info',
     templateUrl: 'department-node-info.component.html',
 })
 export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implements OnChanges {
-    photo = DEFAULT_PHOTO;
+    public photo = DEFAULT_PHOTO;
     public update: boolean;
+    public roles = ROLES_IN_WORKFLOW;
 
     bossName: string;
     department: string;
@@ -38,5 +40,13 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
                     }
             }
         }
+    }
+
+    getRole(value: number): string {
+        let sRole = this.roles.find((elem) => elem.value === value);
+        if (!sRole) {
+            sRole = this.roles[0];
+        }
+        return sRole.title;
     }
 }

@@ -88,7 +88,6 @@ const routes: Routes = [{
     path: 'test',
     component: TestPageComponent,
     data: { title: 'Test page for UI components', showInBreadcrumb: true, showBreadcrumb: false },
-    canActivate: [AuthorizedGuard],
 }, {
     path: 'delivery',
     canActivate: [AuthorizedGuard],

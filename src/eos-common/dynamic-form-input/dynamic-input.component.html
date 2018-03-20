@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="input.controlType">
+    <eos-dynamic-input-string *ngSwitchCase="'string'"
+        [form]="form"
+        [input]="input"
+        [readonly]="readonly"></eos-dynamic-input-string>
+    <eos-dynamic-input-text *ngSwitchCase="'text'"
+        [form]="form"
+        [input]="input"
+        [readonly]="readonly"></eos-dynamic-input-text>
+    <eos-dynamic-input-select *ngSwitchCase="'select'"
+        [form]="form"
+        [input]="input"
+        [readonly]="readonly"></eos-dynamic-input-select>
+    <eos-dynamic-input-checkbox *ngSwitchCase="'checkbox'"
+        [form]="form"
+        [input]="input"
+        [readonly]="readonly"></eos-dynamic-input-checkbox>
+    <eos-dynamic-input-date *ngSwitchCase="'date'"
+        [form]="form"
+        [input]="input"
+        [readonly]="readonly"></eos-dynamic-input-date>
+</ng-container>

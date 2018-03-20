@@ -7,18 +7,18 @@ import { BaseCardEditComponent } from './base-card-edit.component';
     templateUrl: 'departments-card-edit-department.component.html',
 })
 export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent {
-    // cannt handle because popup doesn't return on cancel or close events
-
-    lockOrgBtn = false;
     orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);
     }
 
+    get hasCard(): boolean {
+        return this.form.controls['rec.CARD_FLAG'] && this.form.controls['rec.CARD_FLAG'].value;
+    }
+
     chooseOrganiz() {
         const config = this.dictSrv.getApiConfig();
         if (config) {
-            // this.lockOrgBtn = true;
             const pageUrl = config.webBaseUrl + '/Pages/Classif/ChooseClassif.aspx?';
             const params = 'Classif=ORGANIZ_CL&value_id=__ClassifIds&skip_deleted=True&select_nodes=False&select_leaf=True&return_due=True';
             this._zone.runOutsideAngular(() => {
@@ -36,9 +36,10 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
             .then((org) => {
                 if (org) {
                     this.orgName = org['CLASSIF_NAME'];
-                    this.change('DUE_LINK_ORGANIZ', 'rec', org.DUE);
+                    if (this.form.controls['rec.DUE_LINK_ORGANIZ']) {
+                        this.form.controls['rec.DUE_LINK_ORGANIZ'].setValue(org.DUE);
+                    }
                 }
-                // this.lockOrgBtn = false;
             });
     }
 }

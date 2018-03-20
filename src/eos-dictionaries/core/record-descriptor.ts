@@ -172,6 +172,12 @@ export class RecordDescriptor {
                         invalidMessage: _f.invalidMessage,
                         isUnic: _f.isUnic,
                         unicInDict: _f.unicInDict,
+                        type: _f.type,
+                        options: _f.options,
+                        height: _f.height,
+                        foreignKey: _f.foreignKey,
+                        forNode: _f.forNode,
+                        default: _f.default
                     };
                 } else {
                     _description[_f.key] = {};
@@ -257,7 +263,7 @@ export class RecordDescriptor {
             if (fld.type === E_FIELD_TYPE.dictionary) {
                 _res = Object.assign({}, fld, { value: data ? data[fld.foreignKey] : null });
             } else {
-                _res = (Object.assign({}, fld, { value: data && data.rec ? data.rec[fld.foreignKey] : null }));
+                _res = (Object.assign({}, fld, { value: data && data.rec ? data.rec[fld.foreignKey] : (fld.default || null) }));
             }
             return _res;
         });

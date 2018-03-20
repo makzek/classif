@@ -28,7 +28,6 @@
     color: $button-color-main-theme !important;
     background: white !important;
     padding: 0 4px;
-
     &:hover {
         color: $button-color-hover-main-theme !important;
         border-color: $button-color-hover-main-theme !important;
@@ -40,7 +39,6 @@
     background-color: $button-color-main-theme !important;
     color: white !important;
     padding: 0 4px;
-
     &:hover {
         border-color: $button-color-hover-main-theme !important;
         background: $button-color-hover-main-theme !important;
@@ -52,11 +50,9 @@
     color: $button-color-main-theme;
     border-color: transparent;
     padding: 1px 6px;
-
     &:hover {
         color: $button-color-hover-main-theme;
     }
-
     &.search-btn {
         &.opened {
             color: $primary-color-main-theme;
@@ -70,7 +66,6 @@
     background-color: $primary-color-main-theme;
     border-color: $border-color-main-theme;
     color: $primary-font-color-main-theme;
-
     &:hover:not(:disabled) {
         background-color: $border-color-main-theme;
     }
@@ -98,6 +93,7 @@
 
 .usual-border {
     border-color: $border-color-main-theme;
+    border-width: 1px;
 }
 
 .active-border {
@@ -118,11 +114,9 @@
 
 .tooltip {
     opacity: 1 !important;
-
     &.word-break {
         word-break: break-all;
     }
-
     .tooltip-inner {
         color: #333333;
         border-radius: 4px;
@@ -137,22 +131,18 @@
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $active-field-color-main-theme;
     }
-
     &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $active-field-color-main-theme;
     }
-
     &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $active-field-color-main-theme;
     }
-
     &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $active-field-color-main-theme;
     }
-
     &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $active-field-color-main-theme;
@@ -165,64 +155,56 @@
         box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $invalid-color-main-theme;
     }
-
     &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $invalid-color-main-theme;
     }
-
     &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $invalid-color-main-theme;
     }
-
     &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $invalid-color-main-theme;
     }
-
     &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $invalid-color-main-theme;
     }
 }
 
-.form-control {
+.form-control,
+.form-control-static {
     color: $secondary-font-color-main-theme;
+}
+
+.form-control {
     background-color: $secondary-color-main-theme;
     border-color: $border-color-main-theme;
-
     &.light {
-        background-color: $primary-color-main-theme;
+        background-color: $modal-block-background-main-theme
     }
-
-    &:focus {
-        border-color: $active-field-color-main-theme;
-    }
-
     &:-ms-input-placeholder {
         color: $primary-font-color-main-theme;
     }
-
-    &.ng-invalid.ng-dirty {
-        border-color: $invalid-color-main-theme !important;
-        outline: $invalid-color-main-theme solid 1px !important;
-        outline-offset: 0 !important;
+    &.ng-invalid.ng-dirty:not(:focus) {
+        border-color: $invalid-color-main-theme;
+        /* outline: $invalid-color-main-theme solid 1px !important; */
+        /* outline-offset: 0 !important; */
     }
-
     &.ng-valid {
-        border-color: $border-color-main-theme !important;
+        border-color: $border-color-main-theme;
     }
-
+    &:focus {
+        border-color: $active-field-color-main-theme;
+    }
     &.readonly {
         border-color: transparent !important;
         background-color: transparent;
-
         &:focus {
             border-color: transparent;
         }
     }
-
     &.highlighted:focus {
         border-color: $button-color-main-theme !important;
     }
@@ -230,32 +212,27 @@
 
 .main-theme {
     .secondary-block {
-        background-color: $block-color-main-theme;
+        background-color: $secondary-panel-bg-color;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
+        border-width: 1px;
     }
-
     .link-text {
         color: $button-color-main-theme;
     }
-
     .selected-text {
         color: $button-color-main-theme;
     }
-
     .secondary-text {
         color: $secondary-font-color-main-theme;
     }
-
     .active {
         border-color: $button-color-main-theme;
         color: $button-color-main-theme;
     }
-
     .transparent-border {
         border-color: transparent;
     }
-
     /*.input-cleaner {
         color: $button-color-main-theme;
 
@@ -263,40 +240,31 @@
             color: $button-color-hover-main-theme;
         }
     }*/
-
     .deleted {
         color: $disabled-color-main-theme;
     }
-
     .highlight-on-hover {
         &:hover {
             background-color: $highlight-color-main-theme;
         }
-    }
-
-    // main-layout
+    } // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
         color: $primary-font-color-main-theme;
     }
-
     .content-wrapper {
         background: $secondary-color-main-theme;
     }
-
-    .breadcrumb > li::before {
+    .breadcrumb>li::before {
         color: $button-color-main-theme;
     }
-
     .menuitem {
         a {
             color: $primary-font-color-main-theme;
         }
-
         &:hover {
             background-color: $secondary-color-main-theme;
         }
-
         &:active {
             background-color: $secondary-color-main-theme;
         }

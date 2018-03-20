@@ -165,8 +165,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        if (!this.date || date.getTime() !== this.date.getTime()) {
-            this._dictSrv.setFilter({ date: date.setHours(0, 0, 0, 0) });
+        if (!date || !this.date || date.getTime() !== this.date.getTime()) {
+            this.date = date;
+            this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
         }
     }
 

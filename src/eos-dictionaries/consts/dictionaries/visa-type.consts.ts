@@ -1,6 +1,18 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { NOT_EMPTY_STRING } from '../input-validation';
+import { ISelectOption } from 'eos-common/interfaces';
+
+export const STATUS_OPTIONS: ISelectOption[] = [{
+    value: 'Положительный',
+    title: 'Положительный',
+}, {
+    value: 'Отрицательный',
+    title: 'Отрицательный',
+}, {
+    value: 'Промежуточный',
+    title: 'Промежуточный',
+}];
 
 export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'visa-type',
@@ -15,7 +27,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     }, {
         key: 'CLASSIF_NAME',
         title: 'Наименование',
-        type: 'text',
+        type: 'string',
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
@@ -45,8 +57,10 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         title: 'Признак финальной визы',
     }, {
         key: 'STATUS',
-        type: 'string',
+        type: 'select',
         title: 'Статус визы',
+        options: STATUS_OPTIONS,
+        required: true,
     }],
     quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],

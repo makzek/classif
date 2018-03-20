@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -10,11 +10,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { EosErrorHandler } from './core/error-handler';
 
-
-// import { APP_CONFIG } from './app.config';
 import { APP_CONFIG_LOCAL } from './app.config.local';
-// console.log('root config', config);
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { EosCommonModule } from '../eos-common/eos-common.module';
@@ -66,6 +62,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         AppRoutingModule,
         HttpModule,
         BsDropdownModule.forRoot(),
@@ -94,7 +91,6 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         EosNoticeService,
         EosStorageService,
         EosUserProfileService,
-        { provide: LOCALE_ID, useValue: 'ru-RU' },
     ],
     bootstrap: [AppComponent],
 })
