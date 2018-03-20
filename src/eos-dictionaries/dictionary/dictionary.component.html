@@ -10,7 +10,7 @@
     </div>
     <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="selectedNode" class="block selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
+            <div *ngIf="selectedNode" class="selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
                 <div class="go-top-wrapper">
                     <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
@@ -50,7 +50,7 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="first-line block">
+            <div class="first-line">
                 <div class="controller pull-left">
                     <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="table-wrapper block">
+        <div class="table-wrapper usual-border">
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
                     <span *ngIf="params.markItems" class="checkbox-inline">
