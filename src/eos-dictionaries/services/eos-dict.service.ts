@@ -577,7 +577,7 @@ export class EosDictService {
     }
 
     setFilter(filter: any) {
-        if (filter) {
+        if (filter && filter.data) {
             Object.assign(this.filters, filter);
             this._reloadList();
         }
