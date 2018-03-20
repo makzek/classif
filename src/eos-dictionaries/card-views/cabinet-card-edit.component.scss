@@ -31,12 +31,12 @@ eos-cabinet-card-edit {
                     margin: 0;
                 }
             }
-        }
-        .folder-access-body {
-            padding: $grid-gutter-width /4 0;
+            .header-label {
+                font-size: 16px;
+            }
         }
         .folder-access-item {
-            padding: $grid-gutter-width /4 $grid-gutter-width /2;
+            padding: $grid-gutter-width /2 $grid-gutter-width /2 0;
             .minus-checkbox {
                 margin: 0;
                 padding: 0;
@@ -55,6 +55,10 @@ eos-cabinet-card-edit {
 
 .eos-cabinet-tab {
     margin-bottom: 0;
+    padding-top: $grid-gutter-width/2;
+    .table-owners {
+        color: $black;
+    }
     .panel-group .panel-heading {
         padding: 11px 20px;
     }
@@ -68,9 +72,12 @@ eos-cabinet-card-edit {
     table {
         margin-bottom: 20px;
         background-color: #fff;
+        vertical-align: middle;
         tr {
             background-color: inherit;
             border-width: 1px 0;
+            height: 32px;
+            line-height: 20px;
         }
         th,
         td,
@@ -78,9 +85,11 @@ eos-cabinet-card-edit {
         .td {
             border-width: 1px;
             background-color: inherit;
+            line-height: inherit;
             vertical-align: middle;
             font-weight: normal;
             padding: 0px 20px;
+            height: inherit;
         }
         tbody {
             td,
@@ -88,16 +97,8 @@ eos-cabinet-card-edit {
                 border-top-style: none;
                 border-bottom-style: none;
                 font-size: 14px;
-                line-height: 20px;
             }
-            background-color: #fff;
-        }
-        thead>tr {
-            th,
-            .th {
-                height: 48px;
-                vertical-align: middle;
-            }
+            background-color: $white;
         }
         th,
         .th {
@@ -107,6 +108,10 @@ eos-cabinet-card-edit {
             padding: 0;
             width: 48px;
             text-align: center;
+            &+td,
+            &+th {
+                padding-left: 0;
+            }
         }
     }
     .checkbox-inline {
@@ -188,9 +193,10 @@ eos-cabinet-card-edit {
         overflow-x: hidden;
         table {
             margin: 0;
-            &>tr>td {
+            tr {
                 font-size: 16px;
                 line-height: 24px;
+                height: 48px;
             }
             .th:first-child,
             th:first-child {
@@ -205,7 +211,8 @@ eos-cabinet-card-edit {
         }
     }
     .tr-divider {
-        th,td {
+        th,
+        td {
             border-top: none;
         }
     }

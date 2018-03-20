@@ -3,7 +3,7 @@
         <li class="tab-item primary-text"
             *ngFor="let tab of fieldGroups; let i = index"
             role="presentation"
-            [ngClass]="{'active-border secondary-text': i === currTab}"
+            [ngClass]="{'active secondary-text': i === currTab}"
             (click)="setTab(i)">
             <span class="tab-title">{{tab}}</span>
         </li>

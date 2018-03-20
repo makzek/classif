@@ -38,6 +38,12 @@
             font-size: 12px;
             line-height: 10px;
             color: $label-color;
+            &.checkbox,
+            &.radio {
+                color: $grey;
+                line-height: 20px;
+                font-size: 14px;
+            }
         }
         margin: 0 0 $grid-gutter-width /2;
         /* margin-bottom: $grid-gutter-width /2; */
@@ -51,14 +57,22 @@
     .form-control,
     .form-control-static {
         color: $secondary-font-color-main-theme;
-    }
-    .form-control {
         border-radius: 0;
         padding: 6px 8px;
         background-color: $light-grey-1;
-        border-color: $border-color-main-theme;
+        border-width: 1px;
         box-shadow: none;
+    }
+    .form-control-static {
+        padding-left: 0;
+        padding-right: 0;
+        min-height: 32px;
+        line-height: 32px;
+        background-color: transparent;
+    }
+    .form-control {
         height: 32px;
+        border-color: $border-color-main-theme;
         &.light {
             background-color: $modal-block-background-main-theme
         }
@@ -77,23 +91,17 @@
         &:focus {
             border-color: $active-field-color-main-theme;
         }
-        &.readonly {
+        &.readonly,
+        &.readonly:focus {
             border-color: transparent;
             background-color: transparent;
-            &:focus {
-                border-color: transparent;
-            }
         }
         &.highlighted:focus {
             border-color: $button-color-main-theme;
         }
     }
-    .form-control-static {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        border-width: 1px;
-        min-height: 32px;
-        line-height: 32px;
+    textarea.form-control {
+        height: 50px;
     }
     .readonly {
         padding: 0;
@@ -114,20 +122,3 @@
         }
     }
 }
-
-
-/*
-.departments-card-edit {
-    .checkbox {
-        display: block;
-        margin-top: 8px;
-        margin-bottom: 0;
-        label {
-            padding-left: 0;
-        }
-        input[type="checkbox"]+span {
-            margin-right: 12px;
-        }
-    }
-}
-*/

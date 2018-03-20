@@ -1,9 +1,9 @@
 <div class="tabs-wrapper secondary-block border-bottom usual-border">
     <ul class="tabs">
-        <li class="tab-item primary-text"
+        <li class="tab-item"
             *ngFor="let tab of tabs; let i = index"
             role="presentation"
-            [ngClass]="{'active-border secondary-text': i === activeTab}"
+            [ngClass]="{'active secondary-text': i === activeTab}"
             (click)="setTab(i)">
             <span class="tab-title">{{tab}}</span>
         </li>
@@ -24,9 +24,7 @@
             [readonly]="!editMode"></eos-dynamic-input>
     </div>
     <div class="form-group">
-        <label for="DUE"
-            class="primary-text"
-            [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+        <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
         <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
     </div>
     <div class="xl-font paragraph-title">Владельцы кабинета</div>
@@ -54,7 +52,7 @@
             (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span></button>
     </div>
     <div class="row">
-        <table class="table usual-border border-bottom">
+        <table class="table usual-border border-bottom table-owners">
             <thead class="secondary-block">
                 <tr class="border-top border-bottom">
                     <th class="td-checkbox secondary-block">
@@ -96,20 +94,21 @@
             </tbody>
         </table>
     </div>
-    <div class="folder-access-wrapper">
+    <div class="folder-access-wrapper form-group">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
         <div class="folder-access-header s-font secondary-block border-bottom row border-top">
             <span class="checkbox-inline">
-                            <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
-                                <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
-                                <span></span>
-            </label>
+                <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
+                    <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
+                    <span></span>
+                </label>
+
             <span *ngIf="!editMode && anyUnmarkedAccess"
                 class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
             <span *ngIf="!editMode && !anyUnmarkedAccess"
                 class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
             </span>
-            <span class="primary-text">Полный доступ</span>
+            <span class="primary-text header-label">Полный доступ</span>
             <span class="upper unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
         </div>
         <div class="folder-access-body row">

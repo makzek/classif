@@ -134,7 +134,7 @@
                         <li class="tab-item"
                             *ngFor="let tab of modes"
                             role="presentation"
-                            [ngClass]="{'active-border secondary-text': tab.key === currTab}"
+                            [ngClass]="{'active secondary-text': tab.key === currTab}"
                             (click)="setTab(tab.key)">
                             <span class="tab-title">{{tab.title}}</span>
                         </li>
