@@ -1,4 +1,4 @@
-<div class="tabs-wrapper usual-border">
+<div class="tabs-wrapper usual-border border-bottom">
     <ul class="tabs">
         <li class="tab-item primary-text"
             *ngFor="let tab of fieldGroups; let i = index"
@@ -25,14 +25,14 @@
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['rec.CODE']"
-                [input]="inputs['rec.CODE']"
+            <eos-dynamic-input *ngIf="inputs['rec.POST_H']"
+                [input]="inputs['rec.POST_H']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['rec.POST_H']"
-                [input]="inputs['rec.POST_H']"
+            <eos-dynamic-input *ngIf="inputs['rec.CODE']"
+                [input]="inputs['rec.CODE']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>

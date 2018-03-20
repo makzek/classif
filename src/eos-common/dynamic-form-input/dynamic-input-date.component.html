@@ -6,8 +6,7 @@
     [isDisabled]="readonly"
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
-    <label class="primary-text"
-        [hidden]="input.hideLabel"
+    <label [hidden]="input.hideLabel"
         [attr.for]="input.key">{{input.label}}</label>
     <div class="eos-datepicker">
         <input type="text"

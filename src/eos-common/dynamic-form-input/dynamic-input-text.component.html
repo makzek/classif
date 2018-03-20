@@ -6,8 +6,7 @@
     [isDisabled]="readonly"
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
-    <label class="primary-text"
-        [hidden]="input.hideLabel"
+    <label [hidden]="input.hideLabel"
         [attr.for]="input.key"
         [ngClass]="{'required': input.required}">{{input.label}}</label>
     <textarea class="form-control m-font"
