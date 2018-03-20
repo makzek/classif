@@ -21,17 +21,26 @@
         -ms-grid-columns: 100px 1fr 153px;
         grid-template-columns: 100px 1fr 153px;
         &.edited {
-            -ms-grid-columns: 0 1fr 195px;
-            grid-template-columns: 0 1fr 195px;
+            -ms-grid-columns: 0 1fr 210px;
+            grid-template-columns: 0 1fr 210px;
         }
+        /*
         .btn {
             padding: 1px 6px;
         }
+        */
         a:hover {
             text-decoration: none;
         }
         div {
             display: inline-block;
+        }
+        .move-wrapper,
+        .buttons-wrapper,
+        .action-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
         }
         .move-wrapper {
             -ms-grid-column: 1;
@@ -62,7 +71,13 @@
             grid-column: 3;
             -ms-grid-row: 1;
             grid-row: 1;
-            height: 48px;
+            height: $item-height;
+            .btn {
+                min-width: 88px;
+            }
+            .btn+.btn {
+                margin-left: 10px;
+            }
         }
         .action-wrapper {
             -ms-grid-column: 4;
@@ -75,16 +90,9 @@
                 width: $item-width;
             }
         }
-        .move-wrapper,
-        .buttons-wrapper,
-        .action-wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
     }
     .edit-card-body {
-        background-color: $block-color-main-theme   ;
+        background-color: $block-color-main-theme;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
         border-style: solid;
