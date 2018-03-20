@@ -44,16 +44,19 @@
         &:not(.gender) {
             position: relative;
         }
-        .form-control-static {
-            padding-top: 6px;
-            padding-bottom: 6px;
-            border-width: 1px;
-            min-height: 32px;
+        .form-control-static.placeholder {
+            color: rgba(0, 0, 0, 0.5);
         }
     }
     .form-control {
         border-radius: 0;
         padding: 6px 8px;
+    }
+    .form-control-static {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-width: 1px;
+        min-height: 32px;
     }
     input.form-control {
         height: 32px;
@@ -78,6 +81,7 @@
         }
     }
 }
+
 
 /*
 .departments-card-edit {
