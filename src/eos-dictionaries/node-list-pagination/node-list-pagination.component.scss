@@ -77,13 +77,16 @@
 
         .btn {
             padding: 0;
-            .text {
-                margin-left: $item-height/2;
-                display: inline-block;
-            }
+            position: relative;
             .arrow {
-                display: inline-block;
-                width:  $item-width;
+                position: absolute;
+                top: -1px;
+                right: 0;
+                width: $item-width;
+                height: $item-height;
+                .icon-btn {
+                    margin-top: 10px;
+                }
             }
         }
 
