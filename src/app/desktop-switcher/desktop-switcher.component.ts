@@ -28,6 +28,7 @@ export class DesktopSwitcherComponent {
     editing = false;
     updating = false;
     maxLength = 80;
+    showCheck = true;
     innerClick: boolean;
 
     notEmptyString = NOT_EMPTY_STRING;

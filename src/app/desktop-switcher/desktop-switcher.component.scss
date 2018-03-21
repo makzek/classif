@@ -26,40 +26,45 @@
             padding-right: 12px;
         }
     }
-    .dropdown-menu {
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-        width: 336px;
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
-        border: none;
-        border: 1px solid #e6e6e6;
-        .menuitem {
-            padding: 0;
-            cursor: pointer;
-            height: $item-height;
-            line-height: $item-height;
-        }
-        .divider {
-            margin: 0;
-        }
-    }
 
     .form-control {
         height: 32px;
     }
+
     .btn-default {
         padding-bottom: 5px;
     }
+
     .dropdown-menu {
-        width: 300px;
+        width: 346px;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
         .menuitem {
-            padding: 3px 10px 3px 20px;
+            padding-left: 20px;
+            cursor: pointer;
+            height: $item-height;
+            line-height: $item-height;
             a {
+                line-height: 48px;
                 text-decoration: none;
             }
         }
+        .menuitem:hover .check {
+            display: none;
+        }
+
+        .menuitem:hover .act-ico {
+            display: block;
+        }
+
+        .divider {
+            margin: 0;
+        }
         li {
+            border: 1px solid #e6e6e6;
+            border-bottom: transparent;
             cursor: pointer;
             .spinner-wrapper {
                 position: absolute;
@@ -83,21 +88,47 @@
         }
     }
     .desktop-wrapper {
-        width: 230px;
+        width: 218px;
         overflow: hidden;
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .actions {
-        position: absolute;
-        right: 5px;
-        cursor: pointer;
-        margin-top: 2px;
+
+    .check {
+        display: block;
     }
+
+    .act-ico {
+        display: none;
+    }
+
+    .not-hide {
+        display: block !important;
+    }
+
+    .actions {
+        text-align: center;
+        vertical-align: top;
+        display: inline-block;
+        width: $item-width;
+        height: $item-height;
+        cursor: pointer;
+        .eos-icon {
+            color: $button-color-main-theme;
+            vertical-align: top;
+            margin-top: $item-height / 4;
+        }
+    }
+
+    .input-wr {
+        margin-top: 8px;
+    }
+
     .create {
         cursor: pointer;
     }
+
     .creating-btns {
         .btn {
             height: 34px;
