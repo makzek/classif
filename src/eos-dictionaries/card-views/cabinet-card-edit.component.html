@@ -11,24 +11,25 @@
 </div>
 <div [hidden]="activeTab !== 0"
     class="eos-cabinet-tab">
-    <div class="form-group">
-        <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
-            [input]="inputs['rec.CABINET_NAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
+    <div class="clearfix">
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
+                [input]="inputs['rec.CABINET_NAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
+                [input]="inputs['rec.FULLNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+            <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
+        </div>
     </div>
-    <div class="form-group">
-        <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
-            [input]="inputs['rec.FULLNAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="form-group">
-        <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-        <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
-    </div>
-    <div class="xl-font paragraph-title">Владельцы кабинета</div>
-
+    <p class="xl-font paragraph-title">Владельцы кабинета</p>
     <div class="secondary-block border-top row"
         *ngIf="editMode">
         <span class="btn-group"
@@ -101,7 +102,7 @@
                 <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
                     <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
                     <span></span>
-                </label>
+            </label>
 
             <span *ngIf="!editMode && anyUnmarkedAccess"
                 class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
