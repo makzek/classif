@@ -43,6 +43,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     @ViewChild('tableEl') tableEl;
 
+    private folderList: any[];
+
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
         return this.updateAccessMarks();
@@ -53,7 +55,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     get anyUnmarkedAccess(): boolean {
-        return !!~this.data.rec.FOLDER_List.findIndex((folder) => !folder['USER_COUNT']);
+        return this.folderList && !!~this.folderList.findIndex((folder) => !folder['USER_COUNT']);
     }
 
     get anyUnmarkedOwners(): boolean {
@@ -76,6 +78,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         CABINET_FOLDERS.forEach((folder) => {
             this.foldersMap.set(folder.key, folder);
         });
+        this.folderList = [];
     }
 
     ngOnChanges() {
@@ -169,6 +172,14 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     private init(data: any) {
+        // console.log(data);
+        if (!data.owners) {
+            data.owners = [];
+        }
+        if (!data.rec.FOLDER_List) {
+            data.rec.FOLDER_List = CABINET_FOLDERS.map((fConst) => ({FOLDER_KIND: fConst.key}));
+        }
+
         this.cabinetOwners = data.owners.map((owner, idx) => {
             return <ICabinetOwner>{
                 index: idx,
@@ -179,9 +190,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
         this.reorderCabinetOwners();
 
-        this.cabinetFolders = data.rec.FOLDER_List.map((folder) => {
-            return CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND);
-        });
+        this.folderList = data.rec.FOLDER_List;
+
+        this.cabinetFolders = data.rec.FOLDER_List
+            .map((folder) => CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND));
 
         this.accessHeaders = [{
             title: 'Ограничение доступа РК',

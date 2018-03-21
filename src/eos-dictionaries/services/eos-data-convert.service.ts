@@ -24,63 +24,64 @@ export class EosDataConvertService {
         const inputs: any = {};
         if (fieldsDescription) {
             Object.keys(fieldsDescription).forEach((_dict) => {
+                const descr = fieldsDescription[_dict];
                 switch (_dict) {
                     case 'rec':
-                        Object.keys(fieldsDescription[_dict]).forEach((_key) => {
-                            switch (fieldsDescription[_dict][_key].type) {
+                        Object.keys(descr).forEach((_key) => {
+                            switch (descr[_key].type) {
                                 case E_FIELD_TYPE.number:
                                 case E_FIELD_TYPE.string:
                                     inputs[_dict + '.' + _key] = new StringInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
-                                        label: fieldsDescription[_dict][_key].title,
-                                        required: fieldsDescription[_dict][_key].required,
-                                        invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
-                                        pattern: fieldsDescription[_dict][_key].pattern,
-                                        isUnic: fieldsDescription[_dict][_key].isUnic,
-                                        unicInDict: fieldsDescription[_dict][_key].inDict,
-                                        forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey]
-                                            || fieldsDescription[_dict][_key].default,
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        required: descr[_key].required,
+                                        invalidMessage: descr[_key].invalidMessage,
+                                        pattern: descr[_key].pattern,
+                                        isUnic: descr[_key].isUnic,
+                                        unicInDict: descr[_key].inDict,
+                                        forNode: descr[_key].forNode,
+                                        value: data[_dict][descr[_key].foreignKey]
+                                            || descr[_key].default,
                                     });
                                     break;
                                 case E_FIELD_TYPE.text:
                                     inputs[_dict + '.' + _key] = new TextInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
-                                        label: fieldsDescription[_dict][_key].title,
-                                        required: fieldsDescription[_dict][_key].required,
-                                        invalidMessage: fieldsDescription[_dict][_key].invalidMessage,
-                                        height: fieldsDescription[_dict][_key].height,
-                                        forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        required: descr[_key].required,
+                                        invalidMessage: descr[_key].invalidMessage,
+                                        height: descr[_key].height,
+                                        forNode: descr[_key].forNode,
+                                        value: data[_dict][descr[_key].foreignKey],
                                     });
                                     break;
                                 case E_FIELD_TYPE.boolean:
                                     inputs[_dict + '.' + _key] = new CheckboxInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
-                                        label: fieldsDescription[_dict][_key].title,
-                                        forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: !!data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        forNode: descr[_key].forNode,
+                                        value: !!data[_dict][descr[_key].foreignKey],
                                         disabled: !editMode,
                                     });
                                     break;
                                 case E_FIELD_TYPE.select:
                                     inputs[_dict + '.' + _key] = new DropdownInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
-                                        label: fieldsDescription[_dict][_key].title,
-                                        options: fieldsDescription[_dict][_key].options,
-                                        required: fieldsDescription[_dict][_key].required,
-                                        forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey]
-                                            || fieldsDescription[_dict][_key].default,
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        options: descr[_key].options,
+                                        required: descr[_key].required,
+                                        forNode: descr[_key].forNode,
+                                        value: data[_dict][descr[_key].foreignKey]
+                                            || descr[_key].default,
                                         disabled: !editMode,
                                     });
                                     break;
                                 case E_FIELD_TYPE.date:
                                     inputs[_dict + '.' + _key] = new DateInput({
-                                        key: _dict + '.' + fieldsDescription[_dict][_key].foreignKey,
-                                        label: fieldsDescription[_dict][_key].title,
-                                        forNode: fieldsDescription[_dict][_key].forNode,
-                                        value: data[_dict][fieldsDescription[_dict][_key].foreignKey],
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        forNode: descr[_key].forNode,
+                                        value: data[_dict][descr[_key].foreignKey],
                                     });
                                     break;
                             }

@@ -53,8 +53,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public dictionaryId: string;
 
     public params: IDictionaryViewParameters;
-    public selectedNode: EosDictionaryNode;
-    public _selectedNodeText: string;
+    public treeNode: EosDictionaryNode;
+    public title: string;
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
     paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
@@ -168,7 +168,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
-                    this._selectedNodeText = node.getTreeView().map((fld) => fld.value).join(' ');
+                    this.title = node.getTreeView().map((fld) => fld.value).join(' ');
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -176,8 +176,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     const url = this._router.url;
                     this._storageSrv.setItem(RECENT_URL, url);
                 }
-                if (node !== this.selectedNode) {
-                    this.selectedNode = node;
+                if (node !== this.treeNode) {
+                    this.treeNode = node;
                 }
             });
 
@@ -310,8 +310,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     goUp() {
-        if (this.selectedNode && this.selectedNode.parent) {
-            const path = this.selectedNode.parent.getPath();
+        if (this.treeNode && this.treeNode.parent) {
+            const path = this.treeNode.parent.getPath();
             this._router.navigate(path);
         }
     }
@@ -399,18 +399,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         span.style.fontSize = '16px';
         body[0].appendChild(span);
         const length = {};
-        let fullWidth = 0;
+        // let fullWidth = 0;
         this.viewFields.forEach((_f) => {
             span.innerText = _f.title;
             length[_f.key] = PADDING_SPACE + span.clientWidth;
-            fullWidth += PADDING_SPACE + span.clientWidth;
+            // fullWidth += PADDING_SPACE + span.clientWidth;
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
                 span.innerText = _f.title;
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
-                fullWidth += PADDING_SPACE + span.clientWidth;
+                // fullWidth += PADDING_SPACE + span.clientWidth;
             });
         }
         this.length = length;
@@ -517,17 +517,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     /**
      * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
      */
-    private _openCreate(params: any) {
+    private _openCreate(recParams: any) {
         this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
-        this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
-        this.modalWindow.content.dictionaryId = this.dictionaryId;
-        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData(params);
+        const dictionary = this._dictSrv.currentDictionary;
+        const editDescr = dictionary.getEditDescriptor();
+        const data = dictionary.getNewNode({ rec: recParams }, this.treeNode);
+
+        this.modalWindow.content.fieldsDescription = editDescr;
+        this.modalWindow.content.dictionaryId = dictionary.id;
+        this.modalWindow.content.nodeData = data;
 
         this.modalWindow.content.onHide.subscribe(() => {
             this.modalWindow.hide();
         });
         this.modalWindow.content.onOpen.subscribe(() => {
-            this._openCreate(params);
+            this._openCreate(recParams);
         });
     }
 

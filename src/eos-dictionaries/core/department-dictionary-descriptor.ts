@@ -1,5 +1,5 @@
 import {
-    E_DEPT_MODE,
+    // E_DEPT_MODE,
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
     IDictionaryDescriptor,
@@ -48,8 +48,9 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         return visible;
     }
 
+    /*
     getMode(values: any): E_DEPT_MODE {
-        /* if IS_NODE or another boolean field */
+        /* if IS_NODE or another boolean field * /
         if (values) {
             if (values.rec[this.modeField.key]) { // 0 - department, 1 - person !!!
                 return E_DEPT_MODE.person;
@@ -60,6 +61,7 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             return undefined;
         }
     }
+    */
 
     protected _getFullSearchFields(): FieldDescriptor[] {
         let __res = [];
@@ -68,23 +70,6 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         });
         return __res;
     }
-
-    /*
-    private _getModeSet(_set: ModeFieldSet, values: any): FieldDescriptor[] {
-        //  todo: fix hardcode to data, need better solution
-        let _mode: string = E_DEPT_MODE[this.getMode(values)];
-
-        if (!_mode) {
-            _mode = E_DEPT_MODE[E_DEPT_MODE.department];
-        }
-
-        if (_mode && _set[_mode]) {
-            return _set[_mode];
-        } else {
-            return [];
-        }
-    }
-    */
 
     private _initModeSets(setNames: string[], descriptor: IDepartmentDictionaryDescriptor) {
         setNames.forEach((setName) => {

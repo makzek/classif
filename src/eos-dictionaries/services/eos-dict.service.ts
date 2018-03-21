@@ -149,6 +149,10 @@ export class EosDictService {
         return true;
     }
 
+    get currentDictionary(): EosDictionary {
+        return this._dictionaries[this._dictMode];
+    }
+
     constructor(
         private _msgSrv: EosMessageService,
         // private _profileSrv: EosUserProfileService,

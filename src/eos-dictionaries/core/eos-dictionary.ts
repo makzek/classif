@@ -13,6 +13,8 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
+import { EosUtils } from 'eos-common/core/utils';
+import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -388,6 +390,32 @@ export class EosDictionary {
 
     getListView() {
         return this.descriptor.record.getListView({});
+    }
+
+    getEditDescriptor(): {} {
+        return this.descriptor.record.getEditFieldDescription();
+    }
+
+    getNewNode(preSetData: {}, parent?: EosDictionaryNode): {} {
+        const nodeData = this.descriptor.record.getNewRecord(preSetData);
+
+        if (this.descriptor.dictionaryType === E_DICT_TYPE.department && parent) {
+            if (nodeData['rec']['IS_NODE'] === 0) {
+                EosUtils.setValueByPath(nodeData, 'rec.DEPARTMENT_INDEX', parent.getParentData('DEPARTMENT_INDEX', 'rec'));
+            } else {
+                EosUtils.setValueByPath(nodeData, 'printInfo.GENDER', null);
+            }
+            EosUtils.setValueByPath(nodeData, 'rec.START_DATE', parent.getParentData('START_DATE', 'rec'));
+            EosUtils.setValueByPath(nodeData, 'rec.END_DATE', parent.getParentData('END_DATE', 'rec'));
+        } else if (this.descriptor.id === 'cabinet' && parent) {
+            // fill cabinet related records with empty data
+            EosUtils.setValueByPath(nodeData, 'owners', []);
+            EosUtils.setValueByPath(nodeData, 'cabinetAccess', []);
+            EosUtils.setValueByPath(nodeData, 'users', []);
+            EosUtils.setValueByPath(nodeData, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key })));
+        }
+
+        return nodeData;
     }
 
     setNodeUserOrder(nodeId: string, order: string[]) {

@@ -58,17 +58,12 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
 
     getRelated(rec: CABINET): Promise<any> {
         const reqs = [
+            this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({ 'DEPARTMENT': [rec.DUE] })
                 .then(([department]: DEPARTMENT[]) => {
-                    return this.apiSrv.read<DEPARTMENT>({
-                        'DEPARTMENT': PipRX.criteries({ 'IS_NODE': '1', DEPARTMENT_DUE: department.DUE })
-                    })
-                        .then((owners) => {
-                            this.prepareForEdit(owners);
-                            return [department, owners];
-                        });
+                    return this.getOwners(department.DUE)
+                        .then((owners) => [department, owners]);
                 }),
-            this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
                 .then((userCabinet: USER_CABINET[]) => {
                     this.prepareForEdit(userCabinet);
@@ -79,7 +74,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             //            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
         ];
         return Promise.all(reqs)
-            .then(([[department, owners], folders, [userCabinet, users]/*, owners*/]) => {
+            .then(([folders, [department, owners], [userCabinet, users]/*, owners*/]) => {
                 //                this.prepareForEdit(owners);
                 this.prepareForEdit(folders);
                 const related = {
@@ -98,7 +93,6 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         const changeData = [];
         const results: IRecordOperationResult[] = [];
         Object.keys(originalData).forEach((key) => {
-
             if (originalData[key]) {
                 switch (key) {
                     case 'folders':
@@ -125,5 +119,13 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         } else {
             return Promise.resolve(results);
         }
+    }
+
+    getOwners(depDue: string): Promise<DEPARTMENT[]> {
+        return this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'IS_NODE': '1', DEPARTMENT_DUE: depDue }) })
+            .then((owners) => {
+                this.prepareForEdit(owners);
+                return owners;
+            });
     }
 }

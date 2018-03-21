@@ -7,6 +7,7 @@ import { EosUtils } from 'eos-common/core/utils';
 // import { EosDictService } from '../services/eos-dict.service';
 import { InputControlService } from 'eos-common/services/input-control.service';
 import { EosDataConvertService } from '../services/eos-data-convert.service';
+import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
     selector: 'eos-card-edit',
@@ -33,10 +34,10 @@ export class CardEditComponent implements OnChanges, OnDestroy {
 
     constructor(
         private _dataSrv: EosDataConvertService,
-        // private _dictSrv: EosDictService,
+        private dictSrv: EosDictService,
         private _inputCtrlSrv: InputControlService
     ) {
-
+        console.log(this.dictSrv.currentDictionary);
     }
     /**
      * Updates value in record data

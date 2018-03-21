@@ -115,27 +115,27 @@ export class RecordDescriptor {
     }
 
     getInfoView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.info, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.info), data);
     }
 
     getShortQuickView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.shortQuickView), data);
     }
 
     getEditView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.edit, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.edit), data);
     }
 
-    getEditFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.edit, data);
+    getEditFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.edit);
     }
 
-    getShortQuickFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.shortQuickView, data);
+    getShortQuickFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.shortQuickView);
     }
 
-    getQuickFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.info, data);
+    getQuickFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.info);
     }
 
     getSearchConfig(): SEARCH_TYPES[] {
@@ -146,20 +146,16 @@ export class RecordDescriptor {
         return this.modeList;
     }
 
-    getFieldView(aSet: E_FIELD_SET, mode?: string) {
-        return this._getFieldView(aSet, mode);
+    getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+        return this._getFieldSet(aSet);
     }
 
-    getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
-        return this._getFieldSet(aSet, values);
-    }
-
-    getFieldDescription(aSet: E_FIELD_SET, data?: any): any {
+    getFieldDescription(aSet: E_FIELD_SET): any {
         const _description = {
             rec: {},
             _list: []
         };
-        const _descs = this.getFieldSet(aSet, data);
+        const _descs = this.getFieldSet(aSet);
         if (_descs) {
             _descs.forEach((_f) => {
                 if (_f.type !== E_FIELD_TYPE.dictionary) {
@@ -189,32 +185,24 @@ export class RecordDescriptor {
         return _description;
     }
 
-    protected _getFieldSet(aSet: E_FIELD_SET, _values?: any): FieldDescriptor[] {
-        switch (aSet) {
-            case E_FIELD_SET.search:
-                return this._getSearchFields();
-            case E_FIELD_SET.allVisible:
-                return this._getAllVisibleFields();
-            case E_FIELD_SET.fullSearch:
-                return this._getFullSearchFields();
-            case E_FIELD_SET.info:
-                return this.quickViewFields;
-            case E_FIELD_SET.shortQuickView:
-                return this.shortQuickViewFields;
-            case E_FIELD_SET.edit:
-                return this.editFields;
-            case E_FIELD_SET.list:
-                return this.listFields;
-            case E_FIELD_SET.tree:
-                return this.treeFields;
-            default:
-                // throw new Error('Unknown field set');
-                console.warn('Unknown field set', aSet);
-                return null;
+    getNewRecord(preSetData: {}): {} {
+        const fields = this.getFieldSet(E_FIELD_SET.edit);
+        const newRec = {
+            rec: {}
+        };
+        fields.forEach((fld) => {
+            if (E_FIELD_TYPE.dictionary === fld.type) {
+                newRec[fld.key] = {};
+            }
+        });
+        if (preSetData) {
+            Object.keys(preSetData)
+                .forEach((key) => {
+                    newRec[key] = Object.assign({}, newRec[key], preSetData[key]);
+                });
         }
+        return newRec;
     }
-
-    protected _getFieldView(_aSet: E_FIELD_SET, _mode?: string): any { }
 
     protected _getFullSearchFields() {
         return this.fullSearchFields;
@@ -236,6 +224,31 @@ export class RecordDescriptor {
 
         if (!this[fldName]) {
             throw new Error('No field decribed for "' + fldName + '"');
+        }
+    }
+
+    private _getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+        switch (aSet) {
+            case E_FIELD_SET.search:
+                return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
+            case E_FIELD_SET.fullSearch:
+                return this._getFullSearchFields();
+            case E_FIELD_SET.info:
+                return this.quickViewFields;
+            case E_FIELD_SET.shortQuickView:
+                return this.shortQuickViewFields;
+            case E_FIELD_SET.edit:
+                return this.editFields;
+            case E_FIELD_SET.list:
+                return this.listFields;
+            case E_FIELD_SET.tree:
+                return this.treeFields;
+            default:
+                // throw new Error('Unknown field set');
+                console.warn('Unknown field set', aSet);
+                return null;
         }
     }
 
