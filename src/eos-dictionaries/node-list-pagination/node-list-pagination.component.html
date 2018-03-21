@@ -18,16 +18,20 @@
 
     <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показывать еще</button>
 
-    <div class="count-select-text usual-border" >
-        <span class="selected-text">Показывать по {{config?.length}}</span>
-    </div>
-    <div class="count-drop-icon" dropdown dropup="true" placement="top right">
-        <button type="button" dropdownToggle class="drop-btn btn btn-transparent selected-text">
-            <span class="icon-btn eos-icon eos-icon-arrow-v-blue-bottom small"></span>
+    <div dropdown placement="top right" #dd="bs-dropdown" dropup="true" class="show-by">
+        <button type="button" dropdownToggle class="drop-btn btn btn-transparent selected-text" style="height: 48px; width: 336px;">
+            <div class="text">Показывать по {{config?.length}}</div>
+            <div class="arrow">
+                <span class="icon-btn eos-icon small"
+                    [ngClass]="{'eos-icon-arrow-v-blue-top': !dd.isOpen, 'eos-icon-arrow-v-blue-bottom': dd.isOpen}"></span>
+            </div>
         </button>
         <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-            <li role="menuitem" *ngFor="let item of pageLengths">
-                <a class="dropdown-item" (click)="setPageLength(item.value)">{{item.title}}</a>
+            <li role="menuitem"
+                *ngFor="let item of pageLengths"
+                (click)="setPageLength(item.value)"
+                class="selected-text">
+                Показывать по {{item.title}}
             </li>
         </ul>
     </div>

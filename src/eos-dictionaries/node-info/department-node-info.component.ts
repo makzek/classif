@@ -1,7 +1,7 @@
 import { Component, OnChanges } from '@angular/core';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { BaseNodeInfoComponent } from './base-node-info';
-import { ROLES_IN_WORKFLOW } from '../consts/roles.const';
+import { ROLES_IN_WORKFLOW } from '../consts/dictionaries/department.consts';
 
 @Component({
     selector: 'eos-department-node-info',

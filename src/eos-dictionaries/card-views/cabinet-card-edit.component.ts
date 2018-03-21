@@ -4,6 +4,7 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
 import { DEPARTMENT } from 'eos-rest';
 import { IOrderBy } from '../interfaces';
+// import { environment } from 'environments/environment';
 
 interface ICabinetOwner {
     index: number;
@@ -16,6 +17,8 @@ interface ICabinetOwner {
     templateUrl: 'cabinet-card-edit.component.html',
 })
 export class CabinetCardEditComponent extends BaseCardEditComponent implements OnChanges {
+    readonly tabs = ['Основные данные', 'Доступ пользователей к кабинету'];
+    activeTab = 0;
     status: any = {
         showOwners: true,
         showAccess: true,
@@ -40,9 +43,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     @ViewChild('tableEl') tableEl;
 
-    private scrollStep = 5;
-    private scrollInterval = 50;
-
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
         return this.updateAccessMarks();
@@ -66,6 +66,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             .filter((owner) => !owner.data['ISN_CABINET']);
     }
 
+    private scrollStep = 5;
+    private scrollInterval = 50;
     private _interval: any;
 
     constructor(injector: Injector) {
@@ -77,7 +79,6 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     ngOnChanges() {
-        super.ngOnChanges();
         if (this.data && this.data.rec) {
             // console.log(this.data);
             this.init(this.data);
@@ -91,6 +92,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     endScroll() {
         window.clearInterval(this._interval);
+    }
+
+    setTab(idx: number) {
+        this.activeTab = idx;
     }
 
     folderTitle(folderType: number): string {
@@ -184,8 +189,8 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         }, {
             title: 'Ограничение доступа РКПД',
             key: 'rkpd'
-        }]
-            .concat(this.cabinetFolders);
+        }];
+
 
         this.cabinetUsers = data.users.map((user) => {
             const userAccess = data.cabinetAccess.find((access) => access.ISN_LCLASSIF === user.ISN_LCLASSIF);
@@ -199,9 +204,11 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             });
             return cUser;
         });
-
-        this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers, this.cabinetUsers);
-
+        /*
+        if (!environment.production) { // for testing table horizontal scroll
+            this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers);
+        }
+        */
         this.updateAccessMarks();
         this.updateOwnersMarks();
         this.updateScroller();

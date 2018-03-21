@@ -272,21 +272,21 @@ export abstract class AbstractDictionaryDescriptor {
         let pSev: Promise<IRecordOperationResult> = Promise.resolve(null);
         const results: IRecordOperationResult[] = [];
         Object.keys(originalData).forEach((key) => {
-
             if (originalData[key]) {
+                const data = Object.assign({}, originalData[key], updates[key]);
                 switch (key) {
                     case 'sev': // do nothing handle sev later
-                        pSev = this.checkSevIsNew(Object.assign({}, originalData.sev, updates.sev), originalData.rec);
+                        pSev = this.checkSevIsNew(data, originalData.rec);
                         break;
                     case 'photo':
                         break;
                     case 'printInfo':
-                        if (PrintInfoHelper.PrepareForSave(originalData[key], originalData.rec)) {
-                            changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        if (PrintInfoHelper.PrepareForSave(data, originalData.rec)) {
+                            changeData.push(data);
                         }
                         break;
                     case 'rec':
-                        changeData.push(Object.assign({}, originalData[key], updates[key]));
+                        changeData.push(data);
                         break;
                     default: // do nothing
 

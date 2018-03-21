@@ -27,8 +27,7 @@
     border-color: $button-color-main-theme !important;
     color: $button-color-main-theme !important;
     background: white !important;
-    padding: 0 4px;
-
+    /* padding: 0 4px; */
     &:hover {
         color: $button-color-hover-main-theme !important;
         border-color: $button-color-hover-main-theme !important;
@@ -39,8 +38,7 @@
     border-color: $button-color-main-theme !important;
     background-color: $button-color-main-theme !important;
     color: white !important;
-    padding: 0 4px;
-
+    /* padding: 0 4px; */
     &:hover {
         border-color: $button-color-hover-main-theme !important;
         background: $button-color-hover-main-theme !important;
@@ -51,12 +49,10 @@
     background-color: transparent;
     color: $button-color-main-theme;
     border-color: transparent;
-    padding: 1px 6px;
-
+    /* padding: 1px 6px; */
     &:hover {
         color: $button-color-hover-main-theme;
     }
-
     &.search-btn {
         &.opened {
             color: $primary-color-main-theme;
@@ -70,7 +66,6 @@
     background-color: $primary-color-main-theme;
     border-color: $border-color-main-theme;
     color: $primary-font-color-main-theme;
-
     &:hover:not(:disabled) {
         background-color: $border-color-main-theme;
     }
@@ -98,6 +93,7 @@
 
 .usual-border {
     border-color: $border-color-main-theme;
+    border-width: 1px;
 }
 
 .active-border {
@@ -113,19 +109,18 @@
 .block {
     background-color: $block-color-main-theme;
     color: $primary-font-color-main-theme;
-    border-color: $border-color-main-theme !important;
+    border-color: $border-color-main-theme;
 }
 
 .tooltip {
     opacity: 1 !important;
-
     &.word-break {
         word-break: break-all;
     }
-
     .tooltip-inner {
+        padding: 8px;
+        border-radius: 0px;
         color: #333333;
-        border-radius: 4px;
         background-color: $primary-color-main-theme;
         box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
     }
@@ -135,28 +130,77 @@
     .tooltip-inner {
         color: $active-field-color-main-theme;
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
-        border-color: $active-field-color-main-theme;
+        border-color: #2196f3;
+    }
+    &.tooltip.bottom .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: calc(50% - 10px);
+        top: -14px;
+        border: 10px solid transparent;
+        border-bottom: 10px solid white;
     }
 
-    &.right .tooltip-arrow,
-    &.tooltip-right .tooltip-arrow {
-        border-right-color: $active-field-color-main-theme;
+    &.tooltip.top .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: calc(50% - 10px);
+        bottom: -14px;
+        border: 10px solid transparent;
+        border-top: 10px solid white;
     }
 
-    &.left .tooltip-arrow,
-    &.tooltip-left .tooltip-arrow {
-        border-left-color: $active-field-color-main-theme;
+    &.tooltip.left .tooltip-inner::before {
+        content: '';
+        top: calc(50% - 10px);
+        display: block;
+        position: absolute;
+        right: -14px;
+        border: 10px solid transparent;
+        border-left: 10px solid white;
     }
 
-    &.top .tooltip-arrow,
-    &.tooltip-top .tooltip-arrow {
-        border-top-color: $active-field-color-main-theme;
+    &.tooltip.right .tooltip-inner::before {
+        content: '';
+        top: calc(50% - 10px);
+        display: block;
+        position: absolute;
+        left: -14px;
+        border: 10px solid transparent;
+        border-right: 10px solid white;
     }
 
-    &.bottom .tooltip-arrow,
-    &.tooltip-bottom .tooltip-arrow {
-        border-bottom-color: $active-field-color-main-theme;
+    &.tooltip.right .tooltip-arrow {
+        top: calc(50% - 5px) !important;
+        left: -15px;
+        border-right-color: #2196f3;
+        border-width: 10px 10px 10px;
     }
+
+    &.tooltip.left .tooltip-arrow {
+        top: calc(50% - 5px) !important;
+        right: -15px;
+        border-left-color: #2196f3;
+        border-width: 10px 10px 10px;
+    }
+
+    &.tooltip.top .tooltip-arrow {
+        bottom: -5px;
+        left: 50% !important;
+        margin-left: -10px;
+        border-top-color: #2196f3;
+        border-width: 10px 10px 0;
+    }
+
+    &.tooltip.bottom .tooltip-arrow {
+        top: -5px;
+        left: 50% !important;
+        margin-left: -10px;
+        border-bottom-color: #2196f3;
+        border-width: 0 10px 10px;
+      }
 }
 
 .tooltip-error {
@@ -165,97 +209,47 @@
         box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $invalid-color-main-theme;
     }
-
     &.right .tooltip-arrow,
     &.tooltip-right .tooltip-arrow {
         border-right-color: $invalid-color-main-theme;
     }
-
     &.left .tooltip-arrow,
     &.tooltip-left .tooltip-arrow {
         border-left-color: $invalid-color-main-theme;
     }
-
     &.top .tooltip-arrow,
     &.tooltip-top .tooltip-arrow {
         border-top-color: $invalid-color-main-theme;
     }
-
     &.bottom .tooltip-arrow,
     &.tooltip-bottom .tooltip-arrow {
         border-bottom-color: $invalid-color-main-theme;
     }
 }
 
-.form-control {
-    color: $secondary-font-color-main-theme;
-    background-color: $secondary-color-main-theme;
-    border-color: $border-color-main-theme;
-
-    &.light {
-        background-color: $modal-block-background-main-theme
-    }
-
-    &:-ms-input-placeholder {
-        color: $primary-font-color-main-theme;
-    }
-
-    &.ng-invalid.ng-dirty:not(:focus) {
-        border-color: $invalid-color-main-theme;
-        /* outline: $invalid-color-main-theme solid 1px !important; */
-        /* outline-offset: 0 !important; */
-    }
-
-    &.ng-valid {
-        border-color: $border-color-main-theme;
-    }
-
-    &:focus {
-        border-color: $active-field-color-main-theme;
-    }
-
-    &.readonly {
-        border-color: transparent !important;
-        background-color: transparent;
-
-        &:focus {
-            border-color: transparent;
-        }
-    }
-
-    &.highlighted:focus {
-        border-color: $button-color-main-theme !important;
-    }
-}
-
 .main-theme {
     .secondary-block {
-        background-color: $block-color-main-theme;
+        background-color: $light-grey-1;
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
+        border-width: 1px;
     }
-
     .link-text {
         color: $button-color-main-theme;
     }
-
     .selected-text {
         color: $button-color-main-theme;
     }
-
     .secondary-text {
         color: $secondary-font-color-main-theme;
     }
-
     .active {
         border-color: $button-color-main-theme;
         color: $button-color-main-theme;
     }
-
     .transparent-border {
         border-color: transparent;
     }
-
     /*.input-cleaner {
         color: $button-color-main-theme;
 
@@ -263,40 +257,31 @@
             color: $button-color-hover-main-theme;
         }
     }*/
-
     .deleted {
         color: $disabled-color-main-theme;
     }
-
     .highlight-on-hover {
         &:hover {
             background-color: $highlight-color-main-theme;
         }
-    }
-
-    // main-layout
+    } // main-layout
     &.main-container {
         background-color: $secondary-color-main-theme;
         color: $primary-font-color-main-theme;
     }
-
     .content-wrapper {
         background: $secondary-color-main-theme;
     }
-
-    .breadcrumb > li::before {
+    .breadcrumb>li::before {
         color: $button-color-main-theme;
     }
-
     .menuitem {
         a {
             color: $primary-font-color-main-theme;
         }
-
         &:hover {
             background-color: $secondary-color-main-theme;
         }
-
         &:active {
             background-color: $secondary-color-main-theme;
         }

@@ -1,112 +1,9 @@
-.eos-card {
-    // min-height: 450px;
-    max-height: calc(100vh - 108px - 60px);
-    border: 1px solid transparent;
+.card-edit {
+    /*
+    */
+    overflow-x: hidden;
     overflow-y: auto;
-    .edit-block-header,
-    .edit-header {
-        background-color: $modal-block-background-main-theme;
-        color: $secondary-font-color-main-theme;
-        border-color: $border-color-main-theme;
-        min-height: $item-height;
-        padding: 0;
-        border-width: 1px;
-        border-style: solid;
-        width: 800px;
-        margin: 0 auto;
-    }
-    .edit-header {
-        display: -ms-grid;
-        display: grid; // sass-lint:disable-line no-duplicate-properties
-        -ms-grid-columns: 100px 1fr 153px;
-        grid-template-columns: 100px 1fr 153px;
-        &.edited {
-            -ms-grid-columns: 0 1fr 195px;
-            grid-template-columns: 0 1fr 195px;
-        }
-        .btn {
-            padding: 1px 6px;
-        }
-        a:hover {
-            text-decoration: none;
-        }
-        div {
-            display: inline-block;
-        }
-
-        .move-wrapper {
-            -ms-grid-column: 1;
-            grid-column: 1;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            .btn {
-                height: $item-height;
-                width: $item-width;
-            }
-        }
-        .name-wrapper {
-            -ms-grid-row-align: center;
-            align-self: center;
-            -ms-grid-column: 2;
-            grid-column: 2;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            &.edited {
-                padding-left: 20px;
-            }
-            .edit-title {
-                font-size: 18px;
-            }
-        }
-        .buttons-wrapper {
-            -ms-grid-column: 3;
-            grid-column: 3;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            height: 48px;
-        }
-        .action-wrapper {
-            -ms-grid-column: 4;
-            grid-column: 4;
-            -ms-grid-row: 1;
-            grid-row: 1;
-            .btn {
-                height: $item-height;
-                margin: -8px 0;
-                width: $item-width;
-            }
-        }
-        .move-wrapper,
-        .buttons-wrapper,
-        .action-wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
-    }
-    .spinner-wrapper {
-        padding: 20px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-width: 1px;
-        border-style: solid;
-        border-top-width: 0;
-        width: 800px;
-        margin: 0 auto;
-    }
-    .edit-aside {
-        .vertical-buttons {
-            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
-        }
-    }
-    /* .active {
-        background-color: #e6e5e5;
-        border-color: #adadad;
-    }*/
-    textarea {
-        resize: none;
-    }
+    max-height: calc(100vh - 200px);
 }
 
 .edit-content {
@@ -136,64 +33,92 @@
             }
         }
     }
-    .visa-type-select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
-        background-repeat: no-repeat;
-        background-position-x: right;
-        background-position-y: center;
-        background-size: 24px;
-    }
-    .visa-select-edit {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-image: none;
-    }
     .form-group {
+        label {
+            font-size: 12px;
+            line-height: 10px;
+            color: $label-color;
+            &.checkbox,
+            &.radio {
+                color: $grey;
+                line-height: 20px;
+                font-size: 14px;
+            }
+        }
+        margin: 0 0 $grid-gutter-width /2;
+        /* margin-bottom: $grid-gutter-width /2; */
         &:not(.gender) {
             position: relative;
         }
-        &:not(:first-child) {
-            margin-top: 30px;
+        .form-control-static.placeholder {
+            color: rgba(0, 0, 0, 0.5);
         }
     }
-    .form-control {
+    .form-control,
+    .form-control-static {
+        color: $secondary-font-color-main-theme;
         border-radius: 0;
-        padding: 8px;
+        padding: 6px 8px;
+        background-color: $light-grey-1;
+        border-width: 1px;
+        box-shadow: none;
     }
-    input.form-control {
+    .form-control-static {
+        padding-left: 0;
+        padding-right: 0;
+        min-height: 32px;
+        line-height: 32px;
+        background-color: transparent;
+    }
+    .form-control {
         height: 32px;
+        border-color: $border-color-main-theme;
+        &.light {
+            background-color: $modal-block-background-main-theme
+        }
+        &:-ms-input-placeholder {
+            color: $primary-font-color-main-theme;
+        }
+        &.ng-invalid.ng-dirty:not(:focus) {
+            border-color: $invalid-color-main-theme;
+            border-width: 2px;
+            /* outline: $invalid-color-main-theme solid 1px !important; */
+            /* outline-offset: 0 !important; */
+        }
+        &.ng-valid {
+            border-color: $border-color-main-theme;
+        }
+        &:focus {
+            border-color: $active-field-color-main-theme;
+        }
+        &.readonly,
+        &.readonly:focus {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        &.highlighted:focus {
+            border-color: $button-color-main-theme;
+        }
+    }
+    textarea.form-control {
+        height: 50px;
     }
     .readonly {
-        box-shadow: none;
         padding: 0;
     }
-}
-
-.simple-card-edit {
-    padding: 20px;
-    border-width: 1px;
-    border-style: solid;
-    border-top-width: 0;
-    width: 800px;
-    margin: 0 auto;
-}
-
-.security-card-edit {
-    .checkbox-inline {
-        padding-left: 0;
+    .field-value {
+        height: 32px;
+        line-height: 32px;
     }
-}
-
-.appearance-none {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
+    .block-title {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        display: block;
+        height: 38px;
+        font-weight: 700;
+        padding-top: 8px;
+        &:not(.first) {
+            margin-top: 50px;
+        }
+    }
 }

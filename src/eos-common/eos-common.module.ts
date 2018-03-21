@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/bs-moment';
@@ -11,15 +11,29 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { MessagesComponent } from './messages/messages.component';
-import { EosMessageService } from './services/eos-message.service';
-import { InfoComponent } from './info/info.component';
+/* components */
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
-import { ConfirmWindowService } from './confirm-window/confirm-window.service';
-import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
+import { DynamicInputComponent } from './dynamic-form-input/dynamic-input.component';
+import { DynamicInputCheckboxComponent } from './dynamic-form-input/dynamic-input-checkbox.component';
+import { DynamicInputDateComponent } from './dynamic-form-input/dynamic-input-date.component';
+import { DynamicInputSelectComponent } from './dynamic-form-input/dynamic-input-select.component';
+import { DynamicInputStringComponent } from './dynamic-form-input/dynamic-input-string.component';
+import { DynamicInputTextComponent } from './dynamic-form-input/dynamic-input-text.component';
+import { InfoComponent } from './info/info.component';
+import { MessagesComponent } from './messages/messages.component';
+import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+
+/* services */
+import { ConfirmWindowService } from './confirm-window/confirm-window.service';
+import { EosMessageService } from './services/eos-message.service';
+import { InputControlService } from './services/input-control.service';
+
+/* directives */
+import { EosDateMaskDirective } from './directives/date-mask.directive';
+import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
+import { UnicValidatorDirective } from './directives/unic-validator.directive';
 
 @NgModule({
     declarations: [
@@ -30,10 +44,19 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
+        UnicValidatorDirective,
+        EosDateMaskDirective,
+        DynamicInputComponent,
+        DynamicInputCheckboxComponent,
+        DynamicInputDateComponent,
+        DynamicInputSelectComponent,
+        DynamicInputStringComponent,
+        DynamicInputTextComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         BsDatepickerModule.forRoot(),
         TooltipModule.forRoot(),
         AlertModule.forRoot(),
@@ -49,6 +72,10 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
         SpinnerComponent,
         PhotoUploaderComponent,
         DatepickerComponent,
+        // TextInputComponent,
+        UnicValidatorDirective,
+        DynamicInputComponent,
+        // DataConvertService,
     ],
     entryComponents: [
         ConfirmWindowComponent,
@@ -56,6 +83,7 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     providers: [
         ConfirmWindowService,
         EosMessageService,
+        InputControlService,
     ]
 })
 export class EosCommonModule { }

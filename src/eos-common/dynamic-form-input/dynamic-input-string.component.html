@@ -1,0 +1,22 @@
+<div [formGroup]="form"
+    [tooltip]="input.invalidMessage"
+    [placement]="tooltipCfg.placement"
+    [containerClass]="tooltipCfg.class"
+    [container]="tooltipCfg.container"
+    [isDisabled]="readonly"
+    [isOpen]="!focused && isDirty && !isValid"
+    triggers="">
+    <label [hidden]="input.hideLabel"
+        [attr.for]="input.key"
+        [ngClass]="{'required': input.required}">{{input.label}}</label>
+    <input class="form-control m-font"
+        [formControlName]="input.key"
+        [id]="input.key"
+        type="text"
+        [readonly]="readonly"
+        [ngClass]="{'readonly': readonly}"
+        [placeholder]="input.label"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        autocomplete="off">
+</div>

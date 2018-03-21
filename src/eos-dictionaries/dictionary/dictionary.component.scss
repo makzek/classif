@@ -125,7 +125,7 @@
     .node-actions {
         .selected-node {
             background: $modal-block-background-main-theme;
-            border: 1px solid transparent;
+            border: 1px solid $border-color-main-theme;
             border-bottom: 0;
             min-height: $item-height;
             display: -ms-grid;
@@ -204,7 +204,7 @@
             background: $modal-block-background-main-theme;
             height: $item-height + 6px;
             padding-top: 1px;
-            border: 1px solid transparent;
+            border: 1px solid $border-color-main-theme;
         }
 
         .search {

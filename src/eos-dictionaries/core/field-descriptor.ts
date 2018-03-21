@@ -1,4 +1,5 @@
 import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { ISelectOption } from 'eos-common/interfaces';
 export class FieldDescriptor implements IFieldDesriptorBase {
     readonly key: string;
     readonly title: string;
@@ -11,6 +12,10 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
+    readonly options?: ISelectOption[];
+    readonly height?: number;
+    readonly forNode?: boolean;
+    readonly default?: any;
 
     constructor(data: IFieldDesriptor) {
         if (data.key) {
@@ -39,5 +44,16 @@ export class FieldDescriptor implements IFieldDesriptorBase {
         this.isUnic = !!data.isUnic;
 
         this.unicInDict = !!data.unicInDict;
+
+        if (data.options) {
+            this.options = data.options;
+        }
+
+        if (data.height) {
+            this.height = data.height;
+        }
+
+        this.forNode = data.forNode;
+        this.default = data.default;
     }
 }

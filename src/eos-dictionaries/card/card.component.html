@@ -1,59 +1,104 @@
 <div class="eos-card">
-    <header class="edit-header" [ngClass]="{'edited': editMode}">
+    <header class="edit-header"
+        [ngClass]="{'edited': editMode}">
         <div class="move-wrapper">
             <div>
-                <button *ngIf="node && !editMode" [disabled]="disManager(true, tt1)" #tt1="bs-tooltip" class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
-                    aria-hidden="true" (click)="prev()" tooltip="Предыдущая" placement="bottom" containerClass="tooltip-info"></button>
-                <button *ngIf="node && !editMode" [disabled]="disManager(false, tt2)" #tt2="bs-tooltip" class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
-                    aria-hidden="true" (click)="next()" tooltip="Следующая" placement="bottom" containerClass="tooltip-info"></button>
+                <button *ngIf="node && !editMode"
+                    [disabled]="disManager(true, tt1)"
+                    #tt1="bs-tooltip"
+                    class="btn btn-primary-light"
+                    aria-hidden="true"
+                    (click)="prev()"
+                    tooltip="Предыдущая"
+                    placement="bottom"
+                    containerClass="tooltip-info">
+                    <span class="eos-icon eos-icon-arrow-v-blue-left small"></span>
+                </button>
+                <button *ngIf="node && !editMode"
+                    [disabled]="disManager(false, tt2)"
+                    #tt2="bs-tooltip"
+                    class="btn btn-primary-light"
+                    aria-hidden="true"
+                    (click)="next()"
+                    tooltip="Следующая"
+                    placement="bottom"
+                    containerClass="tooltip-info">
+                    <span class="eos-icon eos-icon-arrow-v-blue-right small"></span>
+                </button>
             </div>
         </div>
-        <div class="name-wrapper" [ngClass]="{'edited': editMode}">
-            <span *ngIf="node" class="edit-title primary-text" [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
+        <div class="name-wrapper"
+            [ngClass]="{'edited': editMode}">
+            <span *ngIf="node"
+                class="edit-title primary-text"
+                [ngClass]="{'deleted': node.isDeleted}">{{ nodeName }}</span>
         </div>
-        <div class="buttons-wrapper" *ngIf="editMode">
+        <div class="buttons-wrapper"
+            *ngIf="editMode">
             <div>
-                <button class="btn btn-primary upper" (click)="cancel()">Отменить</button>
-                <button class="btn btn-primary-full upper" [disabled]="!isChanged || disableSave" (click)="save()">Сохранить</button>
+                <button class="btn btn-primary upper"
+                    (click)="cancel()">Отменить</button>
+                <button class="btn btn-primary-full upper"
+                    [disabled]="!isChanged || disableSave"
+                    (click)="save()">Сохранить</button>
             </div>
         </div>
-        <div class="action-wrapper" *ngIf="!editMode">
+        <div class="action-wrapper"
+            *ngIf="!editMode">
             <span class="pull-right">
                 <button class="btn btn-primary-light" aria-hidden="true" [disabled]="!node || node.updating" (click)="edit()" tooltip="Редактировать" placement="bottom" containerClass="tooltip-info">
                     <span class="eos-icon eos-icon-edit-blue small"></span>
-                </button>
-                <a routerLink="{{selfLink}}" target="_blank">
+            </button>
+            <a routerLink="{{selfLink}}"
+                target="_blank">
                     <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новом окне" placement="bottom" containerClass="tooltip-info">
                         <span class="eos-icon eos-icon-external-link-blue small"></span>
                     </button>
                 </a>
-                <button class="btn btn-primary-light" aria-hidden="true" [disabled]="!node || node.updating" (click)="close()" tooltip="Закрыть" placement="bottom" containerClass="tooltip-info">
+            <button class="btn btn-primary-light"
+                aria-hidden="true"
+                [disabled]="!node || node.updating"
+                (click)="close()"
+                tooltip="Закрыть"
+                placement="bottom"
+                containerClass="tooltip-info">
                     <span class="eos-icon eos-icon-close-blue small"></span>
                 </button>
             </span>
         </div>
     </header>
 
-    <div *ngIf="!node || node.updating" class="spinner-wrapper secondary-block">
+    <div *ngIf="!node || node.updating"
+        class="spinner-wrapper secondary-block">
         <eos-spinner [size]="'lg'"></eos-spinner>
     </div>
-    <eos-card-edit
-        [dictionaryId]="dictionaryId"
-        [nodeId]="node?.id"
-        [data]="nodeData"
-        [fieldsDescription]="fieldsDescription"
-        [editMode]="editMode"
-        (formChanged)="recordChanged($event)"
-        (formInvalid)="turnOffSave($event)"
-        [dutysList]="dutysList"
-        [fullNamesList]="fullNamesList"></eos-card-edit>
-    <div bsModal #onlyEdit="bs-modal" [config]="{ show: false }" class="modal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="edit-card-body">
+        <eos-card-edit #cardEditEl
+            [dictionaryId]="dictionaryId"
+            [data]="nodeData"
+            [fieldsDescription]="fieldsDescription"
+            [editMode]="editMode"
+            (formChanged)="recordChanged($event)"
+            (formInvalid)="turnOffSave($event)"
+            [dutysList]="dutysList"
+            [fullNamesList]="fullNamesList"></eos-card-edit>
+    </div>
+    <div bsModal
+        #onlyEdit="bs-modal"
+        [config]="{ show: false }"
+        class="modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
         (onHide)="forceView()">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Предупреждение</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalOnlyRef.hide()">
+                    <button type="button"
+                        class="close pull-right"
+                        aria-label="Close"
+                        (click)="modalOnlyRef.hide()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -63,7 +108,8 @@
                             В настоящее время в режиме редактирования находится карточка
                             <br>
                             <p class="text-center">
-                                <a href="/#/{{ lastEditedCard?.link }}" (click)="modalOnlyRef.hide()">{{ lastEditedCard?.title }}</a>
+                                <a href="/#/{{ lastEditedCard?.link }}"
+                                    (click)="modalOnlyRef.hide()">{{ lastEditedCard?.title }}</a>
                             </p>
                         </div>
                     </div>
