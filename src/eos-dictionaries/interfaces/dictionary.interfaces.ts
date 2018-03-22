@@ -34,6 +34,7 @@ export enum E_FIELD_TYPE {
     boolean,
     dictionary,
     select,
+    array
 }
 
 export interface IFieldDesriptor {

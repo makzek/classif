@@ -8,6 +8,7 @@ import { DateInput } from 'eos-common/core/inputs/date-input';
 import { E_FIELD_TYPE } from '../interfaces';
 import { GENDERS } from '../consts/dictionaries/department.consts';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
+import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 @Injectable()
 export class EosDataConvertService {
@@ -356,12 +357,25 @@ export class EosDataConvertService {
                             });
                         }
                         break;
+                    case 'folders':
+                        data['rec']['FOLDER_List'].forEach((folder) => {
+                            const path = 'rec.FOLDER_List[' + (folder.FOLDER_KIND - 1) + '].USER_COUNT';
+                            const label = CABINET_FOLDERS.find((cf) => cf.key === folder.FOLDER_KIND);
+
+                            inputs[path] = new CheckboxInput({
+                                key: path,
+                                label: label ? label.title : '',
+                                value: !!folder.USER_COUNT,
+                                disabled: !editMode,
+                            });
+                        });
+                        break;
                 }
 
             });
 
         }
-        // console.warn('generated inputs', inputs);
+        console.warn('generated inputs', inputs);
         return inputs;
     }
 }

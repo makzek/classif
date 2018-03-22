@@ -4,6 +4,7 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
 import { DEPARTMENT } from 'eos-rest';
 import { IOrderBy } from '../interfaces';
+import { AbstractControl } from '@angular/forms';
 // import { environment } from 'environments/environment';
 
 interface ICabinetOwner {
@@ -54,8 +55,18 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         return this.updateOwnersMarks();
     }
 
+    get folderListControls(): AbstractControl[] {
+        const controls = [];
+        Object.keys(this.form.controls).forEach((key) => {
+            if (key.indexOf('FOLDER_List') > -1) {
+                controls.push(this.form.controls[key]);
+            }
+        });
+        return controls;
+    }
+
     get anyUnmarkedAccess(): boolean {
-        return this.folderList && !!~this.folderList.findIndex((folder) => !folder['USER_COUNT']);
+        return this.folderListControls.findIndex((ctrl) => !ctrl.value) > -1;
     }
 
     get anyUnmarkedOwners(): boolean {
@@ -83,12 +94,12 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     ngOnChanges() {
         if (this.data && this.data.rec) {
-            // console.log(this.data);
             this.init(this.data);
         }
     }
 
     add(owner: ICabinetOwner) {
+        // todo: refactor
         owner.data.ISN_CABINET = this.data.rec.ISN_CABINET;
         this.formChanged.emit(this.data);
     }
@@ -159,10 +170,12 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     toggleAllAccessMarks() {
-        this.data.rec.FOLDER_List.forEach((folder) => {
-            folder['USER_COUNT'] = +this.allMarkedAccess;
+        Object.keys(this.form.controls).forEach((key) => {
+            if (key.indexOf('FOLDER_List') > -1) {
+                const ctrl = this.form.controls[key];
+                ctrl.setValue(this.allMarkedAccess);
+            }
         });
-        this.formChanged.emit(this.data);
     }
 
     toggleAllOwnersMarks() {
@@ -172,23 +185,18 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     private init(data: any) {
-        // console.log(data);
-        if (!data.owners) {
-            data.owners = [];
-        }
-        if (!data.rec.FOLDER_List) {
-            data.rec.FOLDER_List = CABINET_FOLDERS.map((fConst) => ({FOLDER_KIND: fConst.key}));
-        }
-
-        this.cabinetOwners = data.owners.map((owner, idx) => {
-            return <ICabinetOwner>{
-                index: idx,
-                marked: false,
-                data: owner,
-            };
+        // console.log('data', data);
+        this.cabinetOwners = [];
+        this.dictSrv.getCabinetOwners(data.department.DUE).then((owners) => {
+            this.cabinetOwners = owners.map((owner, idx) => {
+                return <ICabinetOwner>{
+                    index: idx,
+                    marked: false,
+                    data: owner,
+                };
+            });
+            this.reorderCabinetOwners();
         });
-
-        this.reorderCabinetOwners();
 
         this.folderList = data.rec.FOLDER_List;
 
@@ -249,7 +257,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     private updateAccessMarks(): boolean {
-        return this.allMarkedAccess = this.data.rec.FOLDER_List.findIndex((folder) => folder['USER_COUNT']) > -1;
+        return this.allMarkedAccess = this.folderListControls.findIndex((ctrl) => ctrl.value) > -1;
     }
 
     private updateOwnersMarks(): boolean {

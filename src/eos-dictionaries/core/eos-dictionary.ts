@@ -14,7 +14,7 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
 import { EosUtils } from 'eos-common/core/utils';
-import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
+// import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -408,11 +408,13 @@ export class EosDictionary {
             EosUtils.setValueByPath(nodeData, 'rec.START_DATE', parent.getParentData('START_DATE', 'rec'));
             EosUtils.setValueByPath(nodeData, 'rec.END_DATE', parent.getParentData('END_DATE', 'rec'));
         } else if (this.descriptor.id === 'cabinet' && parent) {
-            // fill cabinet related records with empty data
-            EosUtils.setValueByPath(nodeData, 'owners', []);
-            EosUtils.setValueByPath(nodeData, 'cabinetAccess', []);
-            EosUtils.setValueByPath(nodeData, 'users', []);
-            EosUtils.setValueByPath(nodeData, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key })));
+            // fill cabinet related records with initial data
+            const departmentDue = parent.data.rec['DUE'];
+            EosUtils.setValueByPath(nodeData, 'rec.DUE', departmentDue);
+            EosUtils.setValueByPath(nodeData, 'department', parent.data.rec);
+            // EosUtils.setValueByPath(nodeData, 'cabinetAccess', []);
+            // EosUtils.setValueByPath(nodeData, 'users', []);
+            // EosUtils.setValueByPath(nodeData, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key })));
         }
 
         return nodeData;

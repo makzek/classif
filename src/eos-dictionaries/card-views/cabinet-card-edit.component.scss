@@ -1,4 +1,7 @@
 $access-first-col-width: 251px;
+.dropdown-menu.owners-menu {
+    z-index: 1060;
+}
 .cabinet-card-edit,
 eos-cabinet-card-edit {
     .action-btn,
@@ -13,6 +16,8 @@ eos-cabinet-card-edit {
         .folder-access-header {
             padding: 11px 20px 11px 0;
             line-height: 24px;
+            border-top: 1px solid $border-color-main-theme;
+            border-bottom: 1px solid $border-color-main-theme;
             unimportant-text {
                 position: relative;
                 top: 5px;
@@ -50,6 +55,12 @@ eos-cabinet-card-edit {
     }
     .eos-icon {
         vertical-align: sub;
+    }
+
+    .form-group {
+        label.checkbox {
+            text-transform: none;
+        }
     }
 }
 

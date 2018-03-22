@@ -8,7 +8,4 @@ import { BaseNodeInfoComponent } from './base-node-info';
 })
 export class CabinetNodeInfoComponent extends BaseNodeInfoComponent {
     update: boolean;
-    constructor() {
-        super();
-    }
 }

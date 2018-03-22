@@ -2,7 +2,20 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { CABINET, USER_CABINET, DEPARTMENT, USER_CL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';
-import { IRecordOperationResult } from '../interfaces';
+import { IRecordOperationResult, IDictionaryDescriptor } from '../interfaces';
+import { RecordDescriptor } from './record-descriptor';
+import { EosUtils } from 'eos-common/core/utils';
+import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
+
+export class CabinetRecordDescriptor extends RecordDescriptor {
+    getNewRecord(preSetData: any) {
+        const rec = super.getNewRecord(preSetData);
+        EosUtils.setValueByPath(rec, 'cabinetAccess', []);
+        EosUtils.setValueByPath(rec, 'users', []);
+        EosUtils.setValueByPath(rec, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key, USER_COUNT: 0 })));
+        return rec;
+    }
+}
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
@@ -127,5 +140,9 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                 this.prepareForEdit(owners);
                 return owners;
             });
+    }
+
+    protected _initRecord(data: IDictionaryDescriptor) {
+        this.record = new CabinetRecordDescriptor(this, data);
     }
 }

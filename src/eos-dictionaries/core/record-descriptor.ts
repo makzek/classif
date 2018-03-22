@@ -158,7 +158,13 @@ export class RecordDescriptor {
         const _descs = this.getFieldSet(aSet);
         if (_descs) {
             _descs.forEach((_f) => {
-                if (_f.type !== E_FIELD_TYPE.dictionary) {
+                if (E_FIELD_TYPE.dictionary === _f.type) {
+                    _description[_f.key] = {};
+                    /* recive other dict description */
+                    // this.dictSrv.getDictionaryField(_f.key);
+                } else if (E_FIELD_TYPE.array === _f.type) {
+                    _description[_f.key] = [];
+                } else {
                     _description._list.push(_f.key);
                     _description.rec[_f.key] = {
                         title: _f.title,
@@ -175,10 +181,6 @@ export class RecordDescriptor {
                         forNode: _f.forNode,
                         default: _f.default
                     };
-                } else {
-                    _description[_f.key] = {};
-                    /* recive other dict description */
-                    // this.dictSrv.getDictionaryField(_f.key);
                 }
             });
         }
@@ -193,6 +195,8 @@ export class RecordDescriptor {
         fields.forEach((fld) => {
             if (E_FIELD_TYPE.dictionary === fld.type) {
                 newRec[fld.key] = {};
+            } else if (E_FIELD_TYPE.array === fld.type) {
+                newRec[fld.key] = [];
             }
         });
         if (preSetData) {
