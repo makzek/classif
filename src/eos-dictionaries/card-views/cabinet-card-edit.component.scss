@@ -53,15 +53,6 @@ eos-cabinet-card-edit {
             }
         }
     }
-    .eos-icon {
-        vertical-align: sub;
-    }
-
-    .form-group {
-        label.checkbox {
-            text-transform: none;
-        }
-    }
 }
 
 .eos-cabinet-tab {
@@ -87,8 +78,7 @@ eos-cabinet-card-edit {
         tr {
             background-color: inherit;
             border-width: 1px 0;
-            height: 32px;
-            line-height: 20px;
+            line-height: 32px;
         }
         th,
         td,

@@ -4,7 +4,8 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
 import { DEPARTMENT } from 'eos-rest';
 import { IOrderBy } from '../interfaces';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
+// import { StringInput } from 'eos-common/core/inputs/string-input';
 // import { environment } from 'environments/environment';
 
 interface ICabinetOwner {
@@ -44,7 +45,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     @ViewChild('tableEl') tableEl;
 
-    private folderList: any[];
+    // private folderList: any[];
 
     /* tslint:disable:no-bitwise */
     get anyMarkedAccess(): boolean {
@@ -89,7 +90,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         CABINET_FOLDERS.forEach((folder) => {
             this.foldersMap.set(folder.key, folder);
         });
-        this.folderList = [];
+        // this.folderList = [];
     }
 
     ngOnChanges() {
@@ -99,9 +100,12 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     add(owner: ICabinetOwner) {
-        // todo: refactor
+        const ctrl = this.form.controls['owners[' + owner.index + '].ISN_CABINET'];
+        if (ctrl) {
+            ctrl.setValue(this.data.rec.ISN_CABINET);
+        }
+
         owner.data.ISN_CABINET = this.data.rec.ISN_CABINET;
-        this.formChanged.emit(this.data);
     }
 
     endScroll() {
@@ -136,11 +140,15 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     remove() {
         this.cabinetOwners.filter((owner) => owner.marked)
             .forEach((markedOwner) => {
+                const ctrl = this.form.controls['owners[' + markedOwner.index + '].ISN_CABINET'];
+                if (ctrl) {
+                    ctrl.setValue(null);
+                }
                 markedOwner.data['ISN_CABINET'] = null;
                 markedOwner.marked = false;
             });
         this.updateOwnersMarks();
-        this.formChanged.emit(this.data);
+        // this.formChanged.emit(this.data);
     }
 
     startScrollToLeft() {
@@ -188,17 +196,26 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         // console.log('data', data);
         this.cabinetOwners = [];
         this.dictSrv.getCabinetOwners(data.department.DUE).then((owners) => {
+            Object.keys(this.form.controls).forEach((key) => {
+                if (key.indexOf('owners') > -1) {
+                    this.form.removeControl(key);
+                }
+            });
             this.cabinetOwners = owners.map((owner, idx) => {
+                const path = 'owners[' + idx + '].ISN_CABINET';
+                this.form.addControl(path, new FormControl(owner['ISN_CABINET']));
+
                 return <ICabinetOwner>{
                     index: idx,
                     marked: false,
                     data: owner,
                 };
             });
+
             this.reorderCabinetOwners();
         });
 
-        this.folderList = data.rec.FOLDER_List;
+        // this.folderList = data.rec.FOLDER_List;
 
         this.cabinetFolders = data.rec.FOLDER_List
             .map((folder) => CABINET_FOLDERS.find((fConst) => fConst.key === folder.FOLDER_KIND));
