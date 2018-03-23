@@ -399,18 +399,18 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         span.style.fontSize = '16px';
         body[0].appendChild(span);
         const length = {};
-        // let fullWidth = 0;
+        let fullWidth = 0;
         this.viewFields.forEach((_f) => {
             span.innerText = _f.title;
             length[_f.key] = PADDING_SPACE + span.clientWidth;
-            // fullWidth += PADDING_SPACE + span.clientWidth;
+            fullWidth += PADDING_SPACE + span.clientWidth;
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
                 span.innerText = _f.title;
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
-                // fullWidth += PADDING_SPACE + span.clientWidth;
+                fullWidth += PADDING_SPACE + span.clientWidth;
             });
         }
         this.length = length;
