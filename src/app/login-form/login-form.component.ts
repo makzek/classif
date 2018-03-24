@@ -8,6 +8,7 @@ import { AUTH_REQUIRED } from '../consts/messages.consts';
     templateUrl: 'login-form.component.html'
 })
 export class LoginFormComponent {
+    inpType = 'password';
     userName: string;
     userPassword: string;
     lockUser: boolean;
@@ -48,5 +49,13 @@ export class LoginFormComponent {
 
     cancel() {
         this.logged.emit(false);
+    }
+
+    showPass() {
+        this.inpType = 'text';
+    }
+
+    hidePass() {
+        this.inpType = 'password';
     }
 }

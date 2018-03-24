@@ -1,6 +1,6 @@
-<div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth}">
+<div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth, 'login-fon': !isAuthorized}">
     <!-- DON'T USE class="container" with display: grid -->
-    <div class="header-wrapper usual-border">
+    <div class="header-wrapper usual-border" *ngIf="isAuthorized">
         <div class="menu">
             <div class="eos-title primary-text"><eos-title></eos-title></div>
             <ul class="header-content left">
