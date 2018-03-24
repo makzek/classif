@@ -51,7 +51,10 @@
         <div class="messages-wrapper">
             <eos-messages></eos-messages>
         </div>
-        <div class="text-right text-info version-number" *ngIf="version">Build: {{version}}</div>
+        <div class="navbar-fixed-bottom row-fluid selected-text text-center" *ngIf="version">
+                <span>ДЕЛО. Сборка: {{version}}. Все права защищены. ЭОС</span>
+            </div>
+        <!--<div class="text-right text-info version-number" *ngIf="version">Build: {{version}}</div>-->
     </div>
 </div>
 
