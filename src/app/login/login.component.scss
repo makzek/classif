@@ -9,14 +9,26 @@ $logo-width: 140px;
     width: $login-panel-width;
     margin: 0 calc(50% - 261px);
     .msg {
+        font-size: 0;
         height: 48px;
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
         margin-bottom: 32px;
         .msg-ico {
+            font-size: 24px;
+            line-height: $item-height;
+            color: $white;
             width: $item-width;
             height: $item-height;
             display: inline-block;
             background: $brand-warning;
+        }
+        .msg-text {
+            display: inline-block;
+            line-height: $item-width;
+            width: 474px;
+            padding: 0 20px;
+            font-size: 14px;
+            vertical-align: top;
         }
     }
     form {
