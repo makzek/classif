@@ -46,6 +46,7 @@ import { SecurityCardEditComponent } from './card-views/security-card-edit.compo
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
+import { DictionariesFastSearchComponent } from './dictionary-fast-search/dictionary-fast-search.component';
 import { MockBackendService } from '../environments/mock-backend.service';
 
 /* services */
@@ -80,6 +81,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         LongTitleHintComponent,
         SecurityCardEditComponent,
         CreateNodeComponent,
+        DictionariesFastSearchComponent,
     ],
     entryComponents: [
         ColumnSettingsComponent,

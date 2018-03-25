@@ -1,0 +1,72 @@
+.fast-srch {
+    position: relative;
+    display: table;
+    width: 100%;
+    height: $item-height;
+    background: $light-grey-1;
+    border-left: 1px $border-color-main-theme solid;
+    border-right: 1px $border-color-main-theme solid;
+    font-size: 0;
+    .item {
+        display: table-cell;
+        height: $item-height;
+        white-space: nowrap;
+        padding: 0 40px 0 0;
+        line-height: $item-height;
+        .quick {
+            label {
+            font-size: 14px;
+            color: $grey;
+            font-weight: normal;
+            }
+        }
+        .form-control {
+
+            font-size: 14px;
+            color: $black;
+            padding: 8px;
+            width: 100%;
+            border: 1px $active-field-color-main-theme solid;
+            height: $item-height;
+            border-radius: 0;
+
+        }
+        .clear-btn {
+            position: absolute;
+            top: 1px;
+            right: 9px;
+            height: 46px;
+            width: 48px;
+            border: 0;
+            background-color: transparent;
+            padding: 8px;
+            margin-right: -8px;
+            z-index: 1;
+        }
+    }
+    .input-item {
+        position: relative;
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .tringle {
+        position: absolute;
+        background: $active-field-color-main-theme;
+        transform: rotate(45deg);
+        width: 15px;
+        height: 15px;
+        top: -7px;
+        right: 14px;
+    }
+
+    .tringle-fon {
+        background: $white;
+        position: absolute;
+        transform: rotate(45deg);
+        width: 15px;
+        height: 15px;
+        top: -5px;
+        right: 14px;
+    }
+}
