@@ -1,9 +1,9 @@
 <div class="tabs-wrapper usual-border border-bottom">
     <ul class="tabs">
-        <li class="tab-item primary-text"
+        <li class="tab-item"
             *ngFor="let tab of fieldGroups; let i = index"
             role="presentation"
-            [ngClass]="{'active-border secondary-text': i === currTab}"
+            [ngClass]="{'active': i === currTab}"
             (click)="setTab(i)">
             <span class="tab-title">{{tab}}</span>
         </li>
@@ -237,8 +237,7 @@
         </div>
     </div>
 </div>
-<div [hidden]="currTab !== 2"
-    class="clearfix">
+<div [hidden]="currTab !== 2">
     <div class="xl-font paragraph-title">Склонение должности <a (click)="fillDeclineFields()"
         class="s-font pull-right"
         containerClass="tooltip-info"

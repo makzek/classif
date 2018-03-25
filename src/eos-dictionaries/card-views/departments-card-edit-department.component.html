@@ -19,7 +19,7 @@
                     [form]="form"
                     [readonly]="!editMode"></eos-dynamic-input>
             </div>
-            <div class="duty-flag">
+            <div class="duty-flag form-group">
                 <eos-dynamic-input *ngIf="inputs['printInfo.NOT_USE_IN_DUTY']"
                     [input]="inputs['printInfo.NOT_USE_IN_DUTY']"
                     [form]="form"
@@ -70,8 +70,7 @@
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
         <div class="form-group">
-            <label class="primary-text"
-                [ngClass]="{'unimportant-text': !editMode }"
+            <label [ngClass]="{'unimportant-text': !editMode }"
                 for="DUE_LINK_ORGANIZ">Организация <a
                 *ngIf="editMode && hasCard"
                 (click)="chooseOrganiz()">[выбрать]</a></label>
@@ -81,7 +80,7 @@
 </div>
 <div class="clearfix">
     <div class="col-1 pull-left">
-        <div class="card-flag">
+        <div class="form-group card-flag">
             <eos-dynamic-input *ngIf="inputs['rec.CARD_FLAG']"
                 [input]="inputs['rec.CARD_FLAG']"
                 [form]="form"

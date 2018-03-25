@@ -134,22 +134,26 @@ input[type=text]::-ms-clear {
     display: flex;
     justify-content: space-around;
     margin: 0 $grid-gutter-width / -2;
+    background-color: $light-grey-1;
 }
 
 .tabs {
     display: inline-block;
+    color: $grey;
     padding: 0;
     margin: 0;
     .tab-item {
         display: inline-block;
-        border-bottom-width: 6px;
-        border-bottom-style: solid;
-        border-bottom-color: transparent;
+        border-bottom: 6px solid transparent;
         padding: 12px 0 5px;
         position: relative;
         cursor: pointer;
         height: $item-height;
         margin-right: 40px;
+        &.active {
+            border-bottom-color: $button-color-main-theme;
+            color: $black;
+        }
     }
     .tab-item:last-child {
         margin: 0;
@@ -158,9 +162,10 @@ input[type=text]::-ms-clear {
 
 .btn {
     border-radius: 2px !important;
-    height: 32px;
+    font-size: 12px;
+    line-height: 1;
+    padding: 9px 4px;
 }
-
 .btn-primary,
 .btn-primary-full {
     border-style: solid;

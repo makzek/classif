@@ -31,6 +31,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         key: 'FULLNAME',
         type: 'text',
         title: 'Полное наименование',
+        height: 50,
         length: 2000,
     }, {
         key: 'DEPARTMENT_NAME',

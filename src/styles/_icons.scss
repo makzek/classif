@@ -770,6 +770,10 @@
         background-image: url("../assets/icons/Show-Dark-Blue.svg");
     }
 
+    &.eos-icon-show-blue {
+        background-image: url("../assets/icons/Show-Blue.svg");
+    }
+
     &.eos-icon-show-grey {
         background-image: url("../assets/icons/Show-Grey.svg");
     }
@@ -804,5 +808,13 @@
 
     &.eos-icon-work-black {
         background-image: url("../assets/icons/Work-Black.svg");
+    }
+
+    &.deal-logo-round {
+        background-image: url("../assets/icons/Deal-Logo-Round-140х140.svg")
+    }
+
+    &.deal-logo-square {
+        background-image: url("../assets/icons/Deal-Logo-Square-48х48.svg")
     }
 }

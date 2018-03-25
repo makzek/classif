@@ -6,21 +6,25 @@
                 <button *ngIf="node && !editMode"
                     [disabled]="disManager(true, tt1)"
                     #tt1="bs-tooltip"
-                    class="eos-icon eos-icon-arrow-v-blue-left btn btn-primary-light"
+                    class="btn btn-primary-light"
                     aria-hidden="true"
                     (click)="prev()"
                     tooltip="Предыдущая"
                     placement="bottom"
-                    containerClass="tooltip-info"></button>
+                    containerClass="tooltip-info">
+                    <span class="eos-icon eos-icon-arrow-v-blue-left small"></span>
+                </button>
                 <button *ngIf="node && !editMode"
                     [disabled]="disManager(false, tt2)"
                     #tt2="bs-tooltip"
-                    class="eos-icon eos-icon-arrow-v-blue-right btn btn-primary-light"
+                    class="btn btn-primary-light"
                     aria-hidden="true"
                     (click)="next()"
                     tooltip="Следующая"
                     placement="bottom"
-                    containerClass="tooltip-info"></button>
+                    containerClass="tooltip-info">
+                    <span class="eos-icon eos-icon-arrow-v-blue-right small"></span>
+                </button>
             </div>
         </div>
         <div class="name-wrapper"
