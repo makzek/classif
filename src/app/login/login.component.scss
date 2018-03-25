@@ -1,6 +1,10 @@
 $login-panel-width: 522px;
 $logo-width: 140px;
 
+.navbar-fixed-bottom {
+    margin-bottom: 20px;
+}
+
 .login-fon {
     background: $white !important;
 }
