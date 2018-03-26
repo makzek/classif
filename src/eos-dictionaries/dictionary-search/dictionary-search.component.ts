@@ -19,6 +19,7 @@ const SEARCH_MODEL = {
 })
 export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
+    @Output() switchFastSrch: EventEmitter<boolean> = new EventEmitter();
 
     dictId = '';
     fieldsDescription = {
@@ -149,6 +150,11 @@ export class DictionarySearchComponent implements OnDestroy {
             this.date = date;
             this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
         }
+    }
+
+    showFastSrch() {
+        this.isOpenQuick = !this.isOpenQuick;
+        this.switchFastSrch.emit(this.isOpenQuick);
     }
 
     public considerDel() {

@@ -87,7 +87,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictMode = 1;
 
     searchStartFlag = false; // flag begin search
-    fastSearch = true;
+    fastSearch = false;
 
     tableWidth: number;
     hasCustomTable: boolean;
@@ -324,8 +324,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.markItem(this.allMarked);
     }
 
-    switchFastSearch() {
-        this.fastSearch = !this.fastSearch;
+    switchFastSearch(val: boolean) {
+        this.fastSearch = val;
     }
 
     /**
