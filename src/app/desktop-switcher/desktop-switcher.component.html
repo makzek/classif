@@ -118,8 +118,8 @@
         <ng-container *ngIf="deskList.length < 6">
             <li class="menuitem"
                 (click)="openCreateForm()">
-                <span *ngIf="!creating"
-                    class="create primary-text">Создать рабочий стол</span>
+                <a *ngIf="!creating"
+                    class="dropdown-item f-14">Создать рабочий стол</a>
                 <ng-container *ngIf="creating">
                     <div class="input-group">
                             <input type="text"
