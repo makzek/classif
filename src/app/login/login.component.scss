@@ -47,6 +47,7 @@ $logo-width: 140px;
 
             .logo-img {
                 border-radius: $logo-width;
+                background-image: url("../assets/images/Deal-Logo-Round-140х140.svg");
                 display: inline-block;
                 width: $logo-width;
                 height: $logo-width;
@@ -60,7 +61,7 @@ $logo-width: 140px;
                 margin-left: 20px;
                 color: $white;
                 line-height: $logo-width;
-                font-size: 67px;
+                font-size: 63px;
                 font-family: Roboto;
                 font-style: italic;
                 font-weight: bold;
@@ -84,8 +85,13 @@ $logo-width: 140px;
                     border-color: $invalid-color-main-theme;
                     border-width: 2px;
                 }
+                background: $light-grey-1;
+                border-color: $border-color-main-theme;
                 border-radius: 0;
                 padding: 8px;
+            }
+            .form-control:focus {
+                border-color: $active-field-color-main-theme;
             }
             .eye {
                 top: 30px;
