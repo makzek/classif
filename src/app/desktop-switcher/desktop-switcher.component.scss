@@ -3,6 +3,7 @@
     margin: 0;
     width: 160px;
     height: 100%;
+
     .dropdown-button {
         width: 160px;
         height: 100%;
@@ -27,6 +28,13 @@
         }
     }
 
+    .dropdown-menu {
+        width: 336px;
+        .menuitem {
+            padding-left: 20px;
+        }
+    }
+
     .form-control {
         height: 32px;
     }
@@ -35,58 +43,6 @@
         padding-bottom: 5px;
     }
 
-    .dropdown-menu {
-        width: 346px;
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
-        .menuitem {
-            padding-left: 20px;
-            cursor: pointer;
-            height: $item-height;
-            line-height: $item-height;
-            a {
-                line-height: 48px;
-                text-decoration: none;
-            }
-        }
-        .menuitem:hover .check {
-            display: none;
-        }
-
-        .menuitem:hover .act-ico {
-            display: block;
-        }
-
-        .divider {
-            margin: 0;
-        }
-        li {
-            border: 1px solid #e6e6e6;
-            border-bottom: transparent;
-            cursor: pointer;
-            .spinner-wrapper {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                top: 0;
-                background-color: #fff;
-                opacity: 0.6;
-                z-index: 1050;
-            }
-            .spinner-holder {
-                position: absolute;
-                bottom: 0;
-                top: 0;
-                width: 100%;
-                height: 2em;
-                margin: auto;
-                text-align: center;
-            }
-        }
-    }
     .desktop-wrapper {
         width: 218px;
         overflow: hidden;

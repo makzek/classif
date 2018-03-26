@@ -18,8 +18,8 @@
                             <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info>
                         </span>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li *ngFor="let item of modulesDropdown" class="else-item xl-font">
-                                <a [routerLink]="item.url" class="primary-text" routerLinkActive="active">
+                            <li *ngFor="let item of modulesDropdown" class="menuitem else-item xl-font">
+                                <a [routerLink]="item.url" class="dropdown-item primary" routerLinkActive="active">
                                     <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
                                 </a>
                             </li>

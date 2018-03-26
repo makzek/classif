@@ -12,9 +12,13 @@
         height: $item-height;
         width: $item-width;
     }
-    .dropdown-menu .btn {
-        width: 100%;
-        text-align: left;
+
+    .actions {
+        .menuitem {
+            .dropdown-item {
+                font-size: 14px;
+            }
+        }
     }
 
     .fa {
@@ -46,7 +50,8 @@
 .create-new-node {
     padding: 0;
 }
+
 .menu-two-lvl {
     position: absolute;
-    top: -32px;
+    top: -25px;
 }

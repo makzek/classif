@@ -30,6 +30,23 @@
             [ngClass]="{'highlighted': desk.name === selectedDesk.name}"
             (click)="route(desk)">
             <ng-container *ngIf="!desk.edited">
+                <a class="dropdown-item f-14"
+                    [hidden]="desk.edited"
+                    tooltip="{{desk.name}}"
+                    placement="bottom"
+                    containerClass="tooltip-info">
+                    <span>{{desk.name}}</span>
+                    <div class="drop-ico">
+                        <span class="eos-icon eos-icon-edit-blue small"></span>
+                    </div>
+                    <div class="drop-ico">
+                        <span class="eos-icon eos-icon-close-blue small"></span>
+                    </div>
+                    <div class="drop-ico">
+                        <span class="eos-icon eos-icon-checkbox-blue small"></span>
+                    </div>
+                </a>
+                <!--
                 <div [hidden]="desk.edited"
                     class="desktop-wrapper"
                     tooltip="{{desk.name}}"
@@ -38,7 +55,8 @@
                     <a class="dropdown-item">
                         <span triggers="hover">{{desk.name}}</span>
                     </a>
-                </div>
+                </div>-->
+                <!--
                 <div class="actions">
                     <div *ngIf="desk.id !== 'system'"
                         tooltip="Редактировать"
@@ -62,7 +80,7 @@
                         [ngClass]="desk.name !== 'system' ? 'check' : 'act-ico'">
                         <span class="eos-icon eos-icon-checkbox-blue small"></span>
                     </div>
-                </div>
+                </div>-->
             </ng-container>
             <ng-container *ngIf="desk.edited">
                 <div class="input-group">
