@@ -284,7 +284,7 @@ export class EosDictionary {
         const nodeSet = this._getMarkedRecords(false);
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive)
+        return this.descriptor.markDeleted(nodeSet, +deleted, recursive)
             .then(() => {
                 // update nodes to reduce server req
                 const marked = this.getMarkedNodes(deleted || recursive);
@@ -293,7 +293,7 @@ export class EosDictionary {
                         node.data.rec.DELETED = (+deleted);
                     });
                 }
-                this._resetMarked();
+                return this._resetMarked();
             });
     }
 

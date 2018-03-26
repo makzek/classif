@@ -565,7 +565,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _restoreItems(): void {
         const marked = this.visibleNodes.filter((node) => node.marked);
-        const withChildren: string[] = [];
+        const childrenTitles: string[] = [];
+        let p: Promise<any>;
 
         marked.forEach((node) => {
             if (node.parent && node.parent.isDeleted) {
@@ -573,24 +574,25 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 node.marked = false;
             } else {
                 if (node.children && node.children.length) {
-                    withChildren.push(node.title);
+                    childrenTitles.push(node.title);
                 }
             }
         });
 
-        if (withChildren.length) {
+        if (childrenTitles.length) {
             const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+            _confrm.body = _confrm.body.replace('{{name}}', childrenTitles.join(', '));
 
-            this._confirmSrv
+            p = this._confirmSrv
                 .confirm(_confrm)
                 .then((confirmed: boolean) => this._dictSrv.markDeleted(confirmed, false));
         } else {
-            this._dictSrv.markDeleted(false, false);
+            p = this._dictSrv.markDeleted(false, false);
         }
-
-        this.anyMarked = false;
-        this.allMarked = false;
+        p.then(() => {
+            this.anyMarked = false;
+            this.allMarked = false;
+        });
     }
 
     private _errHandler(err) {
