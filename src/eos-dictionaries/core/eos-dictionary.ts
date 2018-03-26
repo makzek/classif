@@ -282,10 +282,19 @@ export class EosDictionary {
      */
     markDeleted(recursive = false, deleted = true): Promise<any> {
         const nodeSet = this._getMarkedRecords(false);
-        this._resetMarked();
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive);
+        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive)
+            .then(() => {
+                // update nodes to reduce server req
+                const marked = this.getMarkedNodes(deleted || recursive);
+                if (marked) {
+                    marked.forEach((node) => {
+                        node.data.rec.DELETED = (+deleted);
+                    });
+                }
+                this._resetMarked();
+            });
     }
 
     getAllChildren(node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
@@ -499,6 +508,19 @@ export class EosDictionary {
             }
         });
         return records;
+    }
+
+    private getMarkedNodes(recursive = false): EosDictionaryNode[] {
+        const nodes: EosDictionaryNode[] = [];
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+                nodes.push(node);
+                if (recursive) {
+                    node.getAllChildren().forEach((chld) => nodes.push(chld));
+                }
+            }
+        });
+        return nodes;
     }
 
     private _resetMarked() {

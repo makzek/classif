@@ -70,13 +70,15 @@ export const SESSION_CLOSED: IMessage = {
     type: 'success',
     title: 'Сессия завершена',
     msg: '',
-    dismissOnTimeout: 3000
+    dismissOnTimeout: 3000,
+    authMsg: true
 };
 
 export const AUTH_REQUIRED: IMessage = {
     type: 'danger',
     title: 'Ошибка авторизации',
-    msg: ''
+    msg: '',
+    authMsg: true
 };
 
 export const NAVIGATE_TO_ELEMENT_WARN: IMessage = {

@@ -16,11 +16,11 @@
         </button>
     </div>
 
-    <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показывать еще</button>
+    <button class="btn show-more selected-text" [disabled]="config?.current*config?.length >= config?.itemsQty" (click)="showMore()">Показать еще</button>
 
     <div dropdown placement="top right" #dd="bs-dropdown" dropup="true" class="show-by">
         <button type="button" dropdownToggle class="drop-btn btn btn-transparent selected-text" style="height: 48px; width: 336px;">
-            <div class="text">Показывать по {{config?.length}}</div>
+            <span>Показывать по {{config?.length}}</span>
             <div class="arrow">
                 <span class="icon-btn eos-icon small"
                     [ngClass]="{'eos-icon-arrow-v-blue-top': !dd.isOpen, 'eos-icon-arrow-v-blue-bottom': dd.isOpen}"></span>
