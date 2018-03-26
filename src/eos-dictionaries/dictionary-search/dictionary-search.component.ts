@@ -120,26 +120,6 @@ export class DictionarySearchComponent implements OnDestroy {
         this.dictSubscription.unsubscribe();
     }
 
-    quickSearch(evt: KeyboardEvent) {
-        if (evt.keyCode === 13) {
-            if (this.searchDone) {
-                this.dataQuick = (this.dataQuick) ? this.dataQuick.trim() : '';
-                if (this.dataQuick !== '') {
-                    this.searchDone = false;
-                    this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
-                    this._dictSrv.search(this.dataQuick, this.settings)
-                        .then(() => this.searchDone = true);
-                }
-            } else {
-                this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
-            }
-        }
-    }
-
-    clearQuickForm() {
-        this.dataQuick = '';
-    }
-
     fullSearch() {
         this.settings.mode = this.mode;
         this.fSearchPop.hide();

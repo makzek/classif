@@ -87,6 +87,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     dictMode = 1;
 
     searchStartFlag = false; // flag begin search
+    fastSearch = true;
 
     tableWidth: number;
     hasCustomTable: boolean;
@@ -321,6 +322,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
         this._dictSrv.markItem(this.allMarked);
+    }
+
+    switchFastSearch() {
+        this.fastSearch = !this.fastSearch;
     }
 
     /**
