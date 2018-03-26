@@ -84,8 +84,13 @@ $logo-width: 140px;
                     border-color: $invalid-color-main-theme;
                     border-width: 2px;
                 }
+                background: $light-grey-1;
+                border-color: $border-color-main-theme;
                 border-radius: 0;
                 padding: 8px;
+            }
+            .form-control:focus {
+                border-color: $active-field-color-main-theme;
             }
             .eye {
                 top: 30px;
