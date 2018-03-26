@@ -12,7 +12,7 @@
         height: $item-height;
         white-space: nowrap;
         padding: 0 40px 0 0;
-        line-height: $item-height;
+        vertical-align: middle;
         .quick {
             label {
             font-size: 14px;
@@ -21,13 +21,12 @@
             }
         }
         .form-control {
-
             font-size: 14px;
             color: $black;
             padding: 8px;
             width: 100%;
             border: 1px $active-field-color-main-theme solid;
-            height: $item-height;
+            height: $item-height - 3px;
             border-radius: 0;
 
         }
@@ -35,11 +34,11 @@
             position: absolute;
             top: 1px;
             right: 9px;
-            height: 46px;
-            width: 48px;
+            height: $item-height - 5px;
+            width: $item-width;
             border: 0;
             background-color: transparent;
-            padding: 8px;
+            padding: 6px 8px;
             margin-right: -8px;
             z-index: 1;
         }
@@ -48,6 +47,7 @@
         position: relative;
         width: 100%;
         padding-right: 0;
+        vertical-align: top;
     }
 
     .tringle {
@@ -57,7 +57,7 @@
         width: 15px;
         height: 15px;
         top: -7px;
-        right: 14px;
+        right: 15px;
     }
 
     .tringle-fon {
@@ -67,6 +67,6 @@
         width: 15px;
         height: 15px;
         top: -5px;
-        right: 14px;
+        right: 15px;
     }
 }
