@@ -62,8 +62,8 @@
     .contact-wrapper {
         display: -ms-grid;
         display: grid;
-        -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        -ms-grid-columns: 140px 220px 220px 180px;
+        grid-template-columns: 140px 220px 220px 180px;
         .cab,
         .phone,
         .phone-local,
@@ -124,13 +124,18 @@
     }
     .declination-wrapper {
         margin-top: 0;
+        .family {
+            flex: 1 1 303px;
+        }
+        .name {
+            width: 180px;
+        }
         eos-dynamic-input {
             display: block;
-            width: 30%;
-            margin-right: 40px;
+            /* margin-right: 40px; */
         }
-        eos-dynamic-input:last-child {
-            margin-right: 0;
+        eos-dynamic-input+eos-dynamic-input {
+            margin-left: 40px;
         }
     }
 }
