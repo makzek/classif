@@ -55,8 +55,11 @@
                     <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
-                    <eos-dictionary-search></eos-dictionary-search>
+                    <eos-dictionary-search (switchFastSrch)="switchFastSearch($event)"></eos-dictionary-search>
                 </div>
+            </div>
+            <div class="fast-srch" *ngIf="fastSearch">
+                <eos-dictionary-fast-search></eos-dictionary-fast-search>
             </div>
         </div>
         <div class="table-wrapper usual-border">
