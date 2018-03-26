@@ -1,13 +1,10 @@
 import { Component, Output, Input, EventEmitter, ViewChild, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
+import { Subscription } from 'rxjs/Subscription';
 import { EosUtils } from 'eos-common/core/utils';
-// import { EosDictService } from '../services/eos-dict.service';
 import { InputControlService } from 'eos-common/services/input-control.service';
 import { EosDataConvertService } from '../services/eos-data-convert.service';
-// import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
     selector: 'eos-card-edit',
@@ -30,21 +27,70 @@ export class CardEditComponent implements OnChanges, OnDestroy {
     newData: any = {};
 
     private _currentFormStatus;
-    private ngUnsubscribe: Subject<any> = new Subject();
+    private subscriptions: Subscription[];
 
     constructor(
         private _dataSrv: EosDataConvertService,
-        // private dictSrv: EosDictService,
         private _inputCtrlSrv: InputControlService
     ) {
-        // console.log(this.dictSrv.currentDictionary);
+        this.subscriptions = [];
     }
+    /**
+     * return new data, used by parent component
+     */
+    getNewData(): any {
+        return this.newData;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if ((changes.fieldsDescription || changes.data) && this.fieldsDescription && this.data) {
+            this.unsubscribe();
+            const inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
+            const isNode = this.data.rec && this.data.rec.IS_NODE;
+            this.form = this._inputCtrlSrv.toFormGroup(inputs, isNode);
+            this.inputs = inputs;
+            this.subscriptions.push(this.form.valueChanges
+                .subscribe((newVal) => {
+                    let changed = false;
+                    Object.keys(newVal).forEach((path) => {
+                        if (this.changeByPath(path, newVal[path])) {
+                            changed = true;
+                        }
+                    });
+                    this.formChanged.emit(changed);
+                }));
+
+            this.subscriptions.push(this.form.statusChanges
+                .subscribe((status) => {
+                    if (this._currentFormStatus !== status) {
+                        this.formInvalid.emit(status === 'INVALID');
+                    }
+                    this._currentFormStatus = status;
+                }));
+        }
+    }
+
+    /**
+     * unsubscribe on destroy
+     */
+    ngOnDestroy() {
+        this.unsubscribe();
+    }
+
+    recordChanged(data: any) {
+        this.formChanged.emit(data);
+    }
+
+    recordInvalid(data: any) {
+        this.formInvalid.emit(data);
+    }
+
     /**
      * Updates value in record data
      * @param path - path in data to property
      * @param value - new value
      */
-    changeByPath(path: string, value: any) {
+    private changeByPath(path: string, value: any) {
         let _value = null;
         if (typeof value === 'boolean') {
             _value = +value;
@@ -58,62 +104,20 @@ export class CardEditComponent implements OnChanges, OnDestroy {
             _value = value;
         }
         this.newData = EosUtils.setValueByPath(this.newData, path, _value);
-        const oldValue = EosUtils.getValueByPath(this.data, path);
+        const oldValue = EosUtils.getValueByPath(this.data, path, false);
+
         if (oldValue !== _value) {
-            console.warn('changed', path, oldValue, 'to', _value);
+            // console.warn('changed', path, oldValue, 'to', _value, this.data.rec);
         }
         return _value !== oldValue;
     }
 
-    /**
-     * return new data, used by parent component
-     */
-    getNewData(): any {
-        return this.newData;
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if ((changes.fieldsDescription || changes.data) && this.fieldsDescription && this.data) {
-            const inputs = this._dataSrv.getInputs(this.fieldsDescription, this.data, this.editMode);
-            const isNode = this.data.rec && this.data.rec.IS_NODE;
-            this.form = this._inputCtrlSrv.toFormGroup(inputs, isNode);
-            this.inputs = inputs;
-            this.form.valueChanges
-                .takeUntil(this.ngUnsubscribe)
-                .subscribe((newVal) => {
-                    let changed = false;
-                    Object.keys(newVal).forEach((path) => {
-                        if (this.changeByPath(path, newVal[path])) {
-                            changed = true;
-                        }
-                    });
-                    this.formChanged.emit(changed);
-                });
-
-            this.form.statusChanges
-                .takeUntil(this.ngUnsubscribe)
-                .subscribe((status) => {
-                    if (this._currentFormStatus !== status) {
-                        this.formInvalid.emit(status === 'INVALID');
-                    }
-                    this._currentFormStatus = status;
-                });
-        }
-    }
-
-    /**
-     * unsubscribe on destroy
-     */
-    ngOnDestroy() {
-        this.ngUnsubscribe.next();
-        this.ngUnsubscribe.complete();
-    }
-
-    recordChanged(data: any) {
-        this.formChanged.emit(data);
-    }
-
-    recordInvalid(data: any) {
-        this.formInvalid.emit(data);
+    private unsubscribe() {
+        this.subscriptions.forEach((subscr) => {
+            if (subscr) {
+                subscr.unsubscribe();
+            }
+        });
+        this.subscriptions = [];
     }
 }

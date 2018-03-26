@@ -5,8 +5,6 @@ import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.co
 import { DEPARTMENT } from 'eos-rest';
 import { IOrderBy } from '../interfaces';
 import { AbstractControl, FormControl } from '@angular/forms';
-// import { StringInput } from 'eos-common/core/inputs/string-input';
-// import { environment } from 'environments/environment';
 
 interface ICabinetOwner {
     index: number;
@@ -100,11 +98,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
     }
 
     add(owner: ICabinetOwner) {
-        const ctrl = this.form.controls['owners[' + owner.index + '].ISN_CABINET'];
-        if (ctrl) {
-            ctrl.setValue(this.data.rec.ISN_CABINET);
-        }
-
+        this.setValue(this.getOwnerPath(owner.index), this.data.rec.ISN_CABINET);
         owner.data.ISN_CABINET = this.data.rec.ISN_CABINET;
     }
 
@@ -139,13 +133,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     remove() {
         this.cabinetOwners.filter((owner) => owner.marked)
-            .forEach((markedOwner) => {
-                const ctrl = this.form.controls['owners[' + markedOwner.index + '].ISN_CABINET'];
-                if (ctrl) {
-                    ctrl.setValue(null);
-                }
-                markedOwner.data['ISN_CABINET'] = null;
-                markedOwner.marked = false;
+            .forEach((owner) => {
+                this.setValue(this.getOwnerPath(owner.index), null);
+                owner.data['ISN_CABINET'] = null;
+                owner.marked = false;
             });
         this.updateOwnersMarks();
         // this.formChanged.emit(this.data);
@@ -190,6 +181,10 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         this.cabinetOwners.forEach((_person) => {
             _person.marked = this.allMarkedOwners && _person.data['ISN_CABINET'] === this.data.rec['ISN_CABINET'];
         });
+    }
+
+    private getOwnerPath(index: number) {
+        return 'owners[' + index + '].ISN_CABINET';
     }
 
     private init(data: any) {
@@ -241,11 +236,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             });
             return cUser;
         });
-        /*
-        if (!environment.production) { // for testing table horizontal scroll
-            this.cabinetUsers = this.cabinetUsers.concat(this.cabinetUsers, this.cabinetUsers);
-        }
-        */
+
         this.updateAccessMarks();
         this.updateOwnersMarks();
         this.updateScroller();
