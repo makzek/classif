@@ -128,7 +128,8 @@
     }
 }
 
-.tooltip-info, .tooltip-error {
+.tooltip-info,
+.tooltip-error {
     .tooltip-inner {
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $active-field-color-main-theme;
@@ -144,7 +145,6 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.top .tooltip-inner::before {
         content: '';
         display: block;
@@ -156,7 +156,6 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.left .tooltip-inner::before {
         content: '';
         display: block;
@@ -168,7 +167,6 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.right .tooltip-inner::before {
         content: '';
         display: block;
@@ -180,21 +178,18 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.right .tooltip-arrow {
         top: calc(50% - 4.5px) !important;
         left: -13px;
         border-right-color: $active-field-color-main-theme;
         border-width: 9px 9px 9px;
     }
-
     &.tooltip.left .tooltip-arrow {
         top: calc(50% - 4.5px) !important;
         right: -13px;
         border-left-color: $active-field-color-main-theme;
         border-width: 9px 9px 9px;
     }
-
     &.tooltip.top .tooltip-arrow {
         bottom: -4px;
         left: 50% !important;
@@ -202,7 +197,6 @@
         border-top-color: $active-field-color-main-theme;
         border-width: 9px 9px 0;
     }
-
     &.tooltip.bottom .tooltip-arrow {
         top: -4px;
         left: 50% !important;
@@ -228,9 +222,7 @@
         left: calc(50% - 7px);
         transform: rotate(45deg);
         background: $primary-color-main-theme;
-
     }
-
     &.tooltip.top .tooltip-inner::before {
         content: '';
         display: block;
@@ -242,7 +234,6 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.left .tooltip-inner::before {
         content: '';
         display: block;
@@ -254,7 +245,6 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.right .tooltip-inner::before {
         content: '';
         display: block;
@@ -266,21 +256,18 @@
         transform: rotate(45deg);
         background: $primary-color-main-theme;
     }
-
     &.tooltip.right .tooltip-arrow {
         top: calc(50% - 4.5px) !important;
         left: -13px;
         border-right-color: $invalid-color-main-theme;
         border-width: 9px 9px 9px;
     }
-
     &.tooltip.left .tooltip-arrow {
         top: calc(50% - 4.5px) !important;
         right: -13px;
         border-left-color: $invalid-color-main-theme;
         border-width: 9px 9px 9px;
     }
-
     &.tooltip.top .tooltip-arrow {
         bottom: -4px;
         left: 50% !important;
@@ -288,7 +275,6 @@
         border-top-color: $invalid-color-main-theme;
         border-width: 9px 9px 0;
     }
-
     &.tooltip.bottom .tooltip-arrow {
         top: -4px;
         left: 50% !important;
@@ -311,7 +297,6 @@
     .selected-text {
         color: $button-color-main-theme;
     }
-
     .secondary-text {
         color: $secondary-font-color-main-theme;
     }
@@ -356,18 +341,41 @@
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .3);
     border: 1px $border-color-main-theme solid;
     .menuitem {
+        line-height: $item-height;
+        .input-group {
+            height: $item-height;
+            padding-left: 12px;
+            border-bottom: 1px $border-color-main-theme solid;
+            .form-control {
+                background: $border-color-main-theme;
+                height: 32px;
+                margin-top: 8px;
+                border-radius: 0;
+                padding: 8px;
+            }
+            .input-group-btn {
+                .btn {
+                    padding: 6px 6px;
+                }
+            }
+        }
         .dropdown-item {
             font-size: 0;
             padding: 0;
             border-bottom: 1px $border-color-main-theme solid;
-            line-height: $item-height;
             text-decoration: none;
+            line-height: 48px;
             height: $item-height;
+        }
+        .ico-wrapper {
+            display: flex;
         }
         .dropdown-item :last-child {
             border-bottom: none;
-        }
-
+        }/*
+        .dropdown-item:hover .drop-ico {
+            display: inline-block;
+        }*/
         .drop-ico {
             display: inline-block;
             width: $item-width;
@@ -376,27 +384,21 @@
                 vertical-align: middle;
             }
         }
-
         .primary {
             color: $grey;
         }
-
         .selected {
             color: $button-color-main-theme;
         }
-
         .f-14 {
             font-size: 14px;
         }
-
         .f-16 {
             font-size: 16px;
         }
-
         .f-18 {
             font-size: 18px;
         }
-
         .have-padding {
             padding: 0 20px;
         }

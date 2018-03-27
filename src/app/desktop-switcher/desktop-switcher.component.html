@@ -27,24 +27,35 @@
         <li *ngFor="let desk of deskList"
             role="menuitem"
             class="menuitem"
-            [ngClass]="{'highlighted': desk.name === selectedDesk.name}"
             (click)="route(desk)">
             <ng-container *ngIf="!desk.edited">
                 <a class="dropdown-item f-14"
                     [hidden]="desk.edited"
-                    tooltip="{{desk.name}}"
-                    placement="bottom"
-                    containerClass="tooltip-info">
-                    <span>{{desk.name}}</span>
-                    <div class="drop-ico">
-                        <span class="eos-icon eos-icon-edit-blue small"></span>
-                    </div>
-                    <div class="drop-ico">
-                        <span class="eos-icon eos-icon-close-blue small"></span>
-                    </div>
-                    <div class="drop-ico">
-                        <span class="eos-icon eos-icon-checkbox-blue small"></span>
-                    </div>
+                    [ngClass]="{'highlighted': desk.name === selectedDesk.name}">
+                    <span tooltip="{{desk.name}}"
+                        placement="bottom"
+                        containerClass="tooltip-info"
+                        class="item-title">{{desk.name}}</span>
+                        <div class="drop-ico"
+                            *ngIf="desk.id !== 'system'"
+                            (click)="openEditForm($event, desk)"
+                            tooltip="Редактировать"
+                            placement="bottom"
+                            containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-edit-blue small"></span>
+                        </div>
+                        <div class="drop-ico"
+                            *ngIf="desk.id !== 'system'"
+                            (click)="removeDesk(desk,$event)"
+                            tooltip="Удалить"
+                            placement="bottom"
+                            containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-close-blue small"></span>
+                        </div>
+                        <div class="drop-ico"
+                            *ngIf="desk.name === selectedDesk.name">
+                            <span class="eos-icon eos-icon-checkbox-blue small"></span>
+                        </div>
                 </a>
                 <!--
                 <div [hidden]="desk.edited"
@@ -122,16 +133,16 @@
                     class="dropdown-item f-14">Создать рабочий стол</a>
                 <ng-container *ngIf="creating">
                     <div class="input-group">
-                            <input type="text"
-                                class="form-control light input-wr"
-                                id="createForm"
-                                name="createForm"
-                                #createForm
-                                placeholder="Название нового рабочего стола"
-                                [(ngModel)]="deskName"
-                                maxlength="{{maxLength}}"
-                                required
-                                [pattern]="notEmptyString.source" />
+                        <input type="text"
+                            class="form-control light input-wr"
+                            id="createForm"
+                            name="createForm"
+                            #createForm
+                            placeholder="Название нового рабочего стола"
+                            [(ngModel)]="deskName"
+                            maxlength="{{maxLength}}"
+                            required
+                            [pattern]="notEmptyString.source" />
                         <div class="input-group-btn">
                             <button class="btn btn-default"
                                 (click)="create($event)"

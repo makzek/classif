@@ -29,18 +29,18 @@
     }
 
     .dropdown-menu {
-        width: 336px;
+        width: 380px;
         .menuitem {
-            padding-left: 20px;
+            .dropdown-item {
+                padding-left: 20px;
+                .item-title {
+                    white-space: normal;
+                }
+                .drop-ico {
+                    float: right;
+                }
+            }
         }
-    }
-
-    .form-control {
-        height: 32px;
-    }
-
-    .btn-default {
-        padding-bottom: 5px;
     }
 
     .desktop-wrapper {
@@ -49,18 +49,6 @@
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-
-    .check {
-        display: block;
-    }
-
-    .act-ico {
-        display: none;
-    }
-
-    .not-hide {
-        display: block !important;
     }
 
     .actions {
@@ -75,10 +63,6 @@
             vertical-align: top;
             margin-top: $item-height / 4;
         }
-    }
-
-    .input-wr {
-        margin-top: 8px;
     }
 
     .create {
