@@ -1,7 +1,6 @@
 .eos-tree-node {
     .node {
         cursor: pointer;
-        width: $dictionary-block-width;
         padding: $item-width / 6 0;
         line-height: 22px;
         .fake-padding,
@@ -33,6 +32,22 @@
         }
         .deleted {
             color: $disabled-color-main-theme;
+        }
+    }
+}
+
+@media(max-width: 1599px) {
+    .eos-tree-node {
+        .node {
+            width: $dictionary-block-width;
+        }
+    }
+}
+
+@media(min-width: 1600px) {
+    .eos-tree-node {
+        .node {
+            width: $dictionary-block-width-big-display;
         }
     }
 }
