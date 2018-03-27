@@ -291,6 +291,7 @@ export class EosDictionary {
                 if (marked) {
                     marked.forEach((node) => {
                         node.data.rec.DELETED = (+deleted);
+                        node.data.rec._orig.DELETED = (+deleted); // force DELETED flag, because reload may doesn't referesh it
                     });
                 }
                 return this._resetMarked();
