@@ -13,18 +13,19 @@ export class SandwichComponent {
 
     show = false;
 
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
+    }
+
     constructor(
-        _route: ActivatedRoute,
         _router: Router,
         private _sandwichSrv: EosSandwichService,
+        private _route: ActivatedRoute,
     ) {
+        this.update();
         _router.events
             .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe(() => {
-                let _actRoute = _route.snapshot;
-                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-                this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
-            });
+            .subscribe(() => this.update());
 
         this._sandwichSrv.currentDictState$.subscribe((state) => {
             if (this.isLeft) {
@@ -35,11 +36,13 @@ export class SandwichComponent {
         });
     }
 
-    get hideTree() {
-        return this._sandwichSrv.treeIsBlocked;
-    }
-
     changeState() {
         this._sandwichSrv.changeDictState(!this.isWide, this.isLeft);
+    }
+
+    private update() {
+        let _actRoute = this._route.snapshot;
+        while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+        this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
     }
 }

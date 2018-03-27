@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
+import { EosHeaderComponent } from './header/eos-header.component';
 import { LoginComponent } from './login/login.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { NoticeComponent } from './notice/notice.component';
@@ -50,6 +51,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         BreadcrumbsComponent,
         DesktopComponent,
         DesktopSwitcherComponent,
+        EosHeaderComponent,
         LoginComponent,
         LoginFormComponent,
         NoticeComponent,

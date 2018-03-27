@@ -19,22 +19,23 @@ export class BreadcrumbsComponent {
     constructor(
         _breadcrumbsSrv: EosBreadcrumbsService,
         _router: Router,
-        _route: ActivatedRoute,
         _sandwichSrv: EosSandwichService,
-
+        private _route: ActivatedRoute,
     ) {
         _breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
-
+        this.update();
         _router.events
             .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe(() => {
-                let _actRoute = _route.snapshot;
-                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+            .subscribe(() => this.update());
 
-                this.showPushpin = _actRoute.data.showPushpin;
-            });
         _sandwichSrv.currentDictState$.subscribe((state) => {
             this.infoOpened = state[1];
         });
+    }
+
+    private update() {
+        let _actRoute = this._route.snapshot;
+        while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+        this.showPushpin = _actRoute.data.showPushpin;
     }
 }

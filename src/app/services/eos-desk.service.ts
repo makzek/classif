@@ -59,6 +59,7 @@ export class EosDeskService {
         this._selectedDesk = this._desksList[0];
         this._selectedDesk$ = new BehaviorSubject(this._selectedDesk);
         this._recentItems$ = new BehaviorSubject(this._recentItems);
+
         _dictSrv.getDictionariesList()
             .then((dictionariesList) => {
                 this._desksList[0].references = dictionariesList.map((dictionary) => {
