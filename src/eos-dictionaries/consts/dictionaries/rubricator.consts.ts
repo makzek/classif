@@ -1,6 +1,7 @@
 import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { COMMON_FIELDS } from './_common';
 /*
 */
 export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
@@ -16,7 +17,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
-    fields: [{
+    fields: COMMON_FIELDS.concat([{
         key: 'DUE',
         type: 'string',
         title: 'ID',
@@ -59,10 +60,6 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         length: 64,
         invalidMessage: 'Максимальная длина 64 символа.'
     }, {
-        key: 'DELETED',
-        title: 'DELETED',
-        type: 'number'
-    }, {
         key: 'ISN_HIGH_NODE',
         title: 'ISN_HIGH_NODE',
         type: 'number'
@@ -79,14 +76,6 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'PARENT_DUE',
         type: 'string'
     }, {
-        key: 'PROTECTED',
-        title: 'PROTECTED',
-        type: 'number'
-    }, {
-        key: 'WEIGHT',
-        title: 'WEIGHT',
-        type: 'number'
-    }, {
         key: 'FULLNAME',
         title: 'Полное наименование',
         type: 'string',
@@ -97,7 +86,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         key: 'sev',
         title: 'Индекс СЭВ',
         type: 'dictionary',
-        }],
+    }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],

@@ -37,7 +37,7 @@ export enum E_FIELD_TYPE {
     array
 }
 
-export interface IFieldDesriptor {
+export interface IFieldDescriptor {
     key: string;
     title: string;
     type: string;
@@ -55,7 +55,7 @@ export interface IFieldDesriptor {
     default?: any;
 }
 
-export interface IFieldDesriptorBase {
+export interface IFieldDescriptorBase {
     readonly key: string;
     readonly title: string;
     customTitle?: string;
@@ -74,7 +74,7 @@ export interface IFieldDesriptorBase {
     readonly default?: any;
 }
 
-export interface IFieldView extends IFieldDesriptorBase {
+export interface IFieldView extends IFieldDescriptorBase {
     value: any;
 }
 
@@ -85,7 +85,7 @@ export interface IDictionaryDescriptor {
     title: string;
     visible?: boolean;
     actions: string[];
-    fields: IFieldDesriptor[];
+    fields: IFieldDescriptor[];
     keyField: string;
     parentField?: string;
 

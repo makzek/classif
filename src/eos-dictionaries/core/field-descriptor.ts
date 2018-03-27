@@ -1,6 +1,6 @@
-import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { IFieldDescriptor, IFieldDescriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { ISelectOption } from 'eos-common/interfaces';
-export class FieldDescriptor implements IFieldDesriptorBase {
+export class FieldDescriptor implements IFieldDescriptorBase {
     readonly key: string;
     readonly title: string;
     readonly type: E_FIELD_TYPE;
@@ -17,7 +17,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly forNode?: boolean;
     readonly default?: any;
 
-    constructor(data: IFieldDesriptor) {
+    constructor(data: IFieldDescriptor) {
         if (data.key) {
             this.key = data.key;
             this.title = data.title;

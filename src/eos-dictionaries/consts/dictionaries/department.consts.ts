@@ -54,10 +54,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: /^\d*$/,
         invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
-        key: 'LAYER',
-        title: 'LAYER',
-        type: 'number'
-    }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящей вершины',
         type: 'number',
