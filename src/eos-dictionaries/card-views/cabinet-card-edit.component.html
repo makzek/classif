@@ -30,25 +30,27 @@
         </div>
     </div>
     <p class="xl-font paragraph-title">Владельцы кабинета</p>
-    <div class="secondary-block border-top row"
+    <div class="usual-border border-top row"
         *ngIf="editMode">
-        <span class="btn-group"
-            dropdown>
-                <button dropdownToggle class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
-        <ul *dropdownMenu
-            class="dropdown-menu"
-            role="menu">
-            <li *ngFor="let owner of possibleOwners"
-                role="menuitem"
-                class="dropdown-item btn selected-text"
-                (click)="add(owner)">
-                {{owner.data['CLASSIF_NAME']}}
-            </li>
-            <li *ngIf="!possibleOwners.length">
-                <span class="dropdown-item btn disabled">Нет доступных ДЛ</span>
-            </li>
-        </ul>
-        </span>
+        <div class="btn-group"
+            dropdown
+            container="body">
+            <button dropdownToggle
+                class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
+            <ul *dropdownMenu
+                class="dropdown-menu owners-menu"
+                role="menu">
+                <li *ngFor="let owner of possibleOwners"
+                    role="menuitem"
+                    class="dropdown-item btn selected-text"
+                    (click)="add(owner)">
+                    {{owner.data['CLASSIF_NAME']}}
+                </li>
+                <li *ngIf="!possibleOwners.length">
+                    <span class="dropdown-item btn disabled">Нет доступных ДЛ</span>
+                </li>
+            </ul>
+        </div>
         <button class="btn action-btn btn-primary-light"
             (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span></button>
     </div>
@@ -97,7 +99,7 @@
     </div>
     <div class="folder-access-wrapper form-group">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
-        <div class="folder-access-header s-font secondary-block border-bottom row border-top">
+        <div class="folder-access-header s-font row">
             <span class="checkbox-inline">
                 <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
                     <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
@@ -117,11 +119,11 @@
                 *ngFor="let colIdx of [0,1,2]">
                 <div class="folder-access-item"
                     *ngFor="let rIdx of [0,1,2]">
-                    <div class="minus-checkbox">
-                        <label class="checkbox primary-text s-font">
-                        <input type="checkbox" [disabled]="!editMode || !data.rec.FOLDER_List[(colIdx*3 + rIdx)]" name="{{'folder_'+(colIdx*3 + rIdx)}}" [ngModel]="data.rec.FOLDER_List[(colIdx*3 + rIdx)]['USER_COUNT']"
-                            (ngModelChange)="changeByPath('rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT', $event)">
-                        <span></span>{{folderTitle(data.rec.FOLDER_List[(colIdx*3 + rIdx)]['FOLDER_KIND'])}}</label>
+                    <div class="form-group minus-checkbox">
+                        <eos-dynamic-input *ngIf="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
+                            [input]="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
+                            [form]="form"
+                            [readonly]="!editMode"></eos-dynamic-input>
                     </div>
                 </div>
             </div>

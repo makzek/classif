@@ -52,7 +52,8 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         }
     }
 
-    markNode() {
+    markNode(marked: boolean) {
+        this.node.marked = marked;
         this.mark.emit(this.node.marked);
     }
 

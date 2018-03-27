@@ -36,9 +36,7 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
             .then((org) => {
                 if (org) {
                     this.orgName = org['CLASSIF_NAME'];
-                    if (this.form.controls['rec.DUE_LINK_ORGANIZ']) {
-                        this.form.controls['rec.DUE_LINK_ORGANIZ'].setValue(org.DUE);
-                    }
+                    this.setValue('rec.DUE_LINK_ORGANIZ', org.DUE);
                 }
             });
     }

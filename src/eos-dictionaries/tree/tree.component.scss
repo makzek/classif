@@ -28,13 +28,11 @@
             width: 22px;
             height: 22px;
         }
-
-        .deleted {
-            color: $disabled-color-main-theme;
-        }
-
         .select {
             color: $secondary-font-color-main-theme;
+        }
+        .deleted {
+            color: $disabled-color-main-theme;
         }
     }
 }

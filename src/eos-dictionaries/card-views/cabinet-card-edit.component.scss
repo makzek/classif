@@ -1,4 +1,7 @@
 $access-first-col-width: 251px;
+.dropdown-menu.owners-menu {
+    z-index: 1060;
+}
 .cabinet-card-edit,
 eos-cabinet-card-edit {
     .action-btn,
@@ -13,6 +16,8 @@ eos-cabinet-card-edit {
         .folder-access-header {
             padding: 11px 20px 11px 0;
             line-height: 24px;
+            border-top: 1px solid $border-color-main-theme;
+            border-bottom: 1px solid $border-color-main-theme;
             unimportant-text {
                 position: relative;
                 top: 5px;
@@ -48,9 +53,6 @@ eos-cabinet-card-edit {
             }
         }
     }
-    .eos-icon {
-        vertical-align: sub;
-    }
 }
 
 .eos-cabinet-tab {
@@ -76,8 +78,7 @@ eos-cabinet-card-edit {
         tr {
             background-color: inherit;
             border-width: 1px 0;
-            height: 32px;
-            line-height: 20px;
+            line-height: 32px;
         }
         th,
         td,

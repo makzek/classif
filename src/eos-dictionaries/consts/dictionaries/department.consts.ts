@@ -54,10 +54,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: /^\d*$/,
         invalidMessage: 'Только числовые значения.  Пробелы запрещены.'
     }, {
-        key: 'LAYER',
-        title: 'LAYER',
-        type: 'number'
-    }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящей вершины',
         type: 'number',
@@ -303,11 +299,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ISN_CLASSIF',
         type: 'number'
     }, {
-        key: 'INDEX',
-        title: 'Индекс',
-        type: 'string',
-        pattern: NOT_EMPTY_STRING,
-    }, {
         key: 'alternate',
         title: 'Заместитель',
         type: 'string',
@@ -341,8 +332,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
     editFields: ['CARD_FLAG', 'CARD_NAME', 'CODE', 'DUTY', 'IS_NODE', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB',
         'START_DATE', 'END_DATE', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'photo',
-        'title',  'DUE_LINK_ORGANIZ', 'indexDep',
-        'INDEX', 'fullTitle', 'ISN_PHOTO'],
+        'title',  'DUE_LINK_ORGANIZ', 'indexDep', 'fullTitle', 'ISN_PHOTO'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
         'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',

@@ -2,7 +2,20 @@ import { DictionaryDescriptor } from './dictionary-descriptor';
 import { CABINET, USER_CABINET, DEPARTMENT, USER_CL } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';
-import { IRecordOperationResult } from '../interfaces';
+import { IRecordOperationResult, IDictionaryDescriptor } from '../interfaces';
+import { RecordDescriptor } from './record-descriptor';
+import { EosUtils } from 'eos-common/core/utils';
+import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
+
+export class CabinetRecordDescriptor extends RecordDescriptor {
+    getNewRecord(preSetData: any) {
+        const rec = super.getNewRecord(preSetData);
+        EosUtils.setValueByPath(rec, 'cabinetAccess', []);
+        EosUtils.setValueByPath(rec, 'users', []);
+        EosUtils.setValueByPath(rec, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key, USER_COUNT: 0 })));
+        return rec;
+    }
+}
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
@@ -58,17 +71,12 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
 
     getRelated(rec: CABINET): Promise<any> {
         const reqs = [
+            this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({ 'DEPARTMENT': [rec.DUE] })
                 .then(([department]: DEPARTMENT[]) => {
-                    return this.apiSrv.read<DEPARTMENT>({
-                        'DEPARTMENT': PipRX.criteries({ 'IS_NODE': '1', DEPARTMENT_DUE: department.DUE })
-                    })
-                        .then((owners) => {
-                            this.prepareForEdit(owners);
-                            return [department, owners];
-                        });
+                    return this.getOwners(department.DUE)
+                        .then((owners) => [department, owners]);
                 }),
-            this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
                 .then((userCabinet: USER_CABINET[]) => {
                     this.prepareForEdit(userCabinet);
@@ -79,7 +87,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             //            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
         ];
         return Promise.all(reqs)
-            .then(([[department, owners], folders, [userCabinet, users]/*, owners*/]) => {
+            .then(([folders, [department, owners], [userCabinet, users]/*, owners*/]) => {
                 //                this.prepareForEdit(owners);
                 this.prepareForEdit(folders);
                 const related = {
@@ -98,7 +106,6 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         const changeData = [];
         const results: IRecordOperationResult[] = [];
         Object.keys(originalData).forEach((key) => {
-
             if (originalData[key]) {
                 switch (key) {
                     case 'folders':
@@ -125,5 +132,17 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         } else {
             return Promise.resolve(results);
         }
+    }
+
+    getOwners(depDue: string): Promise<DEPARTMENT[]> {
+        return this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'IS_NODE': '1', DEPARTMENT_DUE: depDue }) })
+            .then((owners) => {
+                this.prepareForEdit(owners);
+                return owners;
+            });
+    }
+
+    protected _initRecord(data: IDictionaryDescriptor) {
+        this.record = new CabinetRecordDescriptor(this, data);
     }
 }

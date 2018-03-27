@@ -28,6 +28,9 @@ export class EosUtils {
         if (key.idx === undefined) {
             elem[key.value] = value;
         } else {
+            if (!(elem[key.value] instanceof Array)) {
+                elem[key.value] = [];
+            }
             elem[key.value][key.idx] = value;
         }
         return data;
@@ -38,11 +41,18 @@ export class EosUtils {
         let elem = data;
         for (let i = 0; i < _path.length && (elem !== undefined && elem !== null); i++) { // dive deep while property exist
             const key = EosUtils.getKeyIndex(_path[i]);
-            if (initPath && elem[key.value] === undefined) { // if undefined init empty
+            if (initPath) {
                 if (key.idx === undefined) {
-                    elem[key.value] = {};
+                    if (elem[key.value] === undefined) {
+                        elem[key.value] = {};
+                    }
                 } else {
-                    elem[key.value][key.idx] = {};
+                    if (elem[key.value] === undefined) {
+                        elem[key.value] = [];
+                    }
+                    if (elem[key.value][key.idx] === undefined) {
+                        elem[key.value][key.idx] = {};
+                    }
                 }
             }
             elem = (key.idx === undefined) ? elem[key.value] : elem[key.value][key.idx];

@@ -1,30 +1,35 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-
 import { EosSandwichService } from '../services/eos-sandwich.service';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
     selector: 'eos-sandwich',
     templateUrl: 'sandwich.component.html',
 })
-export class SandwichComponent {
+export class SandwichComponent implements OnDestroy {
     @Input() isLeft: boolean;
     isWide: boolean;
 
     show = false;
 
+    get hideTree() {
+        return this._sandwichSrv.treeIsBlocked;
+    }
+
+    private ngUnsubscribe: Subject<any> = new Subject();
+
     constructor(
-        _route: ActivatedRoute,
         _router: Router,
         private _sandwichSrv: EosSandwichService,
+        private _route: ActivatedRoute,
     ) {
+        this.update();
         _router.events
             .filter((evt) => evt instanceof NavigationEnd)
-            .subscribe(() => {
-                let _actRoute = _route.snapshot;
-                while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
-                this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
-            });
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe(() => this.update());
 
         this._sandwichSrv.currentDictState$.subscribe((state) => {
             if (this.isLeft) {
@@ -35,11 +40,18 @@ export class SandwichComponent {
         });
     }
 
-    get hideTree() {
-        return this._sandwichSrv.treeIsBlocked;
-    }
-
     changeState() {
         this._sandwichSrv.changeDictState(!this.isWide, this.isLeft);
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next(null);
+        this.ngUnsubscribe.complete();
+    }
+
+    private update() {
+        let _actRoute = this._route.snapshot;
+        while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
+        this.show = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
     }
 }

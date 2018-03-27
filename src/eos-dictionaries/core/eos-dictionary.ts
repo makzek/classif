@@ -13,6 +13,8 @@ import { EosDictionaryNode } from './eos-dictionary-node';
 
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
 import { OrganizationDictionaryDescriptor } from 'eos-dictionaries/core/organization-dictionary-descriptor';
+import { EosUtils } from 'eos-common/core/utils';
+// import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 export class EosDictionary {
     descriptor: AbstractDictionaryDescriptor;
@@ -282,16 +284,17 @@ export class EosDictionary {
         const nodeSet = this._getMarkedRecords(false);
         // 1 - mark deleted
         // 0 - unmark deleted
-        return this.descriptor.markDeleted(nodeSet, ((deleted) ? 1 : 0), recursive)
+        return this.descriptor.markDeleted(nodeSet, +deleted, recursive)
             .then(() => {
                 // update nodes to reduce server req
                 const marked = this.getMarkedNodes(deleted || recursive);
                 if (marked) {
                     marked.forEach((node) => {
                         node.data.rec.DELETED = (+deleted);
+                        node.data.rec._orig.DELETED = (+deleted); // force DELETED flag, because reload may doesn't referesh it
                     });
                 }
-                this._resetMarked();
+                return this._resetMarked();
             });
     }
 
@@ -397,6 +400,34 @@ export class EosDictionary {
 
     getListView() {
         return this.descriptor.record.getListView({});
+    }
+
+    getEditDescriptor(): {} {
+        return this.descriptor.record.getEditFieldDescription();
+    }
+
+    getNewNode(preSetData: {}, parent?: EosDictionaryNode): {} {
+        const nodeData = this.descriptor.record.getNewRecord(preSetData);
+
+        if (this.descriptor.dictionaryType === E_DICT_TYPE.department && parent) {
+            if (nodeData['rec']['IS_NODE'] === 0) {
+                EosUtils.setValueByPath(nodeData, 'rec.DEPARTMENT_INDEX', parent.getParentData('DEPARTMENT_INDEX', 'rec'));
+            } else {
+                EosUtils.setValueByPath(nodeData, 'printInfo.GENDER', null);
+            }
+            EosUtils.setValueByPath(nodeData, 'rec.START_DATE', parent.getParentData('START_DATE', 'rec'));
+            EosUtils.setValueByPath(nodeData, 'rec.END_DATE', parent.getParentData('END_DATE', 'rec'));
+        } else if (this.descriptor.id === 'cabinet' && parent) {
+            // fill cabinet related records with initial data
+            const departmentDue = parent.data.rec['DUE'];
+            EosUtils.setValueByPath(nodeData, 'rec.DUE', departmentDue);
+            EosUtils.setValueByPath(nodeData, 'department', parent.data.rec);
+            // EosUtils.setValueByPath(nodeData, 'cabinetAccess', []);
+            // EosUtils.setValueByPath(nodeData, 'users', []);
+            // EosUtils.setValueByPath(nodeData, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key })));
+        }
+
+        return nodeData;
     }
 
     setNodeUserOrder(nodeId: string, order: string[]) {

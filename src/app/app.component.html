@@ -1,48 +1,5 @@
 <div class="main-container main-theme" [ngClass]="{'hide': !firstLoadAuth, 'login-fon': !isAuthorized}">
-    <!-- DON'T USE class="container" with display: grid -->
-    <div class="header-wrapper usual-border" *ngIf="isAuthorized">
-        <div class="menu">
-            <div class="eos-title primary-text"><eos-title></eos-title></div>
-            <ul class="header-content left">
-                <li class="header-item primary-text" *ngIf="isAuthorized">
-                    <eos-desktop-switcher></eos-desktop-switcher>
-                </li>
-                <ng-container *ngIf="isAuthorized">
-                    <li *ngFor="let item of modules" class="header-item primary-text">
-                        <a class="link-name primary-text xl-font" [routerLink]="item.url" routerLinkActive="active">
-                            <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
-                        </a>
-                    </li>
-                    <li class="header-item else-dropdown primary-text" dropdown>
-                        <span class="link-name xl-font" dropdownToggle>Ещё
-                            <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info>
-                        </span>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li *ngFor="let item of modulesDropdown" class="menuitem else-item xl-font">
-                                <a [routerLink]="item.url" class="dropdown-item f-18 have-padding" routerLinkActive="active">
-                                    <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ng-container>
-            </ul>
-            <ul class="header-content right pull-right">
-                <!--li class="header-item primary-text" *ngIf="isAuthorized">
-                    <button class="btn search-btn">
-                        <span class="eos-icon eos-icon-search-blue"></span>
-                    </button>
-                </li-->
-                <li class="header-item primary-text" *ngIf="isAuthorized">
-                    <eos-notice></eos-notice>
-                </li>
-                <li class="header-item primary-text">
-                    <eos-user></eos-user>
-                </li>
-            </ul>
-        </div>
-        <eos-breadcrumb [ngClass]="{'hide' : !breadcrumbView}"></eos-breadcrumb>
-    </div>
+    <eos-header *ngIf="isAuthorized"></eos-header>
     <div class="content-wrapper">
         <div class="content-outlet">
             <router-outlet></router-outlet>
@@ -50,10 +7,9 @@
         <div class="messages-wrapper">
             <eos-messages></eos-messages>
         </div>
-        <div class="navbar-fixed-bottom row-fluid selected-text text-center" *ngIf="version && !isAuthorized">
-                <span>ДЕЛО. Сборка: {{version}}. Все права защищены. ЭОС</span>
+        <div class="navbar-fixed-bottom row-fluid selected-text text-center" *ngIf="version">
+            <span>ДЕЛО. Сборка: {{version}}. Все права защищены. ЭОС</span>
         </div>
-        <div class="text-right text-info version-number" *ngIf="version && isAuthorized">Build: {{version}}</div>
     </div>
 </div>
 
