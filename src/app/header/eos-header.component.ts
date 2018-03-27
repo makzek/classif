@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { APP_MODULES, APP_MODULES_DROPDOWN } from '../consts/app-modules.const';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
     selector: 'eos-header',
     templateUrl: './eos-header.component.html'
 })
-export class EosHeaderComponent {
+export class EosHeaderComponent implements OnDestroy {
     modules = APP_MODULES;
     modulesDropdown = APP_MODULES_DROPDOWN;
     breadcrumbView = true;
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         _router: Router,
@@ -17,7 +20,13 @@ export class EosHeaderComponent {
     ) {
         this.update();
         _router.events.filter((evt) => evt instanceof NavigationEnd)
+            .takeUntil(this.ngUnsubscribe)
             .subscribe(() => this.update());
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next(null);
+        this.ngUnsubscribe.complete();
     }
 
     private update() {

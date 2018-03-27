@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-
 import { EosSandwichService } from '../services/eos-sandwich.service';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
     selector: 'eos-sandwich',
     templateUrl: 'sandwich.component.html',
 })
-export class SandwichComponent {
+export class SandwichComponent implements OnDestroy {
     @Input() isLeft: boolean;
     isWide: boolean;
 
@@ -17,6 +18,8 @@ export class SandwichComponent {
         return this._sandwichSrv.treeIsBlocked;
     }
 
+    private ngUnsubscribe: Subject<any> = new Subject();
+
     constructor(
         _router: Router,
         private _sandwichSrv: EosSandwichService,
@@ -25,6 +28,7 @@ export class SandwichComponent {
         this.update();
         _router.events
             .filter((evt) => evt instanceof NavigationEnd)
+            .takeUntil(this.ngUnsubscribe)
             .subscribe(() => this.update());
 
         this._sandwichSrv.currentDictState$.subscribe((state) => {
@@ -38,6 +42,11 @@ export class SandwichComponent {
 
     changeState() {
         this._sandwichSrv.changeDictState(!this.isWide, this.isLeft);
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next(null);
+        this.ngUnsubscribe.complete();
     }
 
     private update() {
