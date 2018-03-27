@@ -1,9 +1,10 @@
 .card-edit {
     /*
     */
+    max-width: 800px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 190px);
 }
 
 .edit-content {
@@ -43,6 +44,7 @@
                 color: $grey;
                 line-height: 20px;
                 font-size: 14px;
+                vertical-align: middle;
             }
         }
         margin: 0 0 $grid-gutter-width /2;

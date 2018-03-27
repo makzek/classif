@@ -19,6 +19,7 @@ const SEARCH_MODEL = {
 })
 export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
+    @Output() switchFastSrch: EventEmitter<boolean> = new EventEmitter();
 
     dictId = '';
     fieldsDescription = {
@@ -120,26 +121,6 @@ export class DictionarySearchComponent implements OnDestroy {
         this.dictSubscription.unsubscribe();
     }
 
-    quickSearch(evt: KeyboardEvent) {
-        if (evt.keyCode === 13) {
-            if (this.searchDone) {
-                this.dataQuick = (this.dataQuick) ? this.dataQuick.trim() : '';
-                if (this.dataQuick !== '') {
-                    this.searchDone = false;
-                    this.settings.deleted = this._dictSrv.viewParameters.showDeleted;
-                    this._dictSrv.search(this.dataQuick, this.settings)
-                        .then(() => this.searchDone = true);
-                }
-            } else {
-                this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
-            }
-        }
-    }
-
-    clearQuickForm() {
-        this.dataQuick = '';
-    }
-
     fullSearch() {
         this.settings.mode = this.mode;
         this.fSearchPop.hide();
@@ -169,6 +150,11 @@ export class DictionarySearchComponent implements OnDestroy {
             this.date = date;
             this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
         }
+    }
+
+    showFastSrch() {
+        this.isOpenQuick = !this.isOpenQuick;
+        this.switchFastSrch.emit(this.isOpenQuick);
     }
 
     public considerDel() {

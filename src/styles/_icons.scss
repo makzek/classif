@@ -3,805 +3,625 @@
     height: 32px;
     width: 32px;
     background-size: cover;
-
+    vertical-align: inherit;
     &.small {
         height: 24px;
         width: 24px;
     }
-
     &.x-small {
         height: 16px;
         width: 16px;
     }
-
     &.eos-icon-arrow-black-left {
         background-image: url("../assets/icons/Arrow-Black.svg");
     }
-
     &.eos-icon-arrow-blue-left {
         background-image: url("../assets/icons/Arrow-Blue.svg");
     }
-
     &.eos-icon-arrow-grey-left {
         background-image: url("../assets/icons/Arrow-Grey.svg");
     }
-
     &.eos-icon-arrow-white-left {
         background-image: url("../assets/icons/Arrow-White.svg");
     }
-
     &.eos-icon-arrow-black-right {
         background-image: url("../assets/icons/Arrow-Black.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-blue-right {
         background-image: url("../assets/icons/Arrow-Blue.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-grey-right {
         background-image: url("../assets/icons/Arrow-Grey.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-white-right {
         background-image: url("../assets/icons/Arrow-White.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-black-top {
         background-image: url("../assets/icons/Arrow-Black.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-blue-top {
         background-image: url("../assets/icons/Arrow-Blue.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-grey-top {
         background-image: url("../assets/icons/Arrow-Grey.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-white-top {
         background-image: url("../assets/icons/Arrow-White.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-black-bottom {
         background-image: url("../assets/icons/Arrow-Black.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-blue-bottom {
         background-image: url("../assets/icons/Arrow-Blue.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-grey-bottom {
         background-image: url("../assets/icons/Arrow-Grey.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-white-bottom {
         background-image: url("../assets/icons/Arrow-White.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-v-black-left {
         background-image: url("../assets/icons/Arrow-V-Black.svg");
     }
-
     &.eos-icon-arrow-v-blue-left {
         background-image: url("../assets/icons/Arrow-V-Blue.svg");
     }
-
     &.eos-icon-arrow-v-grey-left {
         background-image: url("../assets/icons/Arrow-V-Grey.svg");
     }
-
     &.eos-icon-arrow-v-white-left {
         background-image: url("../assets/icons/Arrow-V-White.svg");
     }
-
     &.eos-icon-arrow-v-black-right {
         background-image: url("../assets/icons/Arrow-V-Black.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-v-blue-right {
         background-image: url("../assets/icons/Arrow-V-Blue.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-v-grey-right {
         background-image: url("../assets/icons/Arrow-V-Grey.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-v-white-right {
         background-image: url("../assets/icons/Arrow-V-White.svg");
         transition: 0ms;
         transform: rotate(180deg);
     }
-
     &.eos-icon-arrow-v-black-top {
         background-image: url("../assets/icons/Arrow-V-Black.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-v-blue-top {
         background-image: url("../assets/icons/Arrow-V-Blue.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-v-grey-top {
         background-image: url("../assets/icons/Arrow-V-Grey.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-v-white-top {
         background-image: url("../assets/icons/Arrow-V-White.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-arrow-v-black-bottom {
         background-image: url("../assets/icons/Arrow-V-Black.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-v-blue-bottom {
         background-image: url("../assets/icons/Arrow-V-Blue.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-v-grey-bottom {
         background-image: url("../assets/icons/Arrow-V-Grey.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-arrow-v-white-bottom {
         background-image: url("../assets/icons/Arrow-V-White.svg");
         transition: 0ms;
         transform: rotate(-90deg);
     }
-
     &.eos-icon-bell-black {
         background-image: url("../assets/icons/Bell-Black.svg");
     }
-
     &.eos-icon-bell-blue {
         background-image: url("../assets/icons/Bell-Blue.svg");
     }
-
     &.eos-icon-bell-blue-active {
         background-image: url("../assets/icons/Bell-Blue-Active.svg");
     }
-
     &.eos-icon-bell-dark-blue {
         background-image: url("../assets/icons/Bell-Dark-Blue.svg");
     }
-
     &.eos-icon-bell-grey {
         background-image: url("../assets/icons/Bell-Grey.svg");
     }
-
     &.eos-icon-bell-red {
         background-image: url("../assets/icons/Bell-Red.svg");
     }
-
     &.eos-icon-bell-white {
         background-image: url("../assets/icons/Bell-White.svg");
     }
-
     &.eos-icon-bin-black {
         background-image: url("../assets/icons/Bin-Black.svg");
     }
-
     &.eos-icon-bin-blue {
         background-image: url("../assets/icons/Bin-Blue.svg");
     }
-
     &.eos-icon-bin-dark-blue {
         background-image: url("../assets/icons/Bin-Dark-Blue.svg");
     }
-
     &.eos-icon-bin-grey {
         background-image: url("../assets/icons/Bin-Grey.svg");
     }
-
     &.eos-icon-bin-white {
         background-image: url("../assets/icons/Bin-White.svg");
     }
-
     &.eos-icon-calendar-black {
         background-image: url("../assets/icons/Calendar-Black.svg");
     }
-
     &.eos-icon-calendar-blue {
         background-image: url("../assets/icons/Calendar-Blue.svg");
     }
-
     &.eos-icon-calendar-dark-blue {
         background-image: url("../assets/icons/Calendar-Dark-Blue.svg");
     }
-
     &.eos-icon-calendar-grey {
         background-image: url("../assets/icons/Calendar-Grey.svg");
     }
-
     &.eos-icon-calendar-white {
         background-image: url("../assets/icons/Calendar-White.svg");
     }
-
     &.eos-icon-checkbox-black {
         background-image: url("../assets/icons/Checkbox-Black.svg");
     }
-
     &.eos-icon-checkbox-blue {
         background-image: url("../assets/icons/Checkbox-Blue.svg");
     }
-
     &.eos-icon-checkbox-grey {
         background-image: url("../assets/icons/Checkbox-Grey.svg");
     }
-
     &.eos-icon-checkbox-square-blue {
         background-image: url("../assets/icons/Checkbox-Square-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-dark-blue {
         background-image: url("../assets/icons/Checkbox-Square-Dark-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-grey {
         background-image: url("../assets/icons/Checkbox-Square-Grey.svg");
     }
-
     &.eos-icon-checkbox-square-minus-blue {
         background-image: url("../assets/icons/Checkbox-Square-Minus-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-minus-dark-blue {
         background-image: url("../assets/icons/Checkbox-Square-Minus-Dark-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-minus-grey {
         background-image: url("../assets/icons/Checkbox-Square-Minus-Grey.svg");
     }
-
     &.eos-icon-checkbox-square-v-blue {
         background-image: url("../assets/icons/Checkbox-Square-V-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-v-dark-blue {
         background-image: url("../assets/icons/Checkbox-Square-V-Dark-Blue.svg");
     }
-
     &.eos-icon-checkbox-square-v-grey {
         background-image: url("../assets/icons/Checkbox-Square-V-Grey.svg");
     }
-
     &.eos-icon-clip-black {
         background-image: url("../assets/icons/Clip-Black.svg");
     }
-
     &.eos-icon-clip-blue {
         background-image: url("../assets/icons/Clip-Blue.svg");
     }
-
     &.eos-icon-clip-dark-blue {
         background-image: url("../assets/icons/Clip-Dark-Blue.svg");
     }
-
     &.eos-icon-clip-grey {
         background-image: url("../assets/icons/Clip-Grey.svg");
     }
-
     &.eos-icon-clip-white {
         background-image: url("../assets/icons/Clip-White.svg");
     }
-
     &.eos-icon-close-black {
         background-image: url("../assets/icons/Close-Black.svg");
     }
-
     &.eos-icon-close-blue {
         background-image: url("../assets/icons/Close-Blue.svg");
     }
-
     &.eos-icon-close-grey {
         background-image: url("../assets/icons/Close-Grey.svg");
     }
-
     &.eos-icon-close-white {
         background-image: url("../assets/icons/Close-White.svg");
     }
-
     &.eos-icon-combine-blue {
         background-image: url("../assets/icons/Combine-Blue.svg");
     }
-
     &.eos-icon-control-red {
         background-image: url("../assets/icons/Control-Red.svg");
     }
-
     &.eos-icon-dept-blue {
         background-image: url("../assets/icons/Dept-Blue.svg");
     }
-
     &.eos-icon-edit-black {
         background-image: url("../assets/icons/Edit-Black.svg");
     }
-
     &.eos-icon-edit-blue {
         background-image: url("../assets/icons/Edit-Blue.svg");
     }
-
     &.eos-icon-edit-dark-blue {
         background-image: url("../assets/icons/Edit-Dark-Blue.svg");
     }
-
     &.eos-icon-edit-grey {
         background-image: url("../assets/icons/Edit-Grey.svg");
     }
-
     &.eos-icon-edit-white {
         background-image: url("../assets/icons/Edit-White.svg");
     }
-
     &.eos-icon-external-link-black {
         background-image: url("../assets/icons/Arrow-Black.svg");
         transition: 0ms;
         transform: rotate(135deg);
     }
-
     &.eos-icon-external-link-blue {
         background-image: url("../assets/icons/Arrow-Blue.svg");
         transition: 0ms;
         transform: rotate(135deg);
     }
-
     &.eos-icon-external-link-blue-grey {
         background-image: url("../assets/icons/Arrow-Grey.svg");
         transition: 0ms;
         transform: rotate(135deg);
     }
-
     &.eos-icon-external-link-white {
         background-image: url("../assets/icons/Arrow-White.svg");
         transition: 0ms;
         transform: rotate(135deg);
     }
-
     &.eos-icon-fab-blue {
         background-image: url("../assets/icons/FAB-Blue.svg");
     }
-
     &.eos-icon-fab-white {
         background-image: url("../assets/icons/FAB-White.svg");
     }
-
     &.eos-icon-full-screen-off {
         background-image: url("../assets/icons/Full-Screen-Off.svg");
     }
-
     &.eos-icon-full-screen-on {
         background-image: url("../assets/icons/Full-Screen-On.svg");
     }
-
     &.eos-icon-heart-grey {
         background-image: url("../assets/icons/Heart-Grey.svg");
     }
-
     &.eos-icon-heart-red {
         background-image: url("../assets/icons/Heart-Red.svg");
     }
-
     &.eos-icon-home-blue {
         background-image: url("../assets/icons/Home-Blue.svg");
     }
-
     &.eos-icon-info-blue {
         background-image: url("../assets/icons/Info-Blue.svg");
     }
-
     &.eos-icon-menu-black {
         background-image: url("../assets/icons/Menu-Black.svg");
     }
-
     &.eos-icon-menu-blue {
         background-image: url("../assets/icons/Menu-Blue.svg");
     }
-
     &.eos-icon-menu-grey {
         background-image: url("../assets/icons/Menu-Grey.svg");
     }
-
     &.eos-icon-menu-white {
         background-image: url("../assets/icons/Menu-White.svg");
     }
-
     &.eos-icon-mic-black {
         background-image: url("../assets/icons/Mic-Black.svg");
     }
-
     &.eos-icon-mic-blue {
         background-image: url("../assets/icons/Mic-Blue.svg");
     }
-
     &.eos-icon-mic-grey {
         background-image: url("../assets/icons/Mic-Grey.svg");
     }
-
     &.eos-icon-mic-white {
         background-image: url("../assets/icons/Mic-White.svg");
     }
-
     &.eos-icon-minus-black {
         background-image: url("../assets/icons/Minus-Black.svg");
     }
-
     &.eos-icon-minus-blue {
         background-image: url("../assets/icons/Minus-Blue.svg");
     }
-
     &.eos-icon-minus-grey {
         background-image: url("../assets/icons/Minus-Grey.svg");
     }
-
     &.eos-icon-minus-white {
         background-image: url("../assets/icons/Minus-White.svg");
     }
-
     &.eos-icon-move-2d-blue {
         background-image: url("../assets/icons/Move-2d-Blue.svg");
     }
-
     &.eos-icon-off {
         background-image: url("../assets/icons/Off.svg");
     }
-
     &.eos-icon-off-grey {
         background-image: url("../assets/icons/Off-Grey.svg");
     }
-
     &.eos-icon-on {
         background-image: url("../assets/icons/On.svg");
     }
-
     &.eos-icon-on-grey {
         background-image: url("../assets/icons/On-Grey.svg");
     }
-
     &.eos-icon-close-folder-blue {
         background-image: url("../assets/icons/Open-Close-Folder-Blue.svg");
     }
-
     &.eos-icon-close-folder-white {
         background-image: url("../assets/icons/Open-Close-Folder-White.svg");
     }
-
     &.eos-icon-open-folder-blue {
         background-image: url("../assets/icons/Open-Close-Folder-Blue.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-open-folder-white {
         background-image: url("../assets/icons/Open-Close-Folder-White.svg");
         transition: 0ms;
         transform: rotate(90deg);
     }
-
     &.eos-icon-pin-blue {
         background-image: url("../assets/icons/Pin-Blue.svg");
     }
-
     &.eos-icon-pin-dark-blue {
         background-image: url("../assets/icons/Pin-Dark-Blue.svg");
     }
-
     &.eos-icon-pin-geo-blue {
         background-image: url("../assets/icons/Pin-Geo-Blue.svg");
     }
-
     &.eos-icon-plus-black {
         background-image: url("../assets/icons/Plus-Black.svg");
     }
-
     &.eos-icon-plus-blue {
         background-image: url("../assets/icons/Plus-Blue.svg");
     }
-
     &.eos-icon-plus-dark-blue {
         background-image: url("../assets/icons/Plus-Dark-Blue.svg");
     }
-
     &.eos-icon-process-blue {
         background-image: url("../assets/icons/Process-Blue.svg");
     }
-
     &.eos-icon-radio-blue {
         background-image: url("../assets/icons/Radio-Blue.svg");
     }
-
     &.eos-icon-radio-dark-blue {
         background-image: url("../assets/icons/Radio-Dark-Blue.svg");
     }
-
     &.eos-icon-radio-grey {
         background-image: url("../assets/icons/Radio-Grey.svg");
     }
-
     &.eos-icon-radio-v-blue {
         background-image: url("../assets/icons/Radio-V-Blue.svg");
     }
-
     &.eos-icon-radio-v-dark-blue {
         background-image: url("../assets/icons/Radio-V-Dark-Blue.svg");
     }
-
     &.eos-icon-radio-v-grey {
         background-image: url("../assets/icons/Radio-V-Grey.svg");
     }
-
     &.eos-icon-rating-blue {
         background-image: url("../assets/icons/Rating-Blue.svg");
     }
-
     &.eos-icon-rating-grey {
         background-image: url("../assets/icons/Rating-Grey.svg");
     }
-
     &.eos-icon-repair-blue {
         background-image: url("../assets/icons/Repair-Blue.svg");
     }
-
     &.eos-icon-search-black {
         background-image: url("../assets/icons/Search-Black.svg");
     }
-
     &.eos-icon-search-blue {
         background-image: url("../assets/icons/Search-Blue.svg");
     }
-
     &.eos-icon-search-grey {
         background-image: url("../assets/icons/Search-Grey.svg");
     }
-
     &.eos-icon-search-white {
         background-image: url("../assets/icons/Search-White.svg");
     }
-
     &.eos-icon-settings-blue {
         background-image: url("../assets/icons/Settings-Blue.svg");
     }
-
     &.eos-icon-show-blue {
         background-image: url("../assets/icons/Show-Blue.svg");
     }
-
     &.eos-icon-star-blue {
         background-image: url("../assets/icons/Star-Blue.svg");
     }
-
     &.eos-icon-work-blue {
         background-image: url("../assets/icons/Work-Blue.svg");
     }
-
     &.eos-icon-work-red {
         background-image: url("../assets/icons/Work-Red.svg");
     }
-
     &.eos-icon-work-white {
         background-image: url("../assets/icons/Work-White.svg");
     }
-
     &.eos-icon-arrow-dark-blue {
         background-image: url("../assets/icons/Arrow-Dark-Blue.svg");
     }
-
     &.eos-icon-arrow-v-dark-blue {
         background-image: url("../assets/icons/Arrow-V-Dark-Blue.svg");
     }
-
     &.eos-icon-avatar-blue {
         background-image: url("../assets/icons/Avatar-Blue.svg");
     }
-
     &.eos-icon-avatar-dark-blue {
         background-image: url("../assets/icons/Avatar-Dark-Blue.svg");
     }
-
     &.eos-icon-avatar-grey {
         background-image: url("../assets/icons/Avatar-Grey.svg");
     }
-
     &.eos-icon-avatar-grey {
         background-image: url("../assets/icons/Avatar-Grey.svg");
     }
-
     &.eos-icon-avatar-white {
         background-image: url("../assets/icons/Avatar-White.svg");
     }
-
     &.eos-icon-bin-forever-blue {
         background-image: url("../assets/icons/Bin-Forever-Blue.svg");
     }
-
     &.eos-icon-bin-forever-dark-blue {
         background-image: url("../assets/icons/Bin-Forever-Dark-Blue.svg");
     }
-
     &.eos-icon-bin-forever-grey {
         background-image: url("../assets/icons/Bin-Forever-Grey.svg");
     }
-
     &.eos-icon-bin-forever-white {
         background-image: url("../assets/icons/Bin-Forever-White.svg");
     }
-
     &.eos-icon-checkbox-dark-blue {
         background-image: url("../assets/icons/Checkbox-Dark-Blue.svg");
     }
-
     &.eos-icon-checkbox-white {
         background-image: url("../assets/icons/Checkbox-White.svg");
     }
-
     &.eos-icon-close-dark-blue {
         background-image: url("../assets/icons/Close-Dark-Blue.svg");
     }
-
     &.eos-icon-custom-list-grey {
         background-image: url("../assets/icons/Custom-List-Grey.svg");
     }
-
     &.eos-icon-custom-list-white {
         background-image: url("../assets/icons/Custom-List-White.svg");
     }
-
     &.eos-icon-custom-list-blue {
         background-image: url("../assets/icons/Custom-List-Blue.svg");
     }
-
     &.eos-icon-custom-list-dark-blue {
         background-image: url("../assets/icons/Custom-List-Dark-Blue.svg");
     }
-
     &.eos-icon-fab-dark-blue {
         background-image: url("../assets/icons/FAB-Dark-Blue.svg");
     }
-
     &.eos-icon-fab-grey {
         background-image: url("../assets/icons/FAB-Grey.svg");
     }
-
     &.eos-icon-filter-blue {
         background-image: url("../assets/icons/Filter-Blue.svg");
     }
-
     &.eos-icon-filter-dark-blue {
         background-image: url("../assets/icons/FAB-Dark-Blue.svg");
     }
-
     &.eos-icon-filter-grey {
         background-image: url("../assets/icons/Filter-Grey.svg");
     }
-
     &.eos-icon-filter-white {
         background-image: url("../assets/icons/Filter-White.svg");
     }
-
     &.eos-icon-folder-black {
         background-image: url("../assets/icons/Folder-Black.svg");
     }
-
     &.eos-icon-folder-blue {
         background-image: url("../assets/icons/Folder-Blue.svg");
     }
-
     &.eos-icon-folder-dark-blue {
         background-image: url("../assets/icons/Folder-Dark-Blue.svg");
     }
-
     &.eos-icon-folder-grey {
         background-image: url("../assets/icons/Folder-Grey.svg");
     }
-
     &.eos-icon-folder-white {
         background-image: url("../assets/icons/Folder-White.svg");
     }
-
     &.eos-icon-minus-dark-blue {
         background-image: url("../assets/icons/Minus-Dark-Blue.svg");
     }
-
     &.eos-icon-open-close-folder-dark-blue {
         background-image: url("../assets/icons/Open-Close-Folder-Dark-Blue.svg");
     }
-
     &.eos-icon-open-close-folder-grey {
         background-image: url("../assets/icons/Open-Close-Folder-Grey.svg");
     }
-
     &.eos-icon-pin-grey {
         background-image: url("../assets/icons/Pin-Grey.svg");
     }
-
     &.eos-icon-pin-white {
         background-image: url("../assets/icons/Pin-White.svg");
     }
-
     &.eos-icon-plus-grey {
         background-image: url("../assets/icons/Plus-Grey.svg");
     }
-
     &.eos-icon-plus-white {
         background-image: url("../assets/icons/Plus-White.svg");
     }
-
     &.eos-icon-show-dark-blue {
         background-image: url("../assets/icons/Show-Dark-Blue.svg");
+    }
+    &.eos-icon-show-blue {
+        background-image: url("../assets/icons/Show-Blue.svg");
     }
 
     &.eos-icon-show-grey {
         background-image: url("../assets/icons/Show-Grey.svg");
     }
-
     &.eos-icon-show-white {
         background-image: url("../assets/icons/Show-White.svg");
     }
-
     &.eos-icon-star-black {
         background-image: url("../assets/icons/Star-Black.svg");
     }
-
     &.eos-icon-tree-black {
         background-image: url("../assets/icons/Three-Black.svg");
     }
-
     &.eos-icon-tree-blue {
         background-image: url("../assets/icons/Three-Blue.svg");
     }
-
     &.eos-icon-tree-dark-blue {
         background-image: url("../assets/icons/Three-Dark-Blue.svg");
     }
-
     &.eos-icon-tree-grey {
         background-image: url("../assets/icons/Three-Grey.svg");
     }
-
     &.eos-icon-tree-white {
         background-image: url("../assets/icons/Three-White.svg");
     }
-
     &.eos-icon-work-black {
         background-image: url("../assets/icons/Work-Black.svg");
     }

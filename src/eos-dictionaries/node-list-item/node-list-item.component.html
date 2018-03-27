@@ -5,7 +5,7 @@
         <span *ngIf="params?.markItems" class="checkbox-inline">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info" container="body" placement="bottom">
-                <input type="checkbox"[(ngModel)]="node.marked" (change)="markNode()"><span></span>
+                <input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span>
             </label>
         </span>
         <span class="node-info" (click)="selectNode()" (dblclick)="dbClickHandler($event)">

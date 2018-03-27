@@ -10,13 +10,13 @@
     </div>
     <div class="selected-wrapper" #selectedWrapper [ngClass]="{'open-tree': currentState[0] && !hideTree }" (click)="onClick()">
         <div class="node-actions">
-            <div *ngIf="selectedNode" class="selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
+            <div *ngIf="treeNode" class="selected-node xl-font" [ngClass]="{'has-custom': hasCustomTable}">
                 <div class="go-top-wrapper">
                     <button *ngIf="hasParent" class="btn btn-primary-light" (click)="goUp()">
                         <span class="eos-icon eos-icon-arrow-blue-left"></span>
                     </button>
                 </div>
-                <span class="selected-node-title xl-font">{{_selectedNodeText}}</span>
+                <span class="selected-node-title xl-font">{{title}}</span>
                 <div class="tabs-wrapper usual-border m-font">
                     <ul class="tabs" *ngIf="dictionary.id === 'departments'">
                         <li class="tab-item" role="presentation" [ngClass]="{'active': dictMode === 1}"
@@ -55,8 +55,11 @@
                     <eos-node-actions (action)="doAction($event)"></eos-node-actions>
                 </div>
                 <div class="pull-right">
-                    <eos-dictionary-search></eos-dictionary-search>
+                    <eos-dictionary-search (switchFastSrch)="switchFastSearch($event)"></eos-dictionary-search>
                 </div>
+            </div>
+            <div class="fast-srch" *ngIf="fastSearch">
+                <eos-dictionary-fast-search></eos-dictionary-fast-search>
             </div>
         </div>
         <div class="table-wrapper usual-border">

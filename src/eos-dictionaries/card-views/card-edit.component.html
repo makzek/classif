@@ -14,9 +14,7 @@
                         [editMode]="editMode"
                         [fieldsDescription]="fieldsDescription"
                         [dutysList]="dutysList"
-                        [fullNamesList]="fullNamesList"
-                        (formChanged)="recordChanged($event)"
-                        (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-person>
+                        [fullNamesList]="fullNamesList"></eos-departments-card-edit-person>
                     <eos-departments-card-edit-department #cardEditEl
                         *ngIf="data.rec['IS_NODE'] === 0"
                         class="departments-department-card-edit departments-card-edit"
@@ -26,27 +24,15 @@
                         [editMode]="editMode"
                         [fieldsDescription]="fieldsDescription"
                         [dutysList]="dutysList"
-                        [fullNamesList]="fullNamesList"
-                        (formChanged)="recordChanged($event)"
-                        (formInvalid)="recordInvalid($event)"></eos-departments-card-edit-department>
+                        [fullNamesList]="fullNamesList"></eos-departments-card-edit-department>
                 </ng-container>
-
                 <eos-cabinet-card-edit *ngSwitchCase="'cabinet'"
                     class="cabinet-card-edit"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [fieldsDescription]="fieldsDescription"
-                    [editMode]="editMode"
-                    (formChanged)="recordChanged($event)"
-                    (formInvalid)="recordInvalid($event)"></eos-cabinet-card-edit>
-                <!-- eos-visa-type-card-edit #cardEditEl *ngSwitchCase="'visa-type'"
-            [data]="data"
-            [fieldsDescription]="fieldsDescription"
-            [editMode]="editMode"
-            [nodeId]="nodeId"
-            (formChanged)="recordChanged($event)"
-            (formInvalid)="recordInvalid($event)"></eos-visa-type-card-edit -->
+                    [editMode]="editMode"></eos-cabinet-card-edit>
                 <eos-security-card-edit #cardEditEl
                     class="security-card-edit"
                     *ngSwitchCase="'security'"
@@ -54,9 +40,7 @@
                     [inputs]="inputs"
                     [data]="data"
                     [fieldsDescription]="fieldsDescription"
-                    [editMode]="editMode"
-                    (formChanged)="recordChanged($event)"
-                    (formInvalid)="recordInvalid($event)"></eos-security-card-edit>
+                    [editMode]="editMode"></eos-security-card-edit>
                 <eos-simple-card-edit #cardEditEl
                     class="simple-card-edit"
                     *ngSwitchDefault
@@ -64,9 +48,7 @@
                     [inputs]="inputs"
                     [data]="data"
                     [fieldsDescription]="fieldsDescription"
-                    [editMode]="editMode"
-                    (formChanged)="recordChanged($event)"
-                    (formInvalid)="recordInvalid($event)"></eos-simple-card-edit>
+                    [editMode]="editMode"></eos-simple-card-edit>
             </ng-container>
             <!-- div class="form-group unimportant-text s-font">
                 <label>* - поля обязательные к заполнению</label>
