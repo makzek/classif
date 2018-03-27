@@ -2,7 +2,7 @@
     .node {
         cursor: pointer;
         padding: $item-width / 6 0;
-        line-height: 22px;
+        line-height: 20px;
         .fake-padding,
         .tree-btn,
         .title {
@@ -24,8 +24,8 @@
         }
 
         .tringle-size {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
         }
         .select {
             color: $secondary-font-color-main-theme;
