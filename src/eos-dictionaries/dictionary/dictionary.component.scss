@@ -15,12 +15,11 @@
 
     .tree-wrapper {
         height: calc(100vh - 108px);
-        width: $dictionary-block-width;
         overflow-x: hidden;
         overflow-y: auto;
         border-right-width: 1px;
         border-right-style: solid;
-        margin-top: -1 * $grid-gutter-width / 2;
+        margin-top: -1 * $grid-gutter-width / 2 - 2px;
 
         &.has-spinner {
             display: flex;
@@ -31,7 +30,6 @@
 
     .opened-wrapper {
         height: calc(100vh - 60px);
-        width: $dictionary-block-width;
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
@@ -51,74 +49,6 @@
             border-style: solid;
             position: relative;
             top: -3px;
-        }
-    }
-
-    &.info {
-        .tree-wrapper {
-            left: -1 * $dictionary-block-width;
-        }
-
-        .opened-wrapper {
-            right: 0;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2;
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
-        }
-    }
-
-    &.tree {
-        .tree-wrapper {
-            left: 0;
-        }
-
-        .opened-wrapper {
-            right: -1 * $dictionary-block-width;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2;
-        }
-    }
-
-    &.only-selected {
-        .tree-wrapper {
-            left: -1 * $dictionary-block-width;
-        }
-
-        .opened-wrapper {
-            right: -1 * $dictionary-block-width;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2;
-            right: $grid-gutter-width / 2;
-        }
-    }
-
-    &.full {
-        .tree-wrapper {
-            left: 0;
-        }
-
-        .opened-wrapper {
-            right: 0;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
         }
     }
 
@@ -311,6 +241,165 @@
             bottom: 0;
             left: 0;
             z-index: 1;
+        }
+    }
+}
+
+@media (max-width: 1599px) {
+    .eos-dictionary {
+        .tree-wrapper {
+            width: $dictionary-block-width;
+        }
+        .opened-wrapper {
+            width: $dictionary-block-width;
+        }
+        &.info {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+        }
+
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+        }
+
+    }
+}
+
+@media (min-width: 1600px) {
+    .eos-dictionary {
+        .tree-wrapper {
+            width: $dictionary-block-width-big-display;
+        }
+        .opened-wrapper {
+            width: $dictionary-block-width-big-display;
+        }
+        &.info {
+            .selected-wrapper { //
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width-big-display;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width-big-display;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+        }
+
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width-big-display;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width-big-display;
+                top: $top-menu-height - $breadcrumbs-height;
+            }
         }
     }
 }

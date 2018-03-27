@@ -21,43 +21,45 @@
             </button>
     </span>
     <div class="opened-node-wrapper">
-        <div *ngIf="update"
-            class="no-data full-info usual-border">
-            <eos-spinner [size]="'lg'"></eos-spinner>
-        </div>
+        <div class="content-block">
+            <div *ngIf="update"
+                class="no-data full-info usual-border">
+                <eos-spinner [size]="'lg'"></eos-spinner>
+            </div>
 
-        <div *ngIf="nodeDataShort"
-            class="short-info l-font">
-            <span>{{nodeDataShort.rec['FULLNAME'] || nodeDataShort.rec['CABINET_NAME']}}</span>
-        </div>
+            <div *ngIf="nodeDataShort"
+                class="short-info l-font">
+                <span>{{nodeDataShort.rec['FULLNAME'] || nodeDataShort.rec['CABINET_NAME']}}</span>
+            </div>
 
-        <div *ngIf="nodeDataFull && nodeDataFull.department"
-            class="full-info usual-border">
-            <div class="field">
-                <span class="field-title unimportant-text s-font">Подразделение</span><br>
-                <a class="field-value selected-text"
-                    [routerLink]="'/spravochniki/departments/'+nodeDataFull.department['DUE']+'/view'">
+            <div *ngIf="nodeDataFull && nodeDataFull.department"
+                class="full-info usual-border">
+                <div class="field">
+                    <span class="field-title unimportant-text s-font">Подразделение</span><br>
+                    <a class="field-value selected-text"
+                        [routerLink]="'/spravochniki/departments/'+nodeDataFull.department['DUE']+'/view'">
                         {{nodeDataFull.department['FULLNAME'] || nodeDataFull.department['CLASSIF_NAME']}}
                 </a>
-            </div>
-            <div class="field">
-                <span class="field-title unimportant-text s-font">Владельцы кабинета</span><br>
-                <ul class="field-value m-font">
-                    <ng-container *ngFor="let owner of nodeDataFull.owners">
-                        <li *ngIf="nodeDataFull?.rec['ISN_CABINET']===owner['ISN_CABINET']">
-                            <a [routerLink]="'/spravochniki/departments/'+owner['DUE']+'/view'">{{owner.CLASSIF_NAME}}</a>
+                </div>
+                <div class="field">
+                    <span class="field-title unimportant-text s-font">Владельцы кабинета</span><br>
+                    <ul class="field-value m-font">
+                        <ng-container *ngFor="let owner of nodeDataFull.owners">
+                            <li *ngIf="nodeDataFull?.rec['ISN_CABINET']===owner['ISN_CABINET']">
+                                <a [routerLink]="'/spravochniki/departments/'+owner['DUE']+'/view'">{{owner.CLASSIF_NAME}}</a>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+                <div class="field">
+                    <span class="field-title unimportant-text s-font">Пользователи кабинета</span><br>
+                    <ul class="field-value m-font">
+                        <li *ngFor="let user of nodeDataFull.users">
+                            {{user['SURNAME_PATRON']}}
+                            <!--a [routerLink]="'/spravochniki/users/'+user['ISN_LCLASSIF']+'/view'">{{user['SURNAME_PATRON']}}</a-->
                         </li>
-                    </ng-container>
-                </ul>
-            </div>
-            <div class="field">
-                <span class="field-title unimportant-text s-font">Пользователи кабинета</span><br>
-                <ul class="field-value m-font">
-                    <li *ngFor="let user of nodeDataFull.users">
-                        {{user['SURNAME_PATRON']}}
-                        <!--a [routerLink]="'/spravochniki/users/'+user['ISN_LCLASSIF']+'/view'">{{user['SURNAME_PATRON']}}</a-->
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -111,7 +111,24 @@
     }
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1600px) {
+    .pagination-option {
+        &.tree {
+            left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            right: $grid-gutter-width / 2;
+        }
+        &.info {
+            right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            left: $grid-gutter-width / 2;
+        }
+        &.full {
+            left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+        }
+    }
+}
+
+@media (max-width: 1599px) {
     .pagination-option {
         &.tree {
             left: $grid-gutter-width / 2 + $dictionary-block-width;
