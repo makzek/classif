@@ -17,7 +17,6 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         title: 'ISN кабинета',
         pattern: /^\d*$/,
         length: 10,
-        invalidMessage: 'Максимальная длинна 10 символов. Только числовые значения. Пробелы запрещены.',
     },
     Object.assign({}, COMMON_FIELD_NAME, {
         key: 'CABINET_NAME',

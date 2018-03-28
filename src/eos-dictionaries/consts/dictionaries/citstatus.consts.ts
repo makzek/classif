@@ -41,7 +41,6 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование статуса',
         length: 64,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа.'
     }), {
         key: 'IS_NODE',
         title: 'IS_NODE',

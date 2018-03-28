@@ -23,7 +23,6 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 255 символов.'
     }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'SIGN_TEXT'],

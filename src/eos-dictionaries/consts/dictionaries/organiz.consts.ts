@@ -52,7 +52,6 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование организации',
         length: 255,
-        invalidMessage: 'Обязательное поле. Максимальная длина 255 символов. Должно быть уникальным в пределах справочника',
     }), {
         key: 'CLASSIF_NAME_SEARCH',
         title: 'Поиск наименование организации',
@@ -65,7 +64,6 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов.'
     }), {
         key: 'ZIPCODE',
         title: 'Почтовый индекс',
@@ -112,7 +110,6 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'number',
         pattern: NOT_EMPTY_STRING,
         length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'OKONH',
         title: 'ОКОНХ',
@@ -131,7 +128,6 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'number',
         pattern: NOT_EMPTY_STRING,
         length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'SERTIFICAT',
         title: 'Регистрационное свидетельство',
@@ -144,14 +140,14 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'number',
         pattern: NOT_EMPTY_STRING,
         length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
+
     }, {
         key: 'CODE',
         title: 'поле для формирования выписок для ЦБ',
         type: 'number',
         length: 4,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения.'
+
     }, {
         key: 'OGRN',
         title: 'ОГРН',

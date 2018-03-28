@@ -45,20 +45,17 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         length: 64,
         required: true,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа.'
     }, {
         key: 'CODE',
         title: 'Код региона',
         pattern: /^\s*\d{0,4}\s*$/,
         type: 'number',
         length: 4,
-        invalidMessage: 'Максимальная длина 4 символа. Допустимы только цифры.'
     }, {
         key: 'COD_OKATO',
         title: 'Код ОКАТО',
         type: 'string',
         length: 11,
-        invalidMessage: 'Максимальная длина 11 символов.'
     }, {
         key: 'IS_NODE',
         title: 'IS_NODE',
@@ -69,7 +66,6 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 248,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 248 символов.'
     }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'COD_OKATO', 'CLASSIF_NAME', 'NOTE'],

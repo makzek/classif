@@ -9,7 +9,6 @@ export const COMMON_FIELD_CODE: IFieldDescriptor = {
     pattern: NOT_EMPTY_STRING,
     isUnic: true,
     unicInDict: false,
-    invalidMessage: 'Поле должно быть уникально. Максимальная длина 64 символа.',
 };
 
 export const COMMON_FIELD_NAME: IFieldDescriptor = {
@@ -19,7 +18,6 @@ export const COMMON_FIELD_NAME: IFieldDescriptor = {
     length: 250,
     required: true,
     pattern: NOT_EMPTY_STRING,
-    invalidMessage: 'Обязательное поле. Максимальная длина 250 символов. Должно быть уникальным в пределах справочника',
     isUnic: true,
     unicInDict: true,
 };
@@ -30,7 +28,6 @@ export const COMMON_FIELD_FULLNAME: IFieldDescriptor = {
     type: 'text',
     length: 2000,
     pattern: NOT_EMPTY_STRING,
-    invalidMessage: 'Максимальная длина 2000 символов.'
 };
 
 export const COMMON_FIELD_NOTE = {
@@ -38,7 +35,6 @@ export const COMMON_FIELD_NOTE = {
     title: 'Примечание',
     type: 'text',
     length: 255,
-    invalidMessage: 'Максимальная длинна 255 символов.'
 };
 
 export const COMMON_FIELDS: IFieldDescriptor[] = [{

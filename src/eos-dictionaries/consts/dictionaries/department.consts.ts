@@ -72,7 +72,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Краткое наименование подразделения',
         foreignKey: 'CLASSIF_NAME',
         length: 255,
-        invalidMessage: 'Обязательное поле. Максимальная длина 255 символов.',
         isUnic: true,
         unicInDict: true,
         forNode: false,
@@ -101,7 +100,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         length: 236,
         pattern: NOT_EMPTY_STRING,
         required: true,
-        invalidMessage: 'Обязательное поле',
         forNode: true,
     },
     Object.assign({}, COMMON_FIELD_FULLNAME, {
@@ -117,14 +115,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'text',
         foreignKey: 'FULLNAME',
         length: 1998,
-        invalidMessage: 'Максимальная длина 1998 символов.',
         forNode: true,
     }), {
         key: 'SKYPE',
         title: 'Skype',
         type: 'string',
         length: 64,
-        invalidMessage: 'Максимальная длина 64 символа.',
         forNode: true,
     }, {
         key: 'DEPARTMENT_DUE',
@@ -145,7 +141,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Индекс ДЛ',
         type: 'string',
         length: 24,
-        invalidMessage: 'Максимальная длина 24 символа',
         forNode: true,
     }, {
         key: 'indexDep',
@@ -154,7 +149,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         type: 'string',
         length: 24,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 24 символа',
         forNode: false,
     }, {
         key: 'POST_H',
@@ -188,7 +182,6 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'ISN контакта',
         type: 'number',
         pattern: /^\d*$/,
-        invalidMessage: 'Только числовые значения. Пробелы запрещены.'
     }, {
         key: 'PHONE_LOCAL',
         title: '№ местного телефона',

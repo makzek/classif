@@ -26,14 +26,12 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         key: 'RUBRIC_CODE',
         required: true,
         length: 248,
-        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Должно быть уникальным в пределах справочника',
         isUnic: true,
         unicInDict: true,
     }),
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Краткое наименование',
         length: 2000,
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Должно быть уникальным в пределах справочника',
     }),
         COMMON_FIELD_FULLNAME,
     {
