@@ -1,3 +1,4 @@
+<ng-template #showMenuTooltip>Показать<br/>меню</ng-template>
 <div class="eos-node-actions">
     <ng-container *ngFor="let item of buttons">
         <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
@@ -6,8 +7,13 @@
     <div class="actions"
         dropdown
         container="body" #dropdown="bs-dropdown">
-        <button class="btn btn-primary-light actions" tooltip="Показать меню" #itemTooltip="bs-tooltip"
-            placement="bottom" containerClass="tooltip-info" dropdownToggle (click)="itemTooltip.hide()">
+        <button class="btn btn-primary-light actions"
+            [tooltip]="showMenuTooltip"
+            #itemTooltip="bs-tooltip"
+            placement="bottom"
+            containerClass="tooltip-info"
+            dropdownToggle
+            (click)="itemTooltip.hide()">
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
         <ul *dropdownMenu
