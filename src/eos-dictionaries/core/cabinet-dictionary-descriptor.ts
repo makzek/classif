@@ -1,5 +1,5 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
-import { CABINET, USER_CABINET, DEPARTMENT, USER_CL } from 'eos-rest';
+import { CABINET, USER_CABINET, DEPARTMENT, USER_CL, FOLDER } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
 import { ALL_ROWS } from 'eos-rest/core/consts';
 import { IRecordOperationResult, IDictionaryDescriptor } from '../interfaces';
@@ -18,6 +18,29 @@ export class CabinetRecordDescriptor extends RecordDescriptor {
 }
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
+
+    addRecord(data: any, _useless: any, isProtected = false, isDeleted = false): Promise<any> {
+
+        this.apiSrv.entityHelper.prepareAdded<CABINET>(data.rec, this.apiInstance);
+        data.rec.ISN_CABINET = this.apiSrv.sequenceMap.GetTempISN();
+        data.rec['FOLDER_List'].forEach((folder, idx) => {
+            folder.ISN_FOLDER = this.apiSrv.sequenceMap.GetTempISN();
+            folder.ISN_CABINET = data.rec.ISN_CABINET;
+            this.apiSrv.entityHelper.prepareAdded<FOLDER>(folder, 'FOLDER');
+        });
+        console.log('create cabinet data', data);
+        const changes = this.apiSrv.changeList([data.rec]);
+        console.log('changes', changes);
+        return this.apiSrv.batch(changes, '')
+            .then(([resp]: any[]) => {
+                if (resp) {
+                    return resp.ID;
+                } else {
+                    return null;
+                }
+            });
+    }
+
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
             query = ALL_ROWS;
@@ -105,21 +128,17 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
     updateRecord(originalData: any, updates: any): Promise<IRecordOperationResult[]> {
         const changeData = [];
         const results: IRecordOperationResult[] = [];
-        Object.keys(originalData).forEach((key) => {
-            if (originalData[key]) {
-                switch (key) {
-                    case 'folders':
-                    case 'owners':
-                        originalData[key].forEach((folder, idx) => {
-                            changeData.push(Object.assign({}, originalData[key][idx], updates[key][idx]));
-                        });
-                        break;
-                    case 'rec':
-                        changeData.push(Object.assign({}, originalData[key], updates[key]));
-                        break;
-                    default: // do nothing
-
-                }
+        Object.keys(updates).forEach((key) => {
+            switch (key) {
+                case 'owners':
+                    updates[key].forEach((folder, idx) => {
+                        changeData.push(EosUtils.deepUpdate(originalData[key][idx], updates[key][idx]));
+                    });
+                    break;
+                case 'rec':
+                    changeData.push(EosUtils.deepUpdate(originalData[key], updates[key]));
+                    break;
+                default: // do nothing
             }
         });
         const changes = this.apiSrv.changeList(changeData);

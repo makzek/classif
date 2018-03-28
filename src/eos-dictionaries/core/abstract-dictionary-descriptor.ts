@@ -13,6 +13,7 @@ import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 import { MockBackendService } from '../../environments/mock-backend.service';
 import { environment } from 'environments/environment';
+import { EosUtils } from 'eos-common/core/utils';
 
 export abstract class AbstractDictionaryDescriptor {
     /**
@@ -271,9 +272,9 @@ export abstract class AbstractDictionaryDescriptor {
         const changeData = [];
         let pSev: Promise<IRecordOperationResult> = Promise.resolve(null);
         const results: IRecordOperationResult[] = [];
-        Object.keys(originalData).forEach((key) => {
-            if (originalData[key]) {
-                const data = Object.assign({}, originalData[key], updates[key]);
+        Object.keys(updates).forEach((key) => {
+            if (updates[key]) {
+                const data = EosUtils.deepUpdate(originalData[key], updates[key]);
                 switch (key) {
                     case 'sev': // do nothing handle sev later
                         pSev = this.checkSevIsNew(data, originalData.rec);
@@ -296,7 +297,7 @@ export abstract class AbstractDictionaryDescriptor {
 
         // console.log('originalData', originalData);
         // console.log('changeData', changeData);
-        const record = Object.assign({}, originalData.rec, updates.rec);
+        const record = EosUtils.deepUpdate(originalData.rec, updates.rec);
         return pSev
             .then((result) => {
                 if (result) {
