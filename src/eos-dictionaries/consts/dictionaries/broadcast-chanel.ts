@@ -26,22 +26,19 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         type: 'string',
         title: 'E-mail',
         required: true,
-        length: 0,
+        length: 10,
         pattern: EMAIL,
-        invalidMessage: 'Введите корркектынй email адрес!'
     }, {
         key: '',
         type: '',
         title: 'SMTP сервер',
         required: true,
-        length: 0,
-        invalidMessage: ''
+        length: 10,
     }, {
         key: '',
         type: '',
         title: 'Использовать слудущий тип шифрования:',
         required: true,
-        invalidMessage: ''
     }, {
         key: '',
         type: '',

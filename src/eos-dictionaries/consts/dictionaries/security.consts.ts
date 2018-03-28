@@ -46,12 +46,6 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
         title: 'Конфиденциальность',
         length: 20,
         pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'NOTE',
-        type: 'text',
-        title: 'Примечание',
-        length: 255,
-        pattern: NOT_EMPTY_STRING,
     }]),
     treeFields: ['GRIF_NAME'],
     allVisibleFields: ['EDS_FLAG', 'ENCRYPT_FLAG', 'SEC_INDEX', 'NOTE'],

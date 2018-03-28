@@ -1,6 +1,7 @@
 import { IDictionaryDescriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { LINEAR_TEMPLATE } from './_linear-template';
 /*
 */
 export const SIGN_KIND_DICT: IDictionaryDescriptor = {
@@ -16,42 +17,13 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     ],
     keyField: 'ISN_LCLASSIF',
     searchConfig: [SEARCH_TYPES.quick],
-    fields: [{
-        key: 'ISN_LCLASSIF',
-        type: 'number',
-        title: 'ID',
-    }, {
-        key: 'CLASSIF_NAME',
-        title: 'Наименование',
-        type: 'string',
-        length: 64,
-        required: true,
-        pattern: NOT_EMPTY_STRING,
-        /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа. Должно быть уникальным в пределах справочника',
-        /* tslint:enable:max-line-length */
-        isUnic: true,
-        unicInDict: true,
-    }, {
+    fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'SIGN_TEXT',
         title: 'Текст подписи',
         type: 'text',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длинна 255 символов.'
-    }, {
-        key: 'DELETED',
-        title: 'Логически удален',
-        type: 'number'
-    }, {
-        key: 'PROTECTED',
-        title: 'Защищен',
-        type: 'number'
-    }, {
-        key: 'WEIGHT',
-        title: 'Вес',
-        type: 'number'
-        }],
+    }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'SIGN_TEXT'],
     searchFields: ['CLASSIF_NAME', 'SIGN_TEXT'],

@@ -36,13 +36,13 @@ export class EosDataConvertService {
                                         key: _dict + '.' + descr[_key].foreignKey,
                                         label: descr[_key].title,
                                         required: descr[_key].required,
-                                        invalidMessage: descr[_key].invalidMessage,
                                         pattern: descr[_key].pattern,
                                         isUnic: descr[_key].isUnic,
                                         unicInDict: descr[_key].inDict,
                                         forNode: descr[_key].forNode,
                                         value: data[_dict][descr[_key].foreignKey]
                                             || descr[_key].default,
+                                        length: descr[_key].length,
                                     });
                                     break;
                                 case E_FIELD_TYPE.text:
@@ -50,10 +50,10 @@ export class EosDataConvertService {
                                         key: _dict + '.' + descr[_key].foreignKey,
                                         label: descr[_key].title,
                                         required: descr[_key].required,
-                                        invalidMessage: descr[_key].invalidMessage,
                                         height: descr[_key].height,
                                         forNode: descr[_key].forNode,
                                         value: data[_dict][descr[_key].foreignKey],
+                                        length: descr[_key].length,
                                     });
                                     break;
                                 case E_FIELD_TYPE.boolean:
@@ -116,7 +116,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['SURNAME'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 64,
-                                invalidMessage: 'Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.NAME'] = new StringInput({
                                 key: 'printInfo.NAME',
@@ -125,7 +124,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['NAME'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 64,
-                                invalidMessage: 'Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.PATRON'] = new StringInput({
                                 key: 'printInfo.PATRON',
@@ -134,7 +132,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['PATRON'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 64,
-                                invalidMessage: 'Максимальная длина 64 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.DUTY_RP'] = new StringInput({
                                 key: 'printInfo.DUTY_RP',
@@ -142,7 +139,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['DUTY_RP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.DUTY_DP'] = new StringInput({
                                 key: 'printInfo.DUTY_DP',
@@ -150,7 +146,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['DUTY_DP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.DUTY_VP'] = new StringInput({
                                 key: 'printInfo.DUTY_VP',
@@ -158,7 +153,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['DUTY_VP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.PRINT_SURNAME_DP'] = new StringInput({
                                 key: 'printInfo.PRINT_SURNAME_DP',
@@ -166,7 +160,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PRINT_SURNAME_DP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.PRINT_SURNAME'] = new StringInput({
                                 key: 'printInfo.PRINT_SURNAME',
@@ -174,7 +167,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PRINT_SURNAME'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.SURNAME_RP'] = new StringInput({
                                 key: 'printInfo.SURNAME_RP',
@@ -182,7 +174,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['SURNAME_RP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.NAME_RP'] = new StringInput({
@@ -191,7 +182,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['NAME_RP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PATRON_RP'] = new StringInput({
@@ -200,7 +190,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PATRON_RP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.SURNAME_DP'] = new StringInput({
@@ -209,7 +198,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['SURNAME_DP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.NAME_DP'] = new StringInput({
@@ -218,7 +206,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['NAME_DP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PATRON_DP'] = new StringInput({
@@ -227,7 +214,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PATRON_DP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.SURNAME_VP'] = new StringInput({
@@ -236,7 +222,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['SURNAME_VP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.NAME_VP'] = new StringInput({
@@ -245,7 +230,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['NAME_VP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PATRON_VP'] = new StringInput({
@@ -254,7 +238,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PATRON_VP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.SURNAME_TP'] = new StringInput({
@@ -263,7 +246,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['SURNAME_TP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.NAME_TP'] = new StringInput({
@@ -272,7 +254,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['NAME_TP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PATRON_TP'] = new StringInput({
@@ -281,7 +262,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PATRON_TP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.SURNAME_PP'] = new StringInput({
@@ -290,7 +270,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['SURNAME_PP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.NAME_PP'] = new StringInput({
@@ -299,7 +278,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['NAME_PP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PATRON_PP'] = new StringInput({
@@ -308,7 +286,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PATRON_PP'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                                 hideLabel: true,
                             });
                             inputs['printInfo.PRINT_DUTY'] = new StringInput({
@@ -318,7 +295,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['PRINT_DUTY'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 255,
-                                invalidMessage: 'Максимальная длина 255 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.PRINT_DEPARTMENT'] = new StringInput({
                                 key: 'printInfo.PRINT_DEPARTMENT',
@@ -326,7 +302,6 @@ export class EosDataConvertService {
                                 dict: 'printInfo',
                                 value: data['printInfo']['PRINT_DEPARTMENT'],
                                 pattern: NOT_EMPTY_STRING,
-                                invalidMessage: 'Пробелы в начале и в конце строки запрещены.',
                             });
                         } else { // department
                             inputs['printInfo.NOT_USE_IN_DUTY'] = new CheckboxInput({
@@ -344,7 +319,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['PRINT_DEPARTMENT'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 2000,
-                                invalidMessage: 'Максимальная длина 2000 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                             inputs['printInfo.DEPARTMENT_RP'] = new StringInput({
                                 key: 'printInfo.DEPARTMENT_RP',
@@ -353,7 +327,6 @@ export class EosDataConvertService {
                                 value: data['printInfo']['DEPARTMENT_RP'],
                                 pattern: NOT_EMPTY_STRING,
                                 length: 248,
-                                invalidMessage: 'Максимальная длина 248 символов. Пробелы в начале и в конце строки запрещены.',
                             });
                         }
                         break;
