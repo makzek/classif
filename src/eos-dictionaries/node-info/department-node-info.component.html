@@ -1,20 +1,4 @@
 <div class="eos-node-info">
-        <span class="opened-node-actions pull-right usual-border">
-            <button class="btn icon-btn left" (click)="actionHandler(actionNavigationUp.type)" tooltip="{{actionNavigationUp.hint}}"
-                containerClass="tooltip-info"
-                placement="bottom">
-                <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
-            </button>
-            <button class="btn icon-btn right" (click)="actionHandler(actionNavigationDown.type)" tooltip="{{actionNavigationDown.hint}}"
-                containerClass="tooltip-info"
-                placement="bottom">
-                <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
-            </button>
-            <button class="btn icon-btn edit" (click)="actionHandler(actionEdit.type)" tooltip="{{actionEdit.hint}}" containerClass="tooltip-info"
-                placement="bottom">
-                <span class="icon {{actionEdit.iconClass}} small"></span>
-            </button>
-        </span>
         <div class="opened-node-wrapper">
             <div *ngIf="nodeDataFull && nodeDataFull.rec && nodeDataFull.rec['IS_NODE']"
                 class="content-block">
