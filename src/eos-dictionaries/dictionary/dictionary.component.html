@@ -1,5 +1,5 @@
 <ng-template #markAllTooltip>
-        {{anyMarked ? 'Пометить' : 'Снять'}}<br/>{{anyMarked ? 'все': 'пометки'}}
+        {{anyMarked ? 'Снять' : 'Пометить'}}<br/>{{anyMarked ? 'пометки': 'все'}}
 </ng-template>
 <div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
         'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
