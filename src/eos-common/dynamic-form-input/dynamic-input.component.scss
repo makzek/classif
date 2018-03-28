@@ -1,3 +1,12 @@
+.form-control {
+    &.placeholder {
+        color: $primary-font-color-main-theme;
+    }
+    textarea {
+        height: 50px;
+    }
+}
+
 .eos-select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -16,7 +25,7 @@
         border: 0 none transparent;
     }
     &.placeholder {
-        color: rgba(0, 0, 0, 0.5);
+        color: $primary-font-color-main-theme;
         option {
             color: black;
         }
@@ -26,10 +35,6 @@
 eos-dynamic-input {
     font-size: 0;
     display: block;
-}
-
-.placeholder {
-    color: $primary-font-color-main-theme;
 }
 
 .appearance-none {

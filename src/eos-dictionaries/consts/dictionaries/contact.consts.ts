@@ -25,41 +25,49 @@ export const CONTACT_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         type: 'string',
         title: 'ФИО',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'SURNAME_DP',
         type: 'string',
         title: 'ФИО в дательном',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'DUTY',
         type: 'string',
         title: 'Должность',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'DEPARTMENT',
         type: 'string',
         title: 'Подразделение',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'PHONE',
         type: 'string',
         title: 'Телефон городской',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'PHONE_LOCAL',
         type: 'string',
         title: 'Телефон местный',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'FAX',
         type: 'string',
         title: 'Факс',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'E_MAIL',
         type: 'string',
         title: 'E_MAIL',
         length: 255,
+        invalidMessage: 'Максимальная длинна 255 символов.',
     }, {
         key: 'EDS_FLAG',
         type: 'boolean',
@@ -73,6 +81,7 @@ export const CONTACT_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         type: 'string',
         title: 'Примечание',
         length: 2048,
+        invalidMessage: 'Максимальная длинна 2048 символов.',
     }, {
         key: 'MAIL_FORMAT',
         type: 'number',

@@ -1,6 +1,7 @@
 import { ITreeDictionaryDescriptor, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
 import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { COMMON_FIELDS, COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
 
 
 export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
@@ -15,7 +16,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
-    fields: [{
+    fields: COMMON_FIELDS.concat([{
         key: 'DUE',
         type: 'string',
         title: 'Код Дьюи организации',
@@ -29,69 +30,43 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         key: 'ISN_NODE',
         type: 'number',
         title: 'ISN организации',
-        pattern: NOT_EMPTY_STRING,
-        length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'ISN_HIGH_NODE',
         title: 'Номер вышестоящ вершины',
         type: 'number',
-        pattern: NOT_EMPTY_STRING,
-        length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'LAYER',
         title: 'Номер уровня',
         type: 'number',
-        pattern: NOT_EMPTY_STRING,
-        length: 4,
-        invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'IS_NODE',
         title: 'Признак вершины',
         type: 'number',
-        length: 1,
-    }, {
-        key: 'WEIGHT',
-        title: 'Вес элемента',
-        type: 'number',
-        length: 10,
     }, {
         key: 'MAXDUE',
         title: 'MAX значение кода Дьюи',
         type: 'string',
         pattern: NOT_EMPTY_STRING,
         length: 248,
-    }, {
-        key: 'CLASSIF_NAME',
+    },
+    Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование организации',
-        type: 'string',
-        pattern: NOT_EMPTY_STRING,
         length: 255,
-        required: true,
-    }, {
+        invalidMessage: 'Обязательное поле. Максимальная длина 255 символов. Должно быть уникальным в пределах справочника',
+    }), {
         key: 'CLASSIF_NAME_SEARCH',
         title: 'Поиск наименование организации',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'PROTECTED',
-        title: 'Признак запрета удаления',
-        type: 'number',
-        length: 1,
-    }, {
-        key: 'DELETED',
-        title: 'Признак лог удаления',
-        type: 'number',
-        length: 1,
-    }, {
-        key: 'FULLNAME',
+    },
+    Object.assign({}, COMMON_FIELD_FULLNAME, {
         title: 'Полное наименование',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-    }, {
+        invalidMessage: 'Максимальная длина 255 символов.'
+    }), {
         key: 'ZIPCODE',
         title: 'Почтовый индекс',
         type: 'string',
@@ -112,14 +87,8 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'MAIL_FOR_ALL',
         title: 'Признак использования e-mail для всех представителей',
-        type: 'number',
+        type: 'boolean',
         length: 1,
-    }, {
-        key: 'NOTE',
-        title: 'Примечание',
-        type: 'text',
-        length: 255,
-        pattern: NOT_EMPTY_STRING,
     }, {
         key: 'NEW_RECORD',
         title: 'Признак новой записи',
@@ -179,7 +148,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'CODE',
         title: 'поле для формирования выписок для ЦБ',
-        type: 'string',
+        type: 'number',
         length: 4,
         pattern: NOT_EMPTY_STRING,
         invalidMessage: 'Максимальная длина 4 символа. Можно вводить только числовые значения.'
@@ -189,28 +158,6 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'string',
         length: 64,
         pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'INS_DATE',
-        title: 'Дата и время создания',
-        type: 'date',
-    }, {
-        key: 'INS_WHO',
-        title: 'Кто создал',
-        type: 'number',
-        pattern: NOT_EMPTY_STRING,
-        length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
-    }, {
-        key: 'UPD_DATE',
-        title: 'Дата и время обновления',
-        type: 'date',
-    }, {
-        key: 'UPD_WHO',
-        title: 'Кто обновил',
-        type: 'number',
-        pattern: NOT_EMPTY_STRING,
-        length: 10,
-        invalidMessage: 'Максимальная длина 10 символов. Можно вводить только числовые значения. Пробелы запрещены.'
     }, {
         key: 'contact',
         type: 'dictionary',
@@ -226,7 +173,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
         type: 'dictionary',
         title: '',
 
-        }],
+    }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'CLASSIF_NAME_SEARCH', 'FULLNAME', 'ZIPCODE', 'CITY', 'ADDRESS', 'MAIL_FOR_ALL', 'NOTE', 'OKPO',
         'INN', 'ISN_REGION', 'OKONH', 'LAW_ADRESS', 'ISN_ORGANIZ_TYPE', 'SERTIFICAT', 'ISN_ADDR_CATEGORY', 'CODE', 'OGRN',

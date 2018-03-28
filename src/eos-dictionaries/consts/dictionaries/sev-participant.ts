@@ -9,31 +9,17 @@ export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LIN
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
     visible: true,
     keyField: 'ISN_LCLASSIF',
-    fields: [{
-        key: 'ISN_LCLASSIF',
-        type: 'number'
-    }, {
+    fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'DUE_ORGANIZ',
+        title: 'Организация',
         type: 'string',
         required: true,
-        title: 'Организация',
-        pattern: NOT_EMPTY_STRING
-    }, {
-        key: 'NOTE',
-        type: 'string',
-        title: 'Примечание',
         pattern: NOT_EMPTY_STRING
     }, {
         key: 'ISN_CHANNEL',
         type: 'number',
         title: 'Канал передачи сообщений',
         required: true,
-    }, {
-        key: 'CLASSIF_NAME',
-        type: 'string'
-    }, {
-        key: 'WEIGHT',
-        type: 'number'
     }, {
         key: 'ADDRESS',
         type: 'string',
@@ -43,7 +29,7 @@ export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LIN
         key: 'SEV_PARTICIPANT_RULE_List',
         type: '',
         title: 'Используемые правила',
-    }],
+    }]),
     editFields: ['DUE_ORGANIZ', 'NOTE', 'ISN_CHANNEL', 'ADDRESS', 'SEV_PARTICIPANT_RULE_List'],
     listFields: ['DUE_ORGANIZ'],
     allVisibleFields: ['ISN_CHANNEL', 'NOTE', 'ADDRESS', 'SEV_PARTICIPANT_RULE_List'],

@@ -1,6 +1,7 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { environment } from 'environments/environment';
+import { COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
 
 export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'cabinet',
@@ -17,23 +18,20 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
         pattern: /^\d*$/,
         length: 10,
         invalidMessage: 'Максимальная длинна 10 символов. Только числовые значения. Пробелы запрещены.',
-    }, {
+    },
+    Object.assign({}, COMMON_FIELD_NAME, {
+        key: 'CABINET_NAME',
+        title: 'Имя кабинета',
+        length: 64,
+    }),
+    Object.assign({}, COMMON_FIELD_FULLNAME, {
+        height: 50,
+        length: 2000,
+    }), {
         key: 'DUE',
         type: 'string',
         title: 'Код подразделения',
         length: 248,
-    }, {
-        key: 'CABINET_NAME',
-        type: 'string',
-        title: 'Имя кабинета',
-        required: true,
-        length: 64,
-    }, {
-        key: 'FULLNAME',
-        type: 'text',
-        title: 'Полное наименование',
-        height: 50,
-        length: 2000,
     }, {
         key: 'DEPARTMENT_NAME',
         title: 'Подразделение',

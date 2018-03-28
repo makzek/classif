@@ -27,11 +27,18 @@ export const COMMON_FIELD_NAME: IFieldDescriptor = {
 export const COMMON_FIELD_FULLNAME: IFieldDescriptor = {
     key: 'FULLNAME',
     title: 'Полное наименование',
-    type: 'string',
-    height: 50,
+    type: 'text',
     length: 2000,
     pattern: NOT_EMPTY_STRING,
     invalidMessage: 'Максимальная длина 2000 символов.'
+};
+
+export const COMMON_FIELD_NOTE = {
+    key: 'NOTE',
+    title: 'Примечание',
+    type: 'text',
+    length: 255,
+    invalidMessage: 'Максимальная длинна 255 символов.'
 };
 
 export const COMMON_FIELDS: IFieldDescriptor[] = [{
@@ -46,10 +53,6 @@ export const COMMON_FIELDS: IFieldDescriptor[] = [{
     key: 'WEIGHT',
     title: 'Вес',
     type: 'number'
-}, {
-    key: 'NOTE',
-    title: 'Примечание',
-    type: 'text',
-    length: 255,
-    invalidMessage: 'Максимальная длинна 255 символов.'
-}];
+},
+    COMMON_FIELD_NOTE
+];
