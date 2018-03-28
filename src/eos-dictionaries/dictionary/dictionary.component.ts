@@ -20,6 +20,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 import {
     WARN_EDIT_ERROR,
@@ -115,6 +116,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _modalSrv: BsModalService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
+        private _bcSrv: EosBreadcrumbsService,
     ) {
         _route.params.subscribe((params) => {
             if (params) {
@@ -201,6 +203,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        this._bcSrv._eventFromBc$.subscribe((action: IActionEvent) => {
+            if (action) {
+                this.doAction(action);
+            }
+        });
     }
 
     ngOnDestroy() {
