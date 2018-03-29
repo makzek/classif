@@ -171,7 +171,6 @@ export class RecordDescriptor {
                         length: _f.length,
                         pattern: _f.pattern,
                         required: _f.required,
-                        invalidMessage: _f.invalidMessage,
                         isUnic: _f.isUnic,
                         unicInDict: _f.unicInDict,
                         type: _f.type,

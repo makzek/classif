@@ -10,12 +10,11 @@ export class InputBase<T>{
     readonly: boolean;
     isUnic: boolean;
     unicInDict: boolean;
-    invalidMessage: string;
     hideLabel: boolean;
     forNode: boolean;
     options?: any[];
     disabled?: boolean;
-    height?: number;
+    length?: number;
 
     constructor(options: {
         value?: T,
@@ -29,11 +28,11 @@ export class InputBase<T>{
         readonly?: boolean,
         isUnic?: boolean,
         unicInDict?: boolean,
-        invalidMessage?: string,
         hideLabel?: boolean,
         forNode?: boolean,
         options?: any[],
-        disabled?: boolean
+        disabled?: boolean,
+        length?: number;
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';
@@ -46,9 +45,9 @@ export class InputBase<T>{
         this.readonly = !!options.readonly;
         this.isUnic = !!options.isUnic;
         this.unicInDict = !!options.unicInDict;
-        this.invalidMessage = options.invalidMessage || '';
         this.hideLabel = !!options.hideLabel;
         this.forNode = options.forNode;
         this.disabled = !!options.disabled;
+        this.length = options.length;
     }
 }

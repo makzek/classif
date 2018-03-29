@@ -1,8 +1,7 @@
 import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
-import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
-/*
-*/
+import { COMMON_FIELD_NAME, COMMON_FIELDS, COMMON_FIELD_CODE } from './_common';
+
 export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     id: 'cistatus',
     apiInstance: 'CITSTATUS_CL',
@@ -15,7 +14,7 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick /*, SEARCH_TYPES.full*/],
-    fields: [{
+    fields: COMMON_FIELDS.concat([{
         key: 'DUE',
         type: 'string',
         title: 'ID',
@@ -37,51 +36,16 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         key: 'LAYER',
         title: 'LAYER',
         type: 'number'
-    }, {
-        key: 'CLASSIF_NAME',
+    },
+        COMMON_FIELD_CODE,
+    Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование статуса',
-        type: 'string',
         length: 64,
-        required: true,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символа.'
-    }, {
-        key: 'NOTE',
-        title: 'Примечание',
-        type: 'text',
-        length: 255,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов.'
-    }, {
-        key: 'CODE',
-        title: 'Код',
-        type: 'string',
-        length: 64,
-        invalidMessage: 'Максимальная длина 64 символа.'
-    }, {
-        key: 'DELETED',
-        title: 'DELETED',
-        type: 'number'
-    }, {
+    }), {
         key: 'IS_NODE',
         title: 'IS_NODE',
         type: 'number'
-    }, {
-        key: 'PROTECTED',
-        title: 'PROTECTED',
-        type: 'number'
-    }, {
-        key: 'WEIGHT',
-        title: 'WEIGHT',
-        type: 'number'
-    }, {
-        key: 'MAXDUE',
-        title: 'MAX значение кода Дьюи',
-        type: 'string',
-        length: 64,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 64 символа.'
-    }],
+    }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'CLASSIF_NAME', 'NOTE'],
     searchFields: ['CODE', 'CLASSIF_NAME', /*'NOTE'*/],

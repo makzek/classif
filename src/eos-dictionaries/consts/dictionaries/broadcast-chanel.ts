@@ -1,6 +1,7 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { NOT_EMPTY_STRING, EMAIL } from '../input-validation';
+import { EMAIL } from '../input-validation';
+import { COMMON_FIELD_NAME } from './_common';
 
 export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'brodcast-chanel',
@@ -9,23 +10,9 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
     visible: true,
     keyField: 'ISN_LCLASSIF',
     title: 'Каналы передачи сообщений (NEW)',
-    fields: [{
-        key: 'ISN_LCLASSIF',
-        type: 'number',
-    }, {
-        key: 'CLASSIF_NAME',
-        type: 'string',
-        length: 0,
-        title: 'Наименование',
-        required: true,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: '',
-    }, {
-        key: 'NOTE',
-        type: 'string',
-        length: 0,
-        title: 'Примечание'
-    }, {
+    fields: LINEAR_TEMPLATE.fields.concat([
+        COMMON_FIELD_NAME,
+    {
         key: 'CHANNEL_TYPE',
         type: 'string',
         title: 'Тип канала',
@@ -35,29 +22,23 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         type: 'string',
         title: 'Параметры доставки'
     }, {
-        key: 'WEIGHT',
-        type: 'number'
-    }, {
         key: 'email',
         type: 'string',
         title: 'E-mail',
         required: true,
-        length: 0,
+        length: 10,
         pattern: EMAIL,
-        invalidMessage: 'Введите корркектынй email адрес!'
     }, {
         key: '',
         type: '',
         title: 'SMTP сервер',
         required: true,
-        length: 0,
-        invalidMessage: ''
+        length: 10,
     }, {
         key: '',
         type: '',
         title: 'Использовать слудущий тип шифрования:',
         required: true,
-        invalidMessage: ''
     }, {
         key: '',
         type: '',
@@ -80,13 +61,13 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         type: '',
         required: true,
         title: 'Задержка, мин',
-    },  {
+    }, {
         key: '',
         type: '',
         required: true,
         title: 'POP3 сервер',
         length: 0,
-    },  {
+    }, {
         key: '',
         type: '',
         required: true,
@@ -96,7 +77,7 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         type: '',
         required: true,
         title: 'Требуется шифрование',
-    },  {
+    }, {
         key: '',
         type: '',
         required: true,
@@ -113,12 +94,12 @@ export const BROADCAST_CHANEL_DICT: IDictionaryDescriptor = Object.assign({}, LI
         type: '',
         required: true,
         title: 'Папка исходящих сообщений',
-    },  {
+    }, {
         key: '',
         type: '',
         required: true,
         title: 'Метод входящих сообщений',
-    }],
+    }]),
     editFields: ['CLASSIF_NAME', 'NOTE', 'CHANNEL_TYPE', 'email'],
     listFields: ['CLASSIF_NAME', 'CHANNEL_TYPE'],
     allVisibleFields: ['NOTE', 'PARAMS'],
