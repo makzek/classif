@@ -348,7 +348,7 @@ export class EosDataConvertService {
             });
 
         }
-        console.warn('generated inputs', inputs);
+        // console.warn('generated inputs', inputs);
         return inputs;
     }
 }

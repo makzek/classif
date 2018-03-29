@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { HintConfiguration } from './hint-configuration.interface';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
-import { EosDictService } from '../services/eos-dict.service';
-import { EosStorageService } from '../../app/services/eos-storage.service';
-import { RECENT_URL } from '../../app/consts/common.consts';
 
 @Component({
     selector: 'eos-longtitle-hint',
@@ -20,12 +16,6 @@ export class LongTitleHintComponent {
     public lkm = false;
     public show = false;
     private _node: EosDictionaryNode;
-
-    constructor(
-        private _dictSrv: EosDictService,
-        private _storageSrv: EosStorageService,
-        private _router: Router,
-    ) { }
 
     public showHint(hintConfig: HintConfiguration) {
         if (this._node && this._node.id === hintConfig.node.id && this.lkm) {
@@ -50,25 +40,11 @@ export class LongTitleHintComponent {
         setTimeout(() => this.show = false, 200);
     }
 
-    public lkmClick() {
+    public innerClick(evt: Event) {
+        evt.preventDefault();
+        evt.stopPropagation();
         this.lkm = true;
         this.hideHint();
         return false;
     }
-
-    public selectNode() {
-        if (!this._node.isDeleted && this._node.id !== '') {
-            this._dictSrv.openNode(this._node.id);
-        }
-    }
-
-    public viewNode() {
-        if (!this._dictSrv.isRoot(this._node.id)) {
-            this._storageSrv.setItem(RECENT_URL, this._router.url);
-            const _path = this._node.getPath();
-            _path.push('view');
-            this._router.navigate(_path);
-        }
-    }
-
 }

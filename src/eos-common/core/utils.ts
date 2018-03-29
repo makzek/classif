@@ -75,4 +75,23 @@ export class EosUtils {
         }
         return { value: aKey, idx: aIdx };
     }
+
+    static deepUpdate(target: any, source: any) {
+        if (source instanceof Array) {
+            if (!target) {
+                target = [];
+            }
+            target = source.map((elem, idx) => EosUtils.deepUpdate(target[idx], elem));
+        } else if (source instanceof Object) {
+            if (!target) {
+                target = {};
+            }
+            Object.keys(source).forEach((key) => {
+                target[key] = EosUtils.deepUpdate(target[key], source[key]);
+            });
+        } else {
+            target = source;
+        }
+        return target;
+    }
 }
