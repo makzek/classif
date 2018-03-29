@@ -113,31 +113,13 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
-    deleteRecord(data: IEnt): Promise<any> {
-        return this._postChanges(data, { _State: _ES.Deleted });
+    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
+        const pDelete = records.map((record) => this.deleteRecord(record));
+        return Promise.all(pDelete);
     }
 
-    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
-        const pDelete = records.map((record) => {
-            record._State = _ES.Deleted;
-            const changes = this.apiSrv.changeList([record]);
-            return this.apiSrv.batch(changes, '')
-                .then(() => {
-                    return <IRecordOperationResult>{
-                        record: record,
-                        success: true
-                    };
-                })
-                .catch((err) => {
-                    return <IRecordOperationResult>{
-                        record: record,
-                        success: false,
-                        error: err
-                    };
-                });
-        });
-
-        return Promise.all(pDelete);
+    getTempISN(): number {
+        return this.apiSrv.sequenceMap.GetTempISN();
     }
 
     getApiConfig(): IAppCfg {
@@ -329,6 +311,25 @@ export abstract class AbstractDictionaryDescriptor {
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);
         return this.apiSrv.batch(changes, '');
+    }
+
+    protected deleteRecord(record: IEnt): Promise<IRecordOperationResult> {
+        record._State = _ES.Deleted;
+        const changes = this.apiSrv.changeList([record]);
+        return this.apiSrv.batch(changes, '')
+            .then(() => {
+                return <IRecordOperationResult>{
+                    record: record,
+                    success: true
+                };
+            })
+            .catch((err) => {
+                return <IRecordOperationResult>{
+                    record: record,
+                    success: false,
+                    error: err
+                };
+            });
     }
 
     protected dueToChain(due: string): string[] {

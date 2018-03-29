@@ -506,7 +506,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
 
-        this._dictSrv.openNodeFromList(this.visibleNodes[_idx]);
+        const node = this.visibleNodes[_idx];
+        if (node && node.id) {
+            this._dictSrv.openNode(node.id);
+        }
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {

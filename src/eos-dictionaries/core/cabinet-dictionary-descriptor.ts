@@ -1,7 +1,7 @@
 import { DictionaryDescriptor } from './dictionary-descriptor';
 import { CABINET, USER_CABINET, DEPARTMENT, USER_CL, FOLDER } from 'eos-rest';
 import { PipRX } from 'eos-rest/services/pipRX.service';
-import { ALL_ROWS } from 'eos-rest/core/consts';
+import { ALL_ROWS, _ES } from 'eos-rest/core/consts';
 import { IRecordOperationResult, IDictionaryDescriptor } from '../interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { EosUtils } from 'eos-common/core/utils';
@@ -10,6 +10,7 @@ import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 export class CabinetRecordDescriptor extends RecordDescriptor {
     getNewRecord(preSetData: any) {
         const rec = super.getNewRecord(preSetData);
+        EosUtils.setValueByPath(rec, 'rec.ISN_CABINET', this.dictionary.getTempISN());
         EosUtils.setValueByPath(rec, 'cabinetAccess', []);
         EosUtils.setValueByPath(rec, 'users', []);
         EosUtils.setValueByPath(rec, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key, USER_COUNT: 0 })));
@@ -19,22 +20,19 @@ export class CabinetRecordDescriptor extends RecordDescriptor {
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
 
-    addRecord(data: any, _useless: any, isProtected = false, isDeleted = false): Promise<any> {
-
+    addRecord(data: any, _parent: any, isProtected = false, isDeleted = false): Promise<any> {
         this.apiSrv.entityHelper.prepareAdded<CABINET>(data.rec, this.apiInstance);
-        data.rec.ISN_CABINET = this.apiSrv.sequenceMap.GetTempISN();
         data.rec['FOLDER_List'].forEach((folder, idx) => {
             folder.ISN_FOLDER = this.apiSrv.sequenceMap.GetTempISN();
             folder.ISN_CABINET = data.rec.ISN_CABINET;
             this.apiSrv.entityHelper.prepareAdded<FOLDER>(folder, 'FOLDER');
         });
-        console.log('create cabinet data', data);
         const changes = this.apiSrv.changeList([data.rec]);
-        console.log('changes', changes);
         return this.apiSrv.batch(changes, '')
             .then(([resp]: any[]) => {
                 if (resp) {
-                    return resp.ID;
+                    return this.updateOwnersCabinet(data.owners, data.rec.ISN_CABINET, resp.ID)
+                        .then(() => resp.ID);
                 } else {
                     return null;
                 }
@@ -104,14 +102,16 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                 .then((userCabinet: USER_CABINET[]) => {
                     this.prepareForEdit(userCabinet);
                     const userIds = userCabinet.map((u2c) => u2c.ISN_LCLASSIF);
-                    return this.apiSrv.read<USER_CL>({ 'USER_CL': userIds })
-                        .then((users) => [userCabinet, users]);
+                    if (userIds.length) {
+                        return this.apiSrv.read<USER_CL>({ 'USER_CL': userIds })
+                            .then((users) => [userCabinet, users]);
+                    } else {
+                        return [userCabinet, []];
+                    }
                 }),
-            //            this.apiSrv.read<DEPARTMENT>({ 'DEPARTMENT': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })
         ];
         return Promise.all(reqs)
-            .then(([folders, [department, owners], [userCabinet, users]/*, owners*/]) => {
-                //                this.prepareForEdit(owners);
+            .then(([folders, [department, owners], [userCabinet, users]]) => {
                 this.prepareForEdit(folders);
                 const related = {
                     department: department,
@@ -120,7 +120,6 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                     users: users,
                     owners: owners
                 };
-                // console.log('cabinet related', related);
                 return related;
             });
     }
@@ -161,7 +160,46 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             });
     }
 
+    protected deleteRecord(record: CABINET): Promise<IRecordOperationResult> {
+        return this.getOwners(record.DUE)
+            .then((owners) => this.updateOwnersCabinet(owners, record.ISN_CABINET, null))
+            .then(() => {
+                record._State = _ES.Deleted;
+                const changes = this.apiSrv.changeList([record]);
+                return this.apiSrv.batch(changes, '')
+                    .then(() => {
+                        return <IRecordOperationResult>{
+                            record: record,
+                            success: true
+                        };
+                    });
+            }).catch((err) => {
+                return <IRecordOperationResult>{
+                    record: record,
+                    success: false,
+                    error: err
+                };
+            });
+    }
+
     protected _initRecord(data: IDictionaryDescriptor) {
         this.record = new CabinetRecordDescriptor(this, data);
+    }
+
+    private updateOwnersCabinet(owners: DEPARTMENT[], oldCabinetIsn: number, newCabinetIsn: number): Promise<any> {
+        let pUpdate = Promise.resolve(null);
+        if (owners) {
+            const updatedOwners = owners
+                .filter((owner: DEPARTMENT) => owner.ISN_CABINET === oldCabinetIsn)
+                .map((owner) => {
+                    owner.ISN_CABINET = newCabinetIsn;
+                    return owner;
+                });
+            const ownersChanges = this.apiSrv.changeList(updatedOwners);
+            if (ownersChanges) {
+                pUpdate = this.apiSrv.batch(ownersChanges, '');
+            }
+        }
+        return pUpdate;
     }
 }

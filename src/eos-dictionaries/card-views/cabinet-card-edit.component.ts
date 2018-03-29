@@ -191,6 +191,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
         // console.log('data', data);
         this.cabinetOwners = [];
         this.dictSrv.getCabinetOwners(data.department.DUE).then((owners) => {
+            data.owners = owners;
             Object.keys(this.form.controls).forEach((key) => {
                 if (key.indexOf('owners') > -1) {
                     this.form.removeControl(key);
@@ -223,18 +224,20 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             key: 'rkpd'
         }];
 
-
-        this.cabinetUsers = data.users.map((user) => {
+        this.cabinetUsers = [];
+        data.users.forEach((user) => {
             const userAccess = data.cabinetAccess.find((access) => access.ISN_LCLASSIF === user.ISN_LCLASSIF);
-            const cUser = {
-                fio: user.SURNAME_PATRON,
-                rk: userAccess.HIDE_INACCESSIBLE,
-                rkpd: userAccess.HIDE_INACCESSIBLE_PRJ
-            };
-            this.cabinetFolders.forEach((folder) => {
-                cUser[folder.key] = userAccess.FOLDERS_AVAILABLE.indexOf(folder.key + '') > -1;
-            });
-            return cUser;
+            if (userAccess) {
+                const cUser = {
+                    fio: user.SURNAME_PATRON,
+                    rk: userAccess.HIDE_INACCESSIBLE,
+                    rkpd: userAccess.HIDE_INACCESSIBLE_PRJ
+                };
+                this.cabinetFolders.forEach((folder) => {
+                    cUser[folder.key] = userAccess.FOLDERS_AVAILABLE.indexOf(folder.key + '') > -1;
+                });
+                this.cabinetUsers.push(cUser);
+            }
         });
 
         this.updateAccessMarks();
