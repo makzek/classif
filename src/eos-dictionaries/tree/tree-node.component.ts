@@ -14,6 +14,7 @@ export class TreeNodeComponent implements OnInit {
     @Input('showDeleted') showDeleted: boolean;
     @Input() layer: number;
     viewFields: IFieldView[];
+    public w: number;
     public _fonWidth: number;
     public _fonLeft: number;
     public _fonTop: number;
@@ -25,6 +26,7 @@ export class TreeNodeComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getTreeView();
+        window.innerWidth > 1600 ? this.w = 285 - this.layer * 24 : this.w = 205 - this.layer * 24;
     }
 
     onExpand(evt: Event/*, isDeleted: boolean*/) {
@@ -48,4 +50,8 @@ export class TreeNodeComponent implements OnInit {
             this._router.navigate(_path);
         }
     }
+
+    onResize($event: Event) {
+        window.innerWidth > 1600 ? this.w = 285 - this.layer * 24 : this.w = 205 - this.layer * 24;
+      }
 }
