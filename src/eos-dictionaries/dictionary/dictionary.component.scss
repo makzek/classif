@@ -29,7 +29,7 @@
     }
 
     .opened-wrapper {
-        height: calc(100vh - 60px);
+        height: calc(100vh - 108px);
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
@@ -250,7 +250,86 @@
     }
 }
 
-@media (max-width: 1599px) {
+@media(min-width: 0px) and (max-width: 1499px) {
+    .eos-dictionary {
+        .tree-wrapper {
+            width: $dictionary-block-width;;
+        }
+        .opened-wrapper {
+            width: $dictionary-block-width;;
+        }
+        &.info {
+            .selected-wrapper { //
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
+        }
+
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
+        }
+    }
+}
+
+@media(min-width: 1500px) and (max-width: 1599px) {
     .eos-dictionary {
         .tree-wrapper {
             width: $dictionary-block-width;
@@ -270,7 +349,7 @@
 
             .opened-wrapper {
                 right: 0;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
         &.tree {
@@ -285,7 +364,7 @@
 
             .opened-wrapper {
                 right: -1 * $dictionary-block-width;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
 
@@ -301,7 +380,7 @@
 
             .opened-wrapper {
                 right: 0;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
 
             .selected-wrapper {
@@ -323,7 +402,7 @@
 
             .opened-wrapper {
                 right: -1 * $dictionary-block-width;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
 
@@ -350,7 +429,7 @@
 
             .opened-wrapper {
                 right: 0;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
         &.tree {
@@ -365,7 +444,7 @@
 
             .opened-wrapper {
                 right: -1 * $dictionary-block-width-big-display;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
 
@@ -381,7 +460,7 @@
 
             .opened-wrapper {
                 right: 0;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
 
             .selected-wrapper {
@@ -403,7 +482,7 @@
 
             .opened-wrapper {
                 right: -1 * $dictionary-block-width-big-display;
-                top: $top-menu-height - $breadcrumbs-height;
+                top: $top-menu-height;
             }
         }
     }

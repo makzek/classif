@@ -111,6 +111,40 @@
     }
 }
 
+@media(min-width: 0px) and (max-width: 1499px) {
+    .pagination-option {
+        &.tree {
+            left: $grid-gutter-width / 2;
+            right: $grid-gutter-width / 2;
+        }
+        &.info {
+            right: $grid-gutter-width / 2;
+            left: $grid-gutter-width / 2;
+        }
+        &.full {
+            left: $grid-gutter-width / 2;
+            right: $grid-gutter-width / 2;
+        }
+    }
+}
+
+@media(min-width: 1500px) and (max-width: 1599px) {
+    .pagination-option {
+        &.tree {
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2;
+        }
+        &.info {
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
+            left: $grid-gutter-width / 2;
+        }
+        &.full {
+            left: $grid-gutter-width / 2 + $dictionary-block-width;
+            right: $grid-gutter-width / 2 + $dictionary-block-width;
+        }
+    }
+}
+
 @media (min-width: 1600px) {
     .pagination-option {
         &.tree {
@@ -128,19 +162,3 @@
     }
 }
 
-@media (max-width: 1599px) {
-    .pagination-option {
-        &.tree {
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2;
-        }
-        &.info {
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
-            left: $grid-gutter-width / 2;
-        }
-        &.full {
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
-        }
-    }
-}
