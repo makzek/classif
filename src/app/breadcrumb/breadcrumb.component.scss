@@ -80,6 +80,11 @@
         position: relative;
         right: 0;
         background: $block-color-main-theme;
+        transition: right 0.3s;
+    }
+
+    .pushpin:focus {
+        border: none;
     }
 
     .left-sandwich {
