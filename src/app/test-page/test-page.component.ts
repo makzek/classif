@@ -14,8 +14,6 @@ const TEST_INPUTS = <IBaseInput[]>[{
     label: 'string',
     required: true,
     pattern: /\S+/,
-    isUnic: false,
-    unicInDict: false,
     forNode: false,
     value: 'no data',
 }, {

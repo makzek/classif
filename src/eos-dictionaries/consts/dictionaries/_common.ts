@@ -18,8 +18,8 @@ export const COMMON_FIELD_NAME: IFieldDescriptor = {
     length: 250,
     required: true,
     pattern: NOT_EMPTY_STRING,
-    isUnic: true,
-    unicInDict: true,
+    // isUnic: true,
+    // unicInDict: true,
 };
 
 export const COMMON_FIELD_FULLNAME: IFieldDescriptor = {
