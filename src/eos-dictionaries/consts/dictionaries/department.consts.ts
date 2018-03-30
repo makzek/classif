@@ -20,7 +20,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     id: 'departments',
     apiInstance: 'DEPARTMENT',
     dictType: E_DICT_TYPE.department,
-    title: 'Подразделения (unstable)',
+    title: 'Подразделения',
     visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard',

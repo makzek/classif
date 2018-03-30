@@ -1,5 +1,6 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
+import { COMMON_FIELD_NAME } from './_common';
 
 export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-rules',
@@ -9,14 +10,17 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     title: 'Правила СЭВ (NEW)',
     keyField: 'ISN_LCLASSIF',
     fields: LINEAR_TEMPLATE.fields.concat([{
+        key: 'RULE_KIND',
+        type: 'number',
+        title: 'Вид правила',
+    },
+    Object.assign({}, COMMON_FIELD_NAME, {
+        title: 'Наименование правила МЭДО'
+    }), {
         key: 'doctype',
         type: '',
         title: 'Тип документа',
         required: true,
-    }, {
-        key: 'RULE_KIND',
-        type: 'number',
-        title: 'Вид правила',
     }, {
         key: 'DUE_DOCGROUP',
         type: 'string',
@@ -24,11 +28,11 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     }, {
         key: 'FILTER_CONFIG',
         title: 'FILTER_CONFIG',
-        type: 'string',
+        type: 'text',
     }, {
         key: 'SCRIPT_CONFIG',
         title: 'SCRIPT_CONFIG',
-        type: 'string'
+        type: 'text'
     }, {
         key: 'DUE_DEP',
         title: 'SCRIPT_CONFIG',
@@ -46,7 +50,7 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         type: '',
         title: 'Параметры обработки',
     }]),
-    editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver'],
+    editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver', 'FILTER_CONFIG', 'SCRIPT_CONFIG'],
     listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP'],
     allVisibleFields: ['doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'NOTE', 'sender', 'receiver', 'processing_params'],
     quickViewFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'sender'],
