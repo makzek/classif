@@ -4,7 +4,7 @@
     max-width: 800px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: calc(100vh - 190px);
+    max-height: calc(100vh - 240px);
 }
 
 .edit-content {
@@ -45,15 +45,13 @@
                 line-height: 20px;
                 font-size: 14px;
                 vertical-align: middle;
+                text-transform: none;
             }
         }
         margin: 0 0 $grid-gutter-width /2;
         /* margin-bottom: $grid-gutter-width /2; */
         &:not(.gender) {
             position: relative;
-        }
-        .form-control-static.placeholder {
-            color: rgba(0, 0, 0, 0.5);
         }
     }
     .form-control,
@@ -64,11 +62,14 @@
         background-color: $light-grey-1;
         border-width: 1px;
         box-shadow: none;
+        &.placeholder {
+            color: $primary-font-color-main-theme;
+        }
     }
     .form-control-static {
         padding-left: 0;
         padding-right: 0;
-        min-height: 32px;
+        height: 32px;
         line-height: 32px;
         background-color: transparent;
     }

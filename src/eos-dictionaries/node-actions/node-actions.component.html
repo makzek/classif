@@ -1,3 +1,4 @@
+<ng-template #showMenuTooltip>Показать<br/>меню</ng-template>
 <div class="eos-node-actions">
     <ng-container *ngFor="let item of buttons">
         <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
@@ -5,16 +6,15 @@
 
     <div class="actions"
         dropdown
-        container="body"
-        #dropdown="bs-dropdown">
+        container="body" #dropdown="bs-dropdown">
         <button class="btn btn-primary-light actions"
-            tooltip="Показать меню"
+            [tooltip]="showMenuTooltip"
             #itemTooltip="bs-tooltip"
             placement="bottom"
             containerClass="tooltip-info"
             dropdownToggle
             (click)="itemTooltip.hide()">
-            <span class="eos-icon eos-icon-fab-blue small"></span>
+            <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
         <ul *dropdownMenu
             class="dropdown-menu action-menu"
@@ -126,39 +126,36 @@
                 <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
                     <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
                         <span [hidden]="isActive" [ngClass]="icon"></span>
-    <span [hidden]="!isActive"
-        [ngClass]="activeIcon"></span>
-    </button>
-    </div>
-    <ul *dropdownMenu
-        class="dropdown-menu"
-        role="menu">
-        <li *ngFor="let item of addMenu"
-            role="menuitem"
-            class="menuitem">
-            <a class="dropdown-item f-14 selected have-padding"
-                tooltip="{{item.hint}}"
-                placement="bottom"
-                containerClass="tooltip-info">
-                <span>{{item.title}}</span>
-            </a>
-        </li>
-    </ul>
-    </span>
-    </ng-container>
-    <ng-container *ngIf="action !== ADD_ACTION || !isTree">
-        <div [tooltip]="hint"
-            #itemTooltip="bs-tooltip"
-            placement="bottom"
-            containerClass="tooltip-info">
-            <button [disabled]="!enabled"
-                class="btn btn-primary-light {{buttonClass}}"
-                [ngClass]="{active: isActive}"
-                (click)="itemTooltip.hide(); doAction(action)">
+                        <span [hidden]="!isActive"
+                            [ngClass]="activeIcon"></span>
+                    </button>
+                </div>
+                <ul *dropdownMenu
+                    class="dropdown-menu"
+                    role="menu">
+                    <li *ngFor="let item of addMenu"
+                        role="menuitem">
+                        <button class="action-dropdown-item btn btn-primary-light"
+                        (click)="doAction(action,item.params)">{{item.title}}</button>
+                    </li>
+                </ul>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="action !== ADD_ACTION || !isTree">
+            <span class="btn-group">
+                <div [tooltip]="hint"
+                    #itemTooltip="bs-tooltip"
+                    placement="bottom"
+                    containerClass="tooltip-info">
+                    <button [disabled]="!enabled"
+                        class="btn btn-primary-light {{buttonClass}}"
+                        [ngClass]="{active: isActive}"
+                        (click)="itemTooltip.hide(); doAction(action)">
                     <span [hidden]="isActive" [ngClass]="icon"></span>
                     <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
-            </button>
-        </div>
-    </ng-container>
+                    </button>
+                </div>
+            </span>
+        </ng-container>
     </span>
 </ng-template>

@@ -88,22 +88,25 @@ export class InputControlService {
         const value = input.value !== undefined ? input.value : null;
         const validators = [];
 
-        if (input.controlType === 'date') {
-            validators.push(this.dateValueValidator());
-        }
-
-        if (input.pattern) {
-            validators.push(Validators.pattern(input.pattern));
-        }
-        if (input.isUnic) {
-            validators.push(this.unicValueValidator(input.key, input.unicInDict));
-        }
-        if (input.required) {
-            validators.push(Validators.required);
-        }
         if (input.disabled) {
             group[input.key] = new FormControl({ value: value, disabled: true }, validators);
         } else {
+            if (input.controlType === 'date') {
+                validators.push(this.dateValueValidator());
+            }
+
+            if (input.pattern) {
+                validators.push(Validators.pattern(input.pattern));
+            }
+            if (input.isUnic) {
+                validators.push(this.unicValueValidator(input.key, input.unicInDict));
+            }
+            if (input.required) {
+                validators.push(Validators.required);
+            }
+            if (input.length) {
+                validators.push(Validators.maxLength(input.length));
+            }
             group[input.key] = new FormControl(value, validators);
         }
     }

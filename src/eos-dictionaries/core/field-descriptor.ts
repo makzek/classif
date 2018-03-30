@@ -9,7 +9,6 @@ export class FieldDescriptor implements IFieldDescriptorBase {
     readonly foreignKey?: string;
     readonly pattern?: RegExp;
     readonly required?: boolean;
-    readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
     readonly options?: ISelectOption[];
@@ -38,8 +37,6 @@ export class FieldDescriptor implements IFieldDescriptorBase {
         }
 
         this.required = !!data.required;
-
-        this.invalidMessage = data.invalidMessage || '';
 
         this.isUnic = !!data.isUnic;
 

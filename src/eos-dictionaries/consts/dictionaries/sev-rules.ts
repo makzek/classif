@@ -1,6 +1,5 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { NOT_EMPTY_STRING } from '../input-validation';
 
 export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-rules',
@@ -9,20 +8,7 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     visible: true,
     title: 'Правила СЭВ (NEW)',
     keyField: 'ISN_LCLASSIF',
-    fields: [{
-        key: 'ISN_LCLASSIF',
-        type: 'number'
-    }, {
-        key: 'CLASSIF_NAME',
-        type: 'string',
-        required: true,
-        title: 'Наименование',
-        pattern: NOT_EMPTY_STRING
-    }, {
-        key: 'NOTE',
-        type: 'text',
-        title: 'Примечание',
-    }, {
+    fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'doctype',
         type: '',
         title: 'Тип документа',
@@ -37,15 +23,15 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         title: 'Группа документов',
     }, {
         key: 'FILTER_CONFIG',
+        title: 'FILTER_CONFIG',
         type: 'string',
     }, {
         key: 'SCRIPT_CONFIG',
+        title: 'SCRIPT_CONFIG',
         type: 'string'
     }, {
-        key: 'WEIGHT',
-        type: 'number'
-    }, {
         key: 'DUE_DEP',
+        title: 'SCRIPT_CONFIG',
         type: 'string'
     }, {
         key: 'sender',
@@ -59,7 +45,7 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         key: 'processing_params',
         type: '',
         title: 'Параметры обработки',
-    }],
+    }]),
     editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver'],
     listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP'],
     allVisibleFields: ['doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'NOTE', 'sender', 'receiver', 'processing_params'],

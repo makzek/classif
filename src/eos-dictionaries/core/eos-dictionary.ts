@@ -188,7 +188,6 @@ export class EosDictionary {
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
-        // console.log('getFullNodeInfo fired', nodeId);
         return this.getNodeByNodeId(nodeId)
             .then((node) => {
                 if (node) {
@@ -200,7 +199,6 @@ export class EosDictionary {
                                 this.descriptor.getRelatedSev(node.data.rec)
                             ]).then(([related, sev]) => {
                                 node.data = Object.assign(node.data, related, { sev: sev });
-                                // console.log('full department info', node.data);
                                 return node;
                             });
                         case 'rubricator':

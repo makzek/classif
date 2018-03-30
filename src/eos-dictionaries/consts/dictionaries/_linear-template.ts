@@ -20,7 +20,6 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     },
     Object.assign({}, COMMON_FIELD_NAME, {
         length: 64,
-        invalidMessage: 'Обязательное поле. Максимальная длина 64 символов. Должно быть уникальным в пределах справочника',
     })]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CLASSIF_NAME', 'NOTE'],
