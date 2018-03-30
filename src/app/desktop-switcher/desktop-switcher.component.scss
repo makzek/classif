@@ -45,6 +45,30 @@
                 }
             }
         }
+        .li-spiner {
+            border: 1px solid #e6e6e6;
+            border-bottom: transparent;
+            cursor: pointer;
+            .spinner-wrapper {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+                background-color: #fff;
+                opacity: 0.6;
+                z-index: 1050;
+            }
+            .spinner-holder {
+                position: absolute;
+                bottom: 0;
+                top: 0;
+                width: 100%;
+                height: 2em;
+                margin: auto;
+                text-align: center;
+            }
+        }
     }
 
     .desktop-wrapper {
