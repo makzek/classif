@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { EosBreadcrumbsService } from '../services/eos-breadcrumbs.service';
+import { EosDictService } from '../../eos-dictionaries/services/eos-dict.service';
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { EosSandwichService } from '../../eos-dictionaries/services/eos-sandwich.service';
 import { Subject } from 'rxjs/Subject';
@@ -23,7 +24,9 @@ export class BreadcrumbsComponent implements OnDestroy {
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
 
+    haveInfoData = false;
     showPushpin = false;
+    showInfoAct = false;
 
     private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -32,17 +35,24 @@ export class BreadcrumbsComponent implements OnDestroy {
         private _router: Router,
         private _sandwichSrv: EosSandwichService,
         private _route: ActivatedRoute,
+        private _dictSrv: EosDictService
     ) {
-        _breadcrumbsSrv.breadcrumbs$.subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
+        _breadcrumbsSrv.breadcrumbs$.takeUntil(this.ngUnsubscribe).
+            subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
         this.update();
         this._router.events
             .filter((evt) => evt instanceof NavigationEnd)
             .takeUntil(this.ngUnsubscribe)
             .subscribe(() => this.update());
 
-        this._sandwichSrv.currentDictState$.subscribe((state) => {
-            this.infoOpened = state[1];
-        });
+        this._sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
+            .subscribe((state) => {
+                this.infoOpened = state[1];
+            });
+
+        this._dictSrv.openedNode$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((n) => n ? this.haveInfoData = true : this.haveInfoData = false);
     }
 
     ngOnDestroy() {
@@ -58,5 +68,6 @@ export class BreadcrumbsComponent implements OnDestroy {
         let _actRoute = this._route.snapshot;
         while (_actRoute.firstChild) { _actRoute = _actRoute.firstChild; }
         this.showPushpin = _actRoute.data.showPushpin;
+        this.showInfoAct = _actRoute.data && _actRoute.data.showSandwichInBreadcrumb;
     }
 }

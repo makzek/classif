@@ -22,15 +22,19 @@
         <eos-pushpin [hidden]="!showPushpin" [infoOpened]="infoOpened"></eos-pushpin>
         <eos-sandwich class="right-sandwich" [isLeft]="false"></eos-sandwich>
     </span>
-    <div class="opened-node-actions info-actions usual-border" [ngClass]="{'o-info' : infoOpened, 'c-info': !infoOpened}">
+    <div *ngIf="showInfoAct"
+        class="opened-node-actions info-actions usual-border"
+        [ngClass]="{'o-info' : infoOpened, 'c-info': !infoOpened, 'hiden': !infoOpened}">
         <button class="btn icon-btn left"
+            *ngIf="haveInfoData"
             (click)="actionHandler(actionNavigationUp.type)"
             tooltip="{{actionNavigationUp.hint}}"
             containerClass="tooltip-info"
             placement="bottom">
                 <span class="icon eos-icon eos-icon-arrow-v-blue-left small"></span>
             </button>
-        <button class="btn icon-btn right"
+        <button *ngIf="haveInfoData"
+            class="btn icon-btn right"
             (click)="actionHandler(actionNavigationDown.type)"
             tooltip="{{actionNavigationDown.hint}}"
             containerClass="tooltip-info"
@@ -38,6 +42,7 @@
                 <span class="icon eos-icon eos-icon-arrow-v-blue-right small"></span>
             </button>
         <button class="btn icon-btn edit"
+            *ngIf="haveInfoData"
             (click)="actionHandler(actionEdit.type)"
             tooltip="{{actionEdit.hint}}"
             containerClass="tooltip-info"

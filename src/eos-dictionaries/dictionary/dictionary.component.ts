@@ -204,11 +204,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
 
-        this._bcSrv._eventFromBc$.subscribe((action: IActionEvent) => {
-            if (action) {
-                this.doAction(action);
-            }
-        });
+        this._bcSrv._eventFromBc$.takeUntil(this.ngUnsubscribe)
+            .subscribe((action: IActionEvent) => {
+                if (action) {
+                    this.doAction(action);
+                }
+            });
     }
 
     ngOnDestroy() {
