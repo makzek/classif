@@ -1,5 +1,6 @@
 .eos-tree-node {
     .node {
+        font-size: 0;
         cursor: pointer;
         padding: $item-width / 6 0;
         line-height: 20px;
@@ -9,18 +10,13 @@
             display: inline-block;
         }
         .tree-btn {
-            /* padding: 13.5px 16px; */
-            /* width: $item-width; */
             width: 20px;
             vertical-align: top;
         }
         .title {
+            font-size: 14px;
             word-wrap: break-word;
             color: $primary-font-color-main-theme;
-
-            .title-item {
-                padding-right: $item-width / 6;
-            }
         }
 
         .tringle-size {

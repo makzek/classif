@@ -5,11 +5,17 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IFieldView } from 'eos-dictionaries/interfaces';
 
+const BIG_PANEL = 340,
+    SMALL_PANEL = 260,
+    PADDING_W = 32,
+    BIG_DISPLAY_W = 1600;
+
 @Component({
     selector: 'eos-tree-node',
     templateUrl: 'tree-node.component.html',
 })
 export class TreeNodeComponent implements OnInit {
+    readonly paddingWidth = PADDING_W;
     @Input('node') node: EosDictionaryNode;
     @Input('showDeleted') showDeleted: boolean;
     @Input() layer: number;
@@ -26,7 +32,7 @@ export class TreeNodeComponent implements OnInit {
 
     ngOnInit() {
         this.viewFields = this.node.getTreeView();
-        window.innerWidth > 1600 ? this.w = 285 - this.layer * 24 : this.w = 205 - this.layer * 24;
+        this.onResize();
     }
 
     onExpand(evt: Event/*, isDeleted: boolean*/) {
@@ -43,7 +49,7 @@ export class TreeNodeComponent implements OnInit {
         }
     }
 
-    onSelect(evt: Event, isDeleted: boolean/*, el: HTMLElement*/) {
+    onSelect(evt: Event, isDeleted: boolean) {
         evt.stopPropagation();
         if (!isDeleted) {
             const _path = this.node.getPath();
@@ -51,7 +57,7 @@ export class TreeNodeComponent implements OnInit {
         }
     }
 
-    onResize($event: Event) {
-        window.innerWidth > 1600 ? this.w = 285 - this.layer * 24 : this.w = 205 - this.layer * 24;
+    onResize() {
+        window.innerWidth > BIG_DISPLAY_W ? this.w = BIG_PANEL - this.layer * PADDING_W : this.w = SMALL_PANEL - this.layer * 32;
       }
 }
