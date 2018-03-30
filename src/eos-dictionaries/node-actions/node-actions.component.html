@@ -8,7 +8,7 @@
         dropdown
         container="body"
         #dropdown="bs-dropdown">
-        <button class="btn btn-primary-light actions"
+        <button class="btn btn-primary-light"
             [tooltip]="showMenuTooltip"
             #itemTooltip="bs-tooltip"
             placement="bottom"
@@ -17,6 +17,7 @@
             (click)="itemTooltip.hide()">
             <span class="eos-icon eos-icon-fab-blue small rotate"></span>
         </button>
+        <!--MENU-->
         <ul *dropdownMenu
             class="dropdown-menu action-menu"
             role="menu">
@@ -26,8 +27,8 @@
                 container="body"
                 dropdown
                 triggers="mouseclick"
-                class="menuitem selected">
-                <a class="dropdown-item f-14 selected"
+                class="menuitem">
+                <a class="dropdown-item selected f-14"
                     [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
                     placement="bottom"
@@ -43,7 +44,7 @@
                     <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                 </a>
 
-                <a class="dropdown-item f-14 selected"
+                <a class="dropdown-item selected f-14"
                     [ngClass]="{'highlighted': item.isActive}"
                     dropdownToggle
                     tooltip="{{item.hint}}"
@@ -107,12 +108,19 @@
     let-icon="iconClass"
     let-activeIcon="activeIconClass"
     let-action="type">
-    <span class="visible-lg-inline-block actions"
+    <div class="visible-lg-inline-block actions"
         *ngIf="show">
         <ng-container *ngIf="action === ADD_ACTION && isTree">
-            <span class="btn-group" dropdown>
-                <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
-                    <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
+            <span dropdown
+                class="btn-group">
+                <div [tooltip]="hint"
+                    #itemTooltip="bs-tooltip"
+                    placement="bottom"
+                    containerClass="tooltip-info">
+                    <button [disabled]="!enabled"
+                        class="btn btn-primary-light {{buttonClass}}"
+                        dropdownToggle [ngClass]="{active: isActive}"
+                        (click)="itemTooltip.hide();">
                         <span [hidden]="isActive"
                             [ngClass]="icon"></span>
                         <span [hidden]="!isActive"
@@ -124,12 +132,19 @@
                     role="menu">
                     <li *ngFor="let item of addMenu"
                         role="menuitem">
-                        <button class="action-dropdown-item btn btn-primary-light"
-                            (click)="doAction($event, item, item.params)">{{item.title}}</button>
+                        <a class="dropdown-item f-14 selected"
+                            [ngClass]="{'highlighted': item.isActive}"
+                            tooltip="{{item.hint}}"
+                            placement="bottom"
+                            containerClass="tooltip-info"
+                            (click)="doAction($event, item, item.params)">
+                                <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                        </a>
                     </li>
                 </ul>
             </span>
         </ng-container>
+
         <ng-container *ngIf="action !== ADD_ACTION || !isTree">
             <span class="btn-group">
                 <div [tooltip]="hint"
@@ -148,5 +163,5 @@
                 </div>
             </span>
         </ng-container>
-    </span>
+    </div>
 </ng-template>

@@ -1,6 +1,5 @@
 .eos-node-actions {
     height: $item-height;
-
     .actions {
         display: inline-block;
     }
@@ -13,45 +12,10 @@
         height: $item-height;
         width: $item-width;
     }
-
-    .actions {
-        .menuitem {
-            .dropdown-item {
-                font-size: 14px;
-            }
-        }
-    }
-
-    .fa {
-        font-size: 22px;
-    }
 }
 
 .disabled {
     color: $disabled-color-main-theme;
-}
-
-.action-dropdown-item {
-    text-align: left;
-    width: 100%;
-    height: $item-height;
-
-    .fa {
-        width: 24px;
-        height: 24px;
-        text-align: center;
-        font-size: 22px;
-    }
-
-    .drop-title {
-        vertical-align: top;
-        margin-top: 4px;
-        display: inline-block;
-    }
-}
-
-.action-dropdown-item:focus {
-    color: $button-color-hover-main-theme;
 }
 
 .create-new-node {
