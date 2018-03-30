@@ -186,27 +186,6 @@ export class RecordDescriptor {
         return _description;
     }
 
-    getNewRecord(preSetData: {}): {} {
-        const fields = this.getFieldSet(E_FIELD_SET.edit);
-        const newRec = {
-            rec: {}
-        };
-        fields.forEach((fld) => {
-            if (E_FIELD_TYPE.dictionary === fld.type) {
-                newRec[fld.key] = {};
-            } else if (E_FIELD_TYPE.array === fld.type) {
-                newRec[fld.key] = [];
-            }
-        });
-        if (preSetData) {
-            Object.keys(preSetData)
-                .forEach((key) => {
-                    newRec[key] = Object.assign({}, newRec[key], preSetData[key]);
-                });
-        }
-        return newRec;
-    }
-
     protected _getFullSearchFields() {
         return this.fullSearchFields;
     }
