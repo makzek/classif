@@ -252,10 +252,8 @@
 
 @media(min-width: 0px) and (max-width: 1499px) {
     .eos-dictionary {
-        .tree-wrapper {
-            width: $dictionary-block-width;;
-        }
-        .opened-wrapper {
+        .tree-wrapper, .opened-wrapper {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
             width: $dictionary-block-width;;
         }
         &.info {
@@ -331,10 +329,7 @@
 
 @media(min-width: 1500px) and (max-width: 1599px) {
     .eos-dictionary {
-        .tree-wrapper {
-            width: $dictionary-block-width;
-        }
-        .opened-wrapper {
+        .tree-wrapper, .opened-wrapper {
             width: $dictionary-block-width;
         }
         &.info {
@@ -411,10 +406,7 @@
 
 @media (min-width: 1600px) {
     .eos-dictionary {
-        .tree-wrapper {
-            width: $dictionary-block-width-big-display;
-        }
-        .opened-wrapper {
+        .tree-wrapper, .opened-wrapper {
             width: $dictionary-block-width-big-display;
         }
         &.info {
