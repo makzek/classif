@@ -58,41 +58,6 @@
                             <span class="eos-icon eos-icon-checkbox-blue small"></span>
                         </div>
                 </a>
-                <!--
-                <div [hidden]="desk.edited"
-                    class="desktop-wrapper"
-                    tooltip="{{desk.name}}"
-                    placement="bottom"
-                    containerClass="tooltip-info">
-                    <a class="dropdown-item">
-                        <span triggers="hover">{{desk.name}}</span>
-                    </a>
-                </div>-->
-                <!--
-                <div class="actions">
-                    <div *ngIf="desk.id !== 'system'"
-                        tooltip="Редактировать"
-                        placement="bottom"
-                        containerClass="tooltip-info"
-                        class="act-ico">
-                        <span class="eos-icon eos-icon-edit-blue small"
-                        (click)="openEditForm($event, desk)"></span>
-                    </div>
-                </div>
-                <div class="actions">
-                    <div *ngIf="desk.id !== 'system'"
-                        tooltip="Удалить"
-                        placement="bottom"
-                        containerClass="tooltip-info"
-                        class="act-ico">
-                        <span class="eos-icon eos-icon-close-blue small"
-                            (click)="removeDesk(desk,$event)"></span>
-                    </div>
-                    <div *ngIf="desk.name === selectedDesk.name"
-                        [ngClass]="desk.name !== 'system' ? 'check' : 'act-ico'">
-                        <span class="eos-icon eos-icon-checkbox-blue small"></span>
-                    </div>
-                </div>-->
             </ng-container>
             <ng-container *ngIf="desk.edited">
                 <div class="input-group">
