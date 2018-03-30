@@ -8,14 +8,6 @@ import { EosUtils } from 'eos-common/core/utils';
 import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 export class CabinetRecordDescriptor extends RecordDescriptor {
-    getNewRecord(preSetData: any) {
-        const rec = super.getNewRecord(preSetData);
-        EosUtils.setValueByPath(rec, 'rec.ISN_CABINET', this.dictionary.getTempISN());
-        EosUtils.setValueByPath(rec, 'cabinetAccess', []);
-        EosUtils.setValueByPath(rec, 'users', []);
-        EosUtils.setValueByPath(rec, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key, USER_COUNT: 0 })));
-        return rec;
-    }
 }
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
@@ -25,7 +17,6 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         data.rec['FOLDER_List'].forEach((folder, idx) => {
             folder.ISN_FOLDER = this.apiSrv.sequenceMap.GetTempISN();
             folder.ISN_CABINET = data.rec.ISN_CABINET;
-            this.apiSrv.entityHelper.prepareAdded<FOLDER>(folder, 'FOLDER');
         });
         const changes = this.apiSrv.changeList([data.rec]);
         return this.apiSrv.batch(changes, '')
@@ -90,6 +81,19 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             });
     }
 
+    getNewRecord(preSetData: any) {
+        const rec = super.getNewRecord(preSetData);
+        EosUtils.setValueByPath(rec, 'rec.ISN_CABINET', this.getTempISN());
+        EosUtils.setValueByPath(rec, 'cabinetAccess', []);
+        EosUtils.setValueByPath(rec, 'users', []);
+        EosUtils.setValueByPath(rec, 'rec.FOLDER_List',
+            CABINET_FOLDERS.map((fConst) =>
+                this.apiSrv.entityHelper.prepareAdded<FOLDER>({ FOLDER_KIND: fConst.key, USER_COUNT: 0 }, 'FOLDER')
+            )
+        );
+        return rec;
+    }
+
     getRelated(rec: CABINET): Promise<any> {
         const reqs = [
             this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
@@ -130,8 +134,8 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         Object.keys(updates).forEach((key) => {
             switch (key) {
                 case 'owners':
-                    updates[key].forEach((folder, idx) => {
-                        changeData.push(EosUtils.deepUpdate(originalData[key][idx], updates[key][idx]));
+                    updates[key].forEach((item, idx) => {
+                        changeData.push(EosUtils.deepUpdate(originalData[key][idx], item));
                     });
                     break;
                 case 'rec':
@@ -144,7 +148,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
         if (changes && changes.length) {
             return this.apiSrv.batch(changes, '')
                 .then(() => {
-                    results.push({ success: true, record: Object.assign({}, originalData.rec, updates.rec) });
+                    results.push({ success: true, record: originalData.rec });
                     return results;
                 });
         } else {

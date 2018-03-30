@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -171,6 +171,24 @@ export abstract class AbstractDictionaryDescriptor {
             }
         });
         return _criteries;
+    }
+
+    getNewRecord(preSetData: {}): {} {
+        const fields = this.record.getFieldSet(E_FIELD_SET.edit);
+        const newRec = {
+            rec: {}
+        };
+        fields.forEach((fld) => {
+            if (E_FIELD_TYPE.dictionary === fld.type) {
+                newRec[fld.key] = {};
+            } else if (E_FIELD_TYPE.array === fld.type) {
+                newRec[fld.key] = [];
+            }
+        });
+        if (preSetData) {
+            EosUtils.deepUpdate(newRec, preSetData);
+        }
+        return newRec;
     }
 
     getRelated(rec: any, ..._args): Promise<any> {
