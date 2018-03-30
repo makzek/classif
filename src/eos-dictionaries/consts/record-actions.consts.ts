@@ -35,8 +35,8 @@ export const RECORD_ACTIONS_NAVIGATION_DOWN = {
 export const RECORD_ACTIONS: IAction[] = [{
     type: E_RECORD_ACTIONS.add,
     group: E_ACTION_GROUPS.common,
-    title: 'Создать новый',
-    hint: 'Создать новый',
+    title: 'Создать',
+    hint: 'Создать',
     iconClass: 'eos-icon eos-icon-plus-blue small',
     disabledIconClass: 'eos-icon eos-icon-plus-grey small',
     activeIconClass: null,
@@ -131,8 +131,8 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
 }, {
     type: E_RECORD_ACTIONS.removeHard,
     group: E_ACTION_GROUPS.group,
-    title: 'Удалить (физически)',
-    hint: 'Удалить (физически)',
+    title: 'Удалить навсегда',
+    hint: 'Удалить навсегда',
     iconClass: 'eos-icon eos-icon-bin-forever-blue small',
     disabledIconClass: 'eos-icon eos-icon-bin-forever-grey small',
     activeIconClass: null,

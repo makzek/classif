@@ -64,14 +64,14 @@
 }
 
 .action-menu {
-    width: 400px;
+    width: 300px;
     position: relative;
-    left: -176px;
+    left: -134px;
 }
 
 @media (max-width: 1200px) {
     .action-menu {
-        width: 400px;
+        width: 300px;
         position: relative;
         left: auto;
     }
@@ -107,7 +107,7 @@
     .action-menu::before {
         content: '';
         top: -8px;
-        left: 190px;
+        left: 150px;
         display: block;
         position: absolute;
         width: 15px;
@@ -120,7 +120,7 @@
     .action-menu::after {
         content: '';
         top: -6px;
-        left: 190px;
+        left: 150px;
         display: block;
         position: absolute;
         width: 15px;
