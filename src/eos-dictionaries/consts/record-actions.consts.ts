@@ -6,6 +6,7 @@ export const RECORD_ACTIONS_EDIT = {
     title: 'Редактировать',
     hint: 'Редактировать',
     iconClass: 'eos-icon eos-icon-edit-blue small',
+    disabledIconClass: 'eos-icon eos-icon-edit-grey small',
     hoverIconClass: 'eos-icon eos-icon-edit-dark-blue small',
     activeIconClass: null,
     buttonClass: null
@@ -17,6 +18,7 @@ export const RECORD_ACTIONS_NAVIGATION_UP = {
     title: null,
     hint: 'Предыдущая',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
+    disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-top small',
     buttonClass: null
 };
 
@@ -26,6 +28,7 @@ export const RECORD_ACTIONS_NAVIGATION_DOWN = {
     title: null,
     hint: 'Следующая',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
+    disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-bottom small',
     buttonClass: null
 };
 
@@ -35,6 +38,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Создать новый',
     hint: 'Создать новый',
     iconClass: 'eos-icon eos-icon-plus-blue small',
+    disabledIconClass: 'eos-icon eos-icon-plus-grey small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-plus-dark-blue small',
     buttonClass: null
@@ -46,6 +50,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Удалить логически',
     hint: 'Удалить логически',
     iconClass: 'eos-icon eos-icon-bin-blue small',
+    disabledIconClass: 'eos-icon eos-icon-bin-grey small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-bin-dark-blue small',
     buttonClass: null
@@ -55,6 +60,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Отображать логически удалённые',
     hint: 'Отображать логически удалённые',
     iconClass: 'eos-icon eos-icon-show-blue small',
+    disabledIconClass: 'eos-icon eos-icon-show-grey small',
     activeIconClass: 'eos-icon eos-icon-show-white small',
     hoverIconClass: '',
     buttonClass: null
@@ -64,6 +70,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Пользовательская сортировка',
     hint: 'Пользовательская сортировка',
     iconClass: 'eos-icon eos-icon-custom-list-blue small',
+    disabledIconClass: 'eos-icon eos-icon-custom-list-grey small',
     activeIconClass: 'eos-icon eos-icon-custom-list-white small',
     hoverIconClass: 'eos-icon eos-icon-custom-list-white small',
     buttonClass: null
@@ -73,6 +80,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Вверх',
     hint: 'Вверх',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
+    disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-top small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-arrow-v-dark-blue-top small',
     buttonClass: null
@@ -82,6 +90,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Вниз',
     hint: 'Вниз',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
+    disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-bottom small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-arrow-v-dark-blue-bottom small',
     buttonClass: null
@@ -91,6 +100,7 @@ export const RECORD_ACTIONS: IAction[] = [{
     title: 'Отобразить все дочерние записи единым списком',
     hint: 'Отобразить все дочерние записи единым списком',
     iconClass: 'eos-icon eos-icon-tree-blue small',
+    disabledIconClass: 'eos-icon eos-icon-tree-grey small',
     activeIconClass: 'eos-icon eos-icon-tree-white small',
     hoverIconClass: '',
     buttonClass: null
@@ -99,7 +109,8 @@ export const RECORD_ACTIONS: IAction[] = [{
     group: E_ACTION_GROUPS.common,
     title: 'Настройка отображения',
     hint: 'Настройка отображения',
-    iconClass: 'fa fa-cog',
+    iconClass: 'eos-icon eos-icon-settings-blue small',
+    disabledIconClass: '',
     activeIconClass: null,
     hoverIconClass: '',
     buttonClass: null
@@ -113,6 +124,7 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     title: 'Восстановить',
     hint: 'Восстановить логически удаленные элементы',
     iconClass: 'eos-icon eos-icon-repair-blue small',
+    disabledIconClass: 'eos-icon eos-icon-repair-grey small',
     activeIconClass: '',
     hoverIconClass: 'eos-icon eos-icon-repair-dark-blue small',
     buttonClass: null
@@ -122,6 +134,7 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     title: 'Удалить (физически)',
     hint: 'Удалить (физически)',
     iconClass: 'eos-icon eos-icon-bin-forever-blue small',
+    disabledIconClass: 'eos-icon eos-icon-bin-forever-grey small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-bin-forever-dark-blue small',
     buttonClass: null
@@ -131,6 +144,7 @@ export const MORE_RECORD_ACTIONS: IAction[] = [{
     title: 'Создать представителя организации',
     hint: 'Создать представителя организации',
     iconClass: 'eos-icon eos-icon-avatar-blue small',
+    disabledIconClass: 'eos-icon eos-icon-avatar-grey small',
     activeIconClass: null,
     hoverIconClass: 'eos-icon eos-icon-avatar-dark-blue small',
     buttonClass: null

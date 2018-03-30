@@ -36,6 +36,7 @@ export interface IAction {
     title: string;
     hint: string;
     iconClass: string;
+    disabledIconClass: string;
     hoverIconClass: string;
     activeIconClass: string;
     buttonClass: string;

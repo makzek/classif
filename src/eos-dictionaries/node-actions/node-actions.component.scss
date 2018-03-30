@@ -27,6 +27,10 @@
     }
 }
 
+.disabled {
+    color: $disabled-color-main-theme;
+}
+
 .action-dropdown-item {
     text-align: left;
     width: 100%;

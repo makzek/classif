@@ -6,7 +6,8 @@
 
     <div class="actions"
         dropdown
-        container="body" #dropdown="bs-dropdown">
+        container="body"
+        #dropdown="bs-dropdown">
         <button class="btn btn-primary-light actions"
             [tooltip]="showMenuTooltip"
             #itemTooltip="bs-tooltip"
@@ -27,21 +28,23 @@
                 triggers="mouseclick"
                 class="menuitem selected">
                 <a class="dropdown-item f-14 selected"
+                    [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
                     placement="bottom"
                     containerClass="tooltip-info"
                     *ngIf="item.show && item.type !== ADD_ACTION && isTree"
-                    (click)="doAction(item.type); dropdown.hide()">
+                    (click)="doAction($event, item); menuMng($event, item.enabled, dropdown)">
                     <div class="drop-ico">
-                        <span *ngIf="!item.isActive"
+                        <span *ngIf="item.enabled"
                             class="{{item.iconClass}}"></span>
-                        <span *ngIf="item.isActive"
-                            class="{{item.activeIconClass}}"></span>
+                        <span *ngIf="!item.enabled"
+                            class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span>{{item.title}}</span>
+                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                 </a>
 
                 <a class="dropdown-item f-14 selected"
+                    [ngClass]="{'highlighted': item.isActive}"
                     dropdownToggle
                     tooltip="{{item.hint}}"
                     placement="bottom"
@@ -49,28 +52,13 @@
                     *ngIf="item.show && item.type === ADD_ACTION && isTree"
                     (click)="stopCloseMenu($event)">
                     <div class="drop-ico">
-                        <span *ngIf="!item.isActive"
+                        <span *ngIf="item.enabled"
                             class="{{item.iconClass}}"></span>
-                        <span *ngIf="item.isActive"
-                            class="{{item.activeIconClass}}"></span>
+                        <span *ngIf="!item.enabled"
+                            class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span>{{item.title}}</span>
+                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                 </a>
-                <!--
-                <button dropdownToggle
-                    *ngIf="item.show && item.type === ADD_ACTION && isTree"
-                    [disabled]="!item.enabled"
-                    [ngClass]="{active: item.isActive}"
-                    class="action-dropdown-item btn btn-primary-light hidden-lg"
-                    (click)="stopCloseMenu($event)"
-                    tooltip="{{item.hint}}"
-                    placement="bottom"
-                    containerClass="tooltip-info">
-                        <span *ngIf="!item.isActive" class="{{item.iconClass}}"></span>
-                        <span *ngIf="item.isActive" class="{{item.activeIconClass}}"></span>
-                        <span class="drop-title">{{item.title}}</span>
-                </button>-->
-
                 <ul *dropdownMenu
                     class="dropdown-menu menu-two-lvl hidden-lg"
                     role="menu">
@@ -81,29 +69,29 @@
                             tooltip="{{item.hint}}"
                             placement="bottom"
                             containerClass="tooltip-info"
-                            (click)="doAction(item.type, type.params)">
+                            (click)="doAction($event, item, type.params)">
                                 <span>{{type.title}}</span>
                             </a>
                     </li>
                 </ul>
             </li>
-
             <li *ngFor="let item of moreButtons"
                 role="menuitem"
                 class="menuitem">
                 <a class="dropdown-item f-14 selected"
+                    [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
                     placement="bottom"
                     containerClass="tooltip-info"
                     *ngIf="item.show"
-                    (click)="doAction(item.type)">
+                    (click)="doAction($event, item)">
                     <div class="drop-ico">
-                        <span *ngIf="!item.isActive"
+                        <span *ngIf="item.enabled"
                             class="{{item.iconClass}}"></span>
-                        <span *ngIf="item.isActive"
-                            class="{{item.activeIconClass}}"></span>
+                        <span *ngIf="!item.enabled"
+                            class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span>{{item.title}}</span>
+                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                 </a>
             </li>
         </ul>
@@ -125,7 +113,8 @@
             <span class="btn-group" dropdown>
                 <div [tooltip]="hint" #itemTooltip="bs-tooltip" placement="bottom" containerClass="tooltip-info">
                     <button [disabled]="!enabled" class="btn btn-primary-light {{buttonClass}}" dropdownToggle [ngClass]="{active: isActive}" (click)="itemTooltip.hide();">
-                        <span [hidden]="isActive" [ngClass]="icon"></span>
+                        <span [hidden]="isActive"
+                            [ngClass]="icon"></span>
                         <span [hidden]="!isActive"
                             [ngClass]="activeIcon"></span>
                     </button>
@@ -136,7 +125,7 @@
                     <li *ngFor="let item of addMenu"
                         role="menuitem">
                         <button class="action-dropdown-item btn btn-primary-light"
-                        (click)="doAction(action,item.params)">{{item.title}}</button>
+                            (click)="doAction($event, item, item.params)">{{item.title}}</button>
                     </li>
                 </ul>
             </span>
@@ -150,9 +139,11 @@
                     <button [disabled]="!enabled"
                         class="btn btn-primary-light {{buttonClass}}"
                         [ngClass]="{active: isActive}"
-                        (click)="itemTooltip.hide(); doAction(action)">
-                    <span [hidden]="isActive" [ngClass]="icon"></span>
-                    <span [hidden]="!isActive" [ngClass]="activeIcon"></span>
+                        (click)="itemTooltip.hide(); doAction($event, item)"> <!--!!!!-->
+                        <span [hidden]="isActive"
+                            [ngClass]="icon"></span>
+                        <span [hidden]="!isActive"
+                            [ngClass]="activeIcon"></span>
                     </button>
                 </div>
             </span>
