@@ -1,7 +1,67 @@
 <ng-template #showMenuTooltip>Показать<br/>меню</ng-template>
+
 <div class="eos-node-actions">
     <ng-container *ngFor="let item of buttons">
-        <ng-container *ngTemplateOutlet="btnTpl; context: item"></ng-container>
+        <div class="visible-lg-inline-block actions"
+            *ngIf="item.show">
+            <ng-container *ngIf="item.type === ADD_ACTION && isTree">
+                <span dropdown
+                    class="btn-group">
+                    <!--Icons button for tree and ADD-->
+                    <div [tooltip]="item.hint"
+                     #itemTooltip="bs-tooltip"
+                        placement="bottom"
+                        containerClass="tooltip-info">
+                        <button dropdownToggle
+                            [disabled]="!item.enabled"
+                            class="btn btn-primary-light {{item.buttonClass}}"
+                            [ngClass]="{active: item.isActive}"
+                            (click)="itemTooltip.hide();">
+                            <span [hidden]="item.isActive"
+                                [ngClass]="item.iconClass"></span>
+                            <span [hidden]="!item.isActive"
+                                [ngClass]="activeIcon"></span>
+                        </button>
+                    </div>
+
+                    <ul *dropdownMenu
+                        class="dropdown-menu"
+                        role="menu">
+                        <li *ngFor="let elem of addMenu"
+                            role="menuitem"
+                            class="menuitem">
+                            <a class="dropdown-item f-14 selected"
+                                tooltip="{{elem.hint}}"
+                                placement="bottom"
+                                containerClass="tooltip-info"
+                                (click)="doAction($event, item, elem.params)">
+                                    <span>{{elem.title}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </ng-container>
+
+            <ng-container *ngIf="item.type !== ADD_ACTION || !isTree">
+                <!--Icons button for other-->
+                <span class="btn-group">
+                    <div [tooltip]="item.hint"
+                        #itemTooltip="bs-tooltip"
+                        placement="bottom"
+                        containerClass="tooltip-info">
+                        <button [disabled]="!item.enabled"
+                            class="btn btn-primary-light {{item.buttonClass}}"
+                            [ngClass]="{active: item.isActive}"
+                            (click)="itemTooltip.hide(); doAction($event, item, null)">
+                            <span [hidden]="item.isActive"
+                                [ngClass]="item.iconClass"></span>
+                            <span [hidden]="!item.isActive"
+                                [ngClass]="item.activeIconClass"></span>
+                        </button>
+                    </div>
+                </span>
+            </ng-container>
+        </div>
     </ng-container>
 
     <div class="actions"
@@ -98,70 +158,3 @@
         </ul>
     </div>
 </div>
-
-<ng-template #btnTpl
-    let-show="show"
-    let-hint="hint"
-    let-enabled="enabled"
-    let-isActive="isActive"
-    let-buttonClass="buttonClass"
-    let-icon="iconClass"
-    let-activeIcon="activeIconClass"
-    let-action="type">
-    <div class="visible-lg-inline-block actions"
-        *ngIf="show">
-        <ng-container *ngIf="action === ADD_ACTION && isTree">
-            <span dropdown
-                class="btn-group">
-                <div [tooltip]="hint"
-                    #itemTooltip="bs-tooltip"
-                    placement="bottom"
-                    containerClass="tooltip-info">
-                    <button [disabled]="!enabled"
-                        class="btn btn-primary-light {{buttonClass}}"
-                        dropdownToggle [ngClass]="{active: isActive}"
-                        (click)="itemTooltip.hide();">
-                        <span [hidden]="isActive"
-                            [ngClass]="icon"></span>
-                        <span [hidden]="!isActive"
-                            [ngClass]="activeIcon"></span>
-                    </button>
-                </div>
-                <ul *dropdownMenu
-                    class="dropdown-menu"
-                    role="menu">
-                    <li *ngFor="let item of addMenu"
-                        role="menuitem">
-                        <a class="dropdown-item f-14 selected"
-                            [ngClass]="{'highlighted': item.isActive}"
-                            tooltip="{{item.hint}}"
-                            placement="bottom"
-                            containerClass="tooltip-info"
-                            (click)="doAction($event, item, item.params)">
-                                <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        </ng-container>
-
-        <ng-container *ngIf="action !== ADD_ACTION || !isTree">
-            <span class="btn-group">
-                <div [tooltip]="hint"
-                    #itemTooltip="bs-tooltip"
-                    placement="bottom"
-                    containerClass="tooltip-info">
-                    <button [disabled]="!enabled"
-                        class="btn btn-primary-light {{buttonClass}}"
-                        [ngClass]="{active: isActive}"
-                        (click)="itemTooltip.hide(); doAction($event, item)"> <!--!!!!-->
-                        <span [hidden]="isActive"
-                            [ngClass]="icon"></span>
-                        <span [hidden]="!isActive"
-                            [ngClass]="activeIcon"></span>
-                    </button>
-                </div>
-            </span>
-        </ng-container>
-    </div>
-</ng-template>

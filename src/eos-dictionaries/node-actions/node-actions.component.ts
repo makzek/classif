@@ -67,7 +67,7 @@ export class NodeActionsComponent implements OnDestroy {
     }
 
     doAction(e: MouseEvent, item: IActionButton, params?: any) {
-        // console.log('action', E_RECORD_ACTIONS[action], params);
+        // console.log('action', item.type, params);
         if (item.enabled) {
             this.action.emit({ action: item.type, params: params });
         } else {
