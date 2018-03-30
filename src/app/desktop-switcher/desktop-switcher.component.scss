@@ -34,7 +34,11 @@
             .dropdown-item {
                 padding-left: 20px;
                 .item-title {
-                    white-space: normal;
+                    width: 210px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
                 }
                 .drop-ico {
                     float: right;
