@@ -17,9 +17,39 @@
 .disabled {
     color: $disabled-color-main-theme;
 }
+.btn-group {
+    .dropdown-menu {
+        .menuitem{
+            .dropdown-item {
+                padding: 0 20px;
+            }
+        }
+    }
 
-.create-new-node {
-    padding: 0;
+    .dropdown-menu::before {
+        content: '';
+        top: -8px;
+        left: 15px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $border-color-main-theme;
+        z-index: -1;
+    }
+    .dropdown-menu::after {
+        content: '';
+        top: -6px;
+        left: 15px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $white;
+        z-index: -1;
+    }
 }
 
 .menu-two-lvl {
