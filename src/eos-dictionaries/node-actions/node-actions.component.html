@@ -94,7 +94,7 @@
                     tooltip="{{item.hint}}"
                     placement="bottom"
                     containerClass="tooltip-info"
-                    *ngIf="item.show && item.type !== ADD_ACTION && isTree"
+                    *ngIf="item.show && item.type !== ADD_ACTION"
                     (click)="doAction($event, item); menuMng($event, item.enabled, dropdown)">
                     <div class="drop-ico">
                         <span *ngIf="item.enabled"
@@ -113,8 +113,8 @@
                     tooltip="{{item.hint}}"
                     placement="bottom"
                     containerClass="tooltip-info"
-                    *ngIf="item.show && item.type === ADD_ACTION && isTree"
-                    (click)="stopCloseMenu($event)">
+                    *ngIf="item.show && item.type === ADD_ACTION"
+                    (click)="isTree ? stopCloseMenu($event) : doAction($event, item)">
                     <div class="drop-ico">
                         <span *ngIf="item.enabled"
                             class="{{item.iconClass}}"></span>
