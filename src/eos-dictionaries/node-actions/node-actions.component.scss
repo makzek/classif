@@ -20,7 +20,7 @@ $drop-menu-width: 300px;
     color: $disabled-color-main-theme;
 }
 .btn-group {
-    .dropdown-menu {
+    .create-menu {
         .menuitem{
             .dropdown-item {
                 padding: 0 20px;
@@ -28,7 +28,7 @@ $drop-menu-width: 300px;
         }
     }
 
-    .dropdown-menu::before {
+    .create-menu::before {
         content: '';
         top: -8px;
         left: 15px;
@@ -40,7 +40,7 @@ $drop-menu-width: 300px;
         background: $border-color-main-theme;
         z-index: -1;
     }
-    .dropdown-menu::after {
+    .create-menu::after {
         content: '';
         top: -6px;
         left: 15px;
