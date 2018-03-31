@@ -1,3 +1,5 @@
+$drop-menu-width: 300px;
+
 .eos-node-actions {
     height: $item-height;
     .actions {
@@ -58,14 +60,14 @@
 }
 
 .action-menu {
-    width: 300px;
+    width: $drop-menu-width;
     position: relative;
     left: -134px;
 }
 
 @media (max-width: 1200px) {
     .action-menu {
-        width: 300px;
+        width: $drop-menu-width;
         position: relative;
         left: auto;
     }
@@ -110,7 +112,6 @@
         background: $border-color-main-theme;
         z-index: -1;
     }
-
     .action-menu::after {
         content: '';
         top: -6px;
@@ -122,5 +123,8 @@
         transform: rotate(45deg);
         background: $white;
         z-index: -1;
+    }
+    .hide-on-big {
+        display: none;
     }
 }

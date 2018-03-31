@@ -81,13 +81,14 @@
         <ul *dropdownMenu
             class="dropdown-menu action-menu"
             role="menu">
+            <!--Common buttons-->
             <li *ngFor="let item of buttons"
                 role="menuitem"
                 placement="right"
                 container="body"
                 dropdown
                 triggers="mouseclick"
-                class="menuitem">
+                class="menuitem hide-on-big">
                 <a class="dropdown-item selected f-14"
                     [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
@@ -120,6 +121,7 @@
                     </div>
                     <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                 </a>
+                <!--Two lvl menu-->
                 <ul *dropdownMenu
                     class="dropdown-menu menu-two-lvl hidden-lg"
                     role="menu">
@@ -131,11 +133,12 @@
                             placement="bottom"
                             containerClass="tooltip-info"
                             (click)="doAction($event, item, type.params)">
-                                <span>{{type.title}}</span>
-                            </a>
+                            <span>{{type.title}}</span>
+                        </a>
                     </li>
                 </ul>
             </li>
+            <!--More buttons-->
             <li *ngFor="let item of moreButtons"
                 role="menuitem"
                 class="menuitem">
