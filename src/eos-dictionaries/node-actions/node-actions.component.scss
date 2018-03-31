@@ -63,6 +63,18 @@ $drop-menu-width: 300px;
     width: $drop-menu-width;
     position: relative;
     left: -134px;
+    font-size: 0;
+    .menuitem {
+        .dropdown-item {
+            .title {
+                width: $drop-menu-width - $item-width;
+                display: inline-block;
+                vertical-align: middle;
+                white-space: normal;
+                line-height: normal;
+            }
+        }
+    }
 }
 
 @media (max-width: 1200px) {

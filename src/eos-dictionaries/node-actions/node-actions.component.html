@@ -89,7 +89,7 @@
                 dropdown
                 triggers="mouseclick"
                 class="menuitem hide-on-big">
-                <a class="dropdown-item selected f-14"
+                <a class="dropdown-item selected"
                     [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
                     placement="bottom"
@@ -102,10 +102,12 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title f-14">
+                        <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    </div>
                 </a>
 
-                <a class="dropdown-item selected f-14"
+                <a class="dropdown-item selected"
                     [ngClass]="{'highlighted': item.isActive}"
                     dropdownToggle
                     tooltip="{{item.hint}}"
@@ -119,7 +121,9 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title f-14">
+                        <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    </div>
                 </a>
                 <!--Two lvl menu-->
                 <ul *dropdownMenu
@@ -155,7 +159,9 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title f-14">
+                        <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    </div>
                 </a>
             </li>
         </ul>
