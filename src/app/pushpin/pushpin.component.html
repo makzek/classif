@@ -7,13 +7,14 @@
         container="body"
         tooltip="Прикрепить"
         placement="bottom"
+        [ngClass]="{'info-open' : infoOpened, 'info-close' : !infoOpened }"
         containerClass="tooltip-info"
-        [style.right]="infoOpened ? openStyle : closeStyle"
         [disabled]="disable">
         <span class="eos-icon eos-icon-pin-blue small"></span>
     </button>
     <ul *dropdownMenu
-        class="pushdrop dropdown-menu dropdown-menu-right pushdrop"
+        class="pushdrop dropdown-menu dropdown-menu-right"
+        [ngClass]="{'info': infoOpened}"
         role="menu">
         <li class="desk"
             *ngFor="let desk of deskList"
