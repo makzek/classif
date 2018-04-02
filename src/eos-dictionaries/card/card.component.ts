@@ -170,6 +170,10 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             this.goTo(url);
         } else {
             const backUrl = (this.node.parent || this.node).getPath();
+            if (this.node.dictionaryId === 'cabinet') { // hardcode because of cabinets. sorry :(
+                backUrl[1] = 'departments';
+                backUrl[2] = this.node.data.rec.DUE;
+            }
             this._router.navigate(backUrl);
         }
     }

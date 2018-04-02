@@ -405,7 +405,7 @@ export class EosDictionary {
     }
 
     getNewNode(preSetData: {}, parent?: EosDictionaryNode): {} {
-        const nodeData = this.descriptor.record.getNewRecord(preSetData);
+        const nodeData = this.descriptor.getNewRecord(preSetData);
 
         if (this.descriptor.dictionaryType === E_DICT_TYPE.department && parent) {
             if (nodeData['rec']['IS_NODE'] === 0) {

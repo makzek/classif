@@ -1,16 +1,13 @@
 <ng-container *ngIf="node">
     <ng-container [ngSwitch]="node.dictionaryId">
         <eos-department-node-info *ngSwitchCase="'departments'"
-            [node]="node"
-            (action)="onAction($event)">
+            [node]="node">
         </eos-department-node-info>
         <eos-cabinet-node-info *ngSwitchCase="'cabinet'"
-            [node]="node"
-            (action)="onAction($event)">
+            [node]="node">
         </eos-cabinet-node-info>
         <eos-node-info *ngSwitchDefault
-            [node]="node"
-            (action)="onAction($event)">
+            [node]="node">
         </eos-node-info>
     </ng-container>
 </ng-container>

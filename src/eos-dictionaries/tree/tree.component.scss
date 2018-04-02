@@ -1,38 +1,49 @@
 .eos-tree-node {
     .node {
+        font-size: 0;
         cursor: pointer;
-        width: $dictionary-block-width;
         padding: $item-width / 6 0;
-        line-height: 22px;
+        line-height: 20px;
         .fake-padding,
         .tree-btn,
         .title {
             display: inline-block;
         }
         .tree-btn {
-            /* padding: 13.5px 16px; */
-            /* width: $item-width; */
             width: 20px;
             vertical-align: top;
         }
         .title {
+            font-size: 14px;
             word-wrap: break-word;
             color: $primary-font-color-main-theme;
-
-            .title-item {
-                padding-right: $item-width / 6;
-            }
         }
 
         .tringle-size {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
         }
         .select {
             color: $secondary-font-color-main-theme;
         }
         .deleted {
             color: $disabled-color-main-theme;
+        }
+    }
+}
+
+@media(max-width: 1599px) {
+    .eos-tree-node {
+        .node {
+            width: $dictionary-block-width;
+        }
+    }
+}
+
+@media(min-width: 1600px) {
+    .eos-tree-node {
+        .node {
+            width: $dictionary-block-width-big-display;
         }
     }
 }

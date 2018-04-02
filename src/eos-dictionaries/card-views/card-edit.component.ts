@@ -39,9 +39,7 @@ export class CardEditComponent implements OnChanges, OnDestroy {
      * return new data, used by parent component
      */
     getNewData(): any {
-        const newData = EosUtils.deepUpdate({}, this.data);
-        return EosUtils.deepUpdate(newData, this.newData);
-        // return this.newData;
+        return EosUtils.deepUpdate(Object.assign({}, this.data), this.newData);
     }
 
     ngOnChanges(changes: SimpleChanges) {

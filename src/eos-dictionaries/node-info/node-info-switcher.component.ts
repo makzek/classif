@@ -1,7 +1,6 @@
-import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
-import { E_RECORD_ACTIONS } from 'eos-dictionaries/interfaces';
 import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 
@@ -10,7 +9,6 @@ import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
     templateUrl: 'node-info-switcher.component.html',
 })
 export class NodeInfoSwitcherComponent implements OnDestroy {
-    @Output() action: EventEmitter<E_RECORD_ACTIONS> = new EventEmitter<E_RECORD_ACTIONS>();
 
     node: EosDictionaryNode;
     private ngUnsubscribe: Subject<any> = new Subject();
@@ -26,9 +24,5 @@ export class NodeInfoSwitcherComponent implements OnDestroy {
     ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-    }
-
-    onAction(action: E_RECORD_ACTIONS) {
-        this.action.emit(action);
     }
 }

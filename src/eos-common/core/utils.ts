@@ -87,10 +87,14 @@ export class EosUtils {
                 target = {};
             }
             Object.keys(source).forEach((key) => {
-                target[key] = EosUtils.deepUpdate(target[key], source[key]);
+                if (key.indexOf('_') !== 0) { // ignore _* properties
+                    target[key] = EosUtils.deepUpdate(target[key], source[key]);
+                }
             });
         } else {
-            target = source;
+            if (source !== undefined) {
+                target = source;
+            }
         }
         return target;
     }
