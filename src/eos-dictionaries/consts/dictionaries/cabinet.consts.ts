@@ -1,6 +1,5 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { environment } from 'environments/environment';
 import { COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
 
 export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
@@ -8,7 +7,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     apiInstance: 'CABINET',
     title: 'Кабинеты',
     keyField: 'ISN_CABINET',
-    visible: !environment.production,
+    visible: false,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'edit',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
     fields: [{

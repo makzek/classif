@@ -1,4 +1,4 @@
-import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult } from 'eos-dictionaries/interfaces';
+import { E_DICT_TYPE, IDictionaryDescriptor, E_FIELD_SET, IRecordOperationResult, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from 'eos-dictionaries/core/record-descriptor';
 
 import { commonMergeMeta } from 'eos-rest/common/initMetaData';
@@ -13,6 +13,7 @@ import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
 import { MockBackendService } from '../../environments/mock-backend.service';
 import { environment } from 'environments/environment';
+import { EosUtils } from 'eos-common/core/utils';
 
 export abstract class AbstractDictionaryDescriptor {
     /**
@@ -112,31 +113,13 @@ export abstract class AbstractDictionaryDescriptor {
             });
     }
 
-    deleteRecord(data: IEnt): Promise<any> {
-        return this._postChanges(data, { _State: _ES.Deleted });
+    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
+        const pDelete = records.map((record) => this.deleteRecord(record));
+        return Promise.all(pDelete);
     }
 
-    deleteRecords(records: IEnt[]): Promise<IRecordOperationResult[]> {
-        const pDelete = records.map((record) => {
-            record._State = _ES.Deleted;
-            const changes = this.apiSrv.changeList([record]);
-            return this.apiSrv.batch(changes, '')
-                .then(() => {
-                    return <IRecordOperationResult>{
-                        record: record,
-                        success: true
-                    };
-                })
-                .catch((err) => {
-                    return <IRecordOperationResult>{
-                        record: record,
-                        success: false,
-                        error: err
-                    };
-                });
-        });
-
-        return Promise.all(pDelete);
+    getTempISN(): number {
+        return this.apiSrv.sequenceMap.GetTempISN();
     }
 
     getApiConfig(): IAppCfg {
@@ -188,6 +171,24 @@ export abstract class AbstractDictionaryDescriptor {
             }
         });
         return _criteries;
+    }
+
+    getNewRecord(preSetData: {}): {} {
+        const fields = this.record.getFieldSet(E_FIELD_SET.edit);
+        const newRec = {
+            rec: {}
+        };
+        fields.forEach((fld) => {
+            if (E_FIELD_TYPE.dictionary === fld.type) {
+                newRec[fld.key] = {};
+            } else if (E_FIELD_TYPE.array === fld.type) {
+                newRec[fld.key] = [];
+            }
+        });
+        if (preSetData) {
+            EosUtils.deepUpdate(newRec, preSetData);
+        }
+        return newRec;
     }
 
     getRelated(rec: any, ..._args): Promise<any> {
@@ -271,9 +272,9 @@ export abstract class AbstractDictionaryDescriptor {
         const changeData = [];
         let pSev: Promise<IRecordOperationResult> = Promise.resolve(null);
         const results: IRecordOperationResult[] = [];
-        Object.keys(originalData).forEach((key) => {
-            if (originalData[key]) {
-                const data = Object.assign({}, originalData[key], updates[key]);
+        Object.keys(updates).forEach((key) => {
+            if (updates[key]) {
+                const data = EosUtils.deepUpdate(originalData[key], updates[key]);
                 switch (key) {
                     case 'sev': // do nothing handle sev later
                         pSev = this.checkSevIsNew(data, originalData.rec);
@@ -296,7 +297,7 @@ export abstract class AbstractDictionaryDescriptor {
 
         // console.log('originalData', originalData);
         // console.log('changeData', changeData);
-        const record = Object.assign({}, originalData.rec, updates.rec);
+        const record = EosUtils.deepUpdate(originalData.rec, updates.rec);
         return pSev
             .then((result) => {
                 if (result) {
@@ -328,6 +329,25 @@ export abstract class AbstractDictionaryDescriptor {
         const changes = this.apiSrv.changeList([data]);
         // console.log('changes', changes);
         return this.apiSrv.batch(changes, '');
+    }
+
+    protected deleteRecord(record: IEnt): Promise<IRecordOperationResult> {
+        record._State = _ES.Deleted;
+        const changes = this.apiSrv.changeList([record]);
+        return this.apiSrv.batch(changes, '')
+            .then(() => {
+                return <IRecordOperationResult>{
+                    record: record,
+                    success: true
+                };
+            })
+            .catch((err) => {
+                return <IRecordOperationResult>{
+                    record: record,
+                    success: false,
+                    error: err
+                };
+            });
     }
 
     protected dueToChain(due: string): string[] {

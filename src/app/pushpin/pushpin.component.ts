@@ -16,8 +16,6 @@ import { NOT_EMPTY_STRING } from 'eos-common/consts/common.consts';
 export class PushpinComponent {
     @Input() infoOpened: boolean;
     deskList: EosDesk[];
-    openStyle = '252px';
-    closeStyle = '0px';
     public disable = false;
     public creating = false;
     public maxLength = 80;

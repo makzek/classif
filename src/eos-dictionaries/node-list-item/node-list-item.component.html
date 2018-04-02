@@ -8,7 +8,7 @@
                 <input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span>
             </label>
         </span>
-        <span class="node-info" (click)="selectNode()" (dblclick)="dbClickHandler($event)">
+        <span class="node-info" (click)="selectNode($event)" (dblclick)="dbClickHandler($event)">
             <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
                 [ngStyle]="{'width.px': length[field.key]}"
                 [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">

@@ -1,5 +1,6 @@
-<ng-template #markAllTooltip>Пометить<br/>все</ng-template>
-<ng-template #unmarkkAllTooltip>Снять<br/>пометки</ng-template>
+<ng-template #markAllTooltip>
+        {{anyMarked ? 'Снять' : 'Пометить'}}<br/>{{anyMarked ? 'пометки': 'все'}}
+</ng-template>
 <div class="eos-dictionary" [ngClass]="{'full': currentState[0] && currentState[1] && !hideTree,
         'only-selected': !currentState[0] && !currentState[1] || currentState[0] && !currentState[1] && hideTree,
         'info': !currentState[0] && currentState[1] || currentState[0] && currentState[1] && hideTree,
@@ -68,7 +69,7 @@
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">
                 <div class="second-line-content">
                     <span *ngIf="params.markItems" class="checkbox-inline">
-                        <label [tooltip]="anyMarked ? unmarkkAllTooltip : markAllTooltip" placement="bottom" container="body" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                        <label [tooltip]="markAllTooltip" placement="bottom" container="body" [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
                             containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()">
                             <span></span>
@@ -108,7 +109,7 @@
         <div class="info-spinner">
             <eos-spinner *ngIf="params.updatingInfo" size="lg"></eos-spinner>
         </div>
-        <eos-node-info-switcher *ngIf="!params.updatingInfo" (action)="doAction($event)"></eos-node-info-switcher>
+        <eos-node-info-switcher *ngIf="!params.updatingInfo"></eos-node-info-switcher>
     </div>
 </div>
 

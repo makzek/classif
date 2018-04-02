@@ -20,6 +20,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 import {
     WARN_EDIT_ERROR,
@@ -115,6 +116,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _modalSrv: BsModalService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
+        private _bcSrv: EosBreadcrumbsService,
     ) {
         _route.params.subscribe((params) => {
             if (params) {
@@ -201,6 +203,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        this._bcSrv._eventFromBc$.takeUntil(this.ngUnsubscribe)
+            .subscribe((action: IActionEvent) => {
+                if (action) {
+                    this.doAction(action);
+                }
+            });
     }
 
     ngOnDestroy() {
@@ -506,7 +515,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
 
-        this._dictSrv.openNodeFromList(this.visibleNodes[_idx]);
+        const node = this.visibleNodes[_idx];
+        if (node && node.id) {
+            this._dictSrv.openNode(node.id);
+        }
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {

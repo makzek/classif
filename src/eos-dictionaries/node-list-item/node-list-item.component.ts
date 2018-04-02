@@ -46,9 +46,10 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         }
     }
 
-    selectNode(): void {
+    selectNode(evt: Event): void {
+        evt.stopPropagation();
         if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNodeFromList(this.node);
+            this._dictSrv.openNode(this.node.id);
         }
     }
 
@@ -59,18 +60,17 @@ export class NodeListItemComponent implements OnInit, OnChanges {
 
     dbClickHandler(evt: MouseEvent) {
         evt.stopPropagation();
-        this.node.isNode ? this.openAsFolder() : this.viewNode();
-    }
-
-    viewNode() {
-        if (!this._dictSrv.isRoot(this.node.id)) {
-            this._storageSrv.setItem(RECENT_URL, this._router.url);
+        if (!this._dictSrv.isRoot(this.node.id) && !this.node.isDeleted) {
             // console.log('node', this.node);
             const _path = this.node.getPath();
-            _path.push('view');
+            if (!this.node.isNode) {
+                this._storageSrv.setItem(RECENT_URL, this._router.url);
+                _path.push('view');
+            }
             this._router.navigate(_path);
         }
     }
+
     /**
      * @param el
      * @description Draw hint for a long title
@@ -100,16 +100,4 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         }
         body[0].removeChild(span);
     }
-
-    /**
-     * @param node EosDictionaryNode
-     * @description Navigate to param node. Open element as node
-     */
-    public openAsFolder() {
-        const urlPeiase = this._router.url.split('/');
-        urlPeiase[3] = this.node.id;
-        const path = urlPeiase.join('/');
-        this._router.navigate([path]);
-    }
-
 }

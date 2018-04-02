@@ -95,7 +95,8 @@
     }
 }
 
-.modal-body,
+
+/*.modal-body,
 .popover-body {
     label {
         text-transform: uppercase;
@@ -104,6 +105,7 @@
         font-weight: normal;
     }
 }
+*/
 
 .dropdown-item {
     cursor: pointer;
@@ -165,6 +167,7 @@ input[type=text]::-ms-clear {
     line-height: 1;
     padding: 9px 4px;
 }
+
 .btn-primary,
 .btn-primary-full {
     border-style: solid;
