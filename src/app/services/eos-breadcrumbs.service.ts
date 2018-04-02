@@ -3,14 +3,17 @@ import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
 import { IDeskItem } from '../core/desk-item.interface';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { IActionEvent } from 'eos-dictionaries/interfaces';
 
 @Injectable()
 export class EosBreadcrumbsService {
+    public _eventFromBc$: Subject<IActionEvent>;
     private _breadcrumbs: IBreadcrumb[];
     private _currentLink: IDeskItem;
     private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
@@ -33,9 +36,14 @@ export class EosBreadcrumbsService {
         private _descrSrv: DictionaryDescriptorService,
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
+        this._eventFromBc$ = new Subject();
         this.makeBreadCrumbs();
         _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
             .subscribe(() => this.makeBreadCrumbs());
+    }
+
+    public sendAction(action: IActionEvent) {
+        this._eventFromBc$.next(action);
     }
 
     public makeBreadCrumbs() {

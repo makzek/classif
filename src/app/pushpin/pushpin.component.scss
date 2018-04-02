@@ -3,16 +3,17 @@
     .pushdrop {
         min-width: 280px !important;
     }
-    .pushpin:focus {
-        border: none;
-    }
     .eos-icon-pin-blue {
         cursor: pointer;
+    }
+    .info-close {
+        right: 0;
     }
 }
 
 .pushdrop {
     min-width: 280px;
+    position: absolute;
     .desk {
         cursor: pointer;
     }
@@ -20,6 +21,32 @@
         cursor: pointer;
         .input-group {
             margin: 3px 20px;
+        }
+    }
+}
+
+@media(max-width: 1599px) {
+    .pin {
+        .info-open {
+            right: 250px;
+        }
+    }
+    .pushdrop {
+        &.info {
+            right: 250px !important;
+        }
+    }
+}
+
+@media(min-width: 1600px) {
+    .pin {
+        .info-open {
+            right: 330px;
+        }
+    }
+    .pushdrop {
+        &.info {
+            right: 330px !important;
         }
     }
 }
