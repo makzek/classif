@@ -15,12 +15,12 @@
                         <button dropdownToggle
                             [disabled]="!item.enabled"
                             class="btn btn-primary-light {{item.buttonClass}}"
-                            [ngClass]="{active: item.isActive}"
+                            [ngClass]="{'active': item.isActive}"
                             (click)="itemTooltip.hide();">
                             <span [hidden]="item.isActive"
                                 [ngClass]="item.iconClass"></span>
                             <span [hidden]="!item.isActive"
-                                [ngClass]="activeIcon"></span>
+                                [ngClass]="item.activeIconClass"></span>
                         </button>
                     </div>
 
@@ -51,12 +51,12 @@
                         containerClass="tooltip-info">
                         <button [disabled]="!item.enabled"
                             class="btn btn-primary-light {{item.buttonClass}}"
-                            [ngClass]="{active: item.isActive}"
+                            [ngClass]="{'active': item.isActive}"
                             (click)="itemTooltip.hide(); doAction($event, item)">
                             <span [hidden]="item.isActive"
                                 [ngClass]="item.iconClass"></span>
                             <span [hidden]="!item.isActive"
-                                [ngClass]="item.isActive"></span>
+                                [ngClass]="item.activeIconClass"></span>
                         </button>
                     </div>
                 </span>
@@ -76,8 +76,10 @@
             containerClass="tooltip-info"
             dropdownToggle
             (click)="itemTooltip.hide()">
-            <span [hidden]="dropdown.isOpen" class="eos-icon eos-icon-fab-blue small"></span>
-            <span [hidden]="!dropdown.isOpen" class="eos-icon eos-icon-fab-white small"></span>
+            <span [hidden]="dropdown.isOpen"
+                class="eos-icon eos-icon-fab-blue small"></span>
+            <span [hidden]="!dropdown.isOpen"
+                class="eos-icon eos-icon-fab-white small"></span>
         </button>
         <!--MENU-->
         <ul *dropdownMenu
