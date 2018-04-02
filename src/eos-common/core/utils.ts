@@ -92,7 +92,9 @@ export class EosUtils {
                 }
             });
         } else {
-            target = source;
+            if (source !== undefined) {
+                target = source;
+            }
         }
         return target;
     }
