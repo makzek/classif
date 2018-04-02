@@ -52,7 +52,7 @@
                         <button [disabled]="!item.enabled"
                             class="btn btn-primary-light {{item.buttonClass}}"
                             [ngClass]="{active: item.isActive}"
-                            (click)="itemTooltip.hide(); doAction($event, item, null)">
+                            (click)="itemTooltip.hide(); doAction($event, item)">
                             <span [hidden]="item.isActive"
                                 [ngClass]="item.iconClass"></span>
                             <span [hidden]="!item.isActive"
@@ -75,7 +75,7 @@
             containerClass="tooltip-info"
             dropdownToggle
             (click)="itemTooltip.hide()">
-            <span class="eos-icon eos-icon-fab-blue small rotate"></span>
+            <span class="eos-icon eos-icon-fab-blue small"></span>
         </button>
         <!--MENU-->
         <ul *dropdownMenu
