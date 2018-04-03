@@ -12,9 +12,10 @@
             display: inline-block;
             font-size: 0;
             .selected-desktop {
-                width: 170 - $item-width;
-                white-space: normal;
-                padding-left: 20px;
+                width: 170px - $item-width;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 14px 20px;
                 overflow: hidden;
                 display: inline-block;
                 height: $item-height;
