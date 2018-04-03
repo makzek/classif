@@ -127,6 +127,18 @@
     color: $active-field-color-main-theme;
     font-size: 36px;
 }
+.more {
+    position: absolute;
+    top: 11px;
+    .menuitem {
+        .dropdown-item {
+            padding: 0 20px !important;
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}
 
 @media (max-width: 1250px) {
     .header-wrapper {
