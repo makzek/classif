@@ -3,6 +3,7 @@
     margin: 0;
     width: 160px;
     height: 100%;
+
     .dropdown-button {
         width: 160px;
         height: 100%;
@@ -26,25 +27,28 @@
             padding-right: 12px;
         }
     }
-    .form-control {
-        height: 32px;
-    }
-    .btn-default {
-        padding-bottom: 5px;
-    }
+
     .dropdown-menu {
-        width: 300px;
+        width: 380px;
         .menuitem {
-            padding: 3px 10px 3px 20px;
-            a {
-                text-decoration: none;
+            .dropdown-item {
+                padding-left: 20px;
+                .item-title {
+                    width: 210px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                }
+                .drop-ico {
+                    float: right;
+                }
             }
         }
-        li {
+        .li-spiner {
+            border: 1px solid #e6e6e6;
+            border-bottom: transparent;
             cursor: pointer;
-            &:last-child {
-                margin-bottom: 5px;
-            }
             .spinner-wrapper {
                 position: absolute;
                 bottom: 0;
@@ -66,22 +70,33 @@
             }
         }
     }
+
     .desktop-wrapper {
-        width: 230px;
+        width: 218px;
         overflow: hidden;
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     .actions {
-        position: absolute;
-        right: 5px;
+        text-align: center;
+        vertical-align: top;
+        display: inline-block;
+        width: $item-width;
+        height: $item-height;
         cursor: pointer;
-        margin-top: 2px;
+        .eos-icon {
+            color: $button-color-main-theme;
+            vertical-align: top;
+            margin-top: $item-height / 4;
+        }
     }
+
     .create {
         cursor: pointer;
     }
+
     .creating-btns {
         .btn {
             height: 34px;

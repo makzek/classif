@@ -8,13 +8,18 @@
     .rotate {
         transform: rotate(-90deg);
     }
+
     .btn {
         height: $item-height;
         width: $item-width;
     }
-    .dropdown-menu .btn {
-        width: 100%;
-        text-align: left;
+
+    .actions {
+        .menuitem {
+            .dropdown-item {
+                font-size: 14px;
+            }
+        }
     }
 
     .fa {
@@ -26,12 +31,14 @@
     text-align: left;
     width: 100%;
     height: $item-height;
+
     .fa {
         width: 24px;
         height: 24px;
         text-align: center;
         font-size: 22px;
     }
+
     .drop-title {
         vertical-align: top;
         margin-top: 4px;
@@ -46,7 +53,76 @@
 .create-new-node {
     padding: 0;
 }
+
 .menu-two-lvl {
     position: absolute;
-    top: -32px;
+    top: -25px;
+}
+
+.action-menu {
+    width: 400px;
+    position: relative;
+    left: -176px;
+}
+
+@media (max-width: 1200px) {
+    .action-menu {
+        width: 400px;
+        position: relative;
+        left: auto;
+    }
+
+    .action-menu::before {
+        content: '';
+        top: -8px;
+        left: 15px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $border-color-main-theme;
+        z-index: -1;
+    }
+
+    .action-menu::after {
+        content: '';
+        top: -6px;
+        left: 15px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $white;
+        z-index: -1;
+    }
+}
+
+@media (min-width: 1200px) {
+    .action-menu::before {
+        content: '';
+        top: -8px;
+        left: 190px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $border-color-main-theme;
+        z-index: -1;
+    }
+
+    .action-menu::after {
+        content: '';
+        top: -6px;
+        left: 190px;
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: rotate(45deg);
+        background: $white;
+        z-index: -1;
+    }
 }
