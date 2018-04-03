@@ -1,11 +1,16 @@
 .column-settings-modal {
+    width: 800px;
     .modal-header {
-        padding: 0 15px;
+        padding: 0 20px;
     }
 
     .btn {
         text-transform: uppercase;
-        margin-top: 7px;
+        margin-top: 8px;
+        padding: 7px;
+        &.btn-primary-light {
+            margin-top: 0;
+        }
     }
 
     .title {
@@ -16,7 +21,7 @@
     .info-block {
         border-width: 1px;
         border-style: solid;
-        height: 500px;
+        height: 472px;
         overflow: auto;
 
         &.right {
@@ -106,9 +111,14 @@
 
 
 .warning {
+    &.modal-header {
+        padding: 11px;
+    }
     &.modal-footer {
+        padding: 9.5px 20px;
         .btn {
-            padding: 0 20px;
+            line-height: 1px;
+            padding: 12.5px 20px;
             text-transform: uppercase;
         }
     }

@@ -1,6 +1,7 @@
 <div class="modal-header">
     <h4 class="xl-font primary-text pull-left">Настройка столбцов таблицы</h4>
     <span class="pull-right">
+        <button class="btn btn-primary clear-btn" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
         <button type="button" class="btn btn-primary" (click)="hideModal()">Отменить</button>
         <button type="button" class="btn btn-primary-full upper" (click)="save()">Сохранить</button>
     </span>
@@ -8,7 +9,6 @@
 <div class="modal-body">
     <div class="modal-body-container">
         <div class="col">
-            <span class="title unimportant-text">Список возможных столбцов таблицы</span>
             <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]="dictionaryFields">
                 <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, 2)" [ngClass]="{'highlighted': item === selectedDictItem}">
                     <span class="text">{{item?.customTitle || item?.title}}</span>
@@ -26,7 +26,6 @@
             </span>
         </div>
         <div class="col">
-            <span class="title unimportant-text">Итоговый список столбцов</span>
             <div class="info-block right modal-block">
                 <div [dragula]='"fixed-bag"'>
                     <div class="item fixed-item" *ngFor="let item of fixedFields" (click)="select(item, 3)"
@@ -58,20 +57,19 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary clear-btn" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
         </div>
     </div>
 </div>
 
 <ng-template #warning>
     <div class="modal-header warning">
-        <h4 class="modal-title pull-left">Предупреждение</h4>
+        <h4 class="modal-title pull-left primary-text">Предупреждение</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body warning">
-        <h4>Вернуть все названия по умолчанию?</h4> 
+        <h4 class="primary-text">Вернуть все названия по умолчанию?</h4>
     </div>
     <div class="modal-footer warning">
         <span class="pull-right">
