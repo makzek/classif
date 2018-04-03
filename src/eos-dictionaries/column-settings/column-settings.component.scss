@@ -39,16 +39,21 @@
             cursor: move;
             position: relative;
 
+            .fa {
+                vertical-align: text-top;
+            }
+
             .edit-btn,
             .ok-btn,
             .cancel-btn {
+                padding: 14px;
                 position: absolute;
-                right: 0;
-                top: 5px;
+                right: 1px;
+                top: 1px;
             }
 
             .ok-btn {
-                right: 24px;
+                right: 32px;
             }
 
             .new-title,
@@ -57,7 +62,14 @@
                 top: 0;
                 left: 0;
                 border-radius: 0;
-                padding-right: 50px;
+                padding-right: 64px;
+            }
+            .new-title {
+                background-color: $light-grey-1;
+            }
+
+            .new-title {
+                border: 1px $active-field-color-main-theme solid;
             }
 
             .new-title::-ms-clear {
