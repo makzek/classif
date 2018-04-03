@@ -59,12 +59,14 @@
         &.right {
             margin-left: 40px;
         }
+
         .header-item {
             display: inline-block;
-            height: 100%;
+            vertical-align: middle;
             .link-name {
-                padding-left: 40px;
+                // vertical-align: middle;
                 cursor: pointer;
+                padding: 13.5px;
                 &:hover,
                 &:focus {
                     text-decoration: none;
