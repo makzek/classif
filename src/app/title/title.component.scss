@@ -2,7 +2,7 @@
     position: absolute;
 
     .title-wrapper {
-        width: 240px;
+        width: 288px;
         display: flex;
         align-items: center;
 
@@ -19,7 +19,7 @@
 @media (max-width: 1250px) {
     .eos-title {
         .title-wrapper {
-            width: 90px;
+            width: $item-width;
 
             .title-text {
                 display: none;

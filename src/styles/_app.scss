@@ -25,6 +25,7 @@
     border-bottom-style: solid;
     box-shadow: 0 10px 5px 0 rgba(0, 0, 0, 0.15);
     .menu {
+        background-color: $white;
         height: $item-width;
         border-bottom: 1px solid $border-color-main-theme;
     }
@@ -36,18 +37,18 @@
             display: inline-block;
             width: $item-width;
             height: $item-height;
-            border: 1px solid transparent;
             background: darkblue;
         }
     }
     .header-content {
+        font-size: 0;
         list-style: none;
         display: inline-block;
         padding: 0;
         margin: 0;
         height: 100%;
         &.left {
-            margin-left: 240px;
+            margin-left: 288px;
         }
         &.right {
             margin-left: 40px;
@@ -56,10 +57,7 @@
             display: inline-block;
             height: 100%;
             .link-name {
-                position: relative;
-                top: 3px;
                 padding-left: 40px;
-                padding-right: 0;
                 cursor: pointer;
                 &:hover,
                 &:focus {
@@ -74,22 +72,6 @@
             }
             &.else-dropdown {
                 position: relative;
-                /*
-                .dropdown-menu {
-                    width: 250px;
-                    padding: 0;
-                    top: 45px;
-                    left: 40px;
-                    .else-item {
-                        height: $item-height;
-                        padding: 12px 0;
-                        &>a {
-                            padding: 0 20px;
-                            font-size: inherit;
-                            line-height: inherit;
-                        }
-                    }
-                }*/
             }
         }
     }
@@ -142,7 +124,7 @@
     .header-wrapper {
         .header-content {
             &.left {
-                margin-left: 90px;
+                margin-left: $item-width;
             }
         }
     }
