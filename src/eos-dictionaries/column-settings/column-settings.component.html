@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h4 class="xl-font primary-text pull-left">Настройка столбцов таблицы</h4>
     <span class="pull-right">
-        <button class="btn btn-primary clear-btn" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
+        <button class="btn btn-primary clear-btn" [disabled]="!haveCustomTitle" (click)="openModal(warning)" >Вернуть названия по умолчанию</button>
         <button type="button" class="btn btn-primary" (click)="hideModal()">Отменить</button>
         <button type="button" class="btn btn-primary-full upper" (click)="save()">Сохранить</button>
     </span>

@@ -14,6 +14,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
     @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
+    public haveCustomTitle = false;
 
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
@@ -85,6 +86,9 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         setTimeout(() => {
             if (this.dictionaryFields) {
                 this.currentFields.forEach((_curr) => {
+                    if (_curr.customTitle) {
+                        this.haveCustomTitle = true;
+                    }
                     this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
                 });
             }
@@ -180,6 +184,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      */
     saveNewTitle() {
         this.editedItem.customTitle = this.newTitle.trim();
+        this.haveCustomTitle = true;
         this.cancelTitleEdit();
     }
 
@@ -216,6 +221,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this.fixedFields.forEach((_f) => {
             _f.customTitle = null;
         });
+        this.haveCustomTitle = false;
     }
 
 }

@@ -13,6 +13,11 @@
         }
     }
 
+    .btn:disabled {
+        border: 1px $disabled-color-main-theme solid !important;
+        color: $disabled-color-main-theme !important;
+    }
+
     .title {
         display: inline-block;
         margin-bottom: 8px;
@@ -129,8 +134,8 @@
     &.modal-footer {
         padding: 9.5px 20px;
         .btn {
-            line-height: 1px;
-            padding: 12.5px 20px;
+            line-height: 0;
+            padding: 13px 20px;
             text-transform: uppercase;
         }
     }
