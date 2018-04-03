@@ -1,28 +1,30 @@
 .eos-desktop-switcher {
     display: inline-block;
-    height: 100%;
+    height: $item-height;
+    border: 1px solid $border-color-main-theme;
 
     .dropdown-button {
-        width: 170px;
-        height: 100%;
+        display: inline-block;
         background-color: transparent;
-        border-radius: 0;
-        border-top: 0;
-        bottom: -1px;
-        .selected-desktop {
-            max-width: 86px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .wr {
+            width: 170px;
             display: inline-block;
+            font-size: 0;
+            .selected-desktop {
+                width: 170 - $item-width;
+                white-space: normal;
+                padding-left: 20px;
+                overflow: hidden;
+                display: inline-block;
+                height: $item-height;
+            }
+            .btn-icon {
+                display: inline-block;
+                vertical-align: top;
+                padding: 12px;
+            }
         }
-        .btn-icon {
-            position: relative;
-            top: 3px;
-            height: 24px;
-            display: inline-block;
-            padding-left: 12px;
-            padding-right: 12px;
-        }
+
     }
 
     .dropdown-menu {
