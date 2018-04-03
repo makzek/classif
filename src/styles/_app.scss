@@ -29,11 +29,17 @@
         height: $item-width;
         border-bottom: 1px solid $border-color-main-theme;
     }
-    .round-img-wrapper {
+    .square-img-wrapper {
         display: inline-block;
         width: $item-width;
         height: $item-height;
-        .round-img {
+        .square-img-logo {
+            display: inline-block;
+            width: $item-width;
+            height: $item-height;
+            background: url("../assets/images/Deal-Logo-Square-48х48.svg");
+        }
+        .square-img {
             display: inline-block;
             width: $item-width;
             height: $item-height;
