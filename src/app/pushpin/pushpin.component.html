@@ -16,17 +16,15 @@
         class="pushdrop dropdown-menu dropdown-menu-right"
         [ngClass]="{'info': infoOpened}"
         role="menu">
-        <li class="desk"
+        <li class="menuitem"
             *ngFor="let desk of deskList"
             (click)="pin(desk)">
-            <a>{{desk.name}}</a>
+            <a class="dropdown-item have-padding f-14">{{desk.name}}</a>
         </li>
-        <li class="divider dropdown-divider"
-            *ngIf="deskList.length > 0 && deskList.length < 5"></li>
         <li *ngIf="deskList.length === 0 || deskList.length < 5"
-            class="desk create">
+            class="menuitem desk create">
             <a *ngIf="!creating"
-                class="create primary-text"
+                class="create dropdown-item f-14 have-padding"
                 (click)="openCreateForm($event)">Создать рабочий стол</a>
             <ng-container *ngIf="creating">
                 <div class="input-group">

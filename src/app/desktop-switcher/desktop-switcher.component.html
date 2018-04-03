@@ -17,7 +17,8 @@
     </span>
     <ul class="dropdown-menu"
         role="menu">
-        <li *ngIf="updating">
+        <li *ngIf="updating"
+            class="li-spiner">
             <div class="spinner-wrapper">
                 <div class="spinner-holder">
                     <eos-spinner size="md"></eos-spinner>
@@ -29,28 +30,39 @@
             class="menuitem"
             (click)="route(desk)">
             <ng-container *ngIf="!desk.edited">
-                <span [hidden]="desk.edited"
-                    class="desktop-wrapper">
-                    <a class="dropdown-item"><span triggers="hover" tooltip="{{desk.name}}" placement="bottom" containerClass="tooltip-info">{{desk.name}}</span></a>
-                </span>
-                <span *ngIf="desk.id !== 'system'"
-                    class="actions">
-                    <span class="eos-icon eos-icon-edit-black x-small"
-                        tooltip="Редактировать"
+                <a class="dropdown-item f-14"
+                    [hidden]="desk.edited"
+                    [ngClass]="{'highlighted': desk.name === selectedDesk.name}">
+                    <span tooltip="{{desk.name}}"
                         placement="bottom"
                         containerClass="tooltip-info"
-                        (click)="openEditForm($event, desk)"></span>
-                    <span class="eos-icon eos-icon-close-black x-small"
-                        tooltip="Удалить"
-                        placement="bottom"
-                        containerClass="tooltip-info"
-                        (click)="removeDesk(desk,$event)"></span>
-                </span>
+                        class="item-title">{{desk.name}}</span>
+                        <div class="drop-ico"
+                            *ngIf="desk.id !== 'system'"
+                            (click)="openEditForm($event, desk)"
+                            tooltip="Редактировать"
+                            placement="bottom"
+                            containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-edit-blue small"></span>
+                        </div>
+                        <div class="drop-ico"
+                            *ngIf="desk.id !== 'system'"
+                            (click)="removeDesk(desk,$event)"
+                            tooltip="Удалить"
+                            placement="bottom"
+                            containerClass="tooltip-info">
+                            <span class="eos-icon eos-icon-close-blue small"></span>
+                        </div>
+                        <div class="drop-ico"
+                            *ngIf="desk.name === selectedDesk.name">
+                            <span class="eos-icon eos-icon-checkbox-blue small"></span>
+                        </div>
+                </a>
             </ng-container>
             <ng-container *ngIf="desk.edited">
                 <div class="input-group">
                     <input type="text"
-                        class="form-control light"
+                        class="form-control light input-wr"
                         id="nameForm"
                         name="nameForm"
                         #nameForm
@@ -81,15 +93,14 @@
             </ng-container>
         </li>
         <ng-container *ngIf="deskList.length < 6">
-            <li class="divider dropdown-divider"></li>
-            <li class="menuitem">
-                <span *ngIf="!creating"
-                    class="create primary-text"
-                    (click)="openCreateForm()">Создать рабочий стол</span>
+            <li class="menuitem"
+                (click)="openCreateForm()">
+                <a *ngIf="!creating"
+                    class="dropdown-item f-14">Создать рабочий стол</a>
                 <ng-container *ngIf="creating">
                     <div class="input-group">
                         <input type="text"
-                            class="form-control light"
+                            class="form-control light input-wr"
                             id="createForm"
                             name="createForm"
                             #createForm
@@ -107,7 +118,7 @@
                                 containerClass="tooltip-info"
                                 [disabled]="!createForm.checkValidity()">
                                 <span class="eos-icon eos-icon-checkbox-black x-small"></span>
-        </button>
+                            </button>
                             <button class="btn btn-default"
                                 (click)="cancelCreating($event)"
                                 type="button"

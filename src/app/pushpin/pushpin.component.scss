@@ -1,7 +1,7 @@
 .pin {
     display: inline-block;
-    .pushdrop {
-        min-width: 280px !important;
+    .pushpin:focus {
+        border: none;
     }
     .eos-icon-pin-blue {
         cursor: pointer;

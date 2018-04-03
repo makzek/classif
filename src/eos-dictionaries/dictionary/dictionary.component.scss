@@ -120,10 +120,27 @@
 
             .item-count-content {
                 padding: 0 $grid-gutter-width / 2;
+                line-height: 24px;
+                font-size: 16px;
+                .counter {
+                    margin-left: 20px;
+                    padding: 6.5px 10px;
+                    background: $disabled-color-main-theme;
+                    border-radius: 2px;
+                    color: $white;
+                }
             }
 
             .item-count-found {
+                font-size: 16px;
+                line-height: 24px;
                 padding-left: $grid-gutter-width / 2;
+                .counter {
+                    padding: 6.5px 10px;
+                    background: $disabled-color-main-theme;
+                    border-radius: 2px;
+                    color: $white;
+                }
             }
 
             .go-top-wrapper {
