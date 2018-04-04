@@ -61,17 +61,18 @@
 
         .icon-btn {
             position: absolute;
-            top: 1px;
-            right: 1px;
+            top: 0;
+            right: 0;
             background-color: transparent;
             width: 48px;
             height: 48px;
+            outline: none;
             display: none;
             &.lefter {
-                right: 49px;
+                right: 48px;
             }
             &.leftest {
-                right: 97px;
+                right: 96px;
             }
         }
         .end-hidder {
