@@ -366,6 +366,7 @@
 .modal {
     .modal-dialog {
         .modal-content {
+            background: $modal-block-background-main-theme;
             border-radius: 1px;
         }
     }
