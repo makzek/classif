@@ -2,6 +2,14 @@
 import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { SEARCH_TYPES } from '../search-types';
 import { COMMON_FIELDS, COMMON_FIELD_CODE, COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
+import { ISelectOption } from 'eos-common/interfaces';
+
+export const RK_TYPE_OPTIONS: ISelectOption[] = [
+    { value: 1, title: 'Не определена' },
+    { value: 2, title: 'Входящие' },
+    { value: 3, title: 'Исходящие' },
+    { value: 4, title: 'Письма граждан' }
+];
 
 export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
     id: 'docgroup',
@@ -32,24 +40,30 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         COMMON_FIELD_FULLNAME,
     {
         key: 'IS_COPYCOUNT',
-        title: 'Признак нумерации копий',
+        title: 'Нумерация копий',
         type: 'boolean',
+        forNode: true,
     }, {
         key: 'RC_TYPE',
         title: 'Вид РК',
-        type: 'number',
+        type: 'select',
+        options: RK_TYPE_OPTIONS,
     }, {
         key: 'DOCGROUP_INDEX',
-        title: 'Индекс группы',
+        title: 'Индекс',
         type: 'string',
+        forNode: true,
     }, {
         key: 'DOCNUMBER_FLAG',
-        title: 'Признак образования номеров',
-        type: 'number',
+        title: 'Номерообразование',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'SHABLON',
-        title: 'Шаблон номера документа',
+        title: 'Шаблон',
         type: 'string',
+        required: true,
+        forNode: true,
     }, {
         key: 'EDS_FLAG',
         title: 'Требуется ЭП',
@@ -100,8 +114,9 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         type: 'number',
     }, {
         key: 'E_DOCUMENT',
-        title: 'Электронный документ',
-        type: 'number',
+        title: 'Оригинал в эл.виде',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'ACCESS_MODE',
         title: 'Конфиденциальность',
