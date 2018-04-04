@@ -11,6 +11,8 @@
         cursor: pointer;
     }
     .sortable-item {
+        max-width: 490px;
+        min-width: 400px;
         display: inline-block;
         position: relative;
         height: 100px;
@@ -33,7 +35,7 @@
                 flex-direction: column;
                 display: flex;
                 justify-content: space-around;
-                border-color: $active-field-color-main-theme;
+                border: 1px $active-field-color-main-theme solid;
             }
             .text {
                 position: absolute;
@@ -42,7 +44,7 @@
                 left: 112px;
                 width: calc(100% - 120px);
                 overflow: hidden;
-                text-overflow: ellipsis;
+                white-space: normal;
             }
             .icon {
                 height: 48px;
