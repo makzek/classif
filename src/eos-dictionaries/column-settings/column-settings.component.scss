@@ -2,6 +2,9 @@
     width: 800px;
     .modal-header {
         padding: 0 20px;
+        .pull-right {
+            font-size: 0;
+        }
     }
 
     .btn {
@@ -11,6 +14,9 @@
         &.btn-primary-light {
             margin-top: 0;
         }
+    }
+    .fixed-width {
+        width: 88px;
     }
 
     .have-margin {
