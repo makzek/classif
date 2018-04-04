@@ -46,6 +46,10 @@
     let-index="index">
     <div class="btn item-content xl-font block edited"
         *ngIf="editing(item.value)">
+        <!--
+        <span class="icon-wrapper">
+            <span class="icon eos-icon eos-icon-bin-blue"></span>
+        </span>-->
         <input id="title"
             name="title"
             #title
@@ -91,14 +95,14 @@
             class="text">
             {{item.value.title}}
         </span>
-        <!--<button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"
+        <button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"
             tooltip="Пеместить"
             placement="bottom"
             containerClass="tooltip-info"
             container="body">
             <span class="eos-icon eos-icon-move-2d-blue small"
                 aria-hidden="true"></span>
-        </button>-->
+        </button>
         <button class="icon-btn btn"
             (click)="edit($event, item.value)"
             [ngClass]="{'lefter': deskId !== 'system'}"
