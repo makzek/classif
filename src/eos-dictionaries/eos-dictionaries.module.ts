@@ -47,7 +47,6 @@ import { SimpleCardEditComponent } from './card-views/simple-card-edit.component
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
 import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dictionary-quick-search.component';
-import { MockBackendService } from '../environments/mock-backend.service';
 
 /* services */
 import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
@@ -116,7 +115,6 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         EosDictService,
         EosSandwichService,
         EosDataConvertService,
-        MockBackendService
     ],
 })
 export class EosDictionariesModule { }
