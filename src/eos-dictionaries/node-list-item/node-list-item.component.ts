@@ -58,12 +58,12 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         this.mark.emit(this.node.marked);
     }
 
-    dbClickHandler(evt: MouseEvent) {
+    viewNode(evt: MouseEvent, view = false) {
         evt.stopPropagation();
         if (!this._dictSrv.isRoot(this.node.id) && !this.node.isDeleted) {
             // console.log('node', this.node);
             const _path = this.node.getPath();
-            if (!this.node.isNode) {
+            if (!this.node.isNode || view) {
                 this._storageSrv.setItem(RECENT_URL, this._router.url);
                 _path.push('view');
             }
