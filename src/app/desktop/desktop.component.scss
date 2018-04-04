@@ -29,10 +29,11 @@
             text-align: left;
             border-radius: 0;
             &.edited {
-                padding: 32px 96px 32px 5px;
+                padding: 32px 96px 32px 0;
                 flex-direction: column;
                 display: flex;
                 justify-content: space-around;
+                border-color: $active-field-color-main-theme;
             }
             .text {
                 position: relative;
@@ -56,16 +57,16 @@
         }
         .icon-btn {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 1px;
+            right: 1px;
             background-color: transparent;
             width: 48px;
             height: 48px;
             &.lefter {
-                right: 48px;
+                right: 49px;
             }
             &.leftest {
-                right: 96px;
+                right: 97px;
             }
         }
         .end-hidder {
@@ -79,7 +80,10 @@
         .title-input {
             border-radius: 0;
             border: none;
-            width: 100%;
+            box-shadow: none;
+            position: absolute;
+            left: 100px;
+            width: calc(100% - 196px);
         }
     }
     .right {
