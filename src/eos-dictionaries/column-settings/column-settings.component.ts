@@ -91,6 +91,11 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                     }
                     this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
                 });
+                this.dictionaryFields.forEach(_field => {
+                    if (_field.customTitle) {
+                        this.haveCustomTitle = true;
+                    }
+                });
             }
         }, 0);
     }
