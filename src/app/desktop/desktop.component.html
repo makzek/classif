@@ -82,6 +82,7 @@
     </div>
 
     <div *ngIf="!editing(item.value)"
+        (mousedown)="tryMove($event)"
         class="btn item-content xl-font block"
         [routerLink]="[item.value.url]"
         tooltip="{{deskId === 'system' ? item.value.title : item.value.title}}"
@@ -95,7 +96,10 @@
             class="text">
             {{item.value.title}}
         </span>
-        <button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"
+        <button *ngIf="deskId !== 'system'"
+            (mouseover)="dragResolve = true"
+            (mouseleave)="dragResolve = false"
+            class="icon-btn btn leftest"
             tooltip="Пеместить"
             placement="bottom"
             containerClass="tooltip-info"
