@@ -57,6 +57,7 @@
             (focus)="setCursor($event)"
             (ngModelChange)="changeName($event)"
             required
+            autofocus
             [pattern]="notEmptyString.source"
             maxlength="255" />
         <button class="icon-btn btn lefter"
