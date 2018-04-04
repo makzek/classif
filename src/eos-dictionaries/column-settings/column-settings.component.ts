@@ -188,8 +188,11 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @description set newTitle as customTitle for editedItem
      */
     saveNewTitle() {
-        this.editedItem.customTitle = this.newTitle.trim();
-        this.haveCustomTitle = true;
+        const trimNewTitle = this.newTitle.trim();
+        if (trimNewTitle !== this.editedItem.title) {
+            this.editedItem.customTitle = trimNewTitle;
+            this.haveCustomTitle = true;
+        }
         this.cancelTitleEdit();
     }
 
