@@ -197,6 +197,7 @@
 
     .tabs-wrapper {
         background-color: $modal-block-background-main-theme;
+        border-bottom: 1px solid $border-color-main-theme;
         width: auto;
         margin: 0 -20px -10px;
     }
