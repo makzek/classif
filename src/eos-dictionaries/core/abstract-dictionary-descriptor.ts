@@ -11,8 +11,6 @@ import { PrintInfoHelper } from 'eos-rest/services/printInfo-helper';
 import { SEV_ASSOCIATION } from 'eos-rest/interfaces/structures';
 import { IAppCfg } from 'eos-common/interfaces';
 import { RestError } from 'eos-rest/core/rest-error';
-import { MockBackendService } from '../../environments/mock-backend.service';
-import { environment } from 'environments/environment';
 import { EosUtils } from 'eos-common/core/utils';
 
 export abstract class AbstractDictionaryDescriptor {
@@ -33,7 +31,6 @@ export abstract class AbstractDictionaryDescriptor {
      * api service endpoint
      */
     protected apiSrv: PipRX;
-    protected mBackSrv: MockBackendService;
 
     get dictionaryType(): E_DICT_TYPE {
         return this.type;
@@ -42,7 +39,6 @@ export abstract class AbstractDictionaryDescriptor {
     constructor(
         descriptor: IDictionaryDescriptor,
         apiSrv: PipRX,
-        mBackSrv: MockBackendService
     ) {
         if (descriptor) {
             this.id = descriptor.id;
@@ -51,7 +47,6 @@ export abstract class AbstractDictionaryDescriptor {
             this.apiInstance = descriptor.apiInstance;
 
             this.apiSrv = apiSrv;
-            this.mBackSrv = mBackSrv;
             commonMergeMeta(this);
             this._initRecord(descriptor);
         } else {
@@ -150,9 +145,6 @@ export abstract class AbstractDictionaryDescriptor {
         return this.apiSrv
             .read(req)
             .then((data: any[]) => {
-                if (!data.length && !environment.production) {
-                    data = this.mBackSrv.fakeDataGenerate(this.id);
-                }
                 this.prepareForEdit(data);
                 return data;
             });
