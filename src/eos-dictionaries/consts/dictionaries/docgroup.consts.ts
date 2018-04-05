@@ -62,11 +62,13 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         required: true,
     }, {
         key: 'EDS_FLAG',
-        title: 'Требуется ЭП',
+        // title: 'Требуется ЭП',
+        title: 'ЭП',
         type: 'boolean',
     }, {
         key: 'ENCRYPT_FLAG',
-        title: 'Требуется шифрование',
+        // title: 'Требуется шифрование',
+        title: 'шифрование',
         type: 'boolean',
     }, {
         key: 'TEST_UNIQ_FLAG',
@@ -77,6 +79,7 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         key: 'PRJ_NUM_FLAG',
         title: 'Проекты документов',
         type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_SHABLON',
         title: 'Шаблон номера проекта документа',
@@ -93,17 +96,20 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         forNode: true,
     }, {
         key: 'PRJ_APPLY_EDS',
-        title: 'Применять ЭП подписей',
+        // title: 'Применять ЭП подписей',
+        title: 'подписей',
         type: 'boolean',
         forNode: true,
     }, {
         key: 'PRJ_APPLY2_EDS',
-        title: 'Применять ЭП виз',
+        // title: 'Применять ЭП виз',
+        title: 'виз',
         type: 'boolean',
         forNode: true,
     }, {
         key: 'PRJ_APPLY_EXEC_EDS',
-        title: 'Применять ЭП исполнителей',
+        // title: 'Применять ЭП исполнителей',
+        title: 'исполнителей',
         type: 'boolean',
         forNode: true,
     }, {
@@ -130,8 +136,13 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         type: 'boolean',
     }, {
         key: 'INITIATIVE_RESOLUTION',
-        title: 'флаг Инициативная резолюция',
-        type: 'number',
+        title: 'Инициативные поручения',
+        type: 'boolean',
+        forNode: true,
+    }, {
+        key: 'UNKNOWN_1',
+        title: 'РК перс. доступа',
+        type: 'boolean',
     }, {
         key: 'AR_DOCGROUP_List',
         title: 'список используемых для этой группы документов дополнительных реквизитов',
@@ -156,7 +167,8 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
     treeFields: ['CLASSIF_NAME'],
     editFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'IS_COPYCOUNT', 'ACCESS_MODE_FIXED', 'E_DOCUMENT', 'PRJ_TEST_UNIQ_FLAG',
         'PRJ_DEL_AFTER_REG', 'PRJ_APPLY_EXEC_EDS', 'PRJ_APPLY2_EDS', 'PRJ_APPLY_EDS', 'PRJ_AUTO_REG', 'PRJ_SHABLON', 'PRJ_NUM_FLAG',
-        'TEST_UNIQ_FLAG', 'ENCRYPT_FLAG', 'EDS_FLAG', 'SHABLON', 'DOCNUMBER_FLAG', 'DOCGROUP_INDEX', 'RC_TYPE'],
+        'TEST_UNIQ_FLAG', 'ENCRYPT_FLAG', 'EDS_FLAG', 'SHABLON', 'DOCNUMBER_FLAG', 'DOCGROUP_INDEX', 'RC_TYPE', 'INITIATIVE_RESOLUTION',
+        'UNKNOWN_1'],
     searchFields: ['CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'DOCGROUP_INDEX', 'NOTE'],
     quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
