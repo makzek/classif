@@ -199,7 +199,6 @@
         background-color: $modal-block-background-main-theme;
         border-bottom: 1px solid $border-color-main-theme;
         width: auto;
-        margin: 0 -20px -10px;
     }
     form {
         padding: 0 20px;
@@ -210,28 +209,28 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
-            margin-top: 30px;
             label {
                 font-weight: normal;
                 text-transform: uppercase;
 
             }
         }
-        .first-col {
-            margin-right: 38px;
+        .float-l {
             float: left;
+        }
+        .first-col {
             width: 180px;
         }
         .second-col {
-            float: left;
             width: 540px;
         }
-    }
 
-    .no-top-margin {
-        .form-group {
-            margin-top: 10px;
+        .col-250 {
+            width: 250px;
+        }
+
+        .margin-r {
+            margin-right: 38px;
         }
     }
 }

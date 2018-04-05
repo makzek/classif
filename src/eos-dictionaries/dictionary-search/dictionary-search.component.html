@@ -46,7 +46,7 @@
 
 <ng-template #searchModal>
     <div class="full-search-top usual-border">
-        <span class="pull-left title">Область поиска</span>
+        <span class="pull-left title xl-font">Область поиска</span>
         <div class="pull-right srch-btns">
             <button [disabled]="noSearchData"
                 class="btn btn-primary s-font upper"
@@ -103,8 +103,8 @@
                 <div *ngIf="currTab === 'person'"
                     class="row">
                     <form id="person">
-                        <div class="row">
-                            <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
+                        <div class="first-col margin-r float-l">
+                            <div class="form-group unimportant-text">
                                 <label class="s-font" for="CODE_PERSON">{{fieldsDescription.rec['CODE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="CODE_PERSON"
@@ -120,8 +120,42 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="form-group unimportant-text">
+                                    <label class="s-font" for="PHONE">{{fieldsDescription.rec['PHONE']?.title}}</label>
+                                    <div class="wrap">
+                                        <input id="PHONE"
+                                            name="PHONE"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person.rec['PHONE']"
+                                            placeholder="{{fieldsDescription.rec['PHONE']?.title}}"
+                                            maxlength="{{fieldsDescription.rec['PHONE']?.length}}">
+                                        <button [ngClass]="{'hide': !person.rec['PHONE']}"
+                                            (click)="person.rec['PHONE'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
+                                    </div>
+                            </div>
+                            <div class="form-group unimportant-text">
+                                    <label class="s-font" for="E_MAIL">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
+                                    <div class="wrap">
+                                        <input id="E_MAIL"
+                                            name="E_MAIL"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person.rec['E_MAIL']"
+                                            placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}"
+                                            maxlength="{{fieldsDescription.rec['E_MAIL']?.length}}">
+                                        <button [ngClass]="{'hide': !person.rec['E_MAIL']}"
+                                            (click)="person.rec['E_MAIL'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                        </div>
 
-                            <div class="form-group unimportant-text col-md-9 col-lg-9 col-xl-9">
+                        <div class="second-col float-l">
+                            <div class="form-group unimportant-text">
                                 <label class="s-font" for="SURNAME">Фамилия</label>
                                 <div class="wrap">
                                     <input id="SURNAME"
@@ -138,125 +172,80 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row no-top-margin">
-                            <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
-                                <label class="s-font" for="PHONE">{{fieldsDescription.rec['PHONE']?.title}}</label>
-                                <div class="wrap">
-                                    <input id="PHONE"
-                                        name="PHONE"
-                                        type="text"
-                                        class="form-control light"
-                                        [(ngModel)]="person.rec['PHONE']"
-                                        placeholder="{{fieldsDescription.rec['PHONE']?.title}}"
-                                        maxlength="{{fieldsDescription.rec['PHONE']?.length}}">
-                                    <button [ngClass]="{'hide': !person.rec['PHONE']}"
-                                        (click)="person.rec['PHONE'] = ''">
-                                        <span class="eos-icon eos-icon-close-blue"></span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-md-9 col-lg-9 col-xl-9">
-                                <div class="row">
-                                    <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label class="s-font" for="NAME">Имя</label>
-                                        <div class="wrap">
-                                            <input id="NAME"
-                                                name="NAME"
-                                                type="text"
-                                                class="form-control light"
-                                                [(ngModel)]="person['printInfo']['NAME']"
-                                                placeholder="Имя"
-                                                maxlength="64"
-                                                readonly>
-                                            <button [ngClass]="{'hide': !person['printInfo']['NAME']}"
-                                                (click)="person['printInfo']['NAME'] = ''">
-                                                <span class="eos-icon eos-icon-close-blue"></span>
-                                            </button>
-                                        </div>
+                            <!---->
+                            <div>
+                                <div class="form-group unimportant-text margin-r col-250 float-l">
+                                    <label class="s-font" for="NAME">Имя</label>
+                                    <div class="wrap">
+                                        <input id="NAME"
+                                            name="NAME"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person['printInfo']['NAME']"
+                                            placeholder="Имя"
+                                            maxlength="64"
+                                            readonly>
+                                        <button [ngClass]="{'hide': !person['printInfo']['NAME']}"
+                                            (click)="person['printInfo']['NAME'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
                                     </div>
-                                    <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label class="s-font" for="PATRON">Отчество</label>
-                                        <div class="wrap">
-                                            <input id="PATRON"
-                                                name="PATRON"
-                                                type="text"
-                                                class="form-control light"
-                                                [(ngModel)]="person['printInfo']['PATRON']"
-                                                placeholder="Отчество"
-                                                maxlength="64"
-                                                readonly>
-                                            <button [ngClass]="{'hide': !person['printInfo']['PATRON']}"
-                                                (click)="person['printInfo']['PATRON'] = ''">
-                                                <span class="eos-icon eos-icon-close-blue"></span>
-                                            </button>
-                                        </div>
+                                </div>
+                                <div class="form-group unimportant-text col-250 float-l">
+                                    <label class="s-font" for="PATRON">Отчество</label>
+                                    <div class="wrap">
+                                        <input id="PATRON"
+                                            name="PATRON"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person['printInfo']['PATRON']"
+                                            placeholder="Отчество"
+                                            maxlength="64"
+                                            readonly>
+                                        <button [ngClass]="{'hide': !person['printInfo']['PATRON']}"
+                                            (click)="person['printInfo']['PATRON'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row no-top-margin">
-                            <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
-                                <label class="s-font" for="E_MAIL">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
-                                <div class="wrap">
-                                    <input id="E_MAIL"
-                                        name="E_MAIL"
-                                        type="text"
-                                        class="form-control light"
-                                        [(ngModel)]="person.rec['E_MAIL']"
-                                        placeholder="{{fieldsDescription.rec['E_MAIL']?.title}}"
-                                        maxlength="{{fieldsDescription.rec['E_MAIL']?.length}}">
-                                    <button [ngClass]="{'hide': !person.rec['E_MAIL']}"
-                                        (click)="person.rec['E_MAIL'] = ''">
-                                        <span class="eos-icon eos-icon-close-blue"></span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-9 col-lg-9 col-xl-9">
-                                <div class="row">
-                                    <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label class="s-font" for="DUTY">{{fieldsDescription.rec['DUTY']?.title}}</label>
-                                        <div class="wrap">
-                                            <input id="DUTY"
-                                                name="DUTY"
-                                                type="text"
-                                                class="form-control light"
-                                                [(ngModel)]="person.rec['DUTY']"
-                                                placeholder="{{fieldsDescription.rec['DUTY']?.title}}"
-                                                maxlength="{{fieldsDescription.rec['DUTY']?.length}}">
-                                            <button [ngClass]="{'hide': !person.rec['DUTY']}"
-                                                (click)="person.rec['DUTY'] = ''">
-                                                <span class="eos-icon eos-icon-close-blue"></span>
-                                            </button>
-                                        </div>
+                            <div>
+                                <div class="form-group unimportant-text margin-r col-250 float-l">
+                                    <label class="s-font" for="DUTY">{{fieldsDescription.rec['DUTY']?.title}}</label>
+                                    <div class="wrap">
+                                        <input id="DUTY"
+                                            name="DUTY"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person.rec['DUTY']"
+                                            placeholder="{{fieldsDescription.rec['DUTY']?.title}}"
+                                            maxlength="{{fieldsDescription.rec['DUTY']?.length}}">
+                                        <button [ngClass]="{'hide': !person.rec['DUTY']}"
+                                            (click)="person.rec['DUTY'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
                                     </div>
-
-                                    <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label class="s-font" for="fullPosition">{{fieldsDescription.rec['fullPosition']?.title}}</label>
-                                        <div class="wrap">
-                                            <input id="fullPosition"
-                                                name="fullPosition"
-                                                type="text"
-                                                class="form-control light"
-                                                [(ngModel)]="person.rec['FULLNAME']"
-                                                placeholder="{{fieldsDescription.rec['fullPosition']?.title}}"
-                                                maxlength="{{fieldsDescription.rec['fullPosition']?.length}}">
-                                            <button [ngClass]="{'hide': !person.rec['FULLNAME']}"
-                                                (click)="person.rec['FULLNAME'] = ''">
-                                                <span class="eos-icon eos-icon-close-blue"></span>
-                                            </button>
-                                        </div>
+                                </div>
+                                <div class="form-group unimportant-text col-250 float-l">
+                                    <label class="s-font" for="fullPosition">{{fieldsDescription.rec['fullPosition']?.title}}</label>
+                                    <div class="wrap">
+                                        <input id="fullPosition"
+                                            name="fullPosition"
+                                            type="text"
+                                            class="form-control light"
+                                            [(ngModel)]="person.rec['FULLNAME']"
+                                            placeholder="{{fieldsDescription.rec['fullPosition']?.title}}"
+                                            maxlength="{{fieldsDescription.rec['fullPosition']?.length}}">
+                                        <button [ngClass]="{'hide': !person.rec['FULLNAME']}"
+                                            (click)="person.rec['FULLNAME'] = ''">
+                                            <span class="eos-icon eos-icon-close-blue"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row no-top-margin">
-                            <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3"></div>
-                            <div class="form-group unimportant-text col-md-9 col-lg-9 col-xl-9">
+                            <div class="form-group unimportant-text">
                                 <label class="s-font" for="PERSON_NOTE">{{fieldsDescription.rec['NOTE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="PERSON_NOTE"
@@ -277,7 +266,8 @@
                     </form>
                 </div>
 
-                <div *ngIf="currTab === 'cabinet'">
+                <div *ngIf="currTab === 'cabinet'"
+                    class="row">
                     <form id="cabinet">
                         <div class="form-group unimportant-text">
                             <label class="s-font" for="titleRoom">{{fieldsDescription.rec['titleRoom']?.title}}</label>
@@ -307,7 +297,7 @@
                 <div *ngIf="currTab === 'department'"
                     class="row">
                     <form id="department">
-                        <div class="first-col">
+                        <div class="first-col margin-r float-l">
                             <div class="form-group unimportant-text">
                                 <label class="s-font" for="CODE">{{fieldsDescription.rec['CODE']?.title}}</label>
                                 <div class="wrap">
@@ -341,7 +331,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="second-col">
+                        <div class="second-col float-l">
                             <div class="form-group unimportant-text">
                                 <label class="s-font" for="title">{{fieldsDescription.rec['title']?.title}}</label>
                                 <div class="wrap">
