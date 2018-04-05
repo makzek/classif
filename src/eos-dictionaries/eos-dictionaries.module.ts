@@ -46,8 +46,7 @@ import { SecurityCardEditComponent } from './card-views/security-card-edit.compo
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
 import { TreeNodeComponent } from './tree/tree-node.component';
-import { DictionariesFastSearchComponent } from './dictionary-fast-search/dictionary-fast-search.component';
-import { MockBackendService } from '../environments/mock-backend.service';
+import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dictionary-quick-search.component';
 
 /* services */
 import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
@@ -64,6 +63,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         DepartmentsCardEditPersonComponent,
         DictionaryComponent,
         DictionariesComponent,
+        DictionariesQuickSearchComponent,
         DictionarySearchComponent,
         NodeActionsComponent,
         NodeInfoComponent,
@@ -81,7 +81,6 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         LongTitleHintComponent,
         SecurityCardEditComponent,
         CreateNodeComponent,
-        DictionariesFastSearchComponent,
     ],
     entryComponents: [
         ColumnSettingsComponent,
@@ -116,7 +115,6 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         EosDictService,
         EosSandwichService,
         EosDataConvertService,
-        MockBackendService
     ],
 })
 export class EosDictionariesModule { }
