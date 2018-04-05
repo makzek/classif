@@ -91,6 +91,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                     }
                     this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
                 });
+            }
+            if (this.currentFields) {
                 this.dictionaryFields.forEach(_field => {
                     if (_field.customTitle) {
                         this.haveCustomTitle = true;
@@ -188,8 +190,15 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @description set newTitle as customTitle for editedItem
      */
     saveNewTitle() {
-        this.editedItem.customTitle = this.newTitle.trim();
-        this.haveCustomTitle = true;
+        const trimNewTitle = this.newTitle.trim();
+        if (trimNewTitle !== this.editedItem.title) {
+            this.editedItem.customTitle = trimNewTitle;
+            this.haveCustomTitle = true;
+        } else {
+            this.editedItem.customTitle = undefined;
+            this.haveCustomTitle = false;
+        }
+        this.haveCustomTitle = this._checkCustomTitle();
         this.cancelTitleEdit();
     }
 
@@ -227,6 +236,25 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
             _f.customTitle = null;
         });
         this.haveCustomTitle = false;
+    }
+
+    private _checkCustomTitle(): boolean {
+        let result = false;
+        if (this.dictionaryFields) {
+            this.dictionaryFields.forEach((_field: IFieldView) => {
+                if (_field.customTitle) {
+                    result = true;
+                }
+            });
+        }
+        if (this.currentFields) {
+            this.currentFields.forEach((_field: IFieldView) => {
+                if (_field.customTitle) {
+                    result = true;
+                }
+            });
+        }
+        return result;
     }
 
 }
