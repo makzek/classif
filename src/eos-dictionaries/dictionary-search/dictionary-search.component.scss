@@ -201,19 +201,31 @@
         width: auto;
         margin: 0 -20px -10px;
     }
+    form {
+        padding: 0 20px;
+        .form-control {
+            padding: 8px;
+            border-radius: 0;
+            height: 32px;
+        }
 
-    .form-control {
-        border-radius: 0;
-        height: 32px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+            margin-top: 30px;
+            label {
+                font-weight: normal;
+                text-transform: uppercase;
 
-    .form-group {
-        margin-bottom: 20px;
-        margin-top: 30px;
-        label {
-            font-weight: normal;
-            text-transform: uppercase;
-
+            }
+        }
+        .first-col {
+            margin-right: 38px;
+            float: left;
+            width: 180px;
+        }
+        .second-col {
+            float: left;
+            width: 540px;
         }
     }
 
@@ -222,6 +234,10 @@
             margin-top: 10px;
         }
     }
+}
+
+.popover {
+    padding: 0;
 }
 
 @media (max-width: 1200px) {
