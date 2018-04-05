@@ -42,7 +42,6 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         key: 'IS_COPYCOUNT',
         title: 'Нумерация копий',
         type: 'boolean',
-        forNode: true,
     }, {
         key: 'RC_TYPE',
         title: 'Вид РК',
@@ -52,38 +51,37 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         key: 'DOCGROUP_INDEX',
         title: 'Индекс',
         type: 'string',
-        forNode: true,
     }, {
         key: 'DOCNUMBER_FLAG',
         title: 'Номерообразование',
         type: 'boolean',
-        forNode: true,
     }, {
         key: 'SHABLON',
         title: 'Шаблон',
         type: 'string',
         required: true,
-        forNode: true,
     }, {
         key: 'EDS_FLAG',
         title: 'Требуется ЭП',
-        type: 'number',
+        type: 'boolean',
     }, {
         key: 'ENCRYPT_FLAG',
         title: 'Требуется шифрование',
-        type: 'number',
+        type: 'boolean',
     }, {
         key: 'TEST_UNIQ_FLAG',
-        title: 'Проверять уникальность',
-        type: 'number',
+        title: 'Проверка уникальности',
+        type: 'boolean',
+        forNode: true
     }, {
         key: 'PRJ_NUM_FLAG',
-        title: 'Разрешение создания РКПД',
-        type: 'number',
+        title: 'Проекты документов',
+        type: 'boolean',
     }, {
         key: 'PRJ_SHABLON',
         title: 'Шаблон номера проекта документа',
         type: 'string',
+        required: true,
     }, {
         key: 'PRJ_WEIGHT',
         title: 'Вес в списке для проектов',
@@ -91,32 +89,37 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'PRJ_AUTO_REG',
         title: 'Авторегистрация проекта',
-        type: 'number',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_APPLY_EDS',
-        title: 'Применять ЭП для подписания проекта',
-        type: 'number',
+        title: 'Применять ЭП подписей',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_APPLY2_EDS',
-        title: 'Применять ЭП для визирования проекта',
-        type: 'number',
+        title: 'Применять ЭП виз',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_APPLY_EXEC_EDS',
-        title: 'Применять ЭП для исполнителя проекта',
-        type: 'number',
+        title: 'Применять ЭП исполнителей',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_DEL_AFTER_REG',
-        title: 'Удалять РК проекта после регистрации',
-        type: 'number',
+        title: 'Удалять РКПД после регистрации',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'PRJ_TEST_UNIQ_FLAG',
-        title: 'Флаг проверки уникальности номера проекта',
-        type: 'number',
+        title: 'Проверка уникальности номера проекта',
+        type: 'boolean',
+        forNode: true,
     }, {
         key: 'E_DOCUMENT',
         title: 'Оригинал в эл.виде',
         type: 'boolean',
-        forNode: true,
     }, {
         key: 'ACCESS_MODE',
         title: 'Конфиденциальность',
@@ -124,7 +127,7 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
     }, {
         key: 'ACCESS_MODE_FIXED',
         title: 'Без редактирования',
-        type: 'number',
+        type: 'boolean',
     }, {
         key: 'INITIATIVE_RESOLUTION',
         title: 'флаг Инициативная резолюция',
@@ -151,7 +154,9 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         type: 'SHABLON_DETAIL[]',
     }]),
     treeFields: ['CLASSIF_NAME'],
-    editFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE'],
+    editFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'IS_COPYCOUNT', 'ACCESS_MODE_FIXED', 'E_DOCUMENT', 'PRJ_TEST_UNIQ_FLAG',
+        'PRJ_DEL_AFTER_REG', 'PRJ_APPLY_EXEC_EDS', 'PRJ_APPLY2_EDS', 'PRJ_APPLY_EDS', 'PRJ_AUTO_REG', 'PRJ_SHABLON', 'PRJ_NUM_FLAG',
+        'TEST_UNIQ_FLAG', 'ENCRYPT_FLAG', 'EDS_FLAG', 'SHABLON', 'DOCNUMBER_FLAG', 'DOCGROUP_INDEX', 'RC_TYPE'],
     searchFields: ['CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'DOCGROUP_INDEX', 'NOTE'],
     quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
