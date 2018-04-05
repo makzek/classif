@@ -104,7 +104,7 @@
                     <form id="person">
                         <div class="row">
                             <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
-                                <label for="CODE_PERSON">{{fieldsDescription.rec['CODE']?.title}}</label>
+                                <label class="s-font" for="CODE_PERSON">{{fieldsDescription.rec['CODE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="CODE_PERSON"
                                         name="CODE_PERSON"
@@ -121,7 +121,7 @@
                             </div>
 
                             <div class="form-group unimportant-text col-md-9 col-lg-9 col-xl-9">
-                                <label for="SURNAME">Фамилия</label>
+                                <label class="s-font" for="SURNAME">Фамилия</label>
                                 <div class="wrap">
                                     <input id="SURNAME"
                                         name="SURNAME"
@@ -141,7 +141,7 @@
 
                         <div class="row no-top-margin">
                             <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
-                                <label for="PHONE">{{fieldsDescription.rec['PHONE']?.title}}</label>
+                                <label class="s-font" for="PHONE">{{fieldsDescription.rec['PHONE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="PHONE"
                                         name="PHONE"
@@ -160,7 +160,7 @@
                             <div class="col-md-9 col-lg-9 col-xl-9">
                                 <div class="row">
                                     <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label for="NAME">Имя</label>
+                                        <label class="s-font" for="NAME">Имя</label>
                                         <div class="wrap">
                                             <input id="NAME"
                                                 name="NAME"
@@ -177,7 +177,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label for="PATRON">Отчество</label>
+                                        <label class="s-font" for="PATRON">Отчество</label>
                                         <div class="wrap">
                                             <input id="PATRON"
                                                 name="PATRON"
@@ -199,7 +199,7 @@
 
                         <div class="row no-top-margin">
                             <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3">
-                                <label for="E_MAIL">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
+                                <label class="s-font" for="E_MAIL">{{fieldsDescription.rec['E_MAIL']?.title}}</label>
                                 <div class="wrap">
                                     <input id="E_MAIL"
                                         name="E_MAIL"
@@ -217,7 +217,7 @@
                             <div class="col-md-9 col-lg-9 col-xl-9">
                                 <div class="row">
                                     <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label for="DUTY">{{fieldsDescription.rec['DUTY']?.title}}</label>
+                                        <label class="s-font" for="DUTY">{{fieldsDescription.rec['DUTY']?.title}}</label>
                                         <div class="wrap">
                                             <input id="DUTY"
                                                 name="DUTY"
@@ -234,7 +234,7 @@
                                     </div>
 
                                     <div class="form-group unimportant-text col-md-6 col-lg-6 col-xl-6">
-                                        <label for="fullPosition">{{fieldsDescription.rec['fullPosition']?.title}}</label>
+                                        <label class="s-font" for="fullPosition">{{fieldsDescription.rec['fullPosition']?.title}}</label>
                                         <div class="wrap">
                                             <input id="fullPosition"
                                                 name="fullPosition"
@@ -256,7 +256,7 @@
                         <div class="row no-top-margin">
                             <div class="form-group unimportant-text col-md-3 col-lg-3 col-xl-3"></div>
                             <div class="form-group unimportant-text col-md-9 col-lg-9 col-xl-9">
-                                <label for="PERSON_NOTE">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                                <label class="s-font" for="PERSON_NOTE">{{fieldsDescription.rec['NOTE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="PERSON_NOTE"
                                         name="PERSON_NOTE"
@@ -279,7 +279,7 @@
                 <div *ngIf="currTab === 'cabinet'">
                     <form id="cabinet">
                         <div class="form-group unimportant-text">
-                            <label for="titleRoom">{{fieldsDescription.rec['titleRoom']?.title}}</label>
+                            <label class="s-font" for="titleRoom">{{fieldsDescription.rec['titleRoom']?.title}}</label>
                             <div class="wrap">
                                 <input id="titleRoom"
                                     name="titleRoom"
@@ -295,7 +295,7 @@
                         </div>
                         <!--
                         <div class="form-group unimportant-text">
-                            <label for="fullTitleRoom" >{{fieldsDescription.rec['fullTitleRoom']?.title}}</label>
+                            <label class="s-font" for="fullTitleRoom" >{{fieldsDescription.rec['fullTitleRoom']?.title}}</label>
                             <input id="fullTitleRoom" name="fullTitleRoom" type="text" class="form-control light"
                                 [(ngModel)]="data.rec['fullTitleRoom']"
                                 placeholder="{{fieldsDescription.rec['fullTitleRoom']?.title}}" >
@@ -308,7 +308,7 @@
                     <form id="department">
                         <div class="col-md-3 col-lg-3 col-xl-3">
                             <div class="form-group unimportant-text">
-                                <label for="CODE">{{fieldsDescription.rec['CODE']?.title}}</label>
+                                <label class="s-font" for="CODE">{{fieldsDescription.rec['CODE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="CODE"
                                         name="CODE"
@@ -324,7 +324,7 @@
                                 </div>
                             </div>
                             <div class="form-group unimportant-text">
-                                <label for="indexDep">{{fieldsDescription.rec['indexDep']?.title}}</label>
+                                <label class="s-font" for="indexDep">{{fieldsDescription.rec['indexDep']?.title}}</label>
                                 <div class="wrap">
                                     <input id="indexDep"
                                         name="indexDepcode"
@@ -342,7 +342,7 @@
                         </div>
                         <div class="col-md-9 col-lg-9 col-xl-9">
                             <div class="form-group unimportant-text">
-                                <label for="title">{{fieldsDescription.rec['title']?.title}}</label>
+                                <label class="s-font" for="title">{{fieldsDescription.rec['title']?.title}}</label>
                                 <div class="wrap">
                                     <input id="title"
                                         name="title"
@@ -358,7 +358,7 @@
                                 </div>
                             </div>
                             <div class="form-group unimportant-text">
-                                <label for="fullTitle">{{fieldsDescription.rec['fullTitle']?.title}}</label>
+                                <label class="s-font" for="fullTitle">{{fieldsDescription.rec['fullTitle']?.title}}</label>
                                 <div class="wrap">
                                     <input id="fullTitle"
                                         name="fullTitle"
@@ -374,7 +374,7 @@
                                 </div>
                             </div>
                             <div class="form-group unimportant-text">
-                                <label for="DEPARTMENT_NOTE">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                                <label class="s-font" for="DEPARTMENT_NOTE">{{fieldsDescription.rec['NOTE']?.title}}</label>
                                 <div class="wrap">
                                     <input id="DEPARTMENT_NOTE"
                                         name="DEPARTMENT_NOTE"
@@ -399,7 +399,7 @@
                     class="row full-search-form">
                     <div class="col-md-3 col-lg-3 col-xl-3">
                         <div class="form-group unimportant-text">
-                            <label for="code">{{fieldsDescription.rec['RUBRIC_CODE']?.title}}</label>
+                            <label class="s-font" for="code">{{fieldsDescription.rec['RUBRIC_CODE']?.title}}</label>
                             <div class="wrap">
                                 <input id="code"
                                     name="code"
@@ -417,7 +417,7 @@
                     </div>
                     <div class="col-md-9 col-lg-9 col-xl-9">
                         <div class="form-group unimportant-text">
-                            <label for="title">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
+                            <label class="s-font" for="title">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
                             <div class="wrap">
                                 <input id="title"
                                     name="title"
@@ -434,7 +434,7 @@
                         </div>
 
                         <div class="form-group unimportant-text">
-                            <label for="fullTitle">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
+                            <label class="s-font" for="fullTitle">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
                             <div class="wrap">
                                 <input id="fullTitle"
                                     name="fullTitle"
@@ -451,7 +451,7 @@
                         </div>
 
                         <div class="form-group unimportant-text">
-                            <label for="note">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                            <label class="s-font" for="note">{{fieldsDescription.rec['NOTE']?.title}}</label>
                             <div class="wrap">
                                 <input id="note"
                                     name="note"
@@ -475,7 +475,7 @@
                     class="full-search-form">
                     <!--
                 <div class="form-group unimportant-text">
-                    <label for="code" >{{fieldsDescription.rec['CODE']?.title}}</label>
+                    <label class="s-font" for="code" >{{fieldsDescription.rec['CODE']?.title}}</label>
                     <input id="code" name="code" type="text" class="form-control"
                         [(ngModel)]="data.rec['CODE']"
                         placeholder="{{fieldsDescription.rec['CODE']?.title}}"
@@ -484,7 +484,7 @@
                 -->
                     <!--
                 <div class="form-group unimportant-text">
-                    <label for="cod-okato" >{{fieldsDescription.rec['COD_OKATO']?.title}}</label>
+                    <label class="s-font" for="cod-okato" >{{fieldsDescription.rec['COD_OKATO']?.title}}</label>
                     <input id="cod-okato" name="cod-okato" type="text" class="form-control"
                         [(ngModel)]="data.rec['COD_OKATO']"
                         placeholder="{{fieldsDescription.rec['COD_OKATO']?.title}}"
@@ -492,7 +492,7 @@
                 </div>
                 -->
                     <div class="form-group unimportant-text">
-                        <label for="name">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
+                        <label class="s-font" for="name">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
                         <div class="wrap">
                             <input id="name"
                                 name="name"
@@ -509,7 +509,7 @@
                     </div>
                     <!--
                 <div class="form-group unimportant-text">
-                    <label for="note" >{{fieldsDescription.rec['NOTE']?.title}}</label>
+                    <label class="s-font" for="note" >{{fieldsDescription.rec['NOTE']?.title}}</label>
                     <input id="note" name="note" type="text" class="form-control"
                         [(ngModel)]="data.rec['NOTE']"
                         placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
