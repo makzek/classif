@@ -38,6 +38,7 @@
                 border: 1px $active-field-color-main-theme solid;
             }
             .text {
+                max-height: 52px;
                 position: absolute;
                 display: inline-block;
                 top: 38px;
