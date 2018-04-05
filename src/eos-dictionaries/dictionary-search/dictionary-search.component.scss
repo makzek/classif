@@ -126,7 +126,8 @@
     }
 
     .srch-btns {
-        margin: 8px 20px 8px 0px;
+        margin: 8px 15px 8px 0;
+        font-size: 0;
 
         .btn {
             width: 82px;
@@ -199,6 +200,7 @@
         background-color: $modal-block-background-main-theme;
         border-bottom: 1px solid $border-color-main-theme;
         width: auto;
+        height: $item-height;
     }
     form {
         padding: 0 20px;
@@ -209,7 +211,21 @@
         }
 
         .form-group {
+            margin: 20px 0;
+
+            &.col-250 {
+                width: 250px;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            &.top-mrg {
+                padding-top: 20px;
+            }
+
             label {
+                line-height: 10px;
+                margin-bottom: 8px;
                 font-weight: normal;
                 text-transform: uppercase;
 
@@ -223,10 +239,6 @@
         }
         .second-col {
             width: 540px;
-        }
-
-        .col-250 {
-            width: 250px;
         }
 
         .margin-r {
