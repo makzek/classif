@@ -163,29 +163,26 @@
     border-bottom-style: solid;
     font-size: 0;
 
-    form {
-        display: flex;
-    }
-
     label {
         font-weight: normal;
         text-transform: none;
     }
-
+    .line {
+        margin-top: 20px;
+    }
     .radio-inline,
     .checkbox-inline {
+        cursor: pointer;
         height: 32px;
         padding-left: 0;
-        margin-right: 20px;
-    }
-
-    .col-1 {
-        width: 190px;
         margin-right: 40px;
-    }
-
-    .col-2 {
-        width: 300px;
+        input[type="checkbox"],
+        input[type="radio"] {
+            & + span {
+                margin-bottom: -6px;
+                cursor: pointer;
+            }
+        }
     }
 }
 
