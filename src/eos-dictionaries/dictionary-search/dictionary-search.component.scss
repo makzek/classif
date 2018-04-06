@@ -199,7 +199,8 @@
         height: $item-height;
     }
     form {
-        padding: 0 20px;
+        padding: 20px;
+        font-size: 0;
         .form-control {
             padding: 8px;
             border-radius: 0;
@@ -207,16 +208,13 @@
         }
 
         .form-group {
-            margin: 20px 0;
+            margin-bottom: 20px;
 
             &.col-250 {
+                display: inline-block;
                 width: 250px;
                 margin-top: 0;
                 margin-bottom: 0;
-            }
-
-            &.top-mrg {
-                padding-top: 20px;
             }
 
             label {
@@ -227,13 +225,17 @@
 
             }
         }
-        .float-l {
-            float: left;
+
+        .form-group:last-child {
+            margin-bottom: 0;
         }
         .first-col {
+            display: inline-block;
+            vertical-align: top;
             width: 180px;
         }
         .second-col {
+            display: inline-block;
             width: 540px;
         }
 
