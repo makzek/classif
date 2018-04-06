@@ -79,7 +79,6 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         key: 'PRJ_NUM_FLAG',
         title: 'Проекты документов',
         type: 'boolean',
-        forNode: true,
     }, {
         key: 'PRJ_SHABLON',
         title: 'Шаблон номера проекта документа',
