@@ -9,7 +9,6 @@ export class BaseCardEditComponent {
     @Input() inputs: any;
     @Input() data: any;
     @Input() editMode: boolean;
-    @Input() fieldsDescription: any;
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
     /*
