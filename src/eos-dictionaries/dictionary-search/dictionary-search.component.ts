@@ -36,7 +36,6 @@ export class DictionarySearchComponent implements OnDestroy {
     };
     currTab: string;
     modes: IRecordModeDescription[];
-    isOpenFull = false;
     searchDone = true; // Flag search is done, false while not received data
 
     @ViewChild('full') fSearchPop;

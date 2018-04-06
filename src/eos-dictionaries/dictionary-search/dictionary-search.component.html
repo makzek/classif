@@ -14,17 +14,15 @@
         class="search-btn-wraper"
         placement="bottom"
         #full="bs-popover"
-        [outsideClick]="true"
-        (onShown)="isOpenFull = true"
-        (onHidden)="isOpenFull = false">
-        <button [ngClass]="{'hidden': !hasFull, 'opened': isOpenFull || !noSearchData }"
+        [outsideClick]="true">
+        <button [ngClass]="{'hidden': !hasFull, 'opened': full.isOpen || !noSearchData }"
             class="btn btn-primary-light search-btn"
             tooltip="Расширенный поиск"
             placement="bottom"
             container="body"
             containerClass="tooltip-info">
-            <i [hidden]="isOpenFull || !noSearchData" class="eos-icon eos-icon-filter-blue small" aria-hidden="true"></i>
-            <i [hidden]="!(isOpenFull || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true"></i>
+            <i [hidden]="full.isOpen || !noSearchData" class="eos-icon eos-icon-filter-blue small" aria-hidden="true"></i>
+            <i [hidden]="!(full.isOpen || !noSearchData)" class="eos-icon eos-icon-filter-white small" aria-hidden="true"></i>
         </button>
     </div>
     <div class="search-btn-wraper"
