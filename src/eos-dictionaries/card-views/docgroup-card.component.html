@@ -21,8 +21,7 @@
         [readonly]="!editMode"></eos-dynamic-input>
 </div>
 <div class="clearfix">
-    <div class="form-group pull-left"
-        *ngIf="data.rec.IS_NODE">
+    <div class="form-group pull-left">
         <eos-dynamic-input [input]="inputs['rec.TEST_UNIQ_FLAG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
@@ -39,7 +38,7 @@
         readonly="true"></eos-dynamic-input>
 </div>
 <div class="form-group"
-    *ngIf="isPrjFlag">
+    [hidden]="!this.inputs['rec.PRJ_SHABLON'].required">
     <eos-dynamic-input [input]="inputs['rec.PRJ_SHABLON']"
         [form]="form"
         readonly="true"></eos-dynamic-input>
@@ -80,8 +79,7 @@
         [readonly]="!editMode"></eos-dynamic-input>
 </div>
 <div class="clearfix">
-    <div class="form-group pull-left"
-        *ngIf="isPrjFlagVisible">
+    <div class="form-group pull-left">
         <eos-dynamic-input [input]="inputs['rec.PRJ_NUM_FLAG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
@@ -93,12 +91,12 @@
     </div>
 </div>
 <ng-container *ngIf="data?.rec['IS_NODE']">
-    <div class="form-group" *ngIf="isAutoRemove">
+    <div class="form-group">
         <eos-dynamic-input [input]="inputs['rec.PRJ_DEL_AFTER_REG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
     </div>
-    <div class="form-group" *ngIf="isAutoreg">
+    <div class="form-group">
         <eos-dynamic-input [input]="inputs['rec.PRJ_AUTO_REG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
