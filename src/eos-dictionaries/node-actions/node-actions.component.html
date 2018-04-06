@@ -17,10 +17,7 @@
                             class="btn btn-primary-light {{item.buttonClass}}"
                             [ngClass]="{'active': item.isActive}"
                             (click)="itemTooltip.hide();">
-                            <span [hidden]="item.isActive"
-                                [ngClass]="item.iconClass"></span>
-                            <span [hidden]="!item.isActive"
-                                [ngClass]="item.activeIconClass"></span>
+                            <span [ngClass]="!item.isActive ? item.iconClass : item.activeIconClass"></span>
                         </button>
                     </div>
 
@@ -53,10 +50,7 @@
                             class="btn btn-primary-light {{item.buttonClass}}"
                             [ngClass]="{'active': item.isActive}"
                             (click)="itemTooltip.hide(); doAction($event, item)">
-                            <span [hidden]="item.isActive"
-                                [ngClass]="item.iconClass"></span>
-                            <span [hidden]="!item.isActive"
-                                [ngClass]="item.activeIconClass"></span>
+                            <span [ngClass]="!item.isActive ? item.iconClass : item.activeIconClass"></span>
                         </button>
                     </div>
                 </span>
@@ -76,10 +70,7 @@
             containerClass="tooltip-info"
             dropdownToggle
             (click)="itemTooltip.hide()">
-            <span [hidden]="dropdown.isOpen"
-                class="eos-icon eos-icon-fab-blue small"></span>
-            <span [hidden]="!dropdown.isOpen"
-                class="eos-icon eos-icon-fab-white small"></span>
+            <span [ngClass]="dropdown.isOpen ? 'eos-icon eos-icon-fab-white small': 'eos-icon eos-icon-fab-blue small'"></span>
         </button>
         <!--MENU-->
         <ul *dropdownMenu
@@ -100,10 +91,7 @@
                     *ngIf="item.show && item.type !== ADD_ACTION"
                     (click)="doAction($event, item); menuMng($event, item.enabled, dropdown)">
                     <div class="drop-ico">
-                        <span *ngIf="item.enabled"
-                            class="{{item.iconClass}}"></span>
-                        <span *ngIf="!item.enabled"
-                            class="{{item.disabledIconClass}}"></span>
+                        <span [ngClass]="item.enabled ? item.iconClass : item.disabledIconClass"></span>
                     </div>
                     <div class="title" [ngClass]="{'disabled': !item.enabled}">
                         <span class="m-font">{{item.title}}</span>
@@ -119,16 +107,13 @@
                     *ngIf="item.show && item.type === ADD_ACTION"
                     (click)="isTree ? stopCloseMenu($event) : doAction($event, item)">
                     <div class="drop-ico">
-                        <span *ngIf="item.enabled"
-                            class="{{item.iconClass}}"></span>
-                        <span *ngIf="!item.enabled"
-                            class="{{item.disabledIconClass}}"></span>
+                        <span [ngClass]="item.enabled ? item.iconClass : item.disabledIconClass"></span>
                     </div>
                     <div class="title">
                         <span class="m-font" [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                     </div>
                 </a>
-
+                <!--SECOND LVL MENU-->
                 <ul *dropdownMenu
                     class="dropdown-menu menu-two-lvl"
                     role="menu">
