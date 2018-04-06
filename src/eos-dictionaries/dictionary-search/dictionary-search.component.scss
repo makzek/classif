@@ -141,17 +141,18 @@
 
     button {
         border: none;
-        padding: 0px;
+        padding: 5px;
         width: 30px;
         height: 30px;
         top: 1px;
         float: right;
-        right: 2px;
+        right: 1px;
         background-color: $modal-block-background-main-theme;
         position: absolute;
 
         .eos-icon {
-            height: 26px;
+            height: 20px;
+            width: 20px;
         }
     }
 }
