@@ -2,8 +2,6 @@
     display: inline-block;
     .pushpin:focus {
         border: none;
-    .pushdrop {
-        min-width: 280px !important;
     }
     .eos-icon-pin-blue {
         cursor: pointer;
@@ -51,5 +49,4 @@
             right: 330px !important;
             }
         }
-    }
 }

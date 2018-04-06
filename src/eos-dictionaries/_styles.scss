@@ -4,12 +4,14 @@
 @import "./card-views/cabinet-card-edit.component";
 @import "./card-views/departments-card-edit-department.component";
 @import "./card-views/departments-card-edit-person.component";
+@import "./card-views/docgroup-card.component";
 @import "./card-views/security-card-edit.component";
 @import "./column-settings/column-settings.component";
 @import "./create-node/create-node.component";
 @import "./dictionaries/dictionaries.component";
-@import "./dictionary/dictionary.component";
+@import './dictionary-quick-search/dictionary-quick-search.component';
 @import "./dictionary-search/dictionary-search.component";
+@import "./dictionary/dictionary.component";
 @import "./long-title-hint/long-title-hint.component";
 @import "./node-actions/node-actions.component";
 @import "./node-info/node-info.component";
@@ -17,4 +19,3 @@
 @import "./node-list-pagination/node-list-pagination.component";
 @import "./sandwich/sandwich.component";
 @import "./tree/tree.component";
-@import './dictionary-fast-search/dictionary-fast-search.component';

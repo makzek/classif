@@ -1,11 +1,32 @@
 .column-settings-modal {
+    width: 800px;
     .modal-header {
-        padding: 0 15px;
+        padding: 0 20px;
+        .pull-right {
+            font-size: 0;
+        }
     }
 
     .btn {
         text-transform: uppercase;
-        margin-top: 7px;
+        margin: 8px 0;
+        padding: 9px 6.5px;
+        &.btn-primary-light {
+            margin-top: 0;
+        }
+    }
+    .fixed-width {
+        width: 88px;
+    }
+
+    .have-margin {
+        margin: 8px 10px;
+    }
+
+
+    .btn:disabled {
+        border: 1px $disabled-color-main-theme solid !important;
+        color: $disabled-color-main-theme !important;
     }
 
     .title {
@@ -16,7 +37,7 @@
     .info-block {
         border-width: 1px;
         border-style: solid;
-        height: 500px;
+        height: 472px;
         overflow: auto;
 
         &.right {
@@ -34,16 +55,21 @@
             cursor: move;
             position: relative;
 
+            .fa {
+                vertical-align: text-top;
+            }
+
             .edit-btn,
             .ok-btn,
             .cancel-btn {
+                padding: 14px;
                 position: absolute;
-                right: 0;
-                top: 5px;
+                right: 1px;
+                top: 1px;
             }
 
             .ok-btn {
-                right: 24px;
+                right: 32px;
             }
 
             .new-title,
@@ -52,7 +78,14 @@
                 top: 0;
                 left: 0;
                 border-radius: 0;
-                padding-right: 50px;
+                padding-right: 64px;
+            }
+            .new-title {
+                background-color: $light-grey-1;
+            }
+
+            .new-title {
+                border: 1px $active-field-color-main-theme solid;
             }
 
             .new-title::-ms-clear {
@@ -106,9 +139,14 @@
 
 
 .warning {
+    &.modal-header {
+        padding: 11px;
+    }
     &.modal-footer {
+        padding: 9.5px 20px;
         .btn {
-            padding: 0 20px;
+            line-height: 0;
+            padding: 15px 20px;
             text-transform: uppercase;
         }
     }

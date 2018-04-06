@@ -14,6 +14,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
     @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
+    public haveCustomTitle = false;
 
     selectedDictItem: IFieldView;
     selectedCurrItem: IFieldView;
@@ -85,7 +86,17 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         setTimeout(() => {
             if (this.dictionaryFields) {
                 this.currentFields.forEach((_curr) => {
+                    if (_curr.customTitle) {
+                        this.haveCustomTitle = true;
+                    }
                     this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
+                });
+            }
+            if (this.currentFields) {
+                this.dictionaryFields.forEach(_field => {
+                    if (_field.customTitle) {
+                        this.haveCustomTitle = true;
+                    }
                 });
             }
         }, 0);
@@ -179,7 +190,15 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @description set newTitle as customTitle for editedItem
      */
     saveNewTitle() {
-        this.editedItem.customTitle = this.newTitle.trim();
+        const trimNewTitle = this.newTitle.trim();
+        if (trimNewTitle !== this.editedItem.title) {
+            this.editedItem.customTitle = trimNewTitle;
+            this.haveCustomTitle = true;
+        } else {
+            this.editedItem.customTitle = undefined;
+            this.haveCustomTitle = false;
+        }
+        this.haveCustomTitle = this._checkCustomTitle();
         this.cancelTitleEdit();
     }
 
@@ -216,6 +235,26 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
         this.fixedFields.forEach((_f) => {
             _f.customTitle = null;
         });
+        this.haveCustomTitle = false;
+    }
+
+    private _checkCustomTitle(): boolean {
+        let result = false;
+        if (this.dictionaryFields) {
+            this.dictionaryFields.forEach((_field: IFieldView) => {
+                if (_field.customTitle) {
+                    result = true;
+                }
+            });
+        }
+        if (this.currentFields) {
+            this.currentFields.forEach((_field: IFieldView) => {
+                if (_field.customTitle) {
+                    result = true;
+                }
+            });
+        }
+        return result;
     }
 
 }

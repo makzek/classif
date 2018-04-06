@@ -37,12 +37,12 @@
                     <ng-template #records>
                         <span class="item-count-content">
                             Записей:
-                            <span class="secondary-text">{{paginationConfig?.itemsQty}}</span>
+                            <span class="counter">{{paginationConfig?.itemsQty}}</span>
                         </span>
                     </ng-template>
                     <ng-template #foundRecords>
                         <span class="item-count-found">
-                            Найдено <span class="secondary-text">{{paginationConfig?.itemsQty}}</span> записей
+                            Найдено <span class="counter">{{paginationConfig?.itemsQty}}</span> записей
                             <button class="btn btn-primary-light"
                                 tooltip="Очистить результаты"
                                 placement="bottom"
@@ -61,9 +61,7 @@
                     <eos-dictionary-search (switchFastSrch)="switchFastSearch($event)"></eos-dictionary-search>
                 </div>
             </div>
-            <div class="fast-srch" *ngIf="fastSearch">
-                <eos-dictionary-fast-search></eos-dictionary-fast-search>
-            </div>
+            <eos-dictionary-quick-search *ngIf="fastSearch"></eos-dictionary-quick-search>
         </div>
         <div class="table-wrapper usual-border">
             <div class="second-line block selected-text" [ngStyle]="{'width.px': tableWidth}">

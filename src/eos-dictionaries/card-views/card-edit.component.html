@@ -41,6 +41,14 @@
                     [data]="data"
                     [fieldsDescription]="fieldsDescription"
                     [editMode]="editMode"></eos-security-card-edit>
+                <eos-docgroup-card #cardEditEl
+                    *ngSwitchCase="'docgroup'"
+                    class="docgroup-card"
+                    [form]="form"
+                    [inputs]="inputs"
+                    [data]="data"
+                    [editMode]="editMode"
+                    [fieldsDescription]="fieldsDescription"></eos-docgroup-card>
                 <eos-simple-card-edit #cardEditEl
                     class="simple-card-edit"
                     *ngSwitchDefault
