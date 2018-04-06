@@ -79,6 +79,7 @@
                         <span></span>Учитывать логически удаленные</label>
             </div>
         </div>
+        <!--FOR Departments-->
         <div [hidden]="dictId !== 'departments'"
             class="full-search-form"
             *ngIf="data.rec && data['printInfo']">
@@ -399,88 +400,90 @@
         <div [hidden]="dictId !== 'rubricator'"
             *ngIf="data.rec"
             class="row full-search-form">
-            <div class="first-col margin-r">
-                <div class="form-group unimportant-text">
-                    <label class="s-font"
-                        for="code">{{fieldsDescription.rec['RUBRIC_CODE']?.title}}</label>
-                    <div class="wrap">
-                        <input id="code"
-                            name="code"
-                            type="text"
-                            class="form-control light"
-                            [(ngModel)]="data.rec['RUBRIC_CODE']"
-                            placeholder="{{fieldsDescription.rec['RUBRIC_CODE']?.title}}"
-                            maxlength="{{fieldsDescription.rec['RUBRIC_CODE']?.length}}">
-                        <button [ngClass]="{'hide': !data.rec['RUBRIC_CODE']}"
-                            (click)="data.rec['RUBRIC_CODE'] = ''">
+            <form id="rubricator">
+                <div class="first-col margin-r">
+                    <div class="form-group unimportant-text">
+                        <label class="s-font"
+                            for="code">{{fieldsDescription.rec['RUBRIC_CODE']?.title}}</label>
+                        <div class="wrap">
+                            <input id="code"
+                                name="code"
+                                type="text"
+                                class="form-control light"
+                                [(ngModel)]="data.rec['RUBRIC_CODE']"
+                                placeholder="{{fieldsDescription.rec['RUBRIC_CODE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['RUBRIC_CODE']?.length}}">
+                            <button [ngClass]="{'hide': !data.rec['RUBRIC_CODE']}"
+                                (click)="data.rec['RUBRIC_CODE'] = ''">
                                     <span class="eos-icon eos-icon-close-blue"></span>
                                 </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="second-col">
-                <div class="form-group unimportant-text">
-                    <label class="s-font"
-                        for="title">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
-                    <div class="wrap">
-                        <input id="title"
-                            name="title"
-                            type="text"
-                            class="form-control light"
-                            [(ngModel)]="data.rec['CLASSIF_NAME']"
-                            placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
-                            maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
-                        <button [ngClass]="{'hide': !data.rec['CLASSIF_NAME']}"
-                            (click)="data.rec['CLASSIF_NAME'] = ''">
+                <div class="second-col">
+                    <div class="form-group unimportant-text">
+                        <label class="s-font"
+                            for="title">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
+                        <div class="wrap">
+                            <input id="title"
+                                name="title"
+                                type="text"
+                                class="form-control light"
+                                [(ngModel)]="data.rec['CLASSIF_NAME']"
+                                placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
+                                maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
+                            <button [ngClass]="{'hide': !data.rec['CLASSIF_NAME']}"
+                                (click)="data.rec['CLASSIF_NAME'] = ''">
                                     <span class="eos-icon eos-icon-close-blue"></span>
                                 </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group unimportant-text">
-                    <label class="s-font"
-                        for="fullTitle">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
-                    <div class="wrap">
-                        <input id="fullTitle"
-                            name="fullTitle"
-                            type="text"
-                            class="form-control light"
-                            [(ngModel)]="data.rec['FULLNAME']"
-                            placeholder="{{fieldsDescription.rec['FULLNAME']?.title}}"
-                            maxlength="{{fieldsDescription.rec['FULLNAME']?.length}}">
-                        <button [ngClass]="{'hide': !data.rec['FULLNAME']}"
-                            (click)="data.rec['FULLNAME'] = ''">
+                    <div class="form-group unimportant-text">
+                        <label class="s-font"
+                            for="fullTitle">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
+                        <div class="wrap">
+                            <input id="fullTitle"
+                                name="fullTitle"
+                                type="text"
+                                class="form-control light"
+                                [(ngModel)]="data.rec['FULLNAME']"
+                                placeholder="{{fieldsDescription.rec['FULLNAME']?.title}}"
+                                maxlength="{{fieldsDescription.rec['FULLNAME']?.length}}">
+                            <button [ngClass]="{'hide': !data.rec['FULLNAME']}"
+                                (click)="data.rec['FULLNAME'] = ''">
                                 <span class="eos-icon eos-icon-close-blue"></span>
                             </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group unimportant-text">
-                    <label class="s-font"
-                        for="note">{{fieldsDescription.rec['NOTE']?.title}}</label>
-                    <div class="wrap">
-                        <input id="note"
-                            name="note"
-                            type="text"
-                            class="form-control light"
-                            [(ngModel)]="data.rec['NOTE']"
-                            placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
-                            maxlength="{{fieldsDescription.rec['NOTE']?.length}}"
-                            readonly>
-                        <button [ngClass]="{'hide': !data.rec['NOTE']}"
-                            (click)="data.rec['NOTE'] = ''">
+                    <div class="form-group unimportant-text">
+                        <label class="s-font"
+                            for="note">{{fieldsDescription.rec['NOTE']?.title}}</label>
+                        <div class="wrap">
+                            <input id="note"
+                                name="note"
+                                type="text"
+                                class="form-control light"
+                                [(ngModel)]="data.rec['NOTE']"
+                                placeholder="{{fieldsDescription.rec['NOTE']?.title}}"
+                                maxlength="{{fieldsDescription.rec['NOTE']?.length}}"
+                                readonly>
+                            <button [ngClass]="{'hide': !data.rec['NOTE']}"
+                                (click)="data.rec['NOTE'] = ''">
                                 <span class="eos-icon eos-icon-close-blue"></span>
                             </button>
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            </form>
         </div>
         <!--FOR Regions-->
         <div [hidden]="dictId !== 'region'"
             *ngIf="data.rec"
-            class="full-search-form">
-            <!--
+            class="row full-search-form">
+            <form id="region">
+                <!--
                 <div class="form-group unimportant-text">
                     <label class="s-font" for="code" >{{fieldsDescription.rec['CODE']?.title}}</label>
                     <input id="code" name="code" type="text" class="form-control"
@@ -489,7 +492,7 @@
                         maxlength="{{fieldsDescription.rec['CODE']?.length}}">
                 </div>
                 -->
-            <!--
+                <!--
                 <div class="form-group unimportant-text">
                     <label class="s-font" for="cod-okato" >{{fieldsDescription.rec['COD_OKATO']?.title}}</label>
                     <input id="cod-okato" name="cod-okato" type="text" class="form-control"
@@ -498,24 +501,24 @@
                         maxlength="{{fieldsDescription.rec['COD_OKATO']?.length}}">
                 </div>
                 -->
-            <div class="form-group unimportant-text">
-                <label class="s-font"
-                    for="name">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
-                <div class="wrap">
-                    <input id="name"
-                        name="name"
-                        type="text"
-                        class="form-control"
-                        [(ngModel)]="data.rec['CLASSIF_NAME']"
-                        placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
-                        maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
-                    <button [ngClass]="{'hide': !data.rec['CLASSIF_NAME']}"
-                        (click)="data.rec['CLASSIF_NAME'] = ''">
+                <div class="form-group unimportant-text">
+                    <label class="s-font"
+                        for="name">{{fieldsDescription.rec['CLASSIF_NAME']?.title}}</label>
+                    <div class="wrap">
+                        <input id="name"
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="data.rec['CLASSIF_NAME']"
+                            placeholder="{{fieldsDescription.rec['CLASSIF_NAME']?.title}}"
+                            maxlength="{{fieldsDescription.rec['CLASSIF_NAME']?.length}}">
+                        <button [ngClass]="{'hide': !data.rec['CLASSIF_NAME']}"
+                            (click)="data.rec['CLASSIF_NAME'] = ''">
                             <span class="eos-icon eos-icon-close-blue"></span>
                         </button>
+                    </div>
                 </div>
-            </div>
-            <!--
+                <!--
                 <div class="form-group unimportant-text">
                     <label class="s-font" for="note" >{{fieldsDescription.rec['NOTE']?.title}}</label>
                     <input id="note" name="note" type="text" class="form-control"
@@ -524,6 +527,7 @@
                         maxlength="{{fieldsDescription.rec['NOTE']?.length}}">
                 </div>
                 -->
+            </form>
         </div>
     </form>
 </ng-template>
