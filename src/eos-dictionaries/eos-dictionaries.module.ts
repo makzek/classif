@@ -33,6 +33,7 @@ import { DepartmentNodeInfoComponent } from './node-info/department-node-info.co
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
+import { DocgroupCardComponent } from './card-views/docgroup-card.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
@@ -65,6 +66,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         DictionariesComponent,
         DictionariesQuickSearchComponent,
         DictionarySearchComponent,
+        DocgroupCardComponent,
         NodeActionsComponent,
         NodeInfoComponent,
         NodeListComponent,

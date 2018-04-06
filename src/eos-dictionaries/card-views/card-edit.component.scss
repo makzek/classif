@@ -125,3 +125,20 @@
         }
     }
 }
+
+.row-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    &>div+div,
+    &>eos-dynamic-input+eos-dynamic-input,
+    &>eos-dynamic-input+div,
+    &>div+eos-dynamic-input {
+        margin-left: $grid-gutter-width /2;
+    }
+}
+.space-between{
+    justify-content: space-between;
+}
