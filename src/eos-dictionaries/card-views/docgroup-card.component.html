@@ -93,12 +93,12 @@
     </div>
 </div>
 <ng-container *ngIf="data?.rec['IS_NODE']">
-    <div class="form-group">
+    <div class="form-group" *ngIf="isAutoRemove">
         <eos-dynamic-input [input]="inputs['rec.PRJ_DEL_AFTER_REG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="isAutoreg">
         <eos-dynamic-input [input]="inputs['rec.PRJ_AUTO_REG']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>

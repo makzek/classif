@@ -16,6 +16,13 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
         return this.getValue('rec.PRJ_NUM_FLAG');
     }
 
+    get isAutoRemove(): boolean {
+        return this.isPrjFlag;
+    }
+
+    get isAutoreg(): boolean {
+        return this.isPrjFlag;
+    }
 
     private formChanges$: Subscription;
 
