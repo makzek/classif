@@ -36,7 +36,6 @@ export class DictionarySearchComponent implements OnDestroy {
     };
     currTab: string;
     modes: IRecordModeDescription[];
-    loading = true;
     isOpenFull = false;
     searchDone = true; // Flag search is done, false while not received data
 
@@ -78,7 +77,6 @@ export class DictionarySearchComponent implements OnDestroy {
 
         this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
-                this.loading = false;
                 this.dictId = _d.id;
                 if (this.dictId) {
                     Object.assign(this.data, {
