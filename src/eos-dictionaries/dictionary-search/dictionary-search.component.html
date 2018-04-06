@@ -60,22 +60,22 @@
         <form #searchForm="ngForm">
             <div class="full-search-settings-container usual-border">
                 <div class="radio-inline">
-                    <label class="s-font">
+                    <label class="m-font">
                         <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
                         <span></span>Во всём справочнике</label>
                 </div>
                 <div class="radio-inline">
-                    <label class="s-font">
+                    <label class="m-font">
                         <input type="radio" name="full-space" [value]="1" [(ngModel)]="mode">
                         <span></span>В текущей ветке</label>
                 </div>
                 <div class="radio-inline">
-                    <label class="s-font">
+                    <label class="m-font">
                         <input type="radio" name="full-space" [value]="2" [(ngModel)]="mode">
                         <span></span>Текущая и подчиненные</label>
                 </div>
-                <div class="checkbox-inline">
-                    <label class="s-font">
+                <div>
+                    <label class="checkbox m-font">
                         <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
                         <span></span>Учитывать логически удаленные</label>
                 </div>
