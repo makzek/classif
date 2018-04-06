@@ -375,10 +375,7 @@
         }
         .dropdown-item :last-child {
             border-bottom: none;
-        }/*
-        .dropdown-item:hover .drop-ico {
-            display: inline-block;
-        }*/
+        }
         .drop-ico {
             display: inline-block;
             width: $item-width;
@@ -386,12 +383,6 @@
             .eos-icon {
                 vertical-align: middle;
             }
-        }
-        .primary {
-            color: $grey;
-        }
-        .selected {
-            color: $button-color-main-theme;
         }
         .have-padding {
             padding: 0 20px;

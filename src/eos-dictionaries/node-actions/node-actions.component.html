@@ -30,7 +30,7 @@
                         <li *ngFor="let elem of addMenu"
                             role="menuitem"
                             class="menuitem">
-                            <a class="dropdown-item m-font selected"
+                            <a class="dropdown-item m-font"
                                 tooltip="{{elem.hint}}"
                                 placement="bottom"
                                 containerClass="tooltip-info"
@@ -92,7 +92,7 @@
                 dropdown
                 triggers="mouseclick"
                 class="menuitem">
-                <a class="dropdown-item selected"
+                <a class="dropdown-item"
                     [ngClass]="{'highlighted': item.isActive}"
                     tooltip="{{item.hint}}"
                     placement="bottom"
@@ -105,12 +105,12 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <div class="title">
-                        <span class="m-font" [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title" [ngClass]="{'disabled': !item.enabled}">
+                        <span class="m-font">{{item.title}}</span>
                     </div>
                 </a>
 
-                <a class="dropdown-item selected"
+                <a class="dropdown-item"
                     [ngClass]="{'highlighted': item.isActive}"
                     dropdownToggle
                     tooltip="{{item.hint}}"
@@ -135,7 +135,7 @@
                     <li class="menuitem"
                         *ngFor="let type of addMenu"
                         role="menuitem">
-                        <a class="dropdown-item m-font selected have-padding"
+                        <a class="dropdown-item m-font have-padding"
                             tooltip="{{item.hint}}"
                             placement="bottom"
                             containerClass="tooltip-info"

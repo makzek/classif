@@ -11,9 +11,6 @@ $drop-menu-width: 300px;
     }
 }
 
-.disabled {
-    color: $disabled-color-main-theme;
-}
 .btn-group {
     .create-menu {
         .menuitem{
@@ -67,6 +64,10 @@ $drop-menu-width: 300px;
                 vertical-align: middle;
                 white-space: normal;
                 line-height: normal;
+                color: $button-color-main-theme;
+                &.disabled {
+                    color: $disabled-color-main-theme;
+                }
                 .m-font {
                     line-height: 20px;
                 }
