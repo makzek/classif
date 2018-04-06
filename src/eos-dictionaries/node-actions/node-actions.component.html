@@ -112,23 +112,23 @@
                     <div class="title">
                         <span class="m-font" [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                     </div>
+                    <!--SECOND LVL MENU -->
+                    <ul *dropdownMenu
+                        class="dropdown-menu second"
+                        role="menu">
+                        <li class="menuitem"
+                            *ngFor="let type of addMenu"
+                            role="menuitem">
+                            <a class="dropdown-item m-font have-padding"
+                                tooltip="{{item.hint}}"
+                                placement="bottom"
+                                containerClass="tooltip-info"
+                                (click)="doAction($event, item, type.params)">
+                                <span class="title m-font">{{type.title}}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </a>
-                <!--SECOND LVL MENU-->
-                <ul *dropdownMenu
-                    class="dropdown-menu second"
-                    role="menu">
-                    <li class="menuitem"
-                        *ngFor="let type of addMenu"
-                        role="menuitem">
-                        <a class="dropdown-item m-font have-padding"
-                            tooltip="{{item.hint}}"
-                            placement="bottom"
-                            containerClass="tooltip-info"
-                            (click)="doAction($event, item, type.params)">
-                            <span class="title m-font">{{type.title}}</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
         </ul>
     </div>
