@@ -366,6 +366,9 @@
             text-decoration: none;
             line-height: 48px;
             height: $item-height;
+            span {
+                line-height: $item-height;
+            }
         }
         .ico-wrapper {
             display: flex;
@@ -389,15 +392,6 @@
         }
         .selected {
             color: $button-color-main-theme;
-        }
-        .f-14 {
-            font-size: 14px;
-        }
-        .f-16 {
-            font-size: 16px;
-        }
-        .f-18 {
-            font-size: 18px;
         }
         .have-padding {
             padding: 0 20px;

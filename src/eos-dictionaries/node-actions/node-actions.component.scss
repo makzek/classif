@@ -67,6 +67,9 @@ $drop-menu-width: 300px;
                 vertical-align: middle;
                 white-space: normal;
                 line-height: normal;
+                .m-font {
+                    line-height: 20px;
+                }
             }
         }
     }

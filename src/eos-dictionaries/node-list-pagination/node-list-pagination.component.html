@@ -48,7 +48,9 @@
                 *ngFor="let item of pageLengths"
                 (click)="setPageLength(item.value)"
                 class="menuitem">
-                <a class="dropdown-item selected f-16 text-center">Показывать по {{item.title}}</a>
+                <a class="dropdown-item selected text-center">
+                    <span class="l-font">Показывать по {{item.title}}</span>
+                </a>
             </li>
         </ul>
     </div>

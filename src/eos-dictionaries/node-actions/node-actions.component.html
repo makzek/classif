@@ -30,12 +30,12 @@
                         <li *ngFor="let elem of addMenu"
                             role="menuitem"
                             class="menuitem">
-                            <a class="dropdown-item f-14 selected"
+                            <a class="dropdown-item m-font selected"
                                 tooltip="{{elem.hint}}"
                                 placement="bottom"
                                 containerClass="tooltip-info"
                                 (click)="doAction($event, item, elem.params)">
-                                    <span>{{elem.title}}</span>
+                                    <span class="m-font">{{elem.title}}</span>
                             </a>
                         </li>
                     </ul>
@@ -105,8 +105,8 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <div class="title f-14">
-                        <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title">
+                        <span class="m-font" [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                     </div>
                 </a>
 
@@ -124,8 +124,8 @@
                         <span *ngIf="!item.enabled"
                             class="{{item.disabledIconClass}}"></span>
                     </div>
-                    <div class="title f-14">
-                        <span [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
+                    <div class="title">
+                        <span class="m-font" [ngClass]="{'disabled': !item.enabled}">{{item.title}}</span>
                     </div>
                 </a>
 
@@ -135,12 +135,12 @@
                     <li class="menuitem"
                         *ngFor="let type of addMenu"
                         role="menuitem">
-                        <a class="dropdown-item f-14 selected have-padding"
+                        <a class="dropdown-item m-font selected have-padding"
                             tooltip="{{item.hint}}"
                             placement="bottom"
                             containerClass="tooltip-info"
                             (click)="doAction($event, item, type.params)">
-                            <span>{{type.title}}</span>
+                            <span class="m-font">{{type.title}}</span>
                         </a>
                     </li>
                 </ul>

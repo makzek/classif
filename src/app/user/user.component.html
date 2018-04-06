@@ -13,7 +13,9 @@
         </li>
         <li class="divider dropdown-divider" *ngIf="isAuthorized"></li-->
         <li role="menuitem" class="menuitem" *ngIf="isAuthorized">
-            <a class="dropdown-item f-16 have-padding" (click)="logout()">Выйти</a>
+            <a class="dropdown-item have-padding" (click)="logout()">
+                <span class="l-font">Выйти</span>
+            </a>
         </li>
     </ul>
 </div>
