@@ -64,9 +64,8 @@
             display: inline-block;
             vertical-align: middle;
             .link-name {
-                // vertical-align: middle;
                 cursor: pointer;
-                padding: 13.5px;
+                padding: 13.5px 20px;
                 &:hover,
                 &:focus {
                     text-decoration: none;
