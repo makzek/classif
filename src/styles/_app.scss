@@ -71,6 +71,9 @@
                     text-decoration: none;
                 }
             }
+            .link-name:hover > span {
+                color: $button-color-hover-main-theme;
+            }
             .search-btn {
                 width: $item-width;
                 height: 100%;
