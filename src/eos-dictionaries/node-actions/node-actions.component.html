@@ -32,7 +32,7 @@
                                 placement="bottom"
                                 containerClass="tooltip-info"
                                 (click)="doAction($event, item, elem.params)">
-                                    <span class="m-font">{{elem.title}}</span>
+                                    <span class="title m-font">{{elem.title}}</span>
                             </a>
                         </li>
                     </ul>
@@ -115,7 +115,7 @@
                 </a>
                 <!--SECOND LVL MENU-->
                 <ul *dropdownMenu
-                    class="dropdown-menu menu-two-lvl"
+                    class="dropdown-menu second"
                     role="menu">
                     <li class="menuitem"
                         *ngFor="let type of addMenu"
@@ -125,7 +125,7 @@
                             placement="bottom"
                             containerClass="tooltip-info"
                             (click)="doAction($event, item, type.params)">
-                            <span class="m-font">{{type.title}}</span>
+                            <span class="title m-font">{{type.title}}</span>
                         </a>
                     </li>
                 </ul>

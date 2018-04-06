@@ -16,6 +16,9 @@ $drop-menu-width: 300px;
         .menuitem{
             .dropdown-item {
                 padding: 0 20px;
+                .title {
+                    color: $button-color-main-theme;
+                }
             }
         }
     }
@@ -46,9 +49,16 @@ $drop-menu-width: 300px;
     }
 }
 
-.menu-two-lvl {
+.second {
     position: absolute;
     top: -25px;
+    .menuitem {
+        .dropdown-item {
+            .title {
+                color: $button-color-main-theme;
+            }
+        }
+    }
 }
 
 .action-menu {
