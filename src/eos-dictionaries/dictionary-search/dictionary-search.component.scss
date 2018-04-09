@@ -194,6 +194,14 @@
         border-bottom: 1px solid $border-color-main-theme;
         width: auto;
         height: $item-height;
+        .tabs {
+            .tab-item {
+                &.active {
+                    color: $black !important;
+                    border-color: $active-field-color-main-theme;
+                }
+            }
+        }
     }
     form {
         padding: 20px;
