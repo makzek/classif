@@ -4,6 +4,10 @@
     <span *ngIf="!noticesCount" class="eos-icon eos-icon-bell-grey"></span>
   </button>
   <ul *dropdownMenu class="dropdown-menu" role="menu">
-    <li *ngFor="let notice of notices" class="menuitem" role="menuitem"><a class="dropdown-item">{{notice}}</a></li>
+    <li *ngFor="let notice of notices" class="menuitem" role="menuitem">
+        <a class="dropdown-item have-padding">
+            <span class="item-title m-font">{{notice}}</span>
+        </a>
+    </li>
   </ul>
 </div>

@@ -14,12 +14,11 @@
     }
 
     .tree-wrapper {
-        height: calc(100vh - 108px);
+        height: calc(100vh - 96px);
         overflow-x: hidden;
         overflow-y: auto;
         border-right-width: 1px;
         border-right-style: solid;
-        margin-top: -1 * $grid-gutter-width / 2 - 2px;
 
         &.has-spinner {
             display: flex;
@@ -29,7 +28,7 @@
     }
 
     .opened-wrapper {
-        height: calc(100vh - 108px);
+        height: calc(100vh - 96px);
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
@@ -280,6 +279,7 @@
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: -1 * $dictionary-block-width;
             }
 
@@ -295,6 +295,7 @@
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: 0;
             }
 
@@ -311,6 +312,7 @@
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: 0;
             }
 
@@ -333,6 +335,7 @@
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: -1 * $dictionary-block-width;
             }
 
@@ -356,6 +359,7 @@
                 right: $grid-gutter-width / 2 + $dictionary-block-width;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: -1 * $dictionary-block-width;
             }
 
@@ -366,11 +370,12 @@
         }
         &.tree {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2 + $dictionary-block-width;
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top:  $top-menu-height;
                 left: 0;
             }
 
@@ -382,11 +387,12 @@
 
         &.full {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2 + $dictionary-block-width;
                 right: $grid-gutter-width / 2 + $dictionary-block-width;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: 0;
             }
 
@@ -404,11 +410,12 @@
         }
         &.only-selected {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2;
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: -1 * $dictionary-block-width;
             }
 
@@ -427,12 +434,13 @@
             width: $dictionary-block-width-big-display;
         }
         &.info {
-            .selected-wrapper { //
-                top: $grid-gutter-width / 2 + $top-menu-height;
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2;
                 right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
             }
             .tree-wrapper {
+                top:$top-menu-height;
                 left: -1 * $dictionary-block-width-big-display;
             }
 
@@ -443,11 +451,12 @@
         }
         &.tree {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: 0;
             }
 
@@ -459,11 +468,12 @@
 
         &.full {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
                 right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
             }
             .tree-wrapper {
+                top:$top-menu-height;
                 left: 0;
             }
 
@@ -473,7 +483,7 @@
             }
 
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
                 right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
             }
@@ -481,11 +491,12 @@
         }
         &.only-selected {
             .selected-wrapper {
-                top: $grid-gutter-width / 2 + $top-menu-height;
+                top: $grid-gutter-width / 2 +  $top-menu-height;
                 left: $grid-gutter-width / 2;
                 right: $grid-gutter-width / 2;
             }
             .tree-wrapper {
+                top: $top-menu-height;
                 left: -1 * $dictionary-block-width-big-display;
             }
 
