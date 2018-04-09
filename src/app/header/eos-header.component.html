@@ -15,19 +15,23 @@
                     routerLinkActive="active"><span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span></a>
             </li>
             <li class="header-item else-dropdown primary-text"
-                dropdown>
-                <span class="link-name xl-font"
-                    dropdownToggle>Ещё <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info></span>
+                dropdown
+                container="body">
+                <a class="link-name primary-text xl-font"
+                    routerLinkActive="active"
+                    dropdownToggle>
+                    <span class="xl-font">Ещё <eos-info info="Компонента отображения краткой справки по элементам интерфейса/справочника"></eos-info></span>
+                </a>
                 <ul *dropdownMenu
-                    class="dropdown-menu"
+                    class="dropdown-menu more"
                     role="menu">
                     <li *ngFor="let item of modulesDropdown"
-                        class="else-item xl-font">
+                        class="menuitem">
                         <a [routerLink]="item.url"
-                            class="primary-text"
+                            class="dropdown-item primary-text"
                             routerLinkActive="active">
-                                <span tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
-                            </a>
+                                <span class="" tooltip="{{item.title}}" placement="bottom" container="body" containerClass="tooltip-info">{{item.title}}</span>
+                        </a>
                     </li>
                 </ul>
             </li>

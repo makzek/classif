@@ -8,13 +8,19 @@
     (click)="setInnerClick()">
     <span dropdownToggle
         type="button"
-        class="dropdown-button btn dropdown-toggle usual-border m-font">
-        <span class="selected-desktop" tooltip="{{selectedDesk.name}}" placement="bottom" [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
-            containerClass="tooltip-info" container="body">
-            {{selectedDesk.name}}
+        class="dropdown-button dropdown-toggle usual-border">
+        <span class="wr">
+            <span class="selected-desktop m-font" tooltip="{{selectedDesk.name}}" placement="bottom" [isDisabled]="dropDown.isOpen" #hint="bs-tooltip"
+                containerClass="tooltip-info" container="body">
+                {{selectedDesk.name}}
+            </span>
+            <span class="btn-icon">
+                <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
+            </span>
         </span>
-    <span class="btn-icon"><span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span></span>
     </span>
+
+
     <ul class="dropdown-menu"
         role="menu">
         <li *ngIf="updating"

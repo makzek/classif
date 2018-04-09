@@ -302,7 +302,7 @@
     }
     .active {
         border-color: $button-color-main-theme;
-        color: $button-color-main-theme;
+        color: $button-color-main-theme !important;
     }
     .transparent-border {
         border-color: transparent;

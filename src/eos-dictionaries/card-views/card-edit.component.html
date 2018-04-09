@@ -12,7 +12,6 @@
                         [inputs]="inputs"
                         [data]="data"
                         [editMode]="editMode"
-                        [fieldsDescription]="fieldsDescription"
                         [dutysList]="dutysList"
                         [fullNamesList]="fullNamesList"></eos-departments-card-edit-person>
                     <eos-departments-card-edit-department #cardEditEl
@@ -22,7 +21,6 @@
                         [inputs]="inputs"
                         [data]="data"
                         [editMode]="editMode"
-                        [fieldsDescription]="fieldsDescription"
                         [dutysList]="dutysList"
                         [fullNamesList]="fullNamesList"></eos-departments-card-edit-department>
                 </ng-container>
@@ -31,7 +29,6 @@
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
-                    [fieldsDescription]="fieldsDescription"
                     [editMode]="editMode"></eos-cabinet-card-edit>
                 <eos-security-card-edit #cardEditEl
                     class="security-card-edit"
@@ -39,7 +36,6 @@
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
-                    [fieldsDescription]="fieldsDescription"
                     [editMode]="editMode"></eos-security-card-edit>
                 <eos-docgroup-card #cardEditEl
                     *ngSwitchCase="'docgroup'"
@@ -47,15 +43,13 @@
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
-                    [editMode]="editMode"
-                    [fieldsDescription]="fieldsDescription"></eos-docgroup-card>
+                    [editMode]="editMode"></eos-docgroup-card>
                 <eos-simple-card-edit #cardEditEl
                     class="simple-card-edit"
                     *ngSwitchDefault
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
-                    [fieldsDescription]="fieldsDescription"
                     [editMode]="editMode"></eos-simple-card-edit>
             </ng-container>
             <!-- div class="form-group unimportant-text s-font">
