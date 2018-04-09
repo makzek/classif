@@ -302,7 +302,7 @@
     }
     .active {
         border-color: $button-color-main-theme;
-        color: $button-color-main-theme;
+        color: $button-color-main-theme !important;
     }
     .transparent-border {
         border-color: transparent;
@@ -366,6 +366,9 @@
             text-decoration: none;
             line-height: 48px;
             height: $item-height;
+            .item-title {
+                height: $item-height !important;
+            }
         }
         .ico-wrapper {
             display: flex;

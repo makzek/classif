@@ -1,19 +1,23 @@
 .eos-user {
     height: 100%;
     cursor: pointer;
-    margin: 0 20px;
 
     .text {
-        position: relative;
-        top: -24px;
+        vertical-align: top;
         display: inline-block;
+        padding: 14px 20px;
     }
 
     .user-menu-btn {
+        border: none;
+        font-size: 0;
         height: 100%;
         background-color: transparent;
         padding: 0;
         overflow: hidden;
+        .pull-right {
+            height: $item-height;
+        }
     }
 }
 
@@ -27,16 +31,11 @@
 
 @media (max-width: 1250px) {
     .eos-user {
-        width: 90px;
-        padding: 0 14px;
+        width: $item-width;
         margin: 0;
 
         .text {
             display: none;
-        }
-
-        .user-menu-btn {
-            width: 60px;
         }
     }
 }
