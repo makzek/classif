@@ -3,7 +3,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
-import { PRJ_TEMPLATE_ELEMENTS, DOC_TEMPLATE_ELEMENTS } from './docgroup-template-config.consts';
+import {
+    PRJ_TEMPLATE_ELEMENTS,
+    DOC_TEMPLATE_ELEMENTS,
+    SINGLE_TEMPLATE_ITEM_EXPR,
+    VALID_TEMPLATE_EXPR,
+    VALID_PRJ_TEMPLATE_EXPR
+} from './docgroup-template-config.consts';
 
 @Component({
     selector: 'eos-docgroup-template-config',
@@ -14,30 +20,11 @@ export class DocgroupTemplateConfigComponent implements OnDestroy {
     @Input() forProject: boolean;
     @Output() onSave: EventEmitter<string> = new EventEmitter<string>();
 
+    availableItems: any[] = [];
+    templateItems: any[] = [];
     selected: any[] = [null, null];
 
-    templateItems: any[] = [];
-
-    /*
-    get templateItems(): any[] {
-        if (this.forProject) {
-            return PRJ_TEMPLATE_ELEMENTS;
-        } else {
-            return DOC_TEMPLATE_ELEMENTS;
-        }
-    }
-    */
-
-    get availableItems(): any[] {
-        if (this.forProject) {
-            return PRJ_TEMPLATE_ELEMENTS;
-        } else {
-            return DOC_TEMPLATE_ELEMENTS;
-        }
-    }
-
-    private _subscriptionDrop: Subscription;
-    private _subscriptionDrag: Subscription;
+    private subscriptions: Subscription[] = [];
 
     /**
      * @description constructor, subscribe on drop in dragulaService for highlighting selected field
@@ -48,38 +35,22 @@ export class DocgroupTemplateConfigComponent implements OnDestroy {
         private dragulaService: DragulaService,
         public bsModalRef: BsModalRef,
     ) {
-        // value[3] - src
-        // value[2] - dst
-        // value[1] - droped elem
-        this._subscriptionDrop = dragulaService.drop.subscribe((param) => {
-            console.log('drop', param);
-        });
-        this._subscriptionDrag = dragulaService.drag
-            .subscribe((param) => {
-                console.log('drag', param);
-            });
-
-        dragulaService.setOptions('bag-one', {
-            moves: (el/*, source, handle, sibling*/) => !el.classList.contains('fixed-item')
+        dragulaService.setOptions('template-bag', {
+            moves: (el, source, handle, sibling) => {
+                return !el.classList.contains('disabled');
+            },
+            copy: (el, source) => {
+                return el.classList.contains('separator') && source.id !== 'selected';
+            },
         });
 
-        dragulaService.drag.subscribe((value) => {
-            console.log('drag', value);
-            this.onDrag(value.slice(1));
-        });
-        dragulaService.drop.subscribe((value) => {
-            console.log('drop', value);
-            this.onDrop(value.slice(1));
-        });
-        dragulaService.over.subscribe((value) => {
-            console.log('over', value);
-            this.onOver(value.slice(1));
-        });
-        dragulaService.out.subscribe((value) => {
-            console.log('out', value);
-            this.onOut(value.slice(1));
-        });
+        this.subscriptions.push(dragulaService.dropModel.subscribe(() => {
+            this.generateTemplate();
+        }));
 
+        this.subscriptions.push(dragulaService.drag.subscribe(() => {
+            this.selected = [null, null];
+        }));
     }
 
     /**
@@ -87,24 +58,51 @@ export class DocgroupTemplateConfigComponent implements OnDestroy {
      * destroy dragula bags
      */
     ngOnDestroy() {
-        if (!!this.dragulaService.find('bag-one')) {
-            this.dragulaService.destroy('bag-one');
+        if (!!this.dragulaService.find('template-bag')) {
+            this.dragulaService.destroy('template-bag');
         }
-
-        this._subscriptionDrop.unsubscribe();
-        this._subscriptionDrag.unsubscribe();
+        this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
     init(content: any) {
-        console.log('init', content);
+        this.selected = [null, null];
         if (content) {
             this.dgTemplate = content.dgTemplate;
             this.forProject = content.forProject;
         }
+
+        this.parseTemplate();
+        this.updateAvailableItems();
+    }
+
+    isEnabled(item: any): boolean {
+        // check if complex elements already in template
+        let res = this.templateItems.findIndex((elem) => SINGLE_TEMPLATE_ITEM_EXPR.test(elem.key)) === -1;
+        if (res && this.templateItems.length) {
+            // disable complex elements for non empty template
+            res = !SINGLE_TEMPLATE_ITEM_EXPR.test(item.key);
+        }
+        if (res && this.forProject && item.key === '{7}') {
+            res = this.templateItems.findIndex((elem) => elem.key === '{2}') > -1;
+        }
+        return res;
+    }
+
+    isSeparator(item: any) {
+        return item.key === '/' || item.key === '-';
+    }
+
+    isTemplateValid(): boolean {
+        if (this.forProject) {
+            return VALID_PRJ_TEMPLATE_EXPR.test(this.dgTemplate);
+        } else {
+            return VALID_TEMPLATE_EXPR.test(this.dgTemplate);
+        }
     }
 
     clearTemplate() {
-        this.dgTemplate = '';
+        this.templateItems = [];
+        this.updateTemplate();
     }
 
     /**
@@ -127,18 +125,11 @@ export class DocgroupTemplateConfigComponent implements OnDestroy {
      * use with arrows
      */
     addToTemplate() {
-        /*
-        if (this.selectedDictItem) {
-            // console.log('addToCurrent, this.selectedDictItem', this.selectedDictItem);
-            /* tslint:disable:no-bitwise * /
-            if (!~this.currentFields.findIndex((_f) => _f.key === this.selectedDictItem.key)) {
-                this.currentFields.push(this.selectedDictItem);
-            }
-            /* tslint:enable:no-bitwise * /
-            this.dictionaryFields.splice(this.dictionaryFields.indexOf(this.selectedDictItem), 1);
-            this.selectedDictItem = null;
+        if (this.selected[0]) {
+            this.templateItems.push(this.selected[0]);
+            this.selected[0] = null;
+            this.updateTemplate();
         }
-        */
     }
 
     /**
@@ -146,62 +137,54 @@ export class DocgroupTemplateConfigComponent implements OnDestroy {
      * use with arrows
      */
     removeFromTemplate() {
-        /*
-        if (this.selectedCurrItem) {
-            /* tslint:disable:no-bitwise * /
-            if (!~this.dictionaryFields.findIndex((_f) => _f.key === this.selectedCurrItem.key)) {
-                this.dictionaryFields.push(this.selectedCurrItem);
+        if (this.selected[1]) {
+            const idx = this.templateItems.findIndex((elem) => elem === this.selected[1]);
+            if (idx > -1) {
+                this.templateItems.splice(idx, 1);
+                this.selected[1] = null;
+                this.updateTemplate();
             }
-            /* tslint:enable:no-bitwise * /
-            this.currentFields.splice(this.currentFields.indexOf(this.selectedCurrItem), 1);
-            this.selectedCurrItem = null;
         }
-        */
     }
 
     /**
      * @description highlight selected item
      * @param item highlighted item
-     * @param type indicates where item is placed
-     * 1 - left
-     * 2 - right
-     * 3 - fixed
+     * @param idx indicates where item is placed
      */
     select(item: any, idx: number) {
-        this.selected[idx] = item;
-    }
-
-    private hasClass(el: any, name: string) {
-        return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(el.className);
-    }
-
-    private addClass(el: any, name: string) {
-        if (!this.hasClass(el, name)) {
-            el.className = el.className ? [el.className, name].join(' ') : name;
+        if (idx > 0 || this.isEnabled(item)) {
+            this.selected[idx] = item;
         }
     }
 
-    private removeClass(el: any, name: string) {
-        if (this.hasClass(el, name)) {
-            el.className = el.className.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
+    private generateTemplate(): string {
+        this.dgTemplate = this.templateItems.map((elem) => elem.key).join('');
+        return this.dgTemplate;
+    }
+
+    private parseTemplate() {
+        const expr = /\{.{1,2}\}|-|\//g;
+        let res;
+        this.templateItems = [];
+        while (res = expr.exec(this.dgTemplate)) {
+            const tplElem = DOC_TEMPLATE_ELEMENTS.find((elem) => elem.key === res[0]);
+            if (tplElem) {
+                this.templateItems.push(Object.assign({}, tplElem));
+            }
         }
     }
 
-    private onDrag(args) {
-        const [e] = args;
-        this.removeClass(e, 'ex-moved');
+    private updateAvailableItems() {
+        let items = this.forProject ? PRJ_TEMPLATE_ELEMENTS : DOC_TEMPLATE_ELEMENTS;
+        items = items.filter((elem) =>
+            elem.key === '-' || elem.key === '/' || this.templateItems.findIndex((tplElem) => tplElem.key === elem.key) === -1
+        );
+        this.availableItems = items;
     }
 
-    private onDrop(args) {
-        const [e] = args;
-        this.addClass(e, 'ex-moved');
-    }
-
-    private onOver(args) {
-        this.addClass(args[1], 'ex-over');
-    }
-
-    private onOut(args) {
-        this.removeClass(args[1], 'ex-over');
+    private updateTemplate() {
+        this.updateAvailableItems();
+        this.generateTemplate();
     }
 }

@@ -4,15 +4,20 @@
     .modal-body {
         padding: 20px;
     }
-    .dnd-container {
+    .dnd-container,
+    .dg-template-wrapper {
         display: flex;
+    }
+    .dnd-container {
         .dnd-content {
             flex: 1 1 200px;
+        }
+        .dnd-bag {
             background-color: $light-grey;
             height: 400px;
             overflow: hidden;
             overflow-y: auto;
-            }
+        }
         .dnd-driver {
             flex: 0 0 48px;
             display: flex;
@@ -32,10 +37,26 @@
             cursor: -webkit-grab;
         }
         .item.gu-transit {
-            opacity: 0.8;
+            color: $brand-primary;
             cursor: grabbing;
             cursor: -moz-grabbing;
             cursor: -webkit-grabbing;
+        }
+        .item.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+    .dg-template-wrapper {
+        margin: 20px 20px 0 20px;
+        align-items: center;
+        .dg-template {
+            flex: 1 1 200px;
+            margin: 0 10px;
+            border: solid 1px $border-color-main-theme;
+            line-height: 26px;
+            padding: 0 6px;
+            height: 26px;
         }
     }
     .col {

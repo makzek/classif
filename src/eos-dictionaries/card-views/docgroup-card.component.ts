@@ -70,15 +70,16 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
 
     editTemplate(forProject = false) {
         this.templateModal = this.modalSrv.show(DocgroupTemplateConfigComponent, { class: 'docgroup-template-modal modal-lg' });
+        const path = forProject ? 'rec.PRJ_SHABLON' : 'rec.SHABLON';
         const content = {
             forProject: forProject,
-            dgTemplate: forProject ? this.getValue('rec.PRJ_SHABLON') : this.getValue('rec.SHABLON')
+            dgTemplate: this.getValue(path)
         };
 
         this.templateModal.content.init(content);
-    }
 
-    editPrjTemplate() { }
+        this.templateModal.content.onSave.subscribe((template) => this.setValue(path, template));
+    }
 
     private toggleInput(enable: boolean, path: string, formChanges: any, updates: any) {
         if (this.form.controls[path]) {

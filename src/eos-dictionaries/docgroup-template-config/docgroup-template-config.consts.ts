@@ -18,6 +18,11 @@ export const DG_TPL_COMB2 = { key: '{1#}', title: 'Спец. элемент пе
 export const DG_TPL_COMB3 = { key: '{2#}', title: 'Спец. элемент повторного документа' };
 export const DG_TPL_COMB4 = { key: '{3#}', title: 'Специальный элемент ответов' };
 
+export const VALID_TEMPLATE_EXPR = /\{2|A|B|C|2#|3#|@|@2\}/;
+export const VALID_PRJ_TEMPLATE_EXPR = /\{2|@|@2\}/;
+export const SINGLE_TEMPLATE_ITEM_EXPR = /\{@|@2|2#|3#\}/;
+
+
 export const DOC_TEMPLATE_ELEMENTS = [
     DG_TPL_GRP_IDX,
     DG_TPL_NUMBER,
