@@ -366,8 +366,8 @@
             text-decoration: none;
             line-height: 48px;
             height: $item-height;
-            .item-title {
-                height: $item-height !important;
+            span {
+                line-height: $item-height;
             }
         }
         .ico-wrapper {
@@ -375,10 +375,7 @@
         }
         .dropdown-item :last-child {
             border-bottom: none;
-        }/*
-        .dropdown-item:hover .drop-ico {
-            display: inline-block;
-        }*/
+        }
         .drop-ico {
             display: inline-block;
             width: $item-width;
@@ -386,21 +383,6 @@
             .eos-icon {
                 vertical-align: middle;
             }
-        }
-        .primary {
-            color: $grey;
-        }
-        .selected {
-            color: $button-color-main-theme;
-        }
-        .f-14 {
-            font-size: 14px;
-        }
-        .f-16 {
-            font-size: 16px;
-        }
-        .f-18 {
-            font-size: 18px;
         }
         .have-padding {
             padding: 0 20px;
