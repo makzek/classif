@@ -1,5 +1,13 @@
-<div *ngIf="show" (mouseleave)="hideHint()" (contextmenu)="innerClick($event)"
-    class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left">
+<div *ngIf="show"
+    (mouseleave)="hideHint(); test($event)"
+    (mouseout)="hideHint(); test($event)"
+    (mousemove)="test2()"
+    (contextmenu)="innerClick($event)"
+    (window:mousemove)="test($event)"
+    class="long-title-hint"
+    [style.opacity]="opacity"
+    [style.top]="top"
+    [style.left]="left">
     <span class="title">{{title}}</span>
     <span class="interface-text">ПКМ - скрыть.</span>
 </div>

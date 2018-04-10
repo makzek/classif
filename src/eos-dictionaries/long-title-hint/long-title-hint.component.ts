@@ -15,6 +15,7 @@ export class LongTitleHintComponent {
 
     public lkm = false;
     public show = false;
+    private _counter = 0;
     private _node: EosDictionaryNode;
 
     public showHint(hintConfig: HintConfiguration) {
@@ -46,5 +47,19 @@ export class LongTitleHintComponent {
         this.lkm = true;
         this.hideHint();
         return false;
+    }
+
+    windowEventHandler(e: MouseEvent) {
+        this._counter--;
+        if (this._counter < 0) {
+            this.hideHint();
+            this._counter = 0;
+        }
+        // console.log(this._counter); //global
+    }
+
+    componentEventHandler(e: MouseEvent) {
+        this._counter++;
+        // console.log(this._counter); //locacal
     }
 }
