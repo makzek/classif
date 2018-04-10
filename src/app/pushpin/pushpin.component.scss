@@ -14,14 +14,8 @@
 .pushdrop {
     min-width: 280px;
     position: absolute;
-    .desk {
+    .desk, .create {
         cursor: pointer;
-    }
-    .create {
-        cursor: pointer;
-        .input-group {
-            margin: 3px 20px;
-        }
     }
 }
 
@@ -47,6 +41,6 @@
     .pushdrop {
         &.info {
             right: 330px !important;
+            }
         }
-    }
 }

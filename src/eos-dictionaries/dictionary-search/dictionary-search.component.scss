@@ -126,7 +126,8 @@
     }
 
     .srch-btns {
-        margin: 8px 20px 8px 0px;
+        margin: 8px 15px 8px 0;
+        font-size: 0;
 
         .btn {
             width: 82px;
@@ -140,54 +141,48 @@
 
     button {
         border: none;
-        padding: 0px;
+        padding: 5px;
         width: 30px;
         height: 30px;
         top: 1px;
         float: right;
-        right: 2px;
+        right: 1px;
         background-color: $modal-block-background-main-theme;
         position: absolute;
 
         .eos-icon {
-            height: 26px;
+            height: 20px;
+            width: 20px;
         }
     }
 }
 
 .full-search-settings-container {
+    padding: 20px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     font-size: 0;
 
-    form {
-        display: flex;
-    }
-
     label {
+        font-weight: normal;
         text-transform: none;
     }
-
-    .radio-inline:first-child {
-        height: 32px;
-        padding-left: 0;
-        margin: 15px ($grid-gutter-width / 2);
+    .line {
+        margin-top: 20px;
     }
-
     .radio-inline,
     .checkbox-inline {
+        cursor: pointer;
         height: 32px;
         padding-left: 0;
-        margin: 15px 20px 15px 0;
-    }
-
-    .col-1 {
-        width: 190px;
         margin-right: 40px;
-    }
-
-    .col-2 {
-        width: 300px;
+        input[type="checkbox"],
+        input[type="radio"] {
+            & + span {
+                margin-bottom: -6px;
+                cursor: pointer;
+            }
+        }
     }
 }
 
@@ -196,25 +191,65 @@
 
     .tabs-wrapper {
         background-color: $modal-block-background-main-theme;
+        border-bottom: 1px solid $border-color-main-theme;
         width: auto;
-        margin: 0 -20px -10px;
-    }
-
-    .form-control {
-        border-radius: 0;
-        height: 32px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-        margin-top: 30px;
-    }
-
-    .no-top-margin {
-        .form-group {
-            margin-top: 10px;
+        height: $item-height;
+        .tabs {
+            .tab-item {
+                &.active {
+                    color: $black !important;
+                    border-color: $active-field-color-main-theme;
+                }
+            }
         }
     }
+    form {
+        padding: 20px;
+        font-size: 0;
+        .form-control {
+            padding: 8px;
+            height: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+
+            &.col-250 {
+                display: inline-block;
+                width: 250px;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            label {
+                line-height: 10px;
+                margin-bottom: 8px;
+                font-weight: normal;
+                text-transform: uppercase;
+            }
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        .first-col {
+            display: inline-block;
+            vertical-align: top;
+            width: 180px;
+        }
+        .second-col {
+            display: inline-block;
+            width: 540px;
+        }
+
+        .margin-r {
+            margin-right: 38px;
+        }
+    }
+}
+
+.popover {
+    padding: 0;
 }
 
 @media (max-width: 1200px) {

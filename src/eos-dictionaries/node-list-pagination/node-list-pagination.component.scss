@@ -92,6 +92,11 @@
 
         .dropdown-menu {
             width: 336px;
+            .menuitem {
+                .dropdown-item {
+                    color: $button-color-main-theme;
+                }
+            }
         }
     }
 }
