@@ -1,6 +1,8 @@
 import { Component, Injector, OnChanges, OnDestroy } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { Subscription } from 'rxjs/Subscription';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DocgroupTemplateConfigComponent } from '../docgroup-template-config/docgroup-template-config.component';
 
 const AUTO_REG_EXPR = /\{(9|A|B|C|@|1#|2#|3#)\}/;
 const UNIQ_CHECK_EXPR = /\{2\}/;
@@ -16,12 +18,14 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
     }
 
     private formChanges$: Subscription;
+    private modalSrv: BsModalService;
+    private templateModal: BsModalRef;
 
     constructor(
         injector: Injector,
-        //        private _msgSrv: EosMessageService
     ) {
         super(injector);
+        this.modalSrv = injector.get(BsModalService);
     }
 
     ngOnChanges() {
@@ -64,7 +68,16 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
         this.unsubscribe();
     }
 
-    editTemplate() { }
+    editTemplate(forProject = false) {
+        this.templateModal = this.modalSrv.show(DocgroupTemplateConfigComponent, { class: 'docgroup-template-modal modal-lg' });
+        const content = {
+            forProject: forProject,
+            dgTemplate: forProject ? this.getValue('rec.PRJ_SHABLON') : this.getValue('rec.SHABLON')
+        };
+
+        this.templateModal.content.init(content);
+    }
+
     editPrjTemplate() { }
 
     private toggleInput(enable: boolean, path: string, formChanges: any, updates: any) {

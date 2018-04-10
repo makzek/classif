@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h4 class="xl-font primary-text pull-left">Настройка шаблона регистрационного номера <span *ngIf="forProject">проекта </span>документа</h4>
+    <span class="pull-right">
+        <button type="button" class="btn btn-primary have-margin fixed-width" (click)="hideModal()">Отменить</button>
+        <button type="button" class="btn btn-primary-full upper fixed-width" (click)="save()">Сохранить</button>
+    </span>
+</div>
+<div class="modal-body">
+    <div class="dnd-container">
+        <div class="dnd-content"
+            [dragula]="'template-bag'"
+            [dragulaModel]="availableItems">
+            <div class="item"
+                *ngFor="let item of availableItems"
+                (click)="select(item, 0)"
+                [ngClass]="{'highlighted': item === selected[0]}">
+                <span class="text">{{item?.key}} {{item?.title}}</span>
+            </div>
+        </div>
+        <div class="dnd-driver">
+            <button class="btn btn-primary-light"
+                (click)="addToTemplate()"><span class="eos-icon eos-icon-arrow-v-blue-right"></span></button>
+            <button class="btn btn-primary-light"
+                (click)="removeFromTemplate()"><span class="eos-icon eos-icon-arrow-v-blue-left"></span></button>
+        </div>
+        <div class="dnd-content"
+            [dragula]="'template-bag'"
+            id="selected"
+            [dragulaModel]="templateItems">
+            <div class="item"
+                *ngFor="let item of templateItems"
+                (click)="select(item, 1)"
+                [ngClass]="{'highlighted': item === selected[1]}">
+                <span class="text">{{item?.key}} {{item?.title}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <span>Шаблон</span>
+        <p class="form-control-static">{{dgTemplate}}</p><button class="btn btn-primary"
+            (click)="clearTemplate()">Очистить</button>
+    </div>
+</div>

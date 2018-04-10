@@ -170,7 +170,7 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
         'UNKNOWN_1'],
     searchFields: ['CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],
     fullSearchFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'DOCGROUP_INDEX', 'NOTE'],
-    quickViewFields: ['FULLNAME', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
+    quickViewFields: ['CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'DOCGROUP_INDEX', 'RC_TYPE' ],  // CLASSIF_NAME is in shortQuickViewFields
     shortQuickViewFields: ['CLASSIF_NAME'],
     listFields: ['CODE', 'CLASSIF_NAME'],
     allVisibleFields: ['NOTE', 'FULLNAME'],
