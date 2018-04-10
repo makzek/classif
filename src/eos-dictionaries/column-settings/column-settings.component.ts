@@ -89,7 +89,8 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                     if (_curr.customTitle) {
                         this.haveCustomTitle = true;
                     }
-                    this.dictionaryFields.splice(this.dictionaryFields.findIndex((_dict) => _dict === _curr), 1);
+                    this.dictionaryFields = this.dictionaryFields.filter((_f: IFieldView) => _f.key !== _curr.key);
+
                 });
             }
             if (this.currentFields) {
