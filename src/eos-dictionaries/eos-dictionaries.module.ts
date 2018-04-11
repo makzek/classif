@@ -47,7 +47,6 @@ import { SandwichComponent } from './sandwich/sandwich.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
-import { TreeNodeComponent } from './tree/tree-node.component';
 import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dictionary-quick-search.component';
 
 /* services */
@@ -78,7 +77,6 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         SandwichComponent,
         SimpleCardEditComponent,
         TreeComponent,
-        TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
         CabinetNodeInfoComponent,

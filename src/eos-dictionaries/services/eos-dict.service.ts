@@ -639,7 +639,6 @@ export class EosDictService {
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this.dictionary.getDictionaryIdByMode(mode);
         }
-        /* todo: implement additional dictionary logic */
         this._reloadList();
         this._dictMode$.next(mode);
     }
