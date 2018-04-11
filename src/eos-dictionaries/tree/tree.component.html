@@ -1,5 +1,4 @@
-<ng-container *ngTemplateOutlet="treeTmpl; context: {items: nodes, level: layer}"
-    (window:resize)="onResize()"></ng-container>
+<ng-container *ngTemplateOutlet="treeTmpl; context: {items: nodes, level: layer}"></ng-container>
 <ng-template #treeTmpl
     let-items="items"
     let-level="level">

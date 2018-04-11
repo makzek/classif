@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { Router } from '@angular/router';
 import { EosDictService } from '../services/eos-dict.service';
@@ -56,7 +56,8 @@ export class TreeComponent implements OnInit {
         }
     }
 
+    @HostListener('window:resize')
     onResize() {
         window.innerWidth >= BIG_DISPLAY_W ? this.w = BIG_PANEL : this.w = SMALL_PANEL;
-      }
+    }
 }
