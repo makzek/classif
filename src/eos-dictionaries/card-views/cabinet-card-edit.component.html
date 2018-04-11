@@ -42,13 +42,10 @@
                 role="menu">
                 <li *ngFor="let owner of possibleOwners"
                     role="menuitem"
-                    class="dropdown-item btn selected-text"
-                    (click)="add(owner)">
-                    {{owner.data['CLASSIF_NAME']}}
-                </li>
-                <li *ngIf="!possibleOwners.length">
-                    <span class="dropdown-item btn disabled">Нет доступных ДЛ</span>
-                </li>
+                    class="dropdown-item selected-text menuitem"
+                    [ngClass]="{deleted: owner.data['DELETED']}"
+                    (click)="add(owner)">{{owner.data['CLASSIF_NAME']}}</li>
+                <li *ngIf="!possibleOwners.length"><span class="dropdown-item btn disabled">Нет доступных ДЛ</span></li>
             </ul>
         </div>
         <button class="btn action-btn btn-primary-light"
@@ -57,7 +54,7 @@
     <div class="row">
         <table class="table usual-border border-bottom table-owners">
             <thead class="secondary-block">
-                <tr class="border-top border-bottom">
+                <tr class="border-top border-bottom usual-border">
                     <th class="td-checkbox secondary-block">
                         <span class="checkbox-inline"
                             *ngIf="editMode">
@@ -146,7 +143,7 @@
             #tableEl>
             <table class="table table-hover usual-border">
                 <thead class="secondary-block">
-                    <tr class="first-line border-bottom">
+                    <tr class="first-line border-bottom usual-border">
                         <th class="usual-border border-right headcol"></th>
                         <th *ngFor="let person of cabinetUsers"
                             class="cell text-center l-font text-primary"
