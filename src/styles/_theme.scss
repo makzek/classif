@@ -362,7 +362,6 @@
         .dropdown-item {
             font-size: 0;
             padding: 0;
-            border-bottom: 1px $border-color-main-theme solid;
             text-decoration: none;
             line-height: 48px;
             height: $item-height;
@@ -372,9 +371,6 @@
         }
         .ico-wrapper {
             display: flex;
-        }
-        .dropdown-item :last-child {
-            border-bottom: none;
         }
         .drop-ico {
             display: inline-block;
@@ -387,6 +383,9 @@
         .have-padding {
             padding: 0 20px;
         }
+    }
+    .menuitem + .menuitem {
+        border-top: solid 1px $border-color-main-theme;
     }
 }
 
