@@ -93,7 +93,8 @@
                 <div class="field">
                     <span class="field-title unimportant-text s-font">КАБИНЕТЫ</span>
                     <br>
-                    <span class="field-value m-font"><a [routerLink]="'/spravochniki/cabinet/'+nodeDataFull.cabinet?.ISN_CABINET + '/view'">{{nodeDataFull.cabinet?.CABINET_NAME}}</a></span>
+                    <span class="field-value m-font"><a *ngIf="nodeDataFull.cabinet?.ISN_CABINET"
+                        [routerLink]="'/spravochniki/cabinet/'+nodeDataFull.cabinet?.ISN_CABINET + '/view'">{{nodeDataFull.cabinet?.CABINET_NAME}}</a></span>
                 </div>
                 <div class="field">
                     <span class="field-title unimportant-text s-font">ЯВЛЯЕТСЯ ПОЛЬЗОВАТЕЛЕМ</span>
@@ -134,7 +135,8 @@
                 <div class="field">
                     <span class="field-title unimportant-text s-font text-upper">Организация</span>
                     <br>
-                    <span class="field-value m-font"><a [routerLink]="'/spravochniki/organization/'+nodeDataFull.organization?.DUE + '/view'">{{nodeDataFull.organization?.CLASSIF_NAME}}</a></span>
+                    <span class="field-value m-font"><a *ngIf="nodeDataFull.organization?.DUE"
+                        [routerLink]="'/spravochniki/organization/'+nodeDataFull.organization?.DUE + '/view'">{{nodeDataFull.organization?.CLASSIF_NAME}}</a></span>
                 </div>
             </div>
         </div>
