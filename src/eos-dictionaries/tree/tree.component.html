@@ -11,13 +11,13 @@
 <ng-template #treeNodeTmpl
     let-node="node"
     let-level="level">
-    <div *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
+    <ng-container *ngIf="node && node.isNode && (!node.isDeleted || showDeleted)">
         <div class="node"
             #el
             (click)="onSelect($event, node)"
-            [ngClass]="{'highlighted' : node.isActive}">
-            <span class="fake-padding"
-                [ngStyle]="{'width.px': level * paddingWidth}"></span>
+            [ngClass]="{'highlighted' : node.isActive}"
+            [ngStyle]="{'padding-left.px': getPadding(level)}">
+            <!-- span class="fake-padding"></span -->
             <div class="tree-btn"
                 (click)="onExpand($event, node)">
                 <span *ngIf="node.expandable"
@@ -26,7 +26,7 @@
             </div>
             <div class="title"
                 [ngClass]="{'deleted': node.isDeleted, 'select': node.isActive}"
-                [style.width.px]="w - (level * paddingWidth)">
+                [style.width.px]="getNodeWidth(level)">
                 <span class="title-item">{{node.title}}</span>
                 <eos-spinner *ngIf="node.updating"
                     size="sm"></eos-spinner>
@@ -35,5 +35,5 @@
         <ng-container *ngIf="node.isExpanded && node.expandable">
             <ng-container *ngTemplateOutlet="treeTmpl; context: {items: node.children, level: level*1+1}"></ng-container>
         </ng-container>
-    </div>
+    </ng-container>
 </ng-template>

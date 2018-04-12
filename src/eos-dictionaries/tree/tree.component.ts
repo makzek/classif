@@ -34,6 +34,11 @@ export class TreeComponent implements OnInit {
         this.onResize();
     }
 
+    @HostListener('window:resize')
+    onResize() {
+        window.innerWidth >= BIG_DISPLAY_W ? this.w = BIG_PANEL : this.w = SMALL_PANEL;
+    }
+
     onExpand(evt: Event, node: EosDictionaryNode/*, isDeleted: boolean*/) {
         evt.stopPropagation();
         if (node.isExpanded) {
@@ -56,8 +61,11 @@ export class TreeComponent implements OnInit {
         }
     }
 
-    @HostListener('window:resize')
-    onResize() {
-        window.innerWidth >= BIG_DISPLAY_W ? this.w = BIG_PANEL : this.w = SMALL_PANEL;
+    getPadding(level: number): number {
+        return PADDING_W * level;
+    }
+
+    getNodeWidth(level: number): number {
+        return this.w - (PADDING_W * level);
     }
 }
