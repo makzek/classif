@@ -122,7 +122,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
-                this._selectNode();
+                if (this.dictionaryId) {
+                    this._dictSrv.openDictionary(this.dictionaryId)
+                        .then(() => this._dictSrv.selectTreeNode(this._nodeId))
+                        .catch((err) => this._errHandler(err));
+                }
             }
         });
 
@@ -437,17 +441,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         this.length = length;
         body[0].removeChild(span);
-    }
-
-    private _selectNode() {
-        if (this.dictionaryId) {
-            this._dictSrv.openDictionary(this.dictionaryId)
-                .then(() => {
-                    // todo: re-factor this ugly solution
-                    this._dictSrv.selectNode(this._nodeId);
-                })
-                .catch((err) => this._errHandler(err));
-        }
     }
 
     /**

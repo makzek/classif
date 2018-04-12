@@ -2,7 +2,6 @@ import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { Router } from '@angular/router';
 import { EosDictService } from '../services/eos-dict.service';
-import { IFieldView } from '../interfaces';
 
 const BIG_PANEL = 340,
     SMALL_PANEL = 260,
@@ -14,15 +13,10 @@ const BIG_PANEL = 340,
     templateUrl: './tree.component.html'
 })
 export class TreeComponent implements OnInit {
-    readonly paddingWidth = PADDING_W;
     @Input() nodes: EosDictionaryNode[];
     @Input() showDeleted: boolean;
-    @Input() layer: number;
-    viewFields: IFieldView[];
-    public w: number;
-    public _fonWidth: number;
-    public _fonLeft: number;
-    public _fonTop: number;
+
+    private w: number;
 
     constructor(
         private _router: Router,
@@ -30,7 +24,6 @@ export class TreeComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.viewFields = this.nodes[0].getTreeView();
         this.onResize();
     }
 

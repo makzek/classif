@@ -9,23 +9,21 @@
                 class="full-info usual-border">
                 <div *ngFor="let key of keys(fieldsDescriptionFull.rec)"
                     class="field">
-                    <span *ngIf="fieldsDescriptionFull.rec[key].type === fieldTypes.boolean;then checkboxField else textField"></span>
+                    <ng-container *ngIf="fieldsDescriptionFull.rec[key].type === fieldTypes.boolean;then checkboxField else textField"></ng-container>
                     <ng-template #checkboxField>
                         <label class="checkbox field-title unimportant-text s-font"><input type="checkbox"
                             [(ngModel)]="nodeDataFull.rec[key]"
                             disabled><span></span>{{fieldsDescriptionFull.rec[key].title}}</label>
                     </ng-template>
                     <ng-template #textField>
-                        <span class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec[key].title}}</span>
-                        <br>
-                        <span class="field-value m-font">{{nodeDataFull.rec[key]}}</span>
+                        <p class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec[key].title}}</p>
+                        <p class="field-value m-font">{{nodeDataFull.rec[key]}}</p>
                     </ng-template>
                 </div>
                 <div *ngIf="nodeDataFull['sev']"
                     class="field">
-                    <span class="field-title unimportant-text s-font">Индекс СЭВ</span>
-                    <br>
-                    <span class="field-value m-font">{{nodeDataFull['sev']['GLOBAL_ID']}}</span>
+                    <p class="field-title unimportant-text s-font">Индекс СЭВ</p>
+                    <p class="field-value m-font">{{nodeDataFull['sev']['GLOBAL_ID']}}</p>
                 </div>
             </div>
         </div>
