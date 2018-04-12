@@ -773,9 +773,7 @@ export class EosDictService {
     private loadChildren(dictionary: EosDictionary, node: EosDictionaryNode): Promise<EosDictionaryNode> {
         if (dictionary) {
             return dictionary.getChildren(node)
-                .then(() => {
-                    return node;
-                })
+                .then(() => node)
                 .catch((err) => this._errHandler(err));
         } else {
             return Promise.resolve(null);
