@@ -12,12 +12,10 @@ export interface IBaseInput {
     readonly?: boolean;
     isUnic?: boolean;
     unicInDict?: boolean;
-    invalidMessage?: string;
     hideLabel?: boolean;
     forNode?: boolean;
     options?: any[];
     disabled?: boolean;
-
 }
 
 export interface ISelectInput extends IBaseInput {

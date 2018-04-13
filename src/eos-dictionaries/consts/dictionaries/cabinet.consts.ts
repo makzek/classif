@@ -1,37 +1,37 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { environment } from 'environments/environment';
+import { COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
 
 export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'cabinet',
     apiInstance: 'CABINET',
     title: 'Кабинеты',
     keyField: 'ISN_CABINET',
-    visible: !environment.production,
+    visible: false,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'edit',
-        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'removeHard', 'tableCustomization'],
+        'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'remove', 'removeHard',
+        'restore', 'tableCustomization'],
     fields: [{
         key: 'ISN_CABINET',
         type: 'number',
         title: 'ISN кабинета',
         pattern: /^\d*$/,
         length: 10,
-        invalidMessage: 'Максимальная длинна 10 символов. Только числовые значения. Пробелы запрещены.',
-    }, {
+    },
+    Object.assign({}, COMMON_FIELD_NAME, {
+        key: 'CABINET_NAME',
+        title: 'Краткое наименование кабинета',
+        length: 64,
+    }),
+    Object.assign({}, COMMON_FIELD_FULLNAME, {
+        title: 'Полное наименование кабинета',
+        height: 50,
+        length: 2000,
+    }), {
         key: 'DUE',
         type: 'string',
         title: 'Код подразделения',
         length: 248,
-    }, {
-        key: 'CABINET_NAME',
-        type: 'string',
-        title: 'Имя кабинета',
-        length: 64,
-    }, {
-        key: 'FULLNAME',
-        type: 'text',
-        title: 'Полное наименование',
-        length: 2000,
     }, {
         key: 'DEPARTMENT_NAME',
         title: 'Подразделение',

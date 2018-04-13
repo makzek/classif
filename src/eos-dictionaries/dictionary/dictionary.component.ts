@@ -20,6 +20,7 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
 import { EosSandwichService } from '../services/eos-sandwich.service';
+import { EosBreadcrumbsService } from '../../app/services/eos-breadcrumbs.service';
 
 import {
     WARN_EDIT_ERROR,
@@ -54,8 +55,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     public dictionaryId: string;
 
     public params: IDictionaryViewParameters;
-    public selectedNode: EosDictionaryNode;
-    public _selectedNodeText: string;
+    public treeNode: EosDictionaryNode;
+    public title: string;
     treeNodes: EosDictionaryNode[] = [];
     visibleNodes: EosDictionaryNode[] = []; // Elements for one page
     paginationConfig: IPaginationConfig; // Pagination configuration, use for count node
@@ -91,6 +92,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     dictMode = 1;
     searchStartFlag = false; // flag begin search
+    fastSearch = false;
 
     tableWidth: number;
     hasCustomTable: boolean;
@@ -116,12 +118,17 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _modalSrv: BsModalService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
+        private _bcSrv: EosBreadcrumbsService,
     ) {
         _route.params.subscribe((params) => {
             if (params) {
                 this.dictionaryId = params.dictionaryId;
                 this._nodeId = params.nodeId;
-                this._selectNode();
+                if (this.dictionaryId) {
+                    this._dictSrv.openDictionary(this.dictionaryId)
+                        .then(() => this._dictSrv.selectTreeNode(this._nodeId))
+                        .catch((err) => this._errHandler(err));
+                }
             }
         });
 
@@ -158,19 +165,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     this.params = Object.assign({}, this.params, { userSort: dictionary.userOrdered });
                     this.params.markItems = dictionary.canDo(E_RECORD_ACTIONS.markRecords);
                     this.hasCustomTable = dictionary.canDo(E_RECORD_ACTIONS.tableCustomization);
-                    if (dictionary.root) {
-                        this.dictionaryName = dictionary.root.title;
-                        this.treeNodes = [dictionary.root];
-                    }
-                } else {
-                    this.treeNodes = [];
                 }
             });
 
         _dictSrv.treeNode$.takeUntil(this.ngUnsubscribe)
             .subscribe((node: EosDictionaryNode) => {
                 if (node) {
-                    this._selectedNodeText = node.getTreeView().map((fld) => fld.value).join(' ');
+                    this.title = node.getTreeView().map((fld) => fld.value).join(' ');
                     if (!this._dictSrv.userOrdered) {
                         this.orderBy = this._dictSrv.order;
                     }
@@ -178,8 +179,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     const url = this._router.url;
                     this._storageSrv.setItem(RECENT_URL, url);
                 }
-                if (node !== this.selectedNode) {
-                    this.selectedNode = node;
+                if (node !== this.treeNode) {
+                    this.treeNode = node;
                 }
             });
 
@@ -202,6 +203,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
+
+        this._bcSrv._eventFromBc$.takeUntil(this.ngUnsubscribe)
+            .subscribe((action: IActionEvent) => {
+                if (action) {
+                    this.doAction(action);
+                }
+            });
     }
 
     ngOnDestroy() {
@@ -335,14 +343,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     onClick() {
-        if (window.innerWidth <= 1500) {
+        if (window.innerWidth < 1600) {
             this._sandwichSrv.changeDictState(false, true);
         }
     }
 
     goUp() {
-        if (this.selectedNode && this.selectedNode.parent) {
-            const path = this.selectedNode.parent.getPath();
+        if (this.treeNode && this.treeNode.parent) {
+            const path = this.treeNode.parent.getPath();
             this._router.navigate(path);
         }
     }
@@ -352,6 +360,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this.anyUnmarked = this.visibleNodes.findIndex((node) => !node.marked) > -1;
         this.allMarked = this.anyMarked;
         this._dictSrv.markItem(this.allMarked);
+    }
+
+    switchFastSearch(val: boolean) {
+        this.fastSearch = val;
     }
 
     /**
@@ -422,7 +434,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _countColumnWidth() {
         const span = document.createElement('span'),
             body = document.getElementsByTagName('body'),
-            PADDING_SPACE = 64; // padding 20 * 2 + 24 sort ico
+            PADDING_SPACE = 74; // padding 20 * 2 + 24 sort ico
 
         span.style.position = 'absolute';
         span.style.top = '-5000px';
@@ -432,14 +444,22 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         const length = {};
         let fullWidth = 0;
         this.viewFields.forEach((_f) => {
-            span.innerText = _f.title;
+            if (_f.customTitle) {
+                span.innerText = _f.customTitle;
+            } else {
+                span.innerText = _f.title;
+            }
             length[_f.key] = PADDING_SPACE + span.clientWidth;
             fullWidth += PADDING_SPACE + span.clientWidth;
         });
 
         if (this.customFields) {
             this.customFields.forEach((_f) => {
-                span.innerText = _f.title;
+                if (_f.customTitle) {
+                    span.innerText = _f.customTitle;
+                } else {
+                    span.innerText = _f.title;
+                }
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
                 fullWidth += PADDING_SPACE + span.clientWidth;
             });
@@ -459,17 +479,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         this.length.length = length;
         body[0].removeChild(span);
-    }
-
-    private _selectNode() {
-        if (this.dictionaryId) {
-            this._dictSrv.openDictionary(this.dictionaryId)
-                .then(() => {
-                    // todo: re-factor this ugly solution
-                    this._dictSrv.selectNode(this._nodeId);
-                })
-                .catch((err) => this._errHandler(err));
-        }
     }
 
     /**
@@ -545,7 +554,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         _idx = (_idx + this.visibleNodes.length) % this.visibleNodes.length;
 
-        this._dictSrv.openNodeFromList(this.visibleNodes[_idx]);
+        const node = this.visibleNodes[_idx];
+        if (node && node.id) {
+            this._dictSrv.openNode(node.id);
+        }
     }
 
     private _callDelWindow(_confrm: IConfirmWindow): void {
@@ -561,17 +573,21 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     /**
      * @description Open modal with CreateNodeComponent, fullfill CreateNodeComponent data
      */
-    private _openCreate(params: any) {
-        this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal modal-lg' });
-        this.modalWindow.content.fieldsDescription = this.selectedNode.getEditFieldsDescription();
-        this.modalWindow.content.dictionaryId = this.dictionaryId;
-        this.modalWindow.content.nodeData = this.selectedNode.getCreatingData(params);
+    private _openCreate(recParams: any) {
+        this.modalWindow = this._modalSrv.show(CreateNodeComponent, { class: 'creating-modal' });
+        const dictionary = this._dictSrv.currentDictionary;
+        const editDescr = dictionary.getEditDescriptor();
+        const data = dictionary.getNewNode({ rec: recParams }, this.treeNode);
+
+        this.modalWindow.content.fieldsDescription = editDescr;
+        this.modalWindow.content.dictionaryId = dictionary.id;
+        this.modalWindow.content.nodeData = data;
 
         this.modalWindow.content.onHide.subscribe(() => {
             this.modalWindow.hide();
         });
         this.modalWindow.content.onOpen.subscribe(() => {
-            this._openCreate(params);
+            this._openCreate(recParams);
         });
     }
 
@@ -600,7 +616,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     private _restoreItems(): void {
         const marked = this.visibleNodes.filter((node) => node.marked);
-        const withChildren: string[] = [];
+        const childrenTitles: string[] = [];
+        let p: Promise<any>;
 
         marked.forEach((node) => {
             if (node.parent && node.parent.isDeleted) {
@@ -608,24 +625,25 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 node.marked = false;
             } else {
                 if (node.children && node.children.length) {
-                    withChildren.push(node.title);
+                    childrenTitles.push(node.title);
                 }
             }
         });
 
-        if (withChildren.length) {
+        if (childrenTitles.length) {
             const _confrm = Object.assign({}, CONFIRM_SUBNODES_RESTORE);
-            _confrm.body = _confrm.body.replace('{{name}}', withChildren.join(', '));
+            _confrm.body = _confrm.body.replace('{{name}}', childrenTitles.join(', '));
 
-            this._confirmSrv
+            p = this._confirmSrv
                 .confirm(_confrm)
                 .then((confirmed: boolean) => this._dictSrv.markDeleted(confirmed, false));
         } else {
-            this._dictSrv.markDeleted(false, false);
+            p = this._dictSrv.markDeleted(false, false);
         }
-
-        this.anyMarked = false;
-        this.allMarked = false;
+        p.then(() => {
+            this.anyMarked = false;
+            this.allMarked = false;
+        });
     }
 
     private _errHandler(err) {

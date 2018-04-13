@@ -3,34 +3,20 @@ import { ActivatedRouteSnapshot, Router, NavigationEnd, ActivatedRoute } from '@
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/combineLatest';
 
 import { IBreadcrumb } from '../core/breadcrumb.interface';
-import { EosDeskService } from '../services/eos-desk.service';
 import { IDeskItem } from '../core/desk-item.interface';
-import { EosDesk } from '../core/eos-desk';
 import { DictionaryDescriptorService } from 'eos-dictionaries/core/dictionary-descriptor.service';
+import { IActionEvent } from 'eos-dictionaries/interfaces';
 
 @Injectable()
 export class EosBreadcrumbsService {
+    public _eventFromBc$: Subject<IActionEvent>;
     private _breadcrumbs: IBreadcrumb[];
     private _currentLink: IDeskItem;
-
     private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
-
-    constructor(
-        _router: Router,
-        private _route: ActivatedRoute,
-        private _descrSrv: DictionaryDescriptorService,
-        _deskSrv: EosDeskService,
-    ) {
-        this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
-        _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
-            .combineLatest(_deskSrv.selectedDesk)
-            .subscribe((val: [NavigationEnd, EosDesk]) => {
-                this.makeBreadCrumbs(val[1]);
-            });
-    }
 
     get breadcrumbs$(): Observable<IBreadcrumb[]> {
         return this._breadcrumbs$.asObservable();
@@ -44,28 +30,42 @@ export class EosBreadcrumbsService {
         return this._currentLink;
     }
 
-    public makeBreadCrumbs(_desk: EosDesk) {
-        this._breadcrumbs = [];
-        Promise.all(this._parseState(this._route.snapshot))
-            .then((breadcrumbs) => {
-                // 55: Убрать без title (!?) routing -> showInBreadcrubs
-                this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
-                /* this._fullTitleGen(); */
-                if (this._breadcrumbs.length) {
-                    this._currentLink = {
-                        url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
-                        title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
-                        /* fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle */
-                    };
-                }
-                this._breadcrumbs$.next(this._breadcrumbs);
-            });
+    constructor(
+        _router: Router,
+        private _route: ActivatedRoute,
+        private _descrSrv: DictionaryDescriptorService,
+    ) {
+        this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
+        this._eventFromBc$ = new Subject();
+        this.makeBreadCrumbs();
+        _router.events.filter((e: NavigationEnd) => e instanceof NavigationEnd)
+            .subscribe(() => this.makeBreadCrumbs());
     }
 
-    private _parseState(route: ActivatedRouteSnapshot): Promise<IBreadcrumb>[] {
+    public sendAction(action: IActionEvent) {
+        this._eventFromBc$.next(action);
+    }
+
+    public makeBreadCrumbs() {
+        this._breadcrumbs = [];
+        const breadcrumbs = this._parseState(this._route.snapshot);
+        // 55: Убрать без title (!?) routing -> showInBreadcrubs
+        this._breadcrumbs = this._breadcrumbs.concat(breadcrumbs.filter((bc) => bc && !!bc.title));
+        /* this._fullTitleGen(); */
+        if (this._breadcrumbs.length) {
+            this._currentLink = {
+                url: this._breadcrumbs[this._breadcrumbs.length - 1].url,
+                title: this._breadcrumbs[this._breadcrumbs.length - 1].title,
+                /* fullTitle: this._breadcrumbs[this._breadcrumbs.length - 1].fullTitle */
+            };
+        }
+        this._breadcrumbs$.next(this._breadcrumbs);
+    }
+
+    private _parseState(route: ActivatedRouteSnapshot): IBreadcrumb[] {
         let currUrl = '';
         let _current = route;
-        const crumbs: Promise<IBreadcrumb>[] = [];
+        const crumbs: IBreadcrumb[] = [];
 
         while (_current) {
             const subpath = _current.url.map((item) => item.path).join('/');
@@ -75,9 +75,7 @@ export class EosBreadcrumbsService {
                     title: _current.data.title,
                     url: currUrl,
                     params: _current.params,
-                    /* fullTitle: '' */
                 };
-                const _crumbPromise: Promise<IBreadcrumb> = Promise.resolve(bc);
 
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
@@ -86,39 +84,12 @@ export class EosBreadcrumbsService {
                         if (descr) {
                             bc.title = descr.title;
                         }
-                        /*
-                        _crumbPromise = this._dictSrv.getDictionariesList()
-                            .then((list) => {
-                                const _d = list.find((e: any) => e.id === _dictId);
-                                if (_d) {
-                                    bc.title = _d.title;
-                                }
-                                return bc;
-                            });
-                        */
                     }
                 }
-                crumbs.push(_crumbPromise);
+                crumbs.push(bc);
             }
             _current = _current.firstChild;
         }
         return crumbs;
     }
-
-    /*
-    private _fullTitleGen() {
-        const arr = [];
-        for (const bc of this._breadcrumbs) {
-            arr.push(bc.title + '/');
-        }
-        for (let i = 1; i < this._breadcrumbs.length; i++) {
-            for (let j = 0; j <= i; j++) {
-                this._breadcrumbs[i].fullTitle += arr[j];
-            }
-        }
-        for (const bc of this._breadcrumbs) {
-            bc.fullTitle = bc.fullTitle.substring(0, bc.fullTitle.length - 1);
-        }
-    }
-    */
 }

@@ -27,12 +27,12 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
     }, {
         key: 'EDS_FLAG',
         type: 'boolean',
-        title: 'Требуется ЭП',
+        title: 'ЭП',
         length: 20,
     }, {
         key: 'ENCRYPT_FLAG',
         type: 'boolean',
-        title: 'Требуется шифрование',
+        title: 'шифрование',
         length: 20,
     }, {
         key: 'SEC_INDEX',
@@ -45,12 +45,6 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
         type: 'boolean',
         title: 'Конфиденциальность',
         length: 20,
-        pattern: NOT_EMPTY_STRING,
-    }, {
-        key: 'NOTE',
-        type: 'text',
-        title: 'Примечание',
-        length: 255,
         pattern: NOT_EMPTY_STRING,
     }]),
     treeFields: ['GRIF_NAME'],

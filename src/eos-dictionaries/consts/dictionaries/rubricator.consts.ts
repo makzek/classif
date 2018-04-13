@@ -1,6 +1,6 @@
 import { E_DICT_TYPE, ITreeDictionaryDescriptor } from 'eos-dictionaries/interfaces';
-import { NOT_EMPTY_STRING } from '../input-validation';
 import { SEARCH_TYPES } from '../search-types';
+import { COMMON_FIELDS, COMMON_FIELD_CODE, COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
 /*
 */
 export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
@@ -16,53 +16,27 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     keyField: 'DUE',
     parentField: 'PARENT_DUE',
     searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
-    fields: [{
+    fields: COMMON_FIELDS.concat([{
         key: 'DUE',
         type: 'string',
         title: 'ID',
         length: 248,
-    }, {
+    },
+    Object.assign({}, COMMON_FIELD_CODE, {
         key: 'RUBRIC_CODE',
-        title: 'Код',
-        type: 'string',
         required: true,
         length: 248,
-        pattern: NOT_EMPTY_STRING,
-        /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 248 символов. Должно быть уникальным в пределах справочника',
-        /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
-    }, {
-        key: 'CLASSIF_NAME',
+    }),
+    Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Краткое наименование',
-        type: 'string',
         length: 2000,
-        required: true,
-        pattern: NOT_EMPTY_STRING,
-        /* tslint:disable:max-line-length */
-        invalidMessage: 'Обязательное поле. Максимальная длина 2000 символов. Должно быть уникальным в пределах справочника',
-        /* tslint:enable:max-line-length */
         isUnic: true,
         unicInDict: true,
-    }, {
-        key: 'NOTE',
-        title: 'Примечание',
-        type: 'text',
-        length: 255,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 255 символов.'
-    }, {
-        key: 'CODE',
-        title: 'Code',
-        type: 'string',
-        length: 64,
-        invalidMessage: 'Максимальная длина 64 символа.'
-    }, {
-        key: 'DELETED',
-        title: 'DELETED',
-        type: 'number'
-    }, {
+    }),
+        COMMON_FIELD_FULLNAME,
+    {
         key: 'ISN_HIGH_NODE',
         title: 'ISN_HIGH_NODE',
         type: 'number'
@@ -79,25 +53,10 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         title: 'PARENT_DUE',
         type: 'string'
     }, {
-        key: 'PROTECTED',
-        title: 'PROTECTED',
-        type: 'number'
-    }, {
-        key: 'WEIGHT',
-        title: 'WEIGHT',
-        type: 'number'
-    }, {
-        key: 'FULLNAME',
-        title: 'Полное наименование',
-        type: 'string',
-        length: 2000,
-        pattern: NOT_EMPTY_STRING,
-        invalidMessage: 'Максимальная длина 2000 символов.'
-    }, {
         key: 'sev',
         title: 'Индекс СЭВ',
         type: 'dictionary',
-        }],
+    }]),
     treeFields: ['CLASSIF_NAME'],
     editFields: ['RUBRIC_CODE', 'CLASSIF_NAME', 'FULLNAME', 'NOTE', 'sev'],
     searchFields: ['RUBRIC_CODE', 'CLASSIF_NAME'/*, 'NOTE'*/],

@@ -1,14 +1,18 @@
 <ng-template #markTemp>Снять<br>пометку</ng-template>
 <ng-template #notMarkTemp>Пометить<br>элемент</ng-template>
-<div #item class="eos-node-list-item secondary-text" [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
-    <div [ngClass]="{'deleted': node.isDeleted}" class="node-list-item">
-        <span *ngIf="params?.markItems" class="checkbox-inline">
+<div #item
+    class="eos-node-list-item secondary-text"
+    [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
+    <div [ngClass]="{'deleted': node.isDeleted}"
+        class="node-list-item">
+        <span *ngIf="params?.markItems"
+            class="checkbox-inline">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info" container="body" placement="bottom">
-                <input type="checkbox"[(ngModel)]="node.marked" (change)="markNode()"><span></span>
-            </label>
+                <input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span>
+        </label>
         </span>
-        <span class="node-info" (click)="selectNode()" (dblclick)="dbClickHandler($event)">
+        <span class="node-info" (click)="selectNode($event)" (dblclick)="openAsFolder($event)">
             <!--COMMON MODE LINE-->
             <div *ngIf="!length.tableModeDuble">
                 <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
@@ -51,4 +55,5 @@
         </span>
         <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>
+    <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
 </div>

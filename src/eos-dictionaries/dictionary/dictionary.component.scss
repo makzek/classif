@@ -14,13 +14,10 @@
     }
 
     .tree-wrapper {
-        height: calc(100vh - 108px);
-        width: $dictionary-block-width;
-        overflow-x: hidden;
+        height: calc(100vh - 96px);
+        overflow-x: auto;
         overflow-y: auto;
-        border-right-width: 1px;
-        border-right-style: solid;
-        margin-top: -1 * $grid-gutter-width / 2;
+        border-right: 1px solid $border-color-main-theme;
 
         &.has-spinner {
             display: flex;
@@ -30,8 +27,7 @@
     }
 
     .opened-wrapper {
-        height: calc(100vh - 60px);
-        width: $dictionary-block-width;
+        height: calc(100vh - 96px);
         border-left-width: 1px;
         border-left-style: solid;
         z-index: 3;
@@ -55,78 +51,10 @@
         }
     }
 
-    &.info {
-        .tree-wrapper {
-            left: -1 * $dictionary-block-width;
-        }
-
-        .opened-wrapper {
-            right: 0;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2;
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
-        }
-    }
-
-    &.tree {
-        .tree-wrapper {
-            left: 0;
-        }
-
-        .opened-wrapper {
-            right: -1 * $dictionary-block-width;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2;
-        }
-    }
-
-    &.only-selected {
-        .tree-wrapper {
-            left: -1 * $dictionary-block-width;
-        }
-
-        .opened-wrapper {
-            right: -1 * $dictionary-block-width;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2;
-            right: $grid-gutter-width / 2;
-        }
-    }
-
-    &.full {
-        .tree-wrapper {
-            left: 0;
-        }
-
-        .opened-wrapper {
-            right: 0;
-            top: $top-menu-height - $breadcrumbs-height;
-        }
-
-        .selected-wrapper {
-            top: $grid-gutter-width / 2 + $top-menu-height;
-            left: $grid-gutter-width / 2 + $dictionary-block-width;
-            right: $grid-gutter-width / 2 + $dictionary-block-width;
-        }
-    }
-
     .node-actions {
         .selected-node {
             background: $modal-block-background-main-theme;
-            border: 1px solid transparent;
+            border: 1px solid $border-color-main-theme;
             border-bottom: 0;
             min-height: $item-height;
             display: -ms-grid;
@@ -140,6 +68,7 @@
             }
 
             .item-count {
+                align-self: center;
                 height: 100%;
                 width: fit-content;
                 display: inline-block;
@@ -150,11 +79,14 @@
             }
 
             .selected-node-title {
+                padding: 11px 0;
+                align-self: center;
                 -ms-grid-column: 2;
                 grid-column: 2;
             }
 
             .tabs-wrapper {
+                align-self: center;
                 background-color: $modal-block-background-main-theme;
                 -ms-grid-column: 3;
                 grid-column: 3;
@@ -188,14 +120,32 @@
             }
 
             .item-count-content {
-                padding: 0 ($grid-gutter-width / 2);
+                padding: 0 $grid-gutter-width / 2;
+                line-height: 24px;
+                font-size: 16px;
+                .counter {
+                    margin-left: 20px;
+                    padding: 6.5px 10px;
+                    background: $disabled-color-main-theme;
+                    border-radius: 2px;
+                    color: $white;
+                }
             }
 
             .item-count-found {
+                font-size: 16px;
+                line-height: 24px;
                 padding-left: $grid-gutter-width / 2;
+                .counter {
+                    padding: 6.5px 10px;
+                    background: $disabled-color-main-theme;
+                    border-radius: 2px;
+                    color: $white;
+                }
             }
 
             .go-top-wrapper {
+                align-self: center;
                 width: $item-height;
                 height: $item-height;
                 -ms-grid-column: 1;
@@ -207,7 +157,7 @@
             background: $modal-block-background-main-theme;
             height: $item-height + 6px;
             padding-top: 1px;
-            border: 1px solid transparent;
+            border: 1px solid $border-color-main-theme;
         }
 
         .search {
@@ -286,12 +236,6 @@
     }
 }
 
-.creating-modal {
-    .modal-content {
-        padding: 0 20px;
-    }
-}
-
 @media (max-width: 1500px) {
     .eos-dictionary {
         .tree-wrapper {
@@ -325,64 +269,244 @@
     }
 }
 
-/*Feature table-scroll*/
-.scroll-mode-wrapper {
-    height: $item-height;
-    .table-move {
-        width: 48px;
-        height: 46px;
-        top: 0;
-        z-index: 3;
-        border: none;
-        position: absolute;
+@media(min-width: 0px) and (max-width: 1499px) {
+    .eos-dictionary {
+        .tree-wrapper, .opened-wrapper {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+            width: $dictionary-block-width;
+        }
+        &.info {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: -1 * $dictionary-block-width;
+            }
 
-    }
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: 0;
+            }
 
-    .srolling-block {
-        width: 50%;
-        display: inline-block;
-        overflow-x: hidden;
-        overflow-y: hidden;
-        height: 48px;
-        .move {
-            display: inline-block;
-            white-space: nowrap;
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
+        }
+
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
         }
     }
+}
 
-    .fixed-block {
-        width: 49.5%;
-        display: inline-block;
-        overflow: hidden;
-        height: 48px;
+@media(min-width: 1500px) and (max-width: 1599px) {
+    .eos-dictionary {
+        .tree-wrapper, .opened-wrapper {
+            width: $dictionary-block-width;
+        }
+        &.info {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top:  $top-menu-height;
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
+        }
+
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: 0;
+            }
+
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 + $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width;
+                right: $grid-gutter-width / 2 + $dictionary-block-width;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: -1 * $dictionary-block-width;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width;
+                top: $top-menu-height;
+            }
+        }
+
     }
+}
 
-    .table-shadow {
-        width: 1px;
-        height: 1000px;
-        box-shadow: -8px 1000px 6px #000;
-        display: inline-block;
-        position: absolute;
-        z-index: 4;
-        cursor: pointer;
-        top: -1000px;
-    }
+@media (min-width: 1600px) {
+    .eos-dictionary {
+        .tree-wrapper, .opened-wrapper {
+            width: $dictionary-block-width-big-display;
+        }
+        &.info {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+            .tree-wrapper {
+                top:$top-menu-height;
+                left: -1 * $dictionary-block-width-big-display;
+            }
 
-    .to-left {
-        background: linear-gradient(90deg, #fafafa 60%, #fafafa00 100%);
-        left: 48%;
-    }
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+        }
+        &.tree {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: 0;
+            }
 
-    .to-left:focus, .to-right:focus {
-        outline: 0 none !important;
-    }
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width-big-display;
+                top: $top-menu-height;
+            }
+        }
 
-    .to-right {
-        background: linear-gradient(-90deg, #fafafa 60%, #fafafa00 100%);
-        right: 0;
-    }
+        &.full {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+            .tree-wrapper {
+                top:$top-menu-height;
+                left: 0;
+            }
 
-    .rigth {
-        transform: rotate(-180deg);
+            .opened-wrapper {
+                right: 0;
+                top: $top-menu-height;
+            }
+
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+                right: $grid-gutter-width / 2 + $dictionary-block-width-big-display;
+            }
+
+        }
+        &.only-selected {
+            .selected-wrapper {
+                top: $grid-gutter-width / 2 +  $top-menu-height;
+                left: $grid-gutter-width / 2;
+                right: $grid-gutter-width / 2;
+            }
+            .tree-wrapper {
+                top: $top-menu-height;
+                left: -1 * $dictionary-block-width-big-display;
+            }
+
+            .opened-wrapper {
+                right: -1 * $dictionary-block-width-big-display;
+                top: $top-menu-height;
+            }
+        }
     }
 }

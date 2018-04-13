@@ -19,52 +19,60 @@
 }
 
 .header-wrapper {
+    position: relative;
+    z-index: 10;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     box-shadow: 0 10px 5px 0 rgba(0, 0, 0, 0.15);
     .menu {
-        height: 60px;
+        background-color: $white;
+        height: $item-width;
         border-bottom: 1px solid $border-color-main-theme;
     }
-    .round-img-wrapper {
+    .square-img-wrapper {
         display: inline-block;
-        width: 60px;
-        height: 60px;
-        .round-img {
+        width: $item-width;
+        height: $item-height;
+        .square-img-logo {
             display: inline-block;
-            width: 50px;
-            height: 50px;
-            margin: 5px 0;
-            border: 1px solid transparent;
-            border-radius: 50%;
+            width: $item-width;
+            height: $item-height;
+            background: url("../assets/images/Deal-Logo-Square-48х48.svg");
+        }
+        .square-img {
+            display: inline-block;
+            width: $item-width;
+            height: $item-height;
             background: darkblue;
         }
     }
     .header-content {
+        font-size: 0;
         list-style: none;
         display: inline-block;
         padding: 0;
         margin: 0;
         height: 100%;
         &.left {
-            margin-left: 240px;
+            margin-left: 228px;
         }
         &.right {
             margin-left: 40px;
         }
+
         .header-item {
             display: inline-block;
-            height: 100%;
+            vertical-align: middle;
             .link-name {
-                position: relative;
-                top: 3px;
-                padding-left: 40px;
-                padding-right: 0;
                 cursor: pointer;
+                padding: 13.5px 20px;
                 &:hover,
                 &:focus {
                     text-decoration: none;
                 }
+            }
+            .link-name:hover > span {
+                color: $button-color-hover-main-theme;
             }
             .search-btn {
                 width: $item-width;
@@ -74,21 +82,6 @@
             }
             &.else-dropdown {
                 position: relative;
-                .dropdown-menu {
-                    width: 250px;
-                    padding: 0;
-                    top: 45px;
-                    left: 40px;
-                    .else-item {
-                        height: $item-height;
-                        padding: 12px 0;
-                        &>a {
-                            padding: 0 20px;
-                            font-size: inherit;
-                            line-height: inherit;
-                        }
-                    }
-                }
             }
         }
     }
@@ -136,12 +129,24 @@
     color: $active-field-color-main-theme;
     font-size: 36px;
 }
+.more {
+    position: absolute;
+    top: 11px;
+    .menuitem {
+        .dropdown-item {
+            padding: 0 20px !important;
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}
 
 @media (max-width: 1250px) {
     .header-wrapper {
         .header-content {
             &.left {
-                margin-left: 90px;
+                margin-left: $item-width;
             }
         }
     }
@@ -172,4 +177,8 @@
     margin: $grid-gutter-width/2 0;
     border: 1px none $border-color-main-theme;
     border-bottom-style: solid;
+}
+
+a {
+    cursor: pointer;
 }

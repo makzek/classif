@@ -1,24 +1,43 @@
 <form #loginForm="ngForm">
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Введите свой логин и пароль</h4>
+    <div class="logo">
+        <div class="logo-img"></div>
+        <div class="logo-text">Дело</div>
     </div>
-    <div class="modal-body login-modal" ng-form="">
-        <div class="form-group">
-            <label for="user-name">Ваш логин</label>
-            <input type="text" [(ngModel)]="userName" maxlength="64" class="form-control light" id="user-name" required name="userName"
+    <div class="form-group" >
+        <label for="user-name">Логин</label>
+        <input type="text"
+            [(ngModel)]="userName"
+            maxlength="64"
+            class="form-control light"
+            [ngClass]="{'has-error': haveErr}"
+            id="user-name"
+            required
+            name="userName"
+            autocomplete="on" />
+    </div>
+    <div class="form-group" >
+        <label for="password">Пароль</label>
+        <input [type]="inpType"
+            #errTooltip="bs-tooltip"
+            [(ngModel)]="userPassword"
+            maxlength="64"
+            class="form-control light"
+            [ngClass]="{'has-error': haveErr}"
+            id="password"
+            required
+            name="userPassword"
             autocomplete="on"
-            />
-        </div>
-        <div class="form-group">
-            <label for="password">Ваш пароль</label>
-            <input type="password" [(ngModel)]="userPassword" maxlength="64" class="form-control light" id="password" required name="userPassword"
-            autocomplete="on"
-            />
-        </div>
-        <p class="text-danger">{{errorMessage}}</p>
+            tooltip="Неверный логин или пароль"
+            placement="bottom"
+            container="body"
+            containerClass="tooltip-error"
+            triggers="" />
+        <button class="btn eye" (mousedown)="showPass()" (mouseup)="hidePass()">
+            <span class="eos-icon eos-icon-show-blue"></span>
+        </button>
     </div>
-    <div class="modal-footer">
-        <!-- button type="button" class="btn btn-primary" (click)="cancel()" [disabled]="inProcess">Отмена</button -->
-        <button type="submit" class="btn btn-primary-full" (click)="login()" [disabled]="!userName || !userPassword || inProcess">Войти</button>
-    </div>
+    <button type="submit"
+        class="btn btn-primary-full"
+        (click)="login()"
+        [disabled]="!userName || !userPassword || inProcess">Войти</button>
 </form>

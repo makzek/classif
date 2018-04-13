@@ -127,7 +127,8 @@ export class EosUserProfileService implements IUserProfile {
                 this._msgSrv.addNewMessage({
                     type: 'danger',
                     title: err.message ? err.message : err,
-                    msg: ''
+                    msg: '',
+                    authMsg: true
                 });
                 return this._logout(true);
             });
@@ -142,7 +143,8 @@ export class EosUserProfileService implements IUserProfile {
                     this._msgSrv.addNewMessage({
                         type: 'danger',
                         title: err.message ? err.message : err,
-                        msg: ''
+                        msg: '',
+                        authMsg: true
                     });
                     return this._logout(true);
                 });

@@ -1,5 +1,13 @@
-<div *ngIf="show" (mouseleave)="hideHint()" (click)="selectNode($event)" (dblclick)="viewNode()" (contextmenu)="lkmClick()"
-    class="long-title-hint" [style.opacity]="opacity" [style.top]="top" [style.left]="left" [style.width]="width">
+<div *ngIf="show"
+    (mouseleave)="hideHint()"
+    (mouseout)="hideHint()"
+    (mousemove)="componentEventHandler()"
+    (contextmenu)="innerClick($event)"
+    (window:mousemove)="windowEventHandler($event)"
+    class="long-title-hint"
+    [style.opacity]="opacity"
+    [style.top]="top"
+    [style.left]="left">
     <span class="title">{{title}}</span>
     <span class="interface-text">ПКМ - скрыть.</span>
 </div>

@@ -1,9 +1,9 @@
 <div class="tabs-wrapper secondary-block border-bottom usual-border">
     <ul class="tabs">
-        <li class="tab-item primary-text"
+        <li class="tab-item"
             *ngFor="let tab of tabs; let i = index"
             role="presentation"
-            [ngClass]="{'active-border secondary-text': i === activeTab}"
+            [ngClass]="{'active secondary-text': i === activeTab}"
             (click)="setTab(i)">
             <span class="tab-title">{{tab}}</span>
         </li>
@@ -11,52 +11,50 @@
 </div>
 <div [hidden]="activeTab !== 0"
     class="eos-cabinet-tab">
-    <div class="form-group">
-        <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
-            [input]="inputs['rec.CABINET_NAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
+    <div class="clearfix">
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
+                [input]="inputs['rec.CABINET_NAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
+                [input]="inputs['rec.FULLNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="form-group">
+            <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+            <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
+        </div>
     </div>
-    <div class="form-group">
-        <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
-            [input]="inputs['rec.FULLNAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="form-group">
-        <label for="DUE"
-            class="primary-text"
-            [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-        <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
-    </div>
-    <div class="xl-font paragraph-title">Владельцы кабинета</div>
-
-    <div class="secondary-block border-top row"
+    <p class="xl-font paragraph-title">Владельцы кабинета</p>
+    <div class="usual-border border-top row secondary-block"
         *ngIf="editMode">
-        <span class="btn-group"
-            dropdown>
-                <button dropdownToggle class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
-        <ul *dropdownMenu
-            class="dropdown-menu"
-            role="menu">
-            <li *ngFor="let owner of possibleOwners"
-                role="menuitem"
-                class="dropdown-item btn selected-text"
-                (click)="add(owner)">
-                {{owner.data['CLASSIF_NAME']}}
-            </li>
-            <li *ngIf="!possibleOwners.length">
-                <span class="dropdown-item btn disabled">Нет доступных ДЛ</span>
-            </li>
-        </ul>
-        </span>
+        <div class="btn-group"
+            dropdown
+            container="body">
+            <button dropdownToggle
+                class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
+            <ul *dropdownMenu
+                class="dropdown-menu owners-menu"
+                role="menu">
+                <li *ngFor="let owner of possibleOwners"
+                    role="menuitem"
+                    class="dropdown-item selected-text menuitem"
+                    [ngClass]="{deleted: owner.data['DELETED']}"
+                    (click)="add(owner)">{{owner.data['CLASSIF_NAME']}}</li>
+                <li *ngIf="!possibleOwners.length"><span class="dropdown-item btn disabled">Нет доступных ДЛ</span></li>
+            </ul>
+        </div>
         <button class="btn action-btn btn-primary-light"
             (click)="remove()"><span class="eos-icon eos-icon-bin-blue small" aria-hidden="true"></span></button>
     </div>
     <div class="row">
-        <table class="table usual-border border-bottom">
+        <table class="table usual-border border-bottom table-owners">
             <thead class="secondary-block">
-                <tr class="border-top border-bottom">
+                <tr class="border-top border-bottom usual-border">
                     <th class="td-checkbox secondary-block">
                         <span class="checkbox-inline"
                             *ngIf="editMode">
@@ -96,20 +94,21 @@
             </tbody>
         </table>
     </div>
-    <div class="folder-access-wrapper">
+    <div class="folder-access-wrapper form-group">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
-        <div class="folder-access-header s-font secondary-block border-bottom row border-top">
+        <div class="folder-access-header s-font row secondary-block">
             <span class="checkbox-inline">
-                            <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
-                                <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
-                                <span></span>
+                <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
+                    <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
+                    <span></span>
             </label>
+
             <span *ngIf="!editMode && anyUnmarkedAccess"
                 class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
             <span *ngIf="!editMode && !anyUnmarkedAccess"
                 class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
             </span>
-            <span class="primary-text">Полный доступ</span>
+            <span class="primary-text header-label">Полный доступ</span>
             <span class="upper unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
         </div>
         <div class="folder-access-body row">
@@ -117,11 +116,11 @@
                 *ngFor="let colIdx of [0,1,2]">
                 <div class="folder-access-item"
                     *ngFor="let rIdx of [0,1,2]">
-                    <div class="minus-checkbox">
-                        <label class="checkbox primary-text s-font">
-                        <input type="checkbox" [disabled]="!editMode || !data.rec.FOLDER_List[(colIdx*3 + rIdx)]" name="{{'folder_'+(colIdx*3 + rIdx)}}" [ngModel]="data.rec.FOLDER_List[(colIdx*3 + rIdx)]['USER_COUNT']"
-                            (ngModelChange)="changeByPath('rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT', $event)">
-                        <span></span>{{folderTitle(data.rec.FOLDER_List[(colIdx*3 + rIdx)]['FOLDER_KIND'])}}</label>
+                    <div class="form-group minus-checkbox">
+                        <eos-dynamic-input *ngIf="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
+                            [input]="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
+                            [form]="form"
+                            [readonly]="!editMode"></eos-dynamic-input>
                     </div>
                 </div>
             </div>
@@ -144,7 +143,7 @@
             #tableEl>
             <table class="table table-hover usual-border">
                 <thead class="secondary-block">
-                    <tr class="first-line border-bottom">
+                    <tr class="first-line border-bottom usual-border">
                         <th class="usual-border border-right headcol"></th>
                         <th *ngFor="let person of cabinetUsers"
                             class="cell text-center l-font text-primary"

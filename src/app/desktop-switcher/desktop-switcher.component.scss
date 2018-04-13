@@ -1,50 +1,56 @@
 .eos-desktop-switcher {
+    cursor: pointer;
     display: inline-block;
-    margin: 0;
-    width: 160px;
-    height: 100%;
+    height: $item-height;
+    border-right: 1px solid $border-color-main-theme;
+    border-left: 1px solid $border-color-main-theme;
+
     .dropdown-button {
-        width: 160px;
-        height: 100%;
-        padding: 15px 0 15px 20px;
+        display: inline-block;
         background-color: transparent;
-        border-radius: 0;
-        border-top: 0;
-        bottom: -1px;
-        .selected-desktop {
-            max-width: 86px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        line-height: $item-height;
+        .wr {
+            width: 170px;
             display: inline-block;
+            font-size: 0;
+            .selected-desktop {
+                vertical-align: middle;
+                width: 170px - $item-width;
+                padding-left: 20px;
+                overflow: hidden;
+                display: inline-block;
+                max-height: 40px;
+            }
+            .btn-icon {
+                display: inline-block;
+                vertical-align: middle;
+                padding: 0 12px;
+            }
         }
-        .btn-icon {
-            position: relative;
-            top: 3px;
-            height: 24px;
-            display: inline-block;
-            padding-left: 12px;
-            padding-right: 12px;
-        }
+
     }
-    .form-control {
-        height: 32px;
-    }
-    .btn-default {
-        padding-bottom: 5px;
-    }
+
     .dropdown-menu {
-        width: 300px;
+        width: 380px;
         .menuitem {
-            padding: 3px 10px 3px 20px;
-            a {
-                text-decoration: none;
+            .dropdown-item {
+                padding-left: 20px;
+                .item-title {
+                    width: 210px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                }
+                .drop-ico {
+                    float: right;
+                }
             }
         }
-        li {
+        .li-spiner {
+            border: 1px solid #e6e6e6;
+            border-bottom: transparent;
             cursor: pointer;
-            &:last-child {
-                margin-bottom: 5px;
-            }
             .spinner-wrapper {
                 position: absolute;
                 bottom: 0;
@@ -66,22 +72,33 @@
             }
         }
     }
+
     .desktop-wrapper {
-        width: 230px;
+        width: 218px;
         overflow: hidden;
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     .actions {
-        position: absolute;
-        right: 5px;
+        text-align: center;
+        vertical-align: top;
+        display: inline-block;
+        width: $item-width;
+        height: $item-height;
         cursor: pointer;
-        margin-top: 2px;
+        .eos-icon {
+            color: $button-color-main-theme;
+            vertical-align: top;
+            margin-top: $item-height / 4;
+        }
     }
+
     .create {
         cursor: pointer;
     }
+
     .creating-btns {
         .btn {
             height: 34px;

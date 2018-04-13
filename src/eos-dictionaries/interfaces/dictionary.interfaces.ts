@@ -34,9 +34,10 @@ export enum E_FIELD_TYPE {
     boolean,
     dictionary,
     select,
+    array
 }
 
-export interface IFieldDesriptor {
+export interface IFieldDescriptor {
     key: string;
     title: string;
     type: string;
@@ -45,15 +46,15 @@ export interface IFieldDesriptor {
     foreignKey?: string;
     pattern?: RegExp;
     required?: boolean;
-    invalidMessage?: string;
     isUnic?: boolean;
     unicInDict?: boolean;
     options?: ISelectOption[];
     height?: number;
     forNode?: boolean;
+    default?: any;
 }
 
-export interface IFieldDesriptorBase {
+export interface IFieldDescriptorBase {
     readonly key: string;
     readonly title: string;
     customTitle?: string;
@@ -63,15 +64,15 @@ export interface IFieldDesriptorBase {
     readonly foreignKey?: string;
     pattern?: RegExp;
     readonly required?: boolean;
-    readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
     readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;
+    readonly default?: any;
 }
 
-export interface IFieldView extends IFieldDesriptorBase {
+export interface IFieldView extends IFieldDescriptorBase {
     value: any;
 }
 
@@ -82,7 +83,7 @@ export interface IDictionaryDescriptor {
     title: string;
     visible?: boolean;
     actions: string[];
-    fields: IFieldDesriptor[];
+    fields: IFieldDescriptor[];
     keyField: string;
     parentField?: string;
 

@@ -1,6 +1,6 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
-import { NOT_EMPTY_STRING } from '../input-validation';
+import { COMMON_FIELD_NAME } from './_common';
 
 export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'sev-rules',
@@ -9,43 +9,33 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     visible: true,
     title: 'Правила СЭВ (NEW)',
     keyField: 'ISN_LCLASSIF',
-    fields: [{
-        key: 'ISN_LCLASSIF',
-        type: 'number'
-    }, {
-        key: 'CLASSIF_NAME',
-        type: 'string',
-        required: true,
-        title: 'Наименование',
-        pattern: NOT_EMPTY_STRING
-    }, {
-        key: 'NOTE',
-        type: 'text',
-        title: 'Примечание',
-    }, {
+    fields: LINEAR_TEMPLATE.fields.concat([{
+        key: 'RULE_KIND',
+        type: 'number',
+        title: 'Вид правила',
+    },
+    Object.assign({}, COMMON_FIELD_NAME, {
+        title: 'Наименование правила МЭДО'
+    }), {
         key: 'doctype',
         type: '',
         title: 'Тип документа',
         required: true,
-    }, {
-        key: 'RULE_KIND',
-        type: 'number',
-        title: 'Вид правила',
     }, {
         key: 'DUE_DOCGROUP',
         type: 'string',
         title: 'Группа документов',
     }, {
         key: 'FILTER_CONFIG',
-        type: 'string',
+        title: 'FILTER_CONFIG',
+        type: 'text',
     }, {
         key: 'SCRIPT_CONFIG',
-        type: 'string'
-    }, {
-        key: 'WEIGHT',
-        type: 'number'
+        title: 'SCRIPT_CONFIG',
+        type: 'text'
     }, {
         key: 'DUE_DEP',
+        title: 'SCRIPT_CONFIG',
         type: 'string'
     }, {
         key: 'sender',
@@ -59,8 +49,8 @@ export const RULES_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
         key: 'processing_params',
         type: '',
         title: 'Параметры обработки',
-    }],
-    editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver'],
+    }]),
+    editFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'DUE_DOCGROUP', 'receiver', 'FILTER_CONFIG', 'SCRIPT_CONFIG'],
     listFields: ['CLASSIF_NAME', 'DUE_DOCGROUP'],
     allVisibleFields: ['doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'NOTE', 'sender', 'receiver', 'processing_params'],
     quickViewFields: ['CLASSIF_NAME', 'NOTE', 'doctype', 'RULE_KIND', 'DUE_DOCGROUP', 'sender'],

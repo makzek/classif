@@ -1,4 +1,4 @@
-import { E_FIELD_TYPE, IFieldView, E_DICT_TYPE } from 'eos-dictionaries/interfaces';
+import { E_FIELD_TYPE, IFieldView } from 'eos-dictionaries/interfaces';
 import { RecordDescriptor } from './record-descriptor';
 import { FieldDescriptor } from './field-descriptor';
 import { EosDictionary } from './eos-dictionary';
@@ -47,7 +47,7 @@ export class EosDictionaryNode {
     private _children?: EosDictionaryNode[];
 
     get children(): EosDictionaryNode[] {
-        return this._children;
+        return this._children || [];
     }
 
     set children(nodes: EosDictionaryNode[]) {
@@ -227,7 +227,7 @@ export class EosDictionaryNode {
     */
 
     getEditFieldsDescription(): any {
-        return this._descriptor.getEditFieldDescription(this.data);
+        return this._descriptor.getEditFieldDescription();
     }
 
     /*
@@ -247,22 +247,16 @@ export class EosDictionaryNode {
         return _data;
     }
     */
-
+    /*
     getCreatingData(recParams: any): any {
-        const _data = {
-            rec: Object.assign({}, recParams),
-        };
-
-        this._descriptor.getEditView(this.data).forEach((_f) => {
-            if (_f.type === E_FIELD_TYPE.dictionary) {
-                _data[_f.key] = {};
-            }
-        });
+        const _data = this._descriptor.getNewRecord();
+        Object.assign(_data.rec, recParams);
 
         if (this._dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
-            _data['printInfo']['GENDER'] = null;
             if (_data.rec['IS_NODE'] === 0) {
                 _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
+            } else {
+                _data['printInfo']['GENDER'] = null;
             }
             _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
             _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
@@ -270,13 +264,13 @@ export class EosDictionaryNode {
 
         return _data;
     }
-
+    */
     getShortViewFieldsDescription(): any {
-        return this._descriptor.getShortQuickFieldDescription(this.data);
+        return this._descriptor.getShortQuickFieldDescription();
     }
 
     getFullViewFieldsDescription(): any {
-        return this._descriptor.getQuickFieldDescription(this.data);
+        return this._descriptor.getQuickFieldDescription();
     }
 
     getShortViewData(): any {

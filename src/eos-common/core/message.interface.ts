@@ -8,4 +8,5 @@ export interface IMessage {
     title: string;
     msg: string;
     dismissOnTimeout?: number;
+    authMsg?: boolean;
 }

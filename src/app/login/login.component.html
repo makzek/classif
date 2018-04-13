@@ -1,7 +1,13 @@
-<div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-        <div class="panel panel-default">
-            <eos-login-form (logged)="loggedIn($event)"></eos-login-form>
+<div class="row login-fon">
+    <div class="login-panel">
+        <div class="msg-container">
+            <div class="msg"*ngIf="authMsg">
+                <div class="msg-ico text-center">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </div>
+                <div class="msg-text">{{authMsg}}</div>
+            </div>
         </div>
+        <eos-login-form (logged)="loggedIn($event)"></eos-login-form>
     </div>
 </div>

@@ -1,12 +1,12 @@
 <div [formGroup]="form"
-    [tooltip]="input.invalidMessage"
+    [tooltip]="tooltipMessage"
     [placement]="tooltipCfg.placement"
     [containerClass]="tooltipCfg.class"
     [container]="tooltipCfg.container"
     [isDisabled]="readonly"
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
-    <label class="primary-text checkbox"
+    <label class="checkbox"
         [ngClass]="{disabled: readonly}">
         <input type="checkbox"
             [formControlName]="input.key"

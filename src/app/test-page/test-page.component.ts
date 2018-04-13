@@ -13,10 +13,7 @@ const TEST_INPUTS = <IBaseInput[]>[{
     key: 'data.string',
     label: 'string',
     required: true,
-    invalidMessage: 'required',
     pattern: /\S+/,
-    isUnic: false,
-    unicInDict: false,
     forNode: false,
     value: 'no data',
 }, {
@@ -24,7 +21,6 @@ const TEST_INPUTS = <IBaseInput[]>[{
     key: 'data.text',
     label: 'TEXT',
     required: false,
-    invalidMessage: 'blablabla',
     height: '100'
 }, {
     controlType: 'checkbox',
@@ -51,7 +47,6 @@ const TEST_INPUTS = <IBaseInput[]>[{
     controlType: 'date',
     key: 'data.date',
     value: new Date(),
-    invalidMessage: 'Некорректная дата',
     label: 'date'
 }];
 

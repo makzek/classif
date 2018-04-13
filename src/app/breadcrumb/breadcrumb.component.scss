@@ -2,6 +2,7 @@
     height: $breadcrumbs-height;
     border-bottom: 1px solid transparent;
     border-radius: 0;
+    position: relative;
 
     .breadcrumb {
         background-color: inherit;
@@ -43,19 +44,86 @@
         }
     }
 
+    .opened-node-actions {
+        transition: right 300ms ease-in-out;
+        position: absolute;
+        height: $breadcrumbs-height;
+        border-left: 1px $border-color-main-theme solid;
+        top: 0;
+        right: 0;
+        .btn {
+            padding: 0;
+            height: $item-height;
+            width: $item-width;
+            background-color: transparent;
+            border-radius: 0;
+            border-color: transparent;
+            &:focus {
+                outline: 0;
+            }
+        }
+        .icon-btn {
+            position: absolute;
+
+            &.left {
+                left: 0;
+            }
+            &.right {
+                left: $item-width;
+            }
+        }
+    }
+
     .pushpin {
-        width: 48px;
-        height: 48px;
+        width: $item-width;
+        height: $item-height - 2px;
         position: relative;
-        transition: right .25s ease-in-out;
         right: 0;
         background: $block-color-main-theme;
+        transition: right 0.3s;
+    }
+
+    .pushpin:focus {
+        border: none;
     }
 
     .left-sandwich {
         .btn {
             margin-right: -16px;
             margin-bottom: -7px;
+        }
+    }
+}
+
+@media (max-width: 1599px) {
+    .eos-breadcrumb {
+        .opened-node-actions {
+            width: $dictionary-block-width;
+            &.c-info {
+                right: -1 * $dictionary-block-width;
+            }
+
+            .icon-btn {
+                &.edit {
+                    right: $item-width;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1600px) {
+    .eos-breadcrumb {
+        .opened-node-actions {
+            width: $dictionary-block-width-big-display;
+            &.c-info {
+                right: -1 * $dictionary-block-width-big-display;
+            }
+            .icon-btn {
+                &.edit {
+                    right: $item-width;
+                }
+            }
         }
     }
 }

@@ -1,13 +1,12 @@
 <div [formGroup]="form"
-    [tooltip]="input.invalidMessage"
+    [tooltip]="tooltipMessage"
     [placement]="tooltipCfg.placement"
     [containerClass]="tooltipCfg.class"
     [container]="tooltipCfg.container"
     [isDisabled]="readonly"
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
-    <label class="primary-text"
-        [hidden]="input.hideLabel"
+    <label [hidden]="input.hideLabel"
         [attr.for]="input.key">{{input.label}}</label>
     <div class="eos-datepicker">
         <input type="text"

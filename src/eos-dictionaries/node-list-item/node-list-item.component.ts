@@ -46,30 +46,31 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         }
     }
 
-    selectNode(): void {
+    selectNode(evt: Event): void {
+        evt.stopPropagation();
         if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNodeFromList(this.node);
+            this._dictSrv.openNode(this.node.id);
         }
     }
 
-    markNode() {
+    markNode(marked: boolean) {
+        this.node.marked = marked;
         this.mark.emit(this.node.marked);
     }
 
-    dbClickHandler(evt: MouseEvent) {
+    viewNode(evt: MouseEvent, view = false) {
         evt.stopPropagation();
-        this.node.isNode ? this.openAsFolder() : this.viewNode();
-    }
-
-    viewNode() {
-        if (!this._dictSrv.isRoot(this.node.id)) {
-            this._storageSrv.setItem(RECENT_URL, this._router.url);
+        if (!this._dictSrv.isRoot(this.node.id) && !this.node.isDeleted) {
             // console.log('node', this.node);
             const _path = this.node.getPath();
-            _path.push('view');
+            if (!this.node.isNode || view) {
+                this._storageSrv.setItem(RECENT_URL, this._router.url);
+                _path.push('view');
+            }
             this._router.navigate(_path);
         }
     }
+
     /**
      * @param el
      * @description Draw hint for a long title

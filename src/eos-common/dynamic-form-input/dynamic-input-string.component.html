@@ -1,5 +1,5 @@
 <div [formGroup]="form"
-    [tooltip]="input.invalidMessage"
+    [tooltip]="tooltipMessage"
     [placement]="tooltipCfg.placement"
     [containerClass]="tooltipCfg.class"
     [container]="tooltipCfg.container"
@@ -7,7 +7,6 @@
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
     <label [hidden]="input.hideLabel"
-        class="primary-text"
         [attr.for]="input.key"
         [ngClass]="{'required': input.required}">{{input.label}}</label>
     <input class="form-control m-font"

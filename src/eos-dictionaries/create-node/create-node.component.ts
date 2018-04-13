@@ -71,55 +71,49 @@ export class CreateNodeComponent {
      */
     public create(hide = true) {
         this.upadating = true;
-        if (this.dictionaryId === 'departments' && this.nodeData && this.nodeData.rec && this.nodeData.rec.IS_NODE) {
+        const data = this.cardEditRef.getNewData();
+        let preAdd = Promise.resolve(null);
+
+        Object.assign(data.rec, this.nodeData.rec); // update with predefined data
+
+        if (this.dictionaryId === 'departments' && data && data.rec && data.rec.IS_NODE) {
             /* tslint:disable */
-            if (this.nodeData.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === this.nodeData.rec.DUTY)) {
-                this.dutysList.push(this.nodeData.rec.DUTY);
+            if (data.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === data.rec.DUTY)) {
+                this.dutysList.push(data.rec.DUTY);
             }
 
-            if (this.nodeData.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === this.nodeData.rec.FULLNAME)) {
-                this.fullNamesList.push(this.nodeData.rec.FULLNAME)
+            if (data.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === data.rec.FULLNAME)) {
+                this.fullNamesList.push(data.rec.FULLNAME)
             }
 
-            if (!this.nodeData.cabiet) {
+            if (!data.cabiet) {
                 this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
             }
 
             const boss = this._dictSrv.getBoss();
-            if (this.nodeData.rec['POST_H'] === '1' && boss) {
+            if (data.rec['POST_H'] === '1' && boss) {
                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-                const CLASSIF_NAME = this.nodeData.rec['SURNAME'] + ' - ' + this.nodeData.rec['DUTY'];
+                const CLASSIF_NAME = data.rec['SURNAME'] + ' - ' + data.rec['DUTY'];
                 changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
                 changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
                 this.onHide.emit(true);
-                this._confirmSrv.confirm(changeBoss)
+                preAdd = this._confirmSrv.confirm(changeBoss)
                     .then((confirm: boolean) => {
                         if (confirm) {
                             boss.data.rec['POST_H'] = 0;
-                            this._dictSrv.updateNode(boss, boss.data).then((node: EosDictionaryNode) => {
-                                this._dictSrv.addNode(this.cardEditRef.getNewData())
-                                    .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-                                    .catch((err) => this._errHandler(err));
-                            })
+                            return this._dictSrv.updateNode(boss, boss.data);
                         } else {
-                            this.nodeData.rec['POST_H'] = 0;
-                            this._dictSrv.addNode(this.cardEditRef.getNewData())
-                                .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-                                .catch((err) => this._errHandler(err));
+                            data.rec['POST_H'] = 0;
+                            return null;
                         }
-                    })
-            } else {
-                this._dictSrv.addNode(this.cardEditRef.getNewData())
-                    .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-                    .catch((err) => this._errHandler(err));
+                    });
             }
             this._storageSrv.setItem('dutysList', this.dutysList, true);
             this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
-        } else {
-            this._dictSrv.addNode(this.cardEditRef.getNewData())
-                .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
-                .catch((err) => this._errHandler(err));
         }
+        preAdd.then(() => this._dictSrv.addNode(data))
+            .then((node: EosDictionaryNode) => this._afterAdding(node, hide))
+            .catch((err) => this._errHandler(err));
     }
 
     /**
@@ -132,13 +126,9 @@ export class CreateNodeComponent {
 
     private _afterAdding(node: EosDictionaryNode, hide: boolean): void {
         if (node) {
-            let title = '';
-            node.getTreeView().forEach((_f) => {
-                title += this.nodeData.rec[_f.key] || _f.value;
-            });
             this._deskSrv.addRecentItem({
                 url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
-                title: title,
+                title: node.title,
             });
         }
         this.upadating = false;

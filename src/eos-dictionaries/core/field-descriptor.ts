@@ -1,6 +1,6 @@
-import { IFieldDesriptor, IFieldDesriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { IFieldDescriptor, IFieldDescriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { ISelectOption } from 'eos-common/interfaces';
-export class FieldDescriptor implements IFieldDesriptorBase {
+export class FieldDescriptor implements IFieldDescriptorBase {
     readonly key: string;
     readonly title: string;
     readonly type: E_FIELD_TYPE;
@@ -9,14 +9,14 @@ export class FieldDescriptor implements IFieldDesriptorBase {
     readonly foreignKey?: string;
     readonly pattern?: RegExp;
     readonly required?: boolean;
-    readonly invalidMessage?: string;
     readonly isUnic?: boolean;
     readonly unicInDict?: boolean;
     readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;
+    readonly default?: any;
 
-    constructor(data: IFieldDesriptor) {
+    constructor(data: IFieldDescriptor) {
         if (data.key) {
             this.key = data.key;
             this.title = data.title;
@@ -38,8 +38,6 @@ export class FieldDescriptor implements IFieldDesriptorBase {
 
         this.required = !!data.required;
 
-        this.invalidMessage = data.invalidMessage || '';
-
         this.isUnic = !!data.isUnic;
 
         this.unicInDict = !!data.unicInDict;
@@ -52,6 +50,7 @@ export class FieldDescriptor implements IFieldDesriptorBase {
             this.height = data.height;
         }
 
-        this.forNode = !!data.forNode;
+        this.forNode = data.forNode;
+        this.default = data.default;
     }
 }

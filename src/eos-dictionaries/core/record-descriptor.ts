@@ -115,27 +115,27 @@ export class RecordDescriptor {
     }
 
     getInfoView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.info, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.info), data);
     }
 
     getShortQuickView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.shortQuickView, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.shortQuickView), data);
     }
 
     getEditView(data: any): IFieldView[] {
-        return this._bindData(this.getFieldSet(E_FIELD_SET.edit, data), data);
+        return this._bindData(this.getFieldSet(E_FIELD_SET.edit), data);
     }
 
-    getEditFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.edit, data);
+    getEditFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.edit);
     }
 
-    getShortQuickFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.shortQuickView, data);
+    getShortQuickFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.shortQuickView);
     }
 
-    getQuickFieldDescription(data: any): any {
-        return this.getFieldDescription(E_FIELD_SET.info, data);
+    getQuickFieldDescription(): any {
+        return this.getFieldDescription(E_FIELD_SET.info);
     }
 
     getSearchConfig(): SEARCH_TYPES[] {
@@ -146,30 +146,31 @@ export class RecordDescriptor {
         return this.modeList;
     }
 
-    getFieldView(aSet: E_FIELD_SET, mode?: string) {
-        return this._getFieldView(aSet, mode);
+    getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+        return this._getFieldSet(aSet);
     }
 
-    getFieldSet(aSet: E_FIELD_SET, values?: any): FieldDescriptor[] {
-        return this._getFieldSet(aSet, values);
-    }
-
-    getFieldDescription(aSet: E_FIELD_SET, data?: any): any {
+    getFieldDescription(aSet: E_FIELD_SET): any {
         const _description = {
             rec: {},
             _list: []
         };
-        const _descs = this.getFieldSet(aSet, data);
+        const _descs = this.getFieldSet(aSet);
         if (_descs) {
             _descs.forEach((_f) => {
-                if (_f.type !== E_FIELD_TYPE.dictionary) {
+                if (E_FIELD_TYPE.dictionary === _f.type) {
+                    _description[_f.key] = {};
+                    /* recive other dict description */
+                    // this.dictSrv.getDictionaryField(_f.key);
+                } else if (E_FIELD_TYPE.array === _f.type) {
+                    _description[_f.key] = [];
+                } else {
                     _description._list.push(_f.key);
                     _description.rec[_f.key] = {
                         title: _f.title,
                         length: _f.length,
                         pattern: _f.pattern,
                         required: _f.required,
-                        invalidMessage: _f.invalidMessage,
                         isUnic: _f.isUnic,
                         unicInDict: _f.unicInDict,
                         type: _f.type,
@@ -177,43 +178,13 @@ export class RecordDescriptor {
                         height: _f.height,
                         foreignKey: _f.foreignKey,
                         forNode: _f.forNode,
+                        default: _f.default
                     };
-                } else {
-                    _description[_f.key] = {};
-                    /* recive other dict description */
-                    // this.dictSrv.getDictionaryField(_f.key);
                 }
             });
         }
         return _description;
     }
-
-    protected _getFieldSet(aSet: E_FIELD_SET, _values?: any): FieldDescriptor[] {
-        switch (aSet) {
-            case E_FIELD_SET.search:
-                return this._getSearchFields();
-            case E_FIELD_SET.allVisible:
-                return this._getAllVisibleFields();
-            case E_FIELD_SET.fullSearch:
-                return this._getFullSearchFields();
-            case E_FIELD_SET.info:
-                return this.quickViewFields;
-            case E_FIELD_SET.shortQuickView:
-                return this.shortQuickViewFields;
-            case E_FIELD_SET.edit:
-                return this.editFields;
-            case E_FIELD_SET.list:
-                return this.listFields;
-            case E_FIELD_SET.tree:
-                return this.treeFields;
-            default:
-                // throw new Error('Unknown field set');
-                console.warn('Unknown field set', aSet);
-                return null;
-        }
-    }
-
-    protected _getFieldView(_aSet: E_FIELD_SET, _mode?: string): any { }
 
     protected _getFullSearchFields() {
         return this.fullSearchFields;
@@ -235,6 +206,31 @@ export class RecordDescriptor {
 
         if (!this[fldName]) {
             throw new Error('No field decribed for "' + fldName + '"');
+        }
+    }
+
+    private _getFieldSet(aSet: E_FIELD_SET): FieldDescriptor[] {
+        switch (aSet) {
+            case E_FIELD_SET.search:
+                return this._getSearchFields();
+            case E_FIELD_SET.allVisible:
+                return this._getAllVisibleFields();
+            case E_FIELD_SET.fullSearch:
+                return this._getFullSearchFields();
+            case E_FIELD_SET.info:
+                return this.quickViewFields;
+            case E_FIELD_SET.shortQuickView:
+                return this.shortQuickViewFields;
+            case E_FIELD_SET.edit:
+                return this.editFields;
+            case E_FIELD_SET.list:
+                return this.listFields;
+            case E_FIELD_SET.tree:
+                return this.treeFields;
+            default:
+                // throw new Error('Unknown field set');
+                console.warn('Unknown field set', aSet);
+                return null;
         }
     }
 
@@ -262,7 +258,7 @@ export class RecordDescriptor {
             if (fld.type === E_FIELD_TYPE.dictionary) {
                 _res = Object.assign({}, fld, { value: data ? data[fld.foreignKey] : null });
             } else {
-                _res = (Object.assign({}, fld, { value: data && data.rec ? data.rec[fld.foreignKey] : null }));
+                _res = (Object.assign({}, fld, { value: data && data.rec ? data.rec[fld.foreignKey] : (fld.default || null) }));
             }
             return _res;
         });

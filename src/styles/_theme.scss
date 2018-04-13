@@ -27,8 +27,7 @@
     border-color: $button-color-main-theme !important;
     color: $button-color-main-theme !important;
     background: white !important;
-    padding: 0 4px;
-
+    /* padding: 0 4px; */
     &:hover {
         color: $button-color-hover-main-theme !important;
         border-color: $button-color-hover-main-theme !important;
@@ -39,8 +38,7 @@
     border-color: $button-color-main-theme !important;
     background-color: $button-color-main-theme !important;
     color: white !important;
-    padding: 0 4px;
-
+    /* padding: 0 4px; */
     &:hover {
         border-color: $button-color-hover-main-theme !important;
         background: $button-color-hover-main-theme !important;
@@ -51,12 +49,10 @@
     background-color: transparent;
     color: $button-color-main-theme;
     border-color: transparent;
-    padding: 1px 6px;
-
+    /* padding: 1px 6px; */
     &:hover {
         color: $button-color-hover-main-theme;
     }
-
     &.search-btn {
         &.opened {
             color: $primary-color-main-theme;
@@ -70,7 +66,6 @@
     background-color: $primary-color-main-theme;
     border-color: $border-color-main-theme;
     color: $primary-font-color-main-theme;
-
     &:hover:not(:disabled) {
         background-color: $border-color-main-theme;
     }
@@ -114,49 +109,100 @@
 .block {
     background-color: $block-color-main-theme;
     color: $primary-font-color-main-theme;
-    border-color: $border-color-main-theme !important;
+    border-color: $border-color-main-theme;
 }
 
 .tooltip {
     opacity: 1 !important;
-
     &.word-break {
         word-break: break-all;
     }
-
     .tooltip-inner {
-        color: #333333;
-        border-radius: 4px;
+        padding: 8px;
+        border-radius: 0px;
+        color: $black;
+        font-size: 14px;
+        line-height: 20px;
         background-color: $primary-color-main-theme;
         box-shadow: 0 0 0 1px #333333, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
     }
 }
 
-.tooltip-info {
+.tooltip-info,
+.tooltip-error {
     .tooltip-inner {
-        color: $active-field-color-main-theme;
         box-shadow: 0 0 0 1px $active-field-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $active-field-color-main-theme;
     }
-
-    &.right .tooltip-arrow,
-    &.tooltip-right .tooltip-arrow {
+    &.tooltip.bottom .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        top: 0;
+        left: calc(50% - 7px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.top .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        left: calc(50% - 7px);
+        bottom: 0;
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.left .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        right: 0;
+        top: calc(50% - 6px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.right .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        left: 0;
+        top: calc(50% - 6px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.right .tooltip-arrow {
+        top: calc(50% - 4.5px) !important;
+        left: -13px;
         border-right-color: $active-field-color-main-theme;
+        border-width: 9px 9px 9px;
     }
-
-    &.left .tooltip-arrow,
-    &.tooltip-left .tooltip-arrow {
+    &.tooltip.left .tooltip-arrow {
+        top: calc(50% - 4.5px) !important;
+        right: -13px;
         border-left-color: $active-field-color-main-theme;
+        border-width: 9px 9px 9px;
     }
-
-    &.top .tooltip-arrow,
-    &.tooltip-top .tooltip-arrow {
+    &.tooltip.top .tooltip-arrow {
+        bottom: -4px;
+        left: 50% !important;
+        margin-left: -10px;
         border-top-color: $active-field-color-main-theme;
+        border-width: 9px 9px 0;
     }
-
-    &.bottom .tooltip-arrow,
-    &.tooltip-bottom .tooltip-arrow {
+    &.tooltip.bottom .tooltip-arrow {
+        top: -4px;
+        left: 50% !important;
+        margin-left: -10px;
         border-bottom-color: $active-field-color-main-theme;
+        border-width: 0 9px 9px;
     }
 }
 
@@ -166,99 +212,109 @@
         box-shadow: 0 0 0 1px $invalid-color-main-theme, 5px 5px 20px 0 rgba(0, 0, 0, 0.3);
         border-color: $invalid-color-main-theme;
     }
-
-    &.right .tooltip-arrow,
-    &.tooltip-right .tooltip-arrow {
+    &.tooltip.bottom .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        top: 0;
+        left: calc(50% - 7px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.top .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        left: calc(50% - 7px);
+        bottom: 0;
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.left .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        right: 0;
+        top: calc(50% - 6px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.right .tooltip-inner::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        left: 0;
+        top: calc(50% - 6px);
+        transform: rotate(45deg);
+        background: $primary-color-main-theme;
+    }
+    &.tooltip.right .tooltip-arrow {
+        top: calc(50% - 4.5px) !important;
+        left: -13px;
         border-right-color: $invalid-color-main-theme;
+        border-width: 9px 9px 9px;
     }
-
-    &.left .tooltip-arrow,
-    &.tooltip-left .tooltip-arrow {
+    &.tooltip.left .tooltip-arrow {
+        top: calc(50% - 4.5px) !important;
+        right: -13px;
         border-left-color: $invalid-color-main-theme;
+        border-width: 9px 9px 9px;
     }
-
-    &.top .tooltip-arrow,
-    &.tooltip-top .tooltip-arrow {
+    &.tooltip.top .tooltip-arrow {
+        bottom: -4px;
+        left: 50% !important;
+        margin-left: -10px;
         border-top-color: $invalid-color-main-theme;
+        border-width: 9px 9px 0;
     }
-
-    &.bottom .tooltip-arrow,
-    &.tooltip-bottom .tooltip-arrow {
+    &.tooltip.bottom .tooltip-arrow {
+        top: -4px;
+        left: 50% !important;
+        margin-left: -10px;
         border-bottom-color: $invalid-color-main-theme;
+        border-width: 0 9px 9px;
     }
 }
 
-.form-control {
+/* .main-theme { */
+
+.secondary-block {
+    background-color: $light-grey-1;
     color: $secondary-font-color-main-theme;
-    background-color: $secondary-color-main-theme;
     border-color: $border-color-main-theme;
-
-    &.light {
-        background-color: $modal-block-background-main-theme
-    }
-
-    &:-ms-input-placeholder {
-        color: $primary-font-color-main-theme;
-    }
-
-    &.ng-invalid.ng-dirty:not(:focus) {
-        border-color: $invalid-color-main-theme;
-        /* outline: $invalid-color-main-theme solid 1px !important; */
-        /* outline-offset: 0 !important; */
-    }
-
-    &.ng-valid {
-        border-color: $border-color-main-theme;
-    }
-
-    &:focus {
-        border-color: $active-field-color-main-theme;
-    }
-
-    &.readonly {
-        border-color: transparent !important;
-        background-color: transparent;
-
-        &:focus {
-            border-color: transparent;
-        }
-    }
-
-    &.highlighted:focus {
-        border-color: $button-color-main-theme !important;
-    }
+    border-width: 1px;
 }
 
-.main-theme {
-    .secondary-block {
-        background-color: $secondary-panel-bg-color;
-        color: $secondary-font-color-main-theme;
-        border-color: $border-color-main-theme;
-        border-width: 1px;
-    }
+.link-text {
+    color: $button-color-main-theme;
+}
 
-    .link-text {
-        color: $button-color-main-theme;
-    }
+.selected-text {
+    color: $button-color-main-theme;
+}
 
-    .selected-text {
-        color: $button-color-main-theme;
-    }
+.secondary-text {
+    color: $secondary-font-color-main-theme;
+}
 
-    .secondary-text {
-        color: $secondary-font-color-main-theme;
-    }
+.active {
+    border-color: $button-color-main-theme;
+    color: $button-color-main-theme !important;
+}
 
-    .active {
-        border-color: $button-color-main-theme;
-        color: $button-color-main-theme;
-    }
+.transparent-border {
+    border-color: transparent;
+}
 
-    .transparent-border {
-        border-color: transparent;
-    }
-
-    /*.input-cleaner {
+/*.input-cleaner {
         color: $button-color-main-theme;
 
         &:hover {
@@ -266,41 +322,94 @@
         }
     }*/
 
-    .deleted {
-        color: $disabled-color-main-theme;
-    }
+.deleted {
+    color: $disabled-color-main-theme;
+}
 
-    .highlight-on-hover {
-        &:hover {
-            background-color: $highlight-color-main-theme;
-        }
+.highlight-on-hover {
+    &:hover {
+        background-color: $highlight-color-main-theme;
     }
+} // main-layout
+.main-container {
+    background-color: $secondary-color-main-theme;
+    color: $primary-font-color-main-theme;
+}
 
-    // main-layout
-    &.main-container {
-        background-color: $secondary-color-main-theme;
-        color: $primary-font-color-main-theme;
-    }
+.content-wrapper {
+    background: $secondary-color-main-theme;
+}
 
-    .content-wrapper {
-        background: $secondary-color-main-theme;
-    }
+.breadcrumb>li::before {
+    color: $button-color-main-theme;
+}
 
-    .breadcrumb > li::before {
-        color: $button-color-main-theme;
-    }
+/* } */
 
+.dropdown-menu {
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .3);
+    border: 1px $border-color-main-theme solid;
     .menuitem {
-        a {
-            color: $primary-font-color-main-theme;
+        line-height: $item-height;
+        .input-group {
+            height: $item-height;
+            padding-left: 12px;
+            border-bottom: 1px $border-color-main-theme solid;
+            .form-control {
+                background: $border-color-main-theme;
+                height: 32px;
+                margin-top: 8px;
+                border-radius: 0;
+                padding: 8px;
+            }
+            .input-group-btn {
+                .btn {
+                    padding: 6px 6px;
+                }
+            }
         }
-
-        &:hover {
-            background-color: $secondary-color-main-theme;
+        .dropdown-item {
+            font-size: 0;
+            padding: 0;
+            text-decoration: none;
+            line-height: 48px;
+            height: $item-height;
+            span {
+                line-height: $item-height;
+            }
         }
+        .ico-wrapper {
+            display: flex;
+        }
+        .drop-ico {
+            display: inline-block;
+            width: $item-width;
+            text-align: center;
+            .eos-icon {
+                vertical-align: middle;
+            }
+        }
+        .have-padding {
+            padding: 0 20px;
+        }
+    }
+    .menuitem+.menuitem {
+        border-top: solid 1px $border-color-main-theme;
+    }
+}
 
-        &:active {
-            background-color: $secondary-color-main-theme;
+.modal-backdrop.in {
+    opacity: .3;
+}
+
+.modal {
+    .modal-dialog {
+        .modal-content {
+            background: $modal-block-background-main-theme;
+            border-radius: 1px;
         }
     }
 }

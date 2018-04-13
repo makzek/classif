@@ -49,8 +49,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         this.dictSrv.uploadImg(img)
             .then((photoId: number) => {
                 if (photoId) {
-                    this.data.rec['ISN_PHOTO'] = photoId['ID'];
-                    this.formChanged.emit(this.data);
+                    this.setValue('rec.ISN_PHOTO', photoId['ID']);
                 } else {
                     this.photo = DEFAULT_PHOTO;
                     this._msgSrv.addNewMessage(UPLOAD_IMG_FALLED);
@@ -60,22 +59,18 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
 
     public fillDeclineFields(): void {
         const field: FieldsDecline = {
-            DUTY: this.data['rec']['DUTY'] || '',
-            GENDER: Number(this.data['printInfo']['GENDER']),
-            NAME: this.data['printInfo']['NAME'] || '',
-            PATRON: this.data['printInfo']['PATRON'] || '',
-            SURNAME: this.data['printInfo']['SURNAME'] || '',
+            DUTY: this.getValue('rec.DUTY') || '',
+            GENDER: this.getValue('printInfo.GENDER') * 1,
+            NAME: this.getValue('printInfo.NAME') || '',
+            PATRON: this.getValue('printInfo.PATRON') || '',
+            SURNAME: this.getValue('printInfo.SURNAME') || '',
             // PRINT_SURNAME_DP: 'test PRINT SURNAME_DP'
         };
 
         this.dictSrv.inclineFields(field)
-            .then((res: any[]) => {
-                if (res && res[0]) {
-                    Object.keys(res[0]).forEach((key) => {
-                        if (res[0][key]) {
-                            this.data.printInfo[key] = res[0][key];
-                        }
-                    });
+            .then(([res]: any) => {
+                if (res) {
+                    Object.keys(res).forEach((key) => this.setValue('printInfo.' + key, res[key]));
                 }
             });
     }

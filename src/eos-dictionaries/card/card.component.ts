@@ -170,6 +170,10 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             this.goTo(url);
         } else {
             const backUrl = (this.node.parent || this.node).getPath();
+            if (this.node.dictionaryId === 'cabinet') { // hardcode because of cabinets. sorry :(
+                backUrl[1] = 'departments';
+                backUrl[2] = this.node.data.rec.DUE;
+            }
             this._router.navigate(backUrl);
         }
     }
@@ -389,34 +393,34 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     private _save(data: any): Promise<any> {
+        // todo: remove duplication from service
         const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
+        let preSave = Promise.resolve(null);
         if (data.rec['POST_H'] === '1' && boss) {
             const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
             const CLASSIF_NAME = data.rec['SURNAME'] + ' - ' + data.rec['DUTY'];
             changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
             changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
 
-            return this._confirmSrv.confirm(changeBoss)
+            preSave = this._confirmSrv.confirm(changeBoss)
                 .then((confirm: boolean) => {
                     if (confirm) {
                         boss.data.rec['POST_H'] = 0;
                         return this._dictSrv.updateNode(boss, boss.data)
-                            .then((node: EosDictionaryNode) => {
+                            .then(() => {
                                 data.rec['POST_H'] = 1;
-                                return this._dictSrv.updateNode(this.node, data);
-                            })
-                            .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
+                                return null;
+                            });
                     } else {
                         data.rec['POST_H'] = 0;
-                        return this._dictSrv.updateNode(this.node, data)
-                            .then((resp: EosDictionaryNode) => this._afterUpdating(resp));
+                        return null;
                     }
                 });
-        } else {
-                return this._dictSrv.updateNode(this.node, data)
-                .then((resp: EosDictionaryNode) => this._afterUpdating(resp))
-                .catch((err) => this._errHandler(err));
         }
+        return preSave
+            .then(() => this._dictSrv.updateNode(this.node, data))
+            .then((node) => this._afterUpdating(node))
+            .catch((err) => this._errHandler(err));
     }
 
     private _afterSaving(node: EosDictionaryNode) {
