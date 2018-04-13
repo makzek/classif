@@ -99,7 +99,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
             this.apiSrv.read({ 'FOLDER': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) }),
             this.apiSrv.read({ 'DEPARTMENT': [rec.DUE] })
                 .then(([department]: DEPARTMENT[]) => {
-                    return this.getOwners(department.DUE)
+                    return this.getOwners(department.DEPARTMENT_DUE)
                         .then((owners) => [department, owners]);
                 }),
             this.apiSrv.read({ 'USER_CABINET': PipRX.criteries({ 'ISN_CABINET': rec.ISN_CABINET + '' }) })

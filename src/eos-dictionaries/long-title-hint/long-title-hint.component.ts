@@ -15,6 +15,7 @@ export class LongTitleHintComponent {
 
     public lkm = false;
     public show = false;
+    private _moveCounter = 0;
     private _node: EosDictionaryNode;
 
     public showHint(hintConfig: HintConfiguration) {
@@ -46,5 +47,17 @@ export class LongTitleHintComponent {
         this.lkm = true;
         this.hideHint();
         return false;
+    }
+
+    windowEventHandler(e: MouseEvent) {
+        this._moveCounter--;
+        if (this._moveCounter < 0) {
+            this.hideHint();
+            this._moveCounter = 0;
+        }
+    }
+
+    componentEventHandler(e: MouseEvent) {
+        this._moveCounter++;
     }
 }

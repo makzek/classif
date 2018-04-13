@@ -66,9 +66,17 @@ export class NodeActionsComponent implements OnDestroy {
         evt.stopPropagation();
     }
 
-    doAction(action: E_RECORD_ACTIONS, params?: any) {
-        // console.log('action', E_RECORD_ACTIONS[action], params);
-        this.action.emit({ action: action, params: params });
+    doAction(e: MouseEvent, item: IActionButton, params?: any) {
+        // console.log('action', item.type, params);
+        if (item.enabled) {
+            this.action.emit({ action: item.type, params: params });
+        } else {
+            e.stopPropagation();
+        }
+    }
+
+    menuMng(e: MouseEvent, enabled: boolean, menu: any) {
+        enabled ? menu.hide() : e.stopPropagation();
     }
 
     private _initButtons() {

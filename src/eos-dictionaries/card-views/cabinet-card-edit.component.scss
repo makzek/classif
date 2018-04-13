@@ -2,9 +2,19 @@ $access-first-col-width: 251px;
 .dropdown-menu.owners-menu {
     z-index: 1060;
 }
+.owners-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    .menuitem {
+        white-space: nowrap;
+        word-wrap: none;
+        padding: 0 $grid-gutter-width / 2;
+    }
+
+}
 .cabinet-card-edit,
 eos-cabinet-card-edit {
-    .action-btn,
+        .action-btn,
     .scroll-btn {
         height: $item-height;
         width: $item-width;

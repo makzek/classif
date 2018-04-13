@@ -15,10 +15,9 @@
 
     .tree-wrapper {
         height: calc(100vh - 96px);
-        overflow-x: hidden;
+        overflow-x: auto;
         overflow-y: auto;
-        border-right-width: 1px;
-        border-right-style: solid;
+        border-right: 1px solid $border-color-main-theme;
 
         &.has-spinner {
             display: flex;
@@ -270,7 +269,7 @@
     .eos-dictionary {
         .tree-wrapper, .opened-wrapper {
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-            width: $dictionary-block-width;;
+            width: $dictionary-block-width;
         }
         &.info {
             .selected-wrapper {

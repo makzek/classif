@@ -281,7 +281,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
     },
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
-        'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title'], // title is in shortQuickViewFields
+        'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title', 'organization'], // title is in shortQuickViewFields
     shortQuickViewFields: ['firstName', 'fathersName', 'lastName', 'title'],
     editFields: ['CARD_FLAG', 'CARD_NAME', 'CODE', 'DUTY', 'IS_NODE', 'NOTE', 'SURNAME', 'indexPerson', 'POST_H', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB',
         'START_DATE', 'END_DATE', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'photo',

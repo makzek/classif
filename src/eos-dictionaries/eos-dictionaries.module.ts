@@ -34,6 +34,7 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { DocgroupCardComponent } from './card-views/docgroup-card.component';
+import { DocgroupTemplateConfigComponent } from './docgroup-template-config/docgroup-template-config.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
@@ -46,7 +47,6 @@ import { SandwichComponent } from './sandwich/sandwich.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
-import { TreeNodeComponent } from './tree/tree-node.component';
 import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dictionary-quick-search.component';
 
 /* services */
@@ -67,6 +67,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         DictionariesQuickSearchComponent,
         DictionarySearchComponent,
         DocgroupCardComponent,
+        DocgroupTemplateConfigComponent,
         NodeActionsComponent,
         NodeInfoComponent,
         NodeListComponent,
@@ -76,7 +77,6 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         SandwichComponent,
         SimpleCardEditComponent,
         TreeComponent,
-        TreeNodeComponent,
         NodeInfoSwitcherComponent,
         DepartmentNodeInfoComponent,
         CabinetNodeInfoComponent,
@@ -87,6 +87,7 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
     entryComponents: [
         ColumnSettingsComponent,
         CreateNodeComponent,
+        DocgroupTemplateConfigComponent,
     ],
     imports: [
         BrowserModule,

@@ -417,12 +417,8 @@ export class EosDictionary {
             EosUtils.setValueByPath(nodeData, 'rec.END_DATE', parent.getParentData('END_DATE', 'rec'));
         } else if (this.descriptor.id === 'cabinet' && parent) {
             // fill cabinet related records with initial data
-            const departmentDue = parent.data.rec['DUE'];
-            EosUtils.setValueByPath(nodeData, 'rec.DUE', departmentDue);
+            EosUtils.setValueByPath(nodeData, 'rec.DUE', parent.data.rec['DUE']);
             EosUtils.setValueByPath(nodeData, 'department', parent.data.rec);
-            // EosUtils.setValueByPath(nodeData, 'cabinetAccess', []);
-            // EosUtils.setValueByPath(nodeData, 'users', []);
-            // EosUtils.setValueByPath(nodeData, 'rec.FOLDER_List', CABINET_FOLDERS.map((fConst) => ({ FOLDER_KIND: fConst.key })));
         }
 
         return nodeData;
@@ -541,10 +537,6 @@ export class EosDictionary {
                 critery[selectedNode._descriptor.keyField.foreignKey] = selectedNode.originalId + '%';
                 critery['LAYER'] = layer + ':Null';
             }
-        }
-
-        if (!params.deleted) {
-            critery['DELETED'] = '0';
         }
     }
 
