@@ -820,7 +820,7 @@ export class EosDictService {
 
 
                 if (1 * data.rec.POST_H === 1) {
-                    return dictionary.getBoss(data)
+                    return dictionary.getBoss(data, this.treeNode)
                         .then((boss) => {
                             if (boss && boss.id !== data.rec.DUE) {
                                 const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);

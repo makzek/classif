@@ -7,6 +7,7 @@ import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.component';
 import { EosDictionaryNode } from 'eos-dictionaries/core/eos-dictionary-node';
 import { EosDepartmentsService } from '../services/eos-department-service';
+import { SUCCESS_SAVE } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-create-node',
@@ -87,6 +88,7 @@ export class CreateNodeComponent {
                 url: this._breadcrumbsSrv.currentLink.url + '/' + node.id + '/edit',
                 title: node.title,
             });
+            this._msgSrv.addNewMessage(SUCCESS_SAVE);
         }
         this.upadating = false;
         this.onHide.emit(true);
