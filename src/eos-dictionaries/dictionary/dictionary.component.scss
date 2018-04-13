@@ -17,7 +17,7 @@
         height: calc(100vh - 96px);
         overflow-x: auto;
         overflow-y: auto;
-        border-right: 1px solid transparent;
+        border-right: 1px solid $border-color-main-theme;
 
         &.has-spinner {
             display: flex;
