@@ -538,10 +538,6 @@ export class EosDictionary {
                 critery['LAYER'] = layer + ':Null';
             }
         }
-
-        if (!params.deleted) {
-            critery['DELETED'] = '0';
-        }
     }
 
     private _doUserOrder(nodes: EosDictionaryNode[], parentId: string): EosDictionaryNode[] {

@@ -25,9 +25,6 @@
                             role="menuitem"
                             class="menuitem">
                             <a class="dropdown-item m-font"
-                                tooltip="{{elem.hint}}"
-                                placement="bottom"
-                                containerClass="tooltip-info"
                                 (click)="doAction($event, item, elem.params)"><span class="title m-font">{{elem.title}}</span></a>
                         </li>
                     </ul>
@@ -116,9 +113,6 @@
                                     *ngFor="let type of addMenu"
                                     role="menuitem">
                                     <a class="dropdown-item m-font have-padding"
-                                        tooltip="{{item.hint}}"
-                                        placement="bottom"
-                                        containerClass="tooltip-info"
                                         (click)="doAction($event, item, type.params)"><span class="title m-font">{{type.title}}</span></a>
                                 </li>
                             </ul>

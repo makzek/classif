@@ -30,7 +30,7 @@
         </div>
     </div>
     <p class="xl-font paragraph-title">Владельцы кабинета</p>
-    <div class="usual-border border-top row"
+    <div class="usual-border border-top row secondary-block"
         *ngIf="editMode">
         <div class="btn-group"
             dropdown
@@ -96,7 +96,7 @@
     </div>
     <div class="folder-access-wrapper form-group">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
-        <div class="folder-access-header s-font row">
+        <div class="folder-access-header s-font row secondary-block">
             <span class="checkbox-inline">
                 <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
                     <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
