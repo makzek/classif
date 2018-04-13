@@ -7,6 +7,7 @@ import { ADDR_CATEGORY_DICT } from './dictionaries/addr-category.consts';
 import { CABINET_DICT } from './dictionaries/cabinet.consts';
 import { CONTACT_DICT } from './dictionaries/contact.consts';
 import { DELIVERY_DICT } from './dictionaries/delivery.consts';
+import { DOCGROUP_DICT } from './dictionaries/docgroup.consts';
 import { ORG_TYPE_DICT } from './dictionaries/org-type.consts';
 import { ORGANIZ_DICT } from './dictionaries/organiz.consts';
 import { RESOLUTION_CATEGORY_DICT } from './dictionaries/resolution-category.consts';
@@ -33,6 +34,7 @@ export const DICTIONARIES = [
     CABINET_DICT,
     CONTACT_DICT,
     DELIVERY_DICT,
+    DOCGROUP_DICT,
     ORG_TYPE_DICT,
     ORGANIZ_DICT,
     RESOLUTION_CATEGORY_DICT,

@@ -1,0 +1,133 @@
+<div class="text-right"
+    *ngIf="editMode">
+    <a class="btn btn-primary"
+        (click)="editTemplate()">Шаблон</a>
+    <a class="btn btn-primary"
+        (click)="editTemplate(true)"
+        [ngClass]="{disabled: !isPrjFlag}">Шаблон проекта</a>
+</div>
+<div class="form-group row-wrapper space-between">
+    <eos-dynamic-input [input]="inputs['rec.DOCGROUP_INDEX']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+    <eos-dynamic-input class="docnumber-flag"
+        [input]="inputs['rec.DOCNUMBER_FLAG']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="form-group">
+    <eos-dynamic-input [input]="inputs['rec.CODE']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="form-group">
+    <eos-dynamic-input [input]="inputs['rec.CLASSIF_NAME']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="form-group">
+    <eos-dynamic-input [input]="inputs['rec.FULLNAME']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="clearfix">
+    <div class="form-group pull-left">
+        <eos-dynamic-input [input]="inputs['rec.TEST_UNIQ_FLAG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group pull-right">
+        <eos-dynamic-input [input]="inputs['rec.IS_COPYCOUNT']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+</div>
+<div class="form-group">
+    <eos-dynamic-input [input]="inputs['rec.SHABLON']"
+        [form]="form"
+        readonly="true"></eos-dynamic-input>
+</div>
+<div class="form-group"
+    [hidden]="!this.inputs['rec.PRJ_SHABLON'].required">
+    <eos-dynamic-input [input]="inputs['rec.PRJ_SHABLON']"
+        [form]="form"
+        readonly="true"></eos-dynamic-input>
+</div>
+<div class="form-group">
+    <eos-dynamic-input [input]="inputs['rec.NOTE']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="clearfix">
+    <div class="form-group pull-right">
+        <eos-dynamic-input [input]="inputs['rec.E_DOCUMENT']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+</div>
+<div class="form-group row-wrapper">
+    <eos-dynamic-input [input]="inputs['rec.RC_TYPE']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+    <div>
+        <p><label>Требуется:</label></p>
+        <eos-dynamic-input class="checkbox-inline"
+            [input]="inputs['rec.EDS_FLAG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+        <eos-dynamic-input class="checkbox-inline"
+            [input]="inputs['rec.ENCRYPT_FLAG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <eos-dynamic-input class="checkbox-inline"
+        [input]="inputs['rec.UNKNOWN_1']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+    <eos-dynamic-input [input]="inputs['rec.ACCESS_MODE_FIXED']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+</div>
+<div class="clearfix">
+    <div class="form-group pull-left">
+        <eos-dynamic-input [input]="inputs['rec.PRJ_NUM_FLAG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group pull-right">
+        <eos-dynamic-input [input]="inputs['rec.INITIATIVE_RESOLUTION']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+</div>
+<ng-container *ngIf="data?.rec['IS_NODE']">
+    <div class="form-group">
+        <eos-dynamic-input [input]="inputs['rec.PRJ_DEL_AFTER_REG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group">
+        <eos-dynamic-input [input]="inputs['rec.PRJ_AUTO_REG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group">
+        <eos-dynamic-input [input]="inputs['rec.PRJ_TEST_UNIQ_FLAG']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+    </div>
+    <div class="form-group">
+        <label>Применять ЭП</label>
+        <div class="row-wrapper">
+            <eos-dynamic-input [input]="inputs['rec.PRJ_APPLY2_EDS']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.PRJ_APPLY_EDS']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.PRJ_APPLY_EXEC_EDS']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+</ng-container>
