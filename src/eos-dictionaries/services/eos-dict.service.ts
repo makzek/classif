@@ -381,7 +381,7 @@ export class EosDictService {
                 if (aNode) {
                     this._openNode(aNode);
                 }
-                return dictionary.getFullNodeInfo(nodeId)
+                return this.getFullNode(dictionary.id, nodeId)
                     .then((node) => {
                         this._openNode(node);
                         this.updateViewParameters({ updatingInfo: false });
@@ -571,8 +571,15 @@ export class EosDictService {
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        return this.openDictionary(dictionaryId)
-            .then(() => this.currentDictionary.getFullNodeInfo(nodeId))
+        let pDictionary: Promise<EosDictionary>;
+        const existDict = this._dictionaries.find((dict) => dict.id === dictionaryId);
+        if (existDict) {
+            pDictionary = Promise.resolve(existDict);
+        } else {
+            pDictionary = this.openDictionary(dictionaryId);
+        }
+        return pDictionary
+            .then((dictionary) => dictionary.getFullNodeInfo(nodeId))
             .then((node) => node)
             .catch((err) => this._errHandler(err));
     }
