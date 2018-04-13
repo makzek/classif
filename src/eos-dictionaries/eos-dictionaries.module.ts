@@ -51,9 +51,10 @@ import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dict
 
 /* services */
 import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
+import { EosDataConvertService } from './services/eos-data-convert.service';
+import { EosDepartmentsService } from './services/eos-department-service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
-import { EosDataConvertService } from './services/eos-data-convert.service';
 
 @NgModule({
     declarations: [
@@ -115,9 +116,10 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
     ],
     providers: [
         DictionaryDescriptorService,
+        EosDataConvertService,
+        EosDepartmentsService,
         EosDictService,
         EosSandwichService,
-        EosDataConvertService,
     ],
 })
 export class EosDictionariesModule { }

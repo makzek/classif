@@ -13,8 +13,6 @@ import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDeskService } from '../../app/services/eos-desk.service';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { ConfirmWindowService } from '../../eos-common/confirm-window/confirm-window.service';
-import { INFO_PERSONE_DONT_HAVE_CABINET } from '../consts/messages.consts';
-import { CONFIRM_CHANGE_BOSS } from '../consts/confirm.consts';
 
 import { RECENT_URL } from '../../app/consts/common.consts';
 
@@ -29,6 +27,7 @@ import { CONFIRM_SAVE_ON_LEAVE } from '../consts/confirm.consts';
 import { LS_EDIT_CARD } from '../consts/common';
 
 import { CardEditComponent } from 'eos-dictionaries/card-views/card-edit.component';
+import { EosDepartmentsService } from '../services/eos-department-service';
 // import { UUID } from 'angular2-uuid';
 
 export enum EDIT_CARD_MODES {
@@ -112,6 +111,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         private _msgSrv: EosMessageService,
         private _route: ActivatedRoute,
         private _router: Router,
+        private departmentsSrv: EosDepartmentsService,
     ) {
         this.selfLink = this._router.url;
         this._route.params.subscribe((params) => {
@@ -204,6 +204,13 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         }
     }
 
+    save(): void {
+        this.disableSave = true;
+        const _data = this.cardEditRef.getNewData();
+        this._save(_data)
+            .then((node: EosDictionaryNode) => this._afterSaving(node));
+    }
+
     disManager(mod: boolean, tooltip: any): boolean {
         if (mod) {
             if (this.isFirst || !this.node.parent) {
@@ -265,8 +272,8 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             // console.log('recived description', this.nodeData);
 
             if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
-                this.dutysList = this._storageSrv.getItem('dutysList') || [];
-                this.fullNamesList = this._storageSrv.getItem('fullNamesList') || [];
+                this.dutysList = this.departmentsSrv.dutys;
+                this.fullNamesList = this.departmentsSrv.fullnames;
             }
         } else {
             this.nodeData = {
@@ -368,57 +375,8 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         }
     }
 
-    save(): void {
-        this.disableSave = true;
-        const _data = this.cardEditRef.getNewData();
-        if (this.dictionaryId === 'departments' && this.node.data && this.node.data.rec && this.node.data.rec.IS_NODE) {
-            /* tslint:disable */
-            if (_data.rec.DUTY && !~this.dutysList.findIndex((_item) => _item === _data.rec.DUTY)) {
-                this.dutysList.push(_data.rec.DUTY);
-            }
-
-            if (_data.rec.FULLNAME && !~this.fullNamesList.findIndex((_item) => _item === _data.rec.FULLNAME)) {
-                this.fullNamesList.push(_data.rec.FULLNAME)
-            }
-            /* tslint:enable */
-            this._storageSrv.setItem('dutysList', this.dutysList, true);
-            this._storageSrv.setItem('fullNamesList', this.fullNamesList, true);
-
-            if (!_data.cabiet) {
-                this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
-            }
-        }
-        this._save(_data)
-            .then((node: EosDictionaryNode) => this._afterSaving(node));
-    }
-
     private _save(data: any): Promise<any> {
-        // todo: remove duplication from service
-        const boss = this._dictSrv.getBoss(this.node.neighbors, this.node);
-        let preSave = Promise.resolve(null);
-        if (data.rec['POST_H'] === '1' && boss) {
-            const changeBoss = Object.assign({}, CONFIRM_CHANGE_BOSS);
-            const CLASSIF_NAME = data.rec['SURNAME'] + ' - ' + data.rec['DUTY'];
-            changeBoss.body = changeBoss.body.replace('{{persone}}', boss.data.rec['CLASSIF_NAME']);
-            changeBoss.body = changeBoss.body.replace('{{newPersone}}', CLASSIF_NAME);
-
-            preSave = this._confirmSrv.confirm(changeBoss)
-                .then((confirm: boolean) => {
-                    if (confirm) {
-                        boss.data.rec['POST_H'] = 0;
-                        return this._dictSrv.updateNode(boss, boss.data)
-                            .then(() => {
-                                data.rec['POST_H'] = 1;
-                                return null;
-                            });
-                    } else {
-                        data.rec['POST_H'] = 0;
-                        return null;
-                    }
-                });
-        }
-        return preSave
-            .then(() => this._dictSrv.updateNode(this.node, data))
+        return this._dictSrv.updateNode(this.node, data)
             .then((node) => this._afterUpdating(node))
             .catch((err) => this._errHandler(err));
     }

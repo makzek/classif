@@ -118,6 +118,23 @@ export class EosDictionary {
         }
     }
 
+    getBoss(nodeData: any): Promise<EosDictionaryNode> {
+        const node = this.getNode(nodeData.rec.PARENT_DUE);
+        if (node) {
+            const boss = node.children.find((chld) => !chld.isNode && chld.data.rec.POST_H === 1);
+            return Promise.resolve(boss);
+        } else {
+            return this.descriptor.getBoss(nodeData.rec.PARENT_DUE)
+                .then((boss) => {
+                    if (boss) {
+                        return new EosDictionaryNode(this, boss);
+                    } else {
+                        return null;
+                    }
+                });
+        }
+    }
+
     init(): Promise<EosDictionaryNode> {
         this._nodes.clear();
         return this.descriptor.getRoot()

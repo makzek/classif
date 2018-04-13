@@ -125,6 +125,10 @@ export abstract class AbstractDictionaryDescriptor {
         this.metadata = metadata[this.apiInstance];
     }
 
+    getBoss(departmentDUE: string): Promise<any> {
+        return Promise.resolve(null);
+    }
+
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
             query = ALL_ROWS;
