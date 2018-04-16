@@ -10,8 +10,7 @@
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info"
                 container="body"
-                placement="bottom">
-                <input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span></label>
+                placement="bottom"><input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span></label>
         </div>
         <div class="node-info"
             (click)="selectNode($event)"

@@ -48,16 +48,15 @@ export class NodeListItemComponent implements OnInit, OnChanges {
 
     selectNode(evt: Event): void {
         evt.stopPropagation();
-        if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNode(this.node.id);
-            this.mark.emit(true);            this.node.autoMarked = true;
-
-        }
+        this.openNode();
     }
 
     markNode(marked: boolean) {
         this.node.marked = marked;
         this.mark.emit(this.node.marked);
+        if (!this._dictSrv.listNode) {
+            this.openNode();
+        }
     }
 
     viewNode(evt: MouseEvent, view = false) {
@@ -101,5 +100,12 @@ export class NodeListItemComponent implements OnInit, OnChanges {
             });
         }
         body[0].removeChild(span);
+    }
+
+    private openNode() {
+        if (!this.node.isDeleted && this.node.id !== '') {
+            this._dictSrv.openNode(this.node.id);
+            this.mark.emit(true);
+        }
     }
 }

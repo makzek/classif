@@ -62,6 +62,10 @@ export class EosDictService {
         return this._dictionary$.asObservable();
     }
 
+    get listNode(): EosDictionaryNode {
+        return this._listNode;
+    }
+
     get listDictionary$(): Observable<EosDictionary> {
         return this._listDictionary$.asObservable();
     }
@@ -153,10 +157,6 @@ export class EosDictService {
 
     get dictMode(): number {
         return this._dictMode;
-    }
-
-    get haveCabinet(): boolean {
-        return true;
     }
 
     get currentDictionary(): EosDictionary {
