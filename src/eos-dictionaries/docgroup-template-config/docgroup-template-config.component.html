@@ -1,7 +1,7 @@
-<div class="modal-header">
-    <h4 class="xl-font primary-text pull-left">Настройка шаблона регистрационного номера <span *ngIf="forProject">проекта </span>документа</h4>
+<div class="modal-header secondary-block">
+    <div class="xl-font primary-text pull-left">Настройка шаблона регистрационного номера <span *ngIf="forProject">проекта </span>документа</div>
     <span class="pull-right">
-        <button type="button" class="btn btn-primary have-margin fixed-width" (click)="hideModal()">Отменить</button>
+        <button type="button" class="btn btn-primary have-margin fixed-width upper" (click)="hideModal()">Отменить</button>
         <button type="button" class="btn btn-primary-full upper fixed-width" (click)="save()" [disabled]="!isTemplateValid()">Сохранить</button>
     </span>
 </div>
