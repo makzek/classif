@@ -18,7 +18,7 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 
 import {
     WARN_SEARCH_NOTFOUND, WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
-    WARN_NO_ORGANIZATION, INFO_PERSONE_DONT_HAVE_CABINET
+    WARN_NO_ORGANIZATION,
 } from '../consts/messages.consts';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
@@ -839,19 +839,12 @@ export class EosDictService {
                                     .then((confirm: boolean) => {
                                         if (confirm) {
                                             boss.data.rec['POST_H'] = 0;
-                                            if (!data.cabinet) {
-                                                this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
-                                            }
                                             return dictionary.updateNodeData(boss, boss.data);
                                         } else {
                                             data.rec['POST_H'] = 0;
                                             return null;
                                         }
                                     });
-                            } else {
-                                if (!data.cabinet) {
-                                    this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
-                                }
                             }
                         });
                 }

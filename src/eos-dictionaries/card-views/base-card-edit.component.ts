@@ -2,7 +2,7 @@ import { /* Output, */ Input, /* EventEmitter, */ Injector } from '@angular/core
 import { FormGroup } from '@angular/forms';
 
 import { EosDictService } from '../services/eos-dict.service';
-// import { EosUtils } from 'eos-common/core/utils';
+import { Subscription } from 'rxjs/Subscription';
 
 export class BaseCardEditComponent {
     @Input() form: FormGroup;
@@ -22,6 +22,8 @@ export class BaseCardEditComponent {
     nodeId: string;
 
     protected dictSrv: EosDictService;
+    protected formChanges$: Subscription;
+
 
     /* private _dates: any = {}; */
     constructor(injector: Injector) {
@@ -53,6 +55,12 @@ export class BaseCardEditComponent {
         const control = this.form.controls[path];
         if (control) {
             control.setValue(value);
+        }
+    }
+
+    protected unsubscribe() {
+        if (this.formChanges$) {
+            this.formChanges$.unsubscribe();
         }
     }
 }

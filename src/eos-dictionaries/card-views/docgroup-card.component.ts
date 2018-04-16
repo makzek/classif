@@ -1,6 +1,5 @@
 import { Component, Injector, OnChanges, OnDestroy } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
-import { Subscription } from 'rxjs/Subscription';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DocgroupTemplateConfigComponent } from '../docgroup-template-config/docgroup-template-config.component';
 
@@ -17,7 +16,6 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
         return this.getValue('rec.PRJ_NUM_FLAG');
     }
 
-    private formChanges$: Subscription;
     private modalSrv: BsModalService;
     private templateModal: BsModalRef;
 
@@ -95,12 +93,6 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
                     }
                 }
             }
-        }
-    }
-
-    private unsubscribe() {
-        if (this.formChanges$) {
-            this.formChanges$.unsubscribe();
         }
     }
 }

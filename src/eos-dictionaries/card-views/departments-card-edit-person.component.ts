@@ -4,7 +4,7 @@ import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerfa
 import { IImage } from '../interfaces/image.interface';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
-import { UPLOAD_IMG_FALLED } from '../consts/messages.consts';
+import { UPLOAD_IMG_FALLED, INFO_PERSONE_DONT_HAVE_CABINET } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-departments-card-edit-person',
@@ -16,6 +16,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
     photo = DEFAULT_PHOTO;
 
     private currentNodeId: string;
+    private bossWarning: boolean;
 
     constructor(
         injector: Injector,
@@ -33,6 +34,21 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             this.photo = this.data.photo.url;
         } else {
             this.photo = DEFAULT_PHOTO;
+        }
+        if (this.form) {
+            this.unsubscribe();
+            this.formChanges$ = this.form.valueChanges.subscribe((formChanges) => {
+                if (this.data.rec.POST_H * 1 !== 1 && !this.data.rec.cabinet) {
+                    if (formChanges['rec.POST_H'] * 1 === 1) {
+                        if (!this.bossWarning) {
+                            this.bossWarning = true;
+                            this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
+                        }
+                    } else {
+                        this.bossWarning = false;
+                    }
+                }
+            });
         }
     }
 
