@@ -3,17 +3,18 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView } from 'eos-dictionaries/interfaces';
+import { IFieldView, ColumnSettings } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-column-settings',
     templateUrl: 'column-settings.component.html',
 })
 export class ColumnSettingsComponent implements OnDestroy, OnInit {
+    @Input() customTitles: IFieldView[] = [];
     @Input() fixedFields: IFieldView[] = [];
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
-    @Output() onChoose: EventEmitter<IFieldView[]> = new EventEmitter<IFieldView[]>();
+    @Output() onChoose: EventEmitter<ColumnSettings> = new EventEmitter<ColumnSettings>();
     public haveCustomTitle = false;
 
     selectedDictItem: IFieldView;
@@ -85,18 +86,16 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     ngOnInit() {
         setTimeout(() => {
             if (this.dictionaryFields) {
-                this.currentFields.forEach((_curr) => {
-                    if (_curr.customTitle) {
-                        this.haveCustomTitle = true;
-                    }
-                    this.dictionaryFields = this.dictionaryFields.filter((_f: IFieldView) => _f.key !== _curr.key);
-
+                this.currentFields.forEach((_field) => {
+                    this.dictionaryFields = this.dictionaryFields.filter((_f: IFieldView) => _f.key !== _field.key);
                 });
             }
             if (this.currentFields) {
                 this.dictionaryFields.forEach(_field => {
-                    if (_field.customTitle) {
+                    const fieldWithCustom = this.customTitles.find(item => item.key === _field.key);
+                    if (fieldWithCustom) {
                         this.haveCustomTitle = true;
+                        _field.customTitle = fieldWithCustom.customTitle;
                     }
                 });
             }
@@ -114,7 +113,10 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @description emit custom fields and hide modal
      */
     save() {
-        this.onChoose.emit(this.currentFields);
+        this.onChoose.emit({
+            currentFields: this.currentFields,
+            dictionaryFIelds: this.dictionaryFields
+        });
         this.hideModal();
     }
 
