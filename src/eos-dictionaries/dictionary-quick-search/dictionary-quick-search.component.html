@@ -2,17 +2,13 @@
     <div class="item"
         *ngIf="isTree">
         <div class="radio-inline quick">
-            <label>
-        <input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode">
-        <span></span>Во всём справочнике</label>
+            <label><input type="radio" name="quick-space" [value]="0" [(ngModel)]="settings.mode"><span></span>Во всём справочнике</label>
         </div>
     </div>
     <div class="item"
         *ngIf="isTree">
         <div class="radio-inline quick">
-            <label>
-            <input type="radio" name="quick-space" [value]="2" [(ngModel)]="settings.mode">
-            <span></span>В текущей ветке</label>
+            <label><input type="radio" name="quick-space" [value]="2" [(ngModel)]="settings.mode"><span></span>В текущей ветке</label>
         </div>
     </div>
     <div class="item input-item">
@@ -22,8 +18,7 @@
             (keydown)="quickSearch($event)">
         <button class="btn btn-default clear-btn"
             (click)="clearQuickForm()">
-            <span class="eos-icon eos-icon-close-blue"></span>
-        </button>
+            <span class="eos-icon eos-icon-close-blue"></span></button>
     </div>
     <div class="tringle"></div>
     <div class="tringle-fon"></div>

@@ -56,13 +56,10 @@
             <thead class="secondary-block">
                 <tr class="border-top border-bottom usual-border">
                     <th class="td-checkbox secondary-block">
-                        <span class="checkbox-inline"
-                            *ngIf="editMode">
-                                <label class="checkbox" [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}">
-                                    <input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()">
-                                    <span></span>
-                        </label>
-                        </span>
+                        <ng-container *ngIf="editMode">
+                            <label class="checkbox checkbox-inline"
+                                [ngClass]="{'group-checkbox': anyUnmarkedOwners && anyMarkedOwners}"><input type="checkbox" name="owners" [(ngModel)]="allMarkedOwners"  (change)="toggleAllOwnersMarks()"><span></span></label>
+                        </ng-container>
                     </th>
                     <th class="text selected-text l-font secondary-block"
                         (click)="order('SURNAME')">
@@ -82,10 +79,10 @@
                     <tr *ngIf="owner.data['ISN_CABINET'] === data.rec['ISN_CABINET']"
                         [ngClass]="{deleted: owner.data['DELETED']}">
                         <td class="td-checkbox">
-                            <span class="checkbox-inline"
-                                *ngIf="editMode">
-                                            <label class="checkbox"><input type="checkbox" name="owner" [(ngModel)]="owner.marked"><span></span></label>
-                            </span>
+                            <label class="checkbox checkbox-inline"
+                                *ngIf="editMode"><input type="checkbox"
+                                    name="owner"
+                                    [(ngModel)]="owner.marked"><span></span></label>
                         </td>
                         <td>{{owner.data['SURNAME']}}</td>
                         <td>{{owner.data['DUTY']}}</td>
@@ -97,18 +94,14 @@
     <div class="folder-access-wrapper form-group">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
         <div class="folder-access-header s-font row secondary-block">
-            <span class="checkbox-inline">
-                <label [hidden]="!editMode" [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess}">
-                    <input type="checkbox" name="access" [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()">
-                    <span></span>
-            </label>
-
-            <span *ngIf="!editMode && anyUnmarkedAccess"
-                class="fake-checkbox eos-icon eos-icon-minus-grey small"></span>
-            <span *ngIf="!editMode && !anyUnmarkedAccess"
-                class="fake-checkbox eos-icon eos-icon-checkbox-grey small"></span>
-            </span>
-            <span class="primary-text header-label">Полный доступ</span>
+            <div class="checkbox-inline">
+                <label [hidden]="!editMode"
+                    class="checkbox"
+                    [ngClass]="{'group-checkbox': anyUnmarkedAccess && anyMarkedAccess,
+                        disabled: !editMode,
+                        'minus-checkbox': !editMode && anyUnmarkedAccess}"><input type="checkbox" name="access"
+                        [(ngModel)]="allMarkedAccess" (change)="toggleAllAccessMarks()" [disabled]="!editMode"><span></span><span class="primary-text header-label">Полный доступ</span></label>
+            </div>
             <span class="upper unimportant-text pull-right">Отметьте папки, поступление документов в которые должно быть открыто</span>
         </div>
         <div class="folder-access-body row">

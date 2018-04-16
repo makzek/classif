@@ -2,6 +2,7 @@ $access-first-col-width: 251px;
 .dropdown-menu.owners-menu {
     z-index: 1060;
 }
+
 .owners-menu {
     max-height: 300px;
     overflow-y: auto;
@@ -10,11 +11,11 @@ $access-first-col-width: 251px;
         word-wrap: none;
         padding: 0 $grid-gutter-width / 2;
     }
-
 }
+
 .cabinet-card-edit,
 eos-cabinet-card-edit {
-        .action-btn,
+    .action-btn,
     .scroll-btn {
         height: $item-height;
         width: $item-width;
@@ -24,7 +25,7 @@ eos-cabinet-card-edit {
     }
     .folder-access-wrapper {
         .folder-access-header {
-            padding: 11px 20px 11px 0;
+            padding: 10px 20px 10px 0;
             line-height: 24px;
             border-top: 1px solid $border-color-main-theme;
             border-bottom: 1px solid $border-color-main-theme;
@@ -37,15 +38,6 @@ eos-cabinet-card-edit {
                 top: 2px;
                 margin-right: 12px;
             }
-            .checkbox-inline {
-                text-align: center;
-                width: 48px;
-                height: 24px;
-                padding-left: 0;
-                span {
-                    margin: 0;
-                }
-            }
             .header-label {
                 font-size: 16px;
             }
@@ -57,9 +49,6 @@ eos-cabinet-card-edit {
                 padding: 0;
                 height: 32px;
                 line-height: 32px;
-                input[type="checkbox"]+span {
-                    margin-right: 12px;
-                }
             }
         }
     }
@@ -123,18 +112,14 @@ eos-cabinet-card-edit {
             &+th {
                 padding-left: 0;
             }
-        }
-    }
-    .checkbox-inline {
-        margin: 0;
-        padding: 0;
-        input[type="checkbox"]+span {
-            margin: 0;
-        }
-        label {
-            padding: 0;
-            margin: 0;
-            height: 24px;
+            .checkbox-inline {
+                line-height: inherit;
+                padding: 0;
+            }
+            input[type="checkbox"]+span {
+                margin: 0;
+
+            }
         }
     }
 }

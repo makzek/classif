@@ -2,11 +2,11 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
     height: $item-height;
     background: $light-grey-1;
     border-left: 1px $border-color-main-theme solid;
     border-right: 1px $border-color-main-theme solid;
+    border-top: 1px solid $border-color-main-theme;
     font-size: 0;
     .item {
         flex-grow: 0;
@@ -29,7 +29,7 @@
             padding: 8px;
             width: 100%;
             border: 1px $active-field-color-main-theme solid;
-            height: $item-height - 3px;
+            height: $item-height - 1px;
             border-radius: 0;
         }
         .clear-btn {
@@ -49,8 +49,7 @@
         flex-grow: 1;
         flex-shrink: 1;
         flex-basis: 200px;
-        position: relative;
-        // width: 100%;
+        position: relative; // width: 100%;
         padding-right: 0;
         vertical-align: top;
     }
