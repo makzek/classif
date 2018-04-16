@@ -38,7 +38,7 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
         if (this.form) {
             this.unsubscribe();
             this.formChanges$ = this.form.valueChanges.subscribe((formChanges) => {
-                if (this.data.rec.POST_H * 1 !== 1 && !this.data.rec.cabinet) {
+                if (this.data.rec.POST_H * 1 !== 1 && !this.data.cabinet) {
                     if (formChanges['rec.POST_H'] * 1 === 1) {
                         if (!this.bossWarning) {
                             this.bossWarning = true;
