@@ -670,7 +670,7 @@ export class EosDictService {
     }
 
     public markItem(val: boolean) {
-        this.updateViewParameters({ haveMarked: val });
+        this.updateViewParameters({ hasMarked: val });
     }
 
     isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
@@ -745,7 +745,7 @@ export class EosDictService {
             searchResults: false,
             updatingInfo: false,
             updatingList: false,
-            haveMarked: false
+            hasMarked: false
         };
     }
 
@@ -962,9 +962,11 @@ export class EosDictService {
         if (this._listNode !== node) {
             if (this._listNode) {
                 this._listNode.isSelected = false;
+                this._listNode.autoMarked = false;
             }
             if (node) {
                 node.isSelected = true;
+                node.autoMarked = true;
             }
             this._listNode = node;
             this._listNode$.next(node);
