@@ -886,7 +886,7 @@ export class EosDictService {
             } else {
                 return dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(dictionary, data, false);
+                        this._updateDictNodes(dictionary, data, true);
                         return dictionary.getNode(nodeId);
                     })
                     .then((node) => {

@@ -38,7 +38,7 @@ export class EosDataConvertService {
                                         required: descr[_key].required,
                                         pattern: descr[_key].pattern,
                                         isUnic: descr[_key].isUnic,
-                                        unicInDict: descr[_key].inDict,
+                                        unicInDict: descr[_key].unicInDict,
                                         forNode: descr[_key].forNode,
                                         value: data[_dict][descr[_key].foreignKey]
                                             || descr[_key].default,
