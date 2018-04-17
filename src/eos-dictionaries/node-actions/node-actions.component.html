@@ -81,7 +81,7 @@
                         containerClass="tooltip-info"
                         *ngIf="item.type !== ADD_ACTION"
                         (click)="doAction($event, item); menuMng($event, item.enabled, dropdown)">
-                        <div class="drop-ico">
+                        <div class="menu-icon">
                             <span [ngClass]="item.enabled ? item.iconClass : item.disabledIconClass"></span>
                         </div>
                         <div class="title"
@@ -98,7 +98,7 @@
                         containerClass="tooltip-info"
                         *ngIf="item.type === ADD_ACTION"
                         (click)="isTree ? stopCloseMenu($event) : doAction($event, item)">
-                        <div class="drop-ico">
+                        <div class="menu-icon">
                             <span [ngClass]="item.enabled ? item.iconClass : item.disabledIconClass"></span>
                         </div>
                         <div class="title">
@@ -112,7 +112,7 @@
                                 <li class="menuitem"
                                     *ngFor="let type of addMenu"
                                     role="menuitem">
-                                    <a class="dropdown-item m-font have-padding"
+                                    <a class="dropdown-item m-font has-padding"
                                         (click)="doAction($event, item, type.params)"><span class="title m-font">{{type.title}}</span></a>
                                 </li>
                             </ul>

@@ -355,13 +355,13 @@
     .menuitem {
         line-height: $item-height;
         .input-group {
-            height: $item-height;
-            padding-left: 12px;
+            height: inherit;
+            padding-left: 0;
             border-bottom: 1px $border-color-main-theme solid;
             .form-control {
                 background: $border-color-main-theme;
-                height: 32px;
-                margin-top: 8px;
+                height: inherit;
+                margin-top: 0;
                 border-radius: 0;
                 padding: 8px;
             }
@@ -371,30 +371,30 @@
                 }
             }
         }
-        .dropdown-item {
-            font-size: 0;
-            padding: 0;
-            text-decoration: none;
-            line-height: 48px;
-            height: $item-height;
-            span {
-                line-height: $item-height;
-            }
+    }
+    .dropdown-item {
+        font-size: 0;
+        padding: 0;
+        text-decoration: none;
+        line-height: 48px;
+        height: $item-height;
+        span {
+            line-height: $item-height;
         }
-        .ico-wrapper {
-            display: flex;
+    }
+    .ico-wrapper {
+        display: flex;
+    }
+    .menu-icon {
+        display: inline-block;
+        width: $item-width;
+        text-align: center;
+        .eos-icon {
+            vertical-align: middle;
         }
-        .drop-ico {
-            display: inline-block;
-            width: $item-width;
-            text-align: center;
-            .eos-icon {
-                vertical-align: middle;
-            }
-        }
-        .have-padding {
-            padding: 0 20px;
-        }
+    }
+    .has-padding {
+        padding: 0 20px;
     }
     .menuitem+.menuitem {
         border-top: solid 1px $border-color-main-theme;
