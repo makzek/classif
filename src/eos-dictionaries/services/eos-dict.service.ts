@@ -409,7 +409,7 @@ export class EosDictService {
         return this.getDictionaryById(node.dictionaryId)
             .then((dictionary) => {
                 let resNode: EosDictionaryNode = null;
-                return this.preSave(data)
+                return this.preSave(dictionary, data)
                     .then(() => dictionary.updateNodeData(node, data))
                     .then((results) => {
                         const keyFld = dictionary.descriptor.record.keyField.foreignKey;
@@ -439,7 +439,7 @@ export class EosDictService {
 
         // Проверка существования записи для регионов.
         if (this.treeNode) {
-            return this.preSave(data)
+            return this.preSave(dictionary, data)
                 .then(() => dictionary.descriptor.addRecord(data, this.treeNode.data))
                 .then((results) => {
                     // console.log('created node', newNodeId);
@@ -825,9 +825,7 @@ export class EosDictService {
         return _p;
     }
 
-    private preSave(data: any): Promise<any> {
-        const dictionary = this.currentDictionary;
-
+    private preSave(dictionary: EosDictionary, data: any): Promise<any> {
         if (data && data.rec) {
             if (dictionary.id === 'departments' && data.rec.IS_NODE) {
                 this.departmentsSrv.addDuty(data.rec.DUTY);
