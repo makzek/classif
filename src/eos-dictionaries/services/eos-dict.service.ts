@@ -402,29 +402,31 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
-        const dictionary = this.currentDictionary;
-        let resNode: EosDictionaryNode = null;
-        return this.preSave(data)
-            .then(() => dictionary.updateNodeData(node, data))
-            .then((results) => {
-                const keyFld = dictionary.descriptor.record.keyField.foreignKey;
+        return this.getDictionaryById(node.dictionaryId)
+            .then((dictionary) => {
+                let resNode: EosDictionaryNode = null;
+                return this.preSave(data)
+                    .then(() => dictionary.updateNodeData(node, data))
+                    .then((results) => {
+                        const keyFld = dictionary.descriptor.record.keyField.foreignKey;
 
-                results.forEach((res) => {
-                    res.record = dictionary.getNode(res.record[keyFld] + '');
-                    if (!res.success) {
-                        this._msgSrv.addNewMessage({
-                            type: 'warning',
-                            title: res.record.title,
-                            msg: res.error.message
+                        results.forEach((res) => {
+                            res.record = dictionary.getNode(res.record[keyFld] + '');
+                            if (!res.success) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: res.record.title,
+                                    msg: res.error.message
+                                });
+                            } else {
+                                resNode = dictionary.getNode(node.id);
+                            }
                         });
-                    } else {
-                        resNode = dictionary.getNode(node.id);
-                    }
-                });
 
+                    })
+                    .then(() => this._reloadList())
+                    .then(() => resNode);
             })
-            .then(() => this._reloadList())
-            .then(() => resNode)
             .catch((err) => this._errHandler(err));
     }
 
@@ -571,14 +573,7 @@ export class EosDictService {
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        let pDictionary: Promise<EosDictionary>;
-        const existDict = this._dictionaries.find((dict) => dict.id === dictionaryId);
-        if (existDict) {
-            pDictionary = Promise.resolve(existDict);
-        } else {
-            pDictionary = this.openDictionary(dictionaryId);
-        }
-        return pDictionary
+        return this.getDictionaryById(dictionaryId)
             .then((dictionary) => dictionary.getFullNodeInfo(nodeId))
             .then((node) => node)
             .catch((err) => this._errHandler(err));
@@ -703,6 +698,15 @@ export class EosDictService {
         // console.log(`Method inclineFields: ${fields}`);
         return this.currentDictionary.descriptor.onPreparePrintInfo(fields)
             .catch((err) => this._errHandler(err));
+    }
+
+    private getDictionaryById(id: string): Promise<EosDictionary> {
+        const existDict = this._dictionaries.find((dictionary) => dictionary.id === id);
+        if (existDict) {
+            return Promise.resolve(existDict);
+        } else {
+            return this.openDictionary(id);
+        }
     }
 
     private _fixCurrentPage() {
