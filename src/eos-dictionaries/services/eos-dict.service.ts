@@ -259,8 +259,12 @@ export class EosDictService {
     }
 
     getCabinetOwners(departmentDue: string): Promise<any[]> {
-        const descriptor: CabinetDictionaryDescriptor = <CabinetDictionaryDescriptor>this.currentDictionary.descriptor;
-        return descriptor.getOwners(departmentDue);
+        return this.getDictionaryById('cabinet')
+            .then((dictionary) => {
+                const descriptor: CabinetDictionaryDescriptor = <CabinetDictionaryDescriptor>dictionary.descriptor;
+                return descriptor.getOwners(departmentDue);
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     getFilterValue(filterName: string): any {
