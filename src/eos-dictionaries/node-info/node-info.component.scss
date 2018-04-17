@@ -19,9 +19,10 @@
     }
     .head-wrapper {
         display: flex;
-        width: 300px;
-        max-width: 300px;
+        align-items: center;
+        justify-content: center;
         .current-image {
+            flex: 0 0 100px;
             min-height: 100px;
             min-width: 100px;
             height: 100px;
@@ -36,21 +37,20 @@
             margin: 0 20px 20px 0;
         }
         .info {
-            width: 100%;
-            max-width: 160px;
-            padding: 20px 20px 20px 0;
-            display: flex;
-            align-items: center;
+            color: $black;
+            flex: 0 1 219px;
+            padding: 0 0 20px 0;
+            max-width: calc(100% - 120px);
             span {
+                max-width: 100%;
+                display: inline-block;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-            div {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
+        }
+        .info-wrapper {
+            max-width: 100%;
         }
     }
     .short-info {
@@ -69,6 +69,7 @@
     }
     .field-value {
         /* display: inline-block; */
+        color: $black;
         white-space: pre-wrap;
     }
     .field {
