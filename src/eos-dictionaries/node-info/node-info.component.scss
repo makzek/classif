@@ -39,7 +39,8 @@
         .info {
             color: $black;
             flex: 0 1 219px;
-            padding: 0 0 20px 0;
+            margin: 0 0 20px 0;
+            max-height: 100px;
             max-width: calc(100% - 120px);
             span {
                 max-width: 100%;
@@ -65,12 +66,16 @@
     .field-title {
         text-transform: uppercase;
         font-weight: normal;
-        margin: 0 0 12px;
+        margin: 0 0 8px;
+        line-height: 10px;
     }
     .field-value {
         /* display: inline-block; */
         color: $black;
         white-space: pre-wrap;
+        word-break: break-all;
+        max-width: 100%;
+        padding: 6px 0;
     }
     .field {
         margin: 0;
