@@ -5,7 +5,7 @@
             <div class="head-wrapper">
                 <div class="current-image usual-border"
                     [ngStyle]="{'background-image': photo}"></div>
-                <div class="info">
+                <div class="info l-font">
                     <ng-container *ngIf="nodeDataFull['printInfo'] && nodeDataFull['printInfo']['NAME'] && nodeDataFull['printInfo']['SURNAME'] && nodeDataFull['printInfo']['PATRON'];then fullName else shortName"></ng-container>
                 </div>
             </div>
@@ -61,7 +61,7 @@
 
                 <div class="field">
                     <p class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec['E_MAIL']?.title}}</p>
-                    <p class="field-value m-font">{{nodeDataFull.rec['E_MAIL']}}</p>
+                    <p class="field-value m-font"><a href="mailto:{{nodeDataFull.rec['E_MAIL']}}">{{nodeDataFull.rec['E_MAIL']}}</a></p>
                 </div>
                 <hr>
                 <div class="field">
