@@ -242,11 +242,10 @@ input[type=password]::-ms-clear {
 
 .long-title {
     display: inline-block;
-    max-height: 52px;
     overflow: hidden;
     overflow-wrap: break-word;
     word-break: break-all;
     word-wrap: break-word;
-    white-space: pre-wrap;
+    white-space: normal;
     text-overflow: ellipsis;
 }

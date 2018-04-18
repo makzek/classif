@@ -61,9 +61,11 @@
             grid-row: 1;
             &.edited {
                 padding-left: 20px;
+                padding-right: 10px;
             }
             .edit-title {
                 font-size: 18px;
+                max-height: 52px;
             }
         }
         .buttons-wrapper {

@@ -38,7 +38,6 @@
             margin: 0 $grid-gutter-width / 2 0 0;
         }
         .info {
-            color: $black;
             flex: 0 1 239px;
             max-height: $photo-radius;
             max-width: calc(100% - 100px);
@@ -49,14 +48,12 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-        }
-        .info-wrapper {
-            max-width: 100%;
-        }
+            }
     }
     .short-info {
-        display: inline-block;
-        padding-bottom: 20px;
+        display: block;
+        margin-bottom: 20px;
+        height: 52px;
     }
     .full-info {
         border-top-width: 1px;
@@ -80,6 +77,7 @@
     .field {
         margin: 0;
         margin-top: 20px;
+        color: $black;
     }
     .no-data {
         display: flex;
@@ -104,9 +102,6 @@
         li,
         .li {
             padding: 0;
-        }
-        li+li {
-            margin-top: 8px;
         }
     }
 }

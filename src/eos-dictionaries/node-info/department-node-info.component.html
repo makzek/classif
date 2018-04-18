@@ -78,13 +78,13 @@
         </div>
         <div *ngIf="nodeDataFull && nodeDataFull.rec && !nodeDataFull.rec['IS_NODE']"
             class="content-block">
-            <div>
+            <div class="short-info long-title">
                 <ng-container *ngIf="nodeDataFull.rec['FULLNAME'];then fullName else shortName"></ng-container>
                 <ng-template #fullName>
-                    <span class="short-info l-font">{{nodeDataFull.rec['FULLNAME']}}</span>
+                    <span class="l-font">{{nodeDataFull.rec['FULLNAME']}}</span>
                 </ng-template>
                 <ng-template #shortName>
-                    <span class="short-info l-font">{{nodeDataFull.rec['CLASSIF_NAME']}}</span>
+                    <span class="l-font">{{nodeDataFull.rec['CLASSIF_NAME']}}</span>
                 </ng-template>
             </div>
             <div class="full-info usual-border">
