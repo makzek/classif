@@ -19,3 +19,18 @@
 .test-form{
     padding: 50px 0;
 }
+
+.fa-icon-list {
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: solid 1px #666;
+}
+.fa-icon-item {
+    margin: 4px;
+    padding: 3px 7px;
+    background-color: white;
+    color: #111;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

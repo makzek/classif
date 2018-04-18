@@ -12,14 +12,16 @@
     <p *ngIf="readonly"
         class="form-control-static m-font"
         [ngClass]="{'placeholder': !hasValue()}">{{currentValue()}}</p>
-    <select *ngIf="!readonly"
-        class="form-control m-font eos-select"
-        [ngClass]="{readonly: readonly, 'placeholder': !hasValue()}"
-        [id]="input.key"
-        [formControlName]="input.key"
-        (focus)="onFocus()"
-        (blur)="onBlur()">
+    <div [ngClass]="{'required': isRequired}">
+        <select *ngIf="!readonly"
+            class="form-control m-font eos-select"
+            [ngClass]="{readonly: readonly, 'placeholder': !hasValue()}"
+            [id]="input.key"
+            [formControlName]="input.key"
+            (focus)="onFocus()"
+            (blur)="onBlur()">
         <option disabled="disabled" [selected]="!hasValue()" class="hidden">{{input.label}}</option>
         <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
     </select>
+    </div>
 </div>

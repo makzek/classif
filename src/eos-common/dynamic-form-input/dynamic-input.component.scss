@@ -7,6 +7,24 @@
     }
 }
 
+.required {
+    position: relative;
+    &:after {
+        content: " ";
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 6px;
+        bottom: 0;
+        margin: auto;
+        font-size: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 100%;
+        background-color: $invalid-color-main-theme;
+    }
+}
+
 .eos-select {
     -webkit-appearance: none;
     -moz-appearance: none;

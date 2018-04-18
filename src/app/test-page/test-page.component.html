@@ -1,4 +1,10 @@
 <p class="h4 text-center">Component test page</p>
+<div class="row fa-icon-list">
+    <div class="pull-left fa-icon-item"
+        *ngFor="let icon of faIcons"><i class="fa"
+            [ngClass]="icon"></i> {{icon}}
+    </div>
+</div>
 
 <p> Ссылки </p>
 <ul>

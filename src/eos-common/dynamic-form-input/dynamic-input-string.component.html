@@ -7,16 +7,17 @@
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
     <label [hidden]="input.hideLabel"
-        [attr.for]="input.key"
-        [ngClass]="{'required': input.required}">{{input.label}}</label>
-    <input class="form-control m-font"
-        [formControlName]="input.key"
-        [id]="input.key"
-        type="text"
-        [readonly]="readonly"
-        [ngClass]="{'readonly': readonly}"
-        [placeholder]="input.label"
-        (focus)="onFocus()"
-        (blur)="onBlur()"
-        autocomplete="off">
+        [attr.for]="input.key">{{input.label}}</label>
+    <div [ngClass]="{'required': isRequired}">
+        <input class="form-control m-font"
+            [formControlName]="input.key"
+            [id]="input.key"
+            type="text"
+            [readonly]="readonly"
+            [ngClass]="{'readonly': readonly}"
+            [placeholder]="input.label"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            autocomplete="off">
+    </div>
 </div>

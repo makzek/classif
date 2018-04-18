@@ -23,11 +23,20 @@ export class DynamicInputBase {
     }
 
     get isValid() {
-        return this.form.controls[this.input.key].valid;
+        return this.control.valid;
     }
 
     get isDirty() {
-        return this.form.controls[this.input.key].dirty;
+        return this.control.dirty;
+    }
+
+    get isRequired(): boolean {
+        let required = false;
+        const control = this.control;
+        if (control && control.errors) {
+            required = !!this.control.errors['required'];
+        }
+        return required;
     }
 
     onFocus() {
