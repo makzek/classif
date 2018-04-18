@@ -9,6 +9,8 @@ import { TextInput } from '../core/inputs/text-input';
 import { CheckboxInput } from '../core/inputs/checkbox-input';
 import { DateInput } from '../core/inputs/date-input';
 import { DropdownInput } from '../core/inputs/select-input';
+import { ButtonsInput } from '../core/inputs/buttons-input';
+import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 
 @Injectable()
 export class InputControlService {
@@ -17,18 +19,21 @@ export class InputControlService {
     generateInputs(inputs: IBaseInput[]): InputBase<any>[] {
         const set: InputBase<any>[] = [];
         inputs.forEach((input) => {
-            switch (input.controlType) {
-                case 'text':
+            switch (E_FIELD_TYPE[input.controlType]) {
+                case E_FIELD_TYPE.text:
                     set.push(new TextInput(input));
                     break;
-                case 'checkbox':
+                case E_FIELD_TYPE.boolean:
                     set.push(new CheckboxInput(input));
                     break;
-                case 'date':
+                case E_FIELD_TYPE.date:
                     set.push(new DateInput(input));
                     break;
-                case 'select':
+                case E_FIELD_TYPE.select:
                     set.push(new DropdownInput(<ISelectInput>input));
+                    break;
+                case E_FIELD_TYPE.buttons:
+                    set.push(new ButtonsInput(<ISelectInput>input));
                     break;
                 default:
                     set.push(new StringInput(input));
@@ -91,7 +96,7 @@ export class InputControlService {
         if (input.disabled) {
             group[input.key] = new FormControl({ value: value, disabled: true }, validators);
         } else {
-            if (input.controlType === 'date') {
+            if (input.controlType === E_FIELD_TYPE.date) {
                 validators.push(this.dateValueValidator());
             }
 

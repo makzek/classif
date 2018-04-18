@@ -48,7 +48,7 @@
         readonly="true"></eos-dynamic-input>
 </div>
 <div class="form-group"
-    [hidden]="!this.inputs['rec.PRJ_SHABLON'].required">
+    [hidden]="!getValue('rec.PRJ_NUM_FLAG')">
     <eos-dynamic-input [input]="inputs['rec.PRJ_SHABLON']"
         [form]="form"
         readonly="true"></eos-dynamic-input>

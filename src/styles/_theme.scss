@@ -23,55 +23,52 @@
 */
 
 // THEME BUT USE IN MODAL/TOOLTIPS/ECT
-.btn-primary {
-    border-color: $button-color-main-theme !important;
-    color: $button-color-main-theme !important;
-    background: white !important;
-    /* padding: 0 4px; */
-    &:hover {
-        color: $button-color-hover-main-theme !important;
-        border-color: $button-color-hover-main-theme !important;
-    }
-}
-
-.btn-primary-full {
-    border-color: $button-color-main-theme !important;
-    background-color: $button-color-main-theme !important;
-    color: white !important;
-    /* padding: 0 4px; */
-    &:hover {
-        border-color: $button-color-hover-main-theme !important;
-        background: $button-color-hover-main-theme !important;
-    }
-}
-
-.btn-primary-light {
-    background-color: transparent;
-    color: $button-color-main-theme;
-    border-color: transparent;
-    /* padding: 1px 6px; */
-    &:hover {
-        color: $button-color-hover-main-theme;
-    }
-    &.search-btn {
-        &.opened {
-            color: $primary-color-main-theme;
-            background: $button-color-main-theme;
-            outline: none;
+.btn {
+    &.btn-primary {
+        border-color: $button-color-main-theme;
+        color: $button-color-main-theme;
+        background: white;
+        /* padding: 0 4px; */
+        &:hover {
+            color: $button-color-hover-main-theme;
+            border-color: $button-color-hover-main-theme;
         }
     }
-}
-
-.btn-default {
-    background-color: $primary-color-main-theme;
-    border-color: $border-color-main-theme;
-    color: $primary-font-color-main-theme;
-    &:hover:not(:disabled) {
-        background-color: $border-color-main-theme;
+    &.btn-primary-full {
+        border-color: $button-color-main-theme;
+        background-color: $button-color-main-theme;
+        color: white;
+        /* padding: 0 4px; */
+        &:hover {
+            color: white;
+            border-color: $button-color-hover-main-theme;
+            background: $button-color-hover-main-theme;
+        }
     }
-}
-
-.btn {
+    &.btn-primary-light {
+        background-color: transparent;
+        color: $button-color-main-theme;
+        border-color: transparent;
+        /* padding: 1px 6px; */
+        &:hover {
+            color: $button-color-hover-main-theme;
+        }
+        &.search-btn {
+            &.opened {
+                color: $primary-color-main-theme;
+                background: $button-color-main-theme;
+                outline: none;
+            }
+        }
+    }
+    &.btn-default {
+        background-color: $primary-color-main-theme;
+        border-color: $border-color-main-theme;
+        color: $primary-font-color-main-theme;
+        &:hover:not(:disabled) {
+            background-color: $border-color-main-theme;
+        }
+    }
     &.active {
         color: $primary-color-main-theme;
         background-color: $button-color-main-theme;

@@ -1,66 +1,160 @@
-.form-control {
-    &.placeholder {
-        color: $primary-font-color-main-theme;
-    }
-    textarea {
-        height: 50px;
-    }
-}
-
-.required {
-    position: relative;
-    &:after {
-        content: " ";
-        position: absolute;
-        display: block;
-        top: 0;
-        right: 6px;
-        bottom: 0;
-        margin: auto;
-        font-size: 6px;
-        width: 6px;
-        height: 6px;
-        border-radius: 100%;
-        background-color: $invalid-color-main-theme;
-    }
-}
-
-.eos-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
-    background-repeat: no-repeat;
-    background-position-x: right;
-    background-position-y: center;
-    background-size: 24px;
-    &[disabled],
-    &.readonly {
-        cursor: default;
-        background-image: none;
-        background-color: inherit;
-        box-shadow: none;
-        border: 0 none transparent;
-    }
-    &.placeholder {
-        color: $primary-font-color-main-theme;
-        option {
-            color: black;
-        }
-    }
-}
-
 eos-dynamic-input {
     font-size: 0;
     display: block;
-}
-
-.appearance-none {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
+    .form-group {
+        margin: 0 0 $grid-gutter-width /2;
+        position: relative;
+    }
+    label {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 10px;
+        color: $label-color;
+        &:not(.checkbox),
+        &:not(.radio) {
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        &.checkbox,
+        &.radio {
+            color: $grey;
+            line-height: 20px;
+            font-size: 14px;
+            vertical-align: middle;
+            text-transform: none;
+        }
+    }
+    .form-control,
+    .form-control-static {
+        color: $secondary-font-color-main-theme;
+        border-radius: 0;
+        padding: 6px 8px;
+        background-color: $light-grey-1;
+        border-width: 1px;
+        box-shadow: none;
+        height: 32px;
+        &.placeholder {
+            color: $primary-font-color-main-theme;
+        }
+    }
+    textarea.form-control,
+    textarea.form-control-static {
+        height: 50px;
+    }
+    .form-control-static {
+        padding-left: 0;
+        padding-right: 0;
+        line-height: 32px;
+        background-color: transparent;
+    }
+    .form-control {
+        border-color: $border-color-main-theme;
+        &.light {
+            background-color: $modal-block-background-main-theme
+        }
+        &:-ms-input-placeholder {
+            color: $primary-font-color-main-theme;
+        }
+        &.ng-invalid.ng-dirty:not(:focus) {
+            border-color: $invalid-color-main-theme;
+            border-width: 2px;
+            /* outline: $invalid-color-main-theme solid 1px !important; */
+            /* outline-offset: 0 !important; */
+        }
+        &.ng-valid {
+            border-color: $border-color-main-theme;
+        }
+        &:focus {
+            border-color: $active-field-color-main-theme;
+        }
+        &.readonly,
+        &.readonly:focus {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        &.highlighted:focus {
+            border-color: $button-color-main-theme;
+        }
+    }
+    .required {
+        position: relative;
+        &:after {
+            content: " ";
+            position: absolute;
+            display: block;
+            top: 0;
+            right: 6px;
+            bottom: 0;
+            margin: auto;
+            font-size: 6px;
+            width: 6px;
+            height: 6px;
+            border-radius: 100%;
+            background-color: $invalid-color-main-theme;
+        }
+    }
+    .eos-select {
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("../assets/icons/Arrow-V-Blue-Bottom.png");
+            background-repeat: no-repeat;
+            background-position-x: right;
+            background-position-y: center;
+            background-size: 24px;
+            &[disabled],
+            &.readonly {
+                cursor: default;
+                background-image: none;
+                background-color: inherit;
+                box-shadow: none;
+                border: 0 none transparent;
+            }
+            &.placeholder {
+                color: $primary-font-color-main-theme;
+                option {
+                    color: black;
+                }
+            }
+        }
+    }
+    .eos-select.required:after {
+        right: 26px;
+    }
+    select::-ms-expand {
+        display: none;
+    }
+    .mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .btn-wrapper {
+            text-align: center;
+            .btn {
+                text-transform: uppercase;
+            }
+        }
+    }
+    .readonly {
+        padding: 0;
+    }
+    .eos-switch {
+        display: flex;
+        .switch-item {
+            flex: 1 1 1px;
+        }
+        .btn {
+            line-height: 30px;
+            vertical-align: middle;
+            padding: 0 5px;
+        }
+    }
 }

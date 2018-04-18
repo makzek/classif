@@ -26,7 +26,7 @@ const TEST_INPUTS = <IBaseInput[]>[{
 }, {
     controlType: 'checkbox',
     key: 'data.checkbox',
-    label: 'olololo',
+    label: 'check me',
     value: true
 }, {
     controlType: 'select',
@@ -49,6 +49,21 @@ const TEST_INPUTS = <IBaseInput[]>[{
     key: 'data.date',
     value: new Date(),
     label: 'date'
+}, {
+    controlType: 'buttons',
+    key: 'data.switch',
+    label: 'buttons',
+    options: [{
+        value: 1,
+        title: 'one',
+    }, {
+        value: 2,
+        title: 'two'
+    }, {
+        value: 3,
+        title: 'three'
+    }],
+    value: 1
 }];
 
 @Component({

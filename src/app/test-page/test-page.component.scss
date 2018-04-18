@@ -26,11 +26,14 @@
     overflow-y: auto;
     border: solid 1px #666;
 }
+.test-item,
 .fa-icon-item {
-    margin: 4px;
     padding: 3px 7px;
     background-color: white;
     color: #111;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+.fa-icon-item {
+    margin: 4px;
 }

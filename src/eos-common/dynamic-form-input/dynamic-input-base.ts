@@ -23,11 +23,11 @@ export class DynamicInputBase {
     }
 
     get isValid() {
-        return this.control.valid;
+        return this.control && this.control.valid;
     }
 
     get isDirty() {
-        return this.control.dirty;
+        return this.control && this.control.dirty;
     }
 
     get isRequired(): boolean {
@@ -44,14 +44,15 @@ export class DynamicInputBase {
     }
 
     onBlur() {
-        this.focused = false;
         this.updateMessage();
+        this.focused = false;
     }
 
     private updateMessage() {
         let msg = '';
         const control = this.control;
         if (this.control && this.control.errors) {
+            this.tooltipCfg.class = 'tooltip-error';
             msg = Object.keys(control.errors)
                 .map((key) => {
                     switch (key) {
@@ -70,7 +71,7 @@ export class DynamicInputBase {
                 })
                 .join(' ');
         } else {
-            this.tooltipCfg.class = 'tooltip-info';
+            // this.tooltipCfg.class = 'tooltip-info';
         }
         this.tooltipMessage = msg;
     }

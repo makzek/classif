@@ -233,9 +233,11 @@ export abstract class AbstractDictionaryDescriptor {
                 .findIndex((fld) => this.isDiffer(data[fld], original[fld])) > -1;
         } else {
             const hasDiff = (original || data) && original !== data;
+            /*
             if (hasDiff) {
                 console.warn('difference in ', data, original);
             }
+            */
             return hasDiff;
         }
     }

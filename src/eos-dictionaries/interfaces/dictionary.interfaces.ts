@@ -32,6 +32,7 @@ export enum E_FIELD_TYPE {
     date,
     icon,
     boolean,
+    buttons,
     dictionary,
     select,
     array

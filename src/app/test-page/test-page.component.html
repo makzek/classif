@@ -1,11 +1,4 @@
 <p class="h4 text-center">Component test page</p>
-<div class="row fa-icon-list">
-    <div class="pull-left fa-icon-item"
-        *ngFor="let icon of faIcons"><i class="fa"
-            [ngClass]="icon"></i> {{icon}}
-    </div>
-</div>
-
 <p> Ссылки </p>
 <ul>
     <li><a routerLink="/delivery">Delivery REST test page</a></li>
@@ -19,20 +12,6 @@
     <eos-photo-uploader class="photo-uploader"
         (endUploading)="newImage($event)"></eos-photo-uploader>
 </div>
-<!--
-<div class="row">
-    <div class="col-sm-2">
-        <eos-datepicker [form]="form"
-            [placeholder]="'Дата окончания действия'"
-            [value]="date"
-            [isReadonly]="false"
-            (dateChange)="change($event)"></eos-datepicker>
-    </div>
-    <div class="col-sm-6">
-        <pre>{{this.date | json}}</pre>
-    </div>
-</div>
--->
 <div>
     выбор из справочника<button (click)="chooseCL($event)">выбор из справочника</button>
     <input type='text'
@@ -40,29 +19,35 @@
         id='__ClassifIds' />
 
 </div>
+<div class="row fa-icon-list">
+    <div class="pull-left fa-icon-item"
+        *ngFor="let icon of faIcons"><i class="fa"
+            [ngClass]="icon"></i> {{icon}}
+    </div>
+</div>
+
 <div class="test-form">
-    <div class="card-edit secondary-block">
+    <!-- div class="card-edit secondary-block">
         <article class="edit-content">
             <!--form [formGroup]="form"
             class="form"-->
+    <div class="row">
+        <div class="col-sm-9">
             <div class="row">
-                <div class="col-sm-8">
-
-                    <div class="row">
-                        <div class="col-sm-4"
-                            *ngFor="let ctrl of inputs">
-                            <eos-dynamic-input [input]="ctrl"
-                                [form]="form"
-                                [readonly]="false">
-                            </eos-dynamic-input>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <pre>{{data | json}}</pre>
+                <div class="col-sm-4 test-item"
+                    *ngFor="let ctrl of inputs">
+                    <eos-dynamic-input [input]="ctrl"
+                        [form]="form"
+                        [readonly]="false">
+                    </eos-dynamic-input>
                 </div>
             </div>
-            <!-- /form -->
-        </article>
+        </div>
+        <div class="col-sm-3">
+            <pre>{{data | json}}</pre>
+        </div>
     </div>
+    <!-- /form -->
+    <!-- /article>
+    </div-->
 </div>
