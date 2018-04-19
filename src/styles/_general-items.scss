@@ -145,6 +145,9 @@ input[type=text]::-ms-clear {
     display: none;
 }
 
+label {
+    font-weight: normal;
+}
 .form-control {
     background: $modal-block-background-main-theme;
     border-radius: 0px;

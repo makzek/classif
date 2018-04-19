@@ -36,10 +36,11 @@
             <div class="row">
                 <div class="col-sm-4 test-item"
                     *ngFor="let ctrl of inputs">
-                    <eos-dynamic-input [input]="ctrl"
-                        [form]="form"
-                        [readonly]="false">
-                    </eos-dynamic-input>
+                    <div class="form-group">
+                        <eos-dynamic-input [input]="ctrl"
+                            [form]="form"
+                            [readonly]="false"></eos-dynamic-input>
+                    </div>
                 </div>
             </div>
         </div>

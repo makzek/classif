@@ -19,9 +19,6 @@
             width: 50%;
         }
         .form-group {
-            width: 50%;
-            margin-bottom: 0;
-            margin-top: 0;
             &:not(:first-child) {
                 margin-top: 0;
             }

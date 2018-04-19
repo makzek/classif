@@ -18,6 +18,24 @@
             margin-top: 50px;
         }
     }
+    label {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 10px;
+        color: $label-color;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        &.checkbox,
+        &.radio {
+            color: $grey;
+            line-height: 32px;
+            font-size: 14px;
+            vertical-align: middle;
+            text-transform: none;
+            margin-bottom: 0;
+        }
+    }
 }
 
 .row-wrapper {
@@ -33,6 +51,7 @@
         margin-left: $grid-gutter-width /2;
     }
 }
-.space-between{
+
+.space-between {
     justify-content: space-between;
 }

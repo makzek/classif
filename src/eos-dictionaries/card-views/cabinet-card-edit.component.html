@@ -12,22 +12,16 @@
 <div [hidden]="activeTab !== 0"
     class="eos-cabinet-tab">
     <div class="clearfix">
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
-                [input]="inputs['rec.CABINET_NAME']"
-                [form]="form"
-                [readonly]="!editMode"></eos-dynamic-input>
-        </div>
-        <div class="form-group">
-            <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
-                [input]="inputs['rec.FULLNAME']"
-                [form]="form"
-                [readonly]="!editMode"></eos-dynamic-input>
-        </div>
-        <div class="form-group">
-            <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
-            <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
-        </div>
+        <eos-dynamic-input *ngIf="inputs['rec.CABINET_NAME']"
+            [input]="inputs['rec.CABINET_NAME']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+        <eos-dynamic-input *ngIf="inputs['rec.FULLNAME']"
+            [input]="inputs['rec.FULLNAME']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+        <label [ngClass]="{'unimportant-text': !editMode }">Подразделение</label>
+        <p class="form-control-static m-font">{{data.department['CLASSIF_NAME']}}</p>
     </div>
     <p class="xl-font paragraph-title">Владельцы кабинета</p>
     <div class="usual-border border-top row secondary-block"
@@ -36,7 +30,7 @@
             dropdown
             container="body">
             <button dropdownToggle
-                class="action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
+                class="btn action-btn btn-primary-light"><span class="eos-icon eos-icon-plus-blue small" aria-hidden="true"></span></button>
             <ul *dropdownMenu
                 class="dropdown-menu owners-menu"
                 role="menu">
@@ -91,7 +85,7 @@
             </tbody>
         </table>
     </div>
-    <div class="folder-access-wrapper form-group">
+    <div class="folder-access-wrapper">
         <div class="xl-font paragraph-title">Настройка папок кабинета</div>
         <div class="folder-access-header s-font row secondary-block">
             <div class="checkbox-inline">
@@ -109,7 +103,7 @@
                 *ngFor="let colIdx of [0,1,2]">
                 <div class="folder-access-item"
                     *ngFor="let rIdx of [0,1,2]">
-                    <div class="form-group minus-checkbox">
+                    <div class="minus-checkbox">
                         <eos-dynamic-input *ngIf="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
                             [input]="inputs['rec.FOLDER_List['+ (colIdx*3 + rIdx) +'].USER_COUNT']"
                             [form]="form"

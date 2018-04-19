@@ -1,30 +1,11 @@
 eos-dynamic-input {
     font-size: 0;
     display: block;
-    .form-group {
-        margin: 0 0 $grid-gutter-width /2;
-        position: relative;
-    }
-    label {
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 10px;
-        color: $label-color;
-        &:not(.checkbox),
-        &:not(.radio) {
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-        &.checkbox,
-        &.radio {
-            color: $grey;
-            line-height: 20px;
-            font-size: 14px;
-            vertical-align: middle;
-            text-transform: none;
-        }
-    }
+}
+
+.form-group {
+    margin: 0 0 $grid-gutter-width / 2;
+    position: relative;
     .form-control,
     .form-control-static {
         color: $secondary-font-color-main-theme;
