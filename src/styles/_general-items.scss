@@ -110,10 +110,6 @@
         &:checked[disabled]+span {
             background-image: url("../assets/icons/Minus-Grey.svg");
         }
-        /*& + span {
-            margin-right: 6px;
-            margin-bottom: -3px;
-        }*/
     }
 }
 

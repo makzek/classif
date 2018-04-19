@@ -52,10 +52,11 @@
         [readonly]="!editMode"></eos-dynamic-input>
 </div>
 <div class="row-wrapper">
-    <eos-dynamic-input [input]="inputs['rec.RC_TYPE']"
+    <eos-dynamic-input class="rc-type"
+        [input]="inputs['rec.RC_TYPE']"
         [form]="form"
         [readonly]="!editMode"></eos-dynamic-input>
-    <div>
+    <div class="dg-require">
         <div><label>Требуется:</label></div>
         <eos-dynamic-input class="checkbox-inline"
             [input]="inputs['rec.EDS_FLAG']"
@@ -70,7 +71,8 @@
         [input]="inputs['rec.UNKNOWN_1']"
         [form]="form"
         [readonly]="!editMode"></eos-dynamic-input>
-    <eos-dynamic-input [input]="inputs['rec.ACCESS_MODE_FIXED']"
+    <eos-dynamic-input class="checkbox-inline"
+        [input]="inputs['rec.ACCESS_MODE_FIXED']"
         [form]="form"
         [readonly]="!editMode"></eos-dynamic-input>
 </div>

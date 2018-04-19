@@ -22,7 +22,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'IS_FINAL',
         type: 'boolean',
-        title: 'Признак финальной визы',
+        title: 'Является финальной',
     }, {
         key: 'STATUS',
         type: 'select',
@@ -32,5 +32,5 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     }]),
     quickViewFields: ['IS_FINAL', 'STATUS', 'NOTE'],  // CLASSIF_NAME is in shortQuickViewFields
     allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],
-    editFields: ['CLASSIF_NAME', 'NOTE', 'IS_FINAL', 'STATUS']
+    editFields: ['CLASSIF_NAME', 'NOTE', 'IS_FINAL', 'STATUS', 'DELETED']
 });

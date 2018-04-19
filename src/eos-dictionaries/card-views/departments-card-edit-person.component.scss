@@ -11,12 +11,9 @@
     .row-wrapper {
         display: flex;
         width: 100%;
-        .person-name {
-            width: 50%;
-            margin-right: 40px;
-        }
+        .person-name,
         .person-second-name {
-            width: 50%;
+            flex: 1 1 50%;
         }
         .form-group {
             &:not(:first-child) {
@@ -27,9 +24,6 @@
             }
             input {
                 width: 100%;
-            }
-            &:not(:last-child) {
-                margin-right: 40px;
             }
         }
     }
@@ -101,7 +95,6 @@
             grid-row: 2;
         }
     }
-    /***/
     .alternate-button-wrapper {
         margin-top: 20px;
         .alternate-button {
@@ -126,13 +119,6 @@
         }
         .name {
             width: 180px;
-        }
-        eos-dynamic-input {
-            display: block;
-            /* margin-right: 40px; */
-        }
-        eos-dynamic-input+eos-dynamic-input {
-            margin-left: 40px;
         }
     }
 }

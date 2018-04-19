@@ -6,6 +6,12 @@ eos-dynamic-input {
 .form-group {
     margin: 0 0 $grid-gutter-width / 2;
     position: relative;
+    select {
+        width: 100%;
+    }
+    input {
+        width: 100%;
+    }
     .form-control,
     .form-control-static {
         color: $secondary-font-color-main-theme;
@@ -14,7 +20,7 @@ eos-dynamic-input {
         background-color: $light-grey-1;
         border-width: 1px;
         box-shadow: none;
-        height: 32px;
+        min-height: 32px;
         &.placeholder {
             color: $primary-font-color-main-theme;
         }
@@ -26,7 +32,6 @@ eos-dynamic-input {
     .form-control-static {
         padding-left: 0;
         padding-right: 0;
-        line-height: 32px;
         background-color: transparent;
     }
     .form-control {
@@ -85,6 +90,7 @@ eos-dynamic-input {
             background-position-x: right;
             background-position-y: center;
             background-size: 24px;
+            padding-right: 24px;
             &[disabled],
             &.readonly {
                 cursor: default;
@@ -100,12 +106,12 @@ eos-dynamic-input {
                 }
             }
         }
-    }
-    .eos-select.required:after {
-        right: 26px;
-    }
-    select::-ms-expand {
-        display: none;
+        select::-ms-expand {
+            display: none;
+        }
+        &.required:after {
+            right: 26px;
+        }
     }
     .mask {
         position: absolute;
