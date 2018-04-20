@@ -15,28 +15,18 @@
         <div class="node-info"
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
-            <div *ngFor="let field of viewFields; let i = index"
-                #el
-                (mouseover)="showHint(el)"
-                id="{{field.foreignKey}}"
-                class="code"
-                [ngStyle]="{'width.px': length[field.key]}"
-                [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
-                <div class="table-field-ico"
-                    *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
-                    <span class="folder small eos-icon"
-                        (click)="viewNode($event, true)"
-                        [ngClass]="{'eos-icon-folder-blue': !node.isDeleted, 'eos-icon-folder-grey': node.isDeleted}"></span>
-                </div>{{field.value}}
-            </div>
-            <div *ngFor="let field of customFields; let i = index"
-                #el
-                (mouseover)="showHint(el)"
-                id="{{field.foreignKey}}"
-                class="code"
-                [ngStyle]="{'width.px': length[field.key]}">
-                <ng-container *ngIf="customValues">{{customValues[field.key]}}</ng-container>
-            </div>
+            <eos-node-field *ngFor="let field of viewFields"
+                [field]="field"
+                [node]="node"
+                [width]="length[field.key]"
+                (fieldHover)="onFieldHover($event)"
+                (view)="viewNode($event, true)"></eos-node-field>
+            <eos-node-field *ngFor="let field of custom"
+                [field]="field"
+                [node]="node"
+                [width]="length[field.key]"
+                (fieldHover)="onFieldHover($event)"
+                (view)="viewNode($event, true)"></eos-node-field>
         </div>
         <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>

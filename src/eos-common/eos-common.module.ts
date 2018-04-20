@@ -36,6 +36,9 @@ import { EosDateMaskDirective } from './directives/date-mask.directive';
 import { InputCleanerDirective } from './input-cleaner/input-cleaner.directive';
 import { UnicValidatorDirective } from './directives/unic-validator.directive';
 
+/* pipes */
+import { EosDatePipe } from './pipes/eos-date.pipe';
+
 @NgModule({
     declarations: [
         ConfirmWindowComponent,
@@ -46,7 +49,6 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         PhotoUploaderComponent,
         DatepickerComponent,
         UnicValidatorDirective,
-        EosDateMaskDirective,
         DynamicInputComponent,
         DynamicInputButtonsComponent,
         DynamicInputCheckboxComponent,
@@ -54,6 +56,8 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         DynamicInputSelectComponent,
         DynamicInputStringComponent,
         DynamicInputTextComponent,
+        EosDateMaskDirective,
+        EosDatePipe,
     ],
     imports: [
         BrowserModule,
@@ -77,6 +81,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         // TextInputComponent,
         UnicValidatorDirective,
         DynamicInputComponent,
+        EosDatePipe,
         // DataConvertService,
     ],
     entryComponents: [
