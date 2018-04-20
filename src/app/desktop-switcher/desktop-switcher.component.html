@@ -6,7 +6,7 @@
     dropdown
     [autoClose]="!innerClick"
     (click)="setInnerClick()">
-    <span dropdownToggle
+    <div dropdownToggle
         type="button"
         class="dropdown-button dropdown-toggle usual-border">
         <span class="wr">
@@ -14,11 +14,11 @@
                 containerClass="tooltip-info" container="body">
                 {{selectedDesk.name}}
             </span>
-            <span class="btn-icon">
+        <span class="btn-icon">
                 <span class="eos-icon eos-icon-arrow-v-blue-bottom small"></span>
-            </span>
         </span>
-    </span>
+        </span>
+    </div>
 
 
     <ul class="dropdown-menu"
@@ -33,37 +33,36 @@
         </li>
         <li *ngFor="let desk of deskList"
             role="menuitem"
-            class="menuitem"
+            class="menuitem dropdown-item"
+            [ngClass]="{'highlighted': desk.name === selectedDesk.name}"
             (click)="route(desk)">
             <ng-container *ngIf="!desk.edited">
-                <a class="dropdown-item"
-                    [hidden]="desk.edited"
-                    [ngClass]="{'highlighted': desk.name === selectedDesk.name}">
-                    <span tooltip="{{desk.name}}"
+                <div tooltip="{{desk.name}}"
+                    placement="bottom"
+                    containerClass="tooltip-info"
+                    class="item-title m-font">{{desk.name}}
+                </div>
+                <div class="menu-icon">
+                    <span *ngIf="desk.name === selectedDesk.name"
+                        class="eos-icon eos-icon-checkbox-blue small"></span>
+                </div>
+                <div class="item-actions"
+                    *ngIf="desk.id !== 'system'">
+                    <div class="action-icon"
+                        (click)="openEditForm($event, desk)"
+                        tooltip="Редактировать"
                         placement="bottom"
-                        containerClass="tooltip-info"
-                        class="item-title m-font">{{desk.name}}</span>
-                        <div class="drop-ico"
-                            *ngIf="desk.id !== 'system'"
-                            (click)="openEditForm($event, desk)"
-                            tooltip="Редактировать"
-                            placement="bottom"
-                            containerClass="tooltip-info">
-                            <span class="eos-icon eos-icon-edit-blue small"></span>
-                        </div>
-                        <div class="drop-ico"
-                            *ngIf="desk.id !== 'system'"
-                            (click)="removeDesk(desk,$event)"
-                            tooltip="Удалить"
-                            placement="bottom"
-                            containerClass="tooltip-info">
-                            <span class="eos-icon eos-icon-close-blue small"></span>
-                        </div>
-                        <div class="drop-ico"
-                            *ngIf="desk.name === selectedDesk.name">
-                            <span class="eos-icon eos-icon-checkbox-blue small"></span>
-                        </div>
-                </a>
+                        containerClass="tooltip-info">
+                        <span class="eos-icon eos-icon-edit-blue x-small"></span>
+                    </div>
+                    <div class="action-icon"
+                        (click)="removeDesk(desk,$event)"
+                        tooltip="Удалить"
+                        placement="bottom"
+                        containerClass="tooltip-info">
+                        <span class="eos-icon eos-icon-close-blue x-small"></span>
+                    </div>
+                </div>
             </ng-container>
             <ng-container *ngIf="desk.edited">
                 <div class="input-group">
@@ -99,13 +98,13 @@
             </ng-container>
         </li>
         <ng-container *ngIf="deskList.length < 6">
-            <li class="menuitem"
+            <li class="menuitem dropdown-item"
                 (click)="openCreateForm()">
-                <a *ngIf="!creating"
-                    class="dropdown-item">
-                    <span class="m-font">Создать рабочий стол</span>
-                </a>
-                <ng-container *ngIf="creating">
+                <ng-container *ngIf="creating;then createTpl else createItemTpl"></ng-container>
+                <ng-template #createItemTpl>
+                    <span class="item-title m-font">Создать рабочий стол</span>
+                </ng-template>
+                <ng-template #createTpl>
                     <div class="input-group">
                         <input type="text"
                             class="form-control light input-wr"
@@ -137,7 +136,7 @@
                             </button>
                         </div>
                     </div>
-                </ng-container>
+                </ng-template>
             </li>
         </ng-container>
     </ul>

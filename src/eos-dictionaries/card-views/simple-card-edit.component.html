@@ -1,7 +1,6 @@
-<div class="form-group"
-    *ngFor="let key of keys(inputs)">
+<ng-container *ngFor="let key of keys(inputs)">
     <eos-dynamic-input [input]="inputs[key]"
         [form]="form"
         [readonly]="!editMode">
     </eos-dynamic-input>
-</div>
+</ng-container>

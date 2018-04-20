@@ -15,6 +15,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { DynamicInputComponent } from './dynamic-form-input/dynamic-input.component';
+import { DynamicInputButtonsComponent } from './dynamic-form-input/dynamic-input-buttons.component';
 import { DynamicInputCheckboxComponent } from './dynamic-form-input/dynamic-input-checkbox.component';
 import { DynamicInputDateComponent } from './dynamic-form-input/dynamic-input-date.component';
 import { DynamicInputSelectComponent } from './dynamic-form-input/dynamic-input-select.component';
@@ -47,6 +48,7 @@ import { UnicValidatorDirective } from './directives/unic-validator.directive';
         UnicValidatorDirective,
         EosDateMaskDirective,
         DynamicInputComponent,
+        DynamicInputButtonsComponent,
         DynamicInputCheckboxComponent,
         DynamicInputDateComponent,
         DynamicInputSelectComponent,

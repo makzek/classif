@@ -11,17 +11,11 @@
     <p *ngIf="readonly"
         class="form-control-static m-font"
         [ngClass]="{'placeholder': !hasValue()}">{{currentValue()}}</p>
-    <div class="eos-select"
-        [ngClass]="{'required': isRequired}"
+    <div class="eos-switch btn-group"
         *ngIf="!readonly">
-        <select class="form-control m-font"
-            [ngClass]="{readonly: readonly, 'placeholder': !hasValue()}"
-            [id]="input.key"
-            [formControlName]="input.key"
-            (focus)="onFocus()"
-            (blur)="onBlur()">
-        <option disabled="disabled" [selected]="!hasValue()" class="hidden">{{input.label}}</option>
-        <option *ngFor="let opt of input.options" [value]="opt.value">{{opt.title}}</option>
-    </select>
+        <a *ngFor="let opt of buttons"
+            class="btn btn-primary switch-item text-uppercase"
+            [ngClass]="{'btn-primary-full':control?.value === opt.value}"
+            (click)="switchTo(opt)">{{opt.title}}</a>
     </div>
 </div>

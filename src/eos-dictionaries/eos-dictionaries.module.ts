@@ -34,6 +34,7 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { DocgroupCardComponent } from './card-views/docgroup-card.component';
+import { VisatypeCardComponent } from './card-views/visatype-card.component';
 import { DocgroupTemplateConfigComponent } from './docgroup-template-config/docgroup-template-config.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
@@ -68,6 +69,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         DictionariesQuickSearchComponent,
         DictionarySearchComponent,
         DocgroupCardComponent,
+        VisatypeCardComponent,
         DocgroupTemplateConfigComponent,
         NodeActionsComponent,
         NodeInfoComponent,

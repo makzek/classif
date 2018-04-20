@@ -9,6 +9,7 @@ import { E_FIELD_TYPE } from '../interfaces';
 import { GENDERS } from '../consts/dictionaries/department.consts';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
+import { ButtonsInput } from 'eos-common/core/inputs/buttons-input';
 
 @Injectable()
 export class EosDataConvertService {
@@ -38,7 +39,7 @@ export class EosDataConvertService {
                                         required: descr[_key].required,
                                         pattern: descr[_key].pattern,
                                         isUnic: descr[_key].isUnic,
-                                        unicInDict: descr[_key].inDict,
+                                        unicInDict: descr[_key].unicInDict,
                                         forNode: descr[_key].forNode,
                                         value: data[_dict][descr[_key].foreignKey]
                                             || descr[_key].default,
@@ -77,6 +78,18 @@ export class EosDataConvertService {
                                         disabled: !editMode,
                                     });
                                     break;
+                                case E_FIELD_TYPE.buttons:
+                                    inputs[_dict + '.' + _key] = new ButtonsInput({
+                                        key: _dict + '.' + descr[_key].foreignKey,
+                                        label: descr[_key].title,
+                                        options: descr[_key].options,
+                                        required: descr[_key].required,
+                                        forNode: descr[_key].forNode,
+                                        value: data[_dict][descr[_key].foreignKey]
+                                            || descr[_key].default,
+                                        disabled: !editMode,
+                                    });
+                                    break;
                                 case E_FIELD_TYPE.date:
                                     inputs[_dict + '.' + _key] = new DateInput({
                                         key: _dict + '.' + descr[_key].foreignKey,
@@ -99,7 +112,7 @@ export class EosDataConvertService {
                         break;
                     case 'printInfo':
                         if (data.rec['IS_NODE'] === 1) { // person
-                            inputs['printInfo.GENDER'] = new DropdownInput({
+                            inputs['printInfo.GENDER'] = new ButtonsInput({
                                 key: 'printInfo.GENDER',
                                 label: 'Пол',
                                 dict: 'printInfo',

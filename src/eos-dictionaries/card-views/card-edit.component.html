@@ -25,28 +25,36 @@
                         [fullNamesList]="fullNamesList"></eos-departments-card-edit-department>
                 </ng-container>
                 <eos-cabinet-card-edit *ngSwitchCase="'cabinet'"
+                    #cardEditEl
                     class="cabinet-card-edit"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"></eos-cabinet-card-edit>
-                <eos-security-card-edit #cardEditEl
+                <eos-security-card-edit *ngSwitchCase="'security'"
+                    #cardEditEl
                     class="security-card-edit"
-                    *ngSwitchCase="'security'"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"></eos-security-card-edit>
-                <eos-docgroup-card #cardEditEl
-                    *ngSwitchCase="'docgroup'"
+                <eos-docgroup-card *ngSwitchCase="'docgroup'"
+                    #cardEditEl
                     class="docgroup-card"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"></eos-docgroup-card>
-                <eos-simple-card-edit #cardEditEl
+                <eos-visatype-card *ngSwitchCase="'visa-type'"
+                    #cardEditEl
+                    class="visatype-card"
+                    [form]="form"
+                    [inputs]="inputs"
+                    [data]="data"
+                    [editMode]="editMode"></eos-visatype-card>
+                <eos-simple-card-edit *ngSwitchDefault
+                    #cardEditEl
                     class="simple-card-edit"
-                    *ngSwitchDefault
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"

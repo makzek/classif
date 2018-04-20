@@ -1,7 +1,8 @@
 import { InputBase } from './input-base';
+import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 
 export class TextInput extends InputBase<string> {
-    controlType = 'text';
+    controlType = E_FIELD_TYPE.text;
     type: string;
     height: number;
 

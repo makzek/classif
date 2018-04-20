@@ -1,4 +1,15 @@
 .docgroup-card {
     display: block;
     padding-top: $grid-gutter-width / 2;
+    .rc-type {
+        flex: 1 0 auto;
+    }
+    .dg-require {
+        .checkbox-inline {
+            padding: 0;
+        }
+    }
+    .checkbox-inline {
+        padding: 0;
+    }
 }

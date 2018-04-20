@@ -17,11 +17,6 @@ export class EosDictionaryNode {
     isActive: boolean;
 
     /**
-     * marked - node checked in list
-     */
-    marked: boolean;
-
-    /**
      * isSelected - true if node selected (highlight it in middle list)
      */
     isSelected: boolean;
@@ -42,6 +37,13 @@ export class EosDictionaryNode {
      * flag for updating indication
      * */
     updating: boolean;
+
+    /**
+     * marked - node checked in list
+     */
+    private _marked: boolean;
+
+    private _autoMarked: boolean;
 
     private _dictionary: EosDictionary;
     private _children?: EosDictionaryNode[];
@@ -112,6 +114,19 @@ export class EosDictionaryNode {
 
     get dictionaryId(): string {
         return this._dictionary.id;
+    }
+
+    get marked(): boolean {
+        return this._marked || this._autoMarked;
+    }
+
+    set marked(marked: boolean) {
+        this._marked = marked;
+        this._autoMarked = marked;
+    }
+
+    set autoMarked(marked: boolean) {
+        this._autoMarked = marked;
     }
 
     constructor(dictionary: EosDictionary, data: any) {

@@ -1,3 +1,5 @@
+import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+
 export class InputBase<T>{
     value: T;
     key: string;
@@ -5,7 +7,7 @@ export class InputBase<T>{
     label: string;
     required: boolean;
     order: number;
-    controlType: string;
+    controlType: E_FIELD_TYPE;
     pattern: RegExp;
     readonly: boolean;
     isUnic: boolean;
@@ -40,7 +42,9 @@ export class InputBase<T>{
         this.label = options.label || '';
         this.required = !!options.required;
         this.order = options.order === undefined ? 1 : options.order;
-        this.controlType = options.controlType || '';
+        if (E_FIELD_TYPE[options.controlType]) {
+            this.controlType = E_FIELD_TYPE[options.controlType] || E_FIELD_TYPE.string;
+        }
         this.pattern = options.pattern || null;
         this.readonly = !!options.readonly;
         this.isUnic = !!options.isUnic;

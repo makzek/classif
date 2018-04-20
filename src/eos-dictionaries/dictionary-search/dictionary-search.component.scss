@@ -172,17 +172,10 @@
     }
     .radio-inline,
     .checkbox-inline {
-        cursor: pointer;
+        line-height: 32px;
         height: 32px;
         padding-left: 0;
         margin-right: 40px;
-        input[type="checkbox"],
-        input[type="radio"] {
-            & + span {
-                margin-bottom: -6px;
-                cursor: pointer;
-            }
-        }
     }
 }
 

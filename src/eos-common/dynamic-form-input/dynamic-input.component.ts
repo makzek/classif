@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { InputBase } from '../core/inputs/input-base';
 import { FormGroup } from '@angular/forms';
+import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 
 @Component({
     selector: 'eos-dynamic-input',
@@ -10,4 +11,6 @@ export class DynamicInputComponent {
     @Input() input: InputBase<any>;
     @Input() form: FormGroup;
     @Input() readonly: boolean;
+
+    types = E_FIELD_TYPE;
 }

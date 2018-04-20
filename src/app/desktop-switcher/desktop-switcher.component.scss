@@ -1,10 +1,9 @@
 .eos-desktop-switcher {
     cursor: pointer;
-    display: inline-block;
+    /* display: inline-block; */
     height: $item-height;
     border-right: 1px solid $border-color-main-theme;
     border-left: 1px solid $border-color-main-theme;
-
     .dropdown-button {
         display: inline-block;
         background-color: transparent;
@@ -27,24 +26,46 @@
                 padding: 0 12px;
             }
         }
-
     }
-
     .dropdown-menu {
-        width: 380px;
+        width: 280px;
         .menuitem {
-            .dropdown-item {
-                padding-left: 20px;
-                .item-title {
-                    width: 210px;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    display: inline-block;
+            position: relative;
+            .item-title {
+                margin-left: 20px;
+                vertical-align: middle;
+                width: 210px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: inline-block;
+            }
+            .input-group {
+                .form-control {
+                    height: $item-height;
+                    margin-top: 0;
+                    border-radius: 0;
+                    padding: 8px;
                 }
-                .drop-ico {
-                    float: right;
+                .input-group-btn {
+                    .btn {
+                        height: $item-height;
+                    }
                 }
+            }
+        }
+        .item-actions {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 48px;
+            .action-icon {
+                display: inline-block;
+            }
+        }
+        .menuitem:hover {
+            .item-actions {
+                display: block;
             }
         }
         .li-spiner {
@@ -72,33 +93,9 @@
             }
         }
     }
-
-    .desktop-wrapper {
-        width: 218px;
-        overflow: hidden;
-        display: inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .actions {
-        text-align: center;
-        vertical-align: top;
-        display: inline-block;
-        width: $item-width;
-        height: $item-height;
-        cursor: pointer;
-        .eos-icon {
-            color: $button-color-main-theme;
-            vertical-align: top;
-            margin-top: $item-height / 4;
-        }
-    }
-
     .create {
         cursor: pointer;
     }
-
     .creating-btns {
         .btn {
             height: 34px;

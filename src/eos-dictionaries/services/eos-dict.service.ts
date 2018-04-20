@@ -18,7 +18,7 @@ import { LS_PAGE_LENGTH, PAGES } from '../node-list-pagination/node-list-paginat
 
 import {
     WARN_SEARCH_NOTFOUND, WARN_NOT_ELEMENTS_FOR_REPRESENTATIVE,
-    WARN_NO_ORGANIZATION, INFO_PERSONE_DONT_HAVE_CABINET
+    WARN_NO_ORGANIZATION,
 } from '../consts/messages.consts';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
 import { EosStorageService } from 'app/services/eos-storage.service';
@@ -60,6 +60,10 @@ export class EosDictService {
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
         return this._dictionary$.asObservable();
+    }
+
+    get listNode(): EosDictionaryNode {
+        return this._listNode;
     }
 
     get listDictionary$(): Observable<EosDictionary> {
@@ -153,10 +157,6 @@ export class EosDictService {
 
     get dictMode(): number {
         return this._dictMode;
-    }
-
-    get haveCabinet(): boolean {
-        return true;
     }
 
     get currentDictionary(): EosDictionary {
@@ -259,8 +259,12 @@ export class EosDictService {
     }
 
     getCabinetOwners(departmentDue: string): Promise<any[]> {
-        const descriptor: CabinetDictionaryDescriptor = <CabinetDictionaryDescriptor>this.currentDictionary.descriptor;
-        return descriptor.getOwners(departmentDue);
+        return this.getDictionaryById('cabinet')
+            .then((dictionary) => {
+                const descriptor: CabinetDictionaryDescriptor = <CabinetDictionaryDescriptor>dictionary.descriptor;
+                return descriptor.getOwners(departmentDue);
+            })
+            .catch((err) => this._errHandler(err));
     }
 
     getFilterValue(filterName: string): any {
@@ -402,29 +406,31 @@ export class EosDictService {
     }
 
     public updateNode(node: EosDictionaryNode, data: any): Promise<any> {
-        const dictionary = this.currentDictionary;
-        let resNode: EosDictionaryNode = null;
-        return this.preSave(data)
-            .then(() => dictionary.updateNodeData(node, data))
-            .then((results) => {
-                const keyFld = dictionary.descriptor.record.keyField.foreignKey;
+        return this.getDictionaryById(node.dictionaryId)
+            .then((dictionary) => {
+                let resNode: EosDictionaryNode = null;
+                return this.preSave(dictionary, data)
+                    .then(() => dictionary.updateNodeData(node, data))
+                    .then((results) => {
+                        const keyFld = dictionary.descriptor.record.keyField.foreignKey;
 
-                results.forEach((res) => {
-                    res.record = dictionary.getNode(res.record[keyFld] + '');
-                    if (!res.success) {
-                        this._msgSrv.addNewMessage({
-                            type: 'warning',
-                            title: res.record.title,
-                            msg: res.error.message
+                        results.forEach((res) => {
+                            res.record = dictionary.getNode(res.record[keyFld] + '');
+                            if (!res.success) {
+                                this._msgSrv.addNewMessage({
+                                    type: 'warning',
+                                    title: res.record.title,
+                                    msg: res.error.message
+                                });
+                            } else {
+                                resNode = dictionary.getNode(node.id);
+                            }
                         });
-                    } else {
-                        resNode = dictionary.getNode(node.id);
-                    }
-                });
 
+                    })
+                    .then(() => this._reloadList())
+                    .then(() => resNode);
             })
-            .then(() => this._reloadList())
-            .then(() => resNode)
             .catch((err) => this._errHandler(err));
     }
 
@@ -433,7 +439,7 @@ export class EosDictService {
 
         // Проверка существования записи для регионов.
         if (this.treeNode) {
-            return this.preSave(data)
+            return this.preSave(dictionary, data)
                 .then(() => dictionary.descriptor.addRecord(data, this.treeNode.data))
                 .then((results) => {
                     // console.log('created node', newNodeId);
@@ -571,14 +577,7 @@ export class EosDictService {
     }
 
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
-        let pDictionary: Promise<EosDictionary>;
-        const existDict = this._dictionaries.find((dict) => dict.id === dictionaryId);
-        if (existDict) {
-            pDictionary = Promise.resolve(existDict);
-        } else {
-            pDictionary = this.openDictionary(dictionaryId);
-        }
-        return pDictionary
+        return this.getDictionaryById(dictionaryId)
             .then((dictionary) => dictionary.getFullNodeInfo(nodeId))
             .then((node) => node)
             .catch((err) => this._errHandler(err));
@@ -670,7 +669,7 @@ export class EosDictService {
     }
 
     public markItem(val: boolean) {
-        this.updateViewParameters({ haveMarked: val });
+        this.updateViewParameters({ hasMarked: val });
     }
 
     isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
@@ -703,6 +702,15 @@ export class EosDictService {
         // console.log(`Method inclineFields: ${fields}`);
         return this.currentDictionary.descriptor.onPreparePrintInfo(fields)
             .catch((err) => this._errHandler(err));
+    }
+
+    private getDictionaryById(id: string): Promise<EosDictionary> {
+        const existDict = this._dictionaries.find((dictionary) => dictionary.id === id);
+        if (existDict) {
+            return Promise.resolve(existDict);
+        } else {
+            return this.openDictionary(id);
+        }
     }
 
     private _fixCurrentPage() {
@@ -745,7 +753,7 @@ export class EosDictService {
             searchResults: false,
             updatingInfo: false,
             updatingList: false,
-            haveMarked: false
+            hasMarked: false
         };
     }
 
@@ -817,9 +825,7 @@ export class EosDictService {
         return _p;
     }
 
-    private preSave(data: any): Promise<any> {
-        const dictionary = this.currentDictionary;
-
+    private preSave(dictionary: EosDictionary, data: any): Promise<any> {
         if (data && data.rec) {
             if (dictionary.id === 'departments' && data.rec.IS_NODE) {
                 this.departmentsSrv.addDuty(data.rec.DUTY);
@@ -839,19 +845,12 @@ export class EosDictService {
                                     .then((confirm: boolean) => {
                                         if (confirm) {
                                             boss.data.rec['POST_H'] = 0;
-                                            if (!data.cabinet) {
-                                                this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
-                                            }
                                             return dictionary.updateNodeData(boss, boss.data);
                                         } else {
                                             data.rec['POST_H'] = 0;
                                             return null;
                                         }
                                     });
-                            } else {
-                                if (!data.cabinet) {
-                                    this._msgSrv.addNewMessage(INFO_PERSONE_DONT_HAVE_CABINET);
-                                }
                             }
                         });
                 }
@@ -893,7 +892,7 @@ export class EosDictService {
             } else {
                 return dictionary.descriptor.getRecord(nodeId)
                     .then((data) => {
-                        this._updateDictNodes(dictionary, data, false);
+                        this._updateDictNodes(dictionary, data, true);
                         return dictionary.getNode(nodeId);
                     })
                     .then((node) => {
@@ -969,9 +968,11 @@ export class EosDictService {
         if (this._listNode !== node) {
             if (this._listNode) {
                 this._listNode.isSelected = false;
+                this._listNode.autoMarked = false;
             }
             if (node) {
                 node.isSelected = true;
+                node.autoMarked = true;
             }
             this._listNode = node;
             this._listNode$.next(node);

@@ -16,7 +16,7 @@ export class DynamicInputSelectComponent extends DynamicInputBase {
 
     currentValue(): string {
         let value = this.input.label;
-        const ctrl = this.form.controls[this.input.key];
+        const ctrl = this.control;
         if (ctrl) {
             const optValue = this.input.options.find((option) => option.value === ctrl.value);
             if (optValue) {
@@ -27,7 +27,7 @@ export class DynamicInputSelectComponent extends DynamicInputBase {
     }
 
     hasValue(): boolean {
-        const ctrl = this.form.controls[this.input.key];
+        const ctrl = this.control;
         return (ctrl && ctrl.value !== null && ctrl.value !== undefined);
     }
 }

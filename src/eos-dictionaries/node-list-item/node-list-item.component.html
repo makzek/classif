@@ -5,35 +5,39 @@
     [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
     <div [ngClass]="{'deleted': node.isDeleted}"
         class="node-list-item">
-        <span *ngIf="params?.markItems"
+        <div *ngIf="params?.markItems"
             class="checkbox-inline">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
-                containerClass="tooltip-info" container="body" placement="bottom">
-                <input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span>
-        </label>
-        </span>
-        <span class="node-info"
+                containerClass="tooltip-info"
+                container="body"
+                placement="bottom"><input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span></label>
+        </div>
+        <div class="node-info"
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
-            <span *ngFor="let field of viewFields; let i = index" #el (mouseover)="showHint(el)" id="{{field.foreignKey}}" class="code"
+            <div *ngFor="let field of viewFields; let i = index"
+                #el
+                (mouseover)="showHint(el)"
+                id="{{field.foreignKey}}"
+                class="code"
                 [ngStyle]="{'width.px': length[field.key]}"
                 [ngClass]="{'have-no-pading': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}">
-                <div class="table-field-ico" *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
+                <div class="table-field-ico"
+                    *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
                     <span class="folder small eos-icon"
-                    (click)="viewNode($event, true)"
-                    [ngClass]="{'eos-icon-folder-blue': !node.isDeleted, 'eos-icon-folder-grey': node.isDeleted}"></span>
+                        (click)="viewNode($event, true)"
+                        [ngClass]="{'eos-icon-folder-blue': !node.isDeleted, 'eos-icon-folder-grey': node.isDeleted}"></span>
+                </div>{{field.value}}
+            </div>
+            <div *ngFor="let field of customFields; let i = index"
+                #el
+                (mouseover)="showHint(el)"
+                id="{{field.foreignKey}}"
+                class="code"
+                [ngStyle]="{'width.px': length[field.key]}">
+                <ng-container *ngIf="customValues">{{customValues[field.key]}}</ng-container>
+            </div>
+        </div>
+        <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>
-    <span>{{field.value}}</span>
-    </span>
-    <span *ngFor="let field of customFields; let i = index"
-        #el
-        (mouseover)="showHint(el)"
-        id="{{field.foreignKey}}"
-        class="code"
-        [ngStyle]="{'width.px': length[field.key]}">
-                <span *ngIf="customValues">{{customValues[field.key]}}</span>
-    </span>
-    </span>
-    <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
-</div>
 </div>

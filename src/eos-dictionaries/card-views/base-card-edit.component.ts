@@ -1,8 +1,9 @@
-import { /* Output, */ Input, /* EventEmitter, */ Injector } from '@angular/core';
+import { Input, Injector } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { EosDictService } from '../services/eos-dict.service';
-// import { EosUtils } from 'eos-common/core/utils';
+import { Subscription } from 'rxjs/Subscription';
+import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
 export class BaseCardEditComponent {
     @Input() form: FormGroup;
@@ -11,17 +12,13 @@ export class BaseCardEditComponent {
     @Input() editMode: boolean;
     @Input() dutysList: string[];
     @Input() fullNamesList: string[];
-    /*
-    @Output() formChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formInvalid: EventEmitter<boolean> = new EventEmitter<boolean>();
-    */
+    readonly notEmptyString = NOT_EMPTY_STRING;
 
-    // inputs: any;
-    // newData: any;
-    // form: FormGroup;
     nodeId: string;
 
     protected dictSrv: EosDictService;
+    protected formChanges$: Subscription;
+
 
     /* private _dates: any = {}; */
     constructor(injector: Injector) {
@@ -53,6 +50,12 @@ export class BaseCardEditComponent {
         const control = this.form.controls[path];
         if (control) {
             control.setValue(value);
+        }
+    }
+
+    protected unsubscribe() {
+        if (this.formChanges$) {
+            this.formChanges$.unsubscribe();
         }
     }
 }

@@ -39,8 +39,8 @@ export const COMMON_FIELD_NOTE = {
 
 export const COMMON_FIELDS: IFieldDescriptor[] = [{
     key: 'DELETED',
-    title: 'Удален логически',
-    type: 'number'
+    title: 'Признак удаления',
+    type: 'boolean'
 }, {
     key: 'PROTECTED',
     title: 'Защищен',
