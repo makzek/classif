@@ -39,6 +39,7 @@ import { DocgroupTemplateConfigComponent } from './docgroup-template-config/docg
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
+import { NodeFieldComponent } from './node-field/node-field.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
 import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
@@ -73,6 +74,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         DocgroupTemplateConfigComponent,
         NodeActionsComponent,
         NodeInfoComponent,
+        NodeFieldComponent,
         NodeListComponent,
         NodeListItemComponent,
         NodeListPaginationComponent,
