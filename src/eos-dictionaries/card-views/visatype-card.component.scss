@@ -1,4 +1,6 @@
 .visatype-card {
+    display: block;
+    padding-top: $grid-gutter-width /2;
     .row-wrapper {
         .flag {
             flex-grow: 0;
