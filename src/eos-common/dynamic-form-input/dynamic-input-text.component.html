@@ -7,15 +7,16 @@
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
     <label [hidden]="input.hideLabel"
-        [attr.for]="input.key"
-        [ngClass]="{'required': input.required}">{{input.label}}</label>
-    <textarea class="form-control m-font"
-        [formControlName]="input.key"
-        [id]="input.key"
-        [readonly]="readonly"
-        [ngClass]="{'readonly': readonly}"
-        [placeholder]="input.label"
-        (focus)="onFocus()"
-        (blur)="onBlur()"
-        triggers=""></textarea>
+        [attr.for]="input.key">{{input.label}}</label>
+    <div [ngClass]="{'required': isRequired}">
+        <textarea class="form-control m-font"
+            [formControlName]="input.key"
+            [id]="input.key"
+            [readonly]="readonly"
+            [ngClass]="{'readonly': readonly}"
+            [placeholder]="input.label"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            triggers=""></textarea>
+    </div>
 </div>

@@ -61,8 +61,8 @@ const RECORD_ACTION_USER_SORT: IAction = {
 const RECORD_ACTION_TO_UP: IAction = {
     type: E_RECORD_ACTIONS.moveUp,
     group: E_ACTION_GROUPS.item,
-    title: 'Вверх',
-    hint: 'Вверх',
+    title: 'Поднять строку',
+    hint: 'Поднять строку',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-top small',
     disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-top small',
     activeIconClass: null,
@@ -73,8 +73,8 @@ const RECORD_ACTION_TO_UP: IAction = {
 const RECORD_ACTION_TO_DOWN: IAction = {
     type: E_RECORD_ACTIONS.moveDown,
     group: E_ACTION_GROUPS.item,
-    title: 'Вниз',
-    hint: 'Вниз',
+    title: 'Опустить строку',
+    hint: 'Опустить строку',
     iconClass: 'eos-icon eos-icon-arrow-v-blue-bottom small',
     disabledIconClass: 'eos-icon eos-icon-arrow-v-grey-bottom small',
     activeIconClass: null,

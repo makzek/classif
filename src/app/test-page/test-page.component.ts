@@ -7,6 +7,7 @@ import { IBaseInput } from 'eos-common/interfaces';
 import { FormGroup } from '@angular/forms';
 import { InputControlService } from 'eos-common/services/input-control.service';
 import { InputBase } from 'eos-common/core/inputs/input-base';
+import { FA_ICONS } from './fa-icons.const';
 
 const TEST_INPUTS = <IBaseInput[]>[{
     controlType: 'string',
@@ -20,12 +21,12 @@ const TEST_INPUTS = <IBaseInput[]>[{
     controlType: 'text',
     key: 'data.text',
     label: 'TEXT',
-    required: false,
+    required: true,
     height: '100'
 }, {
     controlType: 'checkbox',
     key: 'data.checkbox',
-    label: 'olololo',
+    label: 'check me',
     value: true
 }, {
     controlType: 'select',
@@ -48,6 +49,21 @@ const TEST_INPUTS = <IBaseInput[]>[{
     key: 'data.date',
     value: new Date(),
     label: 'date'
+}, {
+    controlType: 'buttons',
+    key: 'data.switch',
+    label: 'buttons',
+    options: [{
+        value: 1,
+        title: 'one',
+    }, {
+        value: 2,
+        title: 'two'
+    }, {
+        value: 3,
+        title: 'three'
+    }],
+    value: 1
 }];
 
 @Component({
@@ -64,6 +80,8 @@ export class TestPageComponent implements OnInit, OnChanges {
     form: FormGroup;
     inputs: InputBase<any>[];
     data = {};
+
+    faIcons = FA_ICONS;
 
     constructor(
         private _messageService: EosMessageService,

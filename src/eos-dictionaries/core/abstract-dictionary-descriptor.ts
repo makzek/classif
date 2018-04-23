@@ -125,6 +125,10 @@ export abstract class AbstractDictionaryDescriptor {
         this.metadata = metadata[this.apiInstance];
     }
 
+    getBoss(departmentDUE: string): Promise<any> {
+        return Promise.resolve(null);
+    }
+
     getData(query?: any, order?: string, limit?: number): Promise<any[]> {
         if (!query) {
             query = ALL_ROWS;
@@ -229,9 +233,11 @@ export abstract class AbstractDictionaryDescriptor {
                 .findIndex((fld) => this.isDiffer(data[fld], original[fld])) > -1;
         } else {
             const hasDiff = (original || data) && original !== data;
+            /*
             if (hasDiff) {
                 console.warn('difference in ', data, original);
             }
+            */
             return hasDiff;
         }
     }

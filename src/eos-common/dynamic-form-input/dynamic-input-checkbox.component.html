@@ -7,14 +7,11 @@
     [isOpen]="!focused && isDirty && !isValid"
     triggers="">
     <label class="checkbox"
-        [ngClass]="{disabled: readonly}">
-        <input type="checkbox"
+        [ngClass]="{disabled: readonly}"><input type="checkbox"
             [formControlName]="input.key"
             [id]="input.key"
             [readonly]="readonly"
             [ngClass]="{'readonly': readonly}"
             (focus)="onFocus()"
-            (blur)="onBlur()">
-        <span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}
-    </label>
+            (blur)="onBlur()"><span class="eos-icon eos-icon-checkbox-square-blue x-small"></span>{{input.label}}</label>
 </div>

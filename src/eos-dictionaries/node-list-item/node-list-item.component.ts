@@ -9,6 +9,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { IDictionaryViewParameters, IFieldView } from 'eos-dictionaries/interfaces';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
+import { EosUtils } from 'eos-common/core/utils';
 
 @Component({
     selector: 'eos-node-list-item',
@@ -25,6 +26,7 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 
     viewFields: IFieldView[];
+    custom: IFieldView[];
 
     customValues: any = {};
 
@@ -36,26 +38,30 @@ export class NodeListItemComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.viewFields = this.node.getListView();
+
     }
 
     ngOnChanges() {
         if (this.customFields) {
-            this.customFields.forEach((_field) => {
-                this.customValues[_field.key] = this.node.getValue(_field);
+            this.custom = EosUtils.deepUpdate({}, this.customFields);
+            this.custom.forEach((_field) => {
+                _field.value = this.node.getValue(_field);
+                // this.customValues[_field.key] = this.node.getValue(_field);
             });
         }
     }
 
     selectNode(evt: Event): void {
         evt.stopPropagation();
-        if (!this.node.isDeleted && this.node.id !== '') {
-            this._dictSrv.openNode(this.node.id);
-        }
+        this.openNode();
     }
 
     markNode(marked: boolean) {
         this.node.marked = marked;
         this.mark.emit(this.node.marked);
+        if (!this._dictSrv.listNode) {
+            this.openNode();
+        }
     }
 
     viewNode(evt: MouseEvent, view = false) {
@@ -71,33 +77,14 @@ export class NodeListItemComponent implements OnInit, OnChanges {
         }
     }
 
-    /**
-     * @param el
-     * @description Draw hint for a long title
-     */
-    public showHint(el: HTMLElement) {
-        const span = document.createElement('span'),
-            body = document.getElementsByTagName('body');
-        span.style.position = 'absolute';
-        span.style.top = '-5000px';
-        span.style.left = '-5000px';
-        span.style.padding = '20px';
-        span.innerText = el.innerText;
-        body[0].appendChild(span);
-        if (span.clientWidth > el.clientWidth) {
-            this.onHoverItem.emit({
-                top: el.offsetTop - el.offsetParent.scrollTop,
-                left: el.offsetLeft,
-                text: el.innerText,
-                show: true,
-                node: this.node
-            });
-        } else {
-            this.onHoverItem.emit({
-                show: false,
-                node: this.node
-            });
+    onFieldHover(config: HintConfiguration) {
+        this.onHoverItem.emit(config);
+    }
+
+    private openNode() {
+        if (!this.node.isDeleted && this.node.id !== '') {
+            this._dictSrv.openNode(this.node.id);
+            this.mark.emit(true);
         }
-        body[0].removeChild(span);
     }
 }

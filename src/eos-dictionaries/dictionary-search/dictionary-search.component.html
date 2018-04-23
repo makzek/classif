@@ -57,28 +57,12 @@
     <form #searchForm="ngForm">
         <div class="full-search-settings-container usual-border">
             <div>
-                <div class="radio-inline">
-                    <label class="m-font">
-                        <input type="radio" name="full-space" [value]="0" [(ngModel)]="mode">
-                        <span></span>Во всём справочнике</label>
-                </div>
-                <div class="radio-inline">
-                    <label class="m-font">
-                        <input type="radio" name="full-space" [value]="1" [(ngModel)]="mode">
-                        <span></span>В текущей ветке</label>
-                </div>
-                <div class="radio-inline">
-                    <label class="m-font">
-                        <input type="radio" name="full-space" [value]="2" [(ngModel)]="mode">
-                        <span></span>Текущая и подчиненные</label>
-                </div>
+                <label class="radio-inline"><input type="radio" name="full-space" [value]="0" [(ngModel)]="mode"><span></span><span class="m-font">Во всём справочнике</span></label>
+                <label class="radio-inline"><input type="radio" name="full-space" [value]="1" [(ngModel)]="mode"><span></span><span class="m-font">В текущей ветке</span></label>
+                <label class="radio-inline"><input type="radio" name="full-space" [value]="2" [(ngModel)]="mode"><span></span><span class="m-font">Текущая и подчиненные</span></label>
             </div>
             <div class="line">
-                <div class="checkbox-inline">
-                    <label class="m-font">
-                        <input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted">
-                        <span></span>Учитывать логически удаленные</label>
-                </div>
+                <label class="checkbox-inline"><input type="checkbox" name="seeDelete" [(ngModel)]="settings.deleted"><span></span><span class="m-font">Учитывать логически удаленные</span></label>
             </div>
         </div>
         <!--FOR Departments-->

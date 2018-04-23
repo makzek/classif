@@ -83,6 +83,18 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
 export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
     record: DepartmentRecordDescriptor;
 
+    getBoss(departmentDue: string): Promise<any> {
+        return this.apiSrv.read({
+            'DEPARTMENT_CL': PipRX.criteries({
+                'PARENT_DUE': departmentDue,
+                'IS_NODE': '1',
+                'POST_H': '1',
+            })
+        })
+            .then(([rec]) => rec);
+    }
+
+
     getFullSearchCriteries(data: any): any {
         const _criteries = {};
         const _searchFields = this.record.fullSearchFields[data['srchMode']];

@@ -1,10 +1,12 @@
 .eos-tree-node {
+    display: inline-block;
     .node {
         font-size: 0;
         cursor: pointer;
         padding: $item-width / 6 0;
         line-height: 20px;
-        display: inline-flex;
+        display: block;
+        white-space: nowrap;
         .fake-padding,
         .tree-btn,
         .title {
@@ -17,6 +19,7 @@
         .title {
             min-width: 100px;
             font-size: 14px;
+            white-space: normal;
             word-wrap: break-word;
             color: $primary-font-color-main-theme;
         }

@@ -21,15 +21,13 @@
             (blur)="onBlur()"
             maxlength="10">
         <span #dpw><a *ngIf="!readonly"
-    bsDatepicker
-    #dp="bsDatepicker"
-    [bsConfig]="bsConfig"
-    [bsValue]="bsDate"
-    (bsValueChange)="dpChanged($event)"
-    [minDate]="bsConfig.minDate"
-    [maxDate]="bsConfig.maxDate"
-    [isDisabled]="readonly"
-    ><span class="eos-icon eos-icon-calendar-blue small"></span></a>
-        </span>
+            bsDatepicker
+            #dp="bsDatepicker"
+            [bsConfig]="bsConfig"
+            [bsValue]="bsDate"
+            (bsValueChange)="dpChanged($event)"
+            [minDate]="bsConfig.minDate"
+            [maxDate]="bsConfig.maxDate"
+            [isDisabled]="readonly"><span class="eos-icon eos-icon-calendar-blue small"></span></a></span>
     </div>
 </div>

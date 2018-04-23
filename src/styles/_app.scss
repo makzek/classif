@@ -112,13 +112,6 @@
     background-color: transparent;
 }
 
-.required:after {
-    content: " *";
-    display: inline;
-    color: inherit;
-    /* vertical-align: super; */
-}
-
 #loading {
     position: absolute;
     top: 46%;

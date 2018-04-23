@@ -14,7 +14,7 @@ import { EosDictService } from '../services/eos-dict.service';
 import { EosDictionary } from '../core/eos-dictionary';
 import {
     IDictionaryViewParameters, E_FIELD_SET, IFieldView,
-    E_DICT_TYPE, IOrderBy, E_RECORD_ACTIONS, IActionEvent
+    E_DICT_TYPE, IOrderBy, E_RECORD_ACTIONS, IActionEvent, ColumnSettings
 } from 'eos-dictionaries/interfaces';
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosMessageService } from 'eos-common/services/eos-message.service';
@@ -380,13 +380,15 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         // const _allFields = [];
         this.modalWindow = this._modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
         this.modalWindow.content.fixedFields = this.viewFields;
+        this.modalWindow.content.customTitles = this._dictSrv.customTitles;
         Object.assign(this.modalWindow.content.currentFields, this.customFields);
         Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
-        this.modalWindow.content.onChoose.subscribe((_fields) => {
-            this.customFields = _fields;
+        this.modalWindow.content.onChoose.subscribe((colSettings: ColumnSettings) => {
+            const customsTitles = [].concat(colSettings.dictionaryFIelds.filter(el => el.customTitle),
+            colSettings.currentFields.filter(el => el.customTitle));
+            this._dictSrv.customTitles = customsTitles;
+            this.customFields = colSettings.currentFields;
             this._dictSrv.customFields = this.customFields;
-            this._dictSrv.customTitles = this.viewFields;
-            /* tslint:enable:no-bitwise */
             this._countColumnWidth();
             this.modalWindow.hide();
         });
@@ -603,7 +605,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
 
     private _errHandler(err) {
-        console.warn(err);
+        // console.warn(err);
         const errMessage = err.message ? err.message : err;
         this._msgSrv.addNewMessage({
             type: 'danger',

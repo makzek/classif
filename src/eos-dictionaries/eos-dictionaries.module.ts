@@ -34,10 +34,12 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
 import { DictionariesComponent } from './dictionaries/dictionaries.component';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { DocgroupCardComponent } from './card-views/docgroup-card.component';
+import { VisatypeCardComponent } from './card-views/visatype-card.component';
 import { DocgroupTemplateConfigComponent } from './docgroup-template-config/docgroup-template-config.component';
 import { LongTitleHintComponent } from './long-title-hint/long-title-hint.component';
 import { NodeActionsComponent } from './node-actions/node-actions.component';
 import { NodeInfoSwitcherComponent } from './node-info/node-info-switcher.component';
+import { NodeFieldComponent } from './node-field/node-field.component';
 import { NodeListComponent } from './node-list/node-list.component';
 import { NodeListItemComponent } from './node-list-item/node-list-item.component';
 import { NodeListPaginationComponent } from './node-list-pagination/node-list-pagination.component';
@@ -51,9 +53,10 @@ import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dict
 
 /* services */
 import { DictionaryDescriptorService } from './core/dictionary-descriptor.service';
+import { EosDataConvertService } from './services/eos-data-convert.service';
+import { EosDepartmentsService } from './services/eos-department-service';
 import { EosDictService } from './services/eos-dict.service';
 import { EosSandwichService } from './services/eos-sandwich.service';
-import { EosDataConvertService } from './services/eos-data-convert.service';
 
 @NgModule({
     declarations: [
@@ -67,9 +70,11 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
         DictionariesQuickSearchComponent,
         DictionarySearchComponent,
         DocgroupCardComponent,
+        VisatypeCardComponent,
         DocgroupTemplateConfigComponent,
         NodeActionsComponent,
         NodeInfoComponent,
+        NodeFieldComponent,
         NodeListComponent,
         NodeListItemComponent,
         NodeListPaginationComponent,
@@ -115,9 +120,10 @@ import { EosDataConvertService } from './services/eos-data-convert.service';
     ],
     providers: [
         DictionaryDescriptorService,
+        EosDataConvertService,
+        EosDepartmentsService,
         EosDictService,
         EosSandwichService,
-        EosDataConvertService,
     ],
 })
 export class EosDictionariesModule { }

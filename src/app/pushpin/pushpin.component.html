@@ -19,14 +19,14 @@
         <li class="menuitem"
             *ngFor="let desk of deskList"
             (click)="pin(desk)">
-            <a class="dropdown-item have-padding">
+            <a class="dropdown-item has-padding">
                 <span class="m-font">{{desk.name}}</span>
             </a>
         </li>
         <li *ngIf="deskList.length === 0 || deskList.length < 5"
             class="menuitem desk create">
             <a *ngIf="!creating"
-                class="create dropdown-item have-padding"
+                class="create dropdown-item has-padding"
                 (click)="openCreateForm($event)">
                 <span class="m-font">Создать рабочий стол</span>
             </a>

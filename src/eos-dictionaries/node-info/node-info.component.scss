@@ -11,19 +11,23 @@
     display: flex;
     flex-direction: column;
     .opened-node-wrapper {
+        overflow-x: hidden;
+        overflow-y: auto;
         .content-block {
             padding: 20px;
         }
     }
     .head-wrapper {
         display: flex;
-        width: 300px;
-        max-width: 300px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
         .current-image {
-            min-height: 100px;
-            min-width: 100px;
-            height: 100px;
-            width: 100px;
+            flex: 0 0 $photo-radius;
+            min-height: $photo-radius;
+            min-width: $photo-radius;
+            height: $photo-radius;
+            width: $photo-radius;
             display: inline-block;
             border-width: 1px;
             border-style: solid;
@@ -31,29 +35,25 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
-            margin: 0 20px 20px 0;
+            margin: 0 $grid-gutter-width / 2 0 0;
         }
         .info {
-            width: 100%;
-            max-width: 160px;
-            padding: 20px 20px 20px 0;
-            display: flex;
-            align-items: center;
+            flex: 0 1 239px;
+            max-height: $photo-radius;
+            max-width: calc(100% - 100px);
             span {
+                max-width: 100%;
+                display: inline-block;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-            div {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
             }
-        }
     }
     .short-info {
-        display: inline-block;
-        padding-bottom: 20px;
+        display: block;
+        margin-bottom: 20px;
+        height: 52px;
     }
     .full-info {
         border-top-width: 1px;
@@ -63,15 +63,21 @@
     .field-title {
         text-transform: uppercase;
         font-weight: normal;
-        margin: 0 0 12px;
+        margin: 0 0 8px;
+        line-height: 10px;
     }
     .field-value {
+        line-height: 32px;
         /* display: inline-block; */
         white-space: pre-wrap;
+        word-break: break-all;
+        max-width: 100%;
+        padding: 6px 0;
     }
     .field {
         margin: 0;
         margin-top: 20px;
+        color: $black;
     }
     .no-data {
         display: flex;
@@ -96,9 +102,6 @@
         li,
         .li {
             padding: 0;
-        }
-        li+li {
-            margin-top: 8px;
         }
     }
 }

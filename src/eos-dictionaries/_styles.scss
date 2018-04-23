@@ -6,6 +6,7 @@
 @import "./card-views/departments-card-edit-person.component";
 @import "./card-views/docgroup-card.component";
 @import "./card-views/security-card-edit.component";
+@import "./card-views/visatype-card.component";
 @import "./column-settings/column-settings.component";
 @import "./create-node/create-node.component";
 @import "./dictionaries/dictionaries.component";
@@ -15,8 +16,10 @@
 @import "./docgroup-template-config/docgroup-template-config.component";
 @import "./long-title-hint/long-title-hint.component";
 @import "./node-actions/node-actions.component";
+@import "./node-field/node-field.component";
 @import "./node-info/node-info.component";
 @import "./node-list/node-list.component";
+@import "./node-list-item/node-list-item.component";
 @import "./node-list-pagination/node-list-pagination.component";
 @import "./sandwich/sandwich.component";
 @import "./tree/tree.component";

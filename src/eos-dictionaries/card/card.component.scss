@@ -61,9 +61,11 @@
             grid-row: 1;
             &.edited {
                 padding-left: 20px;
+                padding-right: 10px;
             }
             .edit-title {
                 font-size: 18px;
+                max-height: 52px;
             }
         }
         .buttons-wrapper {
@@ -80,8 +82,8 @@
             }
         }
         .action-wrapper {
-            -ms-grid-column: 4;
-            grid-column: 4;
+            -ms-grid-column: 3;
+            grid-column: 3;
             -ms-grid-row: 1;
             grid-row: 1;
             .btn {
@@ -96,7 +98,7 @@
         color: $secondary-font-color-main-theme;
         border-color: $border-color-main-theme;
         border-style: solid;
-        border-width: 1px;
+        border-width: 0px 1px 1px;
     }
     .spinner-wrapper {
         padding: 20px;
@@ -109,17 +111,4 @@
         width: 800px;
         margin: 0 auto;
     }
-    /*
-    .edit-aside {
-        .vertical-buttons {
-            transform: rotate(-90deg) translateX(-145px) translateY(-144px);
-        }
-    }
-    */
-    /*
-    .active {
-        background-color: #e6e5e5;
-        border-color: #adadad;
-    }
-    */
 }
