@@ -1,0 +1,20 @@
+<div #el
+    class="node-field"
+    id="{{field.foreignKey}}"
+    [ngStyle]="{'width.px': width}"
+    [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}"
+    (mouseover)="showHint(el)">
+    <ng-container [ngSwitch]="field.type">
+        <ng-container *ngSwitchCase="types.date">
+            {{field.value | eosDate}}
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <div class="table-field-ico"
+                *ngIf="node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')">
+                <span class="folder small eos-icon"
+                    (click)="viewNode($event)"
+                    [ngClass]="{'eos-icon-folder-blue': !node.isDeleted, 'eos-icon-folder-grey': node.isDeleted}"></span>
+            </div>{{field.value}}
+        </ng-container>
+    </ng-container>
+</div>

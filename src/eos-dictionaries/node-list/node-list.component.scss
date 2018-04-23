@@ -8,10 +8,6 @@
     bs-sortable {
         width: 100%;
     }
-    .node-list-item {
-        overflow: hidden;
-        display: flex;
-    }
     .elements {
         list-style: none;
         max-height: calc(100vh - 415px);
@@ -31,25 +27,6 @@
         }
         .checkbox-inline {
             padding: 5px 0 5px 12px;
-        }
-        .code {
-            padding: 0 20px;
-            display: inline-block;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: bottom;
-            line-height: 48px;
-            height: 48px;
-            .table-field-ico {
-                display: inline-block;
-                width: $item-width;
-                text-align: center;
-                line-height: $item-width;
-            }
-        }
-        .have-no-pading {
-            padding: 0;
         }
         .folder {
             position: relative;
@@ -99,20 +76,3 @@
     }
 }
 
-.node-list-item {
-    height: $item-height;
-}
-
-.create-new-node {
-    &.modal-body {
-        .input-group {
-            margin-bottom: 10px;
-        }
-        .edit-content,
-        .simple-card-edit,
-        .eos-departments-card-edit,
-        .cabinet-card-edit .middle-block {
-            border-width: 0;
-        }
-    }
-}
