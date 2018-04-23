@@ -16,6 +16,14 @@ export class EosUtils {
         }
     }
 
+    static dateToStringValue(date: Date): string {
+        if (date instanceof Date && !isNaN(date.getTime())) {
+            return [EosUtils.pad(date.getDate()), EosUtils.pad(date.getMonth() + 1), date.getFullYear()].join('.');
+        } else {
+            return null;
+        }
+    }
+
     static setValueByPath(data: any, path: string, value: any): any {
         const _path = path.split('.');
         const tail = _path.splice(-1, 1);

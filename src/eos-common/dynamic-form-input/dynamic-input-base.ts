@@ -64,6 +64,8 @@ export class DynamicInputBase {
                             return INPUT_ERROR_MESSAGES[key][+(!!this.input.unicInDict)];
                         case 'maxlength':
                             return 'Максимальная длина ' + this.input.length + ' символ(а|ов).';
+                        case 'dateCompare':
+                            return control.errors[key];
                         default:
                             // console.warn('unhandled error key', key);
                             return INPUT_ERROR_MESSAGES.default;

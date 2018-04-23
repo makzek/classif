@@ -72,6 +72,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         title: 'Краткое наименование подразделения',
         foreignKey: 'CLASSIF_NAME',
         length: 255,
+        required: true,
         // isUnic: true,
         // unicInDict: true,
         forNode: false,

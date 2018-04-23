@@ -13,12 +13,7 @@ export class EosDatePipe implements PipeTransform {
         } else if (value) {
             date = new Date(value);
         }
-
-        if (date instanceof Date && !isNaN(date.getTime())) {
-            return [EosUtils.pad(date.getDate()), EosUtils.pad(date.getMonth() + 1), date.getFullYear()].join('.');
-        } else {
-            return null;
-        }
+        return EosUtils.dateToStringValue(date);
     }
 
     parse(value: string): string {
