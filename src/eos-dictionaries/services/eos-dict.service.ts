@@ -674,7 +674,7 @@ export class EosDictService {
 
     isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
         let records: EosDictionaryNode[] = [];
-        let _hasMatch = false;
+        let valid = true;
 
         if ('string' === typeof val) {
             val = val.trim();
@@ -688,9 +688,9 @@ export class EosDictService {
 
             records = records.filter((node) => !this._listNode || node.id !== this._listNode.id);
 
-            _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
+            valid = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) === -1;
         }
-        return _hasMatch ? { 'isUnic': !_hasMatch } : null;
+        return valid ? null : { 'isUnic': !valid };
     }
 
     public uploadImg(img: IImage): Promise<number> {

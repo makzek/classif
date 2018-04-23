@@ -28,8 +28,7 @@ export class DynamicInputDateComponent extends DynamicInputBase {
     }
 
     dpChanged(value: Date) {
-        // const sDate = EosUtils.dateForInput(value);
         this.form.controls[this.input.key].setValue(value);
+        this.onBlur();
     }
-
 }

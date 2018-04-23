@@ -1,12 +1,12 @@
 
-import { Component, Injector, NgZone } from '@angular/core';
+import { Component, Injector, NgZone, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 
 @Component({
     selector: 'eos-departments-card-edit-department',
     templateUrl: 'departments-card-edit-department.component.html',
 })
-export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent {
+export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent implements OnChanges {
     orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);
@@ -39,5 +39,24 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
                     this.setValue('rec.DUE_LINK_ORGANIZ', org.DUE);
                 }
             });
+    }
+
+    ngOnChanges() {
+        if (this.form) {
+            this.unsubscribe();
+            this.formChanges$ = this.form.valueChanges.subscribe((formChanges) => this.updateForm(formChanges));
+        }
+    }
+
+    private updateForm(formChanges: any) {
+        const updates = {};
+        // toggle CARD_NAME
+        this.toggleInput(formChanges['rec.CARD_FLAG'], 'rec.CARD_NAME', formChanges, updates);
+
+
+        if (Object.keys(updates).length) {
+            this.form.patchValue(updates);
+        }
+
     }
 }

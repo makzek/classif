@@ -167,6 +167,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         key: 'CARD_NAME',
         title: 'Наименование картотеки',
         type: 'string',
+        required: true,
         length: 64,
         pattern: NOT_EMPTY_STRING,
         forNode: false,

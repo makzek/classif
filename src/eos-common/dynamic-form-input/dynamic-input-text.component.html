@@ -1,11 +1,4 @@
-<div [formGroup]="form"
-    [tooltip]="tooltipMessage"
-    [placement]="tooltipCfg.placement"
-    [containerClass]="tooltipCfg.class"
-    [container]="tooltipCfg.container"
-    [isDisabled]="readonly"
-    [isOpen]="!focused && isDirty && !isValid"
-    triggers="">
+<div [formGroup]="form">
     <label [hidden]="input.hideLabel"
         [attr.for]="input.key">{{input.label}}</label>
     <div [ngClass]="{'required': isRequired}">

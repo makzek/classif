@@ -7,28 +7,7 @@ export class DynamicInputBase {
     @Input() input: InputBase<any>;
     @Input() form: FormGroup;
     @Input() readonly: boolean;
-
-    focused = false;
-
-    tooltipCfg: any = {
-        placement: 'bottom',
-        class: 'tooltip-error',
-        container: ''
-    };
-
-    tooltipMessage = '';
-
-    get control(): AbstractControl {
-        return this.form.controls[this.input.key];
-    }
-
-    get isValid() {
-        return this.control && this.control.valid;
-    }
-
-    get isDirty() {
-        return this.control && this.control.dirty;
-    }
+    @Input() inputTooltip: any;
 
     get isRequired(): boolean {
         let required = false;
@@ -39,20 +18,24 @@ export class DynamicInputBase {
         return required;
     }
 
+    protected get control(): AbstractControl {
+        return this.form.controls[this.input.key];
+    }
+
     onFocus() {
-        this.focused = true;
+        this.toggleTooltip(true);
     }
 
     onBlur() {
         this.updateMessage();
-        this.focused = false;
+        this.toggleTooltip(false);
     }
 
     private updateMessage() {
         let msg = '';
         const control = this.control;
         if (this.control && this.control.errors) {
-            this.tooltipCfg.class = 'tooltip-error';
+            this.inputTooltip.class = 'tooltip-error';
             msg = Object.keys(control.errors)
                 .map((key) => {
                     switch (key) {
@@ -73,8 +56,19 @@ export class DynamicInputBase {
                 })
                 .join(' ');
         } else {
-            // this.tooltipCfg.class = 'tooltip-info';
+            this.inputTooltip.class = 'tooltip-info';
         }
-        this.tooltipMessage = msg;
+        this.inputTooltip.message = msg;
+    }
+
+    private toggleTooltip(focused: boolean) {
+        if (!this.readonly) {
+            const control = this.control;
+            if (control) {
+                this.inputTooltip.visible = !focused && control.invalid && control.dirty;
+            } else {
+                this.inputTooltip.visible = false;
+            }
+        }
     }
 }
