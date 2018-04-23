@@ -83,6 +83,8 @@ export class TestPageComponent implements OnInit, OnChanges {
 
     faIcons = FA_ICONS;
 
+    testMessages = ['danger', 'warning', 'success', 'info'];
+
     constructor(
         private _messageService: EosMessageService,
         private pip: PipRX,
@@ -101,12 +103,11 @@ export class TestPageComponent implements OnInit, OnChanges {
     ngOnInit() {
     }
 
-    addNewMessage() {
+    addNewMessage(type: 'danger' | 'warning' | 'info' | 'success') {
         this._messageService.addNewMessage({
-            type: 'danger',
-            title: 'Ошибка!',
-            msg: 'что-то пошло не так',
-            dismissOnTimeout: 5000,
+            type: type,
+            title: type.toUpperCase(),
+            msg: 'Южно-эфиопский грач увёл мышь за хобот на съезд ящериц.',
         });
     }
 

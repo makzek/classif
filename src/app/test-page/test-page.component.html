@@ -1,23 +1,32 @@
 <p class="h4 text-center">Component test page</p>
-<p> Ссылки </p>
-<ul>
-    <li><a routerLink="/delivery">Delivery REST test page</a></li>
-    <li><a routerLink="/rubric">Rubric REST test page</a></li>
-    <li><a routerLink="/department">Department REST test page</a></li>
-    <li><a routerLink="/user">User REST test page</a></li>
-</ul>
+<div class="row">
+    <div class="col-sm-3">
+        <p> Ссылки </p>
 
-<div class="current-image"
-    [ngStyle]="{'background-image': defaultImage}">
-    <eos-photo-uploader class="photo-uploader"
-        (endUploading)="newImage($event)"></eos-photo-uploader>
-</div>
-<div>
-    выбор из справочника<button (click)="chooseCL($event)">выбор из справочника</button>
-    <input type='text'
-        name='__ClassifIds'
-        id='__ClassifIds' />
+        <ul class="pull-left">
+            <li><a routerLink="/delivery">Delivery REST test page</a></li>
+            <li><a routerLink="/rubric">Rubric REST test page</a></li>
+            <li><a routerLink="/department">Department REST test page</a></li>
+            <li><a routerLink="/user">User REST test page</a></li>
+        </ul>
+        выбор из справочника<button (click)="chooseCL($event)">выбор из справочника</button>
+        <input type='text'
+            name='__ClassifIds'
+            id='__ClassifIds' />
 
+    </div>
+    <div class="col-sm-2">
+        <div class="current-image"
+            [ngStyle]="{'background-image': defaultImage}">
+            <eos-photo-uploader class="photo-uploader"
+                (endUploading)="newImage($event)"></eos-photo-uploader>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <button class="btn text-uppercase"
+            *ngFor="let msg of testMessages"
+            (click)="addNewMessage(msg)">{{msg}} message</button>
+    </div>
 </div>
 <div class="row fa-icon-list">
     <div class="pull-left fa-icon-item"
@@ -27,10 +36,6 @@
 </div>
 
 <div class="test-form">
-    <!-- div class="card-edit secondary-block">
-        <article class="edit-content">
-            <!--form [formGroup]="form"
-            class="form"-->
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
@@ -48,7 +53,4 @@
             <pre>{{data | json}}</pre>
         </div>
     </div>
-    <!-- /form -->
-    <!-- /article>
-    </div-->
 </div>
