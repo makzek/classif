@@ -31,6 +31,24 @@
     }
 }
 
+@media (min-width: 0px) and (max-width: 1280px) {
+    .eos-desktop .sortable-item {
+        flex-basis: calc((100% - 2*12px) / 1);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1640px) {
+    .eos-desktop .sortable-item {
+        flex-basis: calc((100% - 3*12px) / 2);
+    }
+}
+
+@media (min-width: 1641px) {
+    .eos-desktop .sortable-item {
+        flex-basis: calc((100% - 4*12px) / 3);
+    }
+}
+
 // For IE, Edge
 @media screen\0  {
     input,
