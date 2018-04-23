@@ -37,7 +37,7 @@
 <eos-dynamic-input [input]="inputs['rec.SHABLON']"
     [form]="form"
     readonly="true"></eos-dynamic-input>
-<div [hidden]="!getValue('rec.PRJ_NUM_FLAG')">
+<div [hidden]="!isPrjFlag">
     <eos-dynamic-input [input]="inputs['rec.PRJ_SHABLON']"
         [form]="form"
         readonly="true"></eos-dynamic-input>
