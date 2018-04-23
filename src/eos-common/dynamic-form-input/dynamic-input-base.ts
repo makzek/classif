@@ -35,7 +35,7 @@ export class DynamicInputBase {
         let msg = '';
         const control = this.control;
         if (this.control && this.control.errors) {
-            this.inputTooltip.class = 'tooltip-error';
+            // this.inputTooltip.class = 'tooltip-error';
             msg = Object.keys(control.errors)
                 .map((key) => {
                     switch (key) {
@@ -56,7 +56,7 @@ export class DynamicInputBase {
                 })
                 .join(' ');
         } else {
-            this.inputTooltip.class = 'tooltip-info';
+            // this.inputTooltip.class = 'tooltip-info';
         }
         this.inputTooltip.message = msg;
     }
