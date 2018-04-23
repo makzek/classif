@@ -144,11 +144,37 @@ input[type=text]::-ms-clear {
 label {
     font-weight: normal;
 }
+
 .form-control {
-    background: $modal-block-background-main-theme;
+    border-color: $border-color-main-theme;
+    background-color: $modal-block-background-main-theme;
     border-radius: 0px;
+    box-shadow: none;
+    &.light {
+        background-color: $modal-block-background-main-theme;
+    }
+    &:-ms-input-placeholder {
+        color: $primary-font-color-main-theme;
+    }
+    &.ng-invalid.ng-dirty:not(:focus) {
+        border-color: $invalid-color-main-theme;
+        border-width: 2px;
+        /* outline: $invalid-color-main-theme solid 1px !important; */
+        /* outline-offset: 0 !important; */
+    }
+    &.ng-valid {
+        border-color: $border-color-main-theme;
+    }
     &:focus {
-        box-shadow: none;
+        border-color: $active-field-color-main-theme;
+    }
+    &.readonly,
+    &.readonly:focus {
+        border-color: transparent;
+        background-color: transparent;
+    }
+    &.highlighted:focus {
+        border-color: $button-color-main-theme;
     }
 }
 

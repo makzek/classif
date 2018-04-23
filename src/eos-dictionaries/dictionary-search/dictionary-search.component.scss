@@ -1,39 +1,31 @@
 .eos-dictionary-search {
     display: inline-block;
     height: $item-height;
-
     .fa {
         font-size: 22px;
     }
-
     .full-search {
         position: relative;
     }
-
     .eos-icon-search-blue {
         position: relative;
     }
-
     .search-btn-wraper {
         display: inline-block;
     }
-
     input:read-only {
         background: $disabled-color-main-theme;
     }
-
     .btn {
         &.search-btn {
             height: 48px;
             width: 48px;
         }
-
         &.quick-search-btn {
             height: 48px;
             width: 48px;
         }
     }
-
     .date-filter-wrapper {
         display: inline-block;
         vertical-align: -webkit-baseline-middle;
@@ -53,24 +45,19 @@
         &.hidden {
             display: none;
         }
-
-        .eos-datepicker {
-            display: inline-block;
-            width: 125px;
-            font-weight: bold;
-            /* position: relative; */
-            /* top: 6px; */
-            input {
-                border-color: transparent;
-                box-shadow: none;
-                background-color: transparent;
-                color: black;
-                font-weight: normal;
-                &.ng-dirty.ng-invalid{
-                    border-color: $brand-danger;
-                }
+    }
+    .eos-datepicker {
+        display: inline-block;
+        width: 125px;
+        font-weight: bold;
+        input {
+            box-shadow: none;
+            background-color: transparent;
+            color: black;
+            font-weight: normal;
+            &.ng-dirty.ng-invalid {
+                border-color: $brand-danger;
             }
-
         }
     }
 }
@@ -81,22 +68,18 @@
     width: 800px;
     max-width: 800px;
     border-radius: 0;
-
     .popover-arrow.arrow {
         right: 61px !important;
         left: auto !important;
     }
-
     .popover-content {
         padding: 0 !important;
     }
-
     .spinner-wrapper {
         text-align: center;
         padding: 10px;
     }
-
-    .checkbox-inline input[type="checkbox"] + span {
+    .checkbox-inline input[type="checkbox"]+span {
         margin-right: 12px;
     }
 }
@@ -106,7 +89,6 @@
     border-top-width: 1px;
     border-top-style: solid;
     padding: 8px 20px;
-
     .btn {
         width: 82px;
         height: 32px;
@@ -118,17 +100,14 @@
     border-bottom-width: 1px;
     border-bottom-style: solid;
     height: 48px;
-
     .title {
         height: 48px;
         line-height: 48px;
         margin-left: 20px;
     }
-
     .srch-btns {
         margin: 8px 15px 8px 0;
         font-size: 0;
-
         .btn {
             width: 82px;
             margin: 0px 5px;
@@ -138,7 +117,6 @@
 
 .wrap {
     position: relative;
-
     button {
         border: none;
         padding: 5px;
@@ -149,7 +127,6 @@
         right: 1px;
         background-color: $modal-block-background-main-theme;
         position: absolute;
-
         .eos-icon {
             height: 20px;
             width: 20px;
@@ -162,7 +139,6 @@
     border-bottom-width: 1px;
     border-bottom-style: solid;
     font-size: 0;
-
     label {
         font-weight: normal;
         text-transform: none;
@@ -181,7 +157,6 @@
 
 .full-search-form {
     padding: 0 20px;
-
     .tabs-wrapper {
         background-color: $modal-block-background-main-theme;
         border-bottom: 1px solid $border-color-main-theme;
@@ -203,17 +178,14 @@
             padding: 8px;
             height: 32px;
         }
-
         .form-group {
             margin-bottom: 20px;
-
             &.col-250 {
                 display: inline-block;
                 width: 250px;
                 margin-top: 0;
                 margin-bottom: 0;
             }
-
             label {
                 line-height: 10px;
                 margin-bottom: 8px;
@@ -221,7 +193,6 @@
                 text-transform: uppercase;
             }
         }
-
         .form-group:last-child {
             margin-bottom: 0;
         }
@@ -234,7 +205,6 @@
             display: inline-block;
             width: 540px;
         }
-
         .margin-r {
             margin-right: 38px;
         }
