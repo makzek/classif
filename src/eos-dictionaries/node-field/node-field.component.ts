@@ -11,6 +11,8 @@ export class NodeFieldComponent {
     @Input() field: IFieldView;
     @Input() node: EosDictionaryNode;
     @Input() width: number;
+    @Input() dualTable: boolean;
+    @Input() index: number;
     @Output() view: EventEmitter<any> = new EventEmitter<any>();
     @Output() fieldHover: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 

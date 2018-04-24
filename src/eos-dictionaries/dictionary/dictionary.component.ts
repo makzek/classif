@@ -78,6 +78,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public length = {
         dualTable: false,
+        lockFieldsSpace: 0
     }; // Length column
 
     orderBy: IOrderBy;
@@ -410,6 +411,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         const length = {
             dualTable: false,
             tableWidth: this.selectedEl.nativeElement.clientWidth,
+            lockFieldsSpace: 0
         };
         let fullWidth = 0;
         this.viewFields.forEach((_f) => {
@@ -436,9 +438,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         if (fullWidth > this.selectedEl.nativeElement.clientWidth) {
             length.dualTable = true;
             length.tableWidth = fullWidth;
-            const lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
+            length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
+
             this.viewFields.forEach((item: IFieldView) =>
-                length[item.key] = lockFieldsSpace / this.viewFields.length);
+                length[item.key] = length.lockFieldsSpace / this.viewFields.length);
             // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
         }
         this.length = length;

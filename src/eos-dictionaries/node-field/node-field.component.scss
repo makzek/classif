@@ -7,6 +7,10 @@
     vertical-align: bottom;
     line-height: 48px;
     height: 48px;
+    &.fixedColumn {
+        position: fixed;
+        background-color: $white;
+    }
     .table-field-ico {
         display: inline-block;
         width: $item-width;

@@ -15,10 +15,12 @@
         <div class="node-info"
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
-            <eos-node-field *ngFor="let field of viewFields"
+            <eos-node-field *ngFor="let field of viewFields; let i = index"
                 [field]="field"
                 [node]="node"
                 [width]="length[field.key]"
+                [dualTable] = "length.dualTable"
+                [index] = "i"
                 (fieldHover)="onFieldHover($event)"
                 (view)="viewNode($event, true)"></eos-node-field>
             <eos-node-field *ngFor="let field of custom"

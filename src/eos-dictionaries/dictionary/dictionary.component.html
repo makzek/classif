@@ -98,9 +98,11 @@
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                     </div>
                     <div class="node-title"><!--<<-->
-                        <div *ngFor="let field of viewFields"
+                        <div *ngFor="let field of viewFields; let i = index"
                             class="item l-font"
-                            [ngStyle]="{'width.px': length[field.key]}">
+                            [ngStyle]="{'width.px': length[field.key]}"
+                            [style.marginLeft.px]='i * length[field.key]'
+                            [ngClass]="{'fixedColumn': length.dualTable}">
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"
                                 (click)="orderByField(field.foreignKey)"
@@ -111,9 +113,11 @@
                                 class="icon eos-icon small"
                                 [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                         </div>
-                        <div *ngFor="let field of customFields"
+                        <div *ngFor="let field of customFields; let i = index"
                             class="item l-font"
-                            [ngStyle]="{'width.px': length[field.key]}">
+                            [ngClass]="{'half-margin': length.dualTable}"
+                            [ngStyle]="{'width.px': length[field.key]}"
+                            [style.marginLeft.px]='i === 0 ? length.lockFieldsSpace : 0'>
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"
                                 (click)="orderByField(field.foreignKey)"
