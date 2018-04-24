@@ -409,7 +409,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         body[0].appendChild(span);
         const length = {
             dualTable: false,
-            tableWidth: 0,
+            tableWidth: this.selectedEl.nativeElement.clientWidth,
         };
         let fullWidth = 0;
         this.viewFields.forEach((_f) => {
@@ -436,7 +436,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         if (fullWidth > this.selectedEl.nativeElement.clientWidth) {
             length.dualTable = true;
             length.tableWidth = fullWidth;
-            // console.log('! DUAL TABLE ACTIVE !');
+            const lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
+            this.viewFields.forEach((item: IFieldView) =>
+                length[item.key] = lockFieldsSpace / this.viewFields.length);
+            // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
         }
         this.length = length;
         body[0].removeChild(span);
