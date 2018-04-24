@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -43,7 +43,8 @@ import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.
 })
 export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
-    @ViewChild('tree') treeEl;
+    @ViewChild('tree') treeEl: ElementRef;
+    @ViewChild('selectedWrapper') selectedWr: ElementRef;
 
     @ViewChild('selectedWrapper') selectedEl;
 
@@ -78,8 +79,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     public length = {
         dualTable: false,
+        tableWidth: 0,
         lockFieldsSpace: 0
     }; // Length column
+    scroll = 0;
 
     orderBy: IOrderBy;
 
@@ -98,9 +101,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
     }
-
+    private _interval: any;
     private _nodeId: string;
-
+    private SCROLL_STEP = 50;
+    private SCROLL_INTERVAL = 40;
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
@@ -223,6 +227,35 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     transitionEnd() {
         this._countColumnWidth();
+    }
+
+    public startScrollToLeft() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
+        this._interval = setInterval(() => {
+            if (this.selectedWr.nativeElement.scrollLeft > this.SCROLL_STEP) {
+                this.scroll -= this.SCROLL_STEP;
+            } else {
+                this.selectedWr.nativeElement.scrollLeft = 0;
+            }
+        }, this.SCROLL_INTERVAL);
+    }
+
+    public startScrollToRight() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
+        this._interval = setInterval(() => {
+            if (this.selectedWr.nativeElement.scrollLeft + this.selectedWr.nativeElement.clientWidth
+                < this.selectedWr.nativeElement.scrollWidth) {
+                this.scroll += this.SCROLL_STEP;
+            }
+        }, this.SCROLL_INTERVAL);
+    }
+
+    public endScroll() {
+        window.clearInterval(this._interval);
     }
 
     doAction(evt: IActionEvent) {

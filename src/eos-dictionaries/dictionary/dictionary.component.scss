@@ -178,6 +178,12 @@
             display: flex;
             width: 100%;
         }
+        .scr-btn {
+            width: $item-width;
+            height: $item-height;
+            background: transparent;
+            position: absolute;
+        }
         .node-title {
             display: inline-block;
             width: 100%;
