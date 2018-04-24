@@ -100,12 +100,14 @@
                     </div>
                     <button class="btn scr-btn"
                         *ngIf="length.dualTable"
-                        [style.marginLeft.px]='length.lockFieldsSpace + 48'>
+                        [style.marginLeft.px]='length.lockFieldsSpace + 47'
+                        (mousedown)="startScrollToLeft()" (mouseup)="endScroll()">
                         <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-left"></span>
                     </button>
-                    <button class="btn scr-btn"
+                    <button class="btn scr-btn rigth"
                         *ngIf="length.dualTable"
-                        [style.marginLeft.px]='length.tableWidth - 48'>
+                        [style.marginLeft.px]='length.lockFieldsSpace * 2 - 48'
+                        (mousedown)="startScrollToRight()" (mouseup)="endScroll()">
                         <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-rigth"></span>
                     </button>
                     <div class="node-title"><!--<<-->
@@ -128,7 +130,7 @@
                             class="item l-font"
                             [ngClass]="{'half-margin': length.dualTable}"
                             [ngStyle]="{'width.px': length[field.key]}"
-                            [style.marginLeft.px]='i === 0 ? length.lockFieldsSpace : 0'>
+                            [style.marginLeft.px]='i === 0 ? length.lockFieldsSpace + 80 : 0'>
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"
                                 (click)="orderByField(field.foreignKey)"

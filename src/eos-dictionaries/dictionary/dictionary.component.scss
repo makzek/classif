@@ -35,7 +35,7 @@
     }
     .selected-wrapper {
         .table-wrapper {
-            overflow-x: auto;
+            overflow-x: hidden;
             width: 100%;
             border-width: 1px;
             border-style: solid;
@@ -180,10 +180,17 @@
         }
         .scr-btn {
             width: $item-width;
-            height: $item-height;
+            height: $item-height - 1;
             background: transparent;
-            position: absolute;
+            position: fixed;
+            background: linear-gradient(to left, transparent 0%, #fff 45%);
+            &.rigth {
+                transform: rotate(180deg);
+            }
         }
+
+
+
         .node-title {
             display: inline-block;
             width: 100%;

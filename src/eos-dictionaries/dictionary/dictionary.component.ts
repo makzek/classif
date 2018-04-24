@@ -103,8 +103,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     }
     private _interval: any;
     private _nodeId: string;
-    private SCROLL_STEP = 50;
-    private SCROLL_INTERVAL = 40;
+    private SCROLL_STEP = 5;
+    private SCROLL_INTERVAL = 50;
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
@@ -235,7 +235,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         }
         this._interval = setInterval(() => {
             if (this.selectedWr.nativeElement.scrollLeft > this.SCROLL_STEP) {
-                this.scroll -= this.SCROLL_STEP;
+                this.selectedWr.nativeElement.scrollLeft -= this.SCROLL_STEP;
             } else {
                 this.selectedWr.nativeElement.scrollLeft = 0;
             }
@@ -249,7 +249,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._interval = setInterval(() => {
             if (this.selectedWr.nativeElement.scrollLeft + this.selectedWr.nativeElement.clientWidth
                 < this.selectedWr.nativeElement.scrollWidth) {
-                this.scroll += this.SCROLL_STEP;
+                this.selectedWr.nativeElement.scrollLeft += this.SCROLL_STEP;
             }
         }, this.SCROLL_INTERVAL);
     }
