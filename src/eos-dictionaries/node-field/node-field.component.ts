@@ -13,6 +13,7 @@ export class NodeFieldComponent {
     @Input() width: number;
     @Input() dualTable: boolean;
     @Input() index: number;
+    @Input() selected: boolean;
     @Output() view: EventEmitter<any> = new EventEmitter<any>();
     @Output() fieldHover: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 

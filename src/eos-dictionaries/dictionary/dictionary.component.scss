@@ -197,14 +197,14 @@
                 }
                 &.fixedColumn {
                     position: fixed;
-                    background-color: $modal-block-background-main-theme;
+                    background: $modal-block-background-main-theme;
                 }
             }
         }
         .checkbox-inline {
             &.fixedColumn {
                 position: fixed;
-                background-color: $modal-block-background-main-theme;
+                background: $modal-block-background-main-theme;
             }
             line-height: $item-height - 1px;
             width: $item-width;

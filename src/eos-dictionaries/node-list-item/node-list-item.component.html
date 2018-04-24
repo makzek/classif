@@ -22,6 +22,7 @@
                 [width]="length[field.key]"
                 [dualTable] = "length.dualTable"
                 [index] = "i"
+                [selected]= "node.isSelected"
                 (fieldHover)="onFieldHover($event)"
                 (view)="viewNode($event, true)"></eos-node-field>
             <eos-node-field *ngFor="let field of custom"

@@ -9,7 +9,10 @@
     height: 48px;
     &.fixedColumn {
         position: fixed;
-        background-color: $white;
+        background: $white;
+    }
+    &.highlighted {
+        background: $highlight-color-main-theme;
     }
     .table-field-ico {
         display: inline-block;

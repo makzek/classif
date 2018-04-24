@@ -4,7 +4,7 @@
     [ngStyle]="{'width.px': width}"
     [style.marginLeft.px]='index * width + 48'
     [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME'),
-    'fixedColumn': dualTable }"
+    'highlighted': selected, 'fixedColumn': dualTable }"
     (mouseover)="showHint(el)">
     <ng-container [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="types.date">
