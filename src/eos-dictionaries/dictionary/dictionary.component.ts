@@ -76,7 +76,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     formValidated = false;
     hasChanges = false;
 
-    public length = {}; // Length column
+    public length = {
+        dualTable: false,
+    }; // Length column
 
     orderBy: IOrderBy;
 
@@ -90,14 +92,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     searchStartFlag = false; // flag begin search
     fastSearch = false;
 
-    tableWidth: number;
     hasCustomTable: boolean;
-
-    public fonConf = {
-        width: 0 + 'px',
-        height: 0 + 'px',
-        top: 0 + 'px'
-    };
 
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
@@ -412,7 +407,10 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         span.style.left = '-5000px';
         span.style.fontSize = '16px';
         body[0].appendChild(span);
-        const length = {};
+        const length = {
+            dualTable: false,
+            tableWidth: 0,
+        };
         let fullWidth = 0;
         this.viewFields.forEach((_f) => {
             if (_f.customTitle) {
@@ -434,6 +432,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
                 fullWidth += PADDING_SPACE + span.clientWidth;
             });
+        }
+        if (fullWidth > this.selectedEl.nativeElement.clientWidth) {
+            length.dualTable = true;
+            length.tableWidth = fullWidth;
+            // console.log('! DUAL TABLE ACTIVE !');
         }
         this.length = length;
         body[0].removeChild(span);

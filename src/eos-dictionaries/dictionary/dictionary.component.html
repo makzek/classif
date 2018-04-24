@@ -17,10 +17,6 @@
         <eos-tree *ngIf="treeNodes.length"
             [nodes]="treeNodes"
             [showDeleted]="params.showDeleted"></eos-tree>
-        <div class="fon highlighted"
-            [style.width]="fonConf.width"
-            [style.height]="fonConf.height"
-            [style.top]="fonConf.top"></div>
     </div>
     <div class="selected-wrapper"
         #selectedWrapper
@@ -90,7 +86,7 @@
         </div>
         <div class="table-wrapper usual-border">
             <div class="second-line block"
-                [ngStyle]="{'width.px': tableWidth}">
+                [ngStyle]="{'width.px': length.tableWidth}">
                 <div class="second-line-content">
                     <div *ngIf="params.markItems"
                         class="checkbox-inline">
@@ -101,7 +97,7 @@
                             containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                     </div>
-                    <div class="node-title">
+                    <div class="node-title"><!--<<-->
                         <div *ngFor="let field of viewFields"
                             class="item l-font"
                             [ngStyle]="{'width.px': length[field.key]}">
@@ -131,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div [ngStyle]="{'width.px': tableWidth}">
+            <div [ngStyle]="{'width.px': length.tableWidth}"><!--<<-->
                 <ng-container>
                     <eos-node-list [nodes]="visibleNodes"
                         [length]="length"
