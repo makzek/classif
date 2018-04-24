@@ -446,7 +446,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             tableWidth: this.selectedEl.nativeElement.clientWidth,
             lockFieldsSpace: 0
         };
-        let fullWidth = 0;
         this.viewFields.forEach((_f) => {
             if (_f.customTitle) {
                 span.innerText = _f.customTitle;
@@ -454,7 +453,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 span.innerText = _f.title;
             }
             length[_f.key] = PADDING_SPACE + span.clientWidth;
-            fullWidth += PADDING_SPACE + span.clientWidth;
+            length.tableWidth += PADDING_SPACE + span.clientWidth;
         });
 
         if (this.customFields) {
@@ -465,16 +464,19 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     span.innerText = _f.title;
                 }
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
-                fullWidth += PADDING_SPACE + span.clientWidth;
+                length.tableWidth += PADDING_SPACE + span.clientWidth;
             });
         }
-        if (fullWidth > this.selectedEl.nativeElement.clientWidth) {
+        if (length.tableWidth > this.selectedEl.nativeElement.clientWidth) {
             length.dualTable = true;
-            length.tableWidth = fullWidth;
             length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
-
-            this.viewFields.forEach((item: IFieldView) =>
-                length[item.key] = length.lockFieldsSpace / this.viewFields.length);
+            length.tableWidth = 0;
+            this.viewFields.forEach((item: IFieldView) => {
+                length[item.key] = length.lockFieldsSpace / this.viewFields.length;
+                length.tableWidth += length[item.key];
+            });
+            this.customFields.forEach((item: IFieldView) => length.tableWidth += length[item.key]);
+            length.tableWidth += 96;
             // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
         }
         this.length = length;
