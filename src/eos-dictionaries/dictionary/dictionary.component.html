@@ -89,7 +89,8 @@
                 [ngStyle]="{'width.px': length.tableWidth}">
                 <div class="second-line-content">
                     <div *ngIf="params.markItems"
-                        class="checkbox-inline">
+                        class="checkbox-inline"
+                        [ngClass]="{'fixedColumn': length.dualTable}">
                         <label [tooltip]="markAllTooltip"
                             placement="bottom"
                             container="body"
@@ -101,7 +102,7 @@
                         <div *ngFor="let field of viewFields; let i = index"
                             class="item l-font"
                             [ngStyle]="{'width.px': length[field.key]}"
-                            [style.marginLeft.px]='i * length[field.key]'
+                            [style.marginLeft.px]='i * length[field.key] + 48'
                             [ngClass]="{'fixedColumn': length.dualTable}">
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"

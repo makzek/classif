@@ -2,7 +2,7 @@
     class="node-field"
     id="{{field.foreignKey}}"
     [ngStyle]="{'width.px': width}"
-    [style.marginLeft.px]='index * width'
+    [style.marginLeft.px]='index * width + 48'
     [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME'),
     'fixedColumn': dualTable }"
     (mouseover)="showHint(el)">
