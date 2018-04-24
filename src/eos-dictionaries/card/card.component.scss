@@ -1,21 +1,23 @@
 .eos-card {
-    padding: 0;
-    width: 800px;
-    margin: 0 auto;
-    /* max-height: calc(100vh - 108px - 60px); */
-    /* border: 1px solid transparent; */
-    /* overflow-x: hidden; */
-    /* overflow-y: auto; */
-    .edit-block-header,
-    .edit-header {
+    text-align: center;
+    .eos-card-wrapper {
+        display: inline-block;
+        min-width: 800px;
+        max-width: calc(100vw - 40px);
+        /* width: 800px;*/
+        padding: 0;
+        margin: 0 auto;
+    }
+    header {
         background-color: #fafafa;
         color: black;
-        border-color: #e6e6e6;
-        min-height: $item-height;
-        border-width: 1px;
-        border-style: solid;
+        border: 1px solid $border-color-main-theme;
     }
     .edit-header {
+        min-height: $item-height;
+        text-align: initial;
+        margin: 0 auto;
+        width: 800px;
         display: -ms-grid;
         display: grid; // sass-lint:disable-line no-duplicate-properties
         -ms-grid-columns: 100px 1fr 153px;
@@ -99,6 +101,8 @@
         border-color: $border-color-main-theme;
         border-style: solid;
         border-width: 0px 1px 1px;
+        text-align: initial;
+        display: inline-block;
     }
     .spinner-wrapper {
         padding: 20px;

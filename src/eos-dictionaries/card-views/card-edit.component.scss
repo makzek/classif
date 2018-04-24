@@ -1,23 +1,14 @@
 .card-edit {
-    max-width: 800px;
+    /* max-width: 800px; */
+    overflow: hidden;
+    /*
     overflow-x: hidden;
     overflow-y: auto;
     max-height: calc(100vh - 240px);
+    */
 }
 
 .edit-content {
-    padding: 0 20px;
-    .block-title {
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        display: block;
-        height: 38px;
-        font-weight: 700;
-        padding-top: 8px;
-        &:not(.first) {
-            margin-top: 50px;
-        }
-    }
     label {
         font-weight: normal;
         font-size: 12px;
@@ -29,13 +20,28 @@
         &.checkbox,
         &.radio {
             color: $grey;
-            line-height: 32px;
+            line-height: 24px;
+            padding: 4px 0;
             font-size: 14px;
             vertical-align: middle;
             text-transform: none;
             margin-bottom: 0;
         }
+        &.checkbox-inline,
+        &.radio-inline {
+            padding-left: 12px;
+        }
     }
+    .tabs-wrapper {
+        margin-bottom: 0;
+    }
+}
+
+.card-content-wrapper {
+    padding: $grid-gutter-width /2 $grid-gutter-width /2 0 $grid-gutter-width /2;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 220px);
 }
 
 .row-wrapper {
@@ -49,7 +55,7 @@
     &>div+eos-dynamic-input {
         margin-left: $grid-gutter-width /2;
     }
-    &>eos-dynamic-input+eos-dynamic-input{
+    &>eos-dynamic-input+eos-dynamic-input {
         margin-left: $grid-gutter-width;
     }
     .form-group {

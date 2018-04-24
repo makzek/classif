@@ -179,9 +179,9 @@ label {
 }
 
 .tabs-wrapper {
-    /* width: 800px; */
     display: flex;
     justify-content: space-around;
+    padding: 0 $grid-gutter-width / 2;
     margin: 0 $grid-gutter-width / -2;
     background-color: $light-grey-1;
 }
