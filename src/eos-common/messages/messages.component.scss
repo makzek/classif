@@ -1,0 +1,40 @@
+.eos-alert {
+    .alert {
+        background-color: $white;
+        border-radius: 0;
+        position: relative;
+        margin-left: 48px;
+        min-height: 48px;
+    }
+    .alert-icon {
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: -48px;
+        width: 48px;
+        text-align: center;
+        font-size: 20px;
+        color: $white;
+        .fa {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+    }
+    .alert-info {
+        .alert-icon {
+            background-color: $brand-primary;
+        }
+    }
+    .alert-success .alert-icon {
+        background-color: $brand-success;
+    }
+    .alert-warning .alert-icon {
+        background-color: $brand-warning;
+    }
+    .alert-danger .alert-icon {
+        background-color: $brand-danger;
+    }
+}

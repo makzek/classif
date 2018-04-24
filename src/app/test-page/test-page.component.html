@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="col-sm-3">
-        <button class="btn text-uppercase"
+        <button class="btn btn-{{msg}}"
             *ngFor="let msg of testMessages"
             (click)="addNewMessage(msg)">{{msg}} message</button>
     </div>

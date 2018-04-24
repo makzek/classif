@@ -1,8 +1,18 @@
 <alert *ngFor="let message of messages"
+    class="eos-alert"
     [type]="message.type"
     [dismissible]="true"
     (onClose)="onClose(message)"
     [dismissOnTimeout]="message.dismissOnTimeout">
-    <strong>{{message.title}}</strong><br/>
-    <span [innerHtml]="message.msg"></span>
+    <div class="alert-icon">
+        <i class="fa"
+            [ngClass]="{'fa-info-circle': message.type==='info',
+            'fa-check-circle': message.type==='success',
+            'fa-warning': message.type==='warning',
+            'fa-exclamation-circle': message.type==='danger'}"></i>
+    </div>
+    <div class="alert-body">
+        <p *ngIf="message.title"><strong>{{message.title}}</strong></p>
+        <span [innerHtml]="message.msg"></span>
+    </div>
 </alert>
