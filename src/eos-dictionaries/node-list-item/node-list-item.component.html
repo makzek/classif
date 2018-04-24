@@ -7,7 +7,7 @@
         class="node-list-item">
         <div *ngIf="params?.markItems"
             class="checkbox-inline"
-            [ngClass]="{'fixedColumn' : length.dualTable}">
+            [ngClass]="{'fixedColumn' : length.dualTable, 'highlighted': node.isSelected}">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info"
                 container="body"
