@@ -183,7 +183,7 @@
             height: $item-height - 1;
             background: transparent;
             position: fixed;
-            background: linear-gradient(to left, transparent 0%, #fff 45%);
+            background: linear-gradient(to left, transparent 0%, $light-grey-1 45%);
             &.rigth {
                 transform: rotate(180deg);
             }

@@ -12,6 +12,8 @@ export class NodeFieldComponent {
     @Input() node: EosDictionaryNode;
     @Input() width: number;
     @Input() dualTable: boolean;
+    @Input() margin: number;
+    @Input() custom: boolean;
     @Input() index: number;
     @Input() selected: boolean;
     @Output() view: EventEmitter<any> = new EventEmitter<any>();
@@ -47,5 +49,15 @@ export class NodeFieldComponent {
 
     viewNode(evt: Event) {
         this.view.emit(evt);
+    }
+
+    getMargin() {
+        if (this.dualTable && this.custom && this.index === 0) {
+            return this.margin;
+        } else if (this.dualTable && !this.custom) {
+            return this.margin;
+        } else {
+            return 0;
+        }
     }
 }

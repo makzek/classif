@@ -2,9 +2,9 @@
     class="node-field"
     id="{{field.foreignKey}}"
     [ngStyle]="{'width.px': width}"
-    [style.marginLeft.px]='dualTable ? index * width + 48 : 0'
+    [style.marginLeft.px]='getMargin()'
     [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME'),
-    'highlighted': selected, 'fixedColumn': dualTable }"
+    'highlighted': selected, 'fixedColumn': dualTable && !custom }"
     (mouseover)="showHint(el)">
     <ng-container [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="types.date">
