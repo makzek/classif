@@ -114,7 +114,7 @@
                         <div *ngFor="let field of viewFields; let i = index"
                             class="item l-font"
                             [ngStyle]="{'width.px': length[field.key]}"
-                            [style.marginLeft.px]='i * length[field.key] + 48'
+                            [style.marginLeft.px]='length.dualTable ? i * length[field.key] + 48 : 0'
                             [ngClass]="{'fixedColumn': length.dualTable}">
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"
@@ -130,7 +130,7 @@
                             class="item l-font"
                             [ngClass]="{'half-margin': length.dualTable}"
                             [ngStyle]="{'width.px': length[field.key]}"
-                            [style.marginLeft.px]='i === 0 ? length.lockFieldsSpace + 80 : 0'>
+                            [style.marginLeft.px]='i === 0 && length.dualTable ? length.lockFieldsSpace + 80 : 0'>
                             <span class="text"
                                 [ngClass]="{'selected-text': orderBy}"
                                 (click)="orderByField(field.foreignKey)"
