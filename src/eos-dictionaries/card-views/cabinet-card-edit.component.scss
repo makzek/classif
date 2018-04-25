@@ -17,6 +17,7 @@ $access-first-col-width: 251px;
 eos-cabinet-card-edit {
     display: block;
     .card-content-wrapper {
+        max-width: calc(100vw - 42px);
         max-height: calc(100vh - 280px);
         padding-top: 0;
     }
