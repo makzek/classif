@@ -71,6 +71,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     }
 
     public startVerticalScroll(e: Event, ul: HTMLUListElement) {
-        this.vScroll.emit(ul.scrollTop);
+        if (this.length.dualTable) {
+            this.vScroll.emit(ul.scrollTop);
+        }
     }
 }

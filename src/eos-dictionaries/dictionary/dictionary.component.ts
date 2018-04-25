@@ -415,7 +415,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         Object.assign(this.modalWindow.content.dictionaryFields, this.dictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
         this.modalWindow.content.onChoose.subscribe((colSettings: ColumnSettings) => {
             const customsTitles = [].concat(colSettings.dictionaryFIelds.filter(el => el.customTitle),
-            colSettings.currentFields.filter(el => el.customTitle));
+                colSettings.currentFields.filter(el => el.customTitle));
             this._dictSrv.customTitles = customsTitles;
             this.customFields = colSettings.currentFields;
             this._dictSrv.customFields = this.customFields;
@@ -477,8 +477,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 needSpace += length[_f.key];
             });
         }
-        // console.warn(length.tableWidth, this.selectedEl.nativeElement.clientWidth);
-        if (needSpace > this.selectedEl.nativeElement.clientWidth) {
+        console.warn(needSpace, this.selectedEl.nativeElement.clientWidth);
+        if (needSpace + 96 > this.selectedEl.nativeElement.clientWidth) {
             length.dualTable = true;
             length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
             length.tableWidth = 0;
