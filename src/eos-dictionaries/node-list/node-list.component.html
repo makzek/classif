@@ -1,25 +1,52 @@
 <div class="eos-node-list">
     <div class="block list">
         <ng-container>
-            <p *ngIf="params.updatingList" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
-            <p *ngIf="!nodes?.length && !params.updatingList" class="text-center text-info">Нет записей.</p>
+            <p *ngIf="params.updatingList"
+                class="spinner-container text-center">
+                <eos-spinner size="lg"></eos-spinner>
+            </p>
+            <p *ngIf="!nodes?.length && !params.updatingList"
+                class="text-center text-info">Нет записей.</p>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList " class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList"
+                #ul
+                class="elements secondary-text"
+                (scroll)="startVerticalScroll($event, ul)">
                 <li class="child">
-                    <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
-                        placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
+                    <bs-sortable [(ngModel)]="nodes"
+                        [itemTemplate]="childTemplate"
+                        itemClass="{'highlighted': node.isSelected}"
+                        itemActiveClass="sortable-item-active"
+                        placeholderItem="Drag here"
+                        (drop)="toggleItem()"
+                        placeholderClass="placeholderStyle"
+                        wrapperClass="sortable-wrapper">
                     </bs-sortable>
                 </li>
             </ul>
             <ng-template #childTemplate let-item="item" let-index="index">
-                <eos-node-list-item  [node]="item.value" [params]="params" [length]="length" [customFields]="customFields"
-                (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
+                <eos-node-list-item
+                    [node]="item.value"
+                    [params]="params"
+                    [length]="length"
+                    [customFields]="customFields"
+                    (mark)="checkState()"
+                    (onHoverItem)="showHint($event)"></eos-node-list-item>
             </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList" class="elements secondary-text">
-                <li *ngFor="let item of nodes" class="child">
-                    <eos-node-list-item [node]="item" [params]="params" [length]="length" [customFields]="customFields"
-                    (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
+            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
+                #ul2
+                class="elements secondary-text"
+                (scroll)="startVerticalScroll($event, ul2)">
+                <li *ngFor="let item of nodes"
+                    class="child">
+                    <eos-node-list-item
+                        [node]="item"
+                        [params]="params"
+                        [length]="length"
+                        [customFields]="customFields"
+                        (mark)="checkState()"
+                        (onHoverItem)="showHint($event)"></eos-node-list-item>
                 </li>
             </ul>
         </ng-container>

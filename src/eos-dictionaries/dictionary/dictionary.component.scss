@@ -184,6 +184,7 @@
             background: transparent;
             position: fixed;
             background: linear-gradient(to left, transparent 0%, $light-grey-1 45%);
+            outline: none;
             &.rigth {
                 transform: rotate(180deg);
             }

@@ -21,6 +21,7 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     @Input('node') node: EosDictionaryNode;
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
+    @Input('index') index: number;
     @Input('customFields') customFields: IFieldView[];
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();

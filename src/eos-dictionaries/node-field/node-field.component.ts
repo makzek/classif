@@ -16,6 +16,7 @@ export class NodeFieldComponent {
     @Input() custom: boolean;
     @Input() index: number;
     @Input() selected: boolean;
+    @Input() marginTop: number;
     @Output() view: EventEmitter<any> = new EventEmitter<any>();
     @Output() fieldHover: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 

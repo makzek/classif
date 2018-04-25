@@ -7,6 +7,7 @@
         class="node-list-item">
         <div *ngIf="params?.markItems"
             class="checkbox-inline"
+            [style.marginTop.px]="length.dualTable ? length.fixedMargTop : null"
             [ngClass]="{'fixedColumn' : length.dualTable, 'highlighted': node.isSelected}">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info"
@@ -24,6 +25,7 @@
                 [index]="i"
                 [custom]="false"
                 [margin] = "i * length[field.key] + 48"
+                [marginTop]="length.fixedMargTop"
                 [selected]= "node.isSelected"
                 (fieldHover)="onFieldHover($event)"
                 (view)="viewNode($event, true)"></eos-node-field>

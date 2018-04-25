@@ -20,6 +20,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @Input() customFields: IFieldView[];
     @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
     @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
+    @Output() vScroll: EventEmitter<number> = new EventEmitter<number>();
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
@@ -67,5 +68,9 @@ export class NodeListComponent implements OnInit, OnDestroy {
         } else {
             this.hint.hideHint(hintConfig);
         }
+    }
+
+    public startVerticalScroll(e: Event, ul: HTMLUListElement) {
+        this.vScroll.emit(ul.scrollTop);
     }
 }
