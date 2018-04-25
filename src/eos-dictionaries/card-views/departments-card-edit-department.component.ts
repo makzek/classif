@@ -57,6 +57,5 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
         if (Object.keys(updates).length) {
             this.form.patchValue(updates);
         }
-
     }
 }
