@@ -86,7 +86,7 @@
         <div class="table-wrapper usual-border"
             #selectedWrapper>
             <div class="second-line block"
-                [ngStyle]="{'width.px': length.tableWidth}">
+                [ngStyle]="{'width.px': length.tableWidth || '100%'}">
                 <div class="second-line-content">
                     <div *ngIf="params.markItems"
                         class="checkbox-inline"
@@ -138,8 +138,8 @@
                                 placement="bottom"
                                 container="body"
                                 containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
-                                    class="icon eos-icon small"
-                                    [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
+                                class="icon eos-icon small"
+                                [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                         </div>
                     </div>
                 </div>

@@ -455,6 +455,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             lockFieldsSpace: 0,
             fixedMargTop: 0
         };
+        let needSpace = 0;
         this.viewFields.forEach((_f) => {
             if (_f.customTitle) {
                 span.innerText = _f.customTitle;
@@ -462,7 +463,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 span.innerText = _f.title;
             }
             length[_f.key] = PADDING_SPACE + span.clientWidth;
-            length.tableWidth += PADDING_SPACE + span.clientWidth;
+            needSpace += length[_f.key];
         });
 
         if (this.customFields) {
@@ -473,10 +474,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     span.innerText = _f.title;
                 }
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
-                length.tableWidth += PADDING_SPACE + span.clientWidth;
+                needSpace += length[_f.key];
             });
         }
-        if (length.tableWidth > this.selectedEl.nativeElement.clientWidth) {
+        // console.warn(length.tableWidth, this.selectedEl.nativeElement.clientWidth);
+        if (needSpace > this.selectedEl.nativeElement.clientWidth) {
             length.dualTable = true;
             length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
             length.tableWidth = 0;
