@@ -24,7 +24,7 @@ export class BreadcrumbsComponent implements OnDestroy {
     actionNavigationUp = RECORD_ACTIONS_NAVIGATION_UP;
     actionNavigationDown = RECORD_ACTIONS_NAVIGATION_DOWN;
 
-    haveInfoData = false;
+    hasInfoData = false;
     showPushpin = false;
     showInfoAct = false;
 
@@ -40,19 +40,19 @@ export class BreadcrumbsComponent implements OnDestroy {
         _breadcrumbsSrv.breadcrumbs$.takeUntil(this.ngUnsubscribe).
             subscribe((bc: IBreadcrumb[]) => this.breadcrumbs = bc);
         this.update();
+
         this._router.events
             .filter((evt) => evt instanceof NavigationEnd)
             .takeUntil(this.ngUnsubscribe)
             .subscribe(() => this.update());
 
-        this._sandwichSrv.currentDictState$.takeUntil(this.ngUnsubscribe)
-            .subscribe((state) => {
-                this.infoOpened = state[1];
-            });
+        this._sandwichSrv.currentDictState$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((state) => this.infoOpened = state[1]);
 
         this._dictSrv.openedNode$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((n) => n ? this.haveInfoData = true : this.haveInfoData = false);
+            .subscribe((n) => this.hasInfoData = !!n);
     }
 
     ngOnDestroy() {

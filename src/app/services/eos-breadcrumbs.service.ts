@@ -17,6 +17,7 @@ export class EosBreadcrumbsService {
     private _breadcrumbs: IBreadcrumb[];
     private _currentLink: IDeskItem;
     private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
+    private subdictionary: IBreadcrumb;
 
     get breadcrumbs$(): Observable<IBreadcrumb[]> {
         return this._breadcrumbs$.asObservable();
@@ -33,7 +34,7 @@ export class EosBreadcrumbsService {
     constructor(
         _router: Router,
         private _route: ActivatedRoute,
-        private _descrSrv: DictionaryDescriptorService,
+        private dictDescriptorSrv: DictionaryDescriptorService,
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._eventFromBc$ = new Subject();
@@ -46,7 +47,20 @@ export class EosBreadcrumbsService {
         this._eventFromBc$.next(action);
     }
 
-    public makeBreadCrumbs() {
+    public setSubdictionary(dictionaryId: string) {
+        const descriptor = this.dictDescriptorSrv.getDescriptorData(dictionaryId);
+        if (descriptor) {
+            this.subdictionary = {
+                title: descriptor.title,
+                url: '/spravochniki/' + descriptor.id
+            };
+        } else {
+            this.subdictionary = null;
+        }
+        this.makeBreadCrumbs();
+    }
+
+    private makeBreadCrumbs() {
         this._breadcrumbs = [];
         const breadcrumbs = this._parseState(this._route.snapshot);
         // 55: Убрать без title (!?) routing -> showInBreadcrubs
@@ -80,7 +94,7 @@ export class EosBreadcrumbsService {
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
-                        const descr = this._descrSrv.getDescriptorData(_dictId);
+                        const descr = this.dictDescriptorSrv.getDescriptorData(_dictId);
                         if (descr) {
                             bc.title = descr.title;
                         }
@@ -89,6 +103,11 @@ export class EosBreadcrumbsService {
                 crumbs.push(bc);
             }
             _current = _current.firstChild;
+        }
+        if (this.subdictionary) {
+            if (crumbs.length && crumbs[crumbs.length - 1].url !== this.subdictionary.url) {
+                crumbs.push(this.subdictionary);
+            }
         }
         return crumbs;
     }

@@ -29,6 +29,7 @@ import { IAppCfg } from 'eos-common/interfaces';
 import { CabinetDictionaryDescriptor } from '../core/cabinet-dictionary-descriptor';
 import { CONFIRM_CHANGE_BOSS } from '../consts/confirm.consts';
 import { ConfirmWindowService } from 'eos-common/confirm-window/confirm-window.service';
+import { EosBreadcrumbsService } from 'app/services/eos-breadcrumbs.service';
 
 @Injectable()
 export class EosDictService {
@@ -52,7 +53,6 @@ export class EosDictService {
     private _customFields: any;
     private _customTitles: any;
     private _dictMode: number;
-    private _dictMode$: BehaviorSubject<number>;
     private _dictionaries: EosDictionary[];
     private _listDictionary$: BehaviorSubject<EosDictionary>;
     private filters: any = {};
@@ -162,23 +162,15 @@ export class EosDictService {
     get currentDictionary(): EosDictionary {
         return this._dictionaries[this._dictMode];
     }
-    /*
-    private get dictionary(): EosDictionary {
-        return this.currentDictionary;
-    }
-
-    private set dictionary(d: EosDictionary) {
-        this._dictionaries[0] = d;
-    }
-    */
 
     constructor(
+        private _router: Router,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
+        private _descrSrv: DictionaryDescriptorService,
         private departmentsSrv: EosDepartmentsService,
         private confirmSrv: ConfirmWindowService,
-        private _descrSrv: DictionaryDescriptorService,
-        private _router: Router
+        private breadcrSrv: EosBreadcrumbsService,
     ) {
         this._initViewParameters();
         this._dictionaries = [];
@@ -191,8 +183,8 @@ export class EosDictService {
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-        this._dictMode$ = new BehaviorSubject(0);
         this._dictMode = 0;
+        this.breadcrSrv.setSubdictionary(null);
     }
 
     bindOrganization(orgDue: string) {
@@ -319,6 +311,7 @@ export class EosDictService {
         this._dictionary$.next(null);
         this._listDictionary$.next(null);
         this.filters = {};
+        this.breadcrSrv.setSubdictionary(null);
     }
 
     public openDictionary(dictionaryId: string): Promise<EosDictionary> {
@@ -615,8 +608,14 @@ export class EosDictService {
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this._dictionaries[0].getDictionaryIdByMode(mode);
         }
+
+        if (mode) {
+            this.breadcrSrv.setSubdictionary(this.currentDictionary.id);
+        } else {
+            this.breadcrSrv.setSubdictionary(null);
+        }
+
         this._reloadList();
-        this._dictMode$.next(mode);
     }
 
     setUserOrder(ordered: EosDictionaryNode[]) {
