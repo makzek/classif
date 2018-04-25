@@ -32,8 +32,9 @@ export class NodeFieldComponent {
         span.innerText = el.innerText;
         body[0].appendChild(span);
         if (span.clientWidth > el.clientWidth) {
+            const top = el.offsetParent ? el.offsetTop - el.offsetParent.scrollTop : el.offsetTop - this.marginTop;
             this.fieldHover.emit({
-                top: el.offsetTop - el.offsetParent.scrollTop,
+                top: top,
                 left: el.offsetLeft,
                 text: el.innerText,
                 show: true,
