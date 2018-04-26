@@ -17,7 +17,6 @@ export class EosBreadcrumbsService {
     private _breadcrumbs: IBreadcrumb[];
     private _currentLink: IDeskItem;
     private _breadcrumbs$: BehaviorSubject<IBreadcrumb[]>;
-    private subdictionary: IBreadcrumb;
 
     get breadcrumbs$(): Observable<IBreadcrumb[]> {
         return this._breadcrumbs$.asObservable();
@@ -45,19 +44,6 @@ export class EosBreadcrumbsService {
 
     public sendAction(action: IActionEvent) {
         this._eventFromBc$.next(action);
-    }
-
-    public setSubdictionary(dictionaryId: string) {
-        const descriptor = this.dictDescriptorSrv.getDescriptorData(dictionaryId);
-        if (descriptor) {
-            this.subdictionary = {
-                title: descriptor.title,
-                url: '/spravochniki/' + descriptor.id
-            };
-        } else {
-            this.subdictionary = null;
-        }
-        this.makeBreadCrumbs();
     }
 
     private makeBreadCrumbs() {
@@ -94,9 +80,17 @@ export class EosBreadcrumbsService {
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
-                        const descr = this.dictDescriptorSrv.getDescriptorData(_dictId);
+                        let descr = this.dictDescriptorSrv.getDescriptorClass(_dictId);
                         if (descr) {
                             bc.title = descr.title;
+                        }
+
+                        if (descr.getParentDictionaryId()) {
+                            descr = this.dictDescriptorSrv.getDescriptorClass(descr.getParentDictionaryId());
+                            crumbs.push({
+                                title: descr.title,
+                                url: '/spravochniki/' + descr.id
+                            });
                         }
                     }
                 }
@@ -104,11 +98,7 @@ export class EosBreadcrumbsService {
             }
             _current = _current.firstChild;
         }
-        if (this.subdictionary) {
-            if (crumbs.length && crumbs[crumbs.length - 1].url !== this.subdictionary.url) {
-                crumbs.push(this.subdictionary);
-            }
-        }
+
         return crumbs;
     }
 }
