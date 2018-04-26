@@ -81,7 +81,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         dualTable: false,
         tableWidth: 0,
         lockFieldsSpace: 0,
-        fixedMargTop: 0
+        fixedMargTop: 0,
+        scroll: false
     }; // Length column
     scroll = 0;
 
@@ -432,9 +433,11 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.setDictMode(mode);
     }
     public vScrollHandler(scrollTop: number) {
-        this.length.fixedMargTop = -1 * scrollTop;
+        this.length.fixedMargTop = scrollTop;
         this.length.dualTable = false;
+        this.length.scroll = true;
         setTimeout(() => {
+            this.length.scroll = true;
             this.length.dualTable = true;
         }, 30);
     }
@@ -453,7 +456,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             dualTable: false,
             tableWidth: this.selectedEl.nativeElement.clientWidth,
             lockFieldsSpace: 0,
-            fixedMargTop: 0
+            fixedMargTop: 0,
+            scroll: false
         };
         let needSpace = 0;
         this.viewFields.forEach((_f) => {

@@ -99,13 +99,13 @@
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                     </div>
                     <button class="btn scr-btn"
-                        *ngIf="length.dualTable"
+                        *ngIf="length.dualTable || length.scroll"
                         [style.marginLeft.px]='length.lockFieldsSpace + 47'
                         (mousedown)="startScrollToLeft()" (mouseup)="endScroll()">
                         <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-left"></span>
                     </button>
                     <button class="btn scr-btn rigth"
-                        *ngIf="length.dualTable"
+                        *ngIf="length.dualTable || length.scroll"
                         [style.marginLeft.px]='length.lockFieldsSpace * 2 - 48'
                         (mousedown)="startScrollToRight()" (mouseup)="endScroll()">
                         <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small to-rigth"></span>

@@ -3,7 +3,7 @@
     id="{{field.foreignKey}}"
     [ngStyle]="{'width.px': width}"
     [style.marginLeft.px]='getMargin()'
-    [style.marginTop.px]="marginTop"
+    [style.top.px]="marginTop"
     [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME'),
     'highlighted': selected, 'fixedColumn': dualTable && !custom }"
     (mouseover)="showHint(el)">
