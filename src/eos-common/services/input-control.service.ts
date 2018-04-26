@@ -94,6 +94,10 @@ export class InputControlService {
                                 errMessage = 'Дата должна быть меньше ' + EosUtils.dateToStringValue(compareCtrl.value);
                                 break;
                         }
+
+                        if (valid && compareCtrl.invalid) {
+                            compareCtrl.updateValueAndValidity();
+                        }
                     }
                 }
             }
