@@ -1,13 +1,16 @@
-import { Input } from '@angular/core';
+import { Input, OnChanges, OnDestroy } from '@angular/core';
 import { InputBase } from '../core/inputs/input-base';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { INPUT_ERROR_MESSAGES } from '../consts/common.consts';
+import { Subscription } from 'rxjs/Subscription';
 
-export class DynamicInputBase {
+export class DynamicInputBase implements OnChanges, OnDestroy {
     @Input() input: InputBase<any>;
     @Input() form: FormGroup;
     @Input() readonly: boolean;
     @Input() inputTooltip: any;
+
+    protected subscriptions: Subscription[] = [];
 
     get isRequired(): boolean {
         let required = false;
@@ -18,10 +21,6 @@ export class DynamicInputBase {
         return required;
     }
 
-    protected get control(): AbstractControl {
-        return this.form.controls[this.input.key];
-    }
-
     onFocus() {
         this.toggleTooltip(true);
     }
@@ -29,6 +28,25 @@ export class DynamicInputBase {
     onBlur() {
         this.updateMessage();
         this.toggleTooltip(false);
+    }
+
+    ngOnChanges() {
+        const control = this.control;
+        if (control) {
+            this.ngOnDestroy();
+            this.subscriptions.push(control.statusChanges.subscribe((status) => {
+                this.inputTooltip.visible = this.inputTooltip.visible && control.invalid && control.dirty;
+            }));
+        }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions = [];
+    }
+
+    protected get control(): AbstractControl {
+        return this.form.controls[this.input.key];
     }
 
     private updateMessage() {

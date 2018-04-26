@@ -49,6 +49,7 @@ export class CardEditComponent implements OnChanges, OnDestroy {
             const isNode = this.data.rec && this.data.rec.IS_NODE;
             this.form = this._inputCtrlSrv.toFormGroup(inputs, isNode);
             this.inputs = inputs;
+
             this.subscriptions.push(this.form.valueChanges
                 .subscribe((newVal) => {
                     let changed = false;

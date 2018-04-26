@@ -16,6 +16,8 @@
         overflow: hidden;
 
         &.btn {
+            min-width: 400px;
+            max-width: 490px;
             padding: 0;
         }
 

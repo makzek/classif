@@ -24,7 +24,7 @@ export class DesktopComponent implements OnDestroy {
     historyToLeft = false;
 
     notEmptyString = NOT_EMPTY_STRING;
-
+    private dragResolve = false;
     private _editingItem: IDeskItem;
     private _newTitle: string;
 
@@ -93,6 +93,12 @@ export class DesktopComponent implements OnDestroy {
                 }
             })
             .catch();
+    }
+
+    tryMove(evt: Event) {
+        if (!this.dragResolve) {
+            this.stopDefault(evt);
+        }
     }
 
     editing(item: IDeskItem) {
