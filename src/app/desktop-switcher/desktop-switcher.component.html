@@ -40,7 +40,8 @@
                 <div tooltip="{{desk.name}}"
                     placement="bottom"
                     containerClass="tooltip-info"
-                    class="item-title m-font">{{desk.name}}
+                    class="item-title m-font"
+                    container="body">{{desk.name}}
                 </div>
                 <div class="menu-icon">
                     <span *ngIf="desk.name === selectedDesk.name"
@@ -52,6 +53,7 @@
                         (click)="openEditForm($event, desk)"
                         tooltip="Редактировать"
                         placement="bottom"
+                        container="body"
                         containerClass="tooltip-info">
                         <span class="eos-icon eos-icon-edit-blue x-small"></span>
                     </div>
@@ -59,6 +61,7 @@
                         (click)="removeDesk(desk,$event)"
                         tooltip="Удалить"
                         placement="bottom"
+                        container="body"
                         containerClass="tooltip-info">
                         <span class="eos-icon eos-icon-close-blue x-small"></span>
                     </div>
