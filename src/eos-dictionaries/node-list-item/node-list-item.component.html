@@ -5,7 +5,7 @@
     [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
     <div [ngClass]="{'deleted': node.isDeleted}"
         class="node-list-item">
-        <div *ngIf="params?.markItems || this.params.dualTable && this.left"
+        <div *ngIf="params?.markItems && this.params.dualTable && this.left || params?.markItems && !this.params.dualTable"
             class="checkbox-inline">
             <label [tooltip]="node.marked ? markTemp : notMarkTemp"
                 containerClass="tooltip-info"
