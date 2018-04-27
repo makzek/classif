@@ -23,7 +23,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
-    params: IDictionaryViewParameters;
+    public dualScroll: number;
+    public params: IDictionaryViewParameters;
 
     private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -67,5 +68,9 @@ export class NodeListComponent implements OnInit, OnDestroy {
         } else {
             this.hint.hideHint(hintConfig);
         }
+    }
+
+    public scrolHanle(e: any): void {
+        this.dualScroll = e.target.scrollTop;
     }
 }

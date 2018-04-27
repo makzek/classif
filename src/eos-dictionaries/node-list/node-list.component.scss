@@ -56,10 +56,15 @@
         }
         .dual-table {
             display: flex;
+            overflow: hidden;
             max-height: calc(100vh - 415px);
             .left {
-                overflow: scroll;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                width: 100%;
+                box-shadow: 0 0 7px $black;
             }
+            .left::-webkit-scrollbar { width: 0; }
             .rigth {
                 overflow: scroll;
             }

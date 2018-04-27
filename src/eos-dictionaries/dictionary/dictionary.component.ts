@@ -417,7 +417,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             tableWidth: this.selectedEl.nativeElement.clientWidth,
             lockFieldsSpace: 0,
             fixedMargTop: 0,
-            scroll: false
+            scroll: false,
+            leftWidth: 0,
+            rigthWidth: 0
         };
         let needSpace = 0;
         this.viewFields.forEach((_f) => {
@@ -450,8 +452,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             this.viewFields.forEach((item: IFieldView) => {
                 length[item.key] = length.lockFieldsSpace / this.viewFields.length;
                 length.tableWidth += length[item.key];
+                length.rigthWidth += length[item.key];
             });
-            this.customFields.forEach((item: IFieldView) => length.tableWidth += length[item.key]);
+            this.customFields.forEach((item: IFieldView) => {
+                length.tableWidth += length[item.key];
+                length.leftWidth += length[item.key];
+            });
             length.tableWidth += 96;
             // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
         } else {

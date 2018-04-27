@@ -39,12 +39,14 @@
             <!--Dual table-->
             <div class="dual-table"
             *ngIf="length.dualTable">
-                <div class="left"
-                    [scrollTop]="r.scrollTop">
+                <div class="left" #l
+                    [scrollTop]="dualScroll"
+                    (scroll)="scrolHanle($event)">
                     <!--Dual simple-->
                     <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
                         class="elements secondary-text"
-                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        [ngClass]="{'dual-table-mode': length.dualTable}"
+                        [style.width.px]="length.rigthWidth">
                         <li *ngFor="let item of nodes"
                             class="child">
                             <eos-node-list-item [node]="item"
@@ -72,12 +74,14 @@
                         </li>
                     </ul>
                 </div>
-                <div class="rigth"
-                    #r>
+                <div class="rigth" #r
+                    [scrollTop]="dualScroll"
+                    (scroll)="scrolHanle($event)">
                     <!--Dual simple-->
                     <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
                         class="elements secondary-text"
-                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        [ngClass]="{'dual-table-mode': length.dualTable}"
+                        [style.width.px]="length.leftWidth">
                         <li *ngFor="let item of nodes"
                             class="child">
                             <eos-node-list-item [node]="item"
