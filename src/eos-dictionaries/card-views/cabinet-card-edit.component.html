@@ -120,11 +120,9 @@
         <div class="table-wrapper row"
             [ngClass]="{scrollable: showScroll}">
             <button class="btn btn-primary-light scroll-btn"
-                [ngClass]="{hidden:!showScroll}"
                 (mousedown)="startScrollToLeft()"
                 (mouseup)="endScroll()"><span class="eos-icon eos-icon-arrow-v-blue-left small" aria-hidden="true"></span></button>
             <button class="btn btn-primary-light scroll-btn right"
-                [ngClass]="{hidden:!showScroll}"
                 (mousedown)="startScrollToRight()"
                 (mouseup)="endScroll()"><span class="eos-icon eos-icon-arrow-v-blue-right small" aria-hidden="true"></span></button>
             <div class="table-responsive"
