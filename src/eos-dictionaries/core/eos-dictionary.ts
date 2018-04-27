@@ -338,6 +338,19 @@ export class EosDictionary {
         }
     }
 
+    getMarkedNodes(recursive = false): EosDictionaryNode[] {
+        const nodes: EosDictionaryNode[] = [];
+        this._nodes.forEach((node) => {
+            if (node.marked) {
+                nodes.push(node);
+                if (recursive) {
+                    node.getAllChildren().forEach((chld) => nodes.push(chld));
+                }
+            }
+        });
+        return nodes;
+    }
+
     /**
      * @description Delete marked records from DB
      */
@@ -522,19 +535,6 @@ export class EosDictionary {
             }
         });
         return records;
-    }
-
-    private getMarkedNodes(recursive = false): EosDictionaryNode[] {
-        const nodes: EosDictionaryNode[] = [];
-        this._nodes.forEach((node) => {
-            if (node.marked) {
-                nodes.push(node);
-                if (recursive) {
-                    node.getAllChildren().forEach((chld) => nodes.push(chld));
-                }
-            }
-        });
-        return nodes;
     }
 
     private _resetMarked() {

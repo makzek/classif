@@ -1,29 +1,97 @@
-<div class="eos-node-list">
-    <div class="block list">
-        <ng-container>
-            <p *ngIf="params.updatingList" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
-            <p *ngIf="!nodes?.length && !params.updatingList" class="text-center text-info">Нет записей.</p>
+<div class="table-wrapper usual-border">
+    <div class="second-line block"
+        [ngStyle]="{'width.px': tableWidth}">
+        <div class="second-line-content">
+            <div *ngIf="params.markItems"
+                class="checkbox-inline">
+                <label [tooltip]="markAllTooltip"
+                    placement="bottom"
+                    container="body"
+                    [ngClass]="{'group-checkbox': anyUnmarked && anyMarked}"
+                    containerClass="tooltip-info">
+                        <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
+            </div>
+            <div class="node-title">
+                <div *ngFor="let field of viewFields"
+                    class="item l-font"
+                    [ngStyle]="{'width.px': length[field.key]}">
+                    <span class="text"
+                        [ngClass]="{'selected-text': orderBy}"
+                        (click)="orderByField(field.foreignKey)"
+                        tooltip="{{field.title}}"
+                        placement="bottom"
+                        container="body"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                        class="icon eos-icon small"
+                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                </div>
+                <div *ngFor="let field of customFields"
+                    class="item l-font"
+                    [ngStyle]="{'width.px': length[field.key]}">
+                    <span class="text"
+                        [ngClass]="{'selected-text': orderBy}"
+                        (click)="orderByField(field.foreignKey)"
+                        tooltip="{{field.title}}"
+                        placement="bottom"
+                        container="body"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                                class="icon eos-icon small"
+                                [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="eos-node-list">
+        <div class="block list">
+            <p *ngIf="params.updatingList"
+                class="spinner-container text-center">
+                <eos-spinner size="lg"></eos-spinner>
+            </p>
+            <p *ngIf="!nodes?.length && !params.updatingList"
+                class="text-center text-info">Нет записей.</p>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList " class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList "
+                class="elements secondary-text">
                 <li class="child">
-                    <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
-                        placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
+                    <bs-sortable [(ngModel)]="nodes"
+                        [itemTemplate]="childTemplate"
+                        itemClass="{'highlighted': node.isSelected}"
+                        itemActiveClass="sortable-item-active"
+                        placeholderItem="Drag here"
+                        (drop)="toggleItem()"
+                        placeholderClass="placeholderStyle"
+                        wrapperClass="sortable-wrapper">
                     </bs-sortable>
                 </li>
             </ul>
-            <ng-template #childTemplate let-item="item" let-index="index">
-                <eos-node-list-item  [node]="item.value" [params]="params" [length]="length" [customFields]="customFields"
-                (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
-            </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList" class="elements secondary-text">
-                <li *ngFor="let item of nodes" class="child">
-                    <eos-node-list-item [node]="item" [params]="params" [length]="length" [customFields]="customFields"
-                    (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
+            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
+                class="elements secondary-text">
+                <li *ngFor="let item of nodes"
+                    class="child">
+                    <eos-node-list-item [node]="item"
+                        [params]="params"
+                        [length]="length"
+                        [customFields]="customFields"
+                        (mark)="checkState()"
+                        (onHoverItem)="showHint($event)"></eos-node-list-item>
                 </li>
             </ul>
-        </ng-container>
-        <eos-longtitle-hint></eos-longtitle-hint>
+            <eos-longtitle-hint></eos-longtitle-hint>
+        </div>
     </div>
 </div>
+<ng-template #markAllTooltip>
+        {{anyMarked ? 'Снять' : 'Пометить'}}<br/>{{anyMarked ? 'пометки': 'все'}}
+</ng-template>
 
+<ng-template #childTemplate
+    let-item="item"
+    let-index="index">
+    <eos-node-list-item [node]="item.value"
+        [params]="params"
+        [length]="length"
+        [customFields]="customFields"
+        (mark)="checkState()"
+        (onHoverItem)="showHint($event)"></eos-node-list-item>
+</ng-template>
