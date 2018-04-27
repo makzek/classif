@@ -171,6 +171,7 @@ eos-cabinet-card-edit {
         border-right-style: solid;
     }
     .scroll-btn {
+        display: none;
         position: absolute;
         margin: 0;
         border-left-width: 0;
@@ -189,6 +190,22 @@ eos-cabinet-card-edit {
     }
     .table-wrapper {
         position: relative;
+    }
+    .table,
+    table {
+        tbody {
+            th,
+            td {
+                border-bottom-width: 0;
+                border-top-width: 0
+            }
+        }
+    }
+    .tr-divider {
+        th,
+        td {
+            border-top: none;
+        }
     }
     .table-responsive {
         overflow-x: hidden;
@@ -211,20 +228,12 @@ eos-cabinet-card-edit {
             }
         }
     }
-    .tr-divider {
-        th,
-        td {
-            border-top: none;
+    .scrollable {
+        .scroll-btn {
+            display: block;
         }
-    }
-    .table,
-    table {
-        tbody {
-            th,
-            td {
-                border-bottom-width: 0;
-                border-top-width: 0
-            }
+        thead th:last-child {
+            padding-right: 48px;
         }
     }
 }

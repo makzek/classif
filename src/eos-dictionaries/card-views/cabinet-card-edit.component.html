@@ -117,7 +117,8 @@
     </div>
     <div [hidden]="activeTab !== 1"
         class="cabinet-access eos-cabinet-tab">
-        <div class="table-wrapper row">
+        <div class="table-wrapper row"
+            [ngClass]="{scrollable: showScroll}">
             <button class="btn btn-primary-light scroll-btn"
                 [ngClass]="{hidden:!showScroll}"
                 (mousedown)="startScrollToLeft()"
