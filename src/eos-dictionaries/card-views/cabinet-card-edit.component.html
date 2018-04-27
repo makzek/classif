@@ -38,10 +38,10 @@
                     role="menu">
                     <li *ngFor="let owner of possibleOwners"
                         role="menuitem"
-                        class="dropdown-item selected-text menuitem"
+                        class="selected-text menuitem"
                         [ngClass]="{deleted: owner.data['DELETED']}"
                         (click)="add(owner)">{{owner.data['CLASSIF_NAME']}}</li>
-                    <li *ngIf="!possibleOwners.length"><span class="dropdown-item btn disabled">Нет доступных ДЛ</span></li>
+                    <li *ngIf="!possibleOwners.length" class="disabled menuitem"><span class="disabled">Нет доступных ДЛ</span></li>
                 </ul>
             </div>
             <button class="btn action-btn btn-primary-light"

@@ -349,6 +349,14 @@
     margin: 0;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .3);
     border: 1px $border-color-main-theme solid;
+    .menuitem,
+    .dropdown-item {
+        cursor: pointer;
+        &.disabled {
+            cursor: not-allowed;
+            color: $disabled-color-main-theme;
+        }
+    }
     .menuitem {
         line-height: $item-height;
         .input-group {
