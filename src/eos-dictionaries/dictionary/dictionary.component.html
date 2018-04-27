@@ -143,34 +143,34 @@
                                     [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                 </div>
                                 <button class="btn scroll-btn btn-rigth"
-                                    (mousedown)="startScrollToRight()"
+                                    (mousedown)="startScrollToLeft()"
                                     (mouseup)="endScroll()">
                                     <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                                 </button>
                             </div>
                             <div class="wr" #rigthWr [style.width.px]="selectedWrapper.clientWidth - length.lockFieldsSpace - 48">
-                            <div class="rigth"
-                                [style.width.px]="length.rigthWidth">
-                                <div *ngFor="let field of customFields"
-                                    class="item l-font"
-                                    [ngStyle]="{'width.px': length[field.key]}">
-                                <span class="text"
-                                    [ngClass]="{'selected-text': orderBy}"
-                                    (click)="orderByField(field.foreignKey)"
-                                    tooltip="{{field.title}}"
-                                    placement="bottom"
-                                    container="body"
-                                    containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
-                                    class="icon eos-icon small"
-                                    [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
+                                <div class="rigth"
+                                    [style.width.px]="length.rigthWidth">
+                                    <div *ngFor="let field of customFields"
+                                        class="item l-font"
+                                        [ngStyle]="{'width.px': length[field.key]}">
+                                        <span class="text"
+                                            [ngClass]="{'selected-text': orderBy}"
+                                            (click)="orderByField(field.foreignKey)"
+                                            tooltip="{{field.title}}"
+                                            placement="bottom"
+                                            container="body"
+                                            containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                                            class="icon eos-icon small"
+                                            [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <button class="btn scroll-btn btn-left"
-                                (mouseup)="endScroll()"
-                                (mousedown)="startScrollToLeft()">
-                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                                <button class="btn scroll-btn btn-left"
+                                    (mouseup)="endScroll()"
+                                    (mousedown)="startScrollToRight()">
+                                    <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
-                        </div>
+                            </div>
                         </div>
                 </div>
             </div>
