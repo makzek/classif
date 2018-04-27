@@ -1,23 +1,25 @@
-<eos-dynamic-input [input]="inputs['rec.SEC_INDEX']"
-    [form]="form"
-    [readonly]="!editMode"></eos-dynamic-input>
-<eos-dynamic-input [input]="inputs['rec.GRIF_NAME']"
-    [form]="form"
-    [readonly]="!editMode"></eos-dynamic-input>
-<label>Требуется</label>
-<div class="checkbox-wrapper">
-    <eos-dynamic-input class="checkbox-inline"
-        [input]="inputs['rec.EDS_FLAG']"
+<div class="card-content-wrapper">
+    <eos-dynamic-input [input]="inputs['rec.SEC_INDEX']"
         [form]="form"
-        [readonly]="!editMode">
-    </eos-dynamic-input>
-    <eos-dynamic-input class="checkbox-inline"
-        [input]="inputs['rec.ENCRYPT_FLAG']"
+        [readonly]="!editMode"></eos-dynamic-input>
+    <eos-dynamic-input [input]="inputs['rec.GRIF_NAME']"
+        [form]="form"
+        [readonly]="!editMode"></eos-dynamic-input>
+    <label>Требуется</label>
+    <div class="checkbox-wrapper">
+        <eos-dynamic-input class="checkbox-inline"
+            [input]="inputs['rec.EDS_FLAG']"
+            [form]="form"
+            [readonly]="!editMode">
+        </eos-dynamic-input>
+        <eos-dynamic-input class="checkbox-inline"
+            [input]="inputs['rec.ENCRYPT_FLAG']"
+            [form]="form"
+            [readonly]="!editMode">
+        </eos-dynamic-input>
+    </div>
+    <eos-dynamic-input [input]="inputs['rec.NOTE']"
         [form]="form"
         [readonly]="!editMode">
     </eos-dynamic-input>
 </div>
-<eos-dynamic-input [input]="inputs['rec.NOTE']"
-    [form]="form"
-    [readonly]="!editMode">
-</eos-dynamic-input>
