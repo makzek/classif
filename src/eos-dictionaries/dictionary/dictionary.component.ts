@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, DoCheck, AfterViewInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -43,7 +43,8 @@ import { IPaginationConfig } from '../node-list-pagination/node-list-pagination.
 })
 export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     @ViewChild(NodeListComponent) nodeListComponent: NodeListComponent;
-    @ViewChild('tree') treeEl;
+    @ViewChild('tree') treeEl: ElementRef;
+    @ViewChild('rigthWr') rigthWr: ElementRef;
 
     @ViewChild('selectedWrapper') selectedEl;
 
@@ -77,7 +78,12 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     hasChanges = false;
 
     public length = {
+        scrollLeft: 0
     }; // Length column
+
+    public _interval: any;
+    public SCROLL_STEP = 5;
+    public SCROLL_INTERVAL = 50;
 
     orderBy: IOrderBy;
 
@@ -93,12 +99,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
 
     tableWidth: number;
     hasCustomTable: boolean;
-
-    public fonConf = {
-        width: 0 + 'px',
-        height: 0 + 'px',
-        top: 0 + 'px'
-    };
 
     get hideTree() {
         return this._sandwichSrv.treeIsBlocked;
@@ -403,6 +403,38 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         this._dictSrv.setDictMode(mode);
     }
 
+    public startScrollToLeft() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
+        this._interval = setInterval(() => {
+            if (this.rigthWr.nativeElement.scrollLeft > this.SCROLL_STEP) {
+                this.rigthWr.nativeElement.scrollLeft -= this.SCROLL_STEP;
+                this.length.scrollLeft = this.rigthWr.nativeElement.scrollLeft;
+            } else {
+                this.rigthWr.nativeElement.scrollLeft = 0;
+                this.length.scrollLeft = this.rigthWr.nativeElement.scrollLeft;
+            }
+        }, this.SCROLL_INTERVAL);
+    }
+
+    public startScrollToRight() {
+        if (this._interval) {
+            window.clearInterval(this._interval);
+        }
+        this._interval = setInterval(() => {
+            if (this.rigthWr.nativeElement.scrollLeft + this.rigthWr.nativeElement.clientWidth
+                < this.rigthWr.nativeElement.scrollWidth) {
+                this.rigthWr.nativeElement.scrollLeft += this.SCROLL_STEP;
+                this.length.scrollLeft = this.rigthWr.nativeElement.scrollLeft;
+            }
+        }, this.SCROLL_INTERVAL);
+    }
+
+    public endScroll() {
+        window.clearInterval(this._interval);
+    }
+
     private _countColumnWidth() {
         const span = document.createElement('span'),
             body = document.getElementsByTagName('body'),
@@ -418,7 +450,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             tableWidth: this.selectedEl.nativeElement.clientWidth,
             lockFieldsSpace: 0,
             leftWidth: 0,
-            rigthWidth: 0
+            rigthWidth: 0,
+            scrollLeft: 0
         };
         let needSpace = 0;
         this.viewFields.forEach((_f) => {

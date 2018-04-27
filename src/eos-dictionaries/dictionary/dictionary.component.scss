@@ -215,7 +215,7 @@
             .left {
                 .scroll-btn {
                     &.btn-rigth {
-                        background: linear-gradient(to right, transparent 0%, #fff 45%);
+                        background: linear-gradient(to right, transparent 0%, $modal-block-background-main-theme 45%);
                     }
                 }
             }
@@ -224,7 +224,8 @@
                 display: inline-block;
                 .scroll-btn {
                     &.btn-left {
-                        background: linear-gradient(to right, transparent 0%, #fff 45%);
+                        background: linear-gradient(to right, transparent 0%, $modal-block-background-main-theme 45%);
+                        transform: rotate(180deg);
                     }
                 }
             }

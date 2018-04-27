@@ -17,10 +17,6 @@
         <eos-tree *ngIf="treeNodes.length"
             [nodes]="treeNodes"
             [showDeleted]="params.showDeleted"></eos-tree>
-        <div class="fon highlighted"
-            [style.width]="fonConf.width"
-            [style.height]="fonConf.height"
-            [style.top]="fonConf.top"></div>
     </div>
     <div class="selected-wrapper"
         #selectedWrapper
@@ -146,11 +142,13 @@
                                     class="icon eos-icon small"
                                     [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                                 </div>
-                                <button class="btn scroll-btn btn-rigth">
+                                <button class="btn scroll-btn btn-rigth"
+                                    (mousedown)="startScrollToRight()"
+                                    (mouseup)="endScroll()">
                                     <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                                 </button>
                             </div>
-                            <div class="wr" [style.width.px]="selectedWrapper.clientWidth - length.lockFieldsSpace - 48">
+                            <div class="wr" #rigthWr [style.width.px]="selectedWrapper.clientWidth - length.lockFieldsSpace - 48">
                             <div class="rigth"
                                 [style.width.px]="length.rigthWidth">
                                 <div *ngFor="let field of customFields"
@@ -167,7 +165,9 @@
                                     [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                                 </div>
                             </div>
-                            <button class="btn scroll-btn btn-left">
+                            <button class="btn scroll-btn btn-left"
+                                (mouseup)="endScroll()"
+                                (mousedown)="startScrollToLeft()">
                                 <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
                             </button>
                         </div>
