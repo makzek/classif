@@ -5,6 +5,18 @@
     [ngClass]="{'no-padding': node.isNode && (field.key === 'CLASSIF_NAME' || field.foreignKey === 'CLASSIF_NAME')}"
     (mouseover)="showHint(el)">
     <ng-container [ngSwitch]="field.type">
+        <div *ngSwitchCase="types.boolean"
+            class="node-field-checkbox">
+            <span class="eos-icon small"
+                aria-hidden="true"
+                [ngClass]="{'eos-icon-checkbox-grey': field.value, 'eos-icon-minus-grey': !field.value}"></span>
+        </div>
+        <ng-container *ngSwitchCase="types.select">
+            {{currentValue()}}
+        </ng-container>
+        <ng-container *ngSwitchCase="types.buttons">
+                {{currentValue()}}
+        </ng-container>
         <ng-container *ngSwitchCase="types.date">
             {{field.value | eosDate}}
         </ng-container>

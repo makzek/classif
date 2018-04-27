@@ -402,12 +402,13 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     private _countColumnWidth() {
         const span = document.createElement('span'),
             body = document.getElementsByTagName('body'),
-            PADDING_SPACE = 74; // padding 20 * 2 + 24 sort ico
+            PADDING_SPACE = 64; // padding 20 * 2 + 24 sort ico
 
         span.style.position = 'absolute';
         span.style.top = '-5000px';
         span.style.left = '-5000px';
         span.style.fontSize = '16px';
+        span.style['font-family'] = 'Roboto, sans-serif';
         body[0].appendChild(span);
         const length = {};
         let fullWidth = 0;

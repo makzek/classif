@@ -45,4 +45,13 @@ export class NodeFieldComponent {
     viewNode(evt: Event) {
         this.view.emit(evt);
     }
+
+    currentValue(): string {
+        let value = this.field.value;
+        const optValue = this.field.options.find((option) => option.value === this.field.value);
+        if (optValue) {
+            value = optValue.title;
+        }
+        return value;
+    }
 }

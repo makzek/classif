@@ -289,7 +289,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         'START_DATE', 'END_DATE', 'fullPosition', 'SKYPE', 'printInfo', 'sev', 'organization', 'cabinet', 'user', 'photo',
         'title', 'DUE_LINK_ORGANIZ', 'indexDep', 'fullTitle', 'ISN_PHOTO'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
-    allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', 'DEPARTMENT_DUE', 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
+    allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', /* 'DEPARTMENT_DUE', */ 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
         'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
 'organization', 'cabinet', 'user'*/],
 };

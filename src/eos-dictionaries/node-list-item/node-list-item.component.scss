@@ -2,4 +2,17 @@
     overflow: hidden;
     display: flex;
     height: $item-height;
+    .node-row {
+        cursor: pointer;
+        width: calc(100% - 48px); // checkbox
+        display: inline-flex;
+    }
+    .checkbox,
+    .checkbox-inline {
+        width: $item-width;
+        line-height: 36px;
+    }
+    .checkbox-inline {
+        padding: 5px 0 5px 12px;
+    }
 }

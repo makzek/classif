@@ -1,10 +1,4 @@
-.eos-node-list,
-.eos-node-list-item {
-    .checkbox,
-    .checkbox-inline {
-        width: $item-width;
-        line-height: 36px;
-    }
+.eos-node-list {
     bs-sortable {
         width: 100%;
     }
@@ -20,17 +14,6 @@
         }
         .flat-child {
             padding: 0;
-        }
-        .node-info {
-            cursor: pointer;
-            width: calc(100% - 48px); // checkbox
-        }
-        .checkbox-inline {
-            padding: 5px 0 5px 12px;
-        }
-        .folder {
-            position: relative;
-            top: 5px;
         }
         .spinner {
             margin-top: 10px;
@@ -75,4 +58,3 @@
         }
     }
 }
-

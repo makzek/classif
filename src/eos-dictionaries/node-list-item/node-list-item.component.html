@@ -12,7 +12,7 @@
                 container="body"
                 placement="bottom"><input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span></label>
         </div>
-        <div class="node-info"
+        <div class="node-row"
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
             <eos-node-field *ngFor="let field of viewFields"
