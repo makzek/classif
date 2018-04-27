@@ -22,6 +22,7 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     @Input('params') params: IDictionaryViewParameters;
     @Input('length') length: any = {};
     @Input('customFields') customFields: IFieldView[];
+    @Input('left') left: boolean;
     @Output('mark') mark: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output('onHoverItem') onHoverItem: EventEmitter<HintConfiguration> = new EventEmitter<HintConfiguration>();
 
@@ -37,8 +38,9 @@ export class NodeListItemComponent implements OnInit, OnChanges {
     ) { }
 
     ngOnInit() {
-        this.viewFields = this.node.getListView();
-
+        if (!this.params.dualTable || this.params.dualTable && this.left) {
+            this.viewFields = this.node.getListView();
+        }
     }
 
     ngOnChanges() {

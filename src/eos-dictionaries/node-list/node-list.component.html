@@ -1,29 +1,123 @@
 <div class="eos-node-list">
     <div class="block list">
         <ng-container>
-            <p *ngIf="params.updatingList" class="spinner-container text-center"><eos-spinner size="lg"></eos-spinner></p>
-            <p *ngIf="!nodes?.length && !params.updatingList" class="text-center text-info">Нет записей.</p>
+            <p *ngIf="params.updatingList"
+                class="spinner-container text-center">
+                <eos-spinner size="lg"></eos-spinner>
+            </p>
+            <p *ngIf="!nodes?.length && !params.updatingList"
+                class="text-center text-info">Нет записей.</p>
             <!--Sortable list-->
-            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList " class="elements secondary-text">
+            <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList && !length.dualTable"
+                class="elements secondary-text">
                 <li class="child">
-                    <bs-sortable [(ngModel)]="nodes" [itemTemplate]="childTemplate" itemClass="{'highlighted': node.isSelected}" itemActiveClass="sortable-item-active"
-                        placeholderItem="Drag here" (drop)="toggleItem()" placeholderClass="placeholderStyle" wrapperClass="sortable-wrapper">
+                    <bs-sortable [(ngModel)]="nodes"
+                        [itemTemplate]="childTemplate"
+                        itemClass="{'highlighted': node.isSelected}"
+                        itemActiveClass="sortable-item-active"
+                        placeholderItem="Drag here"
+                        (drop)="toggleItem()"
+                        placeholderClass="placeholderStyle"
+                        wrapperClass="sortable-wrapper">
                     </bs-sortable>
                 </li>
             </ul>
-            <ng-template #childTemplate let-item="item" let-index="index">
-                <eos-node-list-item  [node]="item.value" [params]="params" [length]="length" [customFields]="customFields"
-                (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
-            </ng-template>
             <!--Simple list-->
-            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList" class="elements secondary-text">
-                <li *ngFor="let item of nodes" class="child">
-                    <eos-node-list-item [node]="item" [params]="params" [length]="length" [customFields]="customFields"
-                    (mark)="checkState()" (onHoverItem)="showHint($event)"></eos-node-list-item>
+            <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList && !length.dualTable
+                || params.searchResults && !params.updatingList && !length.dualTable"
+                class="elements secondary-text">
+                <li *ngFor="let item of nodes"
+                    class="child">
+                    <eos-node-list-item [node]="item"
+                        [params]="params"
+                        [length]="length"
+                        [customFields]="customFields"
+                        (mark)="checkState()"
+                        (onHoverItem)="showHint($event)"></eos-node-list-item>
                 </li>
             </ul>
+            <!--Dual table-->
+            <div class="dual-table"
+            *ngIf="length.dualTable">
+                <div class="left"
+                    [scrollTop]="r.scrollTop">
+                    <!--Dual simple-->
+                    <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
+                        class="elements secondary-text"
+                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        <li *ngFor="let item of nodes"
+                            class="child">
+                            <eos-node-list-item [node]="item"
+                                [params]="params"
+                                [length]="length"
+                                [left]="true"
+                                (mark)="checkState()"
+                                (onHoverItem)="showHint($event)"></eos-node-list-item>
+                        </li>
+                    </ul>
+                    <!--Dual sortable-->
+                    <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList "
+                        class="elements secondary-text"
+                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        <li class="child">
+                            <bs-sortable [(ngModel)]="nodes"
+                                [itemTemplate]="childTemplate"
+                                itemClass="{'highlighted': node.isSelected}"
+                                itemActiveClass="sortable-item-active"
+                                placeholderItem="Drag here"
+                                (drop)="toggleItem()"
+                                placeholderClass="placeholderStyle"
+                                wrapperClass="sortable-wrapper">
+                            </bs-sortable>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rigth"
+                    #r>
+                    <!--Dual simple-->
+                    <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
+                        class="elements secondary-text"
+                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        <li *ngFor="let item of nodes"
+                            class="child">
+                            <eos-node-list-item [node]="item"
+                                [params]="params"
+                                [length]="length"
+                                [customFields]="customFields"
+                                (mark)="checkState()"
+                                (onHoverItem)="showHint($event)"></eos-node-list-item>
+                        </li>
+                    </ul>
+                    <!--Dual sortable-->
+                    <ul *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList "
+                        class="elements secondary-text"
+                        [ngClass]="{'dual-table-mode': length.dualTable}">
+                        <li class="child">
+                            <bs-sortable [(ngModel)]="nodes"
+                                [itemTemplate]="childTemplate"
+                                itemClass="{'highlighted': node.isSelected}"
+                                itemActiveClass="sortable-item-active"
+                                placeholderItem="Drag here"
+                                (drop)="toggleItem()"
+                                placeholderClass="placeholderStyle"
+                                wrapperClass="sortable-wrapper">
+                            </bs-sortable>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </ng-container>
         <eos-longtitle-hint></eos-longtitle-hint>
     </div>
 </div>
 
+<ng-template #childTemplate
+    let-item="item"
+    let-index="index">
+    <eos-node-list-item [node]="item.value"
+        [params]="params"
+        [length]="length"
+        [customFields]="customFields"
+        (mark)="checkState()"
+        (onHoverItem)="showHint($event)"></eos-node-list-item>
+</ng-template>

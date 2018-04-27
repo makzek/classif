@@ -412,8 +412,14 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         span.style.left = '-5000px';
         span.style.fontSize = '16px';
         body[0].appendChild(span);
-        const length = {};
-        let fullWidth = 0;
+        const length = {
+            dualTable: false,
+            tableWidth: this.selectedEl.nativeElement.clientWidth,
+            lockFieldsSpace: 0,
+            fixedMargTop: 0,
+            scroll: false
+        };
+        let needSpace = 0;
         this.viewFields.forEach((_f) => {
             if (_f.customTitle) {
                 span.innerText = _f.customTitle;
@@ -421,7 +427,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 span.innerText = _f.title;
             }
             length[_f.key] = PADDING_SPACE + span.clientWidth;
-            fullWidth += PADDING_SPACE + span.clientWidth;
+            needSpace += length[_f.key];
         });
 
         if (this.customFields) {
@@ -432,8 +438,24 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                     span.innerText = _f.title;
                 }
                 length[_f.key] = PADDING_SPACE + span.clientWidth;
-                fullWidth += PADDING_SPACE + span.clientWidth;
+                needSpace += length[_f.key];
             });
+        }
+        console.warn(needSpace, this.selectedEl.nativeElement.clientWidth);
+        if (needSpace + 96 > this.selectedEl.nativeElement.clientWidth) {
+            this._dictSrv.viewParameters.dualTable = true;
+            length.dualTable = true;
+            length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
+            length.tableWidth = 0;
+            this.viewFields.forEach((item: IFieldView) => {
+                length[item.key] = length.lockFieldsSpace / this.viewFields.length;
+                length.tableWidth += length[item.key];
+            });
+            this.customFields.forEach((item: IFieldView) => length.tableWidth += length[item.key]);
+            length.tableWidth += 96;
+            // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
+        } else {
+            this._dictSrv.viewParameters.dualTable = false;
         }
         this.length = length;
         body[0].removeChild(span);

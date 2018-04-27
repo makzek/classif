@@ -102,6 +102,7 @@
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                     </div>
                     <div class="node-title">
+                        <!--FIELDS-->
                         <div *ngFor="let field of viewFields"
                             class="item l-font"
                             [ngStyle]="{'width.px': length[field.key]}">
@@ -115,6 +116,7 @@
                                 class="icon eos-icon small"
                                 [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
                         </div>
+                        <!--CUSTOM FIELDS-->
                         <div *ngFor="let field of customFields"
                             class="item l-font"
                             [ngStyle]="{'width.px': length[field.key]}">
