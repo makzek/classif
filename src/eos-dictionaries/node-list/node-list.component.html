@@ -46,7 +46,7 @@
                     <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
                         class="elements secondary-text"
                         [ngClass]="{'dual-table-mode': length.dualTable}"
-                        [style.width.px]="length.rigthWidth">
+                        [style.width.px]="length.lockFieldsSpace">
                         <li *ngFor="let item of nodes"
                             class="child">
                             <eos-node-list-item [node]="item"
@@ -81,7 +81,7 @@
                     <ul *ngIf="!params.userOrdered && nodes?.length && !params.updatingList || params.searchResults && !params.updatingList"
                         class="elements secondary-text"
                         [ngClass]="{'dual-table-mode': length.dualTable}"
-                        [style.width.px]="length.leftWidth">
+                        [style.width.px]="length.rigthWidth">
                         <li *ngFor="let item of nodes"
                             class="child">
                             <eos-node-list-item [node]="item"

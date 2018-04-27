@@ -89,8 +89,7 @@
             <eos-dictionary-quick-search *ngIf="fastSearch"></eos-dictionary-quick-search>
         </div>
         <div class="table-wrapper usual-border">
-            <div class="second-line block"
-                >
+            <div class="second-line block">
                 <div class="second-line-content">
                     <div *ngIf="params.markItems"
                         class="checkbox-inline">
@@ -101,7 +100,7 @@
                             containerClass="tooltip-info">
                             <input type="checkbox" [(ngModel)]="allMarked" (change)="toggleAllMarks()"><span></span></label>
                     </div>
-                    <div class="node-title">
+                    <div class="node-title" *ngIf="!length.dualTable">
                         <!--FIELDS-->
                         <div *ngFor="let field of viewFields"
                             class="item l-font"
@@ -131,6 +130,48 @@
                                     [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                         </div>
                     </div>
+                    <div class="node-title-duble" *ngIf="params.dualTable">
+                            <div class="left"
+                                [style.width.px]="length.lockFieldsSpace - 48">
+                                <div *ngFor="let field of viewFields"
+                                    class="item l-font"
+                                    [ngStyle]="{'width.px': length[field.key]}">
+                                <span class="text"
+                                    [ngClass]="{'selected-text': orderBy}"
+                                    (click)="orderByField(field.foreignKey)"
+                                    tooltip="{{field.title}}"
+                                    placement="bottom"
+                                    container="body"
+                                    containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                                    class="icon eos-icon small"
+                                    [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                                </div>
+                                <button class="btn scroll-btn btn-rigth">
+                                    <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                                </button>
+                            </div>
+                            <div class="wr" [style.width.px]="selectedWrapper.clientWidth - length.lockFieldsSpace - 48">
+                            <div class="rigth"
+                                [style.width.px]="length.rigthWidth">
+                                <div *ngFor="let field of customFields"
+                                    class="item l-font"
+                                    [ngStyle]="{'width.px': length[field.key]}">
+                                <span class="text"
+                                    [ngClass]="{'selected-text': orderBy}"
+                                    (click)="orderByField(field.foreignKey)"
+                                    tooltip="{{field.title}}"
+                                    placement="bottom"
+                                    container="body"
+                                    containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                                    class="icon eos-icon small"
+                                    [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
+                                </div>
+                            </div>
+                            <button class="btn scroll-btn btn-left">
+                                <span class="icon-btn eos-icon eos-icon-arrow-v-blue-left small"></span>
+                            </button>
+                        </div>
+                        </div>
                 </div>
             </div>
             <div [ngStyle]="{'width.px': tableWidth}">

@@ -76,7 +76,8 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
     formValidated = false;
     hasChanges = false;
 
-    public length = {}; // Length column
+    public length = {
+    }; // Length column
 
     orderBy: IOrderBy;
 
@@ -416,8 +417,6 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
             dualTable: false,
             tableWidth: this.selectedEl.nativeElement.clientWidth,
             lockFieldsSpace: 0,
-            fixedMargTop: 0,
-            scroll: false,
             leftWidth: 0,
             rigthWidth: 0
         };
@@ -443,23 +442,23 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 needSpace += length[_f.key];
             });
         }
-        console.warn(needSpace, this.selectedEl.nativeElement.clientWidth);
-        if (needSpace + 96 > this.selectedEl.nativeElement.clientWidth) {
+
+        if (needSpace > this.selectedEl.nativeElement.clientWidth) {
             this._dictSrv.viewParameters.dualTable = true;
             length.dualTable = true;
-            length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2;
+            length.lockFieldsSpace = this.selectedEl.nativeElement.clientWidth / 2 - 48;
+            console.warn(length.lockFieldsSpace);
             length.tableWidth = 0;
             this.viewFields.forEach((item: IFieldView) => {
-                length[item.key] = length.lockFieldsSpace / this.viewFields.length;
-                length.tableWidth += length[item.key];
-                length.rigthWidth += length[item.key];
-            });
-            this.customFields.forEach((item: IFieldView) => {
+                length[item.key] = length.lockFieldsSpace / this.viewFields.length - 40;
                 length.tableWidth += length[item.key];
                 length.leftWidth += length[item.key];
             });
-            length.tableWidth += 96;
-            // console.log('! DUAL TABLE ACTIVE !', this.viewFields);
+            length.leftWidth -= 48;
+            this.customFields.forEach((item: IFieldView) => {
+                length.tableWidth += length[item.key];
+                length.rigthWidth += length[item.key];
+            });
         } else {
             this._dictSrv.viewParameters.dualTable = false;
         }

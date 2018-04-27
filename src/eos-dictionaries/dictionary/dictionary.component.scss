@@ -197,6 +197,52 @@
                 }
             }
         }
+        .node-title-duble {
+            display: inline-block;
+            vertical-align: middle;
+            .rigth, .left {
+                display: inline-block;
+                position: relative;
+            }
+            .scroll-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: $item-width;
+                height: $item-height;
+                outline: none;
+            }
+            .left {
+                .scroll-btn {
+                    &.btn-rigth {
+                        background: linear-gradient(to right, transparent 0%, #fff 45%);
+                    }
+                }
+            }
+            .wr {
+                overflow-x: scroll;
+                display: inline-block;
+                .scroll-btn {
+                    &.btn-left {
+                        background: linear-gradient(to right, transparent 0%, #fff 45%);
+                    }
+                }
+            }
+            .item {
+                display: inline-block;
+                padding: 0 20px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
+                .text {
+                    cursor: pointer;
+                }
+                .icon {
+                    margin: -5px 0 0;
+                }
+            }
+        }
         .checkbox-inline {
             line-height: $item-height - 1px;
             width: $item-width;
