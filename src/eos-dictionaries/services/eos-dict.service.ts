@@ -52,10 +52,10 @@ export class EosDictService {
     private _customFields: any;
     private _customTitles: any;
     private _dictMode: number;
-    private _dictMode$: BehaviorSubject<number>;
     private _dictionaries: EosDictionary[];
     private _listDictionary$: BehaviorSubject<EosDictionary>;
     private filters: any = {};
+    private currentNode: EosDictionaryNode;
 
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
@@ -162,23 +162,14 @@ export class EosDictService {
     get currentDictionary(): EosDictionary {
         return this._dictionaries[this._dictMode];
     }
-    /*
-    private get dictionary(): EosDictionary {
-        return this.currentDictionary;
-    }
-
-    private set dictionary(d: EosDictionary) {
-        this._dictionaries[0] = d;
-    }
-    */
 
     constructor(
+        private _router: Router,
         private _msgSrv: EosMessageService,
         private _storageSrv: EosStorageService,
+        private _descrSrv: DictionaryDescriptorService,
         private departmentsSrv: EosDepartmentsService,
         private confirmSrv: ConfirmWindowService,
-        private _descrSrv: DictionaryDescriptorService,
-        private _router: Router
     ) {
         this._initViewParameters();
         this._dictionaries = [];
@@ -191,7 +182,6 @@ export class EosDictService {
         this._viewParameters$ = new BehaviorSubject<IDictionaryViewParameters>(this.viewParameters);
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
-        this._dictMode$ = new BehaviorSubject(0);
         this._dictMode = 0;
     }
 
@@ -318,6 +308,7 @@ export class EosDictService {
         this._treeNode$.next(null);
         this._dictionary$.next(null);
         this._listDictionary$.next(null);
+        this.currentNode = null;
         this.filters = {};
     }
 
@@ -557,7 +548,7 @@ export class EosDictService {
     }
 
     setFilter(filter: any) {
-        if (filter && filter.data) {
+        if (filter && filter.date) {
             Object.assign(this.filters, filter);
             this._reloadList();
         }
@@ -579,7 +570,7 @@ export class EosDictService {
     public getFullNode(dictionaryId: string, nodeId: string): Promise<EosDictionaryNode> {
         return this.getDictionaryById(dictionaryId)
             .then((dictionary) => dictionary.getFullNodeInfo(nodeId))
-            .then((node) => node)
+            .then((node) => this.currentNode = node)
             .catch((err) => this._errHandler(err));
     }
 
@@ -615,8 +606,8 @@ export class EosDictService {
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this._dictionaries[0].getDictionaryIdByMode(mode);
         }
+
         this._reloadList();
-        this._dictMode$.next(mode);
     }
 
     setUserOrder(ordered: EosDictionaryNode[]) {
@@ -674,8 +665,7 @@ export class EosDictService {
 
     isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
         let records: EosDictionaryNode[] = [];
-        let _hasMatch = false;
-
+        let valid = true;
         if ('string' === typeof val) {
             val = val.trim();
         }
@@ -683,14 +673,14 @@ export class EosDictService {
             if (inDict) {
                 records = Array.from(this.currentDictionary.nodes.values());
             } else {
-                records = this._listNode ? this._listNode.neighbors : [];
+                records = this.currentNode ? this.currentNode.neighbors : [];
             }
 
-            records = records.filter((node) => !this._listNode || node.id !== this._listNode.id);
+            records = records.filter((node) => !this.currentNode || node.id !== this.currentNode.id);
 
-            _hasMatch = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) > -1;
+            valid = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) === -1;
         }
-        return _hasMatch ? { 'isUnic': !_hasMatch } : null;
+        return valid ? null : { 'isUnic': !valid };
     }
 
     public uploadImg(img: IImage): Promise<number> {

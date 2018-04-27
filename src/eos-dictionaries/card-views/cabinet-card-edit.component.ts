@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild, OnChanges } from '@angular/core';
+import { Component, Injector, ViewChild, OnChanges, HostListener } from '@angular/core';
 
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { CABINET_FOLDERS } from 'eos-dictionaries/consts/dictionaries/cabinet.consts';
@@ -108,6 +108,9 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
 
     setTab(idx: number) {
         this.activeTab = idx;
+        setTimeout(() => {
+            this.updateScroller();
+        }, 0);
     }
 
     folderTitle(folderType: number): string {
@@ -276,6 +279,7 @@ export class CabinetCardEditComponent extends BaseCardEditComponent implements O
             _person.marked && _person.data.ISN_CABINET === this.data.rec['ISN_CABINET']) > -1;
     }
 
+    @HostListener('window:resize')
     private updateScroller() {
         if (this.tableEl && this.tableEl.nativeElement.scrollWidth) {
             this.showScroll = this.tableEl.nativeElement.scrollWidth > this.tableEl.nativeElement.clientWidth;

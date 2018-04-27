@@ -33,7 +33,7 @@ export class EosBreadcrumbsService {
     constructor(
         _router: Router,
         private _route: ActivatedRoute,
-        private _descrSrv: DictionaryDescriptorService,
+        private dictDescriptorSrv: DictionaryDescriptorService,
     ) {
         this._breadcrumbs$ = new BehaviorSubject<IBreadcrumb[]>([]);
         this._eventFromBc$ = new Subject();
@@ -46,7 +46,7 @@ export class EosBreadcrumbsService {
         this._eventFromBc$.next(action);
     }
 
-    public makeBreadCrumbs() {
+    private makeBreadCrumbs() {
         this._breadcrumbs = [];
         const breadcrumbs = this._parseState(this._route.snapshot);
         // 55: Убрать без title (!?) routing -> showInBreadcrubs
@@ -80,9 +80,17 @@ export class EosBreadcrumbsService {
                 if (_current.params) {
                     if (_current.params.dictionaryId && !_current.params.nodeId) {
                         const _dictId = _current.params.dictionaryId;
-                        const descr = this._descrSrv.getDescriptorData(_dictId);
+                        let descr = this.dictDescriptorSrv.getDescriptorClass(_dictId);
                         if (descr) {
                             bc.title = descr.title;
+                        }
+
+                        if (descr.getParentDictionaryId()) {
+                            descr = this.dictDescriptorSrv.getDescriptorClass(descr.getParentDictionaryId());
+                            crumbs.push({
+                                title: descr.title,
+                                url: '/spravochniki/' + descr.id
+                            });
                         }
                     }
                 }
@@ -90,6 +98,7 @@ export class EosBreadcrumbsService {
             }
             _current = _current.firstChild;
         }
+
         return crumbs;
     }
 }

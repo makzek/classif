@@ -15,8 +15,9 @@ import { UserRestComponent } from '../eos-rest/clman/user.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
 import { LoginComponent } from './login/login.component';
+import { environment } from 'environments/environment';
 
-const routes: Routes = [{
+let routes: Routes = [{
     path: 'spravochniki',
     data: { title: 'Справочники', showInBreadcrumb: true },
     canActivate: [AuthorizedGuard],
@@ -27,10 +28,12 @@ const routes: Routes = [{
         canActivate: [AuthorizedGuard],
     }, {
         path: ':dictionaryId',
-        data: { title: 'Справочник', showBreadcrumb: true,
-        showInBreadcrumb: true,
-        showSandwichInBreadcrumb: true,
-        showPushpin: true  },
+        data: {
+            title: 'Справочник', showBreadcrumb: true,
+            showInBreadcrumb: true,
+            showSandwichInBreadcrumb: true,
+            showPushpin: true
+        },
         children: [{
             path: ':nodeId',
             data: { title: 'Запись', showInBreadcrumb: false },
@@ -85,35 +88,41 @@ const routes: Routes = [{
         data: { title: 'Главная', showInBreadcrumb: false, showBreadcrumb: false }
     }]
 }, {
-    path: 'test',
-    component: TestPageComponent,
-    data: { title: 'Test page for UI components', showInBreadcrumb: true, showBreadcrumb: false },
-}, {
-    path: 'delivery',
-    canActivate: [AuthorizedGuard],
-    component: DeliveryComponent,
-    data: { title: 'delivery page', showInBreadcrumb: true },
-}, {
-    path: 'rubric',
-    canActivate: [AuthorizedGuard],
-    component: RubricComponent,
-    data: { title: 'rubric page', showInBreadcrumb: true }
-}, {
-    path: 'department',
-    canActivate: [AuthorizedGuard],
-    component: DepartmentComponent,
-    data: { title: 'department page', showInBreadcrumb: true }
-}, {
-    path: 'user',
-    canActivate: [AuthorizedGuard],
-    component: UserRestComponent,
-    data: { title: 'user page', showInBreadcrumb: true }
-}, {
     path: 'login',
     canActivate: [UnauthorizedGuard],
     component: LoginComponent,
     data: { title: 'Вход в систему', showInBreadcrumb: false }
-}, {
+}];
+
+if (!environment.production) {
+    routes = routes.concat([{
+        path: 'test',
+        component: TestPageComponent,
+        data: { title: 'Test page for UI components' },
+    }, {
+        path: 'delivery',
+        canActivate: [AuthorizedGuard],
+        component: DeliveryComponent,
+        data: { title: 'delivery page' },
+    }, {
+        path: 'rubric',
+        canActivate: [AuthorizedGuard],
+        component: RubricComponent,
+        data: { title: 'rubric page' }
+    }, {
+        path: 'department',
+        canActivate: [AuthorizedGuard],
+        component: DepartmentComponent,
+        data: { title: 'department page' }
+    }, {
+        path: 'user',
+        canActivate: [AuthorizedGuard],
+        component: UserRestComponent,
+        data: { title: 'user page' }
+    }]);
+}
+
+routes = routes.concat([{
     path: '',
     redirectTo: '/desk/system',
     pathMatch: 'full',
@@ -121,7 +130,7 @@ const routes: Routes = [{
     path: '**',
     redirectTo: '/desk/system',
     pathMatch: 'full',
-}];
+}]);
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

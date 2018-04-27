@@ -11,6 +11,7 @@ import { DateInput } from '../core/inputs/date-input';
 import { DropdownInput } from '../core/inputs/select-input';
 import { ButtonsInput } from '../core/inputs/buttons-input';
 import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
+import { EosUtils } from '../core/utils';
 
 @Injectable()
 export class InputControlService {
@@ -73,6 +74,38 @@ export class InputControlService {
         return (control: AbstractControl): { [key: string]: any } => this._dictSrv.isUnic(control.value, path, inDict);
     }
 
+    dateCompareValidator(commparePath: string, operand: 'lt' | 'gt'): ValidatorFn {
+        return (control: AbstractControl): { [errKey: string]: any } => {
+            let valid = true;
+            let errMessage: string = null;
+            const value = control.value;
+            if (value && value instanceof Date) {
+                const group = <FormGroup>control.parent;
+                if (group) {
+                    const compareCtrl = group.controls[commparePath];
+                    if (compareCtrl && compareCtrl.value && compareCtrl.value instanceof Date) {
+                        switch (operand) {
+                            case 'gt':
+                                valid = value.getTime() > compareCtrl.value.getTime();
+                                errMessage = 'Дата должна быть больше ' + EosUtils.dateToStringValue(compareCtrl.value);
+                                break;
+                            case 'lt':
+                                valid = value.getTime() < compareCtrl.value.getTime();
+                                errMessage = 'Дата должна быть меньше ' + EosUtils.dateToStringValue(compareCtrl.value);
+                                break;
+                        }
+
+                        if (valid && compareCtrl.invalid) {
+                            compareCtrl.updateValueAndValidity();
+                        }
+                    }
+                }
+            }
+
+            return (valid ? null : { dateCompare: errMessage });
+        };
+    }
+
     dateValueValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             const value = control.value;
@@ -98,6 +131,12 @@ export class InputControlService {
         } else {
             if (input.controlType === E_FIELD_TYPE.date) {
                 validators.push(this.dateValueValidator());
+                if (input.key === 'rec.END_DATE') {
+                    validators.push(this.dateCompareValidator('rec.START_DATE', 'gt'));
+                }
+                if (input.key === 'rec.START_DATE') {
+                    validators.push(this.dateCompareValidator('rec.END_DATE', 'lt'));
+                }
             }
 
             if (input.pattern) {

@@ -44,8 +44,11 @@
 <ng-template #referenceTemplate
     let-item="item"
     let-index="index">
-    <div class="btn item-content xl-font block edited"
+    <div class="item-content xl-font block edited"
         *ngIf="editing(item.value)">
+        <span class="icon-wrapper">
+            <span class="icon eos-icon eos-icon-bin-blue"></span>
+        </span>
         <input id="title"
             name="title"
             #title
@@ -54,6 +57,7 @@
             (focus)="setCursor($event)"
             (ngModelChange)="changeName($event)"
             required
+            autofocus
             [pattern]="notEmptyString.source"
             maxlength="255" />
         <button class="icon-btn btn lefter"
@@ -78,7 +82,8 @@
     </div>
 
     <div *ngIf="!editing(item.value)"
-        class="btn item-content xl-font block"
+        (mousedown)="tryMove($event)"
+        class="item-content xl-font block"
         [routerLink]="[item.value.url]"
         tooltip="{{deskId === 'system' ? item.value.title : item.value.title}}"
         placement="bottom"
@@ -91,14 +96,17 @@
             class="text">
             {{item.value.title}}
         </span>
-        <!--<button *ngIf="deskId !== 'system'" class="icon-btn btn leftest"
+        <button *ngIf="deskId !== 'system'"
+            (mouseover)="dragResolve = true"
+            (mouseleave)="dragResolve = false"
+            class="icon-btn btn leftest"
             tooltip="Пеместить"
             placement="bottom"
             containerClass="tooltip-info"
             container="body">
-            <span class="eos-icon eos-icon-move-2d-blue small"
+            <span class="fa fa-arrows selected-text xl-font "
                 aria-hidden="true"></span>
-        </button>-->
+        </button>
         <button class="icon-btn btn"
             (click)="edit($event, item.value)"
             [ngClass]="{'lefter': deskId !== 'system'}"

@@ -1,6 +1,7 @@
-<ng-container *ngFor="let key of keys(inputs)">
-    <eos-dynamic-input [input]="inputs[key]"
+<div class="card-content-wrapper">
+    <eos-dynamic-input *ngFor="let key of keys(inputs)"
+        [input]="inputs[key]"
         [form]="form"
         [readonly]="!editMode">
     </eos-dynamic-input>
-</ng-container>
+</div>

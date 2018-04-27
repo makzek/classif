@@ -1,76 +1,78 @@
-<div class="clearfix">
-    <div class="col-1 pull-left">
-        <eos-dynamic-input [input]="inputs['rec.CODE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.indexDep']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="col-2 pull-right">
-        <div class="col-2 pull-right">
-            <eos-dynamic-input [input]="inputs['rec.title']"
+<div class="card-content-wrapper">
+    <div class="clearfix">
+        <div class="col-1 pull-left">
+            <eos-dynamic-input [input]="inputs['rec.CODE']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
-            <div class="duty-flag">
-                <eos-dynamic-input [input]="inputs['printInfo.NOT_USE_IN_DUTY']"
+            <eos-dynamic-input [input]="inputs['rec.indexDep']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="col-2 pull-right">
+            <div class="col-2 pull-right">
+                <eos-dynamic-input [input]="inputs['rec.title']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+                <div class="duty-flag">
+                    <eos-dynamic-input [input]="inputs['printInfo.NOT_USE_IN_DUTY']"
+                        [form]="form"
+                        [readonly]="!editMode"></eos-dynamic-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="col-1 pull-left">
+            <eos-dynamic-input [input]="inputs['sev.GLOBAL_ID']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <div class="col-2 pull-right">
+            <div class="department-fullname">
+                <eos-dynamic-input [input]="inputs['rec.fullTitle']"
                     [form]="form"
                     [readonly]="!editMode"></eos-dynamic-input>
             </div>
         </div>
     </div>
-</div>
-<div class="clearfix">
-    <div class="col-1 pull-left">
-        <eos-dynamic-input [input]="inputs['sev.GLOBAL_ID']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="col-2 pull-right">
-        <div class="department-fullname">
-            <eos-dynamic-input [input]="inputs['rec.fullTitle']"
+    <div class="clearfix">
+        <div class="col-1 pull-left">
+            <eos-dynamic-input [input]="inputs['rec.START_DATE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.END_DATE']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
-    </div>
-</div>
-<div class="clearfix">
-    <div class="col-1 pull-left">
-        <eos-dynamic-input [input]="inputs['rec.START_DATE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.END_DATE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="col-2 pull-right">
-        <eos-dynamic-input [input]="inputs['printInfo.DEPARTMENT_RP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <label [ngClass]="{'unimportant-text': !editMode }"
-            for="DUE_LINK_ORGANIZ">Организация <a
+        <div class="col-2 pull-right">
+            <eos-dynamic-input [input]="inputs['printInfo.DEPARTMENT_RP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <label [ngClass]="{'unimportant-text': !editMode }"
+                for="DUE_LINK_ORGANIZ">Организация <a
                 *ngIf="editMode && hasCard"
                 (click)="chooseOrganiz()">[выбрать]</a></label>
-        <p class="form-control-static m-font">{{orgName || data.organization['CLASSIF_NAME'] || ''}}</p>
+            <p class="form-control-static m-font">{{orgName || data.organization['CLASSIF_NAME'] || ''}}</p>
+        </div>
     </div>
-</div>
-<div class="clearfix">
-    <div class="col-1 pull-left">
-        <div class="card-flag">
-            <eos-dynamic-input [input]="inputs['rec.CARD_FLAG']"
+    <div class="clearfix">
+        <div class="col-1 pull-left">
+            <div class="card-flag">
+                <eos-dynamic-input [input]="inputs['rec.CARD_FLAG']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+            </div>
+        </div>
+        <div class="col-2 pull-right">
+            <ng-container *ngIf="hasCard">
+                <eos-dynamic-input [input]="inputs['rec.CARD_NAME']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+            </ng-container>
+            <eos-dynamic-input class="department-note"
+                [input]="inputs['rec.NOTE']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
-    </div>
-    <div class="col-2 pull-right">
-        <ng-container *ngIf="hasCard">
-            <eos-dynamic-input [input]="inputs['rec.CARD_NAME']"
-                [form]="form"
-                [readonly]="!editMode"></eos-dynamic-input>
-        </ng-container>
-        <eos-dynamic-input class="department-note"
-            [input]="inputs['rec.NOTE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
     </div>
 </div>

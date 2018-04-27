@@ -119,15 +119,7 @@ export class EosDateMaskDirective implements ControlValueAccessor {
                 value.setHours(0, 0, 0, 0);
             }
             this.value = value;
-            this.ref.nativeElement.value = this.dateToString(value);
-        }
-    }
-
-    private dateToString(d: Date): string {
-        if (d instanceof Date && !isNaN(d.getTime())) {
-            return [EosUtils.pad(d.getDate()), EosUtils.pad(d.getMonth() + 1), d.getFullYear()].join('.');
-        } else {
-            return null;
+            this.ref.nativeElement.value = EosUtils.dateToStringValue(value);
         }
     }
 

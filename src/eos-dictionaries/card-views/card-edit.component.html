@@ -7,7 +7,7 @@
                 <ng-container *ngSwitchCase="'departments'">
                     <eos-departments-card-edit-person #cardEditEl
                         *ngIf="data.rec['IS_NODE'] === 1"
-                        class="departments-person-card-edit departments-card-edit"
+                        class="departments-person-card-edit simple-card-edit"
                         [form]="form"
                         [inputs]="inputs"
                         [data]="data"
@@ -16,7 +16,7 @@
                         [fullNamesList]="fullNamesList"></eos-departments-card-edit-person>
                     <eos-departments-card-edit-department #cardEditEl
                         *ngIf="data.rec['IS_NODE'] === 0"
-                        class="departments-department-card-edit departments-card-edit"
+                        class="departments-department-card-edit simple-card-edit"
                         [form]="form"
                         [inputs]="inputs"
                         [data]="data"
@@ -33,21 +33,21 @@
                     [editMode]="editMode"></eos-cabinet-card-edit>
                 <eos-security-card-edit *ngSwitchCase="'security'"
                     #cardEditEl
-                    class="security-card-edit"
+                    class="security-card-edit simple-card-edit"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"></eos-security-card-edit>
                 <eos-docgroup-card *ngSwitchCase="'docgroup'"
                     #cardEditEl
-                    class="docgroup-card"
+                    class="docgroup-card simple-card-edit"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"
                     [editMode]="editMode"></eos-docgroup-card>
                 <eos-visatype-card *ngSwitchCase="'visa-type'"
                     #cardEditEl
-                    class="visatype-card"
+                    class="visatype-card simple-card-edit"
                     [form]="form"
                     [inputs]="inputs"
                     [data]="data"

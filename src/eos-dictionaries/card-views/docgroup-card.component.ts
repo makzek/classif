@@ -1,4 +1,4 @@
-import { Component, Injector, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Injector, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DocgroupTemplateConfigComponent } from '../docgroup-template-config/docgroup-template-config.component';
@@ -10,7 +10,7 @@ const UNIQ_CHECK_EXPR = /\{2\}/;
     selector: 'eos-docgroup-card',
     templateUrl: 'docgroup-card.component.html',
 })
-export class DocgroupCardComponent extends BaseCardEditComponent implements OnChanges, OnDestroy {
+export class DocgroupCardComponent extends BaseCardEditComponent implements OnChanges {
 
     get isPrjFlag(): boolean {
         return this.getValue('rec.PRJ_NUM_FLAG');
@@ -33,10 +33,6 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
         }
     }
 
-    ngOnDestroy() {
-        this.unsubscribe();
-    }
-
     editTemplate(forProject = false) {
         this.templateModal = this.modalSrv.show(DocgroupTemplateConfigComponent, { class: 'docgroup-template-modal modal-lg' });
         const path = forProject ? 'rec.PRJ_SHABLON' : 'rec.SHABLON';
@@ -48,23 +44,6 @@ export class DocgroupCardComponent extends BaseCardEditComponent implements OnCh
         this.templateModal.content.init(content);
 
         this.templateModal.content.onSave.subscribe((template) => this.setValue(path, template));
-    }
-
-    private toggleInput(enable: boolean, path: string, formChanges: any, updates: any) {
-        if (this.form.controls[path]) {
-            if (enable) {
-                if (this.form.controls[path].disabled) {
-                    this.form.controls[path].enable();
-                }
-            } else {
-                if (this.form.controls[path].enabled) {
-                    this.form.controls[path].disable();
-                    if (formChanges[path]) {
-                        updates[path] = null;
-                    }
-                }
-            }
-        }
     }
 
     private updateForm(formChanges: any) {

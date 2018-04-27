@@ -1,34 +1,16 @@
-import { Input } from '@angular/core';
+import { Input, OnChanges, OnDestroy } from '@angular/core';
 import { InputBase } from '../core/inputs/input-base';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { INPUT_ERROR_MESSAGES } from '../consts/common.consts';
+import { Subscription } from 'rxjs/Subscription';
 
-export class DynamicInputBase {
+export class DynamicInputBase implements OnChanges, OnDestroy {
     @Input() input: InputBase<any>;
     @Input() form: FormGroup;
     @Input() readonly: boolean;
+    @Input() inputTooltip: any;
 
-    focused = false;
-
-    tooltipCfg: any = {
-        placement: 'bottom',
-        class: 'tooltip-error',
-        container: ''
-    };
-
-    tooltipMessage = '';
-
-    get control(): AbstractControl {
-        return this.form.controls[this.input.key];
-    }
-
-    get isValid() {
-        return this.control && this.control.valid;
-    }
-
-    get isDirty() {
-        return this.control && this.control.dirty;
-    }
+    protected subscriptions: Subscription[] = [];
 
     get isRequired(): boolean {
         let required = false;
@@ -40,19 +22,38 @@ export class DynamicInputBase {
     }
 
     onFocus() {
-        this.focused = true;
+        this.toggleTooltip(true);
     }
 
     onBlur() {
         this.updateMessage();
-        this.focused = false;
+        this.toggleTooltip(false);
+    }
+
+    ngOnChanges() {
+        const control = this.control;
+        if (control) {
+            this.ngOnDestroy();
+            this.subscriptions.push(control.statusChanges.subscribe((status) => {
+                this.inputTooltip.visible = this.inputTooltip.visible && control.invalid && control.dirty;
+            }));
+        }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions = [];
+    }
+
+    protected get control(): AbstractControl {
+        return this.form.controls[this.input.key];
     }
 
     private updateMessage() {
         let msg = '';
         const control = this.control;
         if (this.control && this.control.errors) {
-            this.tooltipCfg.class = 'tooltip-error';
+            // this.inputTooltip.class = 'tooltip-error';
             msg = Object.keys(control.errors)
                 .map((key) => {
                     switch (key) {
@@ -64,6 +65,8 @@ export class DynamicInputBase {
                             return INPUT_ERROR_MESSAGES[key][+(!!this.input.unicInDict)];
                         case 'maxlength':
                             return 'Максимальная длина ' + this.input.length + ' символ(а|ов).';
+                        case 'dateCompare':
+                            return control.errors[key];
                         default:
                             // console.warn('unhandled error key', key);
                             return INPUT_ERROR_MESSAGES.default;
@@ -71,8 +74,19 @@ export class DynamicInputBase {
                 })
                 .join(' ');
         } else {
-            // this.tooltipCfg.class = 'tooltip-info';
+            // this.inputTooltip.class = 'tooltip-info';
         }
-        this.tooltipMessage = msg;
+        this.inputTooltip.message = msg;
+    }
+
+    private toggleTooltip(focused: boolean) {
+        if (!this.readonly) {
+            const control = this.control;
+            if (control) {
+                this.inputTooltip.visible = !focused && control.invalid && control.dirty;
+            } else {
+                this.inputTooltip.visible = false;
+            }
+        }
     }
 }

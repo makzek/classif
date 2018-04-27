@@ -1,11 +1,11 @@
-import { Input, Injector } from '@angular/core';
+import { Input, Injector, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { EosDictService } from '../services/eos-dict.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NOT_EMPTY_STRING } from '../consts/input-validation';
 
-export class BaseCardEditComponent {
+export class BaseCardEditComponent implements OnDestroy {
     @Input() form: FormGroup;
     @Input() inputs: any;
     @Input() data: any;
@@ -18,7 +18,6 @@ export class BaseCardEditComponent {
 
     protected dictSrv: EosDictService;
     protected formChanges$: Subscription;
-
 
     /* private _dates: any = {}; */
     constructor(injector: Injector) {
@@ -37,6 +36,10 @@ export class BaseCardEditComponent {
         }
     }
 
+    ngOnDestroy() {
+        this.unsubscribe();
+    }
+
     protected getValue(path: string): any {
         const control = this.form.controls[path];
         if (control) {
@@ -50,6 +53,24 @@ export class BaseCardEditComponent {
         const control = this.form.controls[path];
         if (control) {
             control.setValue(value);
+        }
+    }
+
+    protected toggleInput(enable: boolean, path: string, formChanges: any, updates: any) {
+        const control = this.form.controls[path];
+        if (control) {
+            if (enable) {
+                if (control.disabled) {
+                    control.enable();
+                }
+            } else {
+                if (control.enabled) {
+                    control.disable();
+                    if (formChanges[path]) {
+                        updates[path] = null;
+                    }
+                }
+            }
         }
     }
 

@@ -9,68 +9,69 @@
         </li>
     </ul>
 </div>
-<div [hidden]="currTab !== 0"
-    class="clearfix">
-    <div class="col-1 pull-left">
-        <div class="current-image"
-            [ngStyle]="{'background-image': photo}">
-            <eos-photo-uploader class="photo-uploader"
-                [disableEdit]="!editMode"
-                (endUploading)="newImage($event)"></eos-photo-uploader>
-        </div>
-        <eos-dynamic-input [input]="inputs['printInfo.GENDER']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.POST_H']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.CODE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.indexPerson']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="sev"
-            [input]="inputs['sev.GLOBAL_ID']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.START_DATE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.END_DATE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <div class="col-2 pull-right">
-        <eos-dynamic-input [input]="inputs['printInfo.SURNAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <div class="row-wrapper">
-            <eos-dynamic-input class="person-name"
-                [input]="inputs['printInfo.NAME']"
+<div class="card-content-wrapper">
+    <div [hidden]="currTab !== 0"
+        class="clearfix">
+        <div class="col-1 pull-left">
+            <div class="current-image"
+                [ngStyle]="{'background-image': photo}">
+                <eos-photo-uploader class="photo-uploader"
+                    [disableEdit]="!editMode"
+                    (endUploading)="newImage($event)"></eos-photo-uploader>
+            </div>
+            <eos-dynamic-input [input]="inputs['printInfo.GENDER']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
-            <eos-dynamic-input class="person-second-name"
-                [input]="inputs['printInfo.PATRON']"
+            <eos-dynamic-input [input]="inputs['rec.POST_H']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.CODE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.indexPerson']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="sev"
+                [input]="inputs['sev.GLOBAL_ID']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.START_DATE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.END_DATE']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
-        <eos-dynamic-input [input]="inputs['rec.SURNAME']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input [input]="inputs['rec.DUTY']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="person-fullname"
-            [input]="inputs['rec.fullPosition']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="person-note"
-            [input]="inputs['rec.NOTE']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
-        <!-- delegation
+        <div class="col-2 pull-right">
+            <eos-dynamic-input [input]="inputs['printInfo.SURNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <div class="row-wrapper">
+                <eos-dynamic-input class="person-name"
+                    [input]="inputs['printInfo.NAME']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+                <eos-dynamic-input class="person-second-name"
+                    [input]="inputs['printInfo.PATRON']"
+                    [form]="form"
+                    [readonly]="!editMode"></eos-dynamic-input>
+            </div>
+            <eos-dynamic-input [input]="inputs['rec.SURNAME']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input [input]="inputs['rec.DUTY']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="person-fullname"
+                [input]="inputs['rec.fullPosition']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="person-note"
+                [input]="inputs['rec.NOTE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <!-- DON'T REMOVE!!! Uncomment when alternates will exist-->
+            <!-- delegation
             <div>
                 <span class="block-title l-font usual-border primary-text">Исполнитель моих обязанностей</span>
                 <div class="row alternates"
@@ -155,139 +156,140 @@
                 </div>
             </div>
             <!-- end of delegation -->
-        <!-- endOf tab1 -->
+            <!-- endOf tab1 -->
+        </div>
     </div>
-</div>
-<div [hidden]="currTab !== 1">
-    <div class="contact-wrapper">
-        <eos-dynamic-input class="cab"
-            [input]="inputs['rec.NUM_CAB']"
+    <div [hidden]="currTab !== 1">
+        <div class="contact-wrapper">
+            <eos-dynamic-input class="cab"
+                [input]="inputs['rec.NUM_CAB']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="phone"
+                [input]="inputs['rec.PHONE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="phone-local"
+                [input]="inputs['rec.PHONE_LOCAL']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="fax"
+                [input]="inputs['rec.FAX']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="email"
+                [input]="inputs['rec.E_MAIL']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="skype"
+                [input]="inputs['rec.SKYPE']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+    </div>
+    <div [hidden]="currTab !== 2" class="additional-info">
+        <div class="xl-font paragraph-title">Склонение должности <a (click)="fillDeclineFields()"
+                class="s-font pull-right"
+                containerClass="tooltip-info"
+                placement="bottom"
+                tooltip="Проверка API склонения">[Заполнить поля]</a></div>
+        <eos-dynamic-input [input]="inputs['printInfo.DUTY_RP']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="phone"
-            [input]="inputs['rec.PHONE']"
+        <eos-dynamic-input [input]="inputs['printInfo.DUTY_DP']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="phone-local"
-            [input]="inputs['rec.PHONE_LOCAL']"
+        <eos-dynamic-input [input]="inputs['printInfo.DUTY_VP']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="fax"
-            [input]="inputs['rec.FAX']"
+        <span class="paragraph-title xl-font">Склонение фамилии, имени, отчества</span>
+        <eos-dynamic-input [input]="inputs['printInfo.PRINT_SURNAME_DP']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="email"
-            [input]="inputs['rec.E_MAIL']"
+        <eos-dynamic-input [input]="inputs['printInfo.PRINT_SURNAME']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="skype"
-            [input]="inputs['rec.SKYPE']"
+        <label for="SURNAME_RP">Родительный падеж (кого?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input class="family"
+                [input]="inputs['printInfo.SURNAME_RP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.NAME_RP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.PATRON_RP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <label for="SURNAME_DP">Дательный падеж (кому?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input class="family"
+                [input]="inputs['printInfo.SURNAME_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.NAME_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.PATRON_DP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <label for="SURNAME_VP">Винительный падеж (кого?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input class="family"
+                [input]="inputs['printInfo.SURNAME_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.NAME_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.PATRON_VP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <label for="SURNAME_TP">Творительный падеж (кем?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input class="family"
+                [input]="inputs['printInfo.SURNAME_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.NAME_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.PATRON_TP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <label for="SURNAME_PP">Предложный падеж (о ком?)</label>
+        <div class="row-wrapper declination-wrapper">
+            <eos-dynamic-input class="family"
+                [input]="inputs['printInfo.SURNAME_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.NAME_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+            <eos-dynamic-input class="name"
+                [input]="inputs['printInfo.PATRON_PP']"
+                [form]="form"
+                [readonly]="!editMode"></eos-dynamic-input>
+        </div>
+        <span class="paragraph-title xl-font">Данные для формирования поручений</span>
+        <eos-dynamic-input [input]="inputs['printInfo.PRINT_DUTY']"
+            [form]="form"
+            [readonly]="!editMode"></eos-dynamic-input>
+        <eos-dynamic-input [input]="inputs['printInfo.PRINT_DEPARTMENT']"
             [form]="form"
             [readonly]="!editMode"></eos-dynamic-input>
     </div>
-</div>
-<div [hidden]="currTab !== 2">
-    <div class="xl-font paragraph-title">Склонение должности <a (click)="fillDeclineFields()"
-            class="s-font pull-right"
-            containerClass="tooltip-info"
-            placement="bottom"
-            tooltip="Проверка API склонения">[Заполнить поля]</a></div>
-    <eos-dynamic-input [input]="inputs['printInfo.DUTY_RP']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <eos-dynamic-input [input]="inputs['printInfo.DUTY_DP']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <eos-dynamic-input [input]="inputs['printInfo.DUTY_VP']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <span class="paragraph-title xl-font">Склонение фамилии, имени, отчества</span>
-    <eos-dynamic-input [input]="inputs['printInfo.PRINT_SURNAME_DP']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <eos-dynamic-input [input]="inputs['printInfo.PRINT_SURNAME']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <label for="SURNAME_RP">Родительный падеж (кого?)</label>
-    <div class="row-wrapper declination-wrapper">
-        <eos-dynamic-input class="family"
-            [input]="inputs['printInfo.SURNAME_RP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.NAME_RP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.PATRON_RP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <label for="SURNAME_DP">Дательный падеж (кому?)</label>
-    <div class="row-wrapper declination-wrapper">
-        <eos-dynamic-input class="family"
-            [input]="inputs['printInfo.SURNAME_DP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.NAME_DP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.PATRON_DP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <label for="SURNAME_VP">Винительный падеж (кого?)</label>
-    <div class="row-wrapper declination-wrapper">
-        <eos-dynamic-input class="family"
-            [input]="inputs['printInfo.SURNAME_VP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.NAME_VP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.PATRON_VP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <label for="SURNAME_TP">Творительный падеж (кем?)</label>
-    <div class="row-wrapper declination-wrapper">
-        <eos-dynamic-input class="family"
-            [input]="inputs['printInfo.SURNAME_TP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.NAME_TP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.PATRON_TP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <label for="SURNAME_PP">Предложный падеж (о ком?)</label>
-    <div class="row-wrapper declination-wrapper">
-        <eos-dynamic-input class="family"
-            [input]="inputs['printInfo.SURNAME_PP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.NAME_PP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-        <eos-dynamic-input class="name"
-            [input]="inputs['printInfo.PATRON_PP']"
-            [form]="form"
-            [readonly]="!editMode"></eos-dynamic-input>
-    </div>
-    <span class="paragraph-title xl-font">Данные для формирования поручений</span>
-    <eos-dynamic-input [input]="inputs['printInfo.PRINT_DUTY']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
-    <eos-dynamic-input [input]="inputs['printInfo.PRINT_DEPARTMENT']"
-        [form]="form"
-        [readonly]="!editMode"></eos-dynamic-input>
 </div>

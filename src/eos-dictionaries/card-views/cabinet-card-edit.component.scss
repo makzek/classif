@@ -15,6 +15,16 @@ $access-first-col-width: 251px;
 
 .cabinet-card-edit,
 eos-cabinet-card-edit {
+    display: block;
+    .card-content-wrapper {
+        min-width: 798px;
+        max-width: calc(100vw - 42px);
+        max-height: calc(100vh - 280px);
+        padding-top: 0;
+    }
+    .card-content-wrapper.main-data {
+        width: 800px;
+    }
     .action-btn,
     .scroll-btn {
         height: $item-height;
@@ -33,17 +43,16 @@ eos-cabinet-card-edit {
                 position: relative;
                 top: 5px;
             }
-            .fake-checkbox {
-                position: relative;
-                top: 2px;
-                margin-right: 12px;
+            .checkbox {
+                padding-top: 0;
+                padding-bottom: 0;
             }
             .header-label {
                 font-size: 16px;
             }
         }
         .folder-access-item {
-            padding: $grid-gutter-width /2 $grid-gutter-width /2 0;
+            margin: $grid-gutter-width /2 0 $grid-gutter-width /2 $grid-gutter-width /2;
             .minus-checkbox {
                 margin: 0;
                 padding: 0;
@@ -71,7 +80,7 @@ eos-cabinet-card-edit {
     }
     .table,
     table {
-        margin-bottom: 20px;
+        margin-bottom: 0px;
         background-color: #fff;
         vertical-align: middle;
         tr {
@@ -118,18 +127,14 @@ eos-cabinet-card-edit {
             }
             input[type="checkbox"]+span {
                 margin: 0;
-
             }
         }
     }
 }
 
 .cabinet-access {
-    border-width: 1px;
-    border-style: solid;
     position: relative;
     padding: 0;
-    border: 0;
     .cell,
     .headcol {
         margin: 0;
@@ -166,6 +171,7 @@ eos-cabinet-card-edit {
         border-right-style: solid;
     }
     .scroll-btn {
+        display: none;
         position: absolute;
         margin: 0;
         border-left-width: 0;
@@ -184,6 +190,22 @@ eos-cabinet-card-edit {
     }
     .table-wrapper {
         position: relative;
+    }
+    .table,
+    table {
+        tbody {
+            th,
+            td {
+                border-bottom-width: 0;
+                border-top-width: 0
+            }
+        }
+    }
+    .tr-divider {
+        th,
+        td {
+            border-top: none;
+        }
     }
     .table-responsive {
         overflow-x: hidden;
@@ -206,20 +228,12 @@ eos-cabinet-card-edit {
             }
         }
     }
-    .tr-divider {
-        th,
-        td {
-            border-top: none;
+    .scrollable {
+        .scroll-btn {
+            display: block;
         }
-    }
-    .table,
-    table {
-        tbody {
-            th,
-            td {
-                border-bottom-width: 0;
-                border-top-width: 0
-            }
+        thead th:last-child {
+            padding-right: 48px;
         }
     }
 }

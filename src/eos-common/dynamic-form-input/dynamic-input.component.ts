@@ -13,4 +13,12 @@ export class DynamicInputComponent {
     @Input() readonly: boolean;
 
     types = E_FIELD_TYPE;
+
+    tooltip: any = {
+        visible: false,
+        message: '',
+        placement: 'bottom',
+        class: 'tooltip-error',
+        container: ''
+    };
 }

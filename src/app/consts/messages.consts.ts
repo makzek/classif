@@ -1,17 +1,17 @@
-import { IMessage, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT } from '../../eos-common/core/message.interface';
+import { IMessage /*, DEFAULT_DISMISS_TIMEOUT, DANGER_DISMISS_TIMEOUT */} from '../../eos-common/core/message.interface';
 
 export const WARN_DESK_EDITING: IMessage = {
     type: 'warning',
     title: 'Ошибка редактирования рабочего стола:',
     msg: 'одновременное редактирование нескольких рабочих столов запрещено',
-    dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
+    // dismissOnTimeout: DEFAULT_DISMISS_TIMEOUT
 };
 
 export const WARN_DESK_CREATING: IMessage = {
     type: 'warning',
     title: 'Ошибка создания рабочего стола:',
     msg: 'Закончите редактирование рабочего стола',
-    dismissOnTimeout: DANGER_DISMISS_TIMEOUT
+    // dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
 export const WARN_DESK_MAX_COUNT: IMessage = {
@@ -24,28 +24,28 @@ export const DANGER_DESK_CREATING: IMessage = {
     type: 'danger',
     title: 'Ошибка создания рабочего стола:',
     msg: 'нельзя создавать рабочие столы с одинаковым именем',
-    dismissOnTimeout: DANGER_DISMISS_TIMEOUT
+    // dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
 export const WARN_LINK_PIN: IMessage = {
     type: 'warning',
     title: 'Ошибка добавления ссылки:',
     msg: 'ссылка была прикреплена к этому рабочему столу ранее',
-    dismissOnTimeout: DANGER_DISMISS_TIMEOUT
+    // dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
 export const WARN_SEARCH_NOTFOUND: IMessage = {
     type: 'warning',
     title: 'Ничего не найдено: ',
     msg: 'попробуйте изменить поисковую фразу',
-    dismissOnTimeout: DANGER_DISMISS_TIMEOUT
+    // dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
 export const WARN_EDIT_ERROR: IMessage = {
     type: 'warning',
     title: 'Ошибка редактирования: ',
     msg: 'не выбран элемент для редактирования',
-    dismissOnTimeout: DANGER_DISMISS_TIMEOUT
+    // dismissOnTimeout: DANGER_DISMISS_TIMEOUT
 };
 
 export const DANGER_EDIT_ROOT_ERROR: IMessage = {

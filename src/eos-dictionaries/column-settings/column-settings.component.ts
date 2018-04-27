@@ -94,11 +94,11 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
                 this.dictionaryFields.forEach(_field => {
                     const fieldWithCustom = this.customTitles.find(item => item.key === _field.key);
                     if (fieldWithCustom) {
-                        this.haveCustomTitle = true;
                         _field.customTitle = fieldWithCustom.customTitle;
                     }
                 });
             }
+            this.haveCustomTitle = Boolean(this.customTitles.length);
         }, 0);
     }
 

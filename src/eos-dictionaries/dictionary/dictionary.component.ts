@@ -116,7 +116,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         private _modalSrv: BsModalService,
         private _confirmSrv: ConfirmWindowService,
         private _sandwichSrv: EosSandwichService,
-        private _bcSrv: EosBreadcrumbsService,
+        _bcSrv: EosBreadcrumbsService,
     ) {
         _route.params.subscribe((params) => {
             if (params) {
@@ -202,12 +202,9 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         _dictSrv.viewParameters$.takeUntil(this.ngUnsubscribe)
             .subscribe((viewParameters: IDictionaryViewParameters) => this.params = viewParameters);
 
-        this._bcSrv._eventFromBc$.takeUntil(this.ngUnsubscribe)
-            .subscribe((action: IActionEvent) => {
-                if (action) {
-                    this.doAction(action);
-                }
-            });
+        _bcSrv._eventFromBc$
+            .takeUntil(this.ngUnsubscribe)
+            .subscribe((action: IActionEvent) => this.doAction(action));
     }
 
     ngOnDestroy() {
