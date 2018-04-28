@@ -68,8 +68,10 @@ export class NodeListComponent implements OnInit, OnDestroy {
             .takeUntil(this.ngUnsubscribe)
             .subscribe((params: IDictionaryViewParameters) => {
                 this.params = params;
-                if (!this.dictSrv.userOrdered) {
-                    this.orderBy = this.dictSrv.order;
+                if (this.dictSrv.userOrdered) {
+                    this.orderBy = null;
+                } else {
+                    this.orderBy = dictSrv.currentDictionary.orderBy;
                 }
             });
     }
