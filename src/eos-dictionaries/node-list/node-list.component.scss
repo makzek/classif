@@ -1,4 +1,32 @@
+.node-title {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    .item {
+        display: inline-block;
+        /* padding: 0 20px; */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        .text {
+            cursor: pointer;
+        }
+        .order-icon {
+            padding: 0 3px;
+        }
+        .eos-icon {
+            margin: -5px 0 0;
+            vertical-align: middle;
+        }
+    }
+    .item+.item {
+        margin-left: $grid-gutter-width /2;
+    }
+}
+
 .eos-node-list {
+    position: relative;
     bs-sortable {
         width: 100%;
     }
@@ -35,10 +63,6 @@
             padding: 20px;
         }
     }
-}
-
-.eos-node-list {
-    position: relative;
     ul {
         position: relative;
     }

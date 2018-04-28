@@ -21,21 +21,22 @@
                         tooltip="{{field.title}}"
                         placement="bottom"
                         container="body"
-                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.foreignKey"
                         class="icon eos-icon small"
-                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span>
+                        [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                 </div>
                 <div *ngFor="let field of customFields"
                     class="item l-font"
                     [ngStyle]="{'width.px': length[field.key]}">
+
                     <span class="text"
                         [ngClass]="{'selected-text': orderBy}"
                         (click)="orderByField(field.foreignKey)"
                         tooltip="{{field.title}}"
                         placement="bottom"
                         container="body"
-                        containerClass="tooltip-info">{{field.customTitle || field.title}}<span *ngIf="orderBy?.fieldKey === field.foreignKey"
-                                class="icon eos-icon small"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                                class="eos-icon small"
                                 [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                 </div>
             </div>
@@ -82,7 +83,7 @@
     </div>
 </div>
 <ng-template #markAllTooltip>
-        {{anyMarked ? 'Снять' : 'Пометить'}}<br/>{{anyMarked ? 'пометки': 'все'}}
+    {{anyMarked ? 'Снять' : 'Пометить'}}<br/>{{anyMarked ? 'пометки': 'все'}}
 </ng-template>
 
 <ng-template #childTemplate

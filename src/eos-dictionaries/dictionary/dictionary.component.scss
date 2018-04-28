@@ -178,25 +178,6 @@
             display: flex;
             width: 100%;
         }
-        .node-title {
-            display: inline-block;
-            width: 100%;
-            vertical-align: middle;
-            .item {
-                display: inline-block;
-                padding: 0 20px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                vertical-align: middle;
-                .text {
-                    cursor: pointer;
-                }
-                .icon {
-                    margin: -5px 0 0;
-                }
-            }
-        }
         .checkbox-inline {
             line-height: $item-height - 1px;
             width: $item-width;
