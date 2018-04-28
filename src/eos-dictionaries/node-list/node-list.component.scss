@@ -4,11 +4,15 @@
     vertical-align: middle;
     .item {
         display: inline-block;
+        margin-right: $grid-gutter-width / 2;
         /* padding: 0 20px; */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         vertical-align: middle;
+        &+.item {
+            margin-left: $grid-gutter-width / 2;
+        }
         .text {
             cursor: pointer;
         }
@@ -19,9 +23,6 @@
             margin: -5px 0 0;
             vertical-align: middle;
         }
-    }
-    .item+.item {
-        margin-left: $grid-gutter-width /2;
     }
 }
 
