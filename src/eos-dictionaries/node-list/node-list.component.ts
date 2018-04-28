@@ -32,12 +32,11 @@ export class NodeListComponent implements OnInit, OnDestroy {
     customFields: IFieldView[] = [];
     length = {};
     modalWindow: BsModalRef;
-
-    orderBy: IOrderBy;
-
-    params: IDictionaryViewParameters;
-    viewFields: IFieldView[] = []; // todo: fill for title
     nodes: EosDictionaryNode[] = []; // Elements for one page
+    orderBy: IOrderBy;
+    params: IDictionaryViewParameters;
+    tableWidth: number;
+    viewFields: IFieldView[] = []; // todo: fill for title
 
     private ngUnsubscribe: Subject<any> = new Subject();
 
