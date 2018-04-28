@@ -1,18 +1,21 @@
 .node-list-item {
     overflow: hidden;
     display: flex;
-    height: $item-height;
+    height: 32px;
     .node-row {
         cursor: pointer;
         width: calc(100% - 48px); // checkbox
         display: inline-flex;
     }
-    .checkbox,
-    .checkbox-inline {
+    .node-marker {
         width: $item-width;
-        line-height: 36px;
-    }
-    .checkbox-inline {
-        padding: 5px 0 5px 12px;
+        text-align: center;
+        .checkbox,
+        .checkbox-inline {
+            line-height: 32px;
+            input[type="checkbox"]+span {
+                margin: 0;
+            }
+        }
     }
 }

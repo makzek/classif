@@ -6,13 +6,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: bottom;
-    line-height: 48px;
-    height: 48px;
+    line-height: 32px;
+    height: 32px;
     .table-field-ico {
         display: inline-block;
         width: $item-width;
         text-align: center;
-        line-height: $item-width;
+        line-height: 32px;
     }
     .no-padding {
         padding: 0;
