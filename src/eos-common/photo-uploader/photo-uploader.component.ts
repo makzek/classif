@@ -46,7 +46,7 @@ export class PhotoUploaderComponent implements OnInit {
                 return;
             }
 
-            if (file.type.indexOf('png') === -1 && file.type.indexOf('jpeg')) {
+            if (file.type.indexOf('png') === -1 && file.type.indexOf('jpeg') === -1) {
                 this._msgSrv.addNewMessage(WARN_WRONG_IMAGE_TYPE);
                 return;
             }
