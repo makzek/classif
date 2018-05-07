@@ -22,7 +22,7 @@ eos-dynamic-input {
         box-shadow: none;
         min-height: 32px;
         &.placeholder {
-            color: $primary-font-color-main-theme;
+            color: $placeholder-color;
         }
     }
     textarea.form-control,
@@ -40,7 +40,7 @@ eos-dynamic-input {
             background-color: $modal-block-background-main-theme
         }
         &:-ms-input-placeholder {
-            color: $primary-font-color-main-theme;
+            color: $placeholder-color;
         }
         &.ng-invalid.ng-dirty:not(:focus) {
             border-color: $invalid-color-main-theme;
@@ -58,6 +58,9 @@ eos-dynamic-input {
         &.readonly:focus {
             border-color: transparent;
             background-color: transparent;
+            &[disabled] {
+                cursor: text;
+            }
         }
         &.highlighted:focus {
             border-color: $button-color-main-theme;
@@ -100,7 +103,7 @@ eos-dynamic-input {
                 border: 0 none transparent;
             }
             &.placeholder {
-                color: $primary-font-color-main-theme;
+                color: $placeholder-color;
                 option {
                     color: black;
                 }

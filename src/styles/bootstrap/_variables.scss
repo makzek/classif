@@ -1,11 +1,13 @@
 $brand-primary: #2196f3;
 $brand-success: #8bc34a;
 $brand-warning: #fdc309;
+$placeholder-color: #808080;
 $brand-danger: #f44336;
 $grid-gutter-width: 40px;
 $panel-body-padding: $grid-gutter-width / 2;
 $bootstrap-sass-asset-helper: false !default;
 $modal-header-border-color: #e6e6e6;
+$input-color-placeholder: $placeholder-color;
 /*
 //
 // Variables
@@ -216,7 +218,7 @@ $input-border-radius-small:      $border-radius-small !default;
 $input-border-focus:             #66afe9 !default;
 
 //** Placeholder text color
-$input-color-placeholder:        #999 !default;
+
 
 //** Default `.form-control` height
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;

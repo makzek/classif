@@ -137,9 +137,6 @@ label {
     &.light {
         background-color: $modal-block-background-main-theme;
     }
-    &:-ms-input-placeholder {
-        color: $primary-font-color-main-theme;
-    }
     &.ng-invalid.ng-dirty:not(:focus) {
         border-color: $invalid-color-main-theme;
         border-width: 2px;
