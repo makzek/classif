@@ -672,7 +672,7 @@ export class EosDictService {
         let records: EosDictionaryNode[] = [];
         let valid = true;
         if ('string' === typeof val) {
-            val = val.trim();
+            val = val.trim().toLowerCase();
         }
         if (val) {
             if (inDict) {
@@ -683,7 +683,13 @@ export class EosDictService {
 
             records = records.filter((node) => !this.currentNode || node.id !== this.currentNode.id);
 
-            valid = records.findIndex((node) => EosUtils.getValueByPath(node.data, path) === val) === -1;
+            valid = records.findIndex((node) => {
+                let recVal = EosUtils.getValueByPath(node.data, path);
+                if ('string' === typeof recVal) {
+                    recVal = recVal.trim().toLowerCase();
+                }
+                return recVal === val;
+            }) === -1;
         }
         return valid ? null : { 'isUnic': !valid };
     }
