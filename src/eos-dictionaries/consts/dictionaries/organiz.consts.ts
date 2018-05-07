@@ -9,7 +9,7 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'ORGANIZ_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Организации',
-    visible: true,
+    visible: false,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
         'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'],
@@ -52,13 +52,13 @@ export const ORGANIZ_DICT: ITreeDictionaryDescriptor = {
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование организации',
         length: 255,
-    }), {
+    }), /* {
         key: 'CLASSIF_NAME_SEARCH',
         title: 'Поиск наименование организации',
         type: 'string',
         length: 255,
         pattern: NOT_EMPTY_STRING,
-    },
+    }*/,
     Object.assign({}, COMMON_FIELD_FULLNAME, {
         title: 'Полное наименование',
         type: 'string',
