@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -62,10 +61,10 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         UserComponent,
     ],
     imports: [
+        AppRoutingModule,
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        AppRoutingModule,
         HttpModule,
         BsDropdownModule.forRoot(),
         SortableModule.forRoot(),
@@ -83,7 +82,6 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
     providers: [
         { provide: LOCALE_ID, useValue: 'ru' },
         { provide: ErrorHandler, useClass: EosErrorHandler },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
         AuthorizedGuard,
         UnauthorizedGuard,
         CanDeactivateGuard,

@@ -98,6 +98,12 @@ export const FILE_IS_NOT_IMAGE: IMessage = {
     msg: 'выбранный файл не является изображением!'
 };
 
+export const WARN_WRONG_IMAGE_TYPE: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'допустимы иззображения в формате *.jpeg, *.png'
+};
+
 export const FILE_IS_BIG: IMessage = {
     type: 'warning',
     title: 'Предупреждение:',

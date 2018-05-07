@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
 import { EosMessageService } from '../services/eos-message.service';
-import { FILE_IS_NOT_IMAGE, FILE_IS_BIG } from '../../eos-dictionaries/consts/messages.consts';
+import { FILE_IS_NOT_IMAGE, FILE_IS_BIG, WARN_WRONG_IMAGE_TYPE } from '../../eos-dictionaries/consts/messages.consts';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { IImage } from '../../eos-dictionaries/interfaces/image.interface';
 
@@ -43,6 +43,11 @@ export class PhotoUploaderComponent implements OnInit {
         if (file) {
             if (file.type.indexOf('image') === -1) {
                 this._msgSrv.addNewMessage(FILE_IS_NOT_IMAGE);
+                return;
+            }
+
+            if (file.type.indexOf('png') === -1 && file.type.indexOf('jpeg')) {
+                this._msgSrv.addNewMessage(WARN_WRONG_IMAGE_TYPE);
                 return;
             }
 

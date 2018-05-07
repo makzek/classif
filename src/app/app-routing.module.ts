@@ -15,9 +15,9 @@ import { UserRestComponent } from '../eos-rest/clman/user.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { AuthorizedGuard, UnauthorizedGuard } from './guards/eos-auth.guard';
 import { LoginComponent } from './login/login.component';
-import { environment } from 'environments/environment';
+/// import { environment } from 'environments/environment';
 
-let routes: Routes = [{
+const routes: Routes = [{
     path: 'spravochniki',
     data: { title: 'Справочники', showInBreadcrumb: true },
     canActivate: [AuthorizedGuard],
@@ -92,37 +92,31 @@ let routes: Routes = [{
     canActivate: [UnauthorizedGuard],
     component: LoginComponent,
     data: { title: 'Вход в систему', showInBreadcrumb: false }
-}];
-
-if (!environment.production) {
-    routes = routes.concat([{
-        path: 'test',
-        component: TestPageComponent,
-        data: { title: 'Test page for UI components' },
-    }, {
-        path: 'delivery',
-        canActivate: [AuthorizedGuard],
-        component: DeliveryComponent,
-        data: { title: 'delivery page' },
-    }, {
-        path: 'rubric',
-        canActivate: [AuthorizedGuard],
-        component: RubricComponent,
-        data: { title: 'rubric page' }
-    }, {
-        path: 'department',
-        canActivate: [AuthorizedGuard],
-        component: DepartmentComponent,
-        data: { title: 'department page' }
-    }, {
-        path: 'user',
-        canActivate: [AuthorizedGuard],
-        component: UserRestComponent,
-        data: { title: 'user page' }
-    }]);
-}
-
-routes = routes.concat([{
+}, {
+    path: 'test',
+    component: TestPageComponent,
+    data: { title: 'Test page for UI components' },
+}, {
+    path: 'delivery',
+    canActivate: [AuthorizedGuard],
+    component: DeliveryComponent,
+    data: { title: 'delivery page' },
+}, {
+    path: 'rubric',
+    canActivate: [AuthorizedGuard],
+    component: RubricComponent,
+    data: { title: 'rubric page' }
+}, {
+    path: 'department',
+    canActivate: [AuthorizedGuard],
+    component: DepartmentComponent,
+    data: { title: 'department page' }
+}, {
+    path: 'user',
+    canActivate: [AuthorizedGuard],
+    component: UserRestComponent,
+    data: { title: 'user page' }
+}, {
     path: '',
     redirectTo: '/desk/system',
     pathMatch: 'full',
@@ -130,10 +124,10 @@ routes = routes.concat([{
     path: '**',
     redirectTo: '/desk/system',
     pathMatch: 'full',
-}]);
+}];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
     exports: [RouterModule],
 })
 export class AppRoutingModule {
