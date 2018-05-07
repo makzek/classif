@@ -3,7 +3,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs/Subscription';
 
-import { IFieldView, ColumnSettings } from 'eos-dictionaries/interfaces';
+import { IFieldView } from 'eos-dictionaries/interfaces';
+import { EosDictService } from '../services/eos-dict.service';
 
 @Component({
     selector: 'eos-column-settings',
@@ -14,7 +15,7 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
     @Input() fixedFields: IFieldView[] = [];
     @Input() currentFields: IFieldView[] = [];
     @Input() dictionaryFields: IFieldView[] = [];
-    @Output() onChoose: EventEmitter<ColumnSettings> = new EventEmitter<ColumnSettings>();
+    @Output() onChoose: EventEmitter<any> = new EventEmitter<any>();
     public haveCustomTitle = false;
 
     selectedDictItem: IFieldView;
@@ -36,7 +37,12 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @param dragulaService drag'n'drop service
      * @param bsModalRef reference to modal
      */
-    constructor(private dragulaService: DragulaService, public bsModalRef: BsModalRef, private modalService: BsModalService) {
+    constructor(
+        private dragulaService: DragulaService,
+        public bsModalRef: BsModalRef,
+        private modalService: BsModalService,
+        private dictSrv: EosDictService,
+    ) {
         // value[3] - src
         // value[2] - dst
         // value[1] - droped elem
@@ -113,11 +119,13 @@ export class ColumnSettingsComponent implements OnDestroy, OnInit {
      * @description emit custom fields and hide modal
      */
     save() {
-        this.onChoose.emit({
-            currentFields: this.currentFields,
-            dictionaryFIelds: this.dictionaryFields
-        });
+        const customsTitles = [].concat(
+            this.dictionaryFields.filter(el => el.customTitle),
+            this.currentFields.filter(el => el.customTitle));
+        this.dictSrv.customTitles = customsTitles;
+        this.dictSrv.customFields = this.currentFields;
         this.hideModal();
+        this.onChoose.emit();
     }
 
     /**

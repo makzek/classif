@@ -5,10 +5,11 @@ import 'rxjs/add/operator/takeUntil';
 
 import { EosDictionaryNode } from '../core/eos-dictionary-node';
 import { EosDictService } from '../services/eos-dict.service';
-import { IDictionaryViewParameters, IFieldView, IOrderBy, E_FIELD_SET, ColumnSettings } from 'eos-dictionaries/interfaces';
+import { IDictionaryViewParameters, IFieldView, IOrderBy, E_FIELD_SET } from 'eos-dictionaries/interfaces';
 import { LongTitleHintComponent } from '../long-title-hint/long-title-hint.component';
 import { HintConfiguration } from '../long-title-hint/hint-configuration.interface';
 import { ColumnSettingsComponent } from '../column-settings/column-settings.component';
+import { EosUtils } from 'eos-common/core/utils';
 
 
 @Component({
@@ -93,20 +94,16 @@ export class NodeListComponent implements OnInit, OnDestroy {
      */
     configColumns() {
         this.modalWindow = this.modalSrv.show(ColumnSettingsComponent, { class: 'column-settings-modal modal-lg' });
-        this.modalWindow.content.fixedFields = this.viewFields;
-        this.modalWindow.content.customTitles = this.dictSrv.customTitles;
-        Object.assign(this.modalWindow.content.currentFields, this.customFields);
-        Object.assign(this.modalWindow.content.dictionaryFields,
+        this.modalWindow.content.fixedFields = EosUtils.deepUpdate([], this.viewFields);
+        this.modalWindow.content.customTitles = EosUtils.deepUpdate([], this.dictSrv.customTitles);
+        this.modalWindow.content.currentFields = EosUtils.deepUpdate([], this.customFields);
+        this.modalWindow.content.dictionaryFields = EosUtils.deepUpdate([],
             this.dictSrv.currentDictionary.descriptor.record.getFieldSet(E_FIELD_SET.allVisible));
-        this.modalWindow.content.onChoose.subscribe((colSettings: ColumnSettings) => {
-            const customsTitles = [].concat(
-                colSettings.dictionaryFIelds.filter(el => el.customTitle),
-                colSettings.currentFields.filter(el => el.customTitle));
-            this.dictSrv.customTitles = customsTitles;
-            this.customFields = colSettings.currentFields;
-            this.dictSrv.customFields = this.customFields;
+
+        const subscription = this.modalWindow.content.onChoose.subscribe(() => {
+            this.customFields = this.dictSrv.customFields;
             this._countColumnWidth();
-            this.modalWindow.hide();
+            subscription.unsubscribe();
         });
     }
 
