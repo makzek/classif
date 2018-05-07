@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { DynamicInputBase } from './dynamic-input-base';
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
 // import { EosUtils } from '../core/utils';
@@ -7,9 +7,10 @@ import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepic
     selector: 'eos-dynamic-input-date',
     templateUrl: 'dynamic-input-date.component.html'
 })
-export class DynamicInputDateComponent extends DynamicInputBase {
+export class DynamicInputDateComponent extends DynamicInputBase implements OnInit {
     bsConfig: Partial<BsDatepickerConfig>;
     bsDate: Date;
+    placement = 'bottom';
 
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;
@@ -30,5 +31,19 @@ export class DynamicInputDateComponent extends DynamicInputBase {
     dpChanged(value: Date) {
         this.form.controls[this.input.key].setValue(value);
         this.onBlur();
+    }
+
+    ngOnInit() {
+        if (this.datePickerWrapper) {
+            if (window.innerHeight - this.datePickerWrapper.nativeElement.getBoundingClientRect().bottom >= 308) {
+                this.placement = 'bottom';
+            } else if (this.datePickerWrapper.nativeElement.getBoundingClientRect().top >= 308) {
+                this.placement = 'top';
+            } else if (this.datePickerWrapper.nativeElement.getBoundingClientRect().left >= 318) {
+                this.placement = 'left';
+            } else {
+                this.placement = 'right';
+            }
+        }
     }
 }

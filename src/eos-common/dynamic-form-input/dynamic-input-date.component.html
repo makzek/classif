@@ -16,6 +16,7 @@
         <span #dpw><a *ngIf="!readonly"
             bsDatepicker
             #dp="bsDatepicker"
+            [placement]="placement"
             [bsConfig]="bsConfig"
             [bsValue]="bsDate"
             (bsValueChange)="dpChanged($event)"
