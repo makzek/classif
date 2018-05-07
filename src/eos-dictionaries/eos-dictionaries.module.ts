@@ -47,6 +47,7 @@ import { NodeInfoComponent } from './node-info/node-info.component';
 import { CabinetCardEditComponent } from './card-views/cabinet-card-edit.component';
 import { SandwichComponent } from './sandwich/sandwich.component';
 import { SecurityCardEditComponent } from './card-views/security-card-edit.component';
+import { SecurityNodeInfoComponent } from './node-info/security-node-info.component';
 import { SimpleCardEditComponent } from './card-views/simple-card-edit.component';
 import { TreeComponent } from './tree/tree.component';
 import { DictionariesQuickSearchComponent } from './dictionary-quick-search/dictionary-quick-search.component';
@@ -87,6 +88,7 @@ import { EosSandwichService } from './services/eos-sandwich.service';
         CabinetNodeInfoComponent,
         LongTitleHintComponent,
         SecurityCardEditComponent,
+        SecurityNodeInfoComponent,
         CreateNodeComponent,
     ],
     entryComponents: [
