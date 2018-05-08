@@ -678,7 +678,11 @@ export class EosDictService {
             if (inDict) {
                 records = Array.from(this.currentDictionary.nodes.values());
             } else {
-                records = this.currentNode ? this.currentNode.neighbors : [];
+                if (this.treeNode) {
+                    records = this.treeNode.children;
+                } else if (this.currentNode) {
+                    records = this.treeNode.neighbors;
+                }
             }
 
             records = records.filter((node) => !this.currentNode || node.id !== this.currentNode.id);
