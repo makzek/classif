@@ -106,7 +106,7 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 _criteries['IS_NODE'] = '1';
                 break;
             case 'cabinet':
-                _criteries['department.cabinet.CABINET_NAME'] = '"' + data.cabinet['CABINET_NAME'].trim() + '"';
+                _criteries['department.cabinet.CABINET_NAME'] = '"' + data['CABINET_NAME'].trim() + '"';
                 break;
         }
         if (data['srchMode'] !== 'cabinet') {

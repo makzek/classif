@@ -115,8 +115,9 @@
     }
 }
 
-.wrap {
+.search-fld {
     position: relative;
+    .clear-btn,
     button {
         border: none;
         padding: 5px;
@@ -171,43 +172,43 @@
             }
         }
     }
+    .form-control {
+        padding: 8px 30px 8px 8px;
+        height: 32px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+        &.col-250 {
+            display: inline-block;
+            width: 250px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        label {
+            line-height: 10px;
+            margin-bottom: 8px;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+    }
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+    .first-col {
+        display: inline-block;
+        vertical-align: top;
+        width: 180px;
+    }
+    .second-col {
+        display: inline-block;
+        width: 540px;
+    }
+    .margin-r {
+        margin-right: 38px;
+    }
     form {
         padding: 20px;
         font-size: 0;
-        .form-control {
-            padding: 8px;
-            height: 32px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            &.col-250 {
-                display: inline-block;
-                width: 250px;
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-            label {
-                line-height: 10px;
-                margin-bottom: 8px;
-                font-weight: normal;
-                text-transform: uppercase;
-            }
-        }
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-        .first-col {
-            display: inline-block;
-            vertical-align: top;
-            width: 180px;
-        }
-        .second-col {
-            display: inline-block;
-            width: 540px;
-        }
-        .margin-r {
-            margin-right: 38px;
-        }
     }
 }
 
