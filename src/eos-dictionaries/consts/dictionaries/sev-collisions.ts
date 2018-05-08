@@ -7,6 +7,7 @@ export const COLLISIONS_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LINE
     apiInstance: 'SEV_COLLISION',
     actions: [],
     visible: true,
+    defaultOrder: 'COLLISION_NAME',
     keyField: 'COLLISION_CODE',
     title: 'Коллизии СЭВ (NEW)',
     searchConfig: [],

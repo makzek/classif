@@ -9,6 +9,7 @@ export const PARTICIPANT_SEV_DICT: IDictionaryDescriptor = Object.assign({}, LIN
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']), // ??
     visible: true,
     keyField: 'ISN_LCLASSIF',
+    defaultOrder: 'ADDRESS',
     fields: LINEAR_TEMPLATE.fields.concat([{
         key: 'DUE_ORGANIZ',
         title: 'Организация',

@@ -9,6 +9,7 @@ export const SIGN_KIND_DICT: IDictionaryDescriptor = {
     apiInstance: 'SIGN_KIND_CL',
     dictType: E_DICT_TYPE.linear,
     title: 'Виды подписей (ЭП)',
+    defaultOrder: 'CLASSIF_NAME',
     visible: false,
     actions: [
         'add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',

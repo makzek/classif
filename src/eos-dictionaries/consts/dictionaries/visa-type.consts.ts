@@ -1,6 +1,7 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { ISelectOption } from 'eos-common/interfaces';
+import { COMMON_FIELD_NAME } from './_common';
 
 export const STATUS_OPTIONS: ISelectOption[] = [{
     value: 'Положительный',
@@ -19,18 +20,20 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     title: 'Типы виз',
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
     visible: true,
-    fields: LINEAR_TEMPLATE.fields.concat([{
-        key: 'IS_FINAL',
-        type: 'boolean',
-        title: 'Является финальной',
-    }, {
-        key: 'STATUS',
-        type: 'select',
-        title: 'Статус визы',
-        options: STATUS_OPTIONS,
-        required: true,
-    }]),
-    quickViewFields: [ 'NOTE', 'IS_FINAL', 'STATUS'],  // CLASSIF_NAME is in shortQuickViewFields
+    fields: LINEAR_TEMPLATE.fields.concat([
+        Object.assign({}, COMMON_FIELD_NAME, { isUnic: true, unicInDict: true }),
+        {
+            key: 'IS_FINAL',
+            type: 'boolean',
+            title: 'Является финальной',
+        }, {
+            key: 'STATUS',
+            type: 'select',
+            title: 'Статус визы',
+            options: STATUS_OPTIONS,
+            required: true,
+        }]),
+    quickViewFields: ['NOTE', 'IS_FINAL', 'STATUS'],  // CLASSIF_NAME is in shortQuickViewFields
     allVisibleFields: ['NOTE', 'IS_FINAL', 'STATUS'],
     editFields: ['CLASSIF_NAME', 'NOTE', 'IS_FINAL', 'STATUS', 'DELETED']
 });

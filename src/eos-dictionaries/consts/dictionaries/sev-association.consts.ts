@@ -5,6 +5,7 @@ export const SEV_ASSOCIATION_DICT: IDictionaryDescriptor = Object.assign({}, LIN
     id: 'sev-association',
     apiInstance: 'SEV_ASSOCIATION',
     title: 'Индексы СЭВ',
+    defaultOrder: 'OBJECT_NAME',
     visible: false,
     fields: [{
         key: 'OBJECT_ID',

@@ -16,6 +16,7 @@ export const DOCGROUP_DICT: ITreeDictionaryDescriptor = {
     apiInstance: 'DOCGROUP_CL',
     dictType: E_DICT_TYPE.tree,
     title: 'Группы документов',
+    defaultOrder: 'CLASSIF_NAME',
     visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',

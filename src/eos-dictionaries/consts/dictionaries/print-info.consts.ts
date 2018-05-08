@@ -6,6 +6,7 @@ export const PRINT_INFO_DICT: IDictionaryDescriptor = {
     id: 'printInfo',
     apiInstance: 'CB_PRINT_INFO',
     dictType: E_DICT_TYPE.linear,
+    defaultOrder: 'PRINT_DEPARTMENT',
     title: '',
     visible: false,
     actions: ['add', 'edit', 'remove', 'removeHard'],

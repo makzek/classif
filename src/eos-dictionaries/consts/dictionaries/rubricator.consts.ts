@@ -9,6 +9,7 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
     dictType: E_DICT_TYPE.tree,
     title: 'Рубрикатор',
     visible: true,
+    defaultOrder: 'CLASSIF_NAME',
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'tableCustomization',
         'edit', 'view', 'remove', 'removeHard', 'userOrder', 'restore', 'showAllSubnodes'

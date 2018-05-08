@@ -21,6 +21,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     apiInstance: 'DEPARTMENT',
     dictType: E_DICT_TYPE.department,
     title: 'Подразделения',
+    defaultOrder: 'CLASSIF_NAME',
     visible: true,
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'import', 'export', 'importPhotos',
         'createRepresentative', 'tableCustomization', 'showAllSubnodes', 'edit', 'view', 'slantForForms', 'restore', 'remove', 'removeHard',
