@@ -187,8 +187,10 @@
                 [readonly]="!editMode"></eos-dynamic-input>
         </div>
     </div>
-    <div [hidden]="currTab !== 2" class="additional-info">
-        <div class="xl-font paragraph-title">Склонение должности <a (click)="fillDeclineFields()"
+    <div [hidden]="currTab !== 2"
+        class="additional-info">
+        <div class="xl-font paragraph-title">Склонение должности <a *ngIf="editMode"
+                (click)="fillDeclineFields()"
                 class="s-font pull-right"
                 containerClass="tooltip-info"
                 placement="bottom"
