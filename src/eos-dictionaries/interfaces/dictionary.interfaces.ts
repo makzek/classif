@@ -86,6 +86,7 @@ export interface IDictionaryDescriptor {
     actions: string[];
     fields: IFieldDescriptor[];
     keyField: string;
+    defaultOrder: string;
     parentField?: string;
 
     // listFields: string[];

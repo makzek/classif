@@ -6,6 +6,7 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
     id: 'security',
     apiInstance: 'SECURITY_CL',
     keyField: 'SECURLEVEL',
+    defaultOrder: 'GRIF_NAME',
     title: 'Грифы доступа',
     visible: true,
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),

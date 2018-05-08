@@ -86,7 +86,7 @@ export class EosDictionary {
     public defaultOrder() {
         this._orderBy = {
             ascend: true,
-            fieldKey: 'CLASSIF_NAME'
+            fieldKey: this.descriptor.defaultOrder
         };
     }
 

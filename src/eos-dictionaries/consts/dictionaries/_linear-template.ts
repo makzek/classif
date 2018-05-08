@@ -6,6 +6,7 @@ export const LINEAR_TEMPLATE: IDictionaryDescriptor = {
     id: '',
     apiInstance: '',
     dictType: E_DICT_TYPE.linear,
+    defaultOrder: 'CLASSIF_NAME',
     title: 'Линейный справочник',
     actions: [
         'add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'restore',

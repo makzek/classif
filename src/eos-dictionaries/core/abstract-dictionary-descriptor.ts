@@ -32,6 +32,12 @@ export abstract class AbstractDictionaryDescriptor {
      */
     protected apiSrv: PipRX;
 
+    private _defaultOrder: string;
+
+    get defaultOrder(): string {
+        return this._defaultOrder || 'CLASSIF_NAME';
+    }
+
     get dictionaryType(): E_DICT_TYPE {
         return this.type;
     }
@@ -45,6 +51,7 @@ export abstract class AbstractDictionaryDescriptor {
             this.title = descriptor.title;
             this.type = descriptor.dictType;
             this.apiInstance = descriptor.apiInstance;
+            this._defaultOrder = descriptor.defaultOrder;
 
             this.apiSrv = apiSrv;
             commonMergeMeta(this);
