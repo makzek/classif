@@ -16,9 +16,11 @@
             class="form-control quick-search-form"
             [(ngModel)]="srchString"
             (keydown)="quickSearch($event)">
-        <button class="btn btn-default clear-btn"
-            (click)="clearQuickForm()">
-            <span class="eos-icon eos-icon-close-blue"></span></button>
+        <a class="btn clear-btn"
+            tooltip="Очистить"
+            placement="bottom"
+            containerClass="tooltip-info"
+            (click)="clearQuickForm()"><span class="eos-icon eos-icon-close-blue"></span></a>
     </div>
     <div class="tringle"></div>
     <div class="tringle-fon"></div>
