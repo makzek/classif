@@ -267,12 +267,10 @@
                                 name="titleRoom"
                                 type="text"
                                 class="form-control light"
-                                [(ngModel)]="data.cabinet['CABINET_NAME']"
+                                [(ngModel)]="cabinet['CABINET_NAME']"
                                 placeholder="{{fieldsDescription.rec['titleRoom']?.title}}">
-                            <button [ngClass]="{'hide': !data.cabinet['CABINET_NAME']}"
-                                (click)="data.cabinet['CABINET_NAME'] = ''">
-                                    <span class="eos-icon eos-icon-close-blue"></span>
-                                </button>
+                            <button [ngClass]="{'hide': !cabinet['CABINET_NAME']}"
+                                (click)="cabinet['CABINET_NAME'] = ''"><span class="eos-icon eos-icon-close-blue"></span></button>
                         </div>
                     </div>
                     <!--
