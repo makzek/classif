@@ -32,7 +32,7 @@
                     *ngFor="let link of recentItems"
                     tooltip="{{link.title}}"
                     placement="bottom"
-                    containerClass="tooltip-info  word-break">
+                    containerClass="tooltip-info word-break">
                     <a class="link-text"
                         (click)="goToCard(link)">{{link.title}}</a>
                 </li>
