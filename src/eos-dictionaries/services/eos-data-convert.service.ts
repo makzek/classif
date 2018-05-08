@@ -347,7 +347,7 @@ export class EosDataConvertService {
                             });
                         } else { // department
                             inputs['printInfo.NOT_USE_IN_DUTY'] = new CheckboxInput({
-                                key: 'printInfo.NOT_USE_IN_DUTY.boolean',
+                                key: 'printInfo.NOT_USE_IN_DUTY',
                                 label: 'Не использовать подразделение в названии должности',
                                 dict: 'printInfo',
                                 value: data['printInfo']['NOT_USE_IN_DUTY'],
