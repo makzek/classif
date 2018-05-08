@@ -349,21 +349,12 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
             return this._confirmSrv.confirm(Object.assign({}, CONFIRM_SAVE_ON_LEAVE,
                 { confirmDisabled: this.disableSave }))
                 .then((doSave) => {
-                    if (doSave == null) {
-                        return false;
+                    if (doSave) {
+                        const _data = this.cardEditRef.getNewData();
+                        return this._save(_data)
+                            .then((node) => !!node);
                     } else {
-                        if (doSave) {
-                            return this._save(this.nodeData)
-                                .then((node) => {
-                                    if (node) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                });
-                        } else {
-                            return true;
-                        }
+                        return false;
                     }
                 })
                 .catch(() => {
