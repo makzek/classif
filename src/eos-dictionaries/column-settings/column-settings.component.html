@@ -9,8 +9,14 @@
 <div class="modal-body">
     <div class="modal-body-container">
         <div class="col">
-            <div class="info-block modal-block" id="posible" [dragula]='"bag-one"' [dragulaModel]="dictionaryFields">
-                <div class="item" *ngFor="let item of dictionaryFields" (click)="select(item, 2)" [ngClass]="{'highlighted': item === selectedDictItem}">
+            <div class="info-block modal-block"
+                id="posible"
+                [dragula]='"bag-one"'
+                [dragulaModel]="dictionaryFields">
+                <div class="item"
+                    *ngFor="let item of dictionaryFields"
+                    (click)="select(item, 2)"
+                    [ngClass]="{'highlighted': item === selectedDictItem}">
                     <span class="text">{{item?.customTitle || item?.title}}</span>
                 </div>
             </div>
@@ -19,8 +25,9 @@
             <span>
                 <button class="btn btn-primary-light" (click)="addToCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-right"></span>
-                </button>
-                <button class="btn btn-primary-light" (click)="removeFromCurrent()">
+            </button>
+            <button class="btn btn-primary-light"
+                (click)="removeFromCurrent()">
                     <span class="eos-icon eos-icon-arrow-v-blue-left"></span>
                 </button>
             </span>
@@ -28,31 +35,53 @@
         <div class="col">
             <div class="info-block right modal-block">
                 <div [dragula]='"fixed-bag"'>
-                    <div class="item fixed-item" *ngFor="let item of fixedFields" (click)="select(item, 3)"
+                    <div class="item fixed-item"
+                        *ngFor="let item of fixedFields"
+                        (click)="select(item, 3)"
                         [ngClass]="{'highlighted': item === selectedFixedItem}">
-                        <i class="fa fa-lock unimportant-text" aria-hidden="true"></i>
-                        <span *ngIf="editedItem !== item" class="text fixed">{{item?.customTitle || item?.title}}</span>
-                        <button [hidden]="item !== selectedFixedItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
+                        <i class="fa fa-lock unimportant-text"
+                            aria-hidden="true"></i>
+                        <span *ngIf="editedItem !== item"
+                            class="text fixed">{{item?.customTitle || item?.title}}</span>
+                        <button [hidden]="item !== selectedFixedItem"
+                            class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
                             (click)="edit(item)"></button>
-                        <input *ngIf="editedItem === item" class="form-control new-title" autofocus [(ngModel)]="newTitle"
-                            [maxlength]="MAX_LEN"/>
-                        <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
+                        <input *ngIf="editedItem === item"
+                            class="form-control new-title"
+                            autofocus
+                            [(ngModel)]="newTitle"
+                            [maxlength]="MAX_LEN" />
+                        <button [hidden]="editedItem !== item"
+                            class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
                             (click)="saveNewTitle()"></button>
-                        <button [hidden]="editedItem !== item" class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
+                        <button [hidden]="editedItem !== item"
+                            class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
                             (click)="cancelTitleEdit()"></button>
                     </div>
                 </div>
-                <div class="current" [dragula]='"bag-one"' id="selected" [dragulaModel]="currentFields">
-                    <div class="item" *ngFor="let item of currentFields" (click)="select(item, 1)"
+                <div class="current"
+                    [dragula]='"bag-one"'
+                    id="selected"
+                    [dragulaModel]="currentFields">
+                    <div class="item"
+                        *ngFor="let item of currentFields"
+                        (click)="select(item, 1)"
                         [ngClass]="{'highlighted': item === selectedCurrItem, 'fixed-item': editedItem === item}">
-                        <span *ngIf="editedItem !== item" class="text">{{item?.customTitle || item?.title}}</span>
-                        <button [hidden]="item !== selectedCurrItem" class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
+                        <span *ngIf="editedItem !== item"
+                            class="text">{{item?.customTitle || item?.title}}</span>
+                        <button [hidden]="item !== selectedCurrItem"
+                            class="btn-primary-light edit-btn eos-icon eos-icon-edit-blue small"
                             (click)="edit(item)"></button>
-                        <input *ngIf="editedItem === item" class="form-control new-title" autofocus [(ngModel)]="newTitle"
-                            [maxlength]="MAX_LEN"/>
-                        <button [hidden]="editedItem !== item" class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
+                        <input *ngIf="editedItem === item"
+                            class="form-control new-title"
+                            autofocus
+                            [(ngModel)]="newTitle"
+                            [maxlength]="MAX_LEN" />
+                        <button [hidden]="editedItem !== item"
+                            class="btn-primary-light ok-btn eos-icon eos-icon-checkbox-blue small"
                             (click)="saveNewTitle()"></button>
-                        <button [hidden]="editedItem !== item" class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
+                        <button [hidden]="editedItem !== item"
+                            class="btn-primary-light cancel-btn eos-icon eos-icon-close-blue small"
                             (click)="cancelTitleEdit()"></button>
                     </div>
                 </div>
@@ -62,19 +91,24 @@
 </div>
 
 <ng-template #warning>
-    <div class="modal-header warning">
+    <div class="modal-header ">
         <h4 class="modal-title pull-left primary-text">Предупреждение</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button"
+            class="close pull-right"
+            aria-label="Close"
+            (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body warning">
-        <h4 class="primary-text">Вернуть все названия по умолчанию?</h4>
+    <div class="modal-body">
+        Вернуть все названия по умолчанию?
     </div>
-    <div class="modal-footer warning">
-        <span class="pull-right">
-            <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Отмена</button>
-            <button type="button" class="btn btn-primary-full" (click)="moveTitlesBack()">Да</button>
-        </span>
+    <div class="modal-footer">
+        <button type="button"
+            class="btn btn-primary"
+            (click)="modalRef.hide()">Отмена</button>
+        <button type="button"
+            class="btn btn-primary-full"
+            (click)="moveTitlesBack()">Да</button>
     </div>
 </ng-template>

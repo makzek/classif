@@ -2,7 +2,6 @@ $ie:10 !default;
 @import "variables";
 @import "fonts";
 @import "icons";
-
 // override bootstrap variables
 //@import "bootstrap/variables";
 // @import "fontawesome/variables";
@@ -10,16 +9,13 @@ $ie:10 !default;
 // ==========================================================================
 @import "../../node_modules/font-awesome/scss/font-awesome";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 @import "app";
-
 @import "general-items";
-
+@import "modal";
 // module styles
 @import "../app/styles";
 @import "../eos-common/styles";
 @import "../eos-dictionaries/styles";
 @import "../eos-rest/styles";
-
 @import "theme";
 @import "adaptation";
