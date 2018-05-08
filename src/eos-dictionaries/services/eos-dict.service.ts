@@ -862,10 +862,10 @@ export class EosDictService {
                 const _srchCriteries = dictionary.getSearchCriteries(data.rec['CLASSIF_NAME'], params, this.treeNode);
 
                 return dictionary.descriptor.search(_srchCriteries)
-                    .then((nodes: EosDictionaryNode[]) =>
-                        nodes.find((el: EosDictionaryNode) =>
-                            el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase())
-                    )
+                    .then((nodes: any[]) =>
+                        nodes.find((el: any) =>
+                            el['CLASSIF_NAME'].toString().toLowerCase() === data.rec.CLASSIF_NAME.toString().toLowerCase()
+                            && data.rec.DUE !== el.DUE))
                     .then((node: EosDictionaryNode) => {
                         if (node) {
                             return Promise.reject('Запись с этим именем уже существует!');

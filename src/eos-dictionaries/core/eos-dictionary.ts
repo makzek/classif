@@ -393,7 +393,7 @@ export class EosDictionary {
     }
 
     getSearchCriteries(search: string, params: ISearchSettings, selectedNode?: EosDictionaryNode): any[] {
-        if (selectedNode.dictionaryId === 'departments' || selectedNode.dictionaryId === 'rubricator') {
+        if (this.id === 'departments' || this.id === 'rubricator') {
             const _criteries = [];
             const _crit: any = {
                 'CL_SEARCH.Contents': '"*' + search + '*"'
