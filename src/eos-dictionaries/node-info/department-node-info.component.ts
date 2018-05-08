@@ -2,6 +2,7 @@ import { Component, OnChanges } from '@angular/core';
 import { DEFAULT_PHOTO } from 'eos-dictionaries/consts/common';
 import { BaseNodeInfoComponent } from './base-node-info';
 import { ROLES_IN_WORKFLOW } from '../consts/dictionaries/department.consts';
+import { EosDictionaryNode } from '../core/eos-dictionary-node';
 
 @Component({
     selector: 'eos-department-node-info',
@@ -12,7 +13,7 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
     public update: boolean;
     public roles = ROLES_IN_WORKFLOW;
 
-    bossName: string;
+    boss: EosDictionaryNode;
     department: string;
 
     constructor() {
@@ -24,12 +25,7 @@ export class DepartmentNodeInfoComponent extends BaseNodeInfoComponent implement
 
         if (this.node) {
             if (!this.node.data.rec['IS_NODE'] && this.node.children) {
-                const _boss = this.node.children.find((_chld) => _chld.data.rec['POST_H']);
-                if (_boss) {
-                    this.bossName = _boss.data.rec['SURNAME'];
-                } else {
-                    this.bossName = '';
-                }
+                this.boss = this.node.children.find((_chld) => _chld.data.rec['POST_H']);
             } else {
                 this.department = this.node.parent.getParentData('FULLNAME', 'rec') ||
                     this.node.parent.getParentData('CLASSIF_NAME', 'rec');
