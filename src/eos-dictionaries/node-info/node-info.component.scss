@@ -48,7 +48,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-            }
+        }
     }
     .short-info {
         display: block;
@@ -103,5 +103,8 @@
         .li {
             padding: 0;
         }
+    }
+    .placeholder {
+        color: $placeholder-color;
     }
 }

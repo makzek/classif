@@ -17,7 +17,8 @@
                     </ng-template>
                     <ng-template #textField>
                         <p class="field-title unimportant-text s-font">{{fieldsDescriptionFull.rec[key].title}}</p>
-                        <p class="field-value m-font">{{nodeDataFull.rec[key]}}</p>
+                        <p class="field-value m-font"
+                            [ngClass]="{placeholder: !nodeDataFull.rec[key]}">{{nodeDataFull.rec[key] || fieldsDescriptionFull.rec[key].title}}</p>
                     </ng-template>
                 </div>
                 <div *ngIf="nodeDataFull['sev']"
