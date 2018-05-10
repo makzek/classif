@@ -51,7 +51,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
-    date: Date;
+    date: Date = new Date();
 
     public mode = 0;
 
@@ -98,12 +98,15 @@ export class DictionarySearchComponent implements OnDestroy {
                 this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
                 /* tslint:enable:no-bitwise */
                 // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
+                if (this.dictId === 'departments') {
+                    if (_dictSrv.getFilterValue('date')) {
+                        this.date = new Date(_dictSrv.getFilterValue('date'));
+                    } else {
+                        this.dateFilter(new Date());
+                    }
+                }
             }
         });
-
-        if (_dictSrv.getFilterValue('date')) {
-            this.date = new Date(_dictSrv.getFilterValue('date'));
-        }
     }
 
     setTab(key: string) {
@@ -143,9 +146,14 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        if (!date || !this.date || date.getTime() !== this.date.getTime()) {
-            this.date = date;
-            this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
+        if (date instanceof Date) {
+            if (!this.date || date.getTime() !== this.date.getTime()) {
+                this.date = date;
+                this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
+            }
+        } else {
+            // drop filter
+            // this.date = new Date();
         }
     }
 
@@ -159,6 +167,8 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     private clearModel(model: string) {
+        this.mode = 0;
+        this.settings.deleted = false;
         this[model] = {};
         Object.keys(SEARCH_MODEL).forEach((key) => this[model][key] = {});
     }
