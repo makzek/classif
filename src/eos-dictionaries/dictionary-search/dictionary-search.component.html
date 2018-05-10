@@ -46,11 +46,9 @@
         <span class="pull-left title xl-font">Область поиска</span>
         <div class="pull-right srch-btns">
             <button [disabled]="noSearchData"
-                type="reset"
                 class="btn btn-primary s-font upper"
                 (click)="clearForm()">Сбросить</button>
             <button [disabled]="noSearchData"
-                type="submit"
                 (click)="fullSearch()"
                 class="btn btn-primary-full s-font upper">Найти</button>
         </div>
@@ -370,6 +368,10 @@
         *ngIf="data.rec"
         class="row full-search-form">
         <form id="rubricator">
+            <button [disabled]="noSearchData"
+                type="submit"
+                (click)="fullSearch()"
+                class="hidden">Найти</button>
             <div class="first-col margin-r">
                 <div class="form-group unimportant-text">
                     <label class="s-font"
@@ -447,6 +449,10 @@
         *ngIf="data.rec"
         class="row full-search-form">
         <form id="region">
+            <button [disabled]="noSearchData"
+                type="submit"
+                (click)="fullSearch()"
+                class="hidden">Найти</button>
             <!--
                 <div class="form-group unimportant-text">
                     <label class="s-font" for="code" >{{fieldsDescription.rec['CODE']?.title}}</label>

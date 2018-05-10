@@ -43,26 +43,31 @@
                 </div>
                 <div class="action-wrapper"
                     *ngIf="!editMode">
-                    <span class="pull-right">
-                <button class="btn btn-primary-light" aria-hidden="true" [disabled]="!node || node.updating" (click)="edit()" tooltip="Редактировать" placement="bottom" containerClass="tooltip-info">
-                    <span class="eos-icon eos-icon-edit-blue small"></span>
-                    </button>
-                    <a routerLink="{{selfLink}}"
-                        target="_blank">
-                    <button class="btn btn-primary-light" aria-hidden="true" tooltip="Открыть в новом окне" placement="bottom" containerClass="tooltip-info">
-                        <span class="eos-icon eos-icon-external-link-blue small"></span>
-                    </button>
-                </a>
-                    <button class="btn btn-primary-light"
-                        aria-hidden="true"
-                        [disabled]="!node || node.updating"
-                        (click)="close()"
-                        tooltip="Закрыть"
-                        placement="bottom"
-                        containerClass="tooltip-info">
+                    <div class="pull-right">
+                        <button class="btn btn-primary-light"
+                            aria-hidden="true"
+                            [disabled]="!node || node.updating"
+                            (click)="edit()"
+                            tooltip="Редактировать"
+                            placement="bottom"
+                            containerClass="tooltip-info"><span class="eos-icon eos-icon-edit-blue small"></span></button>
+                        <a class="btn btn-primary-light"
+                            routerLink="{{selfLink}}"
+                            aria-hidden="true"
+                            tooltip="Открыть в новом окне"
+                            placement="bottom"
+                            containerClass="tooltip-info"
+                            target="_blank"><span class="eos-icon eos-icon-external-link-blue small"></span></a>
+                        <button class="btn btn-primary-light"
+                            aria-hidden="true"
+                            [disabled]="!node || node.updating"
+                            (click)="close()"
+                            tooltip="Закрыть"
+                            placement="bottom"
+                            containerClass="tooltip-info">
                     <span class="eos-icon eos-icon-close-blue small"></span>
                 </button>
-                    </span>
+                    </div>
                 </div>
             </div>
         </header>

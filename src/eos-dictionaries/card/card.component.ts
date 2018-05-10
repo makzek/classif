@@ -356,7 +356,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
                         return this._save(_data)
                             .then((node) => !!node);
                     } else {
-                        return false;
+                        return true;
                     }
                 })
                 .catch(() => {
