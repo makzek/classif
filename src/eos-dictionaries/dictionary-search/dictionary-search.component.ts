@@ -6,6 +6,9 @@ import { E_DICT_TYPE, E_FIELD_SET, IRecordModeDescription, ISearchSettings, SEAR
 import { SEARCH_TYPES } from '../consts/search-types';
 import { EosMessageService } from '../../eos-common/services/eos-message.service';
 import { SEARCH_NOT_DONE } from '../consts/messages.consts';
+import { FormGroup } from '@angular/forms';
+import { InputBase } from 'eos-common/core/inputs/input-base';
+import { InputControlService } from 'eos-common/services/input-control.service';
 
 const SEARCH_MODEL = {
     rec: {},
@@ -20,6 +23,15 @@ const SEARCH_MODEL = {
 export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
     @Output() switchFastSrch: EventEmitter<boolean> = new EventEmitter();
+
+    filterInputs = [{
+        controlType: 'date',
+        key: 'filterDate',
+        value: new Date(),
+        label: 'Состояние на',
+        hideLabel: true,
+        readonly: false
+    }];
 
     dictId = '';
     fieldsDescription = {
@@ -51,6 +63,9 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
+    aForm: FormGroup;
+    inputs: InputBase<any>[];
+
     date: Date = new Date();
 
     public mode = 0;
@@ -70,9 +85,17 @@ export class DictionarySearchComponent implements OnDestroy {
 
     constructor(
         private _dictSrv: EosDictService,
-        private _msgSrv: EosMessageService
+        private _msgSrv: EosMessageService,
+        private inputCtrlSrv: InputControlService,
     ) {
         ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
+
+        this.inputs = this.inputCtrlSrv.generateInputs(this.filterInputs);
+        this.aForm = this.inputCtrlSrv.toFormGroup(this.inputs, false);
+
+        this.aForm.valueChanges.subscribe((data) => {
+            // console.log(data);
+        });
 
         this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {

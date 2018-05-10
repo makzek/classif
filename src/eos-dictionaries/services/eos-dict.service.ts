@@ -705,7 +705,6 @@ export class EosDictService {
     }
 
     inclineFields(fields: FieldsDecline): Promise<any[]> {
-        // console.log(`Method inclineFields: ${fields}`);
         return this.currentDictionary.descriptor.onPreparePrintInfo(fields)
             .catch((err) => this._errHandler(err));
     }
