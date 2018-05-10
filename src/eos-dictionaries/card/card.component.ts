@@ -123,7 +123,7 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
             .subscribe((nodes) => {
-                this.nodes = nodes.filter((node) => node.isVisible(this._dictSrv.viewParameters.showDeleted));
+                this.nodes = nodes.filter((node) => !node.isDeleted);
             });
     }
 
