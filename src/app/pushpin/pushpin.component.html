@@ -8,62 +8,13 @@
         tooltip="Прикрепить"
         placement="bottom"
         [ngClass]="{'info-open' : infoOpened, 'info-close' : !infoOpened }"
-        containerClass="tooltip-info"
-        [disabled]="disable">
+        containerClass="tooltip-info">
         <span class="eos-icon eos-icon-pin-blue small"></span>
     </button>
     <ul *dropdownMenu
         class="pushdrop dropdown-menu dropdown-menu-right"
         [ngClass]="{'info': infoOpened}"
         role="menu">
-        <li class="menuitem"
-            *ngFor="let desk of deskList"
-            (click)="pin(desk)">
-            <a class="dropdown-item has-padding">
-                <span class="m-font">{{desk.name}}</span>
-            </a>
-        </li>
-        <li *ngIf="deskList.length === 0 || deskList.length < 5"
-            class="menuitem desk create">
-            <a *ngIf="!creating"
-                class="create dropdown-item has-padding"
-                (click)="openCreateForm($event)">
-                <span class="m-font">Создать рабочий стол</span>
-            </a>
-            <ng-container *ngIf="creating">
-                <div class="input-group">
-                    <input type="text"
-                        (click)="stop($event)"
-                        class="form-control light"
-                        id="createForm"
-                        name="createForm"
-                        #createForm
-                        placeholder="Название нового рабочего стола"
-                        [(ngModel)]="deskName"
-                        maxlength="{{maxLength}}"
-                        required
-                        [pattern]="notEmptyString.source">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default"
-                            (click)="create($event)"
-                            type="button"
-                            tooltip="Сохранить"
-                            placement="bottom"
-                            containerClass="tooltip-info"
-                            [disabled]="!deskName?.length || !createForm.checkValidity()">
-                            <span class="eos-icon eos-icon-checkbox-black x-small"></span>
-                        </button>
-                        <button class="btn btn-default"
-                            (click)="cancelCreating($event)"
-                            type="button"
-                            tooltip="Отменить"
-                            placement="bottom"
-                            containerClass="tooltip-info">
-                            <span class="eos-icon eos-icon-close-black x-small"></span>
-                        </button>
-                    </div>
-                </div>
-            </ng-container>
-        </li>
+        <eos-desktop-list [hideSystem]="hideSystem" selectedMarker="showSelected" (onSelectDesk)="pin($event)"></eos-desktop-list>
     </ul>
 </div>

@@ -110,10 +110,11 @@ export class EosDictService {
 
     get customFields(): IFieldView[] {
         const _storageData = this._storageSrv.getItem('customFields');
-        if (_storageData) {
+        const dictionary = this.currentDictionary;
+        if (_storageData && dictionary) {
             this._customFields = _storageData;
-            if (this._customFields[this.currentDictionary.id]) {
-                return this._customFields[this.currentDictionary.id];
+            if (this._customFields[dictionary.id]) {
+                return this._customFields[dictionary.id];
             } else {
                 return [];
             }

@@ -60,10 +60,10 @@ export class DesktopComponent implements OnDestroy {
             (items) => this.recentItems = items
         );
 
-        this._routeSubscription = _route.url.subscribe(
-            (res) => {
-                const link = res[0] || { path: 'system' };
-                _deskSrv.setSelectedDesk(link.path);
+        this._routeSubscription = _route.params.subscribe(
+            (params) => {
+                const id = params.desktopId || 'system' ;
+                _deskSrv.setSelectedDesk(id);
             }
         );
         this._dictSrv.closeDictionary();

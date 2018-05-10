@@ -3,7 +3,7 @@
         [attr.for]="input.key">{{input.label}}</label>
     <p *ngIf="readonly"
         class="form-control-static m-font"
-        [ngClass]="{'placeholder': !hasValue()}">{{currentValue()}}</p>
+        [ngClass]="{'placeholder': !hasValue()}">{{currentValue}}</p>
     <div class="eos-switch btn-group"
         *ngIf="!readonly">
         <a *ngFor="let opt of buttons"

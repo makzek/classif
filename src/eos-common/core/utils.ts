@@ -1,3 +1,6 @@
+import { AbstractControl } from '@angular/forms';
+import { INPUT_ERROR_MESSAGES } from '../consts/common.consts';
+
 export class EosUtils {
     static pad(n: number): string {
         return n < 10 ? '0' + n : '' + n;
@@ -105,5 +108,26 @@ export class EosUtils {
             }
         }
         return target;
+    }
+
+    static getControlErrorMessage(control: AbstractControl, params: any): string {
+        let msg = '';
+        if (control && control.errors) {
+            msg = Object.keys(control.errors)
+                .map((key) => {
+                    switch (key) {
+                        case 'wrongDate':
+                        case 'pattern':
+                        case 'required':
+                            return INPUT_ERROR_MESSAGES[key];
+                        case 'maxlength':
+                            return 'Максимальная длина ' + params.maxLength + ' символ(а|ов).';
+                        case 'dateCompare':
+                            return control.errors[key];
+                    }
+                })
+                .join(' ');
+        }
+        return msg;
     }
 }

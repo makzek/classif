@@ -66,8 +66,7 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
     private updateMessage() {
         let msg = '';
         const control = this.control;
-        if (this.control && this.control.errors) {
-            // this.inputTooltip.class = 'tooltip-error';
+        if (control && control.errors) {
             msg = Object.keys(control.errors)
                 .map((key) => {
                     switch (key) {
@@ -87,8 +86,6 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
                     }
                 })
                 .join(' ');
-        } else {
-            // this.inputTooltip.class = 'tooltip-info';
         }
         this.inputTooltip.message = msg;
     }
@@ -101,6 +98,8 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
             } else {
                 this.inputTooltip.visible = false;
             }
+        } else {
+            this.inputTooltip.visible = false;
         }
     }
 }

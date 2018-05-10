@@ -1,0 +1,88 @@
+<li *ngIf="updating"
+    class="li-spiner">
+    <div class="spinner-wrapper">
+        <div class="spinner-holder">
+            <eos-spinner size="md"></eos-spinner>
+        </div>
+    </div>
+</li>
+<li *ngFor="let desk of deskList"
+    role="menuitem"
+    class="menuitem dropdown-item"
+    [ngClass]="{'highlighted': selectedMarker && desk.name === selectedDesk.name, 'withMarker': selectedMarker}"
+    (click)="selectDesk(desk, $event)">
+    <ng-container *ngIf="!desk.edited; else editItemTpl">
+        <div tooltip="{{desk.name}}"
+            placement="bottom"
+            containerClass="tooltip-info"
+            class="item-title m-font"
+            container="body">{{desk.name}}
+        </div>
+        <div class="menu-icon">
+            <span *ngIf="desk.name === selectedDesk.name"
+                class="eos-icon eos-icon-checkbox-blue small"></span>
+        </div>
+        <div class="item-actions"
+            *ngIf="desk.id !== 'system'">
+            <div class="action-icon"
+                (click)="openEditForm($event, desk)"
+                tooltip="Редактировать"
+                placement="bottom"
+                container="body"
+                containerClass="tooltip-info">
+                <span class="eos-icon eos-icon-edit-blue x-small"></span>
+            </div>
+            <div class="action-icon"
+                (click)="removeDesk(desk,$event)"
+                tooltip="Удалить"
+                placement="bottom"
+                container="body"
+                containerClass="tooltip-info">
+                <span class="eos-icon eos-icon-close-blue x-small"></span>
+            </div>
+        </div>
+    </ng-container>
+</li>
+<ng-container *ngIf="deskList.length < 6">
+    <li class="menuitem dropdown-item"
+        (click)="openCreateForm($event)">
+        <span class="item-title m-font"
+            *ngIf="!creating; else editItemTpl">Создать рабочий стол</span>
+    </li>
+</ng-container>
+<ng-template #editItemTpl>
+    <form #editForm="ngForm">
+        <div class="input-group">
+            <input type="text"
+                class="form-control light"
+                id="deskName"
+                name="deskName"
+                placeholder="Название рабочего стола"
+                [(ngModel)]="deskName"
+                maxlength="{{maxLength}}"
+                required
+                [tooltip]="inputTooltip.message"
+                [placement]="inputTooltip.placement"
+                [containerClass]="inputTooltip.class"
+                [isOpen]="inputTooltip.visible"
+                (focus)="onFocus()"
+                (blur)="onBlur(editForm)"
+                triggers="">
+            <div class="input-group-btn">
+                <button class="btn btn-default"
+                    (click)="saveDesk($event)"
+                    type="button"
+                    tooltip="Сохранить"
+                    placement="bottom"
+                    containerClass="tooltip-info"
+                    [disabled]="!editForm.valid"><span class="eos-icon eos-icon-checkbox-black x-small"></span></button>
+                <button class="btn btn-default"
+                    (click)="cancelEdit($event)"
+                    type="button"
+                    tooltip="Отменить"
+                    placement="bottom"
+                    containerClass="tooltip-info"><span class="eos-icon eos-icon-close-black x-small"></span></button>
+            </div>
+        </div>
+    </form>
+</ng-template>

@@ -19,6 +19,7 @@ import { EosRestModule } from '../eos-rest/eos-rest.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { DesktopListComponent } from './desktop-list/desktop-list.component';
 import { DesktopSwitcherComponent } from './desktop-switcher/desktop-switcher.component';
 import { EosHeaderComponent } from './header/eos-header.component';
 import { LoginComponent } from './login/login.component';
@@ -49,6 +50,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
         AppComponent,
         BreadcrumbsComponent,
         DesktopComponent,
+        DesktopListComponent,
         DesktopSwitcherComponent,
         EosHeaderComponent,
         LoginComponent,

@@ -34,6 +34,8 @@ export class EosDeskService {
     private _selectedDesk$: BehaviorSubject<EosDesk>;
     private _recentItems$: BehaviorSubject<IDeskItem[]>;
 
+    private selectedDeskId: string;
+
     get desksList(): Observable<EosDesk[]> {
         return this._desksList$.asObservable();
     }
@@ -53,6 +55,7 @@ export class EosDeskService {
         private _appCtx: AppContext,
         private viewManager: ViewManager
     ) {
+        this.selectedDeskId = 'system';
         this._desksList = DEFAULT_DESKS;
 
         this._desksList$ = new BehaviorSubject(this._desksList);
@@ -68,12 +71,6 @@ export class EosDeskService {
                         title: dictionary.title,
                     };
                 });
-
-                if (this._selectedDesk$ && this._selectedDesk) {
-                    if (this._selectedDesk.id === 'system') {
-                        this._selectedDesk$.next(this._desksList[0]);
-                    }
-                }
             });
 
         this._recentItems = [];
@@ -143,8 +140,10 @@ export class EosDeskService {
     }*/
 
     setSelectedDesk(deskId: string) {
-        this._selectedDesk = this._desksList.find((d) => d.id === deskId);
-        this._selectedDesk$.next(this._selectedDesk || this._desksList[0]);
+        if (deskId !== this.selectedDeskId) {
+            this.selectedDeskId = deskId;
+            this.updateSelectedDesk();
+        }
     }
 
     unpinRef(link: IDeskItem): void {
@@ -179,14 +178,12 @@ export class EosDeskService {
             res = this.viewManager.saveView(v);
         }
         return res.then(() => {
-            if (this._selectedDesk === desk) {
-                this._selectedDesk = this._desksList[0]; // system desk
-                this._selectedDesk$.next(this._selectedDesk);
+            if (this._selectedDesk.id === desk.id) {
+                this.setSelectedDesk(this._desksList[0].id);
             }
 
-            this._desksList = this._desksList.filter((d) => d !== desk);
+            this._desksList = this._desksList.filter((d) => d.id !== desk.id);
             this._desksList$.next(this._desksList);
-
         });
     }
 
@@ -256,8 +253,9 @@ export class EosDeskService {
         const view = this._appCtx.UserViews.filter((uv) => uv.SRCH_KIND_NAME === 'clmanDesc');
         for (let i = 0; i < view.length; i++) {
             this._desksList.push(this.readDesc(view[i]));
-            this._desksList$.next(this._desksList);
         }
+        this._desksList$.next(this._desksList);
+        this.updateSelectedDesk();
     }
 
     private readDesc(v: SRCH_VIEW): EosDesk {
@@ -290,5 +288,10 @@ export class EosDeskService {
             // TODO: может отругаться?
         }
         return v;
+    }
+
+    private updateSelectedDesk() {
+        this._selectedDesk = this._desksList.find((d) => d.id === this.selectedDeskId);
+        this._selectedDesk$.next(this._selectedDesk || this._desksList[0]);
     }
 }

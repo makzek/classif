@@ -103,8 +103,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 this._nodeId = params.nodeId;
                 if (this.dictionaryId) {
                     this._dictSrv.openDictionary(this.dictionaryId)
-                        .then(() => this._dictSrv.selectTreeNode(this._nodeId))
-                        .catch((err) => this._errHandler(err));
+                        .then(() => this._dictSrv.selectTreeNode(this._nodeId));
                 }
             }
         });
@@ -323,8 +322,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 if (confirmed) {
                     return this._dictSrv.deleteMarked();
                 }
-            })
-            .catch((err) => this._errHandler(err));
+            });
     }
 
     /**
@@ -366,9 +364,7 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
         if (delCount === allCount) {
             this._msgSrv.addNewMessage(WARN_LOGIC_DELETE);
         }
-        this._dictSrv.markDeleted(true, true)
-            // .then(() => this.updateMarks())
-            .catch((err) => this._errHandler(err));
+        this._dictSrv.markDeleted(true, true);
     }
 
     private _editNode() {
@@ -413,15 +409,5 @@ export class DictionaryComponent implements OnDestroy, DoCheck, AfterViewInit {
                 .confirm(_confrm);
         }
         p.then((confirmed: boolean) => this._dictSrv.markDeleted(confirmed, false));
-    }
-
-    private _errHandler(err) {
-        // console.warn(err);
-        const errMessage = err.message ? err.message : err;
-        this._msgSrv.addNewMessage({
-            type: 'danger',
-            title: 'Ошибка операции',
-            msg: errMessage
-        });
     }
 }

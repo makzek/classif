@@ -48,15 +48,17 @@ export class NodeListComponent implements OnInit, OnDestroy {
         dictSrv.visibleList$.takeUntil(this.ngUnsubscribe)
             .subscribe((nodes: EosDictionaryNode[]) => {
                 // console.log('visibleList', nodes);
-                this.customFields = this.dictSrv.customFields;
-                this.viewFields = this.dictSrv.currentDictionary.getListView();
-                const _customTitles = this.dictSrv.customTitles;
-                _customTitles.forEach((_title) => {
-                    const vField = this.viewFields.find((_field) => _field.key === _title.key);
-                    if (vField) {
-                        vField.customTitle = _title.customTitle;
-                    }
-                });
+                if (dictSrv.currentDictionary) {
+                    this.customFields = this.dictSrv.customFields;
+                    this.viewFields = this.dictSrv.currentDictionary.getListView();
+                    const _customTitles = this.dictSrv.customTitles;
+                    _customTitles.forEach((_title) => {
+                        const vField = this.viewFields.find((_field) => _field.key === _title.key);
+                        if (vField) {
+                            vField.customTitle = _title.customTitle;
+                        }
+                    });
+                }
                 this.nodes = nodes;
                 setTimeout(() => {
                     this._countColumnWidth();
@@ -71,7 +73,9 @@ export class NodeListComponent implements OnInit, OnDestroy {
                 if (this.dictSrv.userOrdered) {
                     this.orderBy = null;
                 } else {
-                    this.orderBy = dictSrv.currentDictionary.orderBy;
+                    if (dictSrv.currentDictionary) {
+                        this.orderBy = dictSrv.currentDictionary.orderBy;
+                    }
                 }
             });
     }
