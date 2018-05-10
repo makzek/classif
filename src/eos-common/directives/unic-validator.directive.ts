@@ -13,7 +13,7 @@ export class UnicValidatorDirective implements Validator {
 
     validate(control: AbstractControl): { [key: string]: any } {
         if (this.eosUnic) {
-            return this.checkingMethod(control.value, this.key, this.inDict) ? { 'isUnic': false } : null;
+            return this.checkingMethod(control.value, this.key, this.inDict) ? { 'isUnique': false } : null;
         } else {
             return null;
         }

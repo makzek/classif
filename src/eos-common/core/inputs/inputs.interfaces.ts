@@ -10,8 +10,8 @@ export interface IBaseInput {
     order?: number;
     pattern?: RegExp;
     readonly?: boolean;
-    isUnic?: boolean;
-    unicInDict?: boolean;
+    isUnique?: boolean;
+    uniqueInDict?: boolean;
     hideLabel?: boolean;
     forNode?: boolean;
     options?: any[];

@@ -27,14 +27,14 @@ export const RUBRICATOR_DICT: ITreeDictionaryDescriptor = {
         key: 'RUBRIC_CODE',
         required: true,
         length: 248,
-        isUnic: true,
-        unicInDict: true,
+        isUnique: true,
+        uniqueInDict: true,
     }),
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Краткое наименование',
         length: 2000,
-        isUnic: true,
-        unicInDict: true,
+        isUnique: true,
+        uniqueInDict: true,
     }),
         COMMON_FIELD_FULLNAME,
     {

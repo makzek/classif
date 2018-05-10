@@ -12,6 +12,15 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
 
     protected subscriptions: Subscription[] = [];
 
+    get currentValue(): any {
+        const control = this.control;
+        if (control) {
+            return control.value;
+        } else {
+            return this.input.label;
+        }
+    }
+
     get isRequired(): boolean {
         let required = false;
         const control = this.control;
@@ -19,6 +28,11 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
             required = !!this.control.errors['required'];
         }
         return required;
+    }
+
+    hasValue(): boolean {
+        const ctrl = this.control;
+        return (ctrl && ctrl.value !== null && ctrl.value !== undefined);
     }
 
     onFocus() {
@@ -61,8 +75,8 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
                         case 'pattern':
                         case 'required':
                             return INPUT_ERROR_MESSAGES[key];
-                        case 'isUnic':
-                            return INPUT_ERROR_MESSAGES[key][+(!!this.input.unicInDict)];
+                        case 'isUnique':
+                            return INPUT_ERROR_MESSAGES[key][+(!!this.input.uniqueInDict)];
                         case 'maxlength':
                             return 'Максимальная длинна ' + this.input.length + ' символ(а|ов).';
                         case 'dateCompare':

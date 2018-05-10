@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { DynamicInputBase } from './dynamic-input-base';
 import { BsDatepickerConfig, BsDatepickerComponent } from 'ngx-bootstrap/datepicker';
-// import { EosUtils } from '../core/utils';
+import { EosUtils } from '../core/utils';
 
 @Component({
     selector: 'eos-dynamic-input-date',
@@ -11,6 +11,16 @@ export class DynamicInputDateComponent extends DynamicInputBase implements OnIni
     bsConfig: Partial<BsDatepickerConfig>;
     bsDate: Date;
     placement = 'bottom';
+
+    get currentValue(): string {
+        const control = this.control;
+        if (control) {
+            if (control.value) {
+                return EosUtils.dateToStringValue(control.value);
+            }
+        }
+        return this.input.label;
+    }
 
     @ViewChild('dpw') datePickerWrapper: ElementRef;
     @ViewChild('dp') datePicker: BsDatepickerComponent;

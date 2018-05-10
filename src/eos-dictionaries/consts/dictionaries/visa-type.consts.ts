@@ -21,7 +21,7 @@ export const VISA_TYPE_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TE
     actions: LINEAR_TEMPLATE.actions.concat(['tableCustomization']),
     visible: true,
     fields: LINEAR_TEMPLATE.fields.concat([
-        Object.assign({}, COMMON_FIELD_NAME, { isUnic: true, unicInDict: true }),
+        Object.assign({}, COMMON_FIELD_NAME, { isUnique: true, uniqueInDict: true }),
         {
             key: 'IS_FINAL',
             type: 'boolean',

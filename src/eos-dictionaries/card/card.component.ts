@@ -122,7 +122,9 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
 
         this._dictSrv.currentList$
             .takeUntil(this.ngUnsubscribe)
-            .subscribe((nodes: EosDictionaryNode[]) => this.nodes = nodes);
+            .subscribe((nodes) => {
+                this.nodes = nodes.filter((node) => node.isVisible(this._dictSrv.viewParameters.showDeleted));
+            });
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -383,8 +385,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
     }
 
     private _afterUpdating(node: EosDictionaryNode): EosDictionaryNode {
-        // const _data = this.cardEditRef.baseCardEditRef.getNewData();
-        // return this._dictSrv.updateNode(this.node, _data)
         if (node) {
             this.recordChanged(node.data);
             this.isChanged = false;
@@ -424,11 +424,6 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
 
     private getLastEditedCard() {
         this.lastEditedCard = this._storageSrv.getItem(LS_EDIT_CARD);
-        /*
-        if (this.lastEditedCard && !this.lastEditedCard.uuid) {
-            this.lastEditedCard.uuid = this._uuid;
-        }
-        */
     }
 
     private _errHandler(err) {
@@ -440,15 +435,4 @@ export class CardComponent implements CanDeactivateGuard, OnDestroy {
         });
         return null;
     }
-
-    /*
-    private cloneData(src: any): any {
-        try {
-            return JSON.parse(JSON.stringify(src));
-        } catch (e) {
-            return null;
-            // console.log(e);
-        }
-    }
-    */
 }

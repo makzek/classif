@@ -6,15 +6,7 @@ import { DynamicInputBase } from './dynamic-input-base';
     templateUrl: 'dynamic-input-select.component.html'
 })
 export class DynamicInputSelectComponent extends DynamicInputBase {
-    selectClick(evt: Event) {
-        if (this.readonly) {
-            evt.stopImmediatePropagation();
-            evt.stopPropagation();
-            evt.preventDefault();
-        }
-    }
-
-    currentValue(): string {
+    get currentValue(): string {
         let value = this.input.label;
         const ctrl = this.control;
         if (ctrl) {
@@ -26,8 +18,11 @@ export class DynamicInputSelectComponent extends DynamicInputBase {
         return value;
     }
 
-    hasValue(): boolean {
-        const ctrl = this.control;
-        return (ctrl && ctrl.value !== null && ctrl.value !== undefined);
+    selectClick(evt: Event) {
+        if (this.readonly) {
+            evt.stopImmediatePropagation();
+            evt.stopPropagation();
+            evt.preventDefault();
+        }
     }
 }

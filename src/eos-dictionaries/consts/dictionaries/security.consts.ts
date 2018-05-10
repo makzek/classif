@@ -23,8 +23,8 @@ export const SECURITY_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEM
         length: 64,
         pattern: NOT_EMPTY_STRING,
         required: true,
-        isUnic: true,
-        unicInDict: true,
+        isUnique: true,
+        uniqueInDict: true,
     }, {
         key: 'EDS_FLAG',
         type: 'boolean',

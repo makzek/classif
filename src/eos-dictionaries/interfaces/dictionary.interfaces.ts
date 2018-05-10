@@ -47,8 +47,8 @@ export interface IFieldDescriptor {
     foreignKey?: string;
     pattern?: RegExp;
     required?: boolean;
-    isUnic?: boolean;
-    unicInDict?: boolean;
+    isUnique?: boolean;
+    uniqueInDict?: boolean;
     options?: ISelectOption[];
     height?: number;
     forNode?: boolean;
@@ -65,8 +65,8 @@ export interface IFieldDescriptorBase {
     readonly foreignKey?: string;
     pattern?: RegExp;
     readonly required?: boolean;
-    readonly isUnic?: boolean;
-    readonly unicInDict?: boolean;
+    readonly isUnique?: boolean;
+    readonly uniqueInDict?: boolean;
     readonly options?: ISelectOption[];
     readonly height?: number;
     readonly forNode?: boolean;

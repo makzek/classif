@@ -668,7 +668,7 @@ export class EosDictService {
         this.updateViewParameters({ hasMarked: val });
     }
 
-    isUnic(val: string, path: string, inDict = false): { [key: string]: any } {
+    isUnique(val: string, path: string, inDict = false): { [key: string]: any } {
         let records: EosDictionaryNode[] = [];
         let valid = true;
         if ('string' === typeof val) {
@@ -695,7 +695,7 @@ export class EosDictService {
                 return recVal === val;
             }) === -1;
         }
-        return valid ? null : { 'isUnic': !valid };
+        return valid ? null : { 'isUnique': !valid };
     }
 
     uploadImg(img: IImage): Promise<number> {
@@ -725,24 +725,6 @@ export class EosDictService {
         this.paginationConfig.current = Math.min(this.paginationConfig.current, maxPage);
         this._paginationConfig$.next(this.paginationConfig);
     }
-    /**
-     * @param list Parent nodes
-     * @returns node have a flag Boss
-     */
-    /*
-    private getBoss(data: any): EosDictionaryNode {
-        const dictionary = this.currentDictionary;
-        if (dictionary.id === 'departments') {
-            if (this._listNode) {
-                return this._listNode.neighbors.find((node) => !node.isNode && node.data.rec['POST_H'] === 1 && node.id !== data.rec.DUE);
-            } else {
-
-            }
-        } else {
-            return null;
-        }
-    }
-    */
 
     private _getListLength(): number {
         return (this._visibleListNodes) ? this._visibleListNodes.length : 0;

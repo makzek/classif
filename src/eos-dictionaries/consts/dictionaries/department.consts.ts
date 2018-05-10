@@ -74,8 +74,8 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         foreignKey: 'CLASSIF_NAME',
         length: 255,
         required: true,
-        // isUnic: true,
-        // unicInDict: true,
+        // isUnique: true,
+        // uniqueInDict: true,
         forNode: false,
     }),
     /*

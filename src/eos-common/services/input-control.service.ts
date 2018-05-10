@@ -71,7 +71,7 @@ export class InputControlService {
      * @param inDict must it be unic in dictionary
      */
     unicValueValidator(path: string, inDict: boolean): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } => this._dictSrv.isUnic(control.value, path, inDict);
+        return (control: AbstractControl): { [key: string]: any } => this._dictSrv.isUnique(control.value, path, inDict);
     }
 
     dateCompareValidator(commparePath: string, operand: 'lt' | 'gt'): ValidatorFn {
@@ -142,8 +142,8 @@ export class InputControlService {
             if (input.pattern) {
                 validators.push(Validators.pattern(input.pattern));
             }
-            if (input.isUnic) {
-                validators.push(this.unicValueValidator(input.key, input.unicInDict));
+            if (input.isUnique) {
+                validators.push(this.unicValueValidator(input.key, input.uniqueInDict));
             }
             if (input.required) {
                 validators.push(Validators.required);

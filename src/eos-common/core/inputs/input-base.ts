@@ -10,8 +10,8 @@ export class InputBase<T>{
     controlType: E_FIELD_TYPE;
     pattern: RegExp;
     readonly: boolean;
-    isUnic: boolean;
-    unicInDict: boolean;
+    isUnique: boolean;
+    uniqueInDict: boolean;
     hideLabel: boolean;
     forNode: boolean;
     options?: any[];
@@ -28,8 +28,8 @@ export class InputBase<T>{
         controlType?: string,
         pattern?: RegExp,
         readonly?: boolean,
-        isUnic?: boolean,
-        unicInDict?: boolean,
+        isUnique?: boolean,
+        uniqueInDict?: boolean,
         hideLabel?: boolean,
         forNode?: boolean,
         options?: any[],
@@ -47,8 +47,8 @@ export class InputBase<T>{
         }
         this.pattern = options.pattern || null;
         this.readonly = !!options.readonly;
-        this.isUnic = !!options.isUnic;
-        this.unicInDict = !!options.unicInDict;
+        this.isUnique = !!options.isUnique;
+        this.uniqueInDict = !!options.uniqueInDict;
         this.hideLabel = !!options.hideLabel;
         this.forNode = options.forNode;
         this.disabled = !!options.disabled;
