@@ -85,7 +85,7 @@
                 <button [disabled]="noSearchData"
                     type="submit"
                     (click)="fullSearch()"
-                    class="hidden">Найти</button>
+                    class="hidden-submit">Найти</button>
                 <div class="first-col margin-r">
                     <div class="form-group unimportant-text">
                         <label class="s-font"
@@ -250,7 +250,7 @@
                 <button [disabled]="noSearchData"
                     type="submit"
                     (click)="fullSearch()"
-                    class="hidden">Найти</button>
+                    class="hidden-submit">Найти</button>
                 <div class="form-group unimportant-text">
                     <label class="s-font"
                         for="titleRoom">{{fieldsDescription.rec['titleRoom']?.title}}</label>
@@ -274,7 +274,7 @@
                 <button [disabled]="noSearchData"
                     type="submit"
                     (click)="fullSearch()"
-                    class="hidden">Найти</button>
+                    class="hidden-submit">Найти</button>
                 <div class="first-col margin-r">
                     <div class="form-group unimportant-text">
                         <label class="s-font"
@@ -371,7 +371,7 @@
             <button [disabled]="noSearchData"
                 type="submit"
                 (click)="fullSearch()"
-                class="hidden">Найти</button>
+                class="hidden-submit">Найти</button>
             <div class="first-col margin-r">
                 <div class="form-group unimportant-text">
                     <label class="s-font"
@@ -452,7 +452,8 @@
             <button [disabled]="noSearchData"
                 type="submit"
                 (click)="fullSearch()"
-                class="hidden">Найти</button>
+                class="hidden-submit">Найти</button>
+
             <!--
                 <div class="form-group unimportant-text">
                     <label class="s-font" for="code" >{{fieldsDescription.rec['CODE']?.title}}</label>
