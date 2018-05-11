@@ -13,7 +13,11 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     }
 
     get hasCard(): boolean {
-        return this.form.controls['rec.CARD_FLAG'] && this.form.controls['rec.CARD_FLAG'].value;
+        return this.getValue('rec.CARD_FLAG');
+    }
+
+    get hasOrganization(): boolean {
+        return this.getValue('rec.DUE_LINK_ORGANIZ');
     }
 
     get orgName(): string {

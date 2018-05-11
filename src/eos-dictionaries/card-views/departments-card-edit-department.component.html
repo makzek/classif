@@ -53,7 +53,7 @@
                     <label [ngClass]="{'unimportant-text': !editMode }">Организация <a
                 *ngIf="editMode && hasCard"
                 (click)="chooseOrganiz()">[выбрать]</a> <a
-                *ngIf="editMode && getValue('rec.DUE_LINK_ORGANIZ')"
+                *ngIf="editMode && hasOrganization"
                 (click)="unbindOrganization()">[удалить]</a></label>
                     <p class="form-control-static m-font">{{orgName}}</p>
                 </div>
