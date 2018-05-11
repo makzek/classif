@@ -548,9 +548,10 @@ export class EosDictService {
     }
 
     setFilter(filter: any) {
-        if (filter && filter.date) {
+        if (filter) {
             Object.assign(this.filters, filter);
-            this._reloadList();
+            this._updateVisibleNodes();
+            // this._reloadList();
         }
     }
 
@@ -916,26 +917,27 @@ export class EosDictService {
 
     private _updateVisibleNodes() {
         this._visibleListNodes = this._currentList;
+        if (this._visibleListNodes) {
+            if (!this.viewParameters.showDeleted) {
+                this._visibleListNodes = this._visibleListNodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            }
 
-        if (!this.viewParameters.showDeleted) {
-            this._visibleListNodes = this._visibleListNodes.filter((node) => node.isVisible(this.viewParameters.showDeleted));
+            this._visibleListNodes = this._visibleListNodes.filter((node) => node.filterBy(this.filters));
+
+            this._fixCurrentPage();
+
+            const page = this.paginationConfig;
+            const pageList = this._visibleListNodes.slice((page.start - 1) * page.length, page.current * page.length);
+            /* unMark invisible nodes */
+            this._currentList
+                .filter((listNode) => listNode.marked && pageList.findIndex((pageNode) => pageNode.id === listNode.id) === -1)
+                .forEach((listNode) => listNode.marked = false);
+
+            if (this._listNode && pageList.findIndex((node) => node.id === this._listNode.id) < 0) {
+                this._openNode(null);
+            }
+            this._visibleList$.next(pageList);
         }
-
-        this._visibleListNodes = this._visibleListNodes.filter((node) => node.filterBy(this.filters));
-
-        this._fixCurrentPage();
-
-        const page = this.paginationConfig;
-        const pageList = this._visibleListNodes.slice((page.start - 1) * page.length, page.current * page.length);
-        /* unMark invisible nodes */
-        this._currentList
-            .filter((listNode) => listNode.marked && pageList.findIndex((pageNode) => pageNode.id === listNode.id) === -1)
-            .forEach((listNode) => listNode.marked = false);
-
-        if (this._listNode && pageList.findIndex((node) => node.id === this._listNode.id) < 0) {
-            this._openNode(null);
-        }
-        this._visibleList$.next(pageList);
     }
 
     private _openNode(node: EosDictionaryNode) {

@@ -97,6 +97,8 @@ export class DictionarySearchComponent implements OnDestroy {
         this.searchForm.valueChanges.subscribe((data) => {
             if (dateFilter.valid) {
                 this.dateFilter(data['filter.stateDate']);
+            } else if (dateFilter.errors.minDate || dateFilter.errors.maxDate) {
+                dateFilter.setValue(new Date());
             } else {
                 this.dateFilter(new Date());
             }
@@ -173,14 +175,9 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     dateFilter(date: Date) {
-        if (date instanceof Date) {
-            if (!this.date || date.getTime() !== this.date.getTime()) {
-                this.date = date;
-                this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
-            }
-        } else {
-            // drop filter
-            // this.date = new Date();
+        if (!date || !this.date || date.getTime() !== this.date.getTime()) {
+            this.date = date;
+            this._dictSrv.setFilter({ date: date ? date.setHours(0, 0, 0, 0) : null });
         }
     }
 
