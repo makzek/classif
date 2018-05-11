@@ -26,7 +26,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     filterInputs = [{
         controlType: 'date',
-        key: 'filterDate',
+        key: 'filter.stateDate',
         value: new Date(),
         label: 'Состояние на',
         hideLabel: true,
@@ -94,6 +94,8 @@ export class DictionarySearchComponent implements OnDestroy {
         this.aForm = this.inputCtrlSrv.toFormGroup(this.inputs, false);
 
         this.aForm.valueChanges.subscribe((data) => {
+            // console.log(data);
+            this.dateFilter(data['filter.stateDate']);
             // console.log(data);
         });
 

@@ -348,9 +348,7 @@ export class EosDictService {
      */
     selectTreeNode(nodeId: string): Promise<EosDictionaryNode> {
         if (nodeId) {
-            // console.log('selectTreeNode', nodeId, this.treeNode);
             if (!this.treeNode || this.treeNode.id !== nodeId) {
-                // console.log('getting node');
                 this.updateViewParameters({ updatingList: true });
                 return this.getTreeNode(nodeId)
                     .then((node) => {
@@ -433,20 +431,17 @@ export class EosDictService {
     addNode(data: any): Promise<EosDictionaryNode> {
         const dictionary = this.currentDictionary;
 
-        // Проверка существования записи для регионов.
         if (this.treeNode) {
             return this.preSave(dictionary, data)
                 .then(() => dictionary.descriptor.addRecord(data, this.treeNode.data))
                 .then((results) => {
-                    // console.log('created node', newNodeId);
-                    return this._reloadList()
+                    return this._reloadList(true)
                         .then(() => {
                             if (dictionary.descriptor.type !== E_DICT_TYPE.linear) {
                                 this._treeNode$.next(this.treeNode);
                                 const keyFld = dictionary.descriptor.record.keyField.foreignKey;
 
                                 results.forEach((res) => {
-                                    // console.log(res, keyFld);
                                     res.record = dictionary.getNode(res.record[keyFld] + '');
                                     if (!res.success) {
                                         this._msgSrv.addNewMessage({
@@ -649,7 +644,6 @@ export class EosDictService {
     }
 
     toggleDeleted() {
-        // console.log('toggle deleted fired');
         this.viewParameters.showDeleted = !this.viewParameters.showDeleted;
 
         if (this.currentDictionary) {
@@ -682,7 +676,7 @@ export class EosDictService {
                 if (this.treeNode) {
                     records = this.treeNode.children;
                 } else if (this.currentNode) {
-                    records = this.treeNode.neighbors;
+                    records = this.currentNode.neighbors;
                 }
             }
 
@@ -731,7 +725,6 @@ export class EosDictService {
     }
 
     private _initViewParameters() {
-        // console.log('_initViewParameters');
         this.viewParameters = {
             showAllSubnodes: false,
             showDeleted: false,
@@ -865,8 +858,6 @@ export class EosDictService {
     }
 
     private getTreeNode(nodeId: string): Promise<EosDictionaryNode> {
-        // todo: refactor
-        // console.log('get node', nodeId);
         const dictionary = this._dictionaries[0];
         if (dictionary) {
             const _node = dictionary.getNode(nodeId);
@@ -900,7 +891,6 @@ export class EosDictService {
 
     private _setCurrentList(dictionary: EosDictionary, nodes: EosDictionaryNode[], update = false) {
         this._currentList = nodes || [];
-        // console.log('_setCurrentList', nodes);
         // remove duplicates
         this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
         // hide root node
@@ -913,8 +903,6 @@ export class EosDictService {
     }
 
     private _reorderList(dictionary: EosDictionary) {
-        // console.log('_reorderList');
-
         if (dictionary) {
             if (!this.viewParameters.searchResults && this.viewParameters.userOrdered && this.treeNode) {
                 this._currentList = dictionary.reorderList(this._currentList, this.treeNode.id);
@@ -927,7 +915,6 @@ export class EosDictService {
     }
 
     private _updateVisibleNodes() {
-        // console.log('_updateVisibleNodes');
         this._visibleListNodes = this._currentList;
 
         if (!this.viewParameters.showDeleted) {
@@ -966,15 +953,18 @@ export class EosDictService {
         }
     }
 
-    private _reloadList(): Promise<any> {
-        // console.log('reloading list');
+    private _reloadList(afterAdd = false): Promise<any> {
         let pResult = Promise.resolve([]);
         const dictionary = this.currentDictionary;
         if (dictionary) {
             if (this._dictMode !== 0) {
                 pResult = dictionary.searchByParentData(this._dictionaries[0], this.treeNode);
             } else if (this._srchCriteries) {
-                pResult = dictionary.search(this._srchCriteries);
+                if (!afterAdd) {
+                    pResult = dictionary.search(this._srchCriteries);
+                } else {
+                    pResult = Promise.resolve(this._currentList);
+                }
             } else if (this.viewParameters.showAllSubnodes) {
                 pResult = dictionary.getAllChildren(this.treeNode);
             } else {
@@ -1031,7 +1021,6 @@ export class EosDictService {
     }
 
     private _search(showDeleted = false): Promise<EosDictionaryNode[]> {
-        // console.log('full search', critery);
         this._openNode(null);
         this.updateViewParameters({
             updatingList: true
@@ -1042,7 +1031,7 @@ export class EosDictService {
                 if (!nodes || nodes.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this.viewParameters.showDeleted = this.viewParameters.showDeleted || showDeleted;
+                    this.viewParameters.showDeleted = this.viewParameters.showDeleted;
                 }
                 this._setCurrentList(dictionary, nodes);
                 this.updateViewParameters({
@@ -1068,7 +1057,6 @@ export class EosDictService {
             return undefined;
         } else {
             const errMessage = err.message ? err.message : err;
-            console.warn(err);
             this._msgSrv.addNewMessage({
                 type: 'danger',
                 title: 'Ошибка обработки. Ответ сервера:',
