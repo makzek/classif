@@ -3055,6 +3055,88 @@ export interface SRCH_REQUEST extends IEnt {
 }
 
 /**
+ * Таблица подписок СЭВ
+ */
+export interface SEV_SUBSCRIBE extends IEnt {
+    /**
+     * ISN_SUBSCRIBE
+     */
+    ISN_SUBSCRIBE: number;
+    /**
+     * ISN_DOC
+     */
+    ISN_DOC: number;
+    /**
+     * KIND_DOC
+     */
+    KIND_DOC: number;
+    /**
+     * DUE_OWNER_ORGANIZ
+     */
+    DUE_OWNER_ORGANIZ: string;
+    /**
+     * PARTICIPANT_ISN
+     */
+    PARTICIPANT_ISN: number;
+    /**
+     * RETURN_ID
+     */
+    RETURN_ID: string;
+    /**
+     * EDMS_NAME
+     */
+    EDMS_NAME: string;
+    /**
+     * EDMS_VERSION
+     */
+    EDMS_VERSION: string;
+    /**
+     * EDMS_UID
+     */
+    EDMS_UID: string;
+    /**
+     * DOC_UID
+     */
+    DOC_UID: string;
+    /**
+     * DOC_VERSION_UID
+     */
+    DOC_VERSION_UID: string;
+    /**
+     * DOC_NUMBER
+     */
+    DOC_NUMBER: string;
+    /**
+     * DOC_DATE
+     */
+    DOC_DATE: number;
+    /**
+     * DOC_GROUP
+     */
+    DOC_GROUP: string;
+    /**
+     * DOC_GROUP_UID
+     */
+    DOC_GROUP_UID: string;
+    /**
+     * SUBSCRIPTIONS
+     */
+    SUBSCRIPTIONS: string;
+    /**
+     * HASH
+     */
+    HASH: string;
+    /**
+     * TASKS_UIDS
+     */
+    TASKS_UIDS: string;
+    /**
+     * VISA_SIGN_UIDS
+     */
+    VISA_SIGN_UIDS: string;
+}
+
+/**
  * Представление результатов запроса
  */
 export interface SRCH_VIEW extends IEnt {
