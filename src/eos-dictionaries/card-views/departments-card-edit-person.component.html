@@ -15,9 +15,11 @@
         <div class="col-1 pull-left">
             <div class="current-image"
                 [ngStyle]="{'background-image': photo}">
-                <eos-photo-uploader class="photo-uploader"
-                    [disableEdit]="!editMode"
-                    (endUploading)="newImage($event)"></eos-photo-uploader>
+                <div class="photo-uploader" *ngIf="editMode">
+                    <eos-photo-uploader [disableEdit]="!editMode"
+                        (endUploading)="newImage($event)"></eos-photo-uploader>
+                    <a class="btn eos-icon eos-icon-close-blue small" (click)="removePhoto()"></a>
+                </div>
             </div>
             <eos-dynamic-input [input]="inputs['printInfo.GENDER']"
                 [form]="form"

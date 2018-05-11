@@ -73,6 +73,11 @@ export class DepartmentsCardEditPersonComponent extends BaseCardEditComponent im
             });
     }
 
+    removePhoto() {
+        this.setValue('rec.ISN_PHOTO', null);
+        this.photo = DEFAULT_PHOTO;
+    }
+
     public fillDeclineFields(): void {
         const field: FieldsDecline = {
             DUTY: this.getValue('rec.DUTY') || '',
