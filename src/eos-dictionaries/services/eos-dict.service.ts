@@ -1031,7 +1031,7 @@ export class EosDictService {
                 if (!nodes || nodes.length < 1) {
                     this._msgSrv.addNewMessage(WARN_SEARCH_NOTFOUND);
                 } else {
-                    this.viewParameters.showDeleted = this.viewParameters.showDeleted;
+                    this.viewParameters.showDeleted = showDeleted;
                 }
                 this._setCurrentList(dictionary, nodes);
                 this.updateViewParameters({
