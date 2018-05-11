@@ -1,7 +1,7 @@
-<div [formGroup]="form">
+<div [formGroup]="form"
+    #dpw>
     <label [hidden]="input.hideLabel"
         [attr.for]="input.key">{{input.label}}</label>
-
     <p class="form-control-static m-font"
         [ngClass]="{'placeholder': !hasValue()}"
         *ngIf="readonly">{{currentValue}}</p>
@@ -18,15 +18,13 @@
             (focus)="onFocus()"
             (blur)="onBlur()"
             maxlength="10">
-        <span #dpw><a bsDatepicker
-            #dp="bsDatepicker"
+        <a bsDatepicker
             [placement]="placement"
             [bsConfig]="bsConfig"
             [bsValue]="bsDate"
-            (bsValueChange)="dpChanged($event)"
             [minDate]="bsConfig.minDate"
             [maxDate]="bsConfig.maxDate"
-            [isDisabled]="readonly"><span class="eos-icon eos-icon-calendar-blue small"></span></a>
-        </span>
+            [isDisabled]="readonly"
+            (bsValueChange)="dpChanged($event)"><span class="eos-icon eos-icon-calendar-blue small"></span></a>
     </div>
 </div>

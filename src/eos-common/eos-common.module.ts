@@ -13,7 +13,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 /* components */
 import { ConfirmWindowComponent } from './confirm-window/confirm-window.component';
-import { DatepickerComponent } from './datepicker/datepicker.component';
 import { DynamicInputComponent } from './dynamic-form-input/dynamic-input.component';
 import { DynamicInputButtonsComponent } from './dynamic-form-input/dynamic-input-buttons.component';
 import { DynamicInputCheckboxComponent } from './dynamic-form-input/dynamic-input-checkbox.component';
@@ -47,7 +46,6 @@ import { EosDatePipe } from './pipes/eos-date.pipe';
         InputCleanerDirective,
         SpinnerComponent,
         PhotoUploaderComponent,
-        DatepickerComponent,
         UnicValidatorDirective,
         DynamicInputComponent,
         DynamicInputButtonsComponent,
@@ -70,19 +68,14 @@ import { EosDatePipe } from './pipes/eos-date.pipe';
     ],
     exports: [
         ConfirmWindowComponent,
-        // ConfirmWindowService,
         InfoComponent,
         MessagesComponent,
-        // EosMessageService,
         InputCleanerDirective,
         SpinnerComponent,
         PhotoUploaderComponent,
-        DatepickerComponent,
-        // TextInputComponent,
         UnicValidatorDirective,
         DynamicInputComponent,
         EosDatePipe,
-        // DataConvertService,
     ],
     entryComponents: [
         ConfirmWindowComponent,

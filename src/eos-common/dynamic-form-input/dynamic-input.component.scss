@@ -148,3 +148,39 @@ eos-dynamic-input {
         }
     }
 }
+
+.eos-datepicker {
+    position: relative;
+    input {
+        margin-right: 5px;
+        padding-right: 32px !important;
+        &.stub {
+            box-shadow: none;
+            background-image: none;
+            padding: 0;
+        }
+        &.hidden {
+            display: none;
+        }
+    }
+    a {
+        position: absolute;
+        right: 4px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 24px;
+    }
+}
+
+.theme-dark-blue .bs-datepicker-head,
+.theme-dark-blue .bs-datepicker-body table td span.selected,
+.theme-dark-blue .bs-datepicker-body table td.selected span,
+.theme-dark-blue .bs-datepicker-body table td span[class*="select-"]:after,
+.theme-dark-blue .bs-datepicker-body table td[class*="select-"] span:after {
+    background-color: $button-color-main-theme !important;
+}
+
+.bs-datepicker-body table td {
+    color: black !important;
+}

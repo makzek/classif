@@ -33,19 +33,27 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     onChange: any = () => { };
     onTouched: any = () => { };
 
+    @HostListener('click', [])
+    @HostListener('focus', [])
+    onFocus() {
+        const elem = this.ref.nativeElement;
+        const cursorPos = (elem.selectionStart < 10) ? elem.selectionStart : 9;
+        elem.selectionStart = cursorPos;
+        elem.selectionEnd = cursorPos + 1;
+    }
+
     @HostListener('keyup', ['$event'])
     onKeyUp(kbEvt: KeyboardEvent) {
         const elem = this.ref.nativeElement;
         const cursorPos = elem.selectionStart;
         const oldVal = elem.value;
-        if (elem.value) {
+        // if (elem.value) {
             const parts = oldVal.split('.');
             const valParts = '..'.split('.')
                 .map((subVal, idx) => parts[idx] ? parts[idx].replace(/\D/g, '') : '')
                 .map((subNum, idx) => (subNum + '____').substr(0, idx < 2 ? 2 : 4));
 
             const val = valParts.join('.');
-            // console.log(kbEvt.keyCode, cursorPos);
             if (val.replace(/\D/g, '')) {
                 this.ref.nativeElement.value = val;
             } else {
@@ -54,41 +62,32 @@ export class EosDateMaskDirective implements ControlValueAccessor {
 
             switch (kbEvt.keyCode) {
                 case 8: // backspace
-                    if (cursorPos === 6 || cursorPos === 3) {
-                        elem.selectionStart = cursorPos - 1;
-                        elem.selectionEnd = cursorPos - 1;
-                    } else {
-                        elem.selectionStart = cursorPos;
-                        elem.selectionEnd = cursorPos;
-                    }
-                    break;
                 case 37: // left
-                    if (cursorPos >= 5) {
-                        elem.selectionStart = 3;
-                        elem.selectionEnd = 5;
+                    if (cursorPos === 3 || cursorPos === 6) {
+                        elem.selectionStart = cursorPos - 2;
                     } else {
-                        elem.selectionStart = 0;
-                        elem.selectionEnd = 2;
+                        elem.selectionStart = cursorPos - 1;
                     }
+                    elem.selectionEnd = elem.selectionStart + 1;
                     break;
                 case 38: // up
                     elem.selectionStart = 0;
-                    elem.selectionEnd = 2;
-                    break;
-                case 39: // right
-                    if (cursorPos < 3) {
-                        elem.selectionStart = 3;
-                        elem.selectionEnd = 5;
-                    } else {
-                        elem.selectionStart = 6;
-                        elem.selectionEnd = 10;
-                    }
+                    elem.selectionEnd = 1;
                     break;
                 case 40: // down
-                    elem.selectionStart = 6;
+                    elem.selectionStart = 9;
                     elem.selectionEnd = 10;
                     break;
+                case 39: // right
                 default:
+                    if (cursorPos === 2 || cursorPos === 5) {
+                        elem.selectionStart = cursorPos + 1;
+                    } else {
+                        elem.selectionStart = cursorPos;
+                    }
+                    elem.selectionEnd = elem.selectionStart + 1;
+                    break;
+                /*
                     const selStart = val.indexOf('_');
                     if (selStart > -1) {
                         elem.selectionStart = selStart;
@@ -100,8 +99,9 @@ export class EosDateMaskDirective implements ControlValueAccessor {
                             elem.selectionEnd = 10;
                         }
                     }
+                */
             }
-        }
+        // }
         this.value = this.parseDate(this.ref.nativeElement.value);
     }
 
