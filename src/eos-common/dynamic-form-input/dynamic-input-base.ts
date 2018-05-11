@@ -71,6 +71,8 @@ export class DynamicInputBase implements OnChanges, OnDestroy {
                 .map((key) => {
                     switch (key) {
                         case 'wrongDate':
+                        case 'minDate':
+                        case 'maxDate':
                         case 'pattern':
                         case 'required':
                             return INPUT_ERROR_MESSAGES[key];

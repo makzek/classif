@@ -109,11 +109,20 @@ export class InputControlService {
     dateValueValidator(): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             const value = control.value;
-            let valid = true;
+            let error = null;
             if (value && value instanceof Date) {
-                valid = !isNaN(value.getTime());
+                if (isNaN(value.getTime())) {
+                    error = { 'wrongDate': true };
+                } else {
+                    const ts = value.setHours(0, 0, 0, 0);
+                    if (ts - new Date('01/01/1900').setHours(0, 0, 0, 0) < 0) {
+                        error = { 'minDate': true };
+                    } else if (new Date('12/31/2100').setHours(0, 0, 0, 0) - ts < 0) {
+                        error = { 'maxDate': true };
+                    }
+                }
             }
-            return (valid ? null : { 'wrongDate': true });
+            return error;
         };
     }
 

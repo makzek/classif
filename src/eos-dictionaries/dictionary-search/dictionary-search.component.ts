@@ -63,7 +63,7 @@ export class DictionarySearchComponent implements OnDestroy {
 
     dictSubscription: Subscription;
 
-    aForm: FormGroup;
+    searchForm: FormGroup;
     inputs: InputBase<any>[];
 
     date: Date = new Date();
@@ -91,12 +91,15 @@ export class DictionarySearchComponent implements OnDestroy {
         ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
 
         this.inputs = this.inputCtrlSrv.generateInputs(this.filterInputs);
-        this.aForm = this.inputCtrlSrv.toFormGroup(this.inputs, false);
+        this.searchForm = this.inputCtrlSrv.toFormGroup(this.inputs, false);
+        const dateFilter = this.searchForm.controls['filter.stateDate'];
 
-        this.aForm.valueChanges.subscribe((data) => {
-            // console.log(data);
-            this.dateFilter(data['filter.stateDate']);
-            // console.log(data);
+        this.searchForm.valueChanges.subscribe((data) => {
+            if (dateFilter.valid) {
+                this.dateFilter(data['filter.stateDate']);
+            } else {
+                this.dateFilter(new Date());
+            }
         });
 
         this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
@@ -116,18 +119,17 @@ export class DictionarySearchComponent implements OnDestroy {
                 }
 
                 const _config = _d.descriptor.record.getSearchConfig();
-                // console.log('search config', _config);
                 /* tslint:disable:no-bitwise */
                 this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
                 this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
                 this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
                 /* tslint:enable:no-bitwise */
-                // console.log('dictionary-search dict update', this.hasDate, this.hasFull, this.hasQuick);
+
                 if (this.dictId === 'departments') {
                     if (_dictSrv.getFilterValue('date')) {
-                        this.date = new Date(_dictSrv.getFilterValue('date'));
+                        dateFilter.setValue(new Date(_dictSrv.getFilterValue('date')));
                     } else {
-                        this.dateFilter(new Date());
+                        this.dateFilter(dateFilter.value);
                     }
                 }
             }
