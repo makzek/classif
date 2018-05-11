@@ -44,6 +44,8 @@ export const REGION_DICT: ITreeDictionaryDescriptor = {
         title: 'Наименование',
         type: 'string',
         length: 64,
+        isUnique: true,
+        uniqueInDict: true,
         required: true,
         pattern: NOT_EMPTY_STRING,
     }, {

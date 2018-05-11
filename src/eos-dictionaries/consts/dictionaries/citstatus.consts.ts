@@ -41,6 +41,8 @@ export const CITSTATUS_DICT: ITreeDictionaryDescriptor = {
         COMMON_FIELD_CODE,
     Object.assign({}, COMMON_FIELD_NAME, {
         title: 'Наименование статуса',
+        isUnique: true,
+        uniqueInDict: true,
         length: 64,
     }), {
         key: 'IS_NODE',
