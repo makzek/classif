@@ -12,6 +12,7 @@ import { DropdownInput } from '../core/inputs/select-input';
 import { ButtonsInput } from '../core/inputs/buttons-input';
 import { E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { EosUtils } from '../core/utils';
+import { NOT_EMPTY_STRING } from '../consts/common.consts';
 
 @Injectable()
 export class InputControlService {
@@ -150,6 +151,8 @@ export class InputControlService {
 
             if (input.pattern) {
                 validators.push(Validators.pattern(input.pattern));
+            } else if (input.controlType === E_FIELD_TYPE.text || input.controlType === E_FIELD_TYPE.string) {
+                validators.push(Validators.pattern(NOT_EMPTY_STRING));
             }
             if (input.isUnique) {
                 validators.push(this.unicValueValidator(input.key, input.uniqueInDict));
