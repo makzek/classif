@@ -48,11 +48,16 @@
             <eos-dynamic-input [input]="inputs['printInfo.DEPARTMENT_RP']"
                 [form]="form"
                 [readonly]="!editMode"></eos-dynamic-input>
-            <label [ngClass]="{'unimportant-text': !editMode }"
-                for="DUE_LINK_ORGANIZ">Организация <a
+            <div class="form-group">
+                <div class="organization-wrapper">
+                    <label [ngClass]="{'unimportant-text': !editMode }">Организация <a
                 *ngIf="editMode && hasCard"
-                (click)="chooseOrganiz()">[выбрать]</a></label>
-            <p class="form-control-static m-font">{{orgName || data.organization['CLASSIF_NAME'] || ''}}</p>
+                (click)="chooseOrganiz()">[выбрать]</a> <a
+                *ngIf="editMode && getValue('rec.DUE_LINK_ORGANIZ')"
+                (click)="unbindOrganization()">[удалить]</a></label>
+                    <p class="form-control-static m-font">{{orgName}}</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="clearfix">

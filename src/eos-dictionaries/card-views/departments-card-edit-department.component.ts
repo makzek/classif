@@ -7,13 +7,23 @@ import { BaseCardEditComponent } from './base-card-edit.component';
     templateUrl: 'departments-card-edit-department.component.html',
 })
 export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent implements OnChanges {
-    orgName = '';
+    private _orgName = '';
     constructor(injector: Injector, private _zone: NgZone) {
         super(injector);
     }
 
     get hasCard(): boolean {
         return this.form.controls['rec.CARD_FLAG'] && this.form.controls['rec.CARD_FLAG'].value;
+    }
+
+    get orgName(): string {
+        if (this._orgName) {
+            return this._orgName;
+        } else if (this.data && this.data.organization) {
+            return this.data.organization.CLASSIF_NAME;
+        } else {
+            return '';
+        }
     }
 
     chooseOrganiz() {
@@ -35,10 +45,16 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
         this.dictSrv.bindOrganization(dues[0])
             .then((org) => {
                 if (org) {
-                    this.orgName = org['CLASSIF_NAME'];
+                    this._orgName = org['CLASSIF_NAME'];
                     this.setValue('rec.DUE_LINK_ORGANIZ', org.DUE);
                 }
             });
+    }
+
+    unbindOrganization() {
+        this._orgName = '';
+        this.data.organization = null;
+        this.setValue('rec.DUE_LINK_ORGANIZ', null);
     }
 
     ngOnChanges() {
