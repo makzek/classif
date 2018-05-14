@@ -10,6 +10,7 @@ import { EosUtils } from '../core/utils';
 export class DynamicInputDateComponent extends DynamicInputBase implements OnInit {
     bsConfig: Partial<BsDatepickerConfig>;
     placement = 'bottom';
+    bsDate: Date;
 
     get currentValue(): string {
         const control = this.control;
