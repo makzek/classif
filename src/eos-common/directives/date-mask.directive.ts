@@ -42,10 +42,10 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     }
     @HostListener('keydown', ['$event'])
     onKeydown(kbEvt: KeyboardEvent) {
-        const elem = this.ref.nativeElement;
         switch (kbEvt.keyCode) {
+            case 46: // delete
             case 8: // backspace
-                elem.selectionEnd = elem.selectionStart;
+                kbEvt.preventDefault();
         }
     }
 
@@ -53,7 +53,15 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     onKeyup(kbEvt: KeyboardEvent) {
         const elem = this.ref.nativeElement;
         const cursorPos = elem.selectionStart;
-        const oldVal = elem.value;
+        let oldVal = elem.value;
+
+        // replace removed symbols with _
+        switch (kbEvt.keyCode) {
+            case 8: // backspace
+            case 46: // delete
+                oldVal = this.removeSymbolAt(oldVal, cursorPos);
+        }
+
         // if (elem.value) {
         const parts = oldVal.split('.');
         const valParts = '..'.split('.')
@@ -132,6 +140,12 @@ export class EosDateMaskDirective implements ControlValueAccessor {
             this.value = value;
             this.ref.nativeElement.value = EosUtils.dateToStringValue(value);
         }
+    }
+
+    private removeSymbolAt(source: string,  pos: number): string {
+        const val = source.split('');
+        val[pos] = '_';
+        return val.join('');
     }
 
     private parseDate(value: string): Date {
