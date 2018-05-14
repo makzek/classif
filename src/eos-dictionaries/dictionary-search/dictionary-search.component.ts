@@ -9,6 +9,7 @@ import { SEARCH_NOT_DONE } from '../consts/messages.consts';
 import { FormGroup } from '@angular/forms';
 import { InputBase } from 'eos-common/core/inputs/input-base';
 import { InputControlService } from 'eos-common/services/input-control.service';
+import { EosDictionary } from '../core/eos-dictionary';
 
 const SEARCH_MODEL = {
     rec: {},
@@ -24,6 +25,9 @@ export class DictionarySearchComponent implements OnDestroy {
     @Output() setFilter: EventEmitter<any> = new EventEmitter(); // todo add filter type
     @Output() switchFastSrch: EventEmitter<boolean> = new EventEmitter();
 
+    @ViewChild('full') fSearchPop;
+    @ViewChild('quick') qSearchPop;
+
     filterInputs = [{
         controlType: 'date',
         key: 'filter.stateDate',
@@ -33,7 +37,6 @@ export class DictionarySearchComponent implements OnDestroy {
         readonly: false
     }];
 
-    dictId = '';
     fieldsDescription = {
         rec: {}
     };
@@ -42,16 +45,13 @@ export class DictionarySearchComponent implements OnDestroy {
     person: any;
     cabinet: any;
 
-    public settings: ISearchSettings = {
+    settings: ISearchSettings = {
         mode: SEARCH_MODES.totalDictionary,
         deleted: false
     };
     currTab: string;
     modes: IRecordModeDescription[];
     searchDone = true; // Flag search is done, false while not received data
-
-    @ViewChild('full') fSearchPop;
-    @ViewChild('quick') qSearchPop;
 
     isOpenQuick = false;
     dataQuick = null;
@@ -61,14 +61,18 @@ export class DictionarySearchComponent implements OnDestroy {
     hasFull: boolean;
     type: E_DICT_TYPE;
 
-    dictSubscription: Subscription;
-
     searchForm: FormGroup;
     inputs: InputBase<any>[];
 
-    date: Date = new Date();
-
     public mode = 0;
+
+    private date: Date = new Date();
+    private dictionary: EosDictionary;
+    private subscriptions: Subscription[] = [];
+
+    get dictId(): string {
+        return this.dictionary.id;
+    }
 
     get noSearchData(): boolean {
         const model = this[this.currTab || 'data'];
@@ -89,7 +93,6 @@ export class DictionarySearchComponent implements OnDestroy {
         private inputCtrlSrv: InputControlService,
     ) {
         ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
-
         this.inputs = this.inputCtrlSrv.generateInputs(this.filterInputs);
         this.searchForm = this.inputCtrlSrv.toFormGroup(this.inputs, false);
         const dateFilter = this.searchForm.controls['filter.stateDate'];
@@ -104,50 +107,21 @@ export class DictionarySearchComponent implements OnDestroy {
             }
         });
 
-        this.dictSubscription = _dictSrv.dictionary$.subscribe((_d) => {
+        this.subscriptions.push(_dictSrv.dictionary$.subscribe((_d) => {
             if (_d) {
-                this.dictId = _d.id;
-                if (this.dictId) {
-                    Object.assign(this.data, {
-                        printInfo: {},
-                        cabinet: {}
-                    });
-                }
-                this.fieldsDescription = _d.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
-                this.type = _d.descriptor.dictionaryType;
-                this.modes = _d.descriptor.record.getModeList();
-                if (this.modes) {
-                    this.currTab = this.modes[0].key;
-                }
-
-                const _config = _d.descriptor.record.getSearchConfig();
-                /* tslint:disable:no-bitwise */
-                this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
-                this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
-                this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
-                /* tslint:enable:no-bitwise */
-
-                if (this.dictId === 'departments') {
-                    if (_dictSrv.getFilterValue('date')) {
-                        dateFilter.setValue(new Date(_dictSrv.getFilterValue('date')));
-                    } else {
-                        this.dateFilter(dateFilter.value);
-                    }
-                }
+                this.dictionary = _dictSrv.currentDictionary;
+                ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
+                this.initSearchForm();
             }
-        });
+        }));
     }
 
     setTab(key: string) {
         this.currTab = key;
     }
 
-    public setFocus() {
-        document.getElementById('inpQuick').focus();
-    }
-
     ngOnDestroy() {
-        this.dictSubscription.unsubscribe();
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 
     fullSearch() {
@@ -195,5 +169,39 @@ export class DictionarySearchComponent implements OnDestroy {
         this.settings.deleted = false;
         this[model] = {};
         Object.keys(SEARCH_MODEL).forEach((key) => this[model][key] = {});
+    }
+
+    private initSearchForm() {
+        ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
+        if (this.dictionary) {
+            const dateFilter = this.searchForm.controls['filter.stateDate'];
+            if (this.dictId) {
+                Object.assign(this.data, {
+                    printInfo: {},
+                    cabinet: {}
+                });
+            }
+            this.fieldsDescription = this.dictionary.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
+            this.type = this.dictionary.descriptor.dictionaryType;
+            this.modes = this.dictionary.descriptor.record.getModeList();
+            if (this.modes) {
+                this.currTab = this.modes[0].key;
+            }
+
+            const _config = this.dictionary.descriptor.record.getSearchConfig();
+            /* tslint:disable:no-bitwise */
+            this.hasDate = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.dateFilter);
+            this.hasQuick = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.quick);
+            this.hasFull = !!~_config.findIndex((_t) => _t === SEARCH_TYPES.full);
+            /* tslint:enable:no-bitwise */
+
+            if (this.dictId === 'departments') {
+                if (this._dictSrv.getFilterValue('date')) {
+                    dateFilter.setValue(new Date(this._dictSrv.getFilterValue('date')));
+                } else {
+                    this.dateFilter(dateFilter.value);
+                }
+            }
+        }
     }
 }

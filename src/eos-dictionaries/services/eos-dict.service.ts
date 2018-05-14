@@ -53,6 +53,7 @@ export class EosDictService {
     private _customFields: any;
     private _customTitles: any;
     private _dictMode: number;
+    private _dictMode$: BehaviorSubject<number>;
     private _dictionaries: EosDictionary[];
     private _listDictionary$: BehaviorSubject<EosDictionary>;
     private filters: any = {};
@@ -60,6 +61,10 @@ export class EosDictService {
     /* Observable dictionary for subscribing on updates in components */
     get dictionary$(): Observable<EosDictionary> {
         return this._dictionary$.asObservable();
+    }
+
+    get dictMode$(): Observable<number> {
+        return this._dictMode$.asObservable();
     }
 
     get listNode(): EosDictionaryNode {
@@ -184,6 +189,7 @@ export class EosDictService {
         this._paginationConfig$ = new BehaviorSubject<IPaginationConfig>(null);
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode = 0;
+        this._dictMode$ = new BehaviorSubject<number>(this._dictMode);
     }
 
     bindOrganization(orgDue: string) {
@@ -304,6 +310,7 @@ export class EosDictService {
         this.treeNode = this._listNode = this._srchCriteries = null;
         this._initViewParameters();
         this._dictMode = 0;
+        this._dictMode$.next(0);
         this._dictionaries = [];
         this._viewParameters$.next(this.viewParameters);
         this._currentList = [];
@@ -556,14 +563,15 @@ export class EosDictService {
     }
 
     fullSearch(data: any, params: ISearchSettings) {
+        const dictionary = this._dictionaries[0];
         if (data.srchMode === 'person') {
-            this._srchCriteries = [this.currentDictionary.getFullsearchCriteries(data, params, this.treeNode)];
+            this._srchCriteries = [dictionary.getFullsearchCriteries(data, params, this.treeNode)];
             data.rec['PHONE_LOCAL'] = data.rec['PHONE'];
             delete data.rec['PHONE'];
-            this._srchCriteries.push(this.currentDictionary.getFullsearchCriteries(data, params, this.treeNode));
+            this._srchCriteries.push(dictionary.getFullsearchCriteries(data, params, this.treeNode));
             return this._search(params.deleted);
         } else {
-            this._srchCriteries = [this.currentDictionary.getFullsearchCriteries(data, params, this.treeNode)];
+            this._srchCriteries = [dictionary.getFullsearchCriteries(data, params, this.treeNode)];
             return this._search(params.deleted);
         }
     }
@@ -608,7 +616,7 @@ export class EosDictService {
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this._dictionaries[0].getDictionaryIdByMode(mode);
         }
-
+        this._dictMode$.next(this._dictMode);
         this._reloadList();
     }
 

@@ -193,7 +193,7 @@ export class RecordDescriptor {
     protected _initFieldSets(fsKeys: string[], descriptor: IDictionaryDescriptor) {
         fsKeys.forEach((foreignKey) => {
             this[foreignKey] = [];
-            if (descriptor[foreignKey]) {
+            if (descriptor[foreignKey] && descriptor[foreignKey] instanceof Array) {
                 descriptor[foreignKey].forEach((fldName) => this._addFieldToSet(fldName, this[foreignKey]));
             }
         });

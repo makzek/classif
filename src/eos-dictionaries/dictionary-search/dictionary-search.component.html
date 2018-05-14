@@ -497,4 +497,31 @@
                 -->
         </form>
     </div>
+    <!--FOR Cabinets-->
+    <div [hidden]="dictId !== 'cabinet'"
+        *ngIf="data.rec"
+        class="row full-search-form">
+        <form id="cabinet">
+            <button [disabled]="noSearchData"
+                type="submit"
+                (click)="fullSearch()"
+                class="hidden-submit">Найти</button>
+            <div class="form-group unimportant-text">
+                <label class="s-font"
+                    for="name">{{fieldsDescription.rec['CABINET_NAME']?.title}}</label>
+                <div class="search-fld">
+                    <input id="name"
+                        name="name"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="data.rec['CABINET_NAME']"
+                        placeholder="{{fieldsDescription.rec['CABINET_NAME']?.title}}"
+                        maxlength="{{fieldsDescription.rec['CABINET_NAME']?.length}}">
+                    <a class="clear-btn"
+                        [ngClass]="{'hide': !data.rec['CABINET_NAME']}"
+                        (click)="data.rec['CABINET_NAME'] = ''"><span class="eos-icon eos-icon-close-blue"></span></a>
+                </div>
+            </div>
+        </form>
+    </div>
 </ng-template>

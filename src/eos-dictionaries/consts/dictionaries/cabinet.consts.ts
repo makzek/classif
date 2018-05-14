@@ -1,6 +1,7 @@
 import { IDictionaryDescriptor } from 'eos-dictionaries/interfaces';
 import { LINEAR_TEMPLATE } from './_linear-template';
 import { COMMON_FIELD_NAME, COMMON_FIELD_FULLNAME } from './_common';
+import { SEARCH_TYPES } from '../search-types';
 
 export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMPLATE, {
     id: 'cabinet',
@@ -8,6 +9,7 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     title: 'Кабинеты',
     keyField: 'ISN_CABINET',
     visible: false,
+    searchConfig: [SEARCH_TYPES.quick, SEARCH_TYPES.full],
     actions: ['add', 'markRecords', 'quickSearch', 'fullSearch', 'order', 'userOrder', 'edit',
         'moveUp', 'moveDown', 'navigateUp', 'navigateDown', 'showDeleted', 'remove', 'removeHard',
         'restore', 'tableCustomization'],
@@ -60,6 +62,8 @@ export const CABINET_DICT: IDictionaryDescriptor = Object.assign({}, LINEAR_TEMP
     }],
     treeFields: ['CABINET_NAME'],
     listFields: ['CABINET_NAME', 'DEPARTMENT_NAME'],
+    searchFields: ['CABINET_NAME'],
+    fullSearchFields: ['CABINET_NAME'],
     allVisibleFields: ['FULLNAME'],
     shortQuickViewFields: ['CABINET_NAME', 'FULLNAME'],
     quickViewFields: ['ISN_CABINET', 'CABINET_NAME', 'DEPARTMENT_NAME', 'department', 'owners', 'users'],
