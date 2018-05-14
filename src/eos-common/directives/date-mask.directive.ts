@@ -33,13 +33,6 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     onChange: any = () => { };
     onTouched: any = () => { };
 
-    @HostListener('click', [])
-    onClick() {
-        const elem = this.ref.nativeElement;
-        const cursorPos = (elem.selectionStart < 10) ? elem.selectionStart : 9;
-        elem.selectionStart = cursorPos;
-        elem.selectionEnd = cursorPos + 1;
-    }
     @HostListener('keydown', ['$event'])
     onKeydown(kbEvt: KeyboardEvent) {
         switch (kbEvt.keyCode) {
@@ -58,11 +51,17 @@ export class EosDateMaskDirective implements ControlValueAccessor {
         // replace removed symbols with _
         switch (kbEvt.keyCode) {
             case 8: // backspace
+                if (cursorPos === 3 || cursorPos === 6) {
+                    oldVal = this.removeSymbolAt(oldVal, cursorPos - 2);
+                } else if (cursorPos > 0) {
+                    oldVal = this.removeSymbolAt(oldVal, cursorPos - 1);
+                }
+                break;
             case 46: // delete
                 oldVal = this.removeSymbolAt(oldVal, cursorPos);
+                break;
         }
 
-        // if (elem.value) {
         const parts = oldVal.split('.');
         const valParts = '..'.split('.')
             .map((subVal, idx) => parts[idx] ? parts[idx].replace(/\D/g, '_') : '')
@@ -75,6 +74,26 @@ export class EosDateMaskDirective implements ControlValueAccessor {
             this.ref.nativeElement.value = null;
         }
 
+        this.value = this.parseDate(this.ref.nativeElement.value);
+
+        elem.selectionStart = cursorPos;
+
+        switch (kbEvt.keyCode) {
+            case 8: // backspace
+                if (cursorPos === 3 || cursorPos === 6) {
+                    elem.selectionStart = cursorPos - 2;
+                } else if (cursorPos === 0) {
+                    elem.selectionStart = cursorPos;
+                } else {
+                    elem.selectionStart = cursorPos - 1;
+                }
+                elem.selectionEnd = elem.selectionStart;
+                break;
+        }
+
+        elem.selectionEnd = elem.selectionStart;
+
+        /*
         switch (kbEvt.keyCode) {
             case 8: // backspace
             case 37: // left
@@ -96,32 +115,21 @@ export class EosDateMaskDirective implements ControlValueAccessor {
                 elem.selectionEnd = 10;
                 break;
             case 39: // right
+            case 46: // delete
             default:
                 if (cursorPos === 2 || cursorPos === 5) {
-                    elem.selectionStart = cursorPos + 1;
+                    console.log(cursorPos);
+                    elem.selectionStart = cursorPos + 2;
+                    elem.selectionEnd = cursorPos + 1;
                 } if (cursorPos === 10) {
                     elem.selectionStart = cursorPos - 1;
                 } else {
                     elem.selectionStart = cursorPos;
                 }
-                elem.selectionEnd = elem.selectionStart + 1;
-                break;
-            /*
-                const selStart = val.indexOf('_');
-                if (selStart > -1) {
-                    elem.selectionStart = selStart;
-                    if (selStart > -1 && selStart < 3) {
-                        elem.selectionEnd = 2;
-                    } else if (selStart >= 3 && selStart < 5) {
-                        elem.selectionEnd = 5;
-                    } else {
-                        elem.selectionEnd = 10;
-                    }
-                }
-            */
+                elem.selectionEnd = cursorPos + 1;
+                console.log(cursorPos, elem.selectionStart, elem.selectionEnd);
         }
-        // }
-        this.value = this.parseDate(this.ref.nativeElement.value);
+        */
     }
 
     registerOnChange(fn) {
@@ -142,7 +150,7 @@ export class EosDateMaskDirective implements ControlValueAccessor {
         }
     }
 
-    private removeSymbolAt(source: string,  pos: number): string {
+    private removeSymbolAt(source: string, pos: number): string {
         const val = source.split('');
         val[pos] = '_';
         return val.join('');
