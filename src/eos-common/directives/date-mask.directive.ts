@@ -36,9 +36,10 @@ export class EosDateMaskDirective implements ControlValueAccessor {
     @HostListener('keydown', ['$event'])
     onKeydown(kbEvt: KeyboardEvent) {
         switch (kbEvt.keyCode) {
-            case 46: // delete
             case 8: // backspace
+            case 46: // delete
                 kbEvt.preventDefault();
+                break;
         }
     }
 
@@ -58,7 +59,9 @@ export class EosDateMaskDirective implements ControlValueAccessor {
                 }
                 break;
             case 46: // delete
-                oldVal = this.removeSymbolAt(oldVal, cursorPos);
+                if (cursorPos !== 2 && cursorPos !== 5) {
+                    oldVal = this.removeSymbolAt(oldVal, cursorPos);
+                }
                 break;
         }
 
@@ -89,6 +92,16 @@ export class EosDateMaskDirective implements ControlValueAccessor {
                 }
                 elem.selectionEnd = elem.selectionStart;
                 break;
+            case 37: // left
+            case 39: // right
+                break;
+            case 46: // delete
+                elem.selectionStart = cursorPos;
+                break;
+            default:
+                if (cursorPos === 2 || cursorPos === 5) {
+                    elem.selectionStart = cursorPos + 1;
+                }
         }
 
         elem.selectionEnd = elem.selectionStart;
