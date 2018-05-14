@@ -1,6 +1,8 @@
 
 import { Component, Injector, NgZone, OnChanges } from '@angular/core';
 import { BaseCardEditComponent } from './base-card-edit.component';
+import { EosMessageService } from 'eos-common/services/eos-message.service';
+import { WARN_NO_BINDED_ORGANIZATION } from '../consts/messages.consts';
 
 @Component({
     selector: 'eos-departments-card-edit-department',
@@ -8,7 +10,7 @@ import { BaseCardEditComponent } from './base-card-edit.component';
 })
 export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponent implements OnChanges {
     private _orgName = '';
-    constructor(injector: Injector, private _zone: NgZone) {
+    constructor(injector: Injector, private _zone: NgZone, private msgSrv: EosMessageService) {
         super(injector);
     }
 
@@ -56,9 +58,13 @@ export class DepartmentsCardEditDepartmentComponent extends BaseCardEditComponen
     }
 
     unbindOrganization() {
-        this._orgName = '';
-        this.data.organization = null;
-        this.setValue('rec.DUE_LINK_ORGANIZ', null);
+        if (this.hasOrganization) {
+            this._orgName = '';
+            this.data.organization = null;
+            this.setValue('rec.DUE_LINK_ORGANIZ', null);
+        } else {
+            this.msgSrv.addNewMessage(WARN_NO_BINDED_ORGANIZATION);
+        }
     }
 
     ngOnChanges() {

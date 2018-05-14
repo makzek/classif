@@ -127,3 +127,9 @@ export const INFO_PERSONE_DONT_HAVE_CABINET: IMessage = {
     title: 'Внимание:',
     msg: 'У выбранного должностного лица отсутвует свой кабинет.'
 };
+
+export const WARN_NO_BINDED_ORGANIZATION: IMessage = {
+    type: 'warning',
+    title: 'Предупреждение:',
+    msg: 'У подразделение нет собственной организации. Удаление невозможно'
+};

@@ -10,5 +10,9 @@
     }
     .btn {
         min-width: 88px;
+        &.eos-icon {
+            min-width: initial;
+        }
     }
+
 }

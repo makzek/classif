@@ -124,4 +124,12 @@
     .card-content-wrapper {
         max-height: calc(100vh - 280px);
     }
+    .photo-uploader {
+        .input-file-label {
+            vertical-align: middle;
+        }
+        .eos-icon {
+            vertical-align: middle;
+        }
+    }
 }

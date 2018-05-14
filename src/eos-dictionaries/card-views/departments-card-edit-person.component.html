@@ -18,7 +18,7 @@
                 <div class="photo-uploader" *ngIf="editMode">
                     <eos-photo-uploader [disableEdit]="!editMode"
                         (endUploading)="newImage($event)"></eos-photo-uploader>
-                    <a class="btn eos-icon eos-icon-close-blue small" (click)="removePhoto()"></a>
+                    <a class="eos-icon eos-icon-close-blue small" (click)="removePhoto()"></a>
                 </div>
             </div>
             <eos-dynamic-input [input]="inputs['printInfo.GENDER']"
