@@ -33,15 +33,6 @@
             top: 44%;
         }
     }
-    .selected-wrapper {
-        .table-wrapper {
-            overflow-x: auto;
-            width: 100%;
-            border-width: 1px;
-            border-style: solid;
-            position: relative;
-        }
-    }
     .node-actions {
         .selected-node {
             background: $modal-block-background-main-theme;
@@ -165,22 +156,6 @@
         .icon {
             margin: 5px 10px;
             cursor: pointer;
-        }
-    }
-    .second-line {
-        background: $modal-block-background-main-theme;
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        width: 100%;
-        height: $item-height;
-        line-height: $item-height - 1px;
-        .second-line-content {
-            display: flex;
-            width: 100%;
-        }
-        .checkbox-inline {
-            line-height: $item-height - 1px;
-            width: $item-width;
         }
     }
 }

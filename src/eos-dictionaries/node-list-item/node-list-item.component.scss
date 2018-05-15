@@ -1,11 +1,8 @@
 .node-list-item {
     overflow: hidden;
-    display: flex;
-    height: 32px;
+    min-height: 32px;
     .node-row {
         cursor: pointer;
-        width: calc(100% - 48px); // checkbox
-        display: inline-flex;
     }
     .node-marker {
         width: $item-width;

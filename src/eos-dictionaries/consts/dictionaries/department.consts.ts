@@ -271,6 +271,12 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         pattern: NOT_EMPTY_STRING,
         foreignKey: 'CLASSIF_NAME',
     }, {
+        key: 'fullCabinet',
+        title: 'Полное наименование кабинета',
+        type: 'string',
+        pattern: NOT_EMPTY_STRING,
+        foreignKey: 'FULLNAME',
+    }, {
         key: 'photo',
         type: 'dictionary',
         title: 'Фото'
@@ -281,7 +287,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     fullSearchFields: {
         person: ['CODE', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'DUTY', 'fullPosition'],
         department: ['CODE', 'title', 'indexDep', 'NOTE', 'fullTitle'],
-        cabinet: ['titleRoom'/*, 'fullTitleRoom'*/]
+        cabinet: ['titleRoom', 'fullCabinet']
     },
     quickViewFields: ['photo', 'fullTitle', 'fullPosition', 'DUTY', 'PHONE', 'PHONE_LOCAL', 'E_MAIL', 'IS_NODE', 'POST_H', 'SURNAME',
         'CARD_NAME', 'CARD_FLAG', 'CODE', 'NOTE', 'IS_NODE', 'printInfo', 'user', 'cabinet', 'sev', 'title', 'organization'], // title is in shortQuickViewFields

@@ -4,9 +4,9 @@
     class="eos-node-list-item secondary-text"
     [ngClass]="{'highlighted': node.isSelected, 'flat-child': node.isActive}">
     <div [ngClass]="{'deleted': node.isDeleted}"
-        class="node-list-item">
+        class="node-list-item clearfix">
         <div *ngIf="params?.markItems"
-            class="node-marker">
+            class="node-marker pull-left">
             <label *ngIf="params?.markItems"
                 class="checkbox"
                 [tooltip]="node.marked ? markTemp : notMarkTemp"
@@ -18,12 +18,14 @@
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
             <eos-node-field *ngFor="let field of viewFields"
+                class="pull-left"
                 [field]="field"
                 [node]="node"
                 [width]="length[field.key]"
                 (fieldHover)="onFieldHover($event)"
                 (view)="viewNode($event, true)"></eos-node-field>
             <eos-node-field *ngFor="let field of custom"
+                class="pull-left"
                 [field]="field"
                 [node]="node"
                 [width]="length[field.key]"

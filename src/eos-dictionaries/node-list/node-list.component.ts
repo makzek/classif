@@ -1,4 +1,4 @@
-import { Component, ViewChild, /* Input, Output, EventEmitter,*/ OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { SortableComponent, BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -30,7 +30,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     orderBy: IOrderBy;
     params: IDictionaryViewParameters;
     tableWidth = 0;
-    viewFields: IFieldView[] = []; // todo: fill for title
+    headerOffset = 0;
+    viewFields: IFieldView[] = [];
 
     private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -209,6 +210,11 @@ export class NodeListComponent implements OnInit, OnDestroy {
         }
     }
 
+    onListScroll(evt: Event) {
+        const offset = evt.srcElement.scrollLeft;
+        this.headerOffset = - offset;
+    }
+
     private _countColumnWidth() {
         const span = document.createElement('span'),
             body = document.getElementsByTagName('body'),
@@ -222,14 +228,16 @@ export class NodeListComponent implements OnInit, OnDestroy {
         body[0].appendChild(span);
         const length = {};
         let fullWidth = 0;
+
         this.viewFields.forEach((_f) => {
             if (_f.customTitle) {
                 span.innerText = _f.customTitle;
             } else {
                 span.innerText = _f.title;
             }
-            length[_f.key] = PADDING_SPACE + span.clientWidth;
-            fullWidth += PADDING_SPACE + span.clientWidth;
+            const itemWidth = PADDING_SPACE + span.clientWidth;
+            length[_f.key] = itemWidth;
+            fullWidth += (itemWidth + 40);
         });
 
         if (this.customFields) {
@@ -239,11 +247,12 @@ export class NodeListComponent implements OnInit, OnDestroy {
                 } else {
                     span.innerText = _f.title;
                 }
-                length[_f.key] = PADDING_SPACE + span.clientWidth;
-                fullWidth += PADDING_SPACE + span.clientWidth;
+                const itemWidth = PADDING_SPACE + span.clientWidth;
+                length[_f.key] = itemWidth;
+                fullWidth += (itemWidth + 40);
             });
         }
-        this.tableWidth = fullWidth;
+        this.tableWidth = fullWidth + 48 - 20; // +checkbox width - first absent margin
         this.length = length;
         body[0].removeChild(span);
     }
