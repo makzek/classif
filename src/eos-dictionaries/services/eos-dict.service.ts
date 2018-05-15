@@ -190,6 +190,7 @@ export class EosDictService {
         this._visibleList$ = new BehaviorSubject<EosDictionaryNode[]>([]);
         this._dictMode = 0;
         this._dictMode$ = new BehaviorSubject<number>(this._dictMode);
+        this._initPaginationConfig();
     }
 
     bindOrganization(orgDue: string) {
