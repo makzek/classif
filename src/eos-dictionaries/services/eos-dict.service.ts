@@ -563,11 +563,13 @@ export class EosDictService {
     }
 
     fullSearch(data: any, params: ISearchSettings) {
-        const dictionary = this._dictionaries[0];
+        const dictionary = this.currentDictionary;
         if (data.srchMode === 'person') {
             this._srchCriteries = [dictionary.getFullsearchCriteries(data, params, this.treeNode)];
-            data.rec['PHONE_LOCAL'] = data.rec['PHONE'];
-            delete data.rec['PHONE'];
+            if (data.person['PHONE']) {
+                data.person['PHONE_LOCAL'] = data.person['PHONE'];
+                delete data.person['PHONE'];
+            }
             this._srchCriteries.push(dictionary.getFullsearchCriteries(data, params, this.treeNode));
             return this._search(params.deleted);
         } else {
@@ -613,6 +615,7 @@ export class EosDictService {
 
     setDictMode(mode: number) {
         this._dictMode = mode;
+        this._srchCriteries = null;
         if (!this._dictionaries[mode]) {
             this._dictionaries[mode] = this._dictionaries[0].getDictionaryIdByMode(mode);
         }

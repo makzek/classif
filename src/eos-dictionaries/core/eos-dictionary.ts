@@ -587,7 +587,7 @@ export class EosDictionary {
     }
 
     private getNodeRelatedData(node: EosDictionaryNode): Promise<EosDictionaryNode> {
-        if (node) {
+        if (node && !node.relatedLoaded) {
             switch (this.descriptor.id) {
                 case 'departments':
                     const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
@@ -596,18 +596,21 @@ export class EosDictionary {
                         this.descriptor.getRelatedSev(node.data.rec)
                     ]).then(([related, sev]) => {
                         node.data = Object.assign(node.data, related, { sev: sev });
+                        node.relatedLoaded = true;
                         return node;
                     });
                 case 'rubricator':
                     return this.descriptor.getRelatedSev(node.data.rec)
                         .then((sev) => {
                             node.data = Object.assign(node.data, { sev: sev });
+                            node.relatedLoaded = true;
                             return node;
                         });
                 default:
                     return this.descriptor.getRelated(node.data.rec)
                         .then((related) => {
                             node.data = Object.assign(node.data, related);
+                            node.relatedLoaded = true;
                             return node;
                         });
             }

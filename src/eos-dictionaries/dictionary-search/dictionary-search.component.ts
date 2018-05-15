@@ -11,11 +11,13 @@ import { InputBase } from 'eos-common/core/inputs/input-base';
 import { InputControlService } from 'eos-common/services/input-control.service';
 import { EosDictionary } from '../core/eos-dictionary';
 
+/*
 const SEARCH_MODEL = {
     rec: {},
     cabinet: {},
     printInfo: {}
 };
+*/
 
 @Component({
     selector: 'eos-dictionary-search',
@@ -64,27 +66,34 @@ export class DictionarySearchComponent implements OnDestroy {
     searchForm: FormGroup;
     inputs: InputBase<any>[];
 
+    searchModel = {};
+
     public mode = 0;
 
     private date: Date = new Date();
     private dictionary: EosDictionary;
     private subscriptions: Subscription[] = [];
+    private searchData = {
+        srchMode: ''
+    };
 
     get dictId(): string {
         return this.dictionary.id;
     }
 
     get noSearchData(): boolean {
-        const model = this[this.currTab || 'data'];
+        return Object.keys(this.searchModel).findIndex((prop) =>
+            this.searchModel[prop] && this.searchModel[prop].trim()) === -1;
+        /*
+        const model = this.getSearchModel();
         let noData = true;
         Object.keys(model).forEach((_dict) => {
             Object.keys(model[_dict]).forEach((_field) => {
-                if (model[_dict][_field] && model[_dict][_field].trim() !== '') {
-                    noData = false;
-                }
+                noData = !(model[_dict][_field] && model[_dict][_field].trim());
             });
         });
         return noData;
+        */
     }
 
     constructor(
@@ -107,17 +116,14 @@ export class DictionarySearchComponent implements OnDestroy {
             }
         });
 
-        this.subscriptions.push(_dictSrv.dictionary$.subscribe((_d) => {
-            if (_d) {
-                this.dictionary = _dictSrv.currentDictionary;
-                ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
-                this.initSearchForm();
-            }
-        }));
+        this.subscriptions.push(_dictSrv.dictMode$.subscribe(() => this.initSearchForm()));
+        this.subscriptions.push(_dictSrv.dictionary$.subscribe((_d) => this.initSearchForm()));
     }
 
     setTab(key: string) {
         this.currTab = key;
+        this.searchData.srchMode = key;
+        this.searchModel = this.getSearchModel();
     }
 
     ngOnDestroy() {
@@ -129,15 +135,10 @@ export class DictionarySearchComponent implements OnDestroy {
         this.fSearchPop.hide();
         if (this.searchDone) {
             this.searchDone = false;
-            if (this.dictId === 'departments') {
-                this[this.currTab]['srchMode'] = this.currTab;
-            }
-            this._dictSrv.fullSearch(this[this.currTab || 'data'], this.settings)
+            const model = (this.dictId === 'departments') ? this.searchData : this.getSearchModel();
+            this._dictSrv.fullSearch(model, this.settings)
                 .then(() => {
                     this.searchDone = true;
-                    if (this.dictId === 'departments') {
-                        this[this.currTab]['srchMode'] = '';
-                    }
                 });
         } else {
             this._msgSrv.addNewMessage(SEARCH_NOT_DONE);
@@ -145,7 +146,7 @@ export class DictionarySearchComponent implements OnDestroy {
     }
 
     clearForm() {
-        this.clearModel(this.currTab || 'data');
+        this.clearModel(this.getModelName());
     }
 
     dateFilter(date: Date) {
@@ -164,28 +165,39 @@ export class DictionarySearchComponent implements OnDestroy {
         this._dictSrv.updateViewParameters({ showDeleted: this.settings.deleted });
     }
 
-    private clearModel(model: string) {
+    private clearModel(modelName: string) {
         this.mode = 0;
         this.settings.deleted = false;
-        this[model] = {};
-        Object.keys(SEARCH_MODEL).forEach((key) => this[model][key] = {});
+        const model = this.searchData[modelName];
+        if (model) {
+            Object.keys(model).forEach((prop) => model[prop] = null);
+        } else {
+            this.searchData[modelName] = {};
+        }
+    }
+
+    private getModelName(): string {
+        return (this.dictId === 'departments') ? this.currTab || 'department' : this.dictId;
+    }
+
+    private getSearchModel() {
+        const prop = this.getModelName();
+        if (!this.searchData[prop]) {
+            this.searchData[prop] = {};
+        }
+        return this.searchData[prop];
     }
 
     private initSearchForm() {
-        ['department', 'data', 'person', 'cabinet'].forEach((model) => this.clearModel(model));
+        this.dictionary = this._dictSrv.currentDictionary;
         if (this.dictionary) {
+            this.searchModel = this.getSearchModel();
             const dateFilter = this.searchForm.controls['filter.stateDate'];
-            if (this.dictId) {
-                Object.assign(this.data, {
-                    printInfo: {},
-                    cabinet: {}
-                });
-            }
             this.fieldsDescription = this.dictionary.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
             this.type = this.dictionary.descriptor.dictionaryType;
             this.modes = this.dictionary.descriptor.record.getModeList();
             if (this.modes) {
-                this.currTab = this.modes[0].key;
+                this.setTab(this.modes[0].key);
             }
 
             const _config = this.dictionary.descriptor.record.getSearchConfig();

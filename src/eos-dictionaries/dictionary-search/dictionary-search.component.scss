@@ -13,7 +13,7 @@
     .search-btn-wraper {
         display: inline-block;
     }
-    input:read-only {
+    .form-control:read-only {
         background: $disabled-color-main-theme;
     }
     .btn {
@@ -147,7 +147,7 @@
         font-weight: normal;
         text-transform: none;
     }
-    .line {
+    div+div {
         margin-top: 20px;
     }
     .radio-inline,

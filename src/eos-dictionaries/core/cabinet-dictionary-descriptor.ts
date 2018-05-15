@@ -8,6 +8,10 @@ import { EosUtils } from 'eos-common/core/utils';
 import { CABINET_FOLDERS } from '../consts/dictionaries/cabinet.consts';
 
 export class CabinetRecordDescriptor extends RecordDescriptor {
+    constructor(dictionary: CabinetDictionaryDescriptor, data: IDictionaryDescriptor) {
+        super(dictionary, data);
+        this._initFieldSets(['fullSearchFields'], data);
+    }
 }
 
 export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
@@ -80,7 +84,19 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                 }
             });
     }
-
+    /*
+    getFullSearchCriteries(data: any): any {
+        const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
+        const _criteries = {};
+        _searchFields.forEach((fld) => {
+            if (data[fld.foreignKey]) {
+                _criteries[fld.foreignKey] = '"' + data[fld.foreignKey].trim() + '"';
+            }
+        });
+        console.log(data, _criteries);
+        return _criteries;
+    }
+    */
     getNewRecord(preSetData: any) {
         const rec = super.getNewRecord(preSetData);
         EosUtils.setValueByPath(rec, 'rec.ISN_CABINET', this.getTempISN());

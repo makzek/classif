@@ -169,8 +169,8 @@ export abstract class AbstractDictionaryDescriptor {
         const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
         const _criteries = {};
         _searchFields.forEach((fld) => {
-            if (data.rec[fld.foreignKey]) {
-                _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+            if (data[fld.foreignKey]) {
+                _criteries[fld.foreignKey] = '"' + data[fld.foreignKey].trim() + '"';
             }
         });
         return _criteries;

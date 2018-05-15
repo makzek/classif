@@ -38,6 +38,8 @@ export class EosDictionaryNode {
      * */
     updating: boolean;
 
+    relatedLoaded = false;
+
     /**
      * marked - node checked in list
      */

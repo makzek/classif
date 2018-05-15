@@ -48,21 +48,6 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
         return visible;
     }
 
-    /*
-    getMode(values: any): E_DEPT_MODE {
-        /* if IS_NODE or another boolean field * /
-        if (values) {
-            if (values.rec[this.modeField.key]) { // 0 - department, 1 - person !!!
-                return E_DEPT_MODE.person;
-            } else {
-                return E_DEPT_MODE.department;
-            }
-        } else {
-            return undefined;
-        }
-    }
-    */
-
     protected _getFullSearchFields(): FieldDescriptor[] {
         let __res = [];
         Object.keys(this.fullSearchFields).forEach((mode) => {
@@ -97,8 +82,9 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
 
     getFullSearchCriteries(data: any): any {
         const _criteries = {};
-        const _searchFields = this.record.fullSearchFields[data['srchMode']];
-        switch (data['srchMode']) {
+        const mode = data['srchMode'];
+        const _searchFields = this.record.fullSearchFields[mode];
+        switch (mode) {
             case 'department':
                 _criteries['IS_NODE'] = '0';
                 break;
@@ -106,13 +92,13 @@ export class DepartmentDictionaryDescriptor extends TreeDictionaryDescriptor {
                 _criteries['IS_NODE'] = '1';
                 break;
             case 'cabinet':
-                _criteries['department.cabinet.CABINET_NAME'] = '"' + data['CABINET_NAME'].trim() + '"';
+                _criteries['department.cabinet.CABINET_NAME'] = '"' + data.cabinet['CABINET_NAME'].trim() + '"';
                 break;
         }
-        if (data['srchMode'] !== 'cabinet') {
+        if (mode !== 'cabinet') {
             _searchFields.forEach((fld) => {
-                if (data.rec[fld.foreignKey]) {
-                    _criteries[fld.foreignKey] = '"' + data.rec[fld.foreignKey].trim() + '"';
+                if (data[mode][fld.foreignKey]) {
+                    _criteries[fld.foreignKey] = '"' + data[mode][fld.foreignKey].trim() + '"';
                 }
             });
         }
