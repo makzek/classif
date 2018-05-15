@@ -2746,6 +2746,10 @@ export interface REF_FILE extends IEnt, IStamp {
      * Рассылать
      */
     SEND_ENABLED: number;
+    /**
+     * UPD_CONTENT_DATE
+     */
+    UPD_CONTENT_DATE: number;
 }
 
 /**
