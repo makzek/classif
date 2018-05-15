@@ -17,13 +17,6 @@ import { EosUtils } from 'eos-common/core/utils';
     templateUrl: 'node-list.component.html',
 })
 export class NodeListComponent implements OnInit, OnDestroy {
-    /*
-    @Input() nodes: EosDictionaryNode[];
-    @Input() length: any;
-    //    @Input() customFields: IFieldView[];
-    @Output() checked: EventEmitter<any> = new EventEmitter<any>(); // changes in checkboxes
-    @Output() reordered: EventEmitter<EosDictionaryNode[]> = new EventEmitter<EosDictionaryNode[]>(); // user order event
-    */
     @ViewChild(SortableComponent) sortableComponent: SortableComponent;
     @ViewChild(LongTitleHintComponent) hint: LongTitleHintComponent;
 
@@ -36,7 +29,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     nodes: EosDictionaryNode[] = []; // Elements for one page
     orderBy: IOrderBy;
     params: IDictionaryViewParameters;
-    tableWidth: number;
+    tableWidth = 0;
     viewFields: IFieldView[] = []; // todo: fill for title
 
     private ngUnsubscribe: Subject<any> = new Subject();
@@ -250,6 +243,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
                 fullWidth += PADDING_SPACE + span.clientWidth;
             });
         }
+        this.tableWidth = fullWidth;
         this.length = length;
         body[0].removeChild(span);
     }

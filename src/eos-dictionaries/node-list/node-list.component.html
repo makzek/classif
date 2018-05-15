@@ -42,7 +42,8 @@
             </div>
         </div>
     </div>
-    <div class="eos-node-list">
+    <div class="eos-node-list"
+        [ngStyle]="{'width.px': tableWidth}">
         <div class="block list">
             <p *ngIf="params.updatingList"
                 class="spinner-container text-center">
