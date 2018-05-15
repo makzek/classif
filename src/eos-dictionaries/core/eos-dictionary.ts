@@ -207,36 +207,13 @@ export class EosDictionary {
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNodeByNodeId(nodeId)
-            .then((node) => {
-                if (node) {
-                    switch (this.descriptor.id) {
-                        case 'departments':
-                            const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
-                            return Promise.all([
-                                this.descriptor.getRelated(node.data.rec, orgDUE),
-                                this.descriptor.getRelatedSev(node.data.rec)
-                            ]).then(([related, sev]) => {
-                                node.data = Object.assign(node.data, related, { sev: sev });
-                                return node;
-                            });
-                        case 'rubricator':
-                            return this.descriptor.getRelatedSev(node.data.rec)
-                                .then((sev) => {
-                                    node.data = Object.assign(node.data, { sev: sev });
-                                    return node;
-                                });
-                        default:
-                            return this.descriptor.getRelated(node.data.rec)
-                                .then((related) => {
-                                    node.data = Object.assign(node.data, related);
-                                    return node;
-                                });
-                    }
-                } else {
-                    return node;
-                }
-            });
+        const existNode = this.getNode(nodeId);
+        if (!existNode) {
+            return this.getNodeByNodeId(nodeId)
+                .then((node) => this.getNodeRelatedData(node));
+        } else {
+            return Promise.resolve(existNode);
+        }
     }
 
     getNodeByNodeId(nodeId: string): Promise<EosDictionaryNode> {
@@ -330,8 +307,11 @@ export class EosDictionary {
             return this.descriptor.getChildren(node.data.rec)
                 .then((nodes) => {
                     const res = this.updateNodes(nodes, true);
-                    node.updating = false;
-                    return res;
+                    return Promise.all(res.map((chld) => this.getNodeRelatedData(chld)))
+                        .then(() => {
+                            node.updating = false;
+                            return res;
+                        });
                 });
         } else {
             return Promise.resolve([]);
@@ -379,7 +359,11 @@ export class EosDictionary {
     search(criteries: any[]): Promise<EosDictionaryNode[]> {
         return this.descriptor
             .search(criteries)
-            .then((data) => this.updateNodes(data, false));
+            .then((data) => {
+                const nodes = this.updateNodes(data, false);
+                return Promise.all(nodes.map((node) => this.getNodeRelatedData(node)))
+                    .then(() => nodes);
+            });
     }
 
     searchByParentData(dictionary: EosDictionary, node: EosDictionaryNode): Promise<EosDictionaryNode[]> {
@@ -600,5 +584,35 @@ export class EosDictionary {
                 return 0;
             }
         });
+    }
+
+    private getNodeRelatedData(node: EosDictionaryNode): Promise<EosDictionaryNode> {
+        if (node) {
+            switch (this.descriptor.id) {
+                case 'departments':
+                    const orgDUE = node.getParentData('DUE_LINK_ORGANIZ', 'rec');
+                    return Promise.all([
+                        this.descriptor.getRelated(node.data.rec, orgDUE),
+                        this.descriptor.getRelatedSev(node.data.rec)
+                    ]).then(([related, sev]) => {
+                        node.data = Object.assign(node.data, related, { sev: sev });
+                        return node;
+                    });
+                case 'rubricator':
+                    return this.descriptor.getRelatedSev(node.data.rec)
+                        .then((sev) => {
+                            node.data = Object.assign(node.data, { sev: sev });
+                            return node;
+                        });
+                default:
+                    return this.descriptor.getRelated(node.data.rec)
+                        .then((related) => {
+                            node.data = Object.assign(node.data, related);
+                            return node;
+                        });
+            }
+        } else {
+            return Promise.resolve(node);
+        }
     }
 }
