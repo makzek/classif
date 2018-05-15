@@ -191,13 +191,14 @@ export class DictionarySearchComponent implements OnDestroy {
     private initSearchForm() {
         this.dictionary = this._dictSrv.currentDictionary;
         if (this.dictionary) {
-            this.searchModel = this.getSearchModel();
             const dateFilter = this.searchForm.controls['filter.stateDate'];
             this.fieldsDescription = this.dictionary.descriptor.record.getFieldDescription(E_FIELD_SET.fullSearch);
             this.type = this.dictionary.descriptor.dictionaryType;
             this.modes = this.dictionary.descriptor.record.getModeList();
             if (this.modes) {
                 this.setTab(this.modes[0].key);
+            } else {
+                this.searchModel = this.getSearchModel();
             }
 
             const _config = this.dictionary.descriptor.record.getSearchConfig();

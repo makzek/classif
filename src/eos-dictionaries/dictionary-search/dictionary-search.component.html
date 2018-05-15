@@ -520,6 +520,22 @@
                         (click)="searchModel['CABINET_NAME'] = ''"><span class="eos-icon eos-icon-close-blue"></span></a>
                 </div>
             </div>
+            <div class="form-group unimportant-text">
+                <label class="s-font"
+                    for="fullname">{{fieldsDescription.rec['FULLNAME']?.title}}</label>
+                <div class="search-fld">
+                    <input id="fullname"
+                        name="fullname"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="searchModel['FULLNAME']"
+                        placeholder="{{fieldsDescription.rec['FULLNAME']?.title}}"
+                        maxlength="{{fieldsDescription.rec['FULLNAME']?.length}}">
+                    <a class="clear-btn"
+                        [ngClass]="{'hide': !searchModel['FULLNAME']}"
+                        (click)="searchModel['FULLNAME'] = ''"><span class="eos-icon eos-icon-close-blue"></span></a>
+                </div>
+            </div>
         </form>
     </div>
 </ng-template>
