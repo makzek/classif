@@ -207,14 +207,16 @@ export class EosDictionary {
     }
 
     getFullNodeInfo(nodeId: string): Promise<EosDictionaryNode> {
-        return this.getNodeByNodeId(nodeId)
-            .then((node) => this.getNodeRelatedData(node));
-        /*
         const existNode = this.getNode(nodeId);
-        if (!existNode || existNode) {
+        if (!existNode || !existNode.relatedLoaded) {
+            return this.getNodeByNodeId(nodeId)
+                .then((node) => this.getNodeRelatedData(node));
         } else {
             return Promise.resolve(existNode);
         }
+        /*
+        return this.getNodeByNodeId(nodeId)
+            .then((node) => this.getNodeRelatedData(node));
         */
     }
 

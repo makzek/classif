@@ -186,6 +186,19 @@ export class RecordDescriptor {
         return _description;
     }
 
+    getFieldValue(field: IFieldView, data: any): any {
+        if (field) {
+            switch (field.key) {
+                case 'sev':
+                    return data.sev ? data.sev.GLOBAL_ID : '';
+                default:
+                    return data.rec[field.foreignKey];
+            }
+        } else {
+            return null;
+        }
+    }
+
     protected _getFullSearchFields() {
         return this.fullSearchFields;
     }

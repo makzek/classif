@@ -3,6 +3,7 @@ import {
     IDepartmentDictionaryDescriptor,
     IRecordModeDescription,
     IDictionaryDescriptor,
+    IFieldView,
 } from 'eos-dictionaries/interfaces';
 import { FieldsDecline } from 'eos-dictionaries/interfaces/fields-decline.inerface';
 import { FieldDescriptor } from './field-descriptor';
@@ -46,6 +47,17 @@ export class DepartmentRecordDescriptor extends RecordDescriptor {
             }
         }
         return visible;
+    }
+
+    getFieldValue(field: IFieldView, data: any): any {
+        let value = super.getFieldValue(field, data);
+        if (!value) {
+            switch (field.key) {
+                default:
+                    value = data[field.key] ? data[field.key]['CLASSIF_NAME'] : null;
+            }
+        }
+        return value;
     }
 
     protected _getFullSearchFields(): FieldDescriptor[] {

@@ -54,4 +54,8 @@ export class NodeFieldComponent {
         }
         return value;
     }
+
+    decodeDictionary(): string {
+        return this.node.getFieldValue(this.field);
+    }
 }

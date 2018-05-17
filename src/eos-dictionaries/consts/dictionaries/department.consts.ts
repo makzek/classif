@@ -239,7 +239,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
     }, {
         key: 'organization',
         type: 'dictionary',
-        title: '',
+        title: 'Организация',
     }, {
         key: 'cabinet',
         type: 'dictionary',
@@ -297,7 +297,7 @@ export const DEPARTMENTS_DICT: IDepartmentDictionaryDescriptor = {
         'title', 'DUE_LINK_ORGANIZ', 'indexDep', 'fullTitle', 'ISN_PHOTO'],
     // ['fio', 'position', 'description', 'title', 'phone', 'email', 'rooms', 'associatedUsers']
     allVisibleFields: ['SURNAME', 'DUTY', 'fullTitle', 'SKYPE', /* 'DEPARTMENT_DUE', */ 'ORDER_NUM', 'indexDep', 'POST_H', 'CARD_FLAG',
-        'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'DUE_LINK_ORGANIZ'/*, 'printInfo', 'sev',
+        'CARD_NAME', 'NOTE', 'START_DATE', 'END_DATE', 'PHONE_LOCAL', 'PHONE', 'FAX', 'E_MAIL', 'NUM_CAB', 'organization'/*, 'printInfo', 'sev',
 'organization', 'cabinet', 'user'*/],
 };
 /* tslint:enable:max-line-length */

@@ -14,7 +14,7 @@
                 container="body"
                 placement="bottom"><input type="checkbox"[ngModel]="node.marked" (ngModelChange)="markNode($event)"><span></span></label>
         </div>
-        <div class="node-row"
+        <div class="node-row clearfix"
             (click)="selectNode($event)"
             (dblclick)="viewNode($event)">
             <eos-node-field *ngFor="let field of viewFields"
@@ -32,6 +32,5 @@
                 (fieldHover)="onFieldHover($event)"
                 (view)="viewNode($event, true)"></eos-node-field>
         </div>
-        <!--eos-spinner [ngClass]="{'transparent': !node.updating}" class="spinner" size="sm"></eos-spinner-->
     </div>
 </div>

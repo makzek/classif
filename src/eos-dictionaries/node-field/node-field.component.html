@@ -15,10 +15,13 @@
             {{currentValue()}}
         </ng-container>
         <ng-container *ngSwitchCase="types.buttons">
-                {{currentValue()}}
+            {{currentValue()}}
         </ng-container>
         <ng-container *ngSwitchCase="types.date">
             {{field.value | eosDate}}
+        </ng-container>
+        <ng-container *ngSwitchCase="types.dictionary">
+            {{decodeDictionary()}}
         </ng-container>
         <ng-container *ngSwitchDefault>
             <div class="table-field-ico"

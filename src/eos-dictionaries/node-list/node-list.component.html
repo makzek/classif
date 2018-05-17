@@ -53,7 +53,7 @@
                 <eos-spinner size="lg"></eos-spinner>
             </p>
             <p *ngIf="!nodes?.length && !params.updatingList"
-                class="text-center text-info">Нет записей.</p>
+                class="text-center text-info node-list-info">Нет записей.</p>
             <!--Sortable list-->
             <ng-container *ngIf="params.userOrdered && nodes?.length && !params.searchResults && !params.updatingList ">
                 <bs-sortable [(ngModel)]="nodes"

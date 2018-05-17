@@ -84,19 +84,7 @@ export class CabinetDictionaryDescriptor extends DictionaryDescriptor {
                 }
             });
     }
-    /*
-    getFullSearchCriteries(data: any): any {
-        const _searchFields = this.record.getFieldSet(E_FIELD_SET.fullSearch);
-        const _criteries = {};
-        _searchFields.forEach((fld) => {
-            if (data[fld.foreignKey]) {
-                _criteries[fld.foreignKey] = '"' + data[fld.foreignKey].trim() + '"';
-            }
-        });
-        console.log(data, _criteries);
-        return _criteries;
-    }
-    */
+
     getNewRecord(preSetData: any) {
         const rec = super.getNewRecord(preSetData);
         EosUtils.setValueByPath(rec, 'rec.ISN_CABINET', this.getTempISN());

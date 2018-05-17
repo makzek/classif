@@ -101,9 +101,11 @@ export class EosDictionaryNode {
         return Boolean(this.data.rec['PROTECTED']);
     }
 
+    /*
     get loaded(): boolean {
         return !this.isNode || this._children !== undefined;
     }
+    */
 
     get originalId(): string | number {
         return this._fieldValue(this._descriptor.keyField);
@@ -219,6 +221,10 @@ export class EosDictionaryNode {
             }
         }
         this.updateExpandable();
+    }
+
+    getFieldValue(field: IFieldView): any {
+        return this._descriptor.getFieldValue(field, this.data);
     }
 
     getTreeView(): IFieldView[] {

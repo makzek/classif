@@ -355,27 +355,35 @@ export class EosDictService {
      * @returns selected node in current dictionary
      */
     selectTreeNode(nodeId: string): Promise<EosDictionaryNode> {
+        let p = Promise.resolve(this.treeNode);
         if (nodeId) {
             if (!this.treeNode || this.treeNode.id !== nodeId) {
                 this.updateViewParameters({ updatingList: true });
-                return this.getTreeNode(nodeId)
-                    .then((node) => {
-                        if (node) {
-                            let parent = node.parent;
-                            while (parent) {
-                                parent.isExpanded = true;
-                                parent = parent.parent;
-                            }
-                        }
-                        this.updateViewParameters({ updatingList: false });
-                        this._selectTreeNode(node);
-                        return node;
-                    })
-                    .catch(err => this._errHandler(err));
+                p = this.getTreeNode(nodeId);
             }
         } else {
-            return Promise.resolve(this.selectTreeRoot());
+            const dictionary = this._dictionaries[0];
+            if (dictionary && dictionary.root) {
+                this.updateViewParameters({ updatingList: true });
+                p = this.loadChildren(dictionary, dictionary.root);
+            } else {
+                p = Promise.resolve(null);
+            }
         }
+        return p
+            .then((node) => {
+                if (node) {
+                    let parent = node.parent;
+                    while (parent) {
+                        parent.isExpanded = true;
+                        parent = parent.parent;
+                    }
+                }
+                this.updateViewParameters({ updatingList: false });
+                this._selectTreeNode(node);
+                return node;
+            })
+            .catch(err => this._errHandler(err));
     }
 
     openNode(nodeId: string): Promise<EosDictionaryNode> {
@@ -874,31 +882,16 @@ export class EosDictService {
         const dictionary = this._dictionaries[0];
         if (dictionary) {
             const _node = dictionary.getNode(nodeId);
+            let p: Promise<EosDictionaryNode>;
             if (_node) {
-                if (_node.loaded) {
-                    return Promise.resolve(_node);
-                } else {
-                    return this.loadChildren(dictionary, _node);
-                }
+                p = this.loadChildren(dictionary, _node);
             } else {
-                return dictionary.descriptor.getRecord(nodeId)
-                    .then((data) => {
-                        this._updateDictNodes(dictionary, data, true);
-                        return dictionary.getNode(nodeId);
-                    })
-                    .then((node) => {
-                        return this.loadChildren(dictionary, node);
-                    })
-                    .catch((err) => this._errHandler(err));
+                p = dictionary.getNodeByNodeId(nodeId)
+                    .then((node) => this.loadChildren(dictionary, node));
             }
-        }
-    }
-
-    private _updateDictNodes(dictionary: EosDictionary, data: any[], updateTree = false): EosDictionaryNode[] {
-        if (data && data.length) {
-            return dictionary.updateNodes(data, updateTree);
+            return p.catch((err) => this._errHandler(err));
         } else {
-            return null;
+            return Promise.resolve(null);
         }
     }
 
@@ -1024,6 +1017,7 @@ export class EosDictService {
         }
     }
 
+    /*
     private selectTreeRoot(): EosDictionaryNode {
         let node: EosDictionaryNode = null;
         const dictionary = this._dictionaries[0];
@@ -1033,6 +1027,7 @@ export class EosDictService {
         this._selectTreeNode(node);
         return node;
     }
+    */
 
     private _search(showDeleted = false): Promise<EosDictionaryNode[]> {
         this._openNode(null);
