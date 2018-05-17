@@ -101,6 +101,8 @@
             }
 
             &.gu-transit {
+                display: block;
+                width: 100%;
                 background-color: $highlight-color-main-theme;
             }
         }

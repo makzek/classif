@@ -8,11 +8,12 @@
     .modal-footer {
         padding: 10px 15px;
     }
-    .btn {
-        min-width: 88px;
-        &.eos-icon {
-            min-width: initial;
+    .modal-footer {
+        .btn {
+            min-width: 88px;
+            &.eos-icon {
+                min-width: initial;
+            }
         }
     }
-
 }
