@@ -1,5 +1,6 @@
 import { IFieldDescriptor, IFieldDescriptorBase, E_FIELD_TYPE } from 'eos-dictionaries/interfaces';
 import { ISelectOption } from 'eos-common/interfaces';
+
 export class FieldDescriptor implements IFieldDescriptorBase {
     readonly key: string;
     readonly title: string;

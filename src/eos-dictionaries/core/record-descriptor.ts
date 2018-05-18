@@ -199,6 +199,13 @@ export class RecordDescriptor {
         }
     }
 
+    getFieldValueByName(fieldName: string, data: any): any {
+        const field = this.fieldsMap.get(fieldName);
+        if (field) {
+            return this.getFieldValue({ ...field, value: null }, data);
+        }
+    }
+
     protected _getFullSearchFields() {
         return this.fullSearchFields;
     }

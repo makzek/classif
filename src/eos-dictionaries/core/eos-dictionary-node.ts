@@ -227,6 +227,10 @@ export class EosDictionaryNode {
         return this._descriptor.getFieldValue(field, this.data);
     }
 
+    getFieldValueByName(fieldName: string): any {
+        return this._descriptor.getFieldValueByName(fieldName, this.data);
+    }
+
     getTreeView(): IFieldView[] {
         return this._descriptor.getTreeView(this.data);
     }
@@ -235,59 +239,10 @@ export class EosDictionaryNode {
         return this._descriptor.getListView(this.data);
     }
 
-    /*
-    getInfoView(): IFieldView[] {
-        return this._descriptor.getInfoView(this.data);
-    }
-
-    getShortQuickView(): IFieldView[] {
-        return this._descriptor.getShortQuickView(this.data);
-    }
-
-    getEditView(): any {
-        return this._descriptor.getEditView(this.data);
-    }
-    */
-
     getEditFieldsDescription(): any {
         return this._descriptor.getEditFieldDescription();
     }
 
-    /*
-    getEditData(): any {
-        const _data = {
-            rec: {},
-        };
-        this._descriptor.getEditView(this.data).forEach((_f) => {
-            if (_f.type !== E_FIELD_TYPE.dictionary) {
-                _data.rec[_f.foreignKey] = _f.value;
-            } else {
-                // console.log('subdictionary', this.data[_f.key]);
-                _data[_f.key] = this.data[_f.key];
-                // recive other dict data
-            }
-        });
-        return _data;
-    }
-    */
-    /*
-    getCreatingData(recParams: any): any {
-        const _data = this._descriptor.getNewRecord();
-        Object.assign(_data.rec, recParams);
-
-        if (this._dictionary.descriptor.dictionaryType === E_DICT_TYPE.department) {
-            if (_data.rec['IS_NODE'] === 0) {
-                _data['rec']['DEPARTMENT_INDEX'] = this.getParentData('DEPARTMENT_INDEX', 'rec');
-            } else {
-                _data['printInfo']['GENDER'] = null;
-            }
-            _data['rec']['START_DATE'] = this.getParentData('START_DATE', 'rec');
-            _data['rec']['END_DATE'] = this.getParentData('END_DATE', 'rec');
-        }
-
-        return _data;
-    }
-    */
     getShortViewFieldsDescription(): any {
         return this._descriptor.getShortQuickFieldDescription();
     }
