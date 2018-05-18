@@ -897,11 +897,13 @@ export class EosDictService {
 
     private _setCurrentList(dictionary: EosDictionary, nodes: EosDictionaryNode[], update = false) {
         this._currentList = nodes || [];
-        // remove duplicates
-        this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
-        // hide root node
-        if (dictionary.root) {
-            this._currentList = this._currentList.filter((item) => item.id !== dictionary.root.id);
+        if (dictionary) {
+            // remove duplicates
+            this._currentList = this._currentList.filter((item, index) => this._currentList.lastIndexOf(item) === index);
+            // hide root node
+            if (dictionary.root) {
+                this._currentList = this._currentList.filter((item) => item.id !== dictionary.root.id);
+            }
         }
         this._initPaginationConfig(update);
         this._emitListDictionary();

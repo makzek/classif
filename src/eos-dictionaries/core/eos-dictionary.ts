@@ -575,10 +575,18 @@ export class EosDictionary {
             let _a = a.getFieldValueByName(_orderBy.fieldKey); // data.rec[_orderBy.fieldKey];
             let _b = b.getFieldValueByName(_orderBy.fieldKey); // data.rec[_orderBy.fieldKey];
 
-            if (typeof _a === 'string' || typeof _b === 'string') {
-                _a = (_a + '').toLocaleLowerCase();
-                _b = (_b + '').toLocaleLowerCase();
+            if (_a !== null && _a !== undefined) {
+                _a = (_a + '').trim().toLowerCase();
+            } else {
+                _a = '';
             }
+
+            if (_b !== null && _b !== undefined) {
+                _b = (_b + '').trim().toLowerCase();
+            } else {
+                _b = '';
+            }
+
             if (_a > _b) {
                 return _orderBy.ascend ? 1 : -1;
             }

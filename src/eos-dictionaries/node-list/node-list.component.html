@@ -18,11 +18,11 @@
                     [ngStyle]="{'width.px': length[field.key]}">
                     <span class="text"
                         [ngClass]="{'selected-text': orderBy}"
-                        (click)="orderByField(field.foreignKey)"
+                        (click)="orderByField(field.key)"
                         tooltip="{{field.title}}"
                         placement="bottom"
                         container="body"
-                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.key"
                         class="icon eos-icon small"
                         [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                 </div>
@@ -32,11 +32,11 @@
 
                     <span class="text"
                         [ngClass]="{'selected-text': orderBy}"
-                        (click)="orderByField(field.foreignKey)"
+                        (click)="orderByField(field.key)"
                         tooltip="{{field.title}}"
                         placement="bottom"
                         container="body"
-                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.foreignKey"
+                        containerClass="tooltip-info">{{field.customTitle || field.title}}</span><span class="order-icon"><span *ngIf="orderBy?.fieldKey === field.key"
                                 class="eos-icon small"
                                 [ngClass]="{'eos-icon-arrow-blue-top': orderBy?.ascend, 'eos-icon-arrow-blue-bottom': !orderBy?.ascend}"></span></span>
                 </div>
