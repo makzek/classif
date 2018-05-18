@@ -1019,6 +1019,7 @@ const commonMeta = {
             IS_HIDDEN: _t.i,
             APPLY_EDS: _t.i,
             SEND_ENABLED: _t.i,
+            UPD_CONTENT_DATE: _t.d,
             INS_DATE: _t.d,
             UPD_DATE: _t.d,
             INS_WHO: _t.i,
