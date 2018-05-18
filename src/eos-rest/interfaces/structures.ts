@@ -1633,6 +1633,27 @@ export interface CA_CATEGORY extends IEnt {
     ISN_EDS_CATEGORY: number;
 }
 
+/**
+ * Таблица хостов
+ */
+export interface APP_HOST extends IEnt {
+    /**
+     * ISN хоста
+     */
+    ISN_APP_HOST: number;
+    /**
+     * Название для показа
+     */
+    DISPLAY_NAME: string;
+    /**
+     * URL сервиса
+     */
+    SERVICE_URL: string;
+    /**
+     * Разрешение на использование
+     */
+    ENABLED: number;
+}
 
 /**
  * Кабинеты

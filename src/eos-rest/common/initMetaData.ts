@@ -239,6 +239,21 @@ const commonMeta = {
 
         ]
     },
+    APP_HOST: {
+        pk: 'ISN_APP_HOST',
+        properties: {
+            ISN_APP_HOST: _t.i,
+            DISPLAY_NAME: _t.s,
+            SERVICE_URL: _t.s,
+            ENABLED: _t.i
+        },
+        readonly: [
+
+        ],
+        relations: [
+
+        ]
+    },
     CITIZEN: {
         pk: 'ISN_CITIZEN',
         properties: {
